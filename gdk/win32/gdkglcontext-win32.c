@@ -243,7 +243,7 @@ _gdk_win32_gl_context_end_frame (GdkGLContext *context,
           GdkRectangle rect = {0, 0, gdk_window_get_width (window), gdk_window_get_height (window)};
 
           /* We need to do gdk_window_invalidate_rect() so that we don't get glitches after maximizing or
-           *  restoring or using aerosnap
+           *  restoring
            */
           gdk_window_invalidate_rect (window, &rect, TRUE);
           _reset_egl_force_redraw (window);
@@ -1376,7 +1376,7 @@ _gdk_win32_window_invalidate_egl_framebuffer (GdkWindow *window)
 {
 /* If we are using ANGLE, we need to force redraw of the whole Window and its child windows
  *  as we need to re-acquire the EGL surfaces that we rendered to upload to Cairo explicitly,
- *  using gdk_window_invalidate_rect (), when we maximize or restore or use aerosnap
+ *  using gdk_window_invalidate_rect (), when we maximize or restore
  */
 #ifdef GDK_WIN32_ENABLE_EGL
   if (window->gl_paint_context != NULL && gdk_gl_context_get_use_es (window->gl_paint_context))
