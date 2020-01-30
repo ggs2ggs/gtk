@@ -197,12 +197,6 @@ gdk_window_impl_win32_finalize (GObject *object)
 
   g_free (window_impl->decorations);
 
-  if (window_impl->cache_surface)
-    {
-      cairo_surface_destroy (window_impl->cache_surface);
-      window_impl->cache_surface = NULL;
-    }
-
   if (window_impl->cairo_surface)
     {
       cairo_surface_destroy (window_impl->cairo_surface);
@@ -288,12 +282,6 @@ gdk_win32_window_begin_paint (GdkWindow *window)
 
   impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
 
-  /* Layered windows are moved *after* repaint.
-   * We supply our own surface, return FALSE to make GDK use it.
-   */
-  if (impl->layered)
-    return FALSE;
-
   /* Non-GL windows are moved *after* repaint.
    * We don't supply our own surface, return TRUE to make GDK create
    * one by itself.
@@ -341,11 +329,9 @@ gdk_win32_window_end_paint (GdkWindow *window)
   if (window->current_paint.use_gl)
     return;
 
-  /* No move/resize is queued up, and we don't need to update
-   * the contents of a layered window, so return immediately.
+  /* No move/resize is queued up, so return immediately.
    */
-  if (!impl->layered &&
-      !impl->drag_move_resize_context.native_move_resize_pending)
+  if (!impl->drag_move_resize_context.native_move_resize_pending)
     return;
 
   impl->drag_move_resize_context.native_move_resize_pending = FALSE;
@@ -353,57 +339,7 @@ gdk_win32_window_end_paint (GdkWindow *window)
   /* Get the position/size of the window that GDK wants. */
   gdk_win32_window_get_queued_window_rect (window, &window_rect);
 
-  if (!impl->layered)
-    {
-      gdk_win32_window_apply_queued_move_resize (window, window_rect);
-
-      return;
-    }
-
-  window_position.x = window_rect.left;
-  window_position.y = window_rect.top;
-
-  window_size.cx = window_rect.right - window_rect.left;
-  window_size.cy = window_rect.bottom - window_rect.top;
-
-  cairo_surface_flush (impl->cairo_surface);
-
-  /* we always draw in the top-left corner of the surface */
-  source_point.x = source_point.y = 0;
-
-  blender.BlendOp = AC_SRC_OVER;
-  blender.BlendFlags = 0;
-  blender.AlphaFormat = AC_SRC_ALPHA;
-  blender.SourceConstantAlpha = impl->layered_opacity * 255;
-
-  /* Update cache surface contents */
-  cr = cairo_create (impl->cache_surface);
-
-  cairo_set_source_surface (cr, window->current_paint.surface, 0, 0);
-  gdk_cairo_region (cr, window->current_paint.region);
-  cairo_clip (cr);
-
-  cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-  cairo_paint (cr);
-
-  cairo_destroy (cr);
-
-  cairo_surface_flush (impl->cache_surface);
-  hdc = cairo_win32_surface_get_dc (impl->cache_surface);
-
-  /* Don't use UpdateLayeredWindow on minimized windows */
-  if (IsIconic (GDK_WINDOW_HWND (window)))
-    {
-      gdk_win32_window_apply_queued_move_resize (window, window_rect);
-
-      return;
-    }
-
-  /* Move, resize and redraw layered window in one call */
-  API_CALL (UpdateLayeredWindow, (GDK_WINDOW_HWND (window), NULL,
-                                  &window_position, &window_size,
-                                  hdc, &source_point,
-                                  0, &blender, ULW_ALPHA));
+  gdk_win32_window_apply_queued_move_resize (window, window_rect);
 }
 
 void
@@ -431,10 +367,6 @@ _gdk_win32_window_enable_transparency (GdkWindow *window)
     return FALSE;
 
   impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-  /* layered windows don't need blurbehind for transparency */
-  if (impl->layered)
-    return TRUE;
 
   screen = gdk_window_get_screen (window);
 
@@ -723,8 +655,6 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
               (gdk_screen_get_rgba_visual (screen) == attributes->visual));
 
   impl->override_redirect = override_redirect;
-  impl->layered = FALSE;
-  impl->layered_opacity = 1.0;
 
   display_win32 = GDK_WIN32_DISPLAY (display);
   impl->window_scale = _gdk_win32_display_get_monitor_scale_factor (display_win32, NULL, NULL, NULL);
@@ -2783,27 +2713,6 @@ _gdk_win32_window_update_style_bits (GdkWindow *window)
       new_exstyle &= ~WS_EX_TOOLWINDOW;
     }
 
-  /* We can get away with using layered windows
-   * only when no decorations are needed. It can mean
-   * CSD or borderless non-CSD windows (tooltips?).
-   *
-   * If this window cannot use layered windows, disable it always.
-   * This currently applies to windows using OpenGL, which
-   * does not work with layered windows.
-   */
-  if (impl->suppress_layered == 0)
-    {
-      if (_gdk_win32_window_lacks_wm_decorations (window))
-        impl->layered = g_strcmp0 (g_getenv ("GDK_WIN32_LAYERED"), "0") != 0;
-    }
-  else
-    impl->layered = FALSE;
-
-  if (impl->layered)
-    new_exstyle |= WS_EX_LAYERED;
-  else
-    new_exstyle &= ~WS_EX_LAYERED;
-
   if (get_effective_window_decorations (window, &decorations))
     {
       all = (decorations & GDK_DECOR_ALL);
@@ -3334,58 +3243,6 @@ gdk_win32_get_window_size_and_position_from_client_rect (GdkWindow *window,
   window_size->cy = window_rect->bottom - window_rect->top;
 }
 
-static void
-gdk_win32_update_layered_window_from_cache (GdkWindow *window,
-                                            RECT      *client_rect)
-{
-  POINT window_position;
-  SIZE window_size;
-  BLENDFUNCTION blender;
-  HDC hdc;
-  SIZE *window_size_ptr;
-  POINT source_point = { 0, 0 };
-  POINT *source_point_ptr;
-  GdkWindowImplWin32 *impl;
-
-  impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-  gdk_win32_get_window_size_and_position_from_client_rect (window,
-                                                           client_rect,
-                                                           &window_size,
-                                                           &window_position);
-
-  blender.BlendOp = AC_SRC_OVER;
-  blender.BlendFlags = 0;
-  blender.AlphaFormat = AC_SRC_ALPHA;
-  blender.SourceConstantAlpha = impl->layered_opacity * 255;
-
-  /* Size didn't change, so move immediately, no need to wait for redraw */
-  /* Strictly speaking, we don't need to supply hdc, source_point and
-   * window_size here. However, without these arguments
-   * the window moves but does not update its contents on Windows 7 when
-   * desktop composition is off. This forces us to provide hdc and
-   * source_point. window_size is here to avoid the function
-   * inexplicably failing with error 317.
-   */
-  if (gdk_screen_is_composited (gdk_window_get_screen (window)))
-    {
-      hdc = NULL;
-      window_size_ptr = NULL;
-      source_point_ptr = NULL;
-    }
-  else
-    {
-      hdc = cairo_win32_surface_get_dc (impl->cache_surface);
-      window_size_ptr = &window_size;
-      source_point_ptr = &source_point;
-    }
-
-  API_CALL (UpdateLayeredWindow, (GDK_WINDOW_HWND (window), NULL,
-                                  &window_position, window_size_ptr,
-                                  hdc, source_point_ptr,
-                                  0, &blender, ULW_ALPHA));
-}
-
 void
 gdk_win32_window_do_move_resize_drag (GdkWindow *window,
                                       gint       x,
@@ -3566,11 +3423,6 @@ gdk_win32_window_do_move_resize_drag (GdkWindow *window,
 
       _gdk_win32_do_emit_configure_event (window, new_rect);
 
-      if (impl->layered)
-        {
-          gdk_win32_update_layered_window_from_cache (window, &new_rect);
-        }
-      else
         {
           SIZE window_size;
           POINT window_position;
@@ -4191,7 +4043,6 @@ gdk_win32_window_set_opacity (GdkWindow *window,
   LONG exstyle;
   typedef BOOL (WINAPI *PFN_SetLayeredWindowAttributes) (HWND, COLORREF, BYTE, DWORD);
   PFN_SetLayeredWindowAttributes setLayeredWindowAttributes = NULL;
-  GdkWindowImplWin32 *impl;
 
   g_return_if_fail (GDK_IS_WINDOW (window));
 
@@ -4202,23 +4053,6 @@ gdk_win32_window_set_opacity (GdkWindow *window,
     opacity = 0;
   else if (opacity > 1)
     opacity = 1;
-
-  impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-  if (impl->layered)
-    {
-      if (impl->layered_opacity != opacity)
-        {
-          RECT window_rect;
-
-          impl->layered_opacity = opacity;
-
-          gdk_win32_get_window_client_area_rect (window, impl->window_scale, &window_rect);
-          gdk_win32_update_layered_window_from_cache (window, &window_rect);
-        }
-
-      return;
-    }
 
   exstyle = GetWindowLong (GDK_WINDOW_HWND (window), GWL_EXSTYLE);
 
@@ -4323,12 +4157,6 @@ _gdk_win32_impl_acquire_dc (GdkWindowImplWin32 *impl)
       GDK_WINDOW_DESTROYED (impl->wrapper))
     return NULL;
 
-  /* We don't call this function for layered windows, but
-   * in case we do...
-   */
-  if (impl->layered)
-    return NULL;
-
   if (!impl->hdc)
     {
       impl->hdc = GetDC (impl->handle);
@@ -4357,9 +4185,6 @@ _gdk_win32_impl_acquire_dc (GdkWindowImplWin32 *impl)
 static void
 _gdk_win32_impl_release_dc (GdkWindowImplWin32 *impl)
 {
-  if (impl->layered)
-    return;
-
   g_return_if_fail (impl->hdc_count > 0);
 
   impl->hdc_count--;
@@ -4397,83 +4222,6 @@ gdk_win32_cairo_surface_destroy (void *data)
 }
 
 static cairo_surface_t *
-gdk_win32_ref_cairo_surface_layered (GdkWindow          *window,
-                                     GdkWindowImplWin32 *impl)
-{
-  gint width, height;
-  RECT window_rect;
-
-  gdk_win32_get_window_client_area_rect (window, impl->window_scale, &window_rect);
-
-  /* Turn client area into window area */
-  _gdk_win32_adjust_client_rect (window, &window_rect);
-
-  width = window_rect.right - window_rect.left;
-  height = window_rect.bottom - window_rect.top;
-
-  if (width > impl->dib_width ||
-      height > impl->dib_height)
-    {
-      cairo_surface_t *new_cache;
-      cairo_t *cr;
-
-      /* Create larger cache surface, copy old cache surface over it */
-      new_cache = cairo_win32_surface_create_with_dib (CAIRO_FORMAT_ARGB32,
-                                                       width,
-                                                       height);
-
-      if (impl->cache_surface)
-        {
-          cr = cairo_create (new_cache);
-          cairo_set_source_surface (cr, impl->cache_surface, 0, 0);
-          cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-          cairo_paint (cr);
-          cairo_destroy (cr);
-          cairo_surface_flush (new_cache);
-
-          cairo_surface_destroy (impl->cache_surface);
-        }
-
-      impl->cache_surface = new_cache;
-
-      cairo_surface_set_device_scale (impl->cache_surface,
-                                      impl->window_scale,
-                                      impl->window_scale);
-
-      if (impl->cairo_surface)
-        cairo_surface_destroy (impl->cairo_surface);
-
-      impl->cairo_surface = NULL;
-    }
-
-  /* This is separate, because cairo_surface gets killed
-   * off frequently by outside code, whereas cache_surface
-   * is only killed by us, above.
-   */
-  if (!impl->cairo_surface)
-    {
-      impl->cairo_surface = cairo_win32_surface_create_with_dib (CAIRO_FORMAT_ARGB32,
-                                                                 width,
-                                                                 height);
-      impl->dib_width = width;
-      impl->dib_height = height;
-
-      cairo_surface_set_device_scale (impl->cairo_surface,
-                                      impl->window_scale,
-                                      impl->window_scale);
-
-      cairo_surface_set_user_data (impl->cairo_surface, &gdk_win32_cairo_key,
-				   impl, gdk_win32_cairo_surface_destroy);
-    }
-  else
-    {
-      cairo_surface_reference (impl->cairo_surface);
-    }
-
-  return impl->cairo_surface;
-}
-
-static cairo_surface_t *
 gdk_win32_ref_cairo_surface (GdkWindow *window)
 {
   GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
@@ -4481,9 +4229,6 @@ gdk_win32_ref_cairo_surface (GdkWindow *window)
   if (GDK_IS_WINDOW_IMPL_WIN32 (impl) &&
       GDK_WINDOW_DESTROYED (impl->wrapper))
     return NULL;
-
-  if (impl->layered)
-    return gdk_win32_ref_cairo_surface_layered (window, impl);
 
   if (!impl->cairo_surface)
     {
@@ -4509,80 +4254,8 @@ BOOL WINAPI
 GtkShowWindow (GdkWindow *window,
                int        cmd_show)
 {
-  cairo_t *cr;
-  cairo_surface_t *surface;
-  RECT window_rect;
-  HDC hdc;
-  POINT window_position;
-  SIZE window_size;
-  POINT source_point;
-  BLENDFUNCTION blender;
-
   HWND hwnd = GDK_WINDOW_HWND (window);
   GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-  switch (cmd_show)
-    {
-    case SW_FORCEMINIMIZE:
-    case SW_HIDE:
-    case SW_MINIMIZE:
-      break;
-    case SW_MAXIMIZE:
-    case SW_RESTORE:
-    case SW_SHOW:
-    case SW_SHOWDEFAULT:
-    case SW_SHOWMINIMIZED:
-    case SW_SHOWMINNOACTIVE:
-    case SW_SHOWNA:
-    case SW_SHOWNOACTIVATE:
-    case SW_SHOWNORMAL:
-
-      if (IsWindowVisible (hwnd))
-        break;
-
-      if ((WS_EX_LAYERED & GetWindowLongPtr (hwnd, GWL_EXSTYLE)) != WS_EX_LAYERED)
-        break;
-
-      /* Window was hidden, will be shown. Erase it, GDK will repaint soon,
-       * but not soon enough, so it's possible to see old content before
-       * the next redraw, unless we erase the window first.
-       */
-      GetWindowRect (hwnd, &window_rect);
-      source_point.x = source_point.y = 0;
-
-      window_position.x = window_rect.left;
-      window_position.y = window_rect.top;
-      window_size.cx = window_rect.right - window_rect.left;
-      window_size.cy = window_rect.bottom - window_rect.top;
-
-      blender.BlendOp = AC_SRC_OVER;
-      blender.BlendFlags = 0;
-      blender.AlphaFormat = AC_SRC_ALPHA;
-      blender.SourceConstantAlpha = 255;
-
-      /* Create a surface of appropriate size and clear it */
-      surface = cairo_win32_surface_create_with_dib (CAIRO_FORMAT_ARGB32,
-                                                     window_size.cx,
-                                                     window_size.cy);
-      cairo_surface_set_device_scale (surface, impl->window_scale, impl->window_scale);
-      cr = cairo_create (surface);
-      cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.0);
-      cairo_paint (cr);
-      cairo_destroy (cr);
-      cairo_surface_flush (surface);
-      hdc = cairo_win32_surface_get_dc (surface);
-
-      /* No API_CALL() wrapper, don't check for errors */
-      UpdateLayeredWindow (hwnd, NULL,
-                           &window_position, &window_size,
-                           hdc, &source_point,
-                           0, &blender, ULW_ALPHA);
-
-      cairo_surface_destroy (surface);
-
-      break;
-    }
 
   /* Ensure that maximized window size is corrected later on */
   if (cmd_show == SW_MAXIMIZE)

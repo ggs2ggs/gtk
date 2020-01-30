@@ -53,8 +53,6 @@ _gdk_win32_gl_context_dispose (GObject *gobject)
   GdkGLContext *context = GDK_GL_CONTEXT (gobject);
   GdkWin32GLContext *context_win32 = GDK_WIN32_GL_CONTEXT (gobject);
   GdkWin32Display *display_win32 = GDK_WIN32_DISPLAY (gdk_gl_context_get_display (context));
-  GdkWindow *window = gdk_gl_context_get_window (context);
-  GdkWindowImplWin32 *impl = NULL;
 
   if (context_win32->hglrc != NULL)
     {
@@ -87,20 +85,6 @@ _gdk_win32_gl_context_dispose (GObject *gobject)
       ReleaseDC (display_win32->gl_hwnd, context_win32->gl_hdc);
     }
 #endif
-
-  if (window != NULL && window->impl != NULL)
-    {
-      impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-      if (impl->suppress_layered > 0)
-        impl->suppress_layered--;
-
-      /* If we don't have any window that forces layered windows off,
-       * trigger update_style_bits() to enable layered windows again
-       */
-      if (impl->suppress_layered == 0)
-        _gdk_win32_window_update_style_bits (window);
-    }
 
   G_OBJECT_CLASS (gdk_win32_gl_context_parent_class)->dispose (gobject);
 }
@@ -1023,7 +1007,6 @@ _gdk_win32_gl_context_realize (GdkGLContext *context,
 #endif
 
   GdkWindow *window = gdk_gl_context_get_window (context);
-  GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
   GdkWin32Display *win32_display = GDK_WIN32_DISPLAY (gdk_window_get_display (window));
 
   /*
@@ -1142,17 +1125,6 @@ _gdk_win32_gl_context_realize (GdkGLContext *context,
 
   /* set whether we are using GLES */
   gdk_gl_context_set_use_es(context, use_es);
-
-  /* OpenGL does not work with WS_EX_LAYERED enabled, so we need to
-   * disable WS_EX_LAYERED when we acquire a valid HGLRC
-   */
-  impl->suppress_layered++;
-
-  /* if this is the first time a GL context is acquired for the window,
-   * disable layered windows by triggering update_style_bits()
-   */
-  if (impl->suppress_layered == 1)
-    _gdk_win32_window_update_style_bits (window);
 
   /* Ensure that any other context is created with a legacy bit set */
   gdk_gl_context_set_is_legacy (context, legacy_bit);
