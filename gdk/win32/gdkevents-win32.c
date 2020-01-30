@@ -61,6 +61,7 @@
 #include "gdkdndprivate.h"
 
 #include <windowsx.h>
+#include <dwmapi.h>
 
 #ifdef G_WITH_CYGWIN
 #include <fcntl.h>
@@ -2021,8 +2022,17 @@ gdk_event_translate (MSG  *msg,
 	}
       else if (msg->message == WM_CREATE)
 	{
+          RECT rcClient;
+          GetWindowRect (msg->hwnd, &rcClient);
+
 	  window = (UNALIGNED GdkWindow*) (((LPCREATESTRUCTW) msg->lParam)->lpCreateParams);
 	  GDK_WINDOW_HWND (window) = msg->hwnd;
+
+          SetWindowPos (msg->hwnd,
+                        NULL,
+                        rcClient.left, rcClient.top,
+                        rcClient.right - rcClient.left, rcClient.bottom - rcClient.top,
+                        SWP_FRAMECHANGED);
 	}
       else
 	{
@@ -3575,6 +3585,37 @@ gdk_event_translate (MSG  *msg,
           API_CALL (CloseClipboard, ());
         }
       break;
+/*
+    case WM_NCACTIVATE:
+      {
+        if (_gdk_win32_window_lacks_wm_decorations (window))
+          {
+            *ret_valp = TRUE;
+            return_val = TRUE;
+          }
+      }
+      break;
+*/
+    case WM_NCCALCSIZE:
+      {
+        if (msg->wParam)
+          {
+            NCCALCSIZE_PARAMS *ncp = (NCCALCSIZE_PARAMS *) msg->lParam;
+            RECT *nr = &ncp->rgrc[0];
+            RECT *or = &ncp->rgrc[1];
+            RECT *oc = &ncp->rgrc[2];
+            GDK_NOTE (EVENTS, g_print (" new rect %ldx%ld @ %ld:%ld,", nr->right - nr->left, nr->bottom - nr->top, nr->left, nr->top));
+            GDK_NOTE (EVENTS, g_print (" old rect %ldx%ld @ %ld:%ld,", or->right - or->left, or->bottom - or->top, or->left, or->top));
+            GDK_NOTE (EVENTS, g_print (" old clnt %ldx%ld @ %ld:%ld,", oc->right - oc->left, oc->bottom - oc->top, oc->left, oc->top));
+
+            if (_gdk_win32_window_lacks_wm_decorations (window))
+              {
+                *ret_valp = 0;
+                return_val = TRUE;
+              }
+          }
+      }
+      break;
 
     case WM_ACTIVATE:
       GDK_NOTE (EVENTS, g_print (" %s%s %p",
@@ -3583,6 +3624,19 @@ gdk_event_translate (MSG  *msg,
 				   (LOWORD (msg->wParam) == WA_INACTIVE ? "INACTIVE" : "???"))),
 				 HIWORD (msg->wParam) ? " minimized" : "",
 				 (HWND) msg->lParam));
+      {
+        // Extend the frame into the client area.
+        MARGINS margins = {-1};
+        HRESULT hr;
+
+        hr = DwmExtendFrameIntoClientArea (GDK_WINDOW_HWND (window), &margins);
+        if (!SUCCEEDED (hr))
+          g_warning ("DwmExtendFrameIntoClientArea() failed: %lx", hr);
+
+        *ret_valp = 0;
+        return_val = TRUE;
+      }
+
       /* We handle mouse clicks for modally-blocked windows under WM_MOUSEACTIVATE,
        * but we still need to deal with alt-tab, or with SetActiveWindow() type
        * situations.

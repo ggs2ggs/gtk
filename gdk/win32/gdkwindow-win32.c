@@ -348,6 +348,9 @@ _gdk_win32_adjust_client_rect (GdkWindow *window,
 {
   LONG style, exstyle;
 
+  if (_gdk_win32_window_lacks_wm_decorations (window))
+    return;
+
   style = GetWindowLong (GDK_WINDOW_HWND (window), GWL_STYLE);
   exstyle = GetWindowLong (GDK_WINDOW_HWND (window), GWL_EXSTYLE);
   API_CALL (AdjustWindowRectEx, (rect, style, FALSE, exstyle));
@@ -1773,9 +1776,7 @@ get_effective_window_decorations (GdkWindow       *window,
     return TRUE;
 
   if (window->window_type != GDK_WINDOW_TOPLEVEL)
-    {
-      return FALSE;
-    }
+    return FALSE;
 
   if ((impl->hint_flags & GDK_HINT_MIN_SIZE) &&
       (impl->hint_flags & GDK_HINT_MAX_SIZE) &&
@@ -1800,6 +1801,7 @@ get_effective_window_decorations (GdkWindow       *window,
   else if (impl->hint_flags & GDK_HINT_MAX_SIZE)
     {
       *decoration = GDK_DECOR_ALL | GDK_DECOR_MAXIMIZE;
+
       if (impl->type_hint == GDK_WINDOW_TYPE_HINT_DIALOG ||
 	  impl->type_hint == GDK_WINDOW_TYPE_HINT_MENU ||
 	  impl->type_hint == GDK_WINDOW_TYPE_HINT_TOOLBAR)
@@ -2616,8 +2618,7 @@ gboolean
 _gdk_win32_window_lacks_wm_decorations (GdkWindow *window)
 {
   GdkWindowImplWin32 *impl;
-  LONG style;
-  gboolean has_any_decorations;
+  GdkWMDecoration decorations;
 
   if (GDK_WINDOW_DESTROYED (window))
     return FALSE;
@@ -2639,33 +2640,10 @@ _gdk_win32_window_lacks_wm_decorations (GdkWindow *window)
   if (GDK_WINDOW_HWND (window) == 0)
     return FALSE;
 
-  style = GetWindowLong (GDK_WINDOW_HWND (window), GWL_STYLE);
+  if (get_effective_window_decorations (window, &decorations))
+    return decorations == 0;
 
-  if (style == 0)
-    {
-      DWORD w32_error = GetLastError ();
-
-      GDK_NOTE (MISC, g_print ("Failed to get style of window %p (handle %p): %lu\n",
-                               window, GDK_WINDOW_HWND (window), w32_error));
-      return FALSE;
-    }
-
-  /* Keep this in sync with _gdk_win32_window_update_style_bits() */
-  /* We don't check what get_effective_window_decorations()
-   * has to say, because it gives suggestions based on
-   * various hints, while we want *actual* decorations,
-   * or their absence.
-   */
-  has_any_decorations = FALSE;
-
-  if (style & (WS_BORDER | WS_THICKFRAME | WS_CAPTION |
-               WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX))
-    has_any_decorations = TRUE;
-  else
-    GDK_NOTE (MISC, g_print ("Window %p (handle %p): has no decorations (style %lx)\n",
-                             window, GDK_WINDOW_HWND (window), style));
-
-  return !has_any_decorations;
+  return FALSE;
 }
 
 void
@@ -2713,7 +2691,15 @@ _gdk_win32_window_update_style_bits (GdkWindow *window)
       new_exstyle &= ~WS_EX_TOOLWINDOW;
     }
 
-  if (get_effective_window_decorations (window, &decorations))
+  if (impl->decorations && *impl->decorations == 0)
+    {
+      /* No-decoration windows get all styles needed for
+       * interactions with the WM. TODO: communicate
+       * from GTK which decorations are actually used.
+       */
+      new_style |= WS_THICKFRAME | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_BORDER;
+    }
+  else if (get_effective_window_decorations (window, &decorations))
     {
       all = (decorations & GDK_DECOR_ALL);
       /* Keep this in sync with the test in _gdk_win32_window_lacks_wm_decorations() */
@@ -2843,6 +2829,18 @@ gdk_win32_window_set_decorations (GdkWindow      *window,
   *impl->decorations = decorations;
 
   _gdk_win32_window_update_style_bits (window);
+
+  {
+    RECT rcClient;
+    GetWindowRect (GDK_WINDOW_HWND (window), &rcClient);
+
+    /* Provoke WM_NCCALCSIZE */
+    SetWindowPos (GDK_WINDOW_HWND (window),
+                  NULL,
+                  rcClient.left, rcClient.top,
+                  rcClient.right - rcClient.left, rcClient.bottom - rcClient.top,
+                  SWP_FRAMECHANGED);
+  }
 }
 
 static gboolean
