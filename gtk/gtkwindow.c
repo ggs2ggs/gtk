@@ -4103,6 +4103,7 @@ unset_titlebar (GtkWindow *window)
 static gboolean
 gtk_window_supports_client_shadow (GtkWindow *window)
 {
+#ifdef GDK_WINDOWING_X11
   GdkDisplay *display;
   GdkScreen *screen;
   GdkVisual *visual;
@@ -4110,7 +4111,6 @@ gtk_window_supports_client_shadow (GtkWindow *window)
   screen = _gtk_window_get_screen (window);
   display = gdk_screen_get_display (screen);
 
-#ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_DISPLAY (display))
     {
       if (!gdk_screen_is_composited (screen))
@@ -4127,16 +4127,11 @@ gtk_window_supports_client_shadow (GtkWindow *window)
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
-  if (GDK_IS_WIN32_DISPLAY (display))
-    {
-      if (!gdk_screen_is_composited (screen))
-        return FALSE;
-
-      /* We need a visual with alpha */
-      visual = gdk_screen_get_rgba_visual (screen);
-      if (!visual)
-        return FALSE;
-    }
+  /* There's no way to tell Windows that some part of a window
+   * is just a decoration, so our client-side shadows do not
+   * work well with the OS.
+   */
+  return FALSE;
 #endif
 
   return TRUE;
