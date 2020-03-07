@@ -1333,7 +1333,12 @@ gdk_event_get_absolute_interpolation_prop_names (const GdkEvent *event,
 
   switch (event->type)
     {
+    case GDK_TOUCHPAD_PINCH:
+      g_array_set_size (names, 1);
+      g_array_index (names, char *, 0) = "scale";
+      break;
     case GDK_SCROLL:
+    case GDK_TOUCHPAD_SWIPE:
       // Doesn't have absolute properties for interpolation.
       g_array_set_size (names, 0);
       break;
@@ -1349,8 +1354,6 @@ gdk_event_get_absolute_interpolation_prop_names (const GdkEvent *event,
     case GDK_TOUCH_END:
     case GDK_TOUCH_CANCEL:
     case GDK_MOTION_NOTIFY:
-    case GDK_TOUCHPAD_SWIPE:
-    case GDK_TOUCHPAD_PINCH:
     case GDK_DRAG_ENTER:
     case GDK_DRAG_LEAVE:
     case GDK_DRAG_MOTION:
@@ -1387,7 +1390,12 @@ gdk_event_get_absolute_values_for_interpolation (const GdkEvent *event,
 
   switch (event->type)
     {
+    case GDK_TOUCHPAD_PINCH:
+      g_array_set_size (values, 1);
+      g_array_index (values, gdouble, 0) = event->touchpad_pinch.scale;
+      break;
     case GDK_SCROLL:
+    case GDK_TOUCHPAD_SWIPE:
       // Doesn't have absolute properties for interpolation.
       g_array_set_size (values, 0);
       break;
@@ -1403,8 +1411,6 @@ gdk_event_get_absolute_values_for_interpolation (const GdkEvent *event,
     case GDK_TOUCH_END:
     case GDK_TOUCH_CANCEL:
     case GDK_MOTION_NOTIFY:
-    case GDK_TOUCHPAD_SWIPE:
-    case GDK_TOUCHPAD_PINCH:
     case GDK_DRAG_ENTER:
     case GDK_DRAG_LEAVE:
     case GDK_DRAG_MOTION:
@@ -1438,6 +1444,10 @@ gdk_event_set_interpolated_absolute_values (GdkEvent *event,
 
   switch (event->type)
     {
+    case GDK_TOUCHPAD_PINCH:
+      g_return_if_fail (values->len == 1);
+      event->touchpad_pinch.scale = g_array_index (values, gdouble, 0);
+      break;
     case GDK_SCROLL:
     case GDK_CONFIGURE:
     case GDK_ENTER_NOTIFY:
@@ -1452,7 +1462,6 @@ gdk_event_set_interpolated_absolute_values (GdkEvent *event,
     case GDK_TOUCH_CANCEL:
     case GDK_MOTION_NOTIFY:
     case GDK_TOUCHPAD_SWIPE:
-    case GDK_TOUCHPAD_PINCH:
     case GDK_DRAG_ENTER:
     case GDK_DRAG_LEAVE:
     case GDK_DRAG_MOTION:
@@ -1496,6 +1505,17 @@ gdk_event_get_relative_interpolation_prop_names (const GdkEvent *event,
       else
         fetched = FALSE;
       break;
+    case GDK_TOUCHPAD_SWIPE:
+      g_array_set_size (names, 2);
+      g_array_index (names, char *, 0) = "dx";
+      g_array_index (names, char *, 1) = "dy";
+      break;
+    case GDK_TOUCHPAD_PINCH:
+      g_array_set_size (names, 3);
+      g_array_index (names, char *, 0) = "dx";
+      g_array_index (names, char *, 1) = "dy";
+      g_array_index (names, char *, 2) = "angle_delta";
+      break;
     case GDK_CONFIGURE:
     case GDK_ENTER_NOTIFY:
     case GDK_LEAVE_NOTIFY:
@@ -1508,8 +1528,6 @@ gdk_event_get_relative_interpolation_prop_names (const GdkEvent *event,
     case GDK_TOUCH_END:
     case GDK_TOUCH_CANCEL:
     case GDK_MOTION_NOTIFY:
-    case GDK_TOUCHPAD_SWIPE:
-    case GDK_TOUCHPAD_PINCH:
     case GDK_DRAG_ENTER:
     case GDK_DRAG_LEAVE:
     case GDK_DRAG_MOTION:
@@ -1558,6 +1576,17 @@ gdk_event_get_relative_values_for_interpolation (const GdkEvent *event,
       else
         fetched = FALSE;
       break;
+    case GDK_TOUCHPAD_SWIPE:
+      g_array_set_size (values, 2);
+      g_array_index (values, gdouble, 0) = event->touchpad_swipe.dx;
+      g_array_index (values, gdouble, 1) = event->touchpad_swipe.dy;
+      break;
+    case GDK_TOUCHPAD_PINCH:
+      g_array_set_size (values, 3);
+      g_array_index (values, gdouble, 0) = event->touchpad_pinch.dx;
+      g_array_index (values, gdouble, 1) = event->touchpad_pinch.dy;
+      g_array_index (values, gdouble, 2) = event->touchpad_pinch.angle_delta;
+      break;
     case GDK_CONFIGURE:
     case GDK_ENTER_NOTIFY:
     case GDK_LEAVE_NOTIFY:
@@ -1570,8 +1599,6 @@ gdk_event_get_relative_values_for_interpolation (const GdkEvent *event,
     case GDK_TOUCH_END:
     case GDK_TOUCH_CANCEL:
     case GDK_MOTION_NOTIFY:
-    case GDK_TOUCHPAD_SWIPE:
-    case GDK_TOUCHPAD_PINCH:
     case GDK_DRAG_ENTER:
     case GDK_DRAG_LEAVE:
     case GDK_DRAG_MOTION:
@@ -1613,6 +1640,17 @@ gdk_event_set_interpolated_relative_values (GdkEvent *event,
           event->scroll.delta_y = g_array_index (values, gdouble, 1);
         }
       break;
+    case GDK_TOUCHPAD_SWIPE:
+      g_return_if_fail (values->len == 2);
+      event->touchpad_swipe.dx = g_array_index (values, gdouble, 0);
+      event->touchpad_swipe.dy = g_array_index (values, gdouble, 1);
+      break;
+    case GDK_TOUCHPAD_PINCH:
+      g_return_if_fail (values->len == 3);
+      event->touchpad_pinch.dx = g_array_index (values, gdouble, 0);
+      event->touchpad_pinch.dy = g_array_index (values, gdouble, 1);
+      event->touchpad_pinch.angle_delta = g_array_index (values, gdouble, 2);
+      break;
     case GDK_CONFIGURE:
     case GDK_ENTER_NOTIFY:
     case GDK_LEAVE_NOTIFY:
@@ -1625,8 +1663,6 @@ gdk_event_set_interpolated_relative_values (GdkEvent *event,
     case GDK_TOUCH_END:
     case GDK_TOUCH_CANCEL:
     case GDK_MOTION_NOTIFY:
-    case GDK_TOUCHPAD_SWIPE:
-    case GDK_TOUCHPAD_PINCH:
     case GDK_DRAG_ENTER:
     case GDK_DRAG_LEAVE:
     case GDK_DRAG_MOTION:
