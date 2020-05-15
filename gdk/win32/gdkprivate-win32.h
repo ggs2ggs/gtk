@@ -509,10 +509,6 @@ gboolean _gdk_win32_get_window_rect             (GdkWindow  *window,
                                                  RECT       *rect);
 void     _gdk_win32_do_emit_configure_event     (GdkWindow  *window,
                                                  RECT        rect);
-void      gdk_win32_window_do_move_resize_drag  (GdkWindow  *window,
-                                                 gint        x,
-                                                 gint        y);
-void      gdk_win32_window_end_move_resize_drag (GdkWindow  *window);
 gboolean _gdk_win32_window_fill_min_max_info    (GdkWindow  *window,
                                                  MINMAXINFO *mmi);
 

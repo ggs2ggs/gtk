@@ -2563,11 +2563,6 @@ gdk_event_translate (MSG  *msg,
 
       impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
 
-      /* End a drag op when the same button that started it is released */
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE &&
-          impl->drag_move_resize_context.button == button)
-        gdk_win32_window_end_move_resize_drag (window);
-
       return_val = TRUE;
       break;
 
@@ -2644,11 +2639,7 @@ gdk_event_translate (MSG  *msg,
       current_root_y = (msg->pt.y + _gdk_offset_y) / impl->window_scale;
 
 
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        {
-          gdk_win32_window_do_move_resize_drag (window, current_root_x, current_root_y);
-        }
-      else if (_gdk_input_ignore_core == 0)
+      if (_gdk_input_ignore_core == 0)
 	{
 	  event = gdk_event_new (GDK_MOTION_NOTIFY);
 	  event->motion.window = window;
@@ -3035,8 +3026,6 @@ gdk_event_translate (MSG  *msg,
 
       impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
 
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        gdk_win32_window_end_move_resize_drag (window);
       break;
 
     case WM_WINDOWPOSCHANGING:
