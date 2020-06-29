@@ -84,8 +84,11 @@ void                     gdk_wayland_window_set_application_id (GdkWindow *windo
 GDK_AVAILABLE_IN_3_22
 void gdk_wayland_window_announce_csd                        (GdkWindow *window);
 
-GDK_AVAILABLE_IN_3_24
+GDK_DEPRECATED_IN_3_24_FOR(gdk_wayland_window_request_ssd)
 void gdk_wayland_window_announce_ssd                        (GdkWindow *window);
+
+GDK_AVAILABLE_IN_3_24
+void gdk_wayland_window_request_ssd                         (GdkWindow *window);
 
 GDK_AVAILABLE_IN_3_24
 void gdk_wayland_window_add_frame_callback_surface (GdkWindow         *window,

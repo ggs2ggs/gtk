@@ -23,6 +23,17 @@ void            gdk_gl_set_flags                (GdkGLFlags flags);
 void            gdk_window_freeze_toplevel_updates      (GdkWindow *window);
 void            gdk_window_thaw_toplevel_updates        (GdkWindow *window);
 
+#ifdef GDK_WINDOWING_WAYLAND
+typedef void (* GdkWindowDecorationNotify) (GdkWindow *window,
+                                            gboolean   ssd,
+                                            void      *user_data);
+
+void gdk_wayland_window_set_decoration_listener (GdkWindow                 *window,
+                                                 GdkWindowDecorationNotify  callback,
+                                                 void                      *user_data);
+#endif
+
+
 GdkRenderingMode gdk_display_get_rendering_mode (GdkDisplay       *display);
 void             gdk_display_set_rendering_mode (GdkDisplay       *display,
                                                  GdkRenderingMode  mode);
@@ -51,6 +62,12 @@ typedef struct {
 
   void (* gdk_window_freeze_toplevel_updates) (GdkWindow *window);
   void (* gdk_window_thaw_toplevel_updates) (GdkWindow *window);
+
+#ifdef GDK_WINDOWING_WAYLAND
+  void (* gdk_wayland_window_set_decoration_listener) (GdkWindow                 *window,
+                                                       GdkWindowDecorationNotify  callback,
+                                                       void                      *user_data);
+#endif
 
   GdkRenderingMode (* gdk_display_get_rendering_mode) (GdkDisplay       *display);
   void             (* gdk_display_set_rendering_mode) (GdkDisplay       *display,
