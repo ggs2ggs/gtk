@@ -32,7 +32,7 @@ static const GtkIMContextInfo ime_info = {
   "Windows IME",
   "gtk+",
   "",
-  "ja:ko:zh",
+  "*",
 };
 
 static const GtkIMContextInfo *info_list[] = {
