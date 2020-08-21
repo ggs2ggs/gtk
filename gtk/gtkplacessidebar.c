@@ -177,20 +177,21 @@ struct _GtkPlacesSidebar {
 
   GActionGroup *action_group;
 
-  guint mounting               : 1;
-  guint  drag_data_received    : 1;
-  guint drop_occurred          : 1;
-  guint show_recent_set        : 1;
-  guint show_recent            : 1;
-  guint show_desktop_set       : 1;
-  guint show_desktop           : 1;
-  guint show_connect_to_server : 1;
-  guint show_enter_location    : 1;
-  guint show_other_locations   : 1;
-  guint show_trash             : 1;
-  guint show_starred_location  : 1;
-  guint local_only             : 1;
-  guint populate_all           : 1;
+  guint mounting                         : 1;
+  guint  drag_data_received              : 1;
+  guint drop_occurred                    : 1;
+  guint show_recent_set                  : 1;
+  guint show_recent                      : 1;
+  guint show_desktop_set                 : 1;
+  guint show_desktop                     : 1;
+  guint show_connect_to_server           : 1;
+  guint show_enter_location              : 1;
+  guint show_other_locations             : 1;
+  guint show_trash                       : 1;
+  guint show_starred_location            : 1;
+  guint local_only                       : 1;
+  guint populate_all                     : 1;
+  guint update_places_after_mount_volume : 1;
 };
 
 struct _GtkPlacesSidebarClass {
@@ -1077,6 +1078,20 @@ on_account_updated (GObject    *object,
 static void
 update_places (GtkPlacesSidebar *sidebar)
 {
+  if(sidebar->mounting)
+    {
+      /* When we're handling a volume mount operation (in volume_mount_cb) the
+       * volume monitor may trigger this function as a callback. Hence we delay
+       * the update operation to happen after we're finished with handling the
+       * volume mount operation*/
+
+      sidebar->update_places_after_mount_volume = TRUE;
+
+      return;
+    }
+
+  sidebar->update_places_after_mount_volume = FALSE;
+
   GList *mounts, *l, *ll;
   GMount *mount;
   GList *drives;
@@ -2512,6 +2527,11 @@ volume_mount_cb (GObject      *source_object,
 
       g_object_unref (G_OBJECT (location));
       g_object_unref (G_OBJECT (mount));
+    }
+
+  if(sidebar->update_places_after_mount_volume)
+    {
+      update_places(sidebar);
     }
 
   g_object_unref (row);
