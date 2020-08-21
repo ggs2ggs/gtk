@@ -298,9 +298,12 @@ static void  check_unmount_and_eject       (GMount   *mount,
 static gboolean on_button_press_event (GtkWidget      *widget,
                                        GdkEventButton *event,
                                        GtkSidebarRow  *sidebar);
-static gboolean on_button_release_event (GtkWidget      *widget,
-                                         GdkEventButton *event,
-                                         GtkSidebarRow  *sidebar);
+static gboolean on_button_release_event (GtkWidget        *widget,
+                                         GdkEventButton   *event,
+                                         GtkPlacesSidebar *sidebar);
+static gboolean on_sidebar_row_button_release_event (GtkWidget      *widget,
+                                                     GdkEventButton *event,
+                                                     GtkSidebarRow  *sidebar);
 static void popup_menu_cb    (GtkSidebarRow   *row);
 static void long_press_cb    (GtkGesture      *gesture,
                               gdouble          x,
@@ -523,7 +526,7 @@ add_place (GtkPlacesSidebar            *sidebar,
   g_signal_connect (event_box, "button-press-event",
                     G_CALLBACK (on_button_press_event), row);
   g_signal_connect (event_box, "button-release-event",
-                    G_CALLBACK (on_button_release_event), row);
+                    G_CALLBACK (on_sidebar_row_button_release_event), row);
 
   gtk_container_add (GTK_CONTAINER (sidebar->list_box), GTK_WIDGET (row));
   gtk_widget_show_all (row);
@@ -3515,6 +3518,18 @@ start_shortcut_cb (GSimpleAction *action,
 }
 
 static void
+bookmark_cur_location (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       data)
+{
+  GtkPlacesSidebar *sidebar = data;
+
+  g_return_if_fail (sidebar->current_location != NULL);
+
+  _gtk_bookmarks_manager_insert_bookmark (sidebar->bookmarks_manager, sidebar->current_location, -1, NULL);
+}
+
+static void
 stop_shortcut_cb (GSimpleAction *action,
                   GVariant      *parameter,
                   gpointer       data)
@@ -3618,17 +3633,29 @@ static GActionEntry entries[] = {
   { "stop", stop_shortcut_cb, NULL, NULL, NULL },
 };
 
+static GActionEntry cur_location_entries[] = {
+  { "bookmark", bookmark_cur_location, NULL, NULL, NULL },
+};
+
 static void
 add_actions (GtkPlacesSidebar *sidebar)
 {
-  GActionGroup *actions;
+  GActionGroup *actions, *cur_location_actions;
 
   actions = G_ACTION_GROUP (g_simple_action_group_new ());
   g_action_map_add_action_entries (G_ACTION_MAP (actions),
                                    entries, G_N_ELEMENTS (entries),
                                    sidebar);
   gtk_widget_insert_action_group (GTK_WIDGET (sidebar), "row", actions);
+
+  cur_location_actions = G_ACTION_GROUP (g_simple_action_group_new ());
+  g_action_map_add_action_entries (G_ACTION_MAP (cur_location_actions),
+                                   cur_location_entries, G_N_ELEMENTS (cur_location_entries),
+                                   sidebar);
+  gtk_widget_insert_action_group (GTK_WIDGET (sidebar), "cur_location", cur_location_actions);
+
   g_object_unref (actions);
+  g_object_unref (cur_location_actions);
 }
 
 static GtkWidget *
@@ -3898,9 +3925,9 @@ on_button_press_event (GtkWidget      *widget,
 }
 
 static gboolean
-on_button_release_event (GtkWidget      *widget,
-                         GdkEventButton *event,
-                         GtkSidebarRow  *row)
+on_sidebar_row_button_release_event (GtkWidget      *widget,
+                                     GdkEventButton *event,
+                                     GtkSidebarRow  *row)
 {
   gboolean ret = FALSE;
   GtkPlacesSidebarPlaceType row_type;
@@ -3930,6 +3957,57 @@ on_button_release_event (GtkWidget      *widget,
     }
 
   return ret;
+}
+
+static gboolean
+on_button_release_event (GtkWidget        *widget,
+                         GdkEventButton   *event,
+                         GtkPlacesSidebar *sidebar)
+{
+  GtkWidget *event_src_widget;
+
+  event_src_widget = gtk_get_event_widget ((GdkEvent*) event);
+
+  if ((event_src_widget == GTK_WIDGET (sidebar->list_box)) &&
+      (event->button == 3))
+    {
+      if (sidebar->popover)
+        {
+          gtk_widget_destroy (sidebar->popover);
+        }
+
+      GtkWidget *box;
+      GdkRectangle point_to_rect;
+      GActionGroup *actions;
+      GAction *action;
+
+      sidebar->popover = gtk_popover_new (GTK_WIDGET (sidebar));
+
+      g_signal_connect (sidebar->popover, "destroy", G_CALLBACK (on_row_popover_destroy), sidebar);
+
+      setup_popover_shadowing (sidebar->popover);
+      box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+      g_object_set (box, "margin", 10, NULL);
+      gtk_widget_show (box);
+      gtk_container_add (GTK_CONTAINER (sidebar->popover), box);
+
+      add_button (box, _("_Bookmark Current Location"), "cur_location.bookmark");
+
+      point_to_rect.x = (gint)event->x;
+      point_to_rect.y = (gint)event->y;
+      point_to_rect.width = 1;
+      point_to_rect.height = 1;
+
+      actions = gtk_widget_get_action_group (GTK_WIDGET (sidebar), "cur_location");
+      action = g_action_map_lookup_action (G_ACTION_MAP (actions), "bookmark");
+      g_simple_action_set_enabled (G_SIMPLE_ACTION (action), TRUE);
+
+      gtk_popover_set_pointing_to (GTK_POPOVER (sidebar->popover), &point_to_rect);
+
+      gtk_popover_popup (GTK_POPOVER (sidebar->popover));
+    }
+
+  return FALSE;
 }
 
 static void
@@ -4262,6 +4340,9 @@ gtk_places_sidebar_init (GtkPlacesSidebar *sidebar)
                     G_CALLBACK (shell_shows_desktop_changed), sidebar);
   g_object_get (sidebar->gtk_settings, "gtk-shell-shows-desktop", &show_desktop, NULL);
   sidebar->show_desktop = show_desktop;
+
+  g_signal_connect (sidebar->list_box, "button-release-event",
+                    G_CALLBACK (on_button_release_event), sidebar);
 
   /* Cloud providers */
 #ifdef HAVE_CLOUDPROVIDERS
