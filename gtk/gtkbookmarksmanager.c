@@ -344,9 +344,85 @@ _gtk_bookmarks_manager_insert_bookmark (GtkBookmarksManager *manager,
   GSList *link;
   GtkBookmark *bookmark;
   GFile *bookmarks_file;
+  GMount* mount;
+  char *label = NULL;
+  char *volume_uri = NULL;
+  GFile *volume_location_as_file = NULL;
 
   g_return_val_if_fail (manager != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  mount = g_file_find_enclosing_mount (file, NULL, NULL);
+
+  if (mount)
+    {
+      GFile *root = NULL;
+
+      root = g_mount_get_root (mount);
+
+      if (g_file_equal (file, root))
+        {
+          /* If current location is the root of a mount path, we do not simply
+           * store the path as the bookmarked location. Instead we create a URI
+           * with a custom/artificial protocol that represents the identifier of
+           * the underlying volume. The bookmarked places loading code is
+           * correspondingly adapted to parse the custom URI and identify the
+           * volume and represent it as such in the sidebar.*/
+
+          GVolume *volume;
+
+          volume = g_mount_get_volume (mount);
+
+          if(volume)
+            {
+              char *volume_uuid;
+
+              volume_uuid = g_volume_get_identifier (volume, G_VOLUME_IDENTIFIER_KIND_UUID);
+
+              if(volume_uuid)
+                {
+                  volume_uri = g_strdup_printf ("volume:///%s", volume_uuid);
+
+                  label = g_volume_get_name (volume);
+
+                  g_warn_if_fail (label != NULL);
+
+                  g_free (volume_uuid);
+                }
+
+              g_object_unref (volume);
+            }
+        }
+
+      if (root)
+        g_object_unref (root);
+
+      g_object_unref (mount);
+    }
+
+  if(volume_uri)
+    {
+      /* We need a GFile corresponding to the URI being bookmarked. To work
+       * around this requirement we create a dummy GFile that represents our
+       * custom URI (even though it doesn't refer to a valid file).
+       *
+       * An alternative solution would be to use a URI string to represent a
+       * bookmark entry.*/
+
+      volume_location_as_file = g_file_new_for_uri (volume_uri);
+
+      if (!volume_location_as_file)
+        {
+          g_warning ("Could not create a GFile object to represent a volume");
+
+          if (label)
+            g_free (label);
+
+          return FALSE;
+        }
+
+      file = volume_location_as_file;
+    }
 
   link = find_bookmark_link_for_file (manager->bookmarks, file, NULL);
 
@@ -364,6 +440,12 @@ _gtk_bookmarks_manager_insert_bookmark (GtkBookmarksManager *manager,
 
       g_free (uri);
 
+      if (label)
+        g_free (label);
+
+      if (volume_location_as_file)
+        g_object_unref (volume_location_as_file);
+
       return FALSE;
     }
 
@@ -372,9 +454,18 @@ _gtk_bookmarks_manager_insert_bookmark (GtkBookmarksManager *manager,
 
   manager->bookmarks = g_slist_insert (manager->bookmarks, bookmark, position);
 
+  if (label)
+    _gtk_bookmarks_manager_set_bookmark_label (manager, file, label, NULL);
+
   bookmarks_file = get_bookmarks_file ();
   save_bookmarks (bookmarks_file, manager->bookmarks);
   g_object_unref (bookmarks_file);
+
+  if (label)
+    g_free (label);
+
+  if (volume_location_as_file)
+    g_object_unref (volume_location_as_file);
 
   notify_changed (manager);
 

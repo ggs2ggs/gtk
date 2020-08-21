@@ -494,9 +494,6 @@ add_place (GtkPlacesSidebar            *sidebar,
   check_unmount_and_eject (mount, volume, drive,
                            &show_unmount, &show_eject);
 
-  if (show_unmount || show_eject)
-    g_assert (place_type != PLACES_BOOKMARK);
-
   show_eject_button = (show_unmount || show_eject);
 
   row = g_object_new (GTK_TYPE_SIDEBAR_ROW,
@@ -849,43 +846,105 @@ on_bookmark_query_info_complete (GObject      *source,
   GtkPlacesSidebar *sidebar = clos->sidebar;
   GFile *root = G_FILE (source);
   GError *error = NULL;
-  GFileInfo *info;
-  gchar *bookmark_name;
-  gchar *mount_uri;
-  gchar *tooltip;
-  GIcon *start_icon;
+  GFileInfo *info = NULL;
+  gchar *bookmark_name = NULL;
+  gchar *mount_uri = NULL;
+  gchar *tooltip = NULL;
+  GIcon *start_icon = NULL;
+  GVolume* volume = NULL;
 
   info = g_file_query_info_finish (root, result, &error);
   if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
     goto out;
 
-  bookmark_name = _gtk_bookmarks_manager_get_bookmark_label (sidebar->bookmarks_manager, root);
-  if (bookmark_name == NULL && info != NULL)
-    bookmark_name = g_strdup (g_file_info_get_display_name (info));
-  else if (bookmark_name == NULL)
+  mount_uri = g_file_get_uri (root);
+
+  g_warn_if_fail (mount_uri != NULL);
+
+  if ((mount_uri != NULL) &&
+      (strlen(mount_uri) > 10) &&
+      (strstr(mount_uri, "volume:///") == mount_uri))
     {
-      /* Don't add non-UTF-8 bookmarks */
-      bookmark_name = g_file_get_basename (root);
-      if (!g_utf8_validate (bookmark_name, -1, NULL))
+      const char* volume_uuid = mount_uri + 10;
+
+      volume = g_volume_monitor_get_volume_for_uuid(sidebar->volume_monitor, volume_uuid);
+    }
+
+  if(volume)
+    {
+      GDrive* drive;
+      GMount* mount;
+
+      drive = g_volume_get_drive(volume);
+
+      g_warn_if_fail (drive != NULL);
+
+      mount = g_volume_get_mount (volume);
+
+      if (mount)
+        {
+          GFile *mount_root;
+
+          start_icon = g_mount_get_symbolic_icon (mount);
+          mount_root = g_mount_get_default_location (mount);
+          bookmark_name = g_mount_get_name (mount);
+          tooltip = g_file_get_parse_name (mount_root);
+
+          add_place (sidebar, PLACES_BOOKMARK,
+                     SECTION_BOOKMARKS,
+                     bookmark_name, start_icon, NULL, mount_uri,
+                     drive, volume, mount, NULL, clos->index, tooltip);
+
+          g_object_unref (mount);
+          g_object_unref (mount_root);
+        }
+      else
+        {
+          start_icon = g_volume_get_symbolic_icon (volume);
+          bookmark_name = g_volume_get_name (volume);
+          tooltip = g_strdup_printf (_("Mount and open “%s”"), bookmark_name);
+
+          add_place (sidebar, PLACES_BOOKMARK,
+                     SECTION_BOOKMARKS,
+                     bookmark_name, start_icon, NULL, mount_uri,
+                     drive, volume, NULL, NULL, clos->index, tooltip);
+        }
+
+      if (drive)
+        g_object_unref (drive);
+
+      g_object_unref (volume);
+
+    }
+  else
+    {
+      bookmark_name = _gtk_bookmarks_manager_get_bookmark_label (sidebar->bookmarks_manager, root);
+      if (bookmark_name == NULL && info != NULL)
+          bookmark_name = g_strdup (g_file_info_get_display_name (info));
+      else if (bookmark_name == NULL)
+      {
+        /* Don't add non-UTF-8 bookmarks */
+        bookmark_name = g_file_get_basename (root);
+        if (!g_utf8_validate (bookmark_name, -1, NULL))
         {
           g_free (bookmark_name);
           goto out;
         }
+      }
+
+      if (info)
+        start_icon = g_object_ref (g_file_info_get_symbolic_icon (info));
+      else
+        start_icon = g_themed_icon_new_with_default_fallbacks (clos->is_native ? ICON_NAME_FOLDER : ICON_NAME_FOLDER_NETWORK);
+
+      tooltip = g_file_get_parse_name (root);
+
+      add_place (sidebar, PLACES_BOOKMARK,
+                 SECTION_BOOKMARKS,
+                 bookmark_name, start_icon, NULL, mount_uri,
+                 NULL, NULL, NULL, NULL, clos->index,
+                 tooltip);
     }
-
-  if (info)
-    start_icon = g_object_ref (g_file_info_get_symbolic_icon (info));
-  else
-    start_icon = g_themed_icon_new_with_default_fallbacks (clos->is_native ? ICON_NAME_FOLDER : ICON_NAME_FOLDER_NETWORK);
-
-  mount_uri = g_file_get_uri (root);
-  tooltip = g_file_get_parse_name (root);
-
-  add_place (sidebar, PLACES_BOOKMARK,
-             SECTION_BOOKMARKS,
-             bookmark_name, start_icon, NULL, mount_uri,
-             NULL, NULL, NULL, NULL, clos->index,
-             tooltip);
 
   g_free (mount_uri);
   g_free (tooltip);
@@ -2531,6 +2590,7 @@ open_row (GtkSidebarRow      *row,
   gchar *uri;
   GDrive *drive;
   GVolume *volume;
+  GMount* mount;
   GtkPlacesSidebarPlaceType place_type;
   GtkPlacesSidebar *sidebar;
 
@@ -2540,6 +2600,7 @@ open_row (GtkSidebarRow      *row,
                 "place-type", &place_type,
                 "drive", &drive,
                 "volume", &volume,
+                "mount", &mount,
                 NULL);
 
   if (place_type == PLACES_OTHER_LOCATIONS)
@@ -2550,6 +2611,32 @@ open_row (GtkSidebarRow      *row,
   else if (place_type == PLACES_STARRED_LOCATION)
     {
       emit_show_starred_location (sidebar, open_flags);
+    }
+  else if (place_type == PLACES_BOOKMARK)
+    {
+      if(mount != NULL)
+        {
+          GFile *root;
+          gchar *real_mount_uri;
+
+          root = g_mount_get_default_location (mount);
+          real_mount_uri = g_file_get_uri (root);
+
+          g_warn_if_fail (real_mount_uri != NULL);
+
+          open_uri (sidebar, real_mount_uri, open_flags);
+
+          g_free (real_mount_uri);
+          g_object_unref (root);
+        }
+      else if(volume != NULL)
+        {
+          open_volume (row, volume, open_flags);
+        }
+      else if (uri != NULL)
+      {
+        open_uri (sidebar, uri, open_flags);
+      }
     }
   else if (uri != NULL)
     {
