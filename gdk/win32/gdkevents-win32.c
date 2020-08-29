@@ -3311,11 +3311,15 @@ gdk_event_translate (MSG *msg,
 				 msg->wParam ? "YES" : "NO",
 				 (gint64) msg->lParam));
       if (msg->wParam && GDK_SURFACE_IS_MAPPED (window))
-	{
-	  ensure_stacking_on_activate_app (msg, window);
-	  restack_children (window);
-	}
+        {
+          ensure_stacking_on_activate_app (msg, window);
+          restack_children (window);
+        }
+
+      // Clear graphics tablet state
+      _gdk_input_ignore_core = 0;
       break;
+
     case WM_NCHITTEST:
       /* TODO: pass all messages to DwmDefWindowProc() first! */
       return_val = handle_nchittest (msg->hwnd, window,
