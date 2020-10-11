@@ -1686,11 +1686,6 @@ _gtk_entry_completion_resize_popup (GtkEntryCompletion *completion)
   gtk_widget_get_preferred_size (completion->priv->popup_window,
                                  &popup_req, NULL);
 
-  if (x < area.x)
-    x = area.x;
-  else if (x + popup_req.width > area.x + area.width)
-    x = area.x + area.width - popup_req.width;
-
   if (y + entry_req.height + popup_req.height <= area.y + area.height ||
       y - area.y < (area.y + area.height) - (y + entry_req.height))
     {
