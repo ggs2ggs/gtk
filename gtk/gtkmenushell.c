@@ -2083,6 +2083,7 @@ gtk_menu_shell_tracker_insert_func (GtkMenuTrackerItem *item,
 
       widget = gtk_model_menu_item_new ();
       g_object_bind_property (item, "label", widget, "text", G_BINDING_SYNC_CREATE);
+      g_object_bind_property (item, "sensitive", widget, "sensitive", G_BINDING_SYNC_CREATE);
 
       submenu = GTK_MENU_SHELL (gtk_menu_new ());
 
