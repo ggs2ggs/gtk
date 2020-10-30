@@ -3763,7 +3763,7 @@ gtk_tree_model_filter_set_root (GtkTreeModelFilter *filter,
  * Creates a new #GtkTreeModel, with @child_model as the child_model
  * and @root as the virtual root.
  *
- * Returns: (transfer full): A new #GtkTreeModelFilter.
+ * Returns: (transfer full) (type Gtk.TreeModelFilter): A new #GtkTreeModelFilter.
  */
 GtkTreeModel *
 gtk_tree_model_filter_new (GtkTreeModel *child_model,
