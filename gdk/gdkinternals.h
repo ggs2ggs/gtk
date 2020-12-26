@@ -175,6 +175,11 @@ struct _GdkEventPrivate
   guint      flags;
   GdkScreen *screen;
   gpointer   windowing_data;
+
+#ifdef GDK_WINDOWING_WIN32
+  gunichar2 *translation;
+  guint      translation_len;
+#endif
 };
 
 /* Tracks information about the pointer grab on this display */
@@ -301,6 +306,10 @@ GdkEvent* _gdk_event_unqueue (GdkDisplay *display);
 
 void _gdk_event_filter_unref        (GdkWindow      *window,
 				     GdkEventFilter *filter);
+
+
+GDKVAR /* IME module needs this exported */
+gboolean gdk_event_is_allocated      (const GdkEvent *event);
 
 GList* _gdk_event_queue_find_first   (GdkDisplay *display);
 void   _gdk_event_queue_remove_link  (GdkDisplay *display,
