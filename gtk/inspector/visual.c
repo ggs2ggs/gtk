@@ -78,6 +78,7 @@ struct _GtkInspectorVisual
   GtkWidget *animation_switch;
   GtkWidget *font_scale_entry;
   GtkAdjustment *font_scale_adjustment;
+  GtkAdjustment *compositing_gamma_adjustment;
   GtkAdjustment *scale_adjustment;
   GtkAdjustment *slowdown_adjustment;
   GtkWidget *slowdown_entry;
@@ -185,6 +186,31 @@ get_dpi_ratio (GtkInspectorVisual *vis)
 
   return 96.0 * 1024.0;
 }
+
+static float
+get_compositing_gamma (GtkInspectorVisual *vis)
+{
+  return gdk_display_get_compositing_gamma(vis->display);
+}
+
+static void
+update_compositing_gamma (GtkInspectorVisual *vis,
+                          float               compositing_gamma)
+{
+  gtk_adjustment_set_value (vis->compositing_gamma_adjustment, compositing_gamma);
+  gdk_display_set_compositing_gamma(vis->display, compositing_gamma);
+}
+
+static void
+compositing_gamma_adjustment_changed (GtkAdjustment      *adjustment,
+                                      GtkInspectorVisual *vis)
+{
+  float compositing_gamma;
+
+  compositing_gamma = gtk_adjustment_get_value (adjustment);
+  update_compositing_gamma (vis, compositing_gamma);
+}
+
 
 static double
 get_font_scale (GtkInspectorVisual *vis)
@@ -796,6 +822,17 @@ init_font_scale (GtkInspectorVisual *vis)
                     G_CALLBACK (font_scale_entry_activated), vis);
 }
 
+static void
+init_compositing_gamma (GtkInspectorVisual *vis)
+{
+  float compositing_gamma;
+
+  compositing_gamma = get_compositing_gamma (vis);
+  update_compositing_gamma (vis, compositing_gamma);
+  g_signal_connect (vis->compositing_gamma_adjustment, "value-changed",
+                    G_CALLBACK (compositing_gamma_adjustment_changed), vis);
+}
+
 #if defined (GDK_WINDOWING_X11)
 static void
 scale_changed (GtkAdjustment *adjustment, GtkInspectorVisual *vis)
@@ -1140,6 +1177,7 @@ gtk_inspector_visual_class_init (GtkInspectorVisualClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GtkInspectorVisual, software_gl_switch);
   gtk_widget_class_bind_template_child (widget_class, GtkInspectorVisual, font_scale_entry);
   gtk_widget_class_bind_template_child (widget_class, GtkInspectorVisual, font_scale_adjustment);
+  gtk_widget_class_bind_template_child (widget_class, GtkInspectorVisual, compositing_gamma_adjustment);
   gtk_widget_class_bind_template_child (widget_class, GtkInspectorVisual, fps_switch);
   gtk_widget_class_bind_template_child (widget_class, GtkInspectorVisual, updates_switch);
   gtk_widget_class_bind_template_child (widget_class, GtkInspectorVisual, fallback_switch);
@@ -1173,6 +1211,7 @@ gtk_inspector_visual_set_display  (GtkInspectorVisual *vis,
   init_cursor_size (vis);
   init_font (vis);
   init_font_scale (vis);
+  init_compositing_gamma (vis);
   init_scale (vis);
   init_animation (vis);
   init_slowdown (vis);
