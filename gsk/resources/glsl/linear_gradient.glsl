@@ -65,6 +65,10 @@ void main() {
       color = mix(color_stops[i - 1], color_stops[i], clamp(o, 0.0, 1.0));
     }
   }
+  
+  color = gsk_unpremultiply(color);
+  color = gsk_srgb_to_linear(color);
+  color = gsk_premultiply(color);
 
   gskSetOutputColor(color * u_alpha);
 }

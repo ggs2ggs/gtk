@@ -42,6 +42,7 @@ typedef enum
   OP_CHANGE_GL_SHADER_ARGS             = 28,
   OP_CHANGE_EXTRA_SOURCE_TEXTURE       = 29,
   OP_CHANGE_CONIC_GRADIENT             = 30,
+  OP_CHANGE_COMPOSITING_GAMMA          = 31,
   OP_LAST
 } OpKind;
 
@@ -91,6 +92,11 @@ typedef struct
 {
   float opacity;
 } OpOpacity;
+
+typedef struct
+{
+  float compositing_gamma;
+} OpCompositingGamma;
 
 typedef struct
 {

@@ -65,5 +65,9 @@ void main() {
     }
   }
 
+  color = gsk_unpremultiply(color);
+  color = gsk_srgb_to_linear(color);
+  color = gsk_premultiply(color);
+  
   gskSetOutputColor(color * u_alpha);
 }

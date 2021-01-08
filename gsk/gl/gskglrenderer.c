@@ -529,6 +529,7 @@ struct _GskGLRenderer
   GskRenderer parent_instance;
 
   int scale_factor;
+  float compositing_gamma;
 
   GdkGLContext *gl_context;
   GskGLDriver *gl_driver;
@@ -672,7 +673,7 @@ render_fallback_node (GskGLRenderer   *self,
 
   if (cached_id != 0)
     {
-      ops_set_program (builder, &self->programs->blit_program);
+      ops_set_program (builder, &self->programs->blit_srgb_program);
       ops_set_texture (builder, cached_id);
       load_offscreen_vertex_data (ops_draw (builder, NULL), node, builder);
       return;
@@ -756,7 +757,7 @@ render_fallback_node (GskGLRenderer   *self,
 
   gsk_gl_driver_set_texture_for_key (self->gl_driver, &key, texture_id);
 
-  ops_set_program (builder, &self->programs->blit_program);
+  ops_set_program (builder, &self->programs->blit_srgb_program);
   ops_set_texture (builder, texture_id);
   load_offscreen_vertex_data (ops_draw (builder, NULL), node, builder);
 }
@@ -782,7 +783,7 @@ render_text_node (GskGLRenderer   *self,
   /* If the font has color glyphs, we don't need to recolor anything */
   if (!force_color && gsk_text_node_has_color_glyphs (node))
     {
-      ops_set_program (builder, &self->programs->blit_program);
+      ops_set_program (builder, &self->programs->blit_srgb_program);
     }
   else
     {
@@ -1056,7 +1057,7 @@ render_texture_node (GskGLRenderer       *self,
 
       gsk_gl_driver_slice_texture (self->gl_driver, texture, &slices, &n_slices);
 
-      ops_set_program (builder, &self->programs->blit_program);
+      ops_set_program (builder, &self->programs->blit_srgb_program);
       for (i = 0; i < n_slices; i ++)
         {
           const TextureSlice *slice = &slices[i];
@@ -1085,7 +1086,7 @@ render_texture_node (GskGLRenderer       *self,
 
       upload_texture (self, texture, &r);
 
-      ops_set_program (builder, &self->programs->blit_program);
+      ops_set_program (builder, &self->programs->blit_srgb_program);
       ops_set_texture (builder, r.texture_id);
 
       load_vertex_data_with_region (ops_draw (builder, NULL),
@@ -1151,6 +1152,7 @@ compile_glshader (GskGLRenderer  *self,
   INIT_COMMON_UNIFORM_LOCATION (program, viewport);
   INIT_COMMON_UNIFORM_LOCATION (program, projection);
   INIT_COMMON_UNIFORM_LOCATION (program, modelview);
+  INIT_COMMON_UNIFORM_LOCATION (program, compositing_gamma);
   program->glshader.size_location = glGetUniformLocation(program->id, "u_size");
   program->glshader.texture_locations[0] = glGetUniformLocation(program->id, "u_texture1");
   program->glshader.texture_locations[1] = glGetUniformLocation(program->id, "u_texture2");
@@ -2000,7 +2002,7 @@ render_blur_node (GskGLRenderer   *self,
   g_assert (blurred_region.texture_id != 0);
 
   /* Draw the result */
-  ops_set_program (builder, &self->programs->blit_program);
+  ops_set_program (builder, &self->programs->blit_srgb_program);
   ops_set_texture (builder, blurred_region.texture_id);
   fill_vertex_data (ops_draw (builder, NULL), min_x, min_y, max_x, max_y);
 
@@ -2161,7 +2163,7 @@ render_inset_shadow_node (GskGLRenderer   *self,
         ops_push_clip (builder, &node_clip);
       }
 
-    ops_set_program (builder, &self->programs->blit_program);
+    ops_set_program (builder, &self->programs->blit_srgb_program);
     ops_set_texture (builder, blurred_texture_id);
 
     load_vertex_data_with_region (ops_draw (builder, NULL),
@@ -2914,6 +2916,14 @@ apply_opacity_op (const Program   *program,
 }
 
 static inline void
+apply_compositing_gamma_op (const Program            *program,
+                            const OpCompositingGamma *op)
+{
+  OP_PRINT (" -> Compositing Gamma %f", op->compositing_gamma);
+  glUniform1f (program->compositing_gamma_location, op->compositing_gamma);
+}
+
+static inline void
 apply_source_texture_op (const Program   *program,
                          const OpTexture *op)
 {
@@ -3332,6 +3342,8 @@ gsk_gl_renderer_create_programs (GskGLRenderer  *self,
     { "/org/gtk/libgsk/glsl/outset_shadow.glsl",             "outset shadow" },
     { "/org/gtk/libgsk/glsl/repeat.glsl",                    "repeat" },
     { "/org/gtk/libgsk/glsl/unblurred_outset_shadow.glsl",   "unblurred_outset shadow" },
+    { "/org/gtk/libgsk/glsl/postprocessing.glsl",            "postprocessing" },
+    { "/org/gtk/libgsk/glsl/blit_srgb.glsl",                 "blit srgb" },
   };
 
   gsk_gl_shader_builder_init (&shader_builder,
@@ -3366,6 +3378,7 @@ gsk_gl_renderer_create_programs (GskGLRenderer  *self,
       INIT_COMMON_UNIFORM_LOCATION (prog, viewport);
       INIT_COMMON_UNIFORM_LOCATION (prog, projection);
       INIT_COMMON_UNIFORM_LOCATION (prog, modelview);
+      INIT_COMMON_UNIFORM_LOCATION (prog, compositing_gamma);
     }
   /* color */
   INIT_PROGRAM_UNIFORM_LOCATION (color, color);
@@ -3443,6 +3456,7 @@ gsk_gl_renderer_create_programs (GskGLRenderer  *self,
     {
       glUseProgram(programs->programs[i].id);
       glUniform1f (programs->programs[i].alpha_location, 1.0);
+      glUniform1f (programs->programs[i].compositing_gamma_location, 1.0);
     }
 
 out:
@@ -4073,6 +4087,10 @@ gsk_gl_renderer_render_ops (GskGLRenderer *self)
           apply_opacity_op (program, ptr);
           break;
 
+        case OP_CHANGE_COMPOSITING_GAMMA:
+          apply_compositing_gamma_op (program, ptr);
+          break;
+
         case OP_CHANGE_COLOR_MATRIX:
           apply_color_matrix_op (program, ptr);
           break;
@@ -4237,6 +4255,7 @@ gsk_gl_renderer_do_render (GskRenderer           *renderer,
   ops_set_projection (&self->op_builder, &projection);
   ops_set_viewport (&self->op_builder, viewport);
   ops_set_modelview (&self->op_builder, gsk_transform_scale (NULL, scale_factor, scale_factor));
+  ops_set_compositing_gamma(&self->op_builder, self->compositing_gamma);
 
   /* Initial clip is self->render_region! */
   if (self->render_region != NULL)
@@ -4331,6 +4350,7 @@ gsk_gl_renderer_render_texture (GskRenderer           *renderer,
 {
   GskGLRenderer *self = GSK_GL_RENDERER (renderer);
   GdkTexture *texture;
+  GdkSurface *surface;
   int width, height;
   guint texture_id;
   guint fbo_id;
@@ -4346,7 +4366,9 @@ gsk_gl_renderer_render_texture (GskRenderer           *renderer,
   width = ceilf (viewport->size.width);
   height = ceilf (viewport->size.height);
 
-  self->scale_factor = gdk_surface_get_scale_factor (gsk_renderer_get_surface (renderer));
+  surface = gsk_renderer_get_surface (renderer);
+  self->scale_factor = gdk_surface_get_scale_factor (surface);
+  self->compositing_gamma = gdk_display_get_compositing_gamma(gdk_surface_get_display (surface));
 
   /* Prepare our framebuffer */
   gsk_gl_driver_begin_frame (self->gl_driver);
@@ -4366,9 +4388,9 @@ gsk_gl_renderer_render_texture (GskRenderer           *renderer,
                                         texture_id);
 
   if (gdk_gl_context_get_use_es (self->gl_context))
-    glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA16, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
   else
-    glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA16, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
 
   glGenFramebuffers (1, &fbo_id);
   glBindFramebuffer (GL_FRAMEBUFFER, fbo_id);
@@ -4414,7 +4436,8 @@ gsk_gl_renderer_render_texture (GskRenderer           *renderer,
 
     ops_set_render_target (&self->op_builder, final_fbo_id);
     ops_push_clip (&self->op_builder, &GSK_ROUNDED_RECT_INIT (0, 0, width, height));
-    ops_set_program (&self->op_builder, &self->programs->blit_program);
+    ops_set_compositing_gamma(&self->op_builder, self->compositing_gamma);
+    ops_set_program (&self->op_builder, &self->programs->postprocessing_program);
 
     ops_begin (&self->op_builder, OP_CLEAR);
     ops_set_texture (&self->op_builder, texture_id);
@@ -4459,12 +4482,16 @@ gsk_gl_renderer_render (GskRenderer          *renderer,
   const cairo_region_t *damage;
   GdkRectangle whole_surface;
   GdkSurface *surface;
+  int width, height;
+  guint texture_id;
+  guint fbo_id;
 
   if (self->gl_context == NULL)
     return;
 
   surface = gsk_renderer_get_surface (renderer);
   self->scale_factor = gdk_surface_get_scale_factor (surface);
+  self->compositing_gamma = gdk_display_get_compositing_gamma(gdk_surface_get_display (surface));
 
   gdk_gl_context_make_current (self->gl_context);
   gdk_gl_context_push_debug_group_printf (self->gl_context,
@@ -4479,23 +4506,24 @@ gsk_gl_renderer_render (GskRenderer          *renderer,
   gdk_draw_context_begin_frame (GDK_DRAW_CONTEXT (self->gl_context),
                                 update_area);
 
-  damage = gdk_draw_context_get_frame_region (GDK_DRAW_CONTEXT (self->gl_context));
+  // damage = gdk_draw_context_get_frame_region (GDK_DRAW_CONTEXT (self->gl_context));
+  
+  // if (cairo_region_contains_rectangle (damage, &whole_surface) == CAIRO_REGION_OVERLAP_IN)
+  //   {
+  //     self->render_region = NULL;
+  //   }
+  // else
+  //   {
+  //     GdkRectangle extents;
 
-  if (cairo_region_contains_rectangle (damage, &whole_surface) == CAIRO_REGION_OVERLAP_IN)
-    {
-      self->render_region = NULL;
-    }
-  else
-    {
-      GdkRectangle extents;
+  //     cairo_region_get_extents (damage, &extents);
 
-      cairo_region_get_extents (damage, &extents);
-
-      if (gdk_rectangle_equal (&extents, &whole_surface))
-        self->render_region = NULL;
-      else
-        self->render_region = cairo_region_create_rectangle (&extents);
-    }
+  //     if (gdk_rectangle_equal (&extents, &whole_surface))
+  //       self->render_region = NULL;
+  //     else
+  //       self->render_region = cairo_region_create_rectangle (&extents);
+  //   }
+  self->render_region = NULL;
 
   gdk_gl_context_make_current (self->gl_context);
 
@@ -4503,10 +4531,83 @@ gsk_gl_renderer_render (GskRenderer          *renderer,
   viewport.origin.y = 0;
   viewport.size.width = whole_surface.width;
   viewport.size.height = whole_surface.height;
+  width = ceilf (viewport.size.width);
+  height = ceilf (viewport.size.height);
 
   gsk_gl_driver_begin_frame (self->gl_driver);
-  gsk_gl_renderer_do_render (renderer, root, &viewport, 0, self->scale_factor);
+
+  /* Prepare temporary framebuffer */
+  glGenTextures (1, &texture_id);
+  glBindTexture (GL_TEXTURE_2D, texture_id);
+
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+  if (gdk_gl_context_has_debug (self->gl_context))
+    gdk_gl_context_label_object_printf (self->gl_context, GL_TEXTURE, texture_id,
+                                        "Texture %s<%p> %d",
+                                        g_type_name_from_instance ((GTypeInstance *) root),
+                                        root,
+                                        texture_id);
+
+  if (gdk_gl_context_get_use_es (self->gl_context))
+    glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA16, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+  else
+    glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA16, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
+
+  glGenFramebuffers (1, &fbo_id);
+  glBindFramebuffer (GL_FRAMEBUFFER, fbo_id);
+
+  if (gdk_gl_context_has_debug (self->gl_context))
+    gdk_gl_context_label_object_printf (self->gl_context, GL_FRAMEBUFFER, fbo_id,
+                                        "FB %s<%p> %d",
+                                        g_type_name_from_instance ((GTypeInstance *) root),
+                                        root,
+                                        fbo_id);
+  glFramebufferTexture2D (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_id, 0);
+
+  gsk_gl_renderer_do_render (renderer, root, &viewport, fbo_id, 1);
+
+  glDeleteFramebuffers (1, &fbo_id);
+
+  /* Apply postprocessing shader to temporary framebuffer texture */
+  {
+    graphene_matrix_t projection;
+
+    ops_reset (&self->op_builder);
+
+    glBindFramebuffer (GL_FRAMEBUFFER, 0);
+
+    g_assert_cmphex (glCheckFramebufferStatus (GL_FRAMEBUFFER), ==, GL_FRAMEBUFFER_COMPLETE);
+
+    ops_set_render_target (&self->op_builder, 0);
+    ops_set_compositing_gamma(&self->op_builder, self->compositing_gamma);
+    ops_set_program (&self->op_builder, &self->programs->postprocessing_program);
+    ops_push_clip (&self->op_builder, &GSK_ROUNDED_RECT_INIT (0, 0, width, height));
+
+    ops_begin (&self->op_builder, OP_CLEAR);
+
+    ops_set_texture (&self->op_builder, texture_id);
+    init_projection_matrix (&projection, &viewport);
+    ops_set_projection (&self->op_builder, &projection);
+    ops_set_viewport (&self->op_builder, &viewport);
+    ops_set_modelview (&self->op_builder, NULL);
+
+    fill_vertex_data (ops_draw (&self->op_builder, NULL),
+                      0, 0, width, height);
+
+    glDisable(GL_BLEND);
+    gsk_gl_renderer_render_ops (self);
+
+    ops_pop_modelview (&self->op_builder);
+    ops_pop_clip (&self->op_builder);
+    ops_finish (&self->op_builder);
+    glDeleteTextures (1, &texture_id);
+  }
+
   gsk_gl_driver_end_frame (self->gl_driver);
+
+
 
   gsk_gl_renderer_clear_tree (self);
 

@@ -475,6 +475,21 @@ ops_set_opacity (RenderOpBuilder *builder,
   return prev_opacity;
 }
 
+float
+ops_set_compositing_gamma (RenderOpBuilder *builder,
+                           float            compositing_gamma)
+{
+  float prev_compositing_gamma;
+
+  if (builder->current_compositing_gamma == compositing_gamma)
+    return compositing_gamma;
+
+  prev_compositing_gamma = builder->current_compositing_gamma;
+  builder->current_compositing_gamma = compositing_gamma;
+
+  return prev_compositing_gamma;
+}
+
 void
 ops_set_color (RenderOpBuilder *builder,
                const GdkRGBA   *color)
@@ -672,6 +687,15 @@ ops_draw (RenderOpBuilder     *builder,
       opo = ops_begin (builder, OP_CHANGE_OPACITY);
       opo->opacity = builder->current_opacity;
       program_state->opacity = builder->current_opacity;
+    }
+
+  if (program_state->compositing_gamma != builder->current_compositing_gamma)
+    {
+      OpCompositingGamma *opo;
+
+      opo = ops_begin (builder, OP_CHANGE_COMPOSITING_GAMMA);
+      opo->compositing_gamma = builder->current_compositing_gamma;
+      program_state->compositing_gamma = builder->current_compositing_gamma;
     }
 
   /* TODO: Did the additions above break the following optimization? */

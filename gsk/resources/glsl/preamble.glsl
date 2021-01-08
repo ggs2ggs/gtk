@@ -1,3 +1,5 @@
+uniform float u_compositing_gamma;
+
 #ifndef GSK_LEGACY
 precision highp float;
 #endif
@@ -38,4 +40,25 @@ gsk_create_rect(vec4[3] data)
 
 vec4 gsk_premultiply(vec4 c) {
   return vec4(c.rgb * c.a, c.a);
+}
+
+vec4 gsk_unpremultiply(vec4 c) {
+  if (c.a != 0)
+    return vec4(c.rgb / c.a, c.a);
+  else
+    return c;
+}
+
+// Transform sRGB to linear RGB 
+vec4 gsk_srgb_to_linear(vec4 srgb)
+{
+  vec3 linear_rgb = pow(srgb.rgb, vec3(u_compositing_gamma));
+  return vec4(linear_rgb, srgb.a);
+}
+
+// Transform linear RGB to sRGB
+vec4 gsk_linear_to_srgb(vec4 linear_rgba)
+{
+  vec3 srgb = pow(linear_rgba.rgb , vec3(1/u_compositing_gamma));
+  return vec4(srgb, linear_rgba.a);
 }

@@ -13,7 +13,7 @@
 #include "opbuffer.h"
 
 #define GL_N_VERTICES 6
-#define GL_N_PROGRAMS 15
+#define GL_N_PROGRAMS 17
 #define GL_MAX_GRADIENT_STOPS 6
 
 typedef struct
@@ -39,6 +39,7 @@ typedef struct
   int source_texture;
   graphene_rect_t viewport;
   float opacity;
+  float compositing_gamma;
   /* Per-program state */
   union {
     GdkRGBA color;
@@ -100,6 +101,7 @@ struct _Program
   int position_location;
   int uv_location;
   int alpha_location;
+  int compositing_gamma_location;
   int viewport_location;
   int projection_location;
   int modelview_location;
@@ -203,6 +205,8 @@ typedef struct {
       Program outset_shadow_program;
       Program repeat_program;
       Program unblurred_outset_shadow_program;
+      Program postprocessing_program;
+      Program blit_srgb_program;
     };
   };
   GHashTable *custom_programs; /* GskGLShader -> Program* */
@@ -218,6 +222,7 @@ typedef struct
   graphene_matrix_t current_projection;
   graphene_rect_t current_viewport;
   float current_opacity;
+  float current_compositing_gamma;
   float dx, dy;
   float scale_x, scale_y;
 
@@ -284,6 +289,8 @@ int               ops_set_render_target  (RenderOpBuilder         *builder,
 
 float             ops_set_opacity        (RenderOpBuilder         *builder,
                                           float                    opacity);
+float             ops_set_compositing_gamma (RenderOpBuilder         *builder,
+                                            float                     compositing_gamma);
 void              ops_set_color          (RenderOpBuilder         *builder,
                                           const GdkRGBA           *color);
 

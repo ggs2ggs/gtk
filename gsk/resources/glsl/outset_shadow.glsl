@@ -10,7 +10,7 @@ void main() {
 
   vUv = vec2(aUv.x, aUv.y);
 
-  final_color = gsk_premultiply(u_color) * u_alpha;
+  final_color = gsk_premultiply(u_color * u_alpha);
 
   GskRoundedRect outline = gsk_create_rect(u_outline_rect);
   gsk_rounded_rect_transform(outline, u_modelview);
@@ -27,7 +27,10 @@ void main() {
   float alpha = GskTexture(u_source, vUv).a;
   alpha *= (1.0 -  clamp(gsk_rounded_rect_coverage(gsk_decode_rect(transformed_outline), frag), 0.0, 1.0));
 
-  vec4 color = final_color * alpha;
-
-  gskSetOutputColor(color);
+  vec4 color = gsk_unpremultiply(final_color);
+  color = gsk_srgb_to_linear(color);
+  color = gsk_premultiply(color);
+  
+  gskSetOutputColor(color * alpha);
 }
+

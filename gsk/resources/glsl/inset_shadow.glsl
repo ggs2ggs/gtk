@@ -37,5 +37,9 @@ void main() {
                       gsk_rounded_rect_coverage(gsk_decode_rect(transformed_inside_outline), frag),
                       0.0, 1.0);
 
-  gskSetOutputColor(final_color * alpha);
+  vec4 color = gsk_unpremultiply(final_color);
+  color = gsk_srgb_to_linear(color);
+  color = gsk_premultiply(color);
+
+  gskSetOutputColor(color * alpha);
 }

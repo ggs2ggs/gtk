@@ -11,7 +11,8 @@ _OUT_ _GSK_ROUNDED_RECT_UNIFORM_ transformed_inside_outline;
 void main() {
   gl_Position = u_projection * u_modelview * vec4(aPosition, 0.0, 1.0);
 
-  final_color = gsk_premultiply(u_color) * u_alpha;
+  
+  final_color = gsk_premultiply(u_color * u_alpha);
 
   GskRoundedRect inside = gsk_create_rect(u_outline_rect);
   GskRoundedRect outside = gsk_rounded_rect_shrink(inside, vec4(- u_spread));
@@ -37,6 +38,10 @@ void main() {
                       gsk_rounded_rect_coverage(gsk_decode_rect(transformed_inside_outline), frag),
                       0.0, 1.0);
 
-  gskSetOutputColor(final_color * alpha);
+  vec4 color = gsk_unpremultiply(final_color);
+  color = gsk_srgb_to_linear(color);
+  color = gsk_premultiply(color);
+
+  gskSetOutputColor(color * alpha);
 }
 
