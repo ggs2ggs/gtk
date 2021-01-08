@@ -69,6 +69,7 @@ enum
   PROP_COMPOSITED,
   PROP_RGBA,
   PROP_INPUT_SHAPES,
+  PROP_COMPOSITING_GAMMA,
   LAST_PROP
 };
 
@@ -109,6 +110,10 @@ gdk_display_get_property (GObject    *object,
 
     case PROP_RGBA:
       g_value_set_boolean (value, gdk_display_is_rgba (display));
+      break;
+
+    case PROP_COMPOSITING_GAMMA:
+      g_value_set_float (value, gdk_display_get_compositing_gamma (display));
       break;
 
     case PROP_INPUT_SHAPES:
@@ -179,6 +184,21 @@ gdk_display_class_init (GdkDisplayClass *class)
                           P_("RGBA"),
                           TRUE,
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  /**
+   * GdkDisplay:compositing-gamma:
+   *
+   * Specifies the compositing gamma of the display. See
+   * gdk_display_get_compositing_gamma() for details.
+   */
+  props[PROP_COMPOSITING_GAMMA] =
+    g_param_spec_float ("compositing-gamma",
+                        P_("Compositing gamma"),
+                        P_("Compositing gamma"),
+                        1.0,
+                        2.2,
+                        2.2,
+                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   /**
    * GdkDisplay:input-shapes:
@@ -323,6 +343,7 @@ gdk_display_init (GdkDisplay *display)
   display->composited = TRUE;
   display->rgba = TRUE;
   display->input_shapes = TRUE;
+  display->compositing_gamma = 1.8;
 }
 
 static void
@@ -1271,6 +1292,28 @@ gdk_display_set_rgba (GdkDisplay *display,
   display->rgba = rgba;
 
   g_object_notify_by_pspec (G_OBJECT (display), props[PROP_RGBA]);
+}
+
+gfloat
+gdk_display_get_compositing_gamma (GdkDisplay *display)
+{
+  g_return_val_if_fail (GDK_IS_DISPLAY (display), 1.0);
+
+  return display->compositing_gamma;
+}
+
+void
+gdk_display_set_compositing_gamma (GdkDisplay *display,
+                                   gfloat     compositing_gamma)
+{
+  g_return_if_fail (GDK_IS_DISPLAY (display));
+
+  if (display->compositing_gamma == compositing_gamma)
+    return;
+
+  display->compositing_gamma = compositing_gamma;
+
+  g_object_notify_by_pspec (G_OBJECT (display), props[PROP_COMPOSITING_GAMMA]);
 }
 
 static void

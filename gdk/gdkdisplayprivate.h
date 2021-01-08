@@ -103,6 +103,7 @@ struct _GdkDisplay
   guint vulkan_refcount;
 #endif /* GDK_RENDERING_VULKAN */
   guint rgba : 1;
+  gfloat compositing_gamma;
   guint composited : 1;
   guint input_shapes : 1;
 
@@ -216,6 +217,8 @@ gboolean            gdk_display_make_gl_context_current  (GdkDisplay        *dis
 
 void                gdk_display_set_rgba              (GdkDisplay       *display,
                                                        gboolean          rgba);
+void                gdk_display_set_compositing_gamma (GdkDisplay       *display,
+                                                       gfloat            compositing_gamma);
 void                gdk_display_set_composited        (GdkDisplay       *display,
                                                        gboolean          composited);
 void                gdk_display_set_input_shapes      (GdkDisplay       *display,
