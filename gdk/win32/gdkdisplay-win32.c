@@ -916,10 +916,10 @@ _gdk_win32_enable_hidpi (GdkWin32Display *display)
           /* then make the GDK-using app DPI-aware */
           if (display->shcore_funcs.setDpiAwareFunc != NULL)
             {
-              switch (display->shcore_funcs.setDpiAwareFunc (PROCESS_SYSTEM_DPI_AWARE))
+              switch (display->shcore_funcs.setDpiAwareFunc (PROCESS_PER_MONITOR_DPI_AWARE))
                 {
                   case S_OK:
-                    display->dpi_aware_type = PROCESS_SYSTEM_DPI_AWARE;
+                    display->dpi_aware_type = PROCESS_PER_MONITOR_DPI_AWARE;
                     status = DPI_STATUS_SUCCESS;
                     break;
                   case E_ACCESSDENIED:
@@ -1000,10 +1000,10 @@ _gdk_win32_enable_hidpi (GdkWin32Display *display)
               /* This most probably means DPI awareness is set through
                  the manifest, or a DPI compatibility setting is used. */
               display->dpi_aware_type = display->user32_dpi_funcs.isDpiAwareFunc () ?
-                                        PROCESS_SYSTEM_DPI_AWARE :
+                                        PROCESS_PER_MONITOR_DPI_AWARE :
                                         PROCESS_DPI_UNAWARE;
 
-              if (display->dpi_aware_type == PROCESS_SYSTEM_DPI_AWARE)
+              if (display->dpi_aware_type != PROCESS_DPI_UNAWARE)
                 status = DPI_STATUS_SUCCESS;
               else
                 status = DPI_STATUS_DISABLED;
