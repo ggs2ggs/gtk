@@ -878,6 +878,8 @@ show_window_internal (GdkSurface *window,
 	  window_rect.bottom = window->height * surface->surface_scale;
 	  _gdk_win32_adjust_client_rect (window, &window_rect);
 
+          GetWindowRect (GDK_SURFACE_HWND (window), &window_rect);
+
 	  x = center_on_rect.left + ((center_on_rect.right - center_on_rect.left) - (window_rect.right - window_rect.left)) / 2;
 	  y = center_on_rect.top + ((center_on_rect.bottom - center_on_rect.top) - (window_rect.bottom - window_rect.top)) / 2;
 	}
