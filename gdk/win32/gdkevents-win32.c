@@ -2572,6 +2572,16 @@ gdk_event_translate (MSG  *msg,
 			 (gpointer) msg->wParam,
 			 GET_X_LPARAM (msg->lParam), GET_Y_LPARAM (msg->lParam)));
 
+      /* We may get a stray WM_MOUSEMOVE while dragging a window around.
+       * Processing such message will break the mouse capture and cancel the
+       * drag operation, which we don't want to do. Ignore the message in
+       * such case (GTK shouldn't interfere in window resizing, let the
+       * OS do everything and pretend that the mouse is owned completely by
+       * the OS).
+       */
+      if (_modal_operation_in_progress & GDK_WIN32_MODAL_OP_SIZEMOVE_MASK)
+        break;
+
       new_window = window;
 
       if (pointer_grab != NULL)
