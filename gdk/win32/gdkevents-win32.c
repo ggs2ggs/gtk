@@ -3609,6 +3609,10 @@ gdk_event_translate (MSG  *msg,
 
             if (_gdk_win32_window_lacks_wm_decorations (window))
               {
+                nr->left = nr->left + 1;
+                nr->right = nr->right - 1;
+                nr->bottom = nr->bottom - 1;
+                /* but not nr->top = nr->top + 1; */
                 *ret_valp = 0;
                 return_val = TRUE;
               }
