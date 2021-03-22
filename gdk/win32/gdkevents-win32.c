@@ -2022,17 +2022,8 @@ gdk_event_translate (MSG  *msg,
 	}
       else if (msg->message == WM_CREATE)
 	{
-          RECT rcClient;
-          GetWindowRect (msg->hwnd, &rcClient);
-
 	  window = (UNALIGNED GdkWindow*) (((LPCREATESTRUCTW) msg->lParam)->lpCreateParams);
 	  GDK_WINDOW_HWND (window) = msg->hwnd;
-
-          SetWindowPos (msg->hwnd,
-                        NULL,
-                        rcClient.left, rcClient.top,
-                        rcClient.right - rcClient.left, rcClient.bottom - rcClient.top,
-                        SWP_FRAMECHANGED);
 	}
       else
 	{

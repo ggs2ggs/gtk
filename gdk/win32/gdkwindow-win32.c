@@ -764,8 +764,16 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
 	  API_CALL (SetWindowPos, (GDK_WINDOW_HWND (window),
 				   SWP_NOZORDER_SPECIFIED,
 				   real_x, real_y, 0, 0,
-				   SWP_NOACTIVATE | SWP_NOSIZE | SWP_NOZORDER));
+				   SWP_NOACTIVATE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED));
 	}
+      /* Or just trigger a WM_NCCALCSIZE */
+      else
+        {
+	  API_CALL (SetWindowPos, (GDK_WINDOW_HWND (window),
+				   SWP_NOZORDER_SPECIFIED,
+				   rect.left, rect.top, 0, 0,
+				   SWP_NOACTIVATE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED));
+        }
     }
 
   g_object_ref (window);
