@@ -41,6 +41,7 @@
 #include "gdkwin32window.h"
 #include "gdkglcontext-win32.h"
 #include "gdkdisplay-win32.h"
+#include "gdkframeclockprivate.h"
 
 #include <cairo-win32.h>
 #include <dwmapi.h>
@@ -269,6 +270,39 @@ gdk_win32_window_apply_queued_move_resize (GdkWindow *window,
 
   /* Don't move iconic windows */
   /* TODO: use SetWindowPlacement() to change non-minimized window position */
+}
+
+static void
+gdk_win32_impl_frame_clock_after_paint (GdkFrameClock *clock,
+                                        GdkWindow     *window)
+{
+  DWM_TIMING_INFO timing_info;
+  LARGE_INTEGER tick_frequency;
+  GdkFrameTimings *timings;
+
+  timings = gdk_frame_clock_get_timings (clock, gdk_frame_clock_get_frame_counter (clock));
+
+  if (timings)
+    {
+      timings->refresh_interval = 16667; /* default to 1/60th of a second */
+      timings->presentation_time = 0;
+
+      if (QueryPerformanceFrequency (&tick_frequency))
+        {
+          HRESULT hr;
+
+          timing_info.cbSize = sizeof (timing_info);
+          hr = DwmGetCompositionTimingInfo (NULL, &timing_info);
+
+          if (SUCCEEDED (hr))
+            {
+              timings->refresh_interval = timing_info.qpcRefreshPeriod * (double)G_USEC_PER_SEC / tick_frequency.QuadPart;
+              timings->presentation_time = timing_info.qpcCompose * (double)G_USEC_PER_SEC / tick_frequency.QuadPart;
+            }
+        }
+
+      timings->complete = TRUE;
+    }
 }
 
 void
@@ -541,6 +575,7 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
   gint x, y, real_x = 0, real_y = 0;
   /* check consistency of redundant information */
   guint remaining_mask = attributes_mask;
+  GdkFrameClock *frame_clock;
 
   g_return_if_fail (display == _gdk_display);
 
@@ -806,6 +841,13 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
     gdk_window_set_cursor (window, attributes->cursor);
 
   _gdk_win32_window_enable_transparency (window);
+
+  frame_clock = gdk_window_get_frame_clock (window);
+  if (frame_clock)
+    g_signal_connect (frame_clock,
+                      "after-paint",
+                      G_CALLBACK (gdk_win32_impl_frame_clock_after_paint),
+                      impl);
 }
 
 GdkWindow *
@@ -891,6 +933,10 @@ gdk_win32_window_destroy (GdkWindow *window,
 
   GDK_NOTE (MISC, g_print ("gdk_win32_window_destroy: %p\n",
 			   GDK_WINDOW_HWND (window)));
+
+  g_signal_handlers_disconnect_by_func (gdk_window_get_frame_clock (window),
+                                        gdk_win32_impl_frame_clock_after_paint,
+                                        window_impl);
 
   /* Remove ourself from the modal stack */
   _gdk_remove_modal_window (window);
