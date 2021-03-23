@@ -378,7 +378,8 @@ notify_cursor_location (GtkIMContextWayland *context)
 
 static uint32_t
 translate_hints (GtkInputHints   input_hints,
-                 GtkInputPurpose purpose)
+                 GtkInputPurpose purpose,
+                 gboolean        use_preedit)
 {
   uint32_t hints = 0;
 
@@ -401,6 +402,9 @@ translate_hints (GtkInputHints   input_hints,
       hints |= (ZWP_TEXT_INPUT_V3_CONTENT_HINT_HIDDEN_TEXT |
                 ZWP_TEXT_INPUT_V3_CONTENT_HINT_SENSITIVE_DATA);
     }
+
+  if (use_preedit)
+    hints |= ZWP_TEXT_INPUT_V3_CONTENT_HINT_PREEDIT_SHOWN;
 
   return hints;
 }
@@ -456,7 +460,8 @@ notify_content_type (GtkIMContextWayland *context)
                 NULL);
 
   zwp_text_input_v3_set_content_type (global->text_input,
-                                      translate_hints (hints, purpose),
+                                      translate_hints (hints, purpose,
+                                                       context->use_preedit),
                                       translate_purpose (purpose));
 }
 
@@ -755,7 +760,8 @@ registry_handle_global (void               *data,
       global->text_input_manager_wl_id = id;
       global->text_input_manager =
         wl_registry_bind (global->registry, global->text_input_manager_wl_id,
-                          &zwp_text_input_manager_v3_interface, 1);
+                          &zwp_text_input_manager_v3_interface,
+                          MIN (version, 2));
       global->text_input =
         zwp_text_input_manager_v3_get_text_input (global->text_input_manager,
                                                   gdk_wayland_seat_get_wl_seat (seat));
@@ -903,6 +909,8 @@ gtk_im_context_wayland_set_use_preedit (GtkIMContext *context,
   GtkIMContextWayland *context_wayland = GTK_IM_CONTEXT_WAYLAND (context);
 
   context_wayland->use_preedit = !!use_preedit;
+  notify_content_type (context_wayland);
+  commit_state (context_wayland);
 }
 
 static void
