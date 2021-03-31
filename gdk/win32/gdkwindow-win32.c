@@ -928,15 +928,18 @@ gdk_win32_window_destroy (GdkWindow *window,
   GdkWindowImplWin32 *window_impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
   GSList *tmp;
   GdkWin32Display *display = NULL;
+  GdkFrameClock *frame_clock;
 
   g_return_if_fail (GDK_IS_WINDOW (window));
 
   GDK_NOTE (MISC, g_print ("gdk_win32_window_destroy: %p\n",
 			   GDK_WINDOW_HWND (window)));
 
-  g_signal_handlers_disconnect_by_func (gdk_window_get_frame_clock (window),
-                                        gdk_win32_impl_frame_clock_after_paint,
-                                        window_impl);
+  frame_clock = gdk_window_get_frame_clock (window);
+  if (frame_clock)
+    g_signal_handlers_disconnect_by_func (frame_clock,
+                                          gdk_win32_impl_frame_clock_after_paint,
+                                          window_impl);
 
   /* Remove ourself from the modal stack */
   _gdk_remove_modal_window (window);
