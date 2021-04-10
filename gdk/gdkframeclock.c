@@ -684,6 +684,13 @@ _gdk_frame_clock_emit_paint (GdkFrameClock *frame_clock)
 }
 
 void
+_gdk_frame_clock_emit_blockable_paint (GdkFrameClock *frame_clock)
+{
+  gboolean handled = FALSE;
+  g_signal_emit (frame_clock, signals[BLOCKABLE_PAINT], 0, &handled);
+}
+
+void
 _gdk_frame_clock_emit_after_paint (GdkFrameClock *frame_clock)
 {
   g_signal_emit (frame_clock, signals[AFTER_PAINT], 0);

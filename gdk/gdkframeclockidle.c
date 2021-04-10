@@ -594,7 +594,7 @@ gdk_frame_clock_paint_idle (void *data)
               if (priv->requested & GDK_FRAME_CLOCK_PHASE_PAINT)
                 {
                   priv->requested &= ~GDK_FRAME_CLOCK_PHASE_PAINT;
-                  _gdk_frame_clock_emit_paint (clock);
+                  _gdk_frame_clock_emit_blockable_paint (clock);
                 }
             }
           /* fallthrough */

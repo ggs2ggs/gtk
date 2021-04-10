@@ -11721,6 +11721,21 @@ gdk_window_paint_on_clock (GdkFrameClock *clock,
   gdk_window_process_updates_with_mode (window, PROCESS_UPDATES_WITH_SAME_CLOCK_CHILDREN);
 }
 
+static gboolean
+gdk_window_blockable_paint_on_clock (GdkFrameClock *clock,
+				     void          *data)
+{
+  GdkWindow *window;
+
+  window = GDK_WINDOW (data);
+
+  /* Update window and any children on the same clock.
+   */
+  gdk_window_process_updates_with_mode (window, PROCESS_UPDATES_WITH_SAME_CLOCK_CHILDREN);
+
+  return TRUE;
+}
+
 static void
 gdk_window_resume_events (GdkFrameClock *clock,
                           void          *data)
@@ -11759,6 +11774,10 @@ gdk_window_set_frame_clock (GdkWindow     *window,
                         G_CALLBACK (gdk_window_paint_on_clock),
                         window);
       g_signal_connect (G_OBJECT (clock),
+                        "blockable-paint",
+                        G_CALLBACK (gdk_window_blockable_paint_on_clock),
+                        window);
+      g_signal_connect (G_OBJECT (clock),
                         "resume-events",
                         G_CALLBACK (gdk_window_resume_events),
                         window);
@@ -11774,6 +11793,9 @@ gdk_window_set_frame_clock (GdkWindow     *window,
                                             window);
       g_signal_handlers_disconnect_by_func (G_OBJECT (window->frame_clock),
                                             G_CALLBACK (gdk_window_paint_on_clock),
+                                            window);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (window->frame_clock),
+                                            G_CALLBACK (gdk_window_blockable_paint_on_clock),
                                             window);
       g_signal_handlers_disconnect_by_func (G_OBJECT (window->frame_clock),
                                             G_CALLBACK (gdk_window_resume_events),
