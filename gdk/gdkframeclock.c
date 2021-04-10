@@ -27,6 +27,7 @@
 #include "gdkframeclockprivate.h"
 #include "gdkinternals.h"
 #include "gdkprofilerprivate.h"
+#include "gdkmarshalers.h"
 
 /**
  * SECTION:gdkframeclock
@@ -76,6 +77,7 @@ enum {
   PAINT,
   AFTER_PAINT,
   RESUME_EVENTS,
+  BLOCKABLE_PAINT,
   LAST_SIGNAL
 };
 
@@ -232,6 +234,30 @@ gdk_frame_clock_class_init (GdkFrameClockClass *klass)
                   0,
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
+
+  /**
+   * GdkFrameClock::blockable-paint:
+   * @clock: the frame clock emitting the signal
+   *
+   * This signal is emitted as the third step of toolkit and
+   * application processing of the frame. The frame is
+   * repainted. GDK normally handles this internally and
+   * produces expose events, which are turned into GTK+
+   * #GtkWidget::draw signals.
+   *
+   * Unlike the GdkFrameClock::paint signal, this signal
+   * can be blocked if a handler returns %FALSE.
+   */
+  signals[BLOCKABLE_PAINT] =
+    g_signal_new (g_intern_static_string ("blockable-paint"),
+                  GDK_TYPE_FRAME_CLOCK,
+                  G_SIGNAL_RUN_LAST,
+                  0,
+                  _gdk_boolean_handled_accumulator, NULL,
+                  _gdk_marshal_BOOLEAN__VOID,
+                  G_TYPE_BOOLEAN, 0);
+  g_signal_set_va_marshaller (signals[BLOCKABLE_PAINT], G_TYPE_FROM_CLASS (klass),
+                              _gdk_marshal_BOOLEAN__VOIDv);
 }
 
 static void

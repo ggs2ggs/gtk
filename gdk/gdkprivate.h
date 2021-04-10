@@ -39,6 +39,11 @@ void gdk_synthesize_window_state (GdkWindow     *window,
                                   GdkWindowState unset_flags,
                                   GdkWindowState set_flags);
 
+gboolean _gdk_boolean_handled_accumulator (GSignalInvocationHint *ihint,
+                                           GValue                *return_accu,
+                                           const GValue          *handler_return,
+                                           gpointer               dummy);
+
 G_END_DECLS
 
 #endif /* __GDK_PRIVATE_H__ */
