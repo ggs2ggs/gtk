@@ -51,6 +51,8 @@
 static void gdk_window_impl_win32_init       (GdkWindowImplWin32      *window);
 static void gdk_window_impl_win32_class_init (GdkWindowImplWin32Class *klass);
 static void gdk_window_impl_win32_finalize   (GObject                 *object);
+static void gdk_win32_window_invalidate_region (GdkWindow      *window,
+                                                cairo_region_t *region);
 
 static gpointer parent_class = NULL;
 static GSList *modal_window_stack = NULL;
@@ -858,6 +860,7 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
                       impl);
 
   window->recursive_paint = gdk_win32_window_on_paint;
+  gdk_window_set_invalidate_handler (window, gdk_win32_window_invalidate_region);
 }
 
 GdkWindow *
@@ -4097,4 +4100,19 @@ gdk_win32_window_on_paint (GdkWindow     *window,
                            GdkFrameClock *clock)
 {
   UpdateWindow (GDK_WINDOW_HWND (window));
+}
+
+static void
+gdk_win32_window_invalidate_region (GdkWindow      *window,
+                                    cairo_region_t *region)
+{
+  GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
+  HRGN hrgn;
+
+  hrgn = cairo_region_to_hrgn (region, 0, 0, impl->window_scale);
+  if (hrgn == NULL)
+    return;
+
+  API_CALL (InvalidateRgn, (GDK_WINDOW_HWND (window), hrgn, FALSE));
+  DeleteObject (hrgn);
 }
