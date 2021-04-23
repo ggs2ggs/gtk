@@ -1619,7 +1619,12 @@ handle_wm_paint (MSG        *msg,
   cairo_region_t *update_region;
   GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
   GdkFrameClock *clock = gdk_window_get_frame_clock (window);
-  HRGN hrgn = CreateRectRgn (0, 0, 0, 0);
+  HRGN hrgn;
+
+  if (GDK_WINDOW_DESTROYED (window))
+    return FALSE;
+
+  hrgn = CreateRectRgn (0, 0, 0, 0);
 
   if (GetUpdateRgn (msg->hwnd, hrgn, FALSE) == ERROR)
     {
