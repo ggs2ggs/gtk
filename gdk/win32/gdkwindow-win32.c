@@ -76,6 +76,9 @@ static gboolean _gdk_window_get_functions (GdkWindow         *window,
                                            GdkWMFunction     *functions);
 static HDC     _gdk_win32_impl_acquire_dc (GdkWindowImplWin32 *impl);
 static void    _gdk_win32_impl_release_dc (GdkWindowImplWin32 *impl);
+static void    gdk_win32_window_on_paint (GdkWindow     *window,
+                                          GdkFrameClock *clock);
+
 
 #define WINDOW_IS_TOPLEVEL(window)		   \
   (GDK_WINDOW_TYPE (window) != GDK_WINDOW_CHILD && \
@@ -401,9 +404,14 @@ RegisterGdkClass (GdkWindowType wtype, GdkWindowTypeHint wtype_hint)
   ATOM klass = 0;
 
   wcl.cbSize = sizeof (WNDCLASSEX);
-  wcl.style = 0; /* DON'T set CS_<H,V>REDRAW. It causes total redraw
-                  * on WM_SIZE and WM_MOVE. Flicker, Performance!
-                  */
+  wcl.style = CS_HREDRAW | CS_VREDRAW;
+  /* Do set CS_<H,V>REDRAW. It causes total redraw
+   * on WM_SIZE. Because we do need to redraw
+   * the window (entirely) when it changes size,
+   * as otherwise window contents will not be in sync
+   * with window size.
+   * An WM_MOVE doesn't cause repaints on modern Windows.
+   */
   wcl.lpfnWndProc = _gdk_win32_window_procedure;
   wcl.cbClsExtra = 0;
   wcl.cbWndExtra = 0;
@@ -848,6 +856,8 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
                       "after-paint",
                       G_CALLBACK (gdk_win32_impl_frame_clock_after_paint),
                       impl);
+
+  window->recursive_paint = gdk_win32_window_on_paint;
 }
 
 GdkWindow *
@@ -3698,6 +3708,10 @@ _gdk_win32_impl_acquire_dc (GdkWindowImplWin32 *impl)
       GDK_WINDOW_DESTROYED (impl->wrapper))
     return NULL;
 
+  /* repaint_hdc is not reference-counted */
+  if (impl->repaint_hdc)
+    return impl->repaint_hdc;
+
   if (!impl->hdc)
     {
       impl->hdc = GetDC (impl->handle);
@@ -3726,6 +3740,10 @@ _gdk_win32_impl_acquire_dc (GdkWindowImplWin32 *impl)
 static void
 _gdk_win32_impl_release_dc (GdkWindowImplWin32 *impl)
 {
+  /* repaint_hdc is not reference-counted */
+  if (impl->repaint_hdc)
+    return;
+
   g_return_if_fail (impl->hdc_count > 0);
 
   impl->hdc_count--;
@@ -3762,6 +3780,14 @@ gdk_win32_cairo_surface_destroy (void *data)
   impl->cairo_surface = NULL;
 }
 
+static void
+gdk_win32_repaint_cairo_surface_destroy (void *data)
+{
+  GdkWindowImplWin32 *impl = data;
+
+  impl->repaint_cairo_surface = NULL;
+}
+
 static cairo_surface_t *
 gdk_win32_ref_cairo_surface (GdkWindow *window)
 {
@@ -3770,6 +3796,24 @@ gdk_win32_ref_cairo_surface (GdkWindow *window)
   if (GDK_IS_WINDOW_IMPL_WIN32 (impl) &&
       GDK_WINDOW_DESTROYED (impl->wrapper))
     return NULL;
+
+  if (impl->repaint_hdc)
+    {
+      if (!impl->repaint_cairo_surface)
+        {
+          HDC hdc = _gdk_win32_impl_acquire_dc (impl);
+          impl->repaint_cairo_surface = cairo_win32_surface_create_with_format (hdc, CAIRO_FORMAT_ARGB32);
+          cairo_surface_set_device_scale (impl->repaint_cairo_surface,
+                                          impl->window_scale,
+                                          impl->window_scale);
+          cairo_surface_set_user_data (impl->repaint_cairo_surface, &gdk_win32_cairo_key,
+                                       impl, gdk_win32_repaint_cairo_surface_destroy);
+        }
+      else
+        cairo_surface_reference (impl->repaint_cairo_surface);
+
+      return impl->repaint_cairo_surface;
+    }
 
   if (!impl->cairo_surface)
     {
@@ -3898,6 +3942,12 @@ _gdk_win32_window_get_unscaled_size (GdkWindow *window,
     *unscaled_height = impl->unscaled_height;
 }
 
+static gboolean
+gdk_win32_window_begin_paint (GdkWindow *window)
+{
+  return FALSE;
+}
+
 static void
 gdk_window_impl_win32_class_init (GdkWindowImplWin32Class *klass)
 {
@@ -3971,6 +4021,7 @@ gdk_window_impl_win32_class_init (GdkWindowImplWin32Class *klass)
   impl_class->set_decorations = gdk_win32_window_set_decorations;
   impl_class->get_decorations = gdk_win32_window_get_decorations;
   impl_class->set_functions = gdk_win32_window_set_functions;
+  impl_class->begin_paint = gdk_win32_window_begin_paint;
 
   impl_class->set_shadow_width = gdk_win32_window_set_shadow_width;
   impl_class->begin_resize_drag = gdk_win32_window_begin_resize_drag;
@@ -4040,3 +4091,10 @@ _gdk_win32_window_get_egl_surface (GdkWindow *window,
 
 }
 #endif
+
+static void
+gdk_win32_window_on_paint (GdkWindow     *window,
+                           GdkFrameClock *clock)
+{
+  UpdateWindow (GDK_WINDOW_HWND (window));
+}

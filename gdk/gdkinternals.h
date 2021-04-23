@@ -201,6 +201,14 @@ struct _GdkEventPrivate
 
 typedef struct _GdkWindowPaint GdkWindowPaint;
 
+typedef void (*GdkWindowOnPaintFunc) (GdkWindow *window, GdkFrameClock *clock);
+
+typedef enum {
+  GDK_RECURSIVE_PAINT_NONE,
+  GDK_RECURSIVE_PAINT_INTERNAL,
+  GDK_RECURSIVE_PAINT_EXTERNAL,
+} GdkRecursivePaintStatus;
+
 struct _GdkWindow
 {
   GObject parent_instance;
@@ -394,6 +402,9 @@ struct _GdkWindow
   GdkDrawingContext *drawing_context;
 
   cairo_region_t *opaque_region;
+
+  GdkRecursivePaintStatus recursive_paint_status;
+  GdkWindowOnPaintFunc recursive_paint;
 };
 
 #define GDK_WINDOW_TYPE(d) ((((GdkWindow *)(d)))->window_type)
@@ -488,6 +499,9 @@ GdkGLContext * gdk_window_get_paint_gl_context (GdkWindow *window,
 void gdk_window_get_unscaled_size (GdkWindow *window,
                                    int *unscaled_width,
                                    int *unscaled_height);
+
+gboolean gdk_window_blockable_paint_on_clock (GdkFrameClock *clock,
+				              void          *data);
 
 GdkDrawingContext *gdk_window_get_drawing_context (GdkWindow *window);
 

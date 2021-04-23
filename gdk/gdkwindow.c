@@ -11721,13 +11721,36 @@ gdk_window_paint_on_clock (GdkFrameClock *clock,
   gdk_window_process_updates_with_mode (window, PROCESS_UPDATES_WITH_SAME_CLOCK_CHILDREN);
 }
 
-static gboolean
+gboolean
 gdk_window_blockable_paint_on_clock (GdkFrameClock *clock,
 				     void          *data)
 {
   GdkWindow *window;
 
   window = GDK_WINDOW (data);
+
+  if (window->recursive_paint)
+    {
+      switch (window->recursive_paint_status)
+        {
+          case GDK_RECURSIVE_PAINT_NONE:
+            /* The frame clock believes it's time to repaint this window.
+             * Do the recursive paint thing (on Windows that means
+             * sending ourselves a WM_PAINT, which will prime the OS
+             * for a synchronized window repaint, at which point we
+             * will change recursive paint status and force the frame clock
+             * to issue a paint signal again, recursively calling this function,
+             * and *that* call will fall through and actually do the painting.
+             */
+            window->recursive_paint_status = GDK_RECURSIVE_PAINT_INTERNAL;
+            window->recursive_paint (window, clock);
+            window->recursive_paint_status = GDK_RECURSIVE_PAINT_NONE;
+            return TRUE;
+          case GDK_RECURSIVE_PAINT_INTERNAL:
+          case GDK_RECURSIVE_PAINT_EXTERNAL:
+            break;
+        }
+    }
 
   /* Update window and any children on the same clock.
    */

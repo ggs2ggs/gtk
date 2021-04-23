@@ -122,6 +122,8 @@ struct _GdkWindowImplWin32
   gint             dib_width;
   gint             dib_height;
 
+  HDC              repaint_hdc; /* only valid during WM_PAINT */
+  cairo_surface_t *repaint_cairo_surface;
   HDC              hdc;
   int              hdc_count;
   HBITMAP          saved_dc_bitmap; /* Original bitmap for dc */

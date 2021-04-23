@@ -805,3 +805,17 @@ _gdk_frame_clock_idle_new (void)
 
   return GDK_FRAME_CLOCK (clock);
 }
+
+gboolean
+gdk_frame_clock_idle_paint_now (GdkFrameClockIdle *clock_idle)
+{
+  GdkFrameClockIdlePrivate *priv = GDK_FRAME_CLOCK_IDLE (clock_idle)->priv;
+
+  if (priv->paint_idle_id != 0)
+    {
+      g_source_remove (priv->paint_idle_id);
+      priv->paint_idle_id = 0;
+    }
+
+  return gdk_frame_clock_paint_idle (clock_idle);
+}

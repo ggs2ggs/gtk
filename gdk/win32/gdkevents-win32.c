@@ -59,6 +59,8 @@
 #include "gdkdisplay-win32.h"
 #include "gdkselection-win32.h"
 #include "gdkdndprivate.h"
+#include "gdkframeclockprivate.h"
+#include "gdkframeclockidle.h"
 
 #include <windowsx.h>
 #include <dwmapi.h>
@@ -1565,46 +1567,134 @@ adjust_drag (LONG *drag,
     *drag = curr - ((curr - *drag + inc/2) / inc) * inc;
 }
 
+/* This is mainly to ensure that all GDK_CONFIGURE
+ * events are handled before we do a forced repaint
+ */
 static void
+catch_up_with_events (GdkWindow *window)
+{
+  GdkDisplay *display = gdk_window_get_display (window);
+  GdkEvent *event;
+
+  if (display == NULL)
+    return;
+
+  while (event = _gdk_event_unqueue (display))
+    {
+      _gdk_event_emit (event);
+      gdk_event_free (event);
+    }
+}
+
+/* States for recursive painting:
+ * NON, INT, EXT
+ *
+ * A)
+ * OS sends WM_PAINT
+ * WM_PAINT (NON) handler changes NON->EXT,
+ * pushes frame clock through paint stages,
+ * causing a paint event.
+ *   Paint event handler (EXT) repaints the window.
+ * WM_PAINT handler changes EXT->NON
+ *
+ * B)
+ * Frame clock sends a paint event
+ * Paint event handler 1 (NON) changes NON->INT, then
+ * sends ourselves a WM_PAINT.
+ *   WM_PAINT handler (INT) pushes frame clock through paint stages,
+ *   causing a paint event.
+ *     Paint event handler 2 (INT) repaints the window.
+ * Paint event handler 1 changes INT->NON.
+ *
+ * WM_PAINT handler (EXT) does nothing. EXT means we're
+ * between BeginPaint() and EndPaint(), and that's the only
+ * thing we care about, so no need to do anything else;
+ * paint region is updated regardless of the state anyway.
+ */
+
+static gboolean
 handle_wm_paint (MSG        *msg,
 		 GdkWindow  *window)
 {
-  HRGN hrgn = CreateRectRgn (0, 0, 0, 0);
-  HDC hdc;
-  PAINTSTRUCT paintstruct;
   cairo_region_t *update_region;
   GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
+  GdkFrameClock *clock = gdk_window_get_frame_clock (window);
+  HRGN hrgn = CreateRectRgn (0, 0, 0, 0);
 
   if (GetUpdateRgn (msg->hwnd, hrgn, FALSE) == ERROR)
     {
       WIN32_GDI_FAILED ("GetUpdateRgn");
-      DeleteObject (hrgn);
-      return;
     }
-
-  hdc = BeginPaint (msg->hwnd, &paintstruct);
-
-  GDK_NOTE (EVENTS, g_print (" %s %s dc %p",
-			     _gdk_win32_rect_to_string (&paintstruct.rcPaint),
-			     (paintstruct.fErase ? "erase" : ""),
-			     hdc));
-
-  EndPaint (msg->hwnd, &paintstruct);
-
-  if ((paintstruct.rcPaint.right == paintstruct.rcPaint.left) ||
-      (paintstruct.rcPaint.bottom == paintstruct.rcPaint.top))
+  else
     {
-      GDK_NOTE (EVENTS, g_print (" (empty paintstruct, ignored)"));
-      DeleteObject (hrgn);
-      return;
+      update_region = _gdk_win32_hrgn_to_region (hrgn, impl->window_scale);
+      if (!cairo_region_is_empty (update_region))
+        _gdk_window_invalidate_for_expose (window, update_region);
+      cairo_region_destroy (update_region);
     }
-
-  update_region = _gdk_win32_hrgn_to_region (hrgn, impl->window_scale);
-  if (!cairo_region_is_empty (update_region))
-    _gdk_window_invalidate_for_expose (window, update_region);
-  cairo_region_destroy (update_region);
 
   DeleteObject (hrgn);
+
+  /* No paint state - this happens when we get WM_PAINT from the OS */
+  if (window->recursive_paint &&
+      clock &&
+      window->recursive_paint_status == GDK_RECURSIVE_PAINT_NONE)
+    {
+      HDC hdc;
+      PAINTSTRUCT paintstruct;
+
+      /* Technically, we don't need to repaint if update region is empty.
+       * What happens if we do that? Would Windows still accept our new
+       * pixels in regions that are not in the update region?
+       */
+      hdc = BeginPaint (msg->hwnd, &paintstruct);
+
+      GDK_NOTE (EVENTS, g_print (" %s %s dc %p",
+                                 _gdk_win32_rect_to_string (&paintstruct.rcPaint),
+                                 (paintstruct.fErase ? "erase" : ""),
+                                 hdc));
+
+      if ((paintstruct.rcPaint.right == paintstruct.rcPaint.left) ||
+          (paintstruct.rcPaint.bottom == paintstruct.rcPaint.top))
+        {
+          GDK_NOTE (EVENTS, g_print (" (empty paintstruct, ignored)"));
+        }
+      else
+        {
+          /* We *must* paint on this DC specifically, otherwise the OS
+           * won't sync our repaints properly.
+           */
+          impl->repaint_hdc = hdc;
+
+          window->recursive_paint_status = GDK_RECURSIVE_PAINT_EXTERNAL;
+          /* Ensure that GtkWindow size matches GdkWindow size */
+          catch_up_with_events (window);
+          /* Request a repaint from the frame clock */
+          gdk_frame_clock_request_phase (clock, GDK_FRAME_CLOCK_PHASE_PAINT);
+          /* Force the frame clock to repaint *now* */
+          gdk_frame_clock_idle_paint_now (clock);
+          window->recursive_paint_status = GDK_RECURSIVE_PAINT_NONE;
+
+          impl->repaint_hdc = NULL;
+        }
+
+      EndPaint (msg->hwnd, &paintstruct);
+    }
+  else if (window->recursive_paint &&
+           window->recursive_paint_status == GDK_RECURSIVE_PAINT_EXTERNAL)
+    {
+      /* Already painting recursively, no need to go deeper */
+    }
+  else if (clock)
+    {
+      /* A window with no recursive painting set up. Can't happen on Windows,
+       * but just in case it does, we'll just short-circuit back to the
+       * frame clock paint singnal handler.
+       */
+      gdk_window_blockable_paint_on_clock (clock, window);
+    }
+
+  return TRUE;
 }
 
 static VOID CALLBACK
@@ -2903,7 +2993,11 @@ gdk_event_translate (MSG  *msg,
       break;
 
     case WM_PAINT:
-      handle_wm_paint (msg, window);
+      if (handle_wm_paint (msg, window))
+        {
+          return_val = TRUE;
+          *ret_valp = 0;
+        }
       break;
 
     case WM_SETCURSOR:
@@ -3602,9 +3696,9 @@ gdk_event_translate (MSG  *msg,
               {
                 nr->left = nr->left + 1;
                 nr->right = nr->right - 1;
+                nr->top = nr->top + 0;
                 nr->bottom = nr->bottom - 1;
-                /* but not nr->top = nr->top + 1; */
-                *ret_valp = 0;
+                *ret_valp = WVR_REDRAW;
                 return_val = TRUE;
               }
           }
@@ -3618,19 +3712,6 @@ gdk_event_translate (MSG  *msg,
 				   (LOWORD (msg->wParam) == WA_INACTIVE ? "INACTIVE" : "???"))),
 				 HIWORD (msg->wParam) ? " minimized" : "",
 				 (HWND) msg->lParam));
-      {
-        // Extend the frame into the client area.
-        MARGINS margins = {-1};
-        HRESULT hr;
-
-        hr = DwmExtendFrameIntoClientArea (GDK_WINDOW_HWND (window), &margins);
-        if (!SUCCEEDED (hr))
-          g_warning ("DwmExtendFrameIntoClientArea() failed: %lx", hr);
-
-        *ret_valp = 0;
-        return_val = TRUE;
-      }
-
       /* We handle mouse clicks for modally-blocked windows under WM_MOUSEACTIVATE,
        * but we still need to deal with alt-tab, or with SetActiveWindow() type
        * situations.

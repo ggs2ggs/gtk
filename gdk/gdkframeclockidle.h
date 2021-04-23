@@ -61,6 +61,7 @@ GType           gdk_frame_clock_idle_get_type       (void) G_GNUC_CONST;
 GdkFrameClock *_gdk_frame_clock_idle_new            (void);
 void           _gdk_frame_clock_idle_freeze_updates (GdkFrameClockIdle *clock_idle);
 void           _gdk_frame_clock_idle_thaw_updates   (GdkFrameClockIdle *clock_idle);
+gboolean        gdk_frame_clock_idle_paint_now      (GdkFrameClockIdle *clock_idle);
 
 G_END_DECLS
 
