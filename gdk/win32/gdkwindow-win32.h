@@ -137,6 +137,11 @@ struct _GdkWindowImplWin32
    */
   LONG_PTR temp_styles;
 
+  /* Last window rect that we gave the OS for WM_SIZING.
+   * Note that this is the window rect, not the client rect.
+   */
+  RECT last_sizing_rect;
+
   /* scale of window on HiDPI */
   gint window_scale;
   gint unscaled_width;

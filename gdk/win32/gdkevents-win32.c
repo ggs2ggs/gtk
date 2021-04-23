@@ -3380,6 +3380,85 @@ gdk_event_translate (MSG  *msg,
 	    }
 	}
 
+      /* Ensure that window size is a multiple of window scale factor */
+      {
+        gboolean width_increased;
+        gboolean height_increased;
+        gboolean width_changed;
+        gboolean height_changed;
+        gboolean x_changed;
+        gboolean y_changed;
+        gboolean x_increased;
+        gboolean y_increased;
+        int cx, cy, x, y;
+        RECT old_rect = impl->last_sizing_rect;
+        RECT rect;
+
+        rect = *drag;
+
+        width_changed = (old_rect.right - old_rect.left) != (rect.right - rect.left);
+        height_changed = (old_rect.bottom - old_rect.top) != (rect.bottom - rect.top);
+        width_increased = (old_rect.right - old_rect.left) < (rect.right - rect.left);
+        height_increased = (old_rect.bottom - old_rect.top) < (rect.bottom - rect.top);
+        x_changed = old_rect.left != rect.left;
+        y_changed = old_rect.top != rect.top;
+        x_increased = old_rect.left < rect.left;
+        y_increased = old_rect.top < rect.top;
+
+        GDK_NOTE (EVENTS, g_print ("width %s (%ld %ld), height %s (%ld %ld)",
+            width_changed ? "changed" : "unchanged", old_rect.right - old_rect.left,
+            rect.right - rect.left, height_changed ? "changed" : "unchanged",
+            old_rect.bottom - old_rect.top, rect.bottom - rect.top));
+
+        cx = rect.right - rect.left;
+        cy = rect.bottom - rect.top;
+        x = rect.left;
+        y = rect.top;
+
+        /* If window gets bigger, round up; otherwise, round down */
+        if (width_changed)
+          {
+            if (!x_changed)
+              {
+                if (width_increased)
+                  drag->right += impl->window_scale - ((rect.right - rect.left) % impl->window_scale);
+                else
+                  drag->right -= ((rect.right - rect.left) % impl->window_scale);
+              }
+            else
+              {
+                if (!x_increased)
+                  drag->left -= impl->window_scale - ((rect.right - rect.left) % impl->window_scale);
+                else
+                  drag->left += ((rect.right - rect.left) % impl->window_scale);
+              }
+          }
+        if (height_changed)
+          {
+            if (!y_changed)
+              {
+                if (height_increased)
+                  drag->bottom += impl->window_scale - ((rect.bottom - rect.top) % impl->window_scale);
+                else
+                  drag->bottom -= ((rect.bottom - rect.top) % impl->window_scale);
+              }
+            else
+              {
+                if (!y_increased)
+                  drag->top -= impl->window_scale - ((rect.bottom - rect.top) % impl->window_scale);
+                else
+                  drag->top += ((rect.bottom - rect.top) % impl->window_scale);
+              }
+          }
+        GDK_NOTE (EVENTS, g_print ("new size %ld x %ld @ %ld x %ld",
+                                   drag->right - drag->left, drag->bottom - drag->top, drag->left, drag->top));
+
+        if (impl->window_scale == 1 &&
+            (rect.left != drag->left || rect.right != drag->right || rect.top != drag->top || rect.bottom != drag->bottom))
+          g_warning ("Resizing discretization is broken - changed %ld x %ld @ %ld x %ld to %ld x %ld @ %ld x %ld", cx, cy, x, y, drag->right - drag->left, drag->bottom - drag->top, drag->left, drag->top);
+
+        impl->last_sizing_rect = *drag;
+      }
       /* WM_GETMINMAXINFO handles min_size and max_size hints? */
 
       if (impl->hint_flags & GDK_HINT_ASPECT)
