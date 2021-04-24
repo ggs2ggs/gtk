@@ -1674,12 +1674,16 @@ handle_wm_paint (MSG        *msg,
           window->recursive_paint_status = GDK_RECURSIVE_PAINT_EXTERNAL;
           /* Ensure that GtkWindow size matches GdkWindow size */
           catch_up_with_events (window);
-          /* Request a repaint from the frame clock */
-          gdk_frame_clock_request_phase (clock, GDK_FRAME_CLOCK_PHASE_PAINT);
-          /* Force the frame clock to repaint *now* */
-          gdk_frame_clock_idle_paint_now (clock);
-          window->recursive_paint_status = GDK_RECURSIVE_PAINT_NONE;
+          /* The window might have been killed by one of the events */
+          if (!GDK_WINDOW_DESTROYED (window))
+            {
+              /* Request a repaint from the frame clock */
+              gdk_frame_clock_request_phase (clock, GDK_FRAME_CLOCK_PHASE_PAINT);
+              /* Force the frame clock to repaint *now* */
+              gdk_frame_clock_idle_paint_now (clock);
+            }
 
+          window->recursive_paint_status = GDK_RECURSIVE_PAINT_NONE;
           impl->repaint_hdc = NULL;
         }
 
@@ -1689,14 +1693,21 @@ handle_wm_paint (MSG        *msg,
            window->recursive_paint_status == GDK_RECURSIVE_PAINT_EXTERNAL)
     {
       /* Already painting recursively, no need to go deeper */
+      return FALSE;
     }
   else if (clock)
     {
-      /* A window with no recursive painting set up. Can't happen on Windows,
-       * but just in case it does, we'll just short-circuit back to the
+      /* A window with no recursive painting set up.
+       * Or an internal paint. Short-circuit back to the
        * frame clock paint singnal handler.
        */
+      HDC hdc;
+      PAINTSTRUCT paintstruct;
+      hdc = BeginPaint (msg->hwnd, &paintstruct);
+      impl->repaint_hdc = hdc;
       gdk_window_blockable_paint_on_clock (clock, window);
+      impl->repaint_hdc = NULL;
+      EndPaint (msg->hwnd, &paintstruct);
     }
 
   return TRUE;
@@ -3460,7 +3471,7 @@ gdk_event_translate (MSG  *msg,
 
         if (impl->window_scale == 1 &&
             (rect.left != drag->left || rect.right != drag->right || rect.top != drag->top || rect.bottom != drag->bottom))
-          g_warning ("Resizing discretization is broken - changed %ld x %ld @ %ld x %ld to %ld x %ld @ %ld x %ld", cx, cy, x, y, drag->right - drag->left, drag->bottom - drag->top, drag->left, drag->top);
+          g_warning ("Resizing discretization is broken - changed %d x %d @ %d x %d to %ld x %ld @ %ld x %ld", cx, cy, x, y, drag->right - drag->left, drag->bottom - drag->top, drag->left, drag->top);
 
         impl->last_sizing_rect = *drag;
       }
