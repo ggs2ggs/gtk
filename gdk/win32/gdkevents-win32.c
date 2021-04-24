@@ -3898,7 +3898,8 @@ _gdk_win32_display_queue_events (GdkDisplay *display)
 {
   MSG msg;
 
-  if (modal_win32_dialog != NULL)
+  if (modal_win32_dialog != NULL ||
+      _modal_operation_in_progress != GDK_WIN32_MODAL_OP_NONE)
     return;
 
   while (PeekMessageW (&msg, NULL, 0, 0, PM_REMOVE))
