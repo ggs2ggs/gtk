@@ -11745,7 +11745,7 @@ gdk_window_blockable_paint_on_clock (GdkFrameClock *clock,
             window->recursive_paint_status = GDK_RECURSIVE_PAINT_INTERNAL;
             window->recursive_paint (window, clock);
             window->recursive_paint_status = GDK_RECURSIVE_PAINT_NONE;
-            return TRUE;
+            return FALSE;
           case GDK_RECURSIVE_PAINT_INTERNAL:
           case GDK_RECURSIVE_PAINT_EXTERNAL:
             break;
@@ -11756,7 +11756,7 @@ gdk_window_blockable_paint_on_clock (GdkFrameClock *clock,
    */
   gdk_window_process_updates_with_mode (window, PROCESS_UPDATES_WITH_SAME_CLOCK_CHILDREN);
 
-  return TRUE;
+  return FALSE;
 }
 
 static void
