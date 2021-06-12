@@ -105,11 +105,12 @@ struct _GtkMenuPrivate
 
   guint have_position         : 1;
   guint have_layout           : 1;
-  guint seen_item_enter       : 1;
   guint ignore_button_release : 1;
   guint no_toggle_size        : 1;
   guint drag_already_pressed  : 1;
   guint drag_scroll_started   : 1;
+
+  GtkWidget *last_item_enter;
 
   /* info used for the table */
   guint *heights;
