@@ -39,8 +39,8 @@
 #include "gdkquartzkeys.h"
 #include "gdkkeys-quartz.h"
 
-#define GRIP_WIDTH 15
-#define GRIP_HEIGHT 15
+#define GRIP_WIDTH 16
+#define GRIP_HEIGHT 16
 #define GDK_LION_RESIZE 5
 #define TABLET_AXES 5
 
@@ -1406,15 +1406,13 @@ test_resize (NSEvent *event, GdkWindow *toplevel, gint x, gint y)
    * event is received in the resizing area.
    */
   toplevel_impl = (GdkWindowImplQuartz *)toplevel->impl;
-  if ([toplevel_impl->toplevel showsResizeIndicator])
-  if ([event type] == GDK_QUARTZ_LEFT_MOUSE_DOWN &&
-      [toplevel_impl->toplevel showsResizeIndicator])
+  if ([event type] == GDK_QUARTZ_LEFT_MOUSE_DOWN)
     {
       NSRect frame;
 
       /* If the resize indicator is visible and the event
-       * is in the lower right 15x15 corner, we leave these
-       * events to Cocoa as to be handled as resize events.
+       * is in one of the lower GRIP_WIDTH x GRIP_HEIGHT corner,
+       * we leave these events to Cocoa as to be handled as resize events.
        * Applications may have widgets in this area.  These
        * will most likely be larger than 15x15 and for
        * scroll bars there are also other means to move
@@ -1423,11 +1421,16 @@ test_resize (NSEvent *event, GdkWindow *toplevel, gint x, gint y)
        * is too important to not make functional.
        */
       frame = [toplevel_impl->view bounds];
-      if (x > frame.size.width - GRIP_WIDTH &&
-          x < frame.size.width &&
-          y > frame.size.height - GRIP_HEIGHT &&
-          y < frame.size.height)
-        return TRUE;
+      // Bottom section
+      if (y > frame.size.height - GRIP_HEIGHT && y < frame.size.height)
+        {
+          // Left corner or right corner
+          if ((x > 0 && x < GRIP_WIDTH) ||
+              (x > frame.size.width - GRIP_WIDTH && x < frame.size.width))
+            {
+              return TRUE;
+            }
+        }
      }
 
   /* If we're on Lion and within 5 pixels of an edge,
