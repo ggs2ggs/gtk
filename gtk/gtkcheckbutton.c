@@ -402,20 +402,6 @@ get_group_first (GtkCheckButton *self)
   return group_first;
 }
 
-static GtkCheckButton *
-get_group_active_button (GtkCheckButton *self)
-{
-  GtkCheckButton *iter;
-
-  for (iter = get_group_first (self); iter; iter = get_group_next (iter))
-    {
-      if (gtk_check_button_get_active (iter))
-        return iter;
-    }
-
-  return NULL;
-}
-
 static void
 gtk_check_button_state_flags_changed (GtkWidget     *widget,
                                       GtkStateFlags  previous_flags)
@@ -446,6 +432,12 @@ gtk_check_button_focus (GtkWidget         *widget,
 
       if (direction == GTK_DIR_TAB_FORWARD ||
           direction == GTK_DIR_TAB_BACKWARD)
+        return FALSE;
+
+      /* We want to let the focus continue normally when it's a check box and
+       * not a radio button
+       */
+      if (!get_group_next (self) && !get_group_prev (self))
         return FALSE;
 
       child_array = g_ptr_array_new ();
@@ -491,12 +483,6 @@ gtk_check_button_focus (GtkWidget         *widget,
     }
   else
     {
-      GtkCheckButton *active_button;
-
-      active_button = get_group_active_button (self);
-      if (active_button && active_button != self)
-        return FALSE;
-
       gtk_widget_grab_focus (widget);
       return TRUE;
     }
