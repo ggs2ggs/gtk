@@ -107,6 +107,8 @@ g_io_module_load (GIOModule *module)
                                   GTK_TYPE_GST_MEDIA_FILE,
                                   "gstreamer",
                                   10);
+
+  gst_init (NULL, NULL);
 }
 
 G_MODULE_EXPORT
