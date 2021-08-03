@@ -861,8 +861,10 @@ function updateForEvent(ev) {
 function onMouseMove (ev) {
     updateForEvent(ev);
     var id = getSurfaceId(ev);
+    realWindowWithMouse = id;
     id = getEffectiveEventTarget (id);
     var pos = getPositionsFromEvent(ev, id);
+    windowWithMouse = id;
     sendInput ("m", [realWindowWithMouse, id, pos.rootX, pos.rootY, pos.winX, pos.winY, lastState]);
 }
 
@@ -882,9 +884,11 @@ function onMouseOver (ev) {
 function onMouseOut (ev) {
     updateForEvent(ev);
     var id = getSurfaceId(ev);
+    realWindowWithMouse = id;
     var origId = id;
     id = getEffectiveEventTarget (id);
     var pos = getPositionsFromEvent(ev, id);
+    windowWithMouse = id;
 
     if (id != 0) {
 	sendInput ("l", [realWindowWithMouse, id, pos.rootX, pos.rootY, pos.winX, pos.winY, lastState, GDK_CROSSING_NORMAL]);
