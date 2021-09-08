@@ -158,6 +158,12 @@ static gboolean gtk_entry_completion_list_enter_notify   (GtkWidget          *wi
 static gboolean gtk_entry_completion_list_motion_notify  (GtkWidget          *widget,
                                                           GdkEventMotion     *event,
                                                           gpointer            data);
+static void gtk_entry_completion_window_moved_to_rect    (GdkWindow          *window,
+                                                          const GdkRectangle *flipped_rect,
+                                                          const GdkRectangle *final_rect,
+                                                          gboolean            flipped_x,
+                                                          gboolean            flipped_y,
+                                                          gpointer            data);
 static void     gtk_entry_completion_insert_action       (GtkEntryCompletion *completion,
                                                           gint                index,
                                                           const gchar        *string,
@@ -605,7 +611,6 @@ gtk_entry_completion_constructed (GObject *object)
 
   /* pack it all */
   priv->popup_window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_use_subsurface (GTK_WINDOW (priv->popup_window), TRUE);
   gtk_window_set_resizable (GTK_WINDOW (priv->popup_window), FALSE);
   gtk_window_set_type_hint (GTK_WINDOW(priv->popup_window),
                             GDK_WINDOW_TYPE_HINT_COMBO);
@@ -1071,8 +1076,6 @@ prepare_popup_func (GdkSeat   *seat,
 
   gtk_tree_selection_unselect_all (gtk_tree_view_get_selection (GTK_TREE_VIEW (completion->priv->tree_view)));
   gtk_tree_selection_unselect_all (gtk_tree_view_get_selection (GTK_TREE_VIEW (completion->priv->action_view)));
-
-  gtk_widget_show (completion->priv->popup_window);
 }
 
 static void
@@ -1113,6 +1116,8 @@ gtk_entry_completion_popup (GtkEntryCompletion *completion)
 
   _gtk_entry_completion_resize_popup (completion);
 
+  gtk_widget_show (completion->priv->popup_window);
+
   if (completion->priv->device)
     {
       gtk_grab_add (completion->priv->popup_window);
@@ -1129,6 +1134,8 @@ gtk_entry_completion_popup (GtkEntryCompletion *completion)
 void
 _gtk_entry_completion_popdown (GtkEntryCompletion *completion)
 {
+  GdkWindow *popup_window;
+
   if (!gtk_widget_get_mapped (completion->priv->popup_window))
     return;
 
@@ -1142,6 +1149,10 @@ _gtk_entry_completion_popdown (GtkEntryCompletion *completion)
     }
 
   gtk_widget_hide (completion->priv->popup_window);
+
+  popup_window = gtk_widget_get_window (completion->priv->popup_window);
+
+  g_signal_handlers_disconnect_by_func (popup_window, gtk_entry_completion_window_moved_to_rect, completion);
 }
 
 /* public API */
@@ -1592,43 +1603,53 @@ gtk_entry_completion_list_motion_notify (GtkWidget      *widget,
   return FALSE;
 }
 
+static void
+gtk_entry_completion_window_moved_to_rect(GdkWindow          *window,
+                                          const GdkRectangle *flipped_rect,
+                                          const GdkRectangle *final_rect,
+                                          gboolean            flipped_x,
+                                          gboolean            flipped_y,
+                                          gpointer            data)
+{
+  GtkEntryCompletion *completion = GTK_ENTRY_COMPLETION (data);
+  gint matches;
+  GtkTreePath *path;
+
+  matches = gtk_tree_model_iter_n_children(GTK_TREE_MODEL(completion->priv->filter_model), NULL);
+
+  if (matches > 0)
+    {
+      path = gtk_tree_path_new_from_indices(flipped_y ? matches - 1 : 0, -1);
+      gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(completion->priv->tree_view), path,
+                                   NULL, FALSE, 0.0, 0.0);
+      gtk_tree_path_free(path);
+    }
+}
 
 /* some nasty size requisition */
 void
 _gtk_entry_completion_resize_popup (GtkEntryCompletion *completion)
 {
-  GtkAllocation allocation;
-  gint x, y;
-  gint matches, actions, items, height;
-  GdkDisplay *display;
-  GdkMonitor *monitor;
-  gint vertical_separator;
-  GdkRectangle area;
-  GdkWindow *window;
-  GtkRequisition popup_req;
-  GtkRequisition entry_req;
-  GtkRequisition tree_req;
-  GtkTreePath *path;
-  gboolean above;
-  gint width;
+  GdkWindow *parent_window;
+  GtkAllocation entry_allocation;
+  gint matches, actions;
   GtkTreeViewColumn *action_column;
-  gint action_height;
+  GtkRequisition tree_req;
+  gint cell_height, action_cell_height;
+  gint vertical_separator;
+  gint width;
+  GtkWidget *toplevel;
+  GdkWindow *popup_window;
 
-  window = gtk_widget_get_window (completion->priv->entry);
+  parent_window = gtk_widget_get_window (completion->priv->entry);
 
-  if (!window)
+  if (!parent_window)
     return;
 
   if (!completion->priv->filter_model)
     return;
 
-  gtk_widget_get_allocation (completion->priv->entry, &allocation);
-  gtk_widget_get_preferred_size (completion->priv->entry,
-                                 &entry_req, NULL);
-
-  gdk_window_get_origin (window, &x, &y);
-  x += allocation.x;
-  y += allocation.y + (allocation.height - entry_req.height) / 2;
+  gtk_widget_get_allocation (completion->priv->entry, &entry_allocation);
 
   matches = gtk_tree_model_iter_n_children (GTK_TREE_MODEL (completion->priv->filter_model), NULL);
   actions = gtk_tree_model_iter_n_children (GTK_TREE_MODEL (completion->priv->actions), NULL);
@@ -1640,78 +1661,54 @@ _gtk_entry_completion_resize_popup (GtkEntryCompletion *completion)
   gtk_widget_get_preferred_size (completion->priv->tree_view,
                                  &tree_req, NULL);
   gtk_tree_view_column_cell_get_size (completion->priv->column, NULL,
-                                      NULL, NULL, NULL, &height);
+                                      NULL, NULL, NULL, &cell_height);
   gtk_tree_view_column_cell_get_size (action_column, NULL,
-                                      NULL, NULL, NULL, &action_height);
+                                      NULL, NULL, NULL, &action_cell_height);
 
   gtk_widget_style_get (GTK_WIDGET (completion->priv->tree_view),
                         "vertical-separator", &vertical_separator,
                         NULL);
 
-  height += vertical_separator;
+  cell_height += vertical_separator;
 
   gtk_widget_realize (completion->priv->tree_view);
 
-  display = gtk_widget_get_display (GTK_WIDGET (completion->priv->entry));
-  monitor = gdk_display_get_monitor_at_window (display, window);
-  gdk_monitor_get_workarea (monitor, &area);
-
-  if (height == 0)
-    items = 0;
-  else if (y > area.height / 2)
-    items = MIN (matches, (((area.y + y) - (actions * action_height)) / height) - 1);
-  else
-    items = MIN (matches, (((area.height - y) - (actions * action_height)) / height) - 1);
-
-  if (items <= 0)
+  if (matches <= 0)
     gtk_widget_hide (completion->priv->scrolled_window);
   else
     gtk_widget_show (completion->priv->scrolled_window);
 
   if (completion->priv->popup_set_width)
-    width = MIN (allocation.width, area.width);
+    width = entry_allocation.width;
   else
     width = -1;
 
   gtk_tree_view_columns_autosize (GTK_TREE_VIEW (completion->priv->tree_view));
   gtk_scrolled_window_set_min_content_width (GTK_SCROLLED_WINDOW (completion->priv->scrolled_window), width);
   gtk_widget_set_size_request (completion->priv->popup_window, width, -1);
-  gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (completion->priv->scrolled_window), items * height);
+  gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (completion->priv->scrolled_window), matches * cell_height);
 
   if (actions)
     gtk_widget_show (completion->priv->action_view);
   else
     gtk_widget_hide (completion->priv->action_view);
 
-  gtk_widget_get_preferred_size (completion->priv->popup_window,
-                                 &popup_req, NULL);
+  popup_window = gtk_widget_get_window (completion->priv->popup_window);
 
-  if (x < area.x)
-    x = area.x;
-  else if (x + popup_req.width > area.x + area.width)
-    x = area.x + area.width - popup_req.width;
+  gdk_window_set_transient_for (popup_window, parent_window);
 
-  if (y + entry_req.height + popup_req.height <= area.y + area.height ||
-      y - area.y < (area.y + area.height) - (y + entry_req.height))
-    {
-      y += entry_req.height;
-      above = FALSE;
-    }
-  else
-    {
-      y -= popup_req.height;
-      above = TRUE;
-    }
+  toplevel = gtk_widget_get_toplevel (completion->priv->entry);
+  gtk_widget_translate_coordinates (completion->priv->entry, toplevel,
+                                    0, 0, &entry_allocation.x, &entry_allocation.y);
 
-  if (matches > 0)
-    {
-      path = gtk_tree_path_new_from_indices (above ? matches - 1 : 0, -1);
-      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (completion->priv->tree_view), path,
-                                    NULL, FALSE, 0.0, 0.0);
-      gtk_tree_path_free (path);
-    }
+  g_signal_handlers_disconnect_by_func (popup_window, gtk_entry_completion_window_moved_to_rect, completion);
 
-  gtk_window_move (GTK_WINDOW (completion->priv->popup_window), x, y);
+  g_signal_connect (popup_window, "moved-to-rect", G_CALLBACK (gtk_entry_completion_window_moved_to_rect), completion);
+
+  gdk_window_move_to_rect (popup_window, &entry_allocation,
+                           GDK_GRAVITY_SOUTH_WEST, GDK_GRAVITY_NORTH_WEST,
+                           GDK_ANCHOR_FLIP,
+                           0, 0);
 }
 
 static gboolean
