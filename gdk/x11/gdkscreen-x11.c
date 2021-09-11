@@ -427,220 +427,6 @@ translate_subpixel_order (int subpixel)
 }
 
 static gboolean
-init_randr15 (GdkX11Screen *x11_screen)
-{
-#ifdef HAVE_RANDR15
-  GdkDisplay *display = GDK_SCREEN_DISPLAY (x11_screen);
-  GdkX11Display *x11_display = GDK_X11_DISPLAY (display);
-  XRRScreenResources *resources;
-  RROutput primary_output = None;
-  RROutput first_output = None;
-  int i;
-  XRRMonitorInfo *rr_monitors;
-  int num_rr_monitors;
-
-  if (!x11_display->have_randr15)
-    return FALSE;
-
-  resources = XRRGetScreenResourcesCurrent (x11_screen->xdisplay,
-                                            x11_screen->xroot_window);
-  if (!resources)
-    return FALSE;
-
-  rr_monitors = XRRGetMonitors (x11_screen->xdisplay,
-                                x11_screen->xroot_window,
-                                True,
-                                &num_rr_monitors);
-  if (!rr_monitors)
-    return FALSE;
-
-  for (i = 0; i < g_list_model_get_n_items (G_LIST_MODEL (x11_display->monitors)); i++)
-    {
-      GdkX11Monitor *monitor = g_list_model_get_item (G_LIST_MODEL (x11_display->monitors), i);
-      monitor->add = FALSE;
-      monitor->remove = TRUE;
-      g_object_unref (monitor);
-    }
-
-  for (i = 0; i < num_rr_monitors; i++)
-    {
-      RROutput output = rr_monitors[i].outputs[0];
-      XRROutputInfo *output_info;
-      GdkX11Monitor *monitor;
-      GdkRectangle geometry;
-      GdkRectangle newgeo;
-      char *name;
-      char *manufacturer = NULL;
-      int refresh_rate = 0;
-
-      gdk_x11_display_error_trap_push (display);
-      output_info = XRRGetOutputInfo (x11_screen->xdisplay, resources, output);
-      if (gdk_x11_display_error_trap_pop (display))
-        continue;
-
-      if (output_info == NULL)
-        continue;
-
-      if (output_info->connection == RR_Disconnected)
-        {
-          XRRFreeOutputInfo (output_info);
-          continue;
-        }
-
-      if (first_output == None)
-        first_output = output;
-
-      if (output_info->crtc)
-        {
-          XRRCrtcInfo *crtc = XRRGetCrtcInfo (x11_screen->xdisplay, resources, output_info->crtc);
-          int j;
-
-          for (j = 0; j < resources->nmode; j++)
-            {
-              XRRModeInfo *xmode = &resources->modes[j];
-              if (xmode->id == crtc->mode)
-                {
-                  if (xmode->hTotal != 0 && xmode->vTotal != 0)
-                    refresh_rate = (1000 * xmode->dotClock) / (xmode->hTotal * xmode->vTotal);
-                  break;
-                }
-            }
-
-          XRRFreeCrtcInfo (crtc);
-        }
-
-      monitor = find_monitor_by_output (x11_display, output);
-      if (monitor)
-        monitor->remove = FALSE;
-      else
-        {
-          monitor = g_object_new (GDK_TYPE_X11_MONITOR,
-                                  "display", display,
-                                  NULL);
-          monitor->output = output;
-          monitor->add = TRUE;
-          g_list_store_append (x11_display->monitors, monitor);
-        }
-
-      /* Fetch minimal manufacturer information (PNP ID) from EDID */
-      {
-        #define EDID_LENGTH 128
-        Atom actual_type, edid_atom;
-        char tmp[3];
-        int actual_format;
-        unsigned char *prop;
-        unsigned long nbytes, bytes_left;
-        Display *disp = GDK_DISPLAY_XDISPLAY (x11_display);
-
-        edid_atom = XInternAtom (disp, RR_PROPERTY_RANDR_EDID, FALSE);
-
-        XRRGetOutputProperty (disp, output,
-                              edid_atom,
-                              0,
-                              EDID_LENGTH,
-                              FALSE,
-                              FALSE,
-                              AnyPropertyType,
-                              &actual_type,
-                              &actual_format,
-                              &nbytes,
-                              &bytes_left,
-                              &prop);
-
-        // Check partial EDID header (whole header: 00 ff ff ff ff ff ff 00)
-        if (nbytes >= EDID_LENGTH && prop[0] == 0x00 && prop[1] == 0xff)
-          {
-            /* decode the Vendor ID from three 5 bit words packed into 2 bytes
-             * /--08--\/--09--\
-             * 7654321076543210
-             * |\---/\---/\---/
-             * R  C1   C2   C3 */
-            tmp[0] = 'A' + ((prop[8] & 0x7c) / 4) - 1;
-            tmp[1] = 'A' + ((prop[8] & 0x3) * 8) + ((prop[9] & 0xe0) / 32) - 1;
-            tmp[2] = 'A' + (prop[9] & 0x1f) - 1;
-
-            manufacturer = g_strndup (tmp, sizeof (tmp));
-          }
-
-        XFree(prop);
-        #undef EDID_LENGTH
-      }
-
-      gdk_monitor_get_geometry (GDK_MONITOR (monitor), &geometry);
-      name = g_strndup (output_info->name, output_info->nameLen);
-
-      newgeo.x = rr_monitors[i].x / x11_screen->surface_scale;
-      newgeo.y = rr_monitors[i].y / x11_screen->surface_scale;
-      newgeo.width = rr_monitors[i].width / x11_screen->surface_scale;
-      newgeo.height = rr_monitors[i].height / x11_screen->surface_scale;
-
-      gdk_monitor_set_geometry (GDK_MONITOR (monitor), &newgeo);
-      gdk_monitor_set_physical_size (GDK_MONITOR (monitor),
-                                     rr_monitors[i].mwidth,
-                                     rr_monitors[i].mheight);
-      gdk_monitor_set_subpixel_layout (GDK_MONITOR (monitor),
-                                       translate_subpixel_order (output_info->subpixel_order));
-      gdk_monitor_set_refresh_rate (GDK_MONITOR (monitor), refresh_rate);
-      gdk_monitor_set_scale_factor (GDK_MONITOR (monitor), x11_screen->surface_scale);
-      gdk_monitor_set_model (GDK_MONITOR (monitor), name);
-      gdk_monitor_set_connector (GDK_MONITOR (monitor), name);
-      gdk_monitor_set_manufacturer (GDK_MONITOR (monitor), manufacturer);
-      g_free (manufacturer);
-      g_free (name);
-
-      if (rr_monitors[i].primary)
-        primary_output = monitor->output;
-
-      XRRFreeOutputInfo (output_info);
-    }
-
-  XRRFreeMonitors (rr_monitors);
-  XRRFreeScreenResources (resources);
-
-  for (i = g_list_model_get_n_items (G_LIST_MODEL (x11_display->monitors)) - 1; i >= 0; i--)
-    {
-      GdkX11Monitor *monitor = g_list_model_get_item (G_LIST_MODEL (x11_display->monitors), i);
-
-      notify_surface_monitor_change (x11_display, GDK_MONITOR (monitor));
-      if (monitor->remove)
-        {
-          g_list_store_remove (x11_display->monitors, i);
-          gdk_monitor_invalidate (GDK_MONITOR (monitor));
-        }
-      g_object_unref (monitor);
-    }
-
-  x11_display->primary_monitor = 0;
-  for (i = 0; i < g_list_model_get_n_items (G_LIST_MODEL (x11_display->monitors)); i++)
-    {
-      GdkX11Monitor *monitor = g_list_model_get_item (G_LIST_MODEL (x11_display->monitors), i);
-      g_object_unref (monitor);
-      if (monitor->output == primary_output)
-        {
-          x11_display->primary_monitor = i;
-          break;
-        }
-
-      /* No RandR1.3+ available or no primary set, fall back to prefer LVDS as primary if present */
-      if (primary_output == None &&
-          g_ascii_strncasecmp (gdk_monitor_get_model (GDK_MONITOR (monitor)), "LVDS", 4) == 0)
-        {
-          x11_display->primary_monitor = i;
-          break;
-        }
-
-      /* No primary specified and no LVDS found */
-      if (monitor->output == first_output)
-        x11_display->primary_monitor = i;
-    }
-
-  return g_list_model_get_n_items (G_LIST_MODEL (x11_display->monitors)) > 0;
-#endif
-
-  return FALSE;
-}
-
-static gboolean
 init_randr13 (GdkX11Screen *x11_screen)
 {
 #ifdef HAVE_RANDR
@@ -684,6 +470,7 @@ init_randr13 (GdkX11Screen *x11_screen)
 	  GdkX11Monitor *monitor;
 	  XRRCrtcInfo *crtc = XRRGetCrtcInfo (x11_screen->xdisplay, resources, output_info->crtc);
           char *name;
+          char *manufacturer = NULL;
           GdkRectangle geometry;
           GdkRectangle newgeo;
           int j;
@@ -713,6 +500,50 @@ init_randr13 (GdkX11Screen *x11_screen)
               g_list_store_append (x11_display->monitors, monitor);
             }
 
+          /* Fetch minimal manufacturer information (PNP ID) from EDID */
+          {
+#define EDID_LENGTH 128
+            Atom actual_type, edid_atom;
+            char tmp[3];
+            int actual_format;
+            unsigned char *prop;
+            unsigned long nbytes, bytes_left;
+            Display *disp = GDK_DISPLAY_XDISPLAY (x11_display);
+
+            edid_atom = XInternAtom (disp, RR_PROPERTY_RANDR_EDID, FALSE);
+
+            XRRGetOutputProperty (disp, output,
+                                  edid_atom,
+                                  0,
+                                  EDID_LENGTH,
+                                  FALSE,
+                                  FALSE,
+                                  AnyPropertyType,
+                                  &actual_type,
+                                  &actual_format,
+                                  &nbytes,
+                                  &bytes_left,
+                                  &prop);
+
+            // Check partial EDID header (whole header: 00 ff ff ff ff ff ff 00)
+            if (nbytes >= EDID_LENGTH && prop[0] == 0x00 && prop[1] == 0xff)
+              {
+                /* decode the Vendor ID from three 5 bit words packed into 2 bytes
+                 * /--08--\/--09--              \
+                 * 7654321076543210
+                 * |\---/\---/\---/
+                 * R  C1   C2   C3 */
+                tmp[0] = 'A' + ((prop[8] & 0x7c) / 4) - 1;
+                tmp[1] = 'A' + ((prop[8] & 0x3) * 8) + ((prop[9] & 0xe0) / 32) - 1;
+                tmp[2] = 'A' + (prop[9] & 0x1f) - 1;
+
+                manufacturer = g_strndup (tmp, sizeof (tmp));
+              }
+
+            XFree (prop);
+#undef EDID_LENGTH
+          }
+
           gdk_monitor_get_geometry (GDK_MONITOR (monitor), &geometry);
           name = g_strndup (output_info->name, output_info->nameLen);
 
@@ -730,7 +561,10 @@ init_randr13 (GdkX11Screen *x11_screen)
           gdk_monitor_set_refresh_rate (GDK_MONITOR (monitor), refresh_rate);
           gdk_monitor_set_scale_factor (GDK_MONITOR (monitor), x11_screen->surface_scale);
           gdk_monitor_set_model (GDK_MONITOR (monitor), name);
+          gdk_monitor_set_connector (GDK_MONITOR (monitor), name);
+          gdk_monitor_set_manufacturer (GDK_MONITOR (monitor), manufacturer);
 
+          g_free (manufacturer);
           g_free (name);
 
           XRRFreeCrtcInfo (crtc);
@@ -850,8 +684,7 @@ init_no_multihead (GdkX11Screen *x11_screen)
 static void
 init_multihead (GdkX11Screen *screen)
 {
-  if (!init_randr15 (screen) &&
-      !init_randr13 (screen))
+  if (!init_randr13 (screen))
     init_no_multihead (screen);
 }
 
