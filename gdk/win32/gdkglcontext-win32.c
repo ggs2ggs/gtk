@@ -1046,7 +1046,8 @@ _gdk_win32_gl_context_realize (GdkGLContext *context,
     legacy_bit = TRUE;
 
   if ((_gdk_gl_flags & GDK_GL_GLES) != 0 ||
-      (share != NULL && gdk_gl_context_get_use_es (share)))
+      (share != NULL && gdk_gl_context_get_use_es (share)) ||
+      gdk_gl_context_get_use_es (context))
     use_es = TRUE;
 
   gdk_gl_context_get_required_version (context, &major, &minor);
