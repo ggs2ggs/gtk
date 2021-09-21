@@ -16,6 +16,8 @@
  */
 
 #include "config.h"
+#include <epoxy/egl_generated.h>
+#include <wayland-client-core.h>
 
 #define VK_USE_PLATFORM_WAYLAND_KHR
 
@@ -41,6 +43,7 @@
 #include "gdkseat-wayland.h"
 #include "gdksurface-wayland.h"
 #include "gdksurfaceprivate.h"
+#include "gdksurface-wayland.h"
 #include "gdkdeviceprivate.h"
 #include "gdkkeysprivate.h"
 #include "gdkprivate-wayland.h"
@@ -95,6 +98,13 @@
 #define NO_XDG_OUTPUT_DONE_SINCE_VERSION 3
 #define XDG_ACTIVATION_VERSION   1
 #define OUTPUT_VERSION           3
+
+enum {
+  RECONNECTED,
+  LAST_SIGNAL
+};
+
+static guint signals[LAST_SIGNAL] = { 0 };
 
 static void _gdk_wayland_display_load_cursor_theme (GdkWaylandDisplay *display_wayland);
 
@@ -610,12 +620,26 @@ _gdk_wayland_display_open (const char *display_name)
   _gdk_wayland_display_init_cursors (display_wayland);
   _gdk_wayland_display_prepare_cursor_themes (display_wayland);
 
+  if (_gdk_wayland_display_init (display_wayland))
+    {
+      gdk_display_emit_opened (display);
+      return display;
+    }
+  else
+    {
+      g_object_unref (display);
+      return NULL;
+    }
+}
+
+gboolean
+_gdk_wayland_display_init (GdkWaylandDisplay *display_wayland)
+{
   display_wayland->wl_registry = wl_display_get_registry (display_wayland->wl_display);
   wl_registry_add_listener (display_wayland->wl_registry, &registry_listener, display_wayland);
   if (wl_display_roundtrip (display_wayland->wl_display) < 0)
     {
-      g_object_unref (display);
-      return NULL;
+      return FALSE;
     }
 
   process_on_globals_closures (display_wayland);
@@ -626,8 +650,7 @@ _gdk_wayland_display_open (const char *display_name)
     {
       if (wl_display_dispatch (display_wayland->wl_display) < 0)
         {
-          g_object_unref (display);
-          return NULL;
+          return FALSE;
         }
     }
 
@@ -658,14 +681,127 @@ _gdk_wayland_display_open (const char *display_name)
     {
       g_warning ("The Wayland compositor does not provide any supported shell interface, "
                  "not using Wayland display");
-      g_object_unref (display);
 
-      return NULL;
+      return FALSE;
     }
 
-  gdk_display_emit_opened (display);
+  return TRUE;
+}
 
-  return display;
+static void
+_gdk_wayland_reinitialize_surfaces(GdkWaylandDisplay *display_wayland)
+{
+  // Re-init all surfaces in the correct order
+  // gdk_wayland_surface_reinit fails if the surface's parent is not initialized
+  GList *pending_toplevels = g_list_copy (display_wayland->toplevels);
+
+
+  // first pass, reset all windows
+  GList *it = g_list_first (pending_toplevels);
+  while (it != NULL)
+  {
+    gdk_wayland_toplevel_reset (GDK_TOPLEVEL (it->data));
+    it = g_list_next(it);
+  }
+
+  // second pass, reinit in order
+  it = g_list_first (pending_toplevels);
+  while (it != NULL)
+    {
+      GList *next_it = g_list_next (it);
+      if (gdk_wayland_toplevel_reinit (GDK_TOPLEVEL (it->data)))
+        {
+          pending_toplevels = g_list_delete_link (pending_toplevels, it);
+        }
+
+      it = next_it;
+      if (it == NULL)
+        it = g_list_first (pending_toplevels);
+    }
+  g_list_free1 (pending_toplevels);
+}
+
+gboolean
+_gdk_wayland_display_reconnect (GdkWaylandDisplay *display_wayland)
+{
+  // remove all outputs and seats
+  GHashTableIter iter;
+  gpointer id;
+  char *value;
+  g_hash_table_iter_init (&iter, display_wayland->known_globals);
+  while (g_hash_table_iter_next (&iter, &id, (gpointer*) &value))
+    {
+      _gdk_wayland_display_remove_seat (display_wayland, GPOINTER_TO_UINT (id));
+      gdk_wayland_display_remove_output (display_wayland, GPOINTER_TO_UINT (id));
+    }
+  g_hash_table_remove_all (display_wayland->known_globals);
+
+  g_clear_pointer (&display_wayland->wl_registry, wl_registry_destroy);
+  g_clear_pointer (&display_wayland->compositor, wl_compositor_destroy);
+  g_clear_pointer (&display_wayland->shm, wl_shm_destroy);
+  g_clear_pointer (&display_wayland->xdg_wm_base, xdg_wm_base_destroy);
+  g_clear_pointer (&display_wayland->zxdg_shell_v6, zxdg_shell_v6_destroy);
+  g_clear_pointer (&display_wayland->gtk_shell, gtk_shell1_destroy);
+  g_clear_pointer (&display_wayland->data_device_manager, wl_data_device_manager_destroy);
+  g_clear_pointer (&display_wayland->subcompositor, wl_subcompositor_destroy);
+  g_clear_pointer (&display_wayland->pointer_gestures, zwp_pointer_gestures_v1_destroy);
+  g_clear_pointer (&display_wayland->primary_selection_manager, zwp_primary_selection_device_manager_v1_destroy);
+  g_clear_pointer (&display_wayland->tablet_manager, zwp_tablet_manager_v2_destroy);
+  g_clear_pointer (&display_wayland->xdg_exporter, zxdg_exporter_v1_destroy);
+  g_clear_pointer (&display_wayland->xdg_exporter_v2, zxdg_exporter_v2_destroy);
+  g_clear_pointer (&display_wayland->xdg_importer, zxdg_importer_v1_destroy);
+  g_clear_pointer (&display_wayland->keyboard_shortcuts_inhibit, zwp_keyboard_shortcuts_inhibit_manager_v1_destroy);
+  g_clear_pointer (&display_wayland->server_decoration_manager, org_kde_kwin_server_decoration_manager_destroy);
+  g_clear_pointer (&display_wayland->xdg_output_manager, zxdg_output_manager_v1_destroy);
+  g_clear_pointer (&display_wayland->idle_inhibit_manager, zwp_idle_inhibit_manager_v1_destroy);
+  g_clear_pointer (&display_wayland->xdg_activation, xdg_activation_v1_destroy);
+  // input device has no custom destructor
+  g_clear_pointer ( ( struct wl_proxy**)&display_wayland->input_device, wl_proxy_destroy);
+
+  g_list_free_full (display_wayland->async_roundtrips, (GDestroyNotify) wl_callback_destroy);
+
+  g_clear_pointer (&display_wayland->cursor_theme, wl_cursor_theme_destroy);
+
+  g_source_destroy (display_wayland->event_source);
+  g_source_unref (display_wayland->event_source);
+  display_wayland->event_source = NULL;
+
+  struct wl_display* old_display = display_wayland->wl_display;
+  display_wayland->wl_display = wl_display_connect(NULL);
+  if (!display_wayland->wl_display)
+    return FALSE;
+
+  if (!_gdk_wayland_display_init (display_wayland))
+    return FALSE;
+
+  // Dave, this doesn't feel in the right place, but I'm unsure where is.
+  EGLBoolean (*eglBindClientWaylandDisplayWL) (EGLDisplay, struct wl_display *display) = (void *) eglGetProcAddress ("eglBindClientWaylandDisplayWL");
+  if (eglBindClientWaylandDisplayWL) {
+    EGLDisplay *egl_display = gdk_display_get_egl_display(GDK_DISPLAY(display_wayland));
+    EGLBoolean rc = eglBindClientWaylandDisplayWL(egl_display, display_wayland->wl_display);
+    if (!rc) {
+      return FALSE;
+    }
+  } else {
+    return FALSE;
+
+  }
+
+  _gdk_wayland_display_load_cursor_theme (display_wayland);
+
+  _gdk_wayland_reinitialize_surfaces(display_wayland);
+  // resetting a toplevel will close any open child popups
+  g_assert (g_list_length (display_wayland->current_popups) == 0);
+  g_assert (g_list_length (display_wayland->current_grabbing_popups) == 0);
+
+  display_wayland->event_source = _gdk_wayland_display_event_source_new (GDK_DISPLAY (display_wayland));
+
+  g_signal_emit(display_wayland, signals[RECONNECTED], 0);
+
+  // wl_proxy_destroy requires the old display..at least for now
+  // so for the custom cusor case we need to leak this a bit
+  // wl_display_disconnect(old_display);
+  return TRUE;
 }
 
 static void
@@ -996,6 +1132,15 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   display_class->get_monitor_at_surface = gdk_wayland_display_get_monitor_at_surface;
   display_class->get_setting = gdk_wayland_display_get_setting;
   display_class->set_cursor_theme = gdk_wayland_display_set_cursor_theme;
+
+  signals[RECONNECTED] =
+    g_signal_new (g_intern_static_string ("reconnected"),
+          G_OBJECT_CLASS_TYPE (object_class),
+                  G_SIGNAL_RUN_LAST,
+          G_STRUCT_OFFSET (GdkWaylandDisplayClass, reconnected),
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_NONE, 0);
 }
 
 static void
@@ -1084,7 +1229,7 @@ gdk_wayland_display_set_cursor_theme (GdkDisplay *display,
     size = 24;
 
   if (g_strcmp0 (name, display_wayland->cursor_theme_name) == 0 &&
-      display_wayland->cursor_theme_size == size)
+      display_wayland->cursor_theme_size == size && display_wayland->cursor_theme)
     return;
 
   theme = get_cursor_theme (display_wayland, name, size);
@@ -1349,6 +1494,8 @@ gdk_wayland_display_create_shm_surface (GdkWaylandDisplay        *display,
   data->buffer = wl_shm_pool_create_buffer (data->pool, 0,
                                             scaled_width, scaled_height,
                                             stride, WL_SHM_FORMAT_ARGB8888);
+  // temporary until we get a new libwayland, see _gdk_wayland_shm_surface_get_wl_buffer
+  wl_proxy_set_tag((struct wl_proxy*)data->buffer, (const char* const *)display->wl_display);
 
   cairo_surface_set_user_data (surface, &gdk_wayland_shm_surface_cairo_key,
                                data, gdk_wayland_cairo_surface_destroy);
@@ -1367,10 +1514,59 @@ gdk_wayland_display_create_shm_surface (GdkWaylandDisplay        *display,
   return surface;
 }
 
-struct wl_buffer *
-_gdk_wayland_shm_surface_get_wl_buffer (cairo_surface_t *surface)
+static void _gdk_wayland_shm_reinit(GdkWaylandDisplay *display,
+                                    cairo_surface_t   *surface)
 {
   GdkWaylandCairoSurfaceData *data = cairo_surface_get_user_data (surface, &gdk_wayland_shm_surface_cairo_key);
+
+  void *old_data_buf = data->buf;
+  int old_data_buf_length = data->buf_length;
+  int height = cairo_image_surface_get_height (surface);
+  int width = cairo_image_surface_get_width (surface);
+  const GdkFractionalScale scale = data->scale;
+  int scaled_width, scaled_height;
+  int stride;
+
+  if (data->buffer)
+    wl_buffer_destroy (data->buffer);
+
+  if (data->pool)
+    wl_shm_pool_destroy (data->pool);
+
+  scaled_width = gdk_fractional_scale_scale (&scale, width);
+  scaled_height = gdk_fractional_scale_scale (&scale, height);
+  stride = cairo_format_stride_for_width (CAIRO_FORMAT_ARGB32, scaled_width);
+
+  data->pool = create_shm_pool (display->shm,
+                                scaled_height * stride,
+                                &data->buf_length,
+                                &data->buf);
+
+  if (G_UNLIKELY (data->pool == NULL))
+    g_error ("Unable to create shared memory pool");
+  g_assert (old_data_buf_length == data->buf_length);
+
+  data->buffer = wl_shm_pool_create_buffer (data->pool, 0,
+                                            scaled_width, scaled_height,
+                                            stride, WL_SHM_FORMAT_ARGB8888);
+
+  wl_proxy_set_tag((struct wl_proxy*)data->buffer, (const char* const *)display->wl_display);
+
+  memcpy (data->buf, old_data_buf, old_data_buf_length);
+  munmap (old_data_buf, old_data_buf_length);
+}
+
+struct wl_buffer *
+_gdk_wayland_shm_surface_get_wl_buffer (GdkWaylandDisplay *display,
+                                        cairo_surface_t   *surface)
+{
+  GdkWaylandCairoSurfaceData *data = cairo_surface_get_user_data (surface, &gdk_wayland_shm_surface_cairo_key);
+
+  // ignore the get_tag usage
+  // when we get new libwayland this can be wl_proxy_get_display(...)
+  if (G_UNLIKELY (data->buffer && wl_proxy_get_tag ( (struct wl_proxy *) data->buffer) !=  (const char* const *)display->wl_display)) {
+    _gdk_wayland_shm_reinit(display, surface);
+  }
   return data->buffer;
 }
 
@@ -1856,7 +2052,7 @@ init_settings (GdkDisplay *display)
       const char *schema_str;
       GVariant *val;
       GVariantIter *iter;
-      const char *patterns[] = { "org.gnome.*", NULL }; 
+      const char *patterns[] = { "org.gnome.*", NULL };
 
       display_wayland->settings_portal = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
                                                                         G_DBUS_PROXY_FLAGS_NONE,

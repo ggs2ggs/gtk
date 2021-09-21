@@ -39,3 +39,7 @@ void     gdk_wayland_toplevel_announce_ssd        (GdkToplevel *toplevel);
 gboolean gdk_wayland_toplevel_inhibit_idle        (GdkToplevel *toplevel);
 void     gdk_wayland_toplevel_uninhibit_idle      (GdkToplevel *toplevel);
 
+void     gdk_wayland_toplevel_reset               (GdkToplevel  *toplevel);
+gboolean gdk_wayland_toplevel_reinit              (GdkToplevel  *toplevel);
+
+

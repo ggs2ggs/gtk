@@ -136,6 +136,7 @@ struct _GdkWaylandToplevel
   int bounds_width;
   int bounds_height;
   gboolean has_bounds;
+  gboolean decorated;
 
   char *title;
 
@@ -2278,6 +2279,8 @@ gdk_wayland_toplevel_announce_csd (GdkToplevel *toplevel)
   g_return_if_fail (GDK_IS_WAYLAND_TOPLEVEL (toplevel));
   toplevel_wayland = GDK_WAYLAND_TOPLEVEL (toplevel);
 
+  toplevel_wayland->decorated = FALSE;
+
   if (!display_wayland->server_decoration_manager)
     return;
   toplevel_wayland->server_decoration =
@@ -2296,6 +2299,8 @@ gdk_wayland_toplevel_announce_ssd (GdkToplevel *toplevel)
 
   g_return_if_fail (GDK_IS_WAYLAND_TOPLEVEL (toplevel));
   toplevel_wayland = GDK_WAYLAND_TOPLEVEL (toplevel);
+
+  toplevel_wayland->decorated = TRUE;
 
   if (!display_wayland->server_decoration_manager)
     return;
@@ -2552,6 +2557,84 @@ gdk_wayland_toplevel_set_transient_for_exported (GdkToplevel *toplevel,
 
   return TRUE;
 }
+
+void
+gdk_wayland_toplevel_reset(GdkToplevel *toplevel)
+{
+    GdkSurface *surface = GDK_SURFACE (toplevel);
+    GdkWaylandSurface *wayland_surface = GDK_WAYLAND_SURFACE (surface);
+    GdkWaylandToplevel *wayland_toplevel = GDK_WAYLAND_TOPLEVEL (toplevel);
+
+    wayland_toplevel->initial_fullscreen_output = NULL;
+
+    if (!GDK_SURFACE_IS_MAPPED(surface))
+        return;
+
+    // layout gets deleted in the hide event
+    GdkToplevelLayout *layout_copy = gdk_toplevel_layout_ref(wayland_toplevel->layout);
+    gdk_wayland_surface_reset (surface);
+    wayland_toplevel->layout = layout_copy;
+}
+
+gboolean
+gdk_wayland_toplevel_reinit(GdkToplevel *toplevel)
+{
+    GdkSurface *surface = GDK_SURFACE (toplevel);
+    GdkWaylandSurface *wayland_surface = GDK_WAYLAND_SURFACE (surface);
+    GdkWaylandToplevel *wayland_toplevel = GDK_WAYLAND_TOPLEVEL (toplevel);
+    GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (gdk_surface_get_display (surface));
+
+    if (!GDK_SURFACE_IS_MAPPED(surface))
+        return TRUE;
+
+    // We need to reinitiliase in order, make sure we do top-most parents first.
+    if (wayland_toplevel->transient_for)
+      {
+        GdkWaylandSurface *impl_parent = GDK_WAYLAND_SURFACE (wayland_toplevel->transient_for);
+        if (!impl_parent->display_server.wl_surface)
+          return FALSE;
+      }
+
+    gdk_wayland_surface_reinit (surface);
+
+    gdk_wayland_toplevel_show (wayland_toplevel);
+    // We never set the gdk_surface to hidden, so on the first configure we don't get into gdk_surface_set_is_mapped
+    // get a frame ready
+    gdk_surface_invalidate_rect (surface, NULL);
+
+    if (wayland_toplevel->idle_inhibitor_refcount > 0)
+      {
+        g_clear_pointer (&wayland_toplevel->idle_inhibitor, zwp_idle_inhibitor_v1_destroy);
+        if (display_wayland->idle_inhibit_manager)
+          {
+            zwp_idle_inhibit_manager_v1_create_inhibitor (display_wayland->idle_inhibit_manager,
+                                                          wayland_surface->display_server.wl_surface);
+          }
+        else
+          {
+            wayland_toplevel->idle_inhibitor_refcount = 0;
+          }
+      }
+
+    // GTK Upstream TODO? Shortcuts inhibitors need to update as seats are removed and added
+    // Once that is done upstream, this code can be deleted.
+    if (surface->shortcuts_inhibited)
+      {
+        gdk_toplevel_restore_system_shortcuts (GDK_TOPLEVEL (toplevel));
+        GList *inhibitors = g_hash_table_get_values (wayland_toplevel->shortcuts_inhibitors);
+        g_list_foreach (inhibitors, ( GFunc)zwp_keyboard_shortcuts_inhibitor_v1_destroy, NULL);
+        g_hash_table_remove_all (wayland_toplevel->shortcuts_inhibitors);
+      }
+
+    g_clear_pointer(&wayland_toplevel->server_decoration, org_kde_kwin_server_decoration_destroy);
+    if (wayland_toplevel->decorated)
+      gdk_wayland_toplevel_announce_ssd (GDK_TOPLEVEL (toplevel));
+    else
+      gdk_wayland_toplevel_announce_csd (GDK_TOPLEVEL (toplevel));
+
+    return TRUE;
+}
+
 
 /* }}} */
 /* vim:set foldmethod=marker expandtab: */

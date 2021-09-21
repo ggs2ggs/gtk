@@ -149,6 +149,7 @@ struct _GdkWaylandDisplay
 struct _GdkWaylandDisplayClass
 {
   GdkDisplayClass parent_class;
+  void (*reconnected) (struct _GdkWaylandDisplay *display);
 };
 
 gboolean                gdk_wayland_display_prefers_ssd         (GdkDisplay *display);

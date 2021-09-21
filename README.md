@@ -8,7 +8,6 @@ This branch contains code to enable compositor handoffs:
 
 # New Dependencies
 
- - libwayland: https://gitlab.freedesktop.org/davidedmundson/wayland/-/tree/reconnections
  - mesa: https://gitlab.freedesktop.org/davidedmundson/mesa/-/tree/reconnect
 
 Mesa changes are not needed if you force "GSK_RENDERER=cairo"
@@ -37,11 +36,8 @@ Please report to branch authors if that is not the case
  - Forcing GSK_RENDERER=vulkan will not work
  - Foreign transient parents will be lost
  - Any manual low level wayland throughout other apps may need adjustments
+------------
 
-==========
-
-[![Build status](https://gitlab.gnome.org/GNOME/gtk/badges/master/pipeline.svg)](https://gitlab.gnome.org/GNOME/gtk/-/commits/master)
->>>>>>> e12721551b (don't merge this: update readme)
 
 General information
 -------------------

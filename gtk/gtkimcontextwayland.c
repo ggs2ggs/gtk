@@ -807,6 +807,21 @@ gtk_im_context_wayland_global_free (gpointer data)
   g_free (global);
 }
 
+static void
+display_reconnected_cb (GdkDisplay *display,
+                        gpointer    data)
+{
+  GtkIMContextWaylandGlobal *global = data;
+
+  g_clear_pointer (&global->registry,  wl_registry_destroy);
+  g_clear_pointer (&global->text_input, zwp_text_input_v3_destroy);
+  g_clear_pointer (&global->text_input_manager, zwp_text_input_manager_v3_destroy);
+  global->focused = FALSE;
+
+  global->registry = wl_display_get_registry (global->display);
+  wl_registry_add_listener (global->registry, &registry_listener, global);
+}
+
 static GtkIMContextWaylandGlobal *
 gtk_im_context_wayland_global_get (GdkDisplay *display)
 {
@@ -821,6 +836,8 @@ gtk_im_context_wayland_global_get (GdkDisplay *display)
   global->registry = wl_display_get_registry (global->display);
 
   wl_registry_add_listener (global->registry, &registry_listener, global);
+
+  g_signal_connect (display, "reconnected", G_CALLBACK (display_reconnected_cb), global);
 
   g_object_set_data_full (G_OBJECT (display),
                           "gtk-im-context-wayland-global",

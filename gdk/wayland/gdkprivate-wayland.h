@@ -190,6 +190,7 @@ void gdk_wayland_device_unset_touch_grab (GdkDevice        *device,
 void     _gdk_wayland_display_deliver_event (GdkDisplay *display, GdkEvent *event);
 GSource *_gdk_wayland_display_event_source_new (GdkDisplay *display);
 void     _gdk_wayland_display_queue_events (GdkDisplay *display);
+gboolean _gdk_wayland_display_handle_error (GdkDisplay *display);
 
 GdkAppLaunchContext *_gdk_wayland_display_get_app_launch_context (GdkDisplay *display);
 
@@ -211,7 +212,10 @@ cairo_surface_t * gdk_wayland_display_create_shm_surface  (GdkWaylandDisplay    
                                                            int                       width,
                                                            int                       height,
                                                            const GdkFractionalScale *scale);
-struct wl_buffer *_gdk_wayland_shm_surface_get_wl_buffer (cairo_surface_t *surface);
+
+struct wl_buffer *_gdk_wayland_shm_surface_get_wl_buffer (GdkWaylandDisplay *display,
+                                                          cairo_surface_t   *surface);
+
 gboolean _gdk_wayland_is_shm_surface (cairo_surface_t *surface);
 
 void gdk_wayland_seat_set_global_cursor (GdkSeat   *seat,
@@ -231,3 +235,5 @@ void gdk_wayland_surface_update_scale (GdkSurface *surface);
 GdkModifierType gdk_wayland_keymap_get_gdk_modifiers (GdkKeymap *keymap,
                                                       guint32    mods);
 
+gboolean _gdk_wayland_display_init (GdkWaylandDisplay *display);
+gboolean _gdk_wayland_display_reconnect (GdkWaylandDisplay *display);

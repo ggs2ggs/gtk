@@ -131,9 +131,9 @@ is_realized_shell_surface (GdkWaylandSurface *impl)
 void
 gdk_wayland_surface_get_window_geometry (GdkSurface   *surface,
                                          GdkRectangle *geometry)
-{     
+{
   GdkWaylandSurface *impl = GDK_WAYLAND_SURFACE (surface);
-      
+
   *geometry = (GdkRectangle) {
     .x = impl->shadow_left,
     .y = impl->shadow_top,
@@ -145,10 +145,10 @@ gdk_wayland_surface_get_window_geometry (GdkSurface   *surface,
 static struct wl_region *
 wl_region_from_cairo_region (GdkWaylandDisplay *display,
                              cairo_region_t    *region)
-{     
+{
   struct wl_region *wl_region;
   int i, n_rects;
-  
+
   wl_region = wl_compositor_create_region (display->compositor);
   if (wl_region == NULL)
     return NULL;
@@ -495,9 +495,11 @@ gdk_wayland_surface_attach_image (GdkSurface           *surface,
 
   g_assert (_gdk_wayland_is_shm_surface (cairo_surface));
 
+  GdkWaylandDisplay *display = GDK_WAYLAND_DISPLAY (gdk_surface_get_display (surface));
+
   /* Attach this new buffer to the surface */
   wl_surface_attach (impl->display_server.wl_surface,
-                     _gdk_wayland_shm_surface_get_wl_buffer (cairo_surface),
+                     _gdk_wayland_shm_surface_get_wl_buffer (display, cairo_surface),
                      0, 0);
 
   if ((impl->pending_buffer_offset_x || impl->pending_buffer_offset_y) &&
@@ -728,7 +730,7 @@ gdk_wayland_surface_fractional_scale_preferred_scale_cb (void *data,
 {
   GdkWaylandSurface *self = GDK_WAYLAND_SURFACE (data);
   GdkSurface *surface = GDK_SURFACE (self);
-  
+
   /* Notify app that scale changed */
   gdk_wayland_surface_update_size (surface,
                                    surface->width, surface->height,
@@ -931,8 +933,9 @@ maybe_notify_mapped (GdkSurface *surface)
   if (surface->destroyed)
     return;
 
-  if (!GDK_SURFACE_IS_MAPPED (surface))
+  if (!GDK_SURFACE_IS_MAPPED (surface)) {
     gdk_surface_set_is_mapped (surface, TRUE);
+  }
 }
 
 static void
@@ -1382,6 +1385,37 @@ gdk_wayland_surface_get_wl_surface (GdkSurface *surface)
   g_return_val_if_fail (GDK_IS_WAYLAND_SURFACE (surface), NULL);
 
   return GDK_WAYLAND_SURFACE (surface)->display_server.wl_surface;
+}
+
+void
+gdk_wayland_surface_reset (GdkSurface *surface)
+{
+  GdkWaylandSurface *impl = GDK_WAYLAND_SURFACE (surface);
+  GdkDisplay *display = gdk_surface_get_display (surface);
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (display);
+
+  impl->last_configure_serial = 0;
+  impl->pending_frame_counter = 0;
+
+  gdk_wayland_surface_hide(surface);
+  gdk_wayland_surface_destroy_wl_surface (impl);
+
+  if (impl->event_queue)
+  {
+    display_wayland->event_queues =
+      g_list_remove (display_wayland->event_queues, impl->event_queue);
+    g_clear_pointer (&impl->event_queue, wl_event_queue_destroy);
+  }
+
+  impl->event_queue = wl_display_create_queue (display_wayland->wl_display);
+  display_wayland->event_queues = g_list_prepend (display_wayland->event_queues,
+                                                impl->event_queue);
+}
+
+void
+gdk_wayland_surface_reinit (GdkSurface *surface)
+{
+  gdk_wayland_surface_create_wl_surface(surface);
 }
 
 /* }}}} */

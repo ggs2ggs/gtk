@@ -242,7 +242,7 @@ from_texture:
       *scale = 1;
 
       cairo_surface_reference (surface);
-      buffer = _gdk_wayland_shm_surface_get_wl_buffer (surface);
+      buffer = _gdk_wayland_shm_surface_get_wl_buffer (display, surface);
       wl_buffer_add_listener (buffer, &buffer_listener, surface);
 
       g_object_unref (texture);
