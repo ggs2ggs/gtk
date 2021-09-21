@@ -40,4 +40,6 @@ void                     gdk_wayland_toplevel_uninhibit_idle            (GdkTopl
 
 void                     gdk_wayland_surface_ensure_wl_egl_window       (GdkSurface  *surface);
 
+gboolean                 gdk_wayland_surface_reinit                     (GdkSurface  *surface);
+
 G_END_DECLS

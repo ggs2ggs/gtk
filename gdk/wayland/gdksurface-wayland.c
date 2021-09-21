@@ -22,7 +22,6 @@
 #include "gdkdeviceprivate.h"
 #include "gdkdisplay-wayland.h"
 #include "gdkdragsurfaceprivate.h"
-#include "gdkeventsprivate.h"
 #include "gdkframeclockidleprivate.h"
 #include "gdkglcontext-wayland.h"
 #include "gdkmonitor-wayland.h"
@@ -241,6 +240,7 @@ struct _GdkWaylandToplevel
   GdkWaylandToplevel *transient_for;
 
   struct org_kde_kwin_server_decoration *server_decoration;
+  gboolean decorated;
   struct zxdg_exported_v1 *xdg_exported;
 
   struct {
@@ -904,16 +904,16 @@ gdk_wayland_surface_attach_image (GdkSurface           *surface,
 
   g_assert (_gdk_wayland_is_shm_surface (cairo_surface));
 
+  display = GDK_WAYLAND_DISPLAY (gdk_surface_get_display (surface));
   /* Attach this new buffer to the surface */
   wl_surface_attach (impl->display_server.wl_surface,
-                     _gdk_wayland_shm_surface_get_wl_buffer (cairo_surface),
+                     _gdk_wayland_shm_surface_get_wl_buffer (display, cairo_surface),
                      impl->pending_buffer_offset_x,
                      impl->pending_buffer_offset_y);
   impl->pending_buffer_offset_x = 0;
   impl->pending_buffer_offset_y = 0;
 
   /* Only set the buffer scale if supported by the compositor */
-  display = GDK_WAYLAND_DISPLAY (gdk_surface_get_display (surface));
   if (display->compositor_version >= WL_SURFACE_HAS_BUFFER_SCALE)
     wl_surface_set_buffer_scale (impl->display_server.wl_surface, impl->scale);
 
@@ -2240,6 +2240,8 @@ gdk_wayland_toplevel_announce_csd (GdkToplevel *toplevel)
   g_return_if_fail (GDK_IS_WAYLAND_TOPLEVEL (toplevel));
   toplevel_wayland = GDK_WAYLAND_TOPLEVEL (toplevel);
 
+  toplevel_wayland->decorated = FALSE;
+
   if (!display_wayland->server_decoration_manager)
     return;
   toplevel_wayland->server_decoration =
@@ -2258,6 +2260,8 @@ gdk_wayland_toplevel_announce_ssd (GdkToplevel *toplevel)
 
   g_return_if_fail (GDK_IS_WAYLAND_TOPLEVEL (toplevel));
   toplevel_wayland = GDK_WAYLAND_TOPLEVEL (toplevel);
+
+  toplevel_wayland->decorated = TRUE;
 
   if (!display_wayland->server_decoration_manager)
     return;
@@ -2865,6 +2869,71 @@ gdk_wayland_surface_show (GdkSurface *surface)
     gdk_wayland_surface_create_surface (surface);
 
   gdk_wayland_surface_map_toplevel (surface);
+}
+
+gboolean
+gdk_wayland_surface_reinit(GdkSurface *surface)
+{
+    GdkWaylandSurface *impl = GDK_WAYLAND_SURFACE (surface);
+    GdkWaylandToplevel *toplevel = GDK_WAYLAND_TOPLEVEL (impl);
+    GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (gdk_surface_get_display (surface));
+
+    // We need to reinitiliase in order, make sure we do top-most parents first.
+    if (toplevel && toplevel->transient_for)
+      {
+        GdkWaylandSurface *impl_parent = GDK_WAYLAND_SURFACE (toplevel->transient_for);
+        if (wl_proxy_get_is_defunct ( (struct wl_proxy*) impl_parent->display_server.wl_surface))
+          return FALSE;
+      }
+
+    impl->last_configure_serial = 0;
+    impl->pending_frame_counter = 0;
+
+    impl->initial_fullscreen_output = NULL;
+
+    if (!GDK_SURFACE_IS_MAPPED(surface))
+        return TRUE;
+
+    // layout gets deleted in the hide event
+    GdkToplevelLayout *layout_copy = gdk_toplevel_layout_ref(impl->toplevel.layout);
+    gdk_wayland_surface_hide (surface);
+    // mark ourselves as unmapped so that we can remap correctly
+    surface->pending_is_mapped = FALSE;
+    impl->toplevel.layout = layout_copy;
+
+    gdk_wayland_surface_show (surface);
+
+    if (toplevel->idle_inhibitor_refcount > 0)
+      {
+        g_clear_pointer (&toplevel->idle_inhibitor, zwp_idle_inhibitor_v1_destroy);
+        if (display_wayland->idle_inhibit_manager)
+          {
+            zwp_idle_inhibit_manager_v1_create_inhibitor (display_wayland->idle_inhibit_manager,
+                                                          impl->display_server.wl_surface);
+          }
+        else
+          {
+            toplevel->idle_inhibitor_refcount = 0;
+          }
+      }
+
+    // GTK Upstream TODO? Shortcuts inhibitors need to update as seats are removed and added
+    // Once that is done upstream, this code can be deleted.
+    if (surface->shortcuts_inhibited)
+      {
+        gdk_toplevel_restore_system_shortcuts (GDK_TOPLEVEL (toplevel));
+        GList *inhibitors = g_hash_table_get_values (impl->shortcuts_inhibitors);
+        g_list_foreach (inhibitors, ( GFunc)zwp_keyboard_shortcuts_inhibitor_v1_destroy, NULL);
+        g_hash_table_remove_all (impl->shortcuts_inhibitors);
+      }
+
+    g_clear_pointer(&toplevel->server_decoration, org_kde_kwin_server_decoration_destroy);
+    if (toplevel->decorated)
+      gdk_wayland_toplevel_announce_ssd (GDK_TOPLEVEL (toplevel));
+    else
+      gdk_wayland_toplevel_announce_csd (GDK_TOPLEVEL (toplevel));
+
+    return TRUE;
 }
 
 static void

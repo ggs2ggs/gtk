@@ -84,6 +84,8 @@ gdk_event_source_prepare (GSource *base,
 
   if (wl_display_flush (display->wl_display) < 0)
     {
+        if (_gdk_wayland_display_handle_error(source->display))
+            return TRUE;
       g_message ("Error flushing display: %s", g_strerror (errno));
       _exit (1);
     }
@@ -113,6 +115,11 @@ gdk_event_source_check (GSource *base)
         {
           if (wl_display_read_events (display_wayland->wl_display) < 0)
             {
+              source->reading = FALSE;
+              if (_gdk_wayland_display_handle_error(source->display))
+                {
+                  return TRUE;
+                }
               g_message ("Error reading events from display: %s", g_strerror (errno));
               _exit (1);
             }
@@ -217,6 +224,10 @@ _gdk_wayland_display_queue_events (GdkDisplay *display)
 
   if (wl_display_dispatch_pending (display_wayland->wl_display) < 0)
     {
+        if (_gdk_wayland_display_handle_error(display))
+          {
+              return;
+          }
       g_message ("Error %d (%s) dispatching to Wayland display.",
                  errno, g_strerror (errno));
       _exit (1);
@@ -228,6 +239,11 @@ _gdk_wayland_display_queue_events (GdkDisplay *display)
 
       if (wl_display_dispatch_queue_pending (display_wayland->wl_display, queue) < 0)
         {
+          if (_gdk_wayland_display_handle_error (display))
+            {
+              return;
+            }
+
           g_message ("Error %d (%s) dispatching to Wayland display.",
                      errno, g_strerror (errno));
           _exit (1);
@@ -236,8 +252,44 @@ _gdk_wayland_display_queue_events (GdkDisplay *display)
 
   if (source->pfd.revents & (G_IO_ERR | G_IO_HUP))
     {
+      if (_gdk_wayland_display_handle_error (display))
+        {
+            return;
+        }
       g_message ("Lost connection to Wayland compositor.");
       _exit (1);
     }
+
   source->pfd.revents = 0;
+}
+
+gboolean
+_gdk_wayland_display_handle_error (GdkDisplay *display)
+{
+  GdkWaylandDisplay *display_wayland;
+  static gboolean reconnecting = FALSE;
+  gboolean reconnected;
+
+  display_wayland = GDK_WAYLAND_DISPLAY (display);
+  GdkWaylandEventSource *source = (GdkWaylandEventSource *) display_wayland->event_source;
+
+  /* Only try to reconnect for socket errors, not protocol errors. */
+  if ( !(source->pfd.revents & (G_IO_ERR | G_IO_HUP)))
+    {
+      int error = wl_display_get_error (display_wayland->wl_display);
+      if (error != EPIPE && error != ECONNRESET)
+        return FALSE;
+    }
+
+  if (reconnecting) {
+    return FALSE;
+  }
+
+  reconnecting = TRUE;
+  reconnected =  _gdk_wayland_display_reconnect (display_wayland);
+  reconnecting = FALSE;
+
+  source->pfd.revents = 0;
+
+  return reconnected;
 }
