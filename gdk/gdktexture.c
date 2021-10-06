@@ -40,7 +40,10 @@
 
 #include "gdktextureprivate.h"
 
+#include "gdkcairo.h"
+#include "gdkcolorprofile.h"
 #include "gdkintl.h"
+#include "gdkmemoryformatprivate.h"
 #include "gdkmemorytextureprivate.h"
 #include "gdkpaintable.h"
 #include "gdksnapshot.h"
@@ -60,8 +63,9 @@ gtk_snapshot_append_texture (GdkSnapshot            *snapshot,
 
 enum {
   PROP_0,
-  PROP_WIDTH,
+  PROP_COLOR_PROFILE,
   PROP_HEIGHT,
+  PROP_WIDTH,
 
   N_PROPS
 };
@@ -262,12 +266,18 @@ gdk_texture_set_property (GObject      *gobject,
 
   switch (prop_id)
     {
-    case PROP_WIDTH:
-      self->width = g_value_get_int (value);
+    case PROP_COLOR_PROFILE:
+      self->color_profile = g_value_dup_object (value);
+      if (self->color_profile == NULL)
+        self->color_profile = g_object_ref (gdk_color_profile_get_srgb ());
       break;
 
     case PROP_HEIGHT:
       self->height = g_value_get_int (value);
+      break;
+
+    case PROP_WIDTH:
+      self->width = g_value_get_int (value);
       break;
 
     default:
@@ -286,12 +296,16 @@ gdk_texture_get_property (GObject    *gobject,
 
   switch (prop_id)
     {
-    case PROP_WIDTH:
-      g_value_set_int (value, self->width);
+    case PROP_COLOR_PROFILE:
+      g_value_set_object (value, self->color_profile);
       break;
 
     case PROP_HEIGHT:
       g_value_set_int (value, self->height);
+      break;
+
+    case PROP_WIDTH:
+      g_value_set_int (value, self->width);
       break;
 
     default:
@@ -306,6 +320,7 @@ gdk_texture_dispose (GObject *object)
   GdkTexture *self = GDK_TEXTURE (object);
 
   gdk_texture_clear_render_data (self);
+  g_clear_object (&self->color_profile);
 
   G_OBJECT_CLASS (gdk_texture_parent_class)->dispose (object);
 }
@@ -324,14 +339,31 @@ gdk_texture_class_init (GdkTextureClass *klass)
   gobject_class->dispose = gdk_texture_dispose;
 
   /**
-   * GdkTexture:width: (attributes org.gtk.Property.get=gdk_texture_get_width)
+   * GdkTexture:color-profile: (attributes org.gtk.Property.get=gdk_texture_get_color_profile)
    *
-   * The width of the texture, in pixels.
+   * The color profile associated with texture.
+   *
+   * Since: 4.6
    */
-  properties[PROP_WIDTH] =
-    g_param_spec_int ("width",
-                      "Width",
-                      "The width of the texture",
+  properties[PROP_COLOR_PROFILE] =
+    g_param_spec_object ("color-profile",
+                         P_("Color Profile"),
+                         P_("The associated color profile"),
+                         GDK_TYPE_COLOR_PROFILE,
+                         G_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT_ONLY |
+                         G_PARAM_STATIC_STRINGS |
+                         G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * GdkTexture:height: (attributes org.gtk.Property.get=gdk_texture_get_height)
+   *
+   * The height of the texture, in pixels.
+   */
+  properties[PROP_HEIGHT] =
+    g_param_spec_int ("height",
+                      P_("Height"),
+                      P_("The height of the texture"),
                       1,
                       G_MAXINT,
                       1,
@@ -341,14 +373,14 @@ gdk_texture_class_init (GdkTextureClass *klass)
                       G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GdkTexture:height: (attributes org.gtk.Property.get=gdk_texture_get_height)
+   * GdkTexture:width: (attributes org.gtk.Property.get=gdk_texture_get_width)
    *
-   * The height of the texture, in pixels.
+   * The width of the texture, in pixels.
    */
-  properties[PROP_HEIGHT] =
-    g_param_spec_int ("height",
-                      "Height",
-                      "The height of the texture",
+  properties[PROP_WIDTH] =
+    g_param_spec_int ("width",
+                      P_("Width"),
+                      P_("The width of the texture"),
                       1,
                       G_MAXINT,
                       1,
@@ -391,15 +423,40 @@ gdk_texture_new_for_surface (cairo_surface_t *surface)
                                       (GDestroyNotify) cairo_surface_destroy,
                                       cairo_surface_reference (surface));
   
-  texture = gdk_memory_texture_new (cairo_image_surface_get_width (surface),
-                                    cairo_image_surface_get_height (surface),
-                                    GDK_MEMORY_DEFAULT,
-                                    bytes,
-                                    cairo_image_surface_get_stride (surface));
+  texture = gdk_memory_texture_new_with_color_profile (cairo_image_surface_get_width (surface),
+                                                       cairo_image_surface_get_height (surface),
+                                                       GDK_MEMORY_DEFAULT,
+                                                       gdk_cairo_surface_get_color_profile (surface),
+                                                       bytes,
+                                                       cairo_image_surface_get_stride (surface));
 
   g_bytes_unref (bytes);
 
   return texture;
+}
+
+static GdkColorProfile *
+gdk_color_profile_from_pixbuf (GdkPixbuf *pixbuf)
+{
+  const char *icc_profile_base64;
+  GdkColorProfile *profile = NULL;
+
+  icc_profile_base64 = gdk_pixbuf_get_option (pixbuf, "icc-profile");
+  if (icc_profile_base64)
+    {
+      guchar *icc_data;
+      gsize icc_len;
+      GBytes *bytes;
+
+      icc_data = g_base64_decode (icc_profile_base64, &icc_len);
+      bytes = g_bytes_new_take (icc_data, icc_len);
+      profile = gdk_color_profile_new_from_icc_bytes (bytes, NULL);
+      g_bytes_unref (bytes);
+    }
+  if (!profile)
+    profile = g_object_ref (gdk_color_profile_get_srgb ());
+
+  return profile;
 }
 
 /**
@@ -419,23 +476,30 @@ gdk_texture_new_for_pixbuf (GdkPixbuf *pixbuf)
 {
   GdkTexture *texture;
   GBytes *bytes;
+  GdkColorProfile *profile;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+
+  profile = gdk_color_profile_from_pixbuf (pixbuf);
 
   bytes = g_bytes_new_with_free_func (gdk_pixbuf_get_pixels (pixbuf),
                                       gdk_pixbuf_get_height (pixbuf)
                                       * gdk_pixbuf_get_rowstride (pixbuf),
                                       g_object_unref,
                                       g_object_ref (pixbuf));
-  texture = gdk_memory_texture_new (gdk_pixbuf_get_width (pixbuf),
-                                    gdk_pixbuf_get_height (pixbuf),
-                                    gdk_pixbuf_get_has_alpha (pixbuf)
-                                    ? GDK_MEMORY_GDK_PIXBUF_ALPHA
-                                    : GDK_MEMORY_GDK_PIXBUF_OPAQUE,
-                                    bytes,
-                                    gdk_pixbuf_get_rowstride (pixbuf));
+
+  texture = gdk_memory_texture_new_with_color_profile (gdk_pixbuf_get_width (pixbuf),
+                                                       gdk_pixbuf_get_height (pixbuf),
+                                                       gdk_pixbuf_get_has_alpha (pixbuf)
+                                                       ? GDK_MEMORY_GDK_PIXBUF_ALPHA
+                                                       : GDK_MEMORY_GDK_PIXBUF_OPAQUE,
+                                                       profile,
+                                                       bytes,
+                                                       gdk_pixbuf_get_rowstride (pixbuf));
 
   g_bytes_unref (bytes);
+
+  g_object_unref (profile);
 
   return texture;
 }
@@ -692,23 +756,73 @@ gdk_texture_get_height (GdkTexture *texture)
   return texture->height;
 }
 
+/**
+ * gdk_texture_get_color_profile: (attributes org.gtk.Method.get_property=color-profile)
+ * @texture: a `GdkTexture`
+ *
+ * Returns the color profile associsated with @texture.
+ *
+ * Returns: the color profile of the `GdkTexture`
+ *
+ * Since: 4.6
+ */
+GdkColorProfile *
+gdk_texture_get_color_profile (GdkTexture *texture)
+{
+  g_return_val_if_fail (GDK_IS_TEXTURE (texture), 0);
+
+  return texture->color_profile;
+}
+
+/*<private>
+ * gdk_texture_download_surface:
+ * @texture: the texture to download
+ * @target_profile: (nullable): The target color profile or %NULL for the
+ *   default sRGB.
+ *
+ * Downloads the texture into a newly created Cairo surface.
+ *
+ * Returns: A new Cairo surface.
+ **/
 cairo_surface_t *
-gdk_texture_download_surface (GdkTexture *texture)
+gdk_texture_download_surface (GdkTexture      *texture,
+                              GdkColorProfile *target_profile)
 {
   cairo_surface_t *surface;
   cairo_status_t surface_status;
 
+
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                                         texture->width, texture->height);
+  if (target_profile != NULL)
+    gdk_cairo_surface_set_color_profile (surface, target_profile);
+  else
+    target_profile = gdk_color_profile_get_srgb ();
 
   surface_status = cairo_surface_status (surface);
   if (surface_status != CAIRO_STATUS_SUCCESS)
-    g_warning ("%s: surface error: %s", __FUNCTION__,
-               cairo_status_to_string (surface_status));
+    {
+      g_warning ("%s: surface error: %s", __FUNCTION__,
+                 cairo_status_to_string (surface_status));
+    }
+  else
+    {
+      GdkTexture *download = gdk_texture_download_texture (texture);
+      GdkMemoryTexture *memdownload = GDK_MEMORY_TEXTURE (download);
 
-  gdk_texture_download (texture,
-                        cairo_image_surface_get_data (surface),
-                        cairo_image_surface_get_stride (surface));
+      gdk_memory_convert (cairo_image_surface_get_data (surface),
+                          cairo_image_surface_get_stride (surface),
+                          GDK_MEMORY_DEFAULT,
+                          target_profile,
+                          gdk_memory_texture_get_data (memdownload),
+                          gdk_memory_texture_get_stride (memdownload),
+                          gdk_memory_texture_get_format (memdownload),
+                          download->color_profile,
+                          download->width,
+                          download->height);
+      g_object_unref (download);
+    }
+
   cairo_surface_mark_dirty (surface);
 
   return surface;

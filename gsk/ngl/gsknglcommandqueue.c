@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include <gdk/gdkglcontextprivate.h>
+#include <gdk/gdkmemoryformatprivate.h>
 #include <gdk/gdkmemorytextureprivate.h>
 #include <gdk/gdkprofilerprivate.h>
 #include <gsk/gskdebugprivate.h>
@@ -1319,6 +1320,86 @@ gsk_ngl_command_queue_create_framebuffer (GskNglCommandQueue *self)
   return fbo_id;
 }
 
+static void
+gsk_ngl_command_queue_do_upload_texture (GdkGLContext    *context,
+                                         GdkTexture      *texture,
+                                         int              x,
+                                         int              y,
+                                         int              width,
+                                         int              height,
+                                         guint            texture_target)
+{
+  GdkMemoryTexture *memory_texture;
+  GdkMemoryFormat data_format;
+  GLenum gl_internalformat;
+  GLenum gl_format;
+  GLenum gl_type;
+  gsize bpp, stride;
+  const guchar *data;
+
+  g_return_if_fail (GDK_IS_GL_CONTEXT (context));
+
+  memory_texture = GDK_MEMORY_TEXTURE (gdk_texture_download_texture (texture));
+  data_format = gdk_memory_texture_get_format (memory_texture);
+
+  if (!gdk_memory_format_gl_format (data_format,
+                                    gdk_gl_context_get_use_es (context),
+                                    &gl_internalformat,
+                                    &gl_format,
+                                    &gl_type))
+    {
+      data_format = GDK_MEMORY_R8G8B8A8_PREMULTIPLIED;
+      if (!gdk_memory_format_gl_format (GDK_MEMORY_R8G8B8A8_PREMULTIPLIED,
+                                        gdk_gl_context_get_use_es (context),
+                                        &gl_internalformat,
+                                        &gl_format,
+                                        &gl_type))
+        {
+          g_assert_not_reached ();
+        }
+    }
+
+  memory_texture = gdk_memory_texture_convert (memory_texture,
+                                               data_format,
+                                               gdk_color_profile_get_srgb (),
+                                               &(GdkRectangle) { x, y, width, height });
+
+  bpp = gdk_memory_format_bytes_per_pixel (data_format);
+  stride = gdk_memory_texture_get_stride (memory_texture);
+  data = gdk_memory_texture_get_data (memory_texture);
+
+  /* GL_UNPACK_ROW_LENGTH is available on desktop GL, OpenGL ES >= 3.0, or if
+   * the GL_EXT_unpack_subimage extension for OpenGL ES 2.0 is available
+   */
+  if (stride == width * bpp)
+    {
+      glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
+
+      glTexImage2D (texture_target, 0, gl_internalformat, width, height, 0, gl_format, gl_type, data);
+      glPixelStorei (GL_UNPACK_ALIGNMENT, 4);
+    }
+  else if ((stride % bpp == 0) &&
+           (!gdk_gl_context_get_use_es (context) ||
+            gdk_gl_context_has_version (context, 3, 0) ||
+            gdk_gl_context_has_unpack_subimage (context)))
+    {
+      glPixelStorei (GL_UNPACK_ROW_LENGTH, stride / bpp);
+
+      glTexImage2D (texture_target, 0, gl_internalformat, width, height, 0, gl_format, gl_type, data);
+
+      glPixelStorei (GL_UNPACK_ROW_LENGTH, 0);
+    }
+  else
+    {
+      int i;
+      glTexImage2D (texture_target, 0, gl_internalformat, width, height, 0, gl_format, gl_type, NULL);
+      for (i = 0; i < height; i++)
+        glTexSubImage2D (texture_target, 0, 0, i, width, 1, gl_format, gl_type, data + (i * stride));
+    }
+
+  g_clear_object (&memory_texture);
+}
+
 int
 gsk_ngl_command_queue_upload_texture (GskNglCommandQueue *self,
                                       GdkTexture         *texture,
@@ -1330,11 +1411,6 @@ gsk_ngl_command_queue_upload_texture (GskNglCommandQueue *self,
                                       int                 mag_filter)
 {
   G_GNUC_UNUSED gint64 start_time = GDK_PROFILER_CURRENT_TIME;
-  cairo_surface_t *surface = NULL;
-  GdkMemoryFormat data_format;
-  const guchar *data;
-  gsize data_stride;
-  gsize bpp;
   int texture_id;
 
   g_assert (GSK_IS_NGL_COMMAND_QUEUE (self));
@@ -1357,42 +1433,22 @@ gsk_ngl_command_queue_upload_texture (GskNglCommandQueue *self,
   if (texture_id == -1)
     return texture_id;
 
-  if (GDK_IS_MEMORY_TEXTURE (texture))
-    {
-      GdkMemoryTexture *memory_texture = GDK_MEMORY_TEXTURE (texture);
-      data = gdk_memory_texture_get_data (memory_texture);
-      data_format = gdk_memory_texture_get_format (memory_texture);
-      data_stride = gdk_memory_texture_get_stride (memory_texture);
-    }
-  else
-    {
-      /* Fall back to downloading to a surface */
-      surface = gdk_texture_download_surface (texture);
-      cairo_surface_flush (surface);
-      data = cairo_image_surface_get_data (surface);
-      data_format = GDK_MEMORY_DEFAULT;
-      data_stride = cairo_image_surface_get_stride (surface);
-    }
-
   self->n_uploads++;
-
-  bpp = gdk_memory_format_bytes_per_pixel (data_format);
 
   /* Switch to texture0 as 2D. We'll restore it later. */
   glActiveTexture (GL_TEXTURE0);
   glBindTexture (GL_TEXTURE_2D, texture_id);
 
-  gdk_gl_context_upload_texture (gdk_gl_context_get_current (),
-                                 data + x_offset * bpp + y_offset * data_stride,
-                                 width, height, data_stride,
-                                 data_format, GL_TEXTURE_2D);
+  gsk_ngl_command_queue_do_upload_texture (gdk_gl_context_get_current (),
+                                           texture,
+                                           x_offset, y_offset,
+                                           width, height,
+                                           GL_TEXTURE_2D);
 
   /* Restore previous texture state if any */
   if (self->attachments->textures[0].id > 0)
     glBindTexture (self->attachments->textures[0].target,
                    self->attachments->textures[0].id);
-
-  g_clear_pointer (&surface, cairo_surface_destroy);
 
   if (gdk_profiler_is_running ())
     gdk_profiler_add_markf (start_time, GDK_PROFILER_CURRENT_TIME-start_time,

@@ -87,6 +87,11 @@ typedef enum {
   GDK_MEMORY_R16G16B16A16_FLOAT_PREMULTIPLIED,
   GDK_MEMORY_R32G32B32_FLOAT,
   GDK_MEMORY_R32G32B32A32_FLOAT_PREMULTIPLIED,
+#ifdef GTK_COMPILATION
+  GDK_MEMORY_R16G16B16A16,
+  GDK_MEMORY_R16G16B16A16_FLOAT,
+  GDK_MEMORY_R32G32B32A32_FLOAT,
+#endif
 
   GDK_MEMORY_N_FORMATS
 } GdkMemoryFormat;
@@ -128,6 +133,14 @@ GDK_AVAILABLE_IN_ALL
 GdkTexture *            gdk_memory_texture_new              (int                width,
                                                              int                height,
                                                              GdkMemoryFormat    format,
+                                                             GBytes            *bytes,
+                                                             gsize              stride);
+GDK_AVAILABLE_IN_4_6
+GdkTexture *            gdk_memory_texture_new_with_color_profile
+                                                            (int                width,
+                                                             int                height,
+                                                             GdkMemoryFormat    format,
+                                                             GdkColorProfile   *profile,
                                                              GBytes            *bytes,
                                                              gsize              stride);
 
