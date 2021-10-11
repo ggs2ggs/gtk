@@ -1,7 +1,47 @@
-GTK — The GTK toolkit
-=====================
+GTK — The GTK toolkit (Reconnections branch)
 
 [![Build status](https://gitlab.gnome.org/GNOME/gtk/badges/main/pipeline.svg)](https://gitlab.gnome.org/GNOME/gtk/-/commits/main)
+
+This branch contains code to enable compositor handoffs:
+ - https://lists.freedesktop.org/archives/wayland-devel/2021-August/041959.html
+ - XDC talk: https://media.ccc.de/v/xdc2021-18-addressing_wayland_robustness
+
+# New Dependencies
+
+ - libwayland: https://gitlab.freedesktop.org/davidedmundson/wayland/-/tree/reconnections
+ - mesa: https://gitlab.freedesktop.org/davidedmundson/mesa/-/tree/reconnect
+
+Mesa changes are not needed if you force "GSK_RENDERER=cairo"
+
+# Testing
+
+With kwin (native)
+ - Login to a plasma session 5.21 onwards
+ - Start gt4k-demo
+ - killall -9 kwin_wayland
+
+With kwin (nested)
+ - Run kwin_wayland_wrapper
+ - WAYLAND_DISPLAY=wayland-1 gtk4-demo
+ - killall -9 kwin_wayland
+
+With weston:
+ - https://gitlab.freedesktop.org/davidre/weston/-/tree/restart
+ - Follow similar steps to above
+
+# Current state
+Everything in GTK4-demo should be seamless, same for any other GTK apps!
+Please report to branch authors if that is not the case
+
+## Caveats
+ - Forcing GSK_RENDERER=vulkan will not work
+ - Foreign transient parents will be lost
+ - Any manual low level wayland throughout other apps may need adjustments
+
+==========
+
+[![Build status](https://gitlab.gnome.org/GNOME/gtk/badges/master/pipeline.svg)](https://gitlab.gnome.org/GNOME/gtk/-/commits/master)
+>>>>>>> e12721551b (don't merge this: update readme)
 
 General information
 -------------------
