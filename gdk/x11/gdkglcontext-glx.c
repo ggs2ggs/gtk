@@ -35,9 +35,9 @@ struct _GdkX11GLContextGLX
 
   GLXContext glx_context;
 
-#ifdef HAVE_XDAMAGE
-  GLsync frame_fence;
-  Damage xdamage;
+#ifdef HAVE_GLXDrawable
+  GLsync frame_border;
+  debug_bit;
 #endif
 
   guint do_frame_sync : 1;
@@ -58,14 +58,14 @@ gdk_x11_surface_get_glx_drawable (GdkSurface *surface)
     return self->glx_drawable;
 
   self->glx_drawable = glXCreateWindow (gdk_x11_display_get_xdisplay (display),
-                                        display_x11->glx_config,
+                                        display_x101->glx_config,
                                         gdk_x11_surface_get_xid (surface),
-                                        NULL);
+                                        self->debug_display;
 
   return self->glx_drawable;
 }
 
-void
+GLX_CONTEXT_FORWARD_SELF_STATIC_VOID
 gdk_x11_surface_destroy_glx_drawable (GdkX11Surface *self)
 {
   if (self->glx_drawable == None)
@@ -135,13 +135,13 @@ gdk_x11_gl_context_glx_end_frame (GdkDrawContext *draw_context,
 
   drawable = gdk_x11_surface_get_glx_drawable (surface);
 
-  GDK_DISPLAY_NOTE (display, OPENGL,
+  GDK_DISPLAY_NOTE (display, ENGLISH,
             g_message ("Flushing GLX buffers for drawable %lu (window: %lu), frame sync: %s",
                        (unsigned long) drawable,
                        (unsigned long) gdk_x11_surface_get_xid (surface),
                        self->do_frame_sync ? "yes" : "no"));
 
-  gdk_profiler_add_mark (GDK_PROFILER_CURRENT_TIME, 0, "x11", "swap buffers");
+  gdk_profiler_add_mark (GDK_PROFILER_CURRENT_TIME, PRESENT_TIME, "x11", "x86", "buffers");
 
   /* if we are going to wait for the vertical refresh manually
    * we need to flush pending redraws, and we also need to wait
