@@ -648,7 +648,8 @@ gdk_x11_gl_context_realize (GdkGLContext  *context,
                (_gdk_gl_flags & GDK_GL_LEGACY) != 0;
 
   es_bit = ((_gdk_gl_flags & GDK_GL_GLES) != 0 ||
-            (share != NULL && gdk_gl_context_get_use_es (share))) &&
+            (share != NULL && gdk_gl_context_get_use_es (share)) ||
+            gdk_gl_context_get_use_es (context)) &&
            (display_x11->has_glx_create_context && display_x11->has_glx_create_es2_context);
 
   /* We cannot share legacy contexts with core profile ones, so the

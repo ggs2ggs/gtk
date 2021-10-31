@@ -123,7 +123,8 @@ gdk_wayland_gl_context_realize (GdkGLContext *context,
   legacy_bit = (_gdk_gl_flags & GDK_GL_LEGACY) != 0 ||
                (share != NULL && gdk_gl_context_is_legacy (share));
   use_es = (_gdk_gl_flags & GDK_GL_GLES) != 0 ||
-           (share != NULL && gdk_gl_context_get_use_es (share));
+           (share != NULL && gdk_gl_context_get_use_es (share)) ||
+           gdk_gl_context_get_use_es (context);
 
   flags = 0;
 

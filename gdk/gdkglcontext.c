@@ -736,9 +736,6 @@ gdk_gl_context_get_use_es (GdkGLContext *context)
 
   g_return_val_if_fail (GDK_IS_GL_CONTEXT (context), FALSE);
 
-  if (!priv->realized)
-    return FALSE;
-
   return priv->use_es > 0;
 }
 
