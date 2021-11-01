@@ -503,6 +503,12 @@ gdk_registry_handle_global (void               *data,
                           &xdg_activation_v1_interface,
                           display_wayland->xdg_activation_version);
     }
+  else if (strcmp (interface, "wp_transaction_manager_v1") == 0)
+    {
+      display_wayland->transaction_manager =
+        wl_registry_bind (display_wayland->wl_registry, id,
+                          &wp_transaction_manager_v1_interface, 1);
+    }
 
   g_hash_table_insert (display_wayland->known_globals,
                        GUINT_TO_POINTER (id), g_strdup (interface));
