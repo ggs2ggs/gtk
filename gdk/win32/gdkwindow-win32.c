@@ -3496,6 +3496,13 @@ _gdk_win32_window_handle_aerosnap (GdkWindow            *window,
   n_monitors = gdk_screen_get_n_monitors (screen);
   monitor = gdk_screen_get_monitor_at_window (screen, window);
 
+  /* Do nothing if the window is not resizable */
+  if ((impl->hint_flags & GDK_HINT_MIN_SIZE) &&
+      (impl->hint_flags & GDK_HINT_MAX_SIZE) &&
+      impl->hints.min_width == impl->hints.max_width &&
+      impl->hints.min_height == impl->hints.max_height)
+    return;
+
   if (minimized && maximized)
     minimized = FALSE;
 
@@ -4215,6 +4222,13 @@ handle_aerosnap_move_resize (GdkWindow                   *window,
   gint fullup = 0;
   gboolean fullup_edge = FALSE;
   GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
+
+  /* Do nothing if the window is not resizable */
+  if ((impl->hint_flags & GDK_HINT_MIN_SIZE) &&
+      (impl->hint_flags & GDK_HINT_MAX_SIZE) &&
+      impl->hints.min_width == impl->hints.max_width &&
+      impl->hints.min_height == impl->hints.max_height)
+    return;
 
   if (context->op == GDK_WIN32_DRAGOP_RESIZE)
     switch (context->edge)
