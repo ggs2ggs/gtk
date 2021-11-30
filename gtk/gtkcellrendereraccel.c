@@ -69,8 +69,9 @@ static char *convert_keysym_state_to_string     (GtkCellRendererAccel *accel,
                                                   GdkModifierType       mask,
                                                   guint                 keycode);
 static GtkWidget *gtk_cell_editable_widget_new (GtkCellRenderer          *cell,
-                                                   GtkCellRendererAccelMode  mode,
-                                                   const char               *path);
+                                                GtkCellRendererAccelMode  mode,
+                                                const char               *path,
+                                                gboolean                  modifier_only);
 
 enum {
   ACCEL_EDITED,
@@ -82,7 +83,8 @@ enum {
   PROP_ACCEL_KEY = 1,
   PROP_ACCEL_MODS,
   PROP_KEYCODE,
-  PROP_ACCEL_MODE
+  PROP_ACCEL_MODE,
+  PROP_MODIFIER_ONLY
 };
 
 static guint signals[LAST_SIGNAL] = { 0 };
@@ -124,6 +126,7 @@ struct _GtkCellRendererAccelPrivate
   GdkModifierType accel_mods;
   guint accel_key;
   guint keycode;
+  gboolean modifier_only;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (GtkCellRendererAccel, gtk_cell_renderer_accel, GTK_TYPE_CELL_RENDERER_TEXT)
@@ -226,7 +229,21 @@ gtk_cell_renderer_accel_class_init (GtkCellRendererAccelClass *cell_accel_class)
                                                       GTK_TYPE_CELL_RENDERER_ACCEL_MODE,
                                                       GTK_CELL_RENDERER_ACCEL_MODE_GTK,
                                                       GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY));
-  
+
+  /**
+   * GtkCellRendererAccel:modifier-only:
+   *
+   * Determines if the modifier-only accelerators are acceptable
+   * likes Ctrl, Ctrl-Shift.
+   */
+  g_object_class_install_property (object_class,
+                                   PROP_MODIFIER_ONLY,
+                                   g_param_spec_boolean ("modifier-only",
+                                                         P_("Accept modifier only"),
+                                                         P_("Whether the modifier only sequences are acceptable"),
+                                                         FALSE,
+                                                         GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY));
+
   /**
    * GtkCellRendererAccel::accel-edited:
    * @accel: the object reveiving the signal
@@ -345,6 +362,10 @@ gtk_cell_renderer_accel_get_property (GObject    *object,
       g_value_set_enum (value, priv->accel_mode);
       break;
 
+    case PROP_MODIFIER_ONLY:
+      g_value_set_boolean (value, priv->modifier_only);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
     }
@@ -407,7 +428,15 @@ gtk_cell_renderer_accel_set_property (GObject      *object,
           g_object_notify (object, "accel-mode");
         }
       break;
-      
+
+    case PROP_MODIFIER_ONLY:
+      if (priv->modifier_only != g_value_get_boolean (value))
+        {
+          priv->modifier_only = g_value_get_boolean (value);
+          g_object_notify (object, "modifier-only");
+        }
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
     }
@@ -470,7 +499,7 @@ gtk_cell_renderer_accel_start_editing (GtkCellRenderer      *cell,
   if (!is_editable)
     return NULL;
 
-  editable = gtk_cell_editable_widget_new (cell, priv->accel_mode, path);
+  editable = gtk_cell_editable_widget_new (cell, priv->accel_mode, path, priv->modifier_only);
 
   return GTK_CELL_EDITABLE (editable);
 }
@@ -487,8 +516,13 @@ struct _GtkCellEditableWidget
   gboolean editing_canceled;
   GtkCellRendererAccelMode accel_mode;
   char *path;
+  gboolean modifier_only;
   GtkCellRenderer *cell;
   GtkWidget *label;
+  guint keyval;
+  guint keycode;
+  GdkModifierType state;
+  gboolean is_modifier;
 };
 
 enum {
@@ -533,17 +567,47 @@ key_controller_key_pressed (GtkEventControllerKey *key,
                             GtkWidget             *widget)
 {
   GtkCellEditableWidget *box = (GtkCellEditableWidget*)widget;
-  gboolean edited = FALSE;
-  gboolean cleared = FALSE;
-  GdkModifierType accel_mods = 0;
-  guint accel_key;
   GdkEvent *event;
+  GdkModifierType accel_mods = 0;
+  guint accel_key = 0;
+
+  box->keyval = 0;
+  box->keycode = 0;
+  box->state = 0;
+  box->is_modifier = FALSE;
 
   event = gtk_event_controller_get_current_event (GTK_EVENT_CONTROLLER (key));
   if (!gdk_key_event_get_match (event, &accel_key, &accel_mods))
     return FALSE;
-    
-  if (accel_mods == 0)
+
+  /* Defer decition to the first key release event after we start editing
+   * if we wish to allow catching modifier sequences only likes Ctrl and
+   * Ctrl-Shift sicne the first sequence is a prefix of the second (if you
+   * press Ctrl first, then Shift).
+   */
+  box->keyval = accel_key;
+  box->keycode = keycode;
+  box->state = accel_mods;
+  box->is_modifier = gdk_key_event_is_modifier (event);
+
+  return TRUE;
+}
+
+static gboolean
+key_controller_key_released (GtkEventControllerKey *key,
+                             guint                  keyval,
+                             guint                  keycode,
+                             GdkModifierType        state,
+                             GtkWidget             *widget)
+{
+  GtkCellEditableWidget *box = (GtkCellEditableWidget*)widget;
+  gboolean edited = FALSE;
+  gboolean cleared = FALSE;
+
+  if (box->is_modifier && !box->modifier_only)
+    goto out;
+
+  if (box->state == 0)
     {
       switch (keyval)
 	{
@@ -558,7 +622,7 @@ key_controller_key_pressed (GtkEventControllerKey *key,
     }
 
   if (box->accel_mode == GTK_CELL_RENDERER_ACCEL_MODE_GTK &&
-      !gtk_accelerator_valid (accel_key, accel_mods))
+      !gtk_accelerator_valid (box->keyval, box->state))
     {
       gtk_widget_error_bell (widget);
       return TRUE;
@@ -573,7 +637,7 @@ key_controller_key_pressed (GtkEventControllerKey *key,
 
   if (edited)
     g_signal_emit (box->cell, signals[ACCEL_EDITED], 0, box->path,
-                   accel_key, accel_mods, keycode);
+                   box->keyval, box->state, box->keycode);
   else if (cleared)
     g_signal_emit (box->cell, signals[ACCEL_CLEARED], 0, box->path);
 
@@ -607,6 +671,9 @@ gtk_cell_editable_widget_set_property (GObject      *object,
     case PROP_PATH:
       box->path = g_value_dup_string (value);
       break;
+    case PROP_MODIFIER_ONLY:
+      box->modifier_only = g_value_get_boolean (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -631,6 +698,9 @@ gtk_cell_editable_widget_get_property (GObject    *object,
       break;
     case PROP_PATH:
       g_value_set_string (value, box->path);
+      break;
+    case PROP_MODIFIER_ONLY:
+      g_value_set_boolean (value, box->modifier_only);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -685,6 +755,10 @@ gtk_cell_editable_widget_class_init (GtkCellEditableWidgetClass *class)
       g_param_spec_string ("path", NULL, NULL,
                            NULL, GTK_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_MODIFIER_ONLY,
+      g_param_spec_boolean ("modifier-only", NULL, NULL,
+                            FALSE, GTK_PARAM_READWRITE));
+
   gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
   gtk_widget_class_set_css_name (widget_class, I_("acceleditor"));
 }
@@ -700,6 +774,8 @@ gtk_cell_editable_widget_init (GtkCellEditableWidget *box)
   controller = gtk_event_controller_key_new ();
   g_signal_connect (controller, "key-pressed",
                     G_CALLBACK (key_controller_key_pressed), box);
+  g_signal_connect (controller, "key-released",
+                    G_CALLBACK (key_controller_key_released), box);
   g_signal_connect (controller, "modifiers",
                     G_CALLBACK (key_controller_modifiers), box);
   gtk_widget_add_controller (widget, controller);
@@ -708,13 +784,15 @@ gtk_cell_editable_widget_init (GtkCellEditableWidget *box)
 static GtkWidget *
 gtk_cell_editable_widget_new (GtkCellRenderer          *cell,
                               GtkCellRendererAccelMode  mode,
-                              const char               *path)
+                              const char               *path,
+                              gboolean                  modifier_only)
 {
   GtkCellEditableWidget *box;
 
   box = g_object_new (gtk_cell_editable_widget_get_type (),
                       "accel-mode", mode,
                       "path", path,
+                      "modifier-only", modifier_only,
                       NULL);
   box->cell = cell;
 
