@@ -36,6 +36,8 @@
 
 #include "gsktransformprivate.h"
 
+#include <math.h>
+
 /* {{{ Boilerplate */
 
 struct _GskTransformClass
@@ -828,6 +830,10 @@ static const GskTransformClass GSK_ROTATE_TRANSFORM_CLASS =
 static inline float
 normalize_angle (float angle)
 {
+
+  /* This prevents a crash if angle is NaN (Not a Number) */
+  if (isnanf (angle))
+    return 0;
 
   if (angle >= 0 && angle < 360)
     return angle;
