@@ -31,6 +31,8 @@
 #include <gdk/gdkcairo.h>
 #include <gdk/gdkcairocontext.h>
 #include <gdk/gdkclipboard.h>
+#include <gdk/gdkcolor.h>
+#include <gdk/gdkcolorspace.h>
 #include <gdk/gdkconfig.h>
 #include <gdk/gdkcontentdeserializer.h>
 #include <gdk/gdkcontentformats.h>

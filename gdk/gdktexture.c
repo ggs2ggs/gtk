@@ -31,6 +31,11 @@
  * instance; you can only make a copy of it, via [method@Gdk.Texture.download]
  * or [method@Gdk.Texture.download_float].
  *
+ * A `GdkColorSpace` is part of every GdkTexture that describes the internal
+ * representation of the pixel data. This is most relevant when creating
+ * textures yourself as you can choose the color space you provide your
+ * pixel data in.
+ *
  * `GdkTexture` is an immutable object: That means you cannot change
  * anything about it other than increasing the reference count via
  * g_object_ref().
@@ -40,6 +45,7 @@
 
 #include "gdktextureprivate.h"
 
+#include "gdkcolorspace.h"
 #include "gdkintl.h"
 #include "gdkmemorytextureprivate.h"
 #include "gdkpaintable.h"
@@ -60,8 +66,9 @@ gtk_snapshot_append_texture (GdkSnapshot            *snapshot,
 
 enum {
   PROP_0,
-  PROP_WIDTH,
+  PROP_COLOR_SPACE,
   PROP_HEIGHT,
+  PROP_WIDTH,
 
   N_PROPS
 };
@@ -224,6 +231,7 @@ G_DEFINE_ABSTRACT_TYPE_WITH_CODE (GdkTexture, gdk_texture, G_TYPE_OBJECT,
 static void
 gdk_texture_default_download (GdkTexture      *texture,
                               GdkMemoryFormat  format,
+                              GdkColorSpace   *color_space,
                               guchar          *data,
                               gsize            stride)
 {
@@ -240,12 +248,18 @@ gdk_texture_set_property (GObject      *gobject,
 
   switch (prop_id)
     {
-    case PROP_WIDTH:
-      self->width = g_value_get_int (value);
+    case PROP_COLOR_SPACE:
+      self->color_space = g_value_dup_object (value);
+      if (self->color_space == NULL)
+        self->color_space = g_object_ref (gdk_color_space_get_srgb ());
       break;
 
     case PROP_HEIGHT:
       self->height = g_value_get_int (value);
+      break;
+
+    case PROP_WIDTH:
+      self->width = g_value_get_int (value);
       break;
 
     default:
@@ -264,12 +278,16 @@ gdk_texture_get_property (GObject    *gobject,
 
   switch (prop_id)
     {
-    case PROP_WIDTH:
-      g_value_set_int (value, self->width);
+    case PROP_COLOR_SPACE:
+      g_value_set_object (value, self->color_space);
       break;
 
     case PROP_HEIGHT:
       g_value_set_int (value, self->height);
+      break;
+
+    case PROP_WIDTH:
+      g_value_set_int (value, self->width);
       break;
 
     default:
@@ -284,6 +302,7 @@ gdk_texture_dispose (GObject *object)
   GdkTexture *self = GDK_TEXTURE (object);
 
   gdk_texture_clear_render_data (self);
+  g_clear_object (&self->color_space);
 
   G_OBJECT_CLASS (gdk_texture_parent_class)->dispose (object);
 }
@@ -300,14 +319,31 @@ gdk_texture_class_init (GdkTextureClass *klass)
   gobject_class->dispose = gdk_texture_dispose;
 
   /**
-   * GdkTexture:width: (attributes org.gtk.Property.get=gdk_texture_get_width)
+   * GdkTexture:color-space: (attributes org.gtk.Property.get=gdk_texture_get_color_space)
    *
-   * The width of the texture, in pixels.
+   * The color space associated with texture.
+   *
+   * Since: 4.6
    */
-  properties[PROP_WIDTH] =
-    g_param_spec_int ("width",
-                      "Width",
-                      "The width of the texture",
+  properties[PROP_COLOR_SPACE] =
+    g_param_spec_object ("color-space",
+                         P_("Color Space"),
+                         P_("The associated color space"),
+                         GDK_TYPE_COLOR_SPACE,
+                         G_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT_ONLY |
+                         G_PARAM_STATIC_STRINGS |
+                         G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * GdkTexture:height: (attributes org.gtk.Property.get=gdk_texture_get_height)
+   *
+   * The height of the texture, in pixels.
+   */
+  properties[PROP_HEIGHT] =
+    g_param_spec_int ("height",
+                      P_("Height"),
+                      P_("The height of the texture"),
                       1,
                       G_MAXINT,
                       1,
@@ -317,14 +353,14 @@ gdk_texture_class_init (GdkTextureClass *klass)
                       G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GdkTexture:height: (attributes org.gtk.Property.get=gdk_texture_get_height)
+   * GdkTexture:width: (attributes org.gtk.Property.get=gdk_texture_get_width)
    *
-   * The height of the texture, in pixels.
+   * The width of the texture, in pixels.
    */
-  properties[PROP_HEIGHT] =
-    g_param_spec_int ("height",
-                      "Height",
-                      "The height of the texture",
+  properties[PROP_WIDTH] =
+    g_param_spec_int ("width",
+                      P_("Width"),
+                      P_("The width of the texture"),
                       1,
                       G_MAXINT,
                       1,
@@ -378,6 +414,30 @@ gdk_texture_new_for_surface (cairo_surface_t *surface)
   return texture;
 }
 
+static GdkColorSpace*
+gdk_color_space_get_from_pixbuf (GdkPixbuf *pixbuf)
+{
+  const char *icc_profile_base64;
+  GdkColorSpace *space = NULL;
+
+  icc_profile_base64 = gdk_pixbuf_get_option (pixbuf, "icc-profile");
+  if (icc_profile_base64)
+    {
+      guchar *icc_data;
+      gsize icc_len;
+      GBytes *bytes;
+
+      icc_data = g_base64_decode (icc_profile_base64, &icc_len);
+      bytes = g_bytes_new_take (icc_data, icc_len);
+      space = gdk_color_space_new_from_icc_profile (bytes, NULL);
+      g_bytes_unref (bytes);
+    }
+  if (!space)
+    space = g_object_ref (gdk_color_space_get_srgb ());
+
+  return space;
+}
+
 /**
  * gdk_texture_new_for_pixbuf:
  * @pixbuf: a `GdkPixbuf`
@@ -395,23 +455,28 @@ gdk_texture_new_for_pixbuf (GdkPixbuf *pixbuf)
 {
   GdkTexture *texture;
   GBytes *bytes;
+  GdkColorSpace *space;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
+  space = gdk_color_space_get_from_pixbuf (pixbuf);
   bytes = g_bytes_new_with_free_func (gdk_pixbuf_get_pixels (pixbuf),
                                       gdk_pixbuf_get_height (pixbuf)
                                       * gdk_pixbuf_get_rowstride (pixbuf),
                                       g_object_unref,
                                       g_object_ref (pixbuf));
-  texture = gdk_memory_texture_new (gdk_pixbuf_get_width (pixbuf),
-                                    gdk_pixbuf_get_height (pixbuf),
-                                    gdk_pixbuf_get_has_alpha (pixbuf)
-                                    ? GDK_MEMORY_GDK_PIXBUF_ALPHA
-                                    : GDK_MEMORY_GDK_PIXBUF_OPAQUE,
-                                    bytes,
-                                    gdk_pixbuf_get_rowstride (pixbuf));
+
+  texture = gdk_memory_texture_new_with_color_space (gdk_pixbuf_get_width (pixbuf),
+                                                     gdk_pixbuf_get_height (pixbuf),
+                                                     gdk_pixbuf_get_has_alpha (pixbuf)
+                                                     ? GDK_MEMORY_GDK_PIXBUF_ALPHA
+                                                     : GDK_MEMORY_GDK_PIXBUF_OPAQUE,
+                                                     space,
+                                                     bytes,
+                                                     gdk_pixbuf_get_rowstride (pixbuf));
 
   g_bytes_unref (bytes);
+  g_object_unref (space);
 
   return texture;
 }
@@ -670,13 +735,32 @@ gdk_texture_get_height (GdkTexture *texture)
   return texture->height;
 }
 
+/**
+ * gdk_texture_get_color_space: (attributes org.gtk.Method.get_property=color-space)
+ * @texture: a `GdkTexture`
+ *
+ * Returns the color space associated with @texture.
+ *
+ * Returns: (transfer none): the color space of the `GdkTexture`
+ *
+ * Since: 4.6
+ */
+GdkColorSpace *
+gdk_texture_get_color_space (GdkTexture *texture)
+{
+  g_return_val_if_fail (GDK_IS_TEXTURE (texture), 0);
+
+  return texture->color_space;
+}
+
 void
 gdk_texture_do_download (GdkTexture      *texture,
                          GdkMemoryFormat  format,
+                         GdkColorSpace   *color_space,
                          guchar          *data,
                          gsize            stride)
 {
-  GDK_TEXTURE_GET_CLASS (texture)->download (texture, format, data,stride);
+  GDK_TEXTURE_GET_CLASS (texture)->download (texture, format, color_space, data, stride);
 }
 
 cairo_surface_t *
@@ -717,6 +801,9 @@ gdk_texture_download_surface (GdkTexture *texture)
  * %CAIRO_FORMAT_ARGB32, so every downloaded pixel requires
  * 4 bytes of memory.
  *
+ * The downloaded data will be in the sRGB color space, no matter the
+ * color space of the texture.
+ *
  * Downloading a texture into a Cairo image surface:
  * ```c
  * surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
@@ -739,6 +826,7 @@ gdk_texture_download (GdkTexture *texture,
 
   gdk_texture_do_download (texture,
                            GDK_MEMORY_DEFAULT,
+                           gdk_color_space_get_srgb (),
                            data,
                            stride);
 }
@@ -757,6 +845,9 @@ gdk_texture_download (GdkTexture *texture,
  * may reside on a GPU or on a remote display server and because the data
  * may need to be upsampled if it was not already available in this
  * format.
+ *
+ * The downloaded data will be in the sRGB color space, no matter the
+ * color space of the texture.
  *
  * You may want to use [method@Gdk.Texture.download] instead if you don't
  * need high dynamic range support.
@@ -781,6 +872,7 @@ gdk_texture_download_float (GdkTexture *texture,
 
   gdk_texture_do_download (texture,
                            GDK_MEMORY_R32G32B32A32_FLOAT_PREMULTIPLIED,
+                           gdk_color_space_get_srgb (),
                            (guchar *) data,
                            stride);
 }
