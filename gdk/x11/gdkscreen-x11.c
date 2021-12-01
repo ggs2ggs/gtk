@@ -471,6 +471,7 @@ init_randr15 (GdkX11Screen *x11_screen)
       GdkRectangle newgeo;
       char *name;
       char *manufacturer = NULL;
+      char fake_output_name[] = "RR monitor";
       int refresh_rate = 0;
 
       gdk_x11_display_error_trap_push (display);
@@ -479,7 +480,15 @@ init_randr15 (GdkX11Screen *x11_screen)
         continue;
 
       if (output_info == NULL)
-        continue;
+        {
+          /* Create a fake output */
+          output_info = g_malloc0 (sizeof (*output_info));
+          output_info->name = fake_output_name;
+          output_info->nameLen = strlen (output_info->name);
+          output_info->connection = RR_Connected;
+          output_info->subpixel_order = 1; /* horizontal RGB */
+          /* No CRTc */
+        }
 
       if (output_info->connection == RR_Disconnected)
         {
