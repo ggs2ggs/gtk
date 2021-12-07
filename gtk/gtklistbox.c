@@ -1821,17 +1821,21 @@ gtk_list_box_activate (GtkListBox    *box,
 }
 
 #define gtk_list_box_select_and_activate(b,r) \
-  gtk_list_box_select_and_activate_full ((b), (r), TRUE)
+  gtk_list_box_select_and_activate_full ((b), (r), FALSE, FALSE, TRUE)
 static void
 gtk_list_box_select_and_activate_full (GtkListBox    *box,
                                        GtkListBoxRow *row,
-                                       gboolean       grab_focus)
+                                       gboolean       modify,
+                                       gboolean       extend,
+                                       gboolean       grab_cursor)
 {
   if (row != NULL)
     {
-      gtk_list_box_select_row_internal (box, row);
-      gtk_list_box_update_cursor (box, row, grab_focus);
-      gtk_list_box_activate (box, row);
+      gtk_list_box_update_selection_full (box, row, modify, extend, grab_cursor);
+      if (!modify && !extend)
+        {
+          gtk_list_box_activate (box, row);
+        }
     }
 }
 
@@ -1882,6 +1886,20 @@ gtk_list_box_click_gesture_released (GtkGestureClick *gesture,
                                      double           y,
                                      GtkListBox      *box)
 {
+  /* With touch, we default to modifying the selection.
+  * You can still clear the selection and start over
+  * by holding Ctrl.
+  */
+  GdkEventSequence *sequence = gtk_gesture_single_get_current_sequence (GTK_GESTURE_SINGLE (gesture));
+  GdkEvent *event = gtk_gesture_get_last_event (GTK_GESTURE (gesture), sequence);
+  GdkModifierType state = gdk_event_get_modifier_state (event);
+  gboolean extend = (state & GDK_SHIFT_MASK) != 0;
+  gboolean modify = (state & GDK_CONTROL_MASK) != 0;
+  GdkInputSource source = gdk_device_get_source (gdk_event_get_device (event));
+
+  if (source == GDK_SOURCE_TOUCHSCREEN)
+    modify = !modify;
+
   /* Take a ref to protect against reentrancy
    * (the activation may destroy the widget)
    */
@@ -1893,30 +1911,11 @@ gtk_list_box_click_gesture_released (GtkGestureClick *gesture,
       gboolean focus_on_click = gtk_widget_get_focus_on_click (GTK_WIDGET (box->active_row));
 
       if (n_press == 1 && box->activate_single_click)
-        gtk_list_box_select_and_activate_full (box, box->active_row, focus_on_click);
+        {
+          gtk_list_box_select_and_activate_full (box, box->active_row, modify, extend, focus_on_click);
+        }
       else
         {
-          GdkEventSequence *sequence;
-          GdkInputSource source;
-          GdkEvent *event;
-          GdkModifierType state;
-          gboolean extend;
-          gboolean modify;
-
-          /* With touch, we default to modifying the selection.
-           * You can still clear the selection and start over
-           * by holding Ctrl.
-           */
-          sequence = gtk_gesture_single_get_current_sequence (GTK_GESTURE_SINGLE (gesture));
-          event = gtk_gesture_get_last_event (GTK_GESTURE (gesture), sequence);
-          state = gdk_event_get_modifier_state (event);
-          extend = (state & GDK_SHIFT_MASK) != 0;
-          modify = (state & GDK_CONTROL_MASK) != 0;
-          source = gdk_device_get_source (gdk_event_get_device (event));
-
-          if (source == GDK_SOURCE_TOUCHSCREEN)
-            modify = !modify;
-
           gtk_list_box_update_selection_full (box, box->active_row, modify, extend, focus_on_click);
         }
     }
