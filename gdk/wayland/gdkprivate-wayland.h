@@ -38,7 +38,6 @@
 
 #include <xkbcommon/xkbcommon.h>
 
-
 #define WL_SURFACE_HAS_BUFFER_SCALE 3
 #define WL_POINTER_HAS_FRAME 5
 
@@ -153,6 +152,7 @@ void gdk_wayland_device_unset_touch_grab (GdkDevice        *device,
 void     _gdk_wayland_display_deliver_event (GdkDisplay *display, GdkEvent *event);
 GSource *_gdk_wayland_display_event_source_new (GdkDisplay *display);
 void     _gdk_wayland_display_queue_events (GdkDisplay *display);
+gboolean _gdk_wayland_display_handle_error (GdkDisplay *display);
 
 GdkAppLaunchContext *_gdk_wayland_display_get_app_launch_context (GdkDisplay *display);
 
@@ -178,7 +178,9 @@ cairo_surface_t * _gdk_wayland_display_create_shm_surface (GdkWaylandDisplay *di
                                                            int                width,
                                                            int                height,
                                                            guint              scale);
-struct wl_buffer *_gdk_wayland_shm_surface_get_wl_buffer (cairo_surface_t *surface);
+struct wl_buffer *_gdk_wayland_shm_surface_get_wl_buffer (GdkWaylandDisplay *display,
+                                                          cairo_surface_t   *surface);
+
 gboolean _gdk_wayland_is_shm_surface (cairo_surface_t *surface);
 
 struct gtk_surface1 * gdk_wayland_surface_get_gtk_surface (GdkSurface *surface);
@@ -201,5 +203,8 @@ GdkSurface * create_dnd_surface (GdkDisplay *display);
 
 GdkModifierType gdk_wayland_keymap_get_gdk_modifiers (GdkKeymap *keymap,
                                                       guint32    mods);
+
+gboolean _gdk_wayland_display_init (GdkWaylandDisplay *display);
+gboolean _gdk_wayland_display_reconnect (GdkWaylandDisplay *display);
 
 #endif /* __GDK_PRIVATE_WAYLAND_H__ */

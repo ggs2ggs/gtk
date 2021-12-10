@@ -131,7 +131,7 @@ gdk_wayland_cairo_context_create_surface (GdkWaylandCairoContext *self)
   cairo_surface = _gdk_wayland_display_create_shm_surface (display_wayland,
                                                            width, height,
                                                            gdk_surface_get_scale_factor (surface));
-  buffer = _gdk_wayland_shm_surface_get_wl_buffer (cairo_surface);
+  buffer = _gdk_wayland_shm_surface_get_wl_buffer (display_wayland, cairo_surface);
   wl_buffer_add_listener (buffer, &buffer_listener, cairo_surface);
   gdk_wayland_cairo_context_add_surface (self, cairo_surface);
 
