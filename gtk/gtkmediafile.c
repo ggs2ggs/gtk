@@ -26,6 +26,13 @@
 #include "gtkmodulesprivate.h"
 #include "gtknomediafileprivate.h"
 
+#ifdef HAVE_FFMPEG
+#include "modules/media/gtkffmediafileprivate.h"
+#endif
+#ifdef HAVE_GSTREAMER
+#include "modules/media/gtkgstmediafileprivate.h"
+#endif
+
 /**
  * GtkMediaFile:
  *
@@ -605,6 +612,15 @@ gtk_media_file_get_input_stream (GtkMediaFile *self)
   return priv->input_stream;
 }
 
+/* stolen from the glib testsuite */
+#ifdef _MSC_VER
+#  define MODULE_PREFIX ""
+#else
+#  define MODULE_PREFIX "lib"
+#endif
+
+#define MODULE_NAME(name) (MODULE_PREFIX name "." G_MODULE_SUFFIX)
+
 void
 gtk_media_file_extension_init (void)
 {
@@ -622,6 +638,21 @@ gtk_media_file_extension_init (void)
   g_type_ensure (GTK_TYPE_NO_MEDIA_FILE);
 
   scope = g_io_module_scope_new (G_IO_MODULE_SCOPE_BLOCK_DUPLICATES);
+
+#ifdef HAVE_FFMPEG
+  g_io_extension_point_implement (GTK_MEDIA_FILE_EXTENSION_POINT_NAME,
+                                  GTK_TYPE_FF_MEDIA_FILE,
+                                  "ffmpeg",
+                                  0);
+  g_io_module_scope_block (scope, MODULE_NAME ("media-ffmpeg"));
+#endif
+#ifdef HAVE_GSTREAMER
+  g_io_extension_point_implement (GTK_MEDIA_FILE_EXTENSION_POINT_NAME,
+                                  GTK_TYPE_GST_MEDIA_FILE,
+                                  "gstreamer",
+                                  10);
+  g_io_module_scope_block (scope, MODULE_NAME ("media-gstreamer"));
+#endif
 
   paths = _gtk_get_module_path ("media");
   for (i = 0; paths[i]; i++)
