@@ -172,23 +172,8 @@ struct _GdkWin32Surface
    */
   guint maximizing : 1;
 
-  /* GDK does not keep window contents around, it just draws new
-   * stuff over the window where changes occurred.
-   * cache_surface retains old window contents, because
-   * UpdateLayeredWindow() doesn't do partial redraws.
-   */
-  cairo_surface_t *cache_surface;
-
-  /* Unlike window-backed surfaces, DIB-backed surface
-   * does not provide a way to query its size,
-   * so we have to remember it ourselves.
-   */
-  int              dib_width;
-  int              dib_height;
-
+  /* WGL requires that we use CS_OWNDC and keep the hdc around */
   HDC              hdc;
-  int              hdc_count;
-  HBITMAP          saved_dc_bitmap; /* Original bitmap for dc */
 
   GdkW32DragMoveResizeContext drag_move_resize_context;
 
