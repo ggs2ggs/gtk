@@ -1563,43 +1563,37 @@ gdk_win32_surface_get_geometry (GdkSurface *window,
 {
   if (!GDK_SURFACE_DESTROYED (window))
     {
-      RECT rect;
       GdkWin32Surface *impl = GDK_WIN32_SURFACE (window);
+      GdkSurface *parent;
+      RECT rect;
+      POINT pt;
 
-      if (GDK_IS_TOPLEVEL (window) && impl->drag_move_resize_context.native_move_resize_pending)
-         rect = impl->next_layout.configured_rect;
+      if (GDK_IS_TOPLEVEL (window))
+        parent = NULL;
+      else if (GDK_IS_POPUP (window))
+        parent = gdk_popup_get_parent (GDK_POPUP (window));
       else
-        {
-          POINT pt;
-          GdkSurface *parent;
+        parent = NULL;
 
-          if (GDK_IS_TOPLEVEL (window))
-            parent = NULL;
-          else if (GDK_IS_POPUP (window))
-            parent = gdk_popup_get_parent (GDK_POPUP (window));
-          else
-            parent = NULL;
+      API_CALL (GetClientRect, (GDK_SURFACE_HWND (window), &rect));
 
-          API_CALL (GetClientRect, (GDK_SURFACE_HWND (window), &rect));
+      pt.x = rect.left;
+      pt.y = rect.top;
+    ClientToScreen (GDK_SURFACE_HWND (window), &pt);
+      if (parent)
+        ScreenToClient (GDK_SURFACE_HWND (parent), &pt);
 
-          pt.x = rect.left;
-          pt.y = rect.top;
-	      ClientToScreen (GDK_SURFACE_HWND (window), &pt);
-          if (parent)
-            ScreenToClient (GDK_SURFACE_HWND (parent), &pt);
+      rect.left = pt.x;
+      rect.top = pt.y;
 
-          rect.left = pt.x;
-          rect.top = pt.y;
+      pt.x = rect.right;
+      pt.y = rect.bottom;
+      ClientToScreen (GDK_SURFACE_HWND (window), &pt);
+      if (parent)
+        ScreenToClient (GDK_SURFACE_HWND (parent), &pt);
 
-          pt.x = rect.right;
-          pt.y = rect.bottom;
-          ClientToScreen (GDK_SURFACE_HWND (window), &pt);
-          if (parent)
-            ScreenToClient (GDK_SURFACE_HWND (parent), &pt);
-
-          rect.right = pt.x;
-          rect.bottom = pt.y;
-        }
+      rect.right = pt.x;
+      rect.bottom = pt.y;
 
       if (x)
 	*x = rect.left / impl->surface_scale;
@@ -1863,488 +1857,6 @@ _gdk_win32_surface_update_style_bits (GdkSurface *window)
 		flags);
 }
 
-static const char *
-get_cursor_name_from_op (GdkW32WindowDragOp op,
-                         GdkSurfaceEdge      edge)
-{
-  switch (op)
-    {
-    case GDK_WIN32_DRAGOP_MOVE:
-      return "move";
-    case GDK_WIN32_DRAGOP_RESIZE:
-      switch (edge)
-        {
-        case GDK_SURFACE_EDGE_NORTH_WEST:
-          return "nw-resize";
-        case GDK_SURFACE_EDGE_NORTH:
-          return "n-resize";
-        case GDK_SURFACE_EDGE_NORTH_EAST:
-          return "ne-resize";
-        case GDK_SURFACE_EDGE_WEST:
-          return "w-resize";
-        case GDK_SURFACE_EDGE_EAST:
-          return "e-resize";
-        case GDK_SURFACE_EDGE_SOUTH_WEST:
-          return "sw-resize";
-        case GDK_SURFACE_EDGE_SOUTH:
-          return "s-resize";
-        case GDK_SURFACE_EDGE_SOUTH_EAST:
-          return "se-resize";
-        }
-      /* default: warn about unhandled enum values,
-       * fallthrough to GDK_WIN32_DRAGOP_NONE case
-       */
-    case GDK_WIN32_DRAGOP_COUNT:
-      g_assert_not_reached ();
-    case GDK_WIN32_DRAGOP_NONE:
-      return "default";
-    /* default: warn about unhandled enum values */
-    }
-
-  g_assert_not_reached ();
-
-  return NULL;
-}
-
-static void
-gdk_win32_surface_maximize (GdkSurface *window);
-static void
-gdk_win32_surface_unmaximize (GdkSurface *window);
-static void
-gdk_win32_surface_minimize (GdkSurface *window);
-
-static void
-setup_drag_move_resize_context (GdkSurface                   *window,
-                                GdkW32DragMoveResizeContext *context,
-                                GdkW32WindowDragOp           op,
-                                GdkSurfaceEdge                edge,
-                                GdkDevice                   *device,
-                                int                          button,
-                                double                       x,
-                                double                       y,
-                                guint32                      timestamp)
-{
-  RECT rect;
-  const char *cursor_name;
-  GdkSurface *pointer_window;
-  GdkWin32Surface *impl = GDK_WIN32_SURFACE (window);
-  gboolean maximized = gdk_toplevel_get_state (GDK_TOPLEVEL (window)) & GDK_TOPLEVEL_STATE_MAXIMIZED;
-  int root_x, root_y;
-
-  gdk_win32_surface_get_root_coords (window, x, y, &root_x, &root_y);
-
-  /* Before we drag, we need to undo any maximization */
-  if (maximized)
-    {
-      GdkMonitor *monitor;
-      int wx, wy, wwidth, wheight;
-      int swx, swy, swwidth, swheight;
-      gboolean pointer_outside_of_window;
-      int offsetx, offsety;
-      gboolean left_half;
-      GdkDisplay *display;
-
-      display = gdk_surface_get_display (window);
-      monitor = gdk_display_get_monitor_at_surface (display, window);
-      gdk_surface_get_geometry (window, &wx, &wy, &wwidth, &wheight);
-
-      swx = wx;
-      swy = wy;
-      swwidth = wwidth;
-      swheight = wheight;
-
-      pointer_outside_of_window = root_x < swx || root_x > swx + swwidth ||
-                                  root_y < swy || root_y > swy + swheight;
-      /* Calculate the offset of the pointer relative to the window */
-      offsetx = root_x - swx;
-      offsety = root_y - swy;
-
-      /* Figure out in which half of the window the pointer is.
-       * The code currently only concerns itself with horizontal
-       * dimension (left/right halves).
-       * There's no upper/lower half, because usually window
-       * is dragged by its upper half anyway. If that changes, adjust
-       * accordingly.
-       */
-      left_half = (offsetx < swwidth / 2);
-
-      /* Inverse the offset for it to be from the right edge */
-      if (!left_half)
-        offsetx = swwidth - offsetx;
-
-      GDK_NOTE (MISC, g_print ("Pointer at %d : %d, this is %d : %d relative to the window's %s\n",
-                               root_x, root_y, offsetx, offsety,
-                               left_half ? "left half" : "right half"));
-
-      /* Move window in such a way that on unmaximization the pointer
-       * is still pointing at the appropriate half of the window,
-       * with the same offset from the left or right edge. If the new
-       * window size is too small, and adding that offset puts the pointer
-       * into the other half or even beyond, move the pointer to the middle.
-       */
-      if (!pointer_outside_of_window && maximized)
-        {
-          WINDOWPLACEMENT placement;
-          int unmax_width, unmax_height;
-          int shadow_unmax_width, shadow_unmax_height;
-
-          placement.length = sizeof (placement);
-          API_CALL (GetWindowPlacement, (GDK_SURFACE_HWND (window), &placement));
-
-          GDK_NOTE (MISC, g_print ("W32 WM unmaximized window placement is %ld x %ld @ %ld : %ld\n",
-                                   placement.rcNormalPosition.right - placement.rcNormalPosition.left,
-                                   placement.rcNormalPosition.bottom - placement.rcNormalPosition.top,
-                                   placement.rcNormalPosition.left,
-                                   placement.rcNormalPosition.top));
-
-          unmax_width = placement.rcNormalPosition.right - placement.rcNormalPosition.left;
-          unmax_height = placement.rcNormalPosition.bottom - placement.rcNormalPosition.top;
-
-          shadow_unmax_width = unmax_width - impl->shadow_x * impl->surface_scale;
-          shadow_unmax_height = unmax_height - impl->shadow_y * impl->surface_scale;
-
-          if (offsetx * impl->surface_scale < (shadow_unmax_width / 2) &&
-              offsety * impl->surface_scale < (shadow_unmax_height / 2))
-            {
-              placement.rcNormalPosition.top = (root_y - offsety + impl->shadow.top) * impl->surface_scale;
-              placement.rcNormalPosition.bottom = placement.rcNormalPosition.top + unmax_height;
-
-              if (left_half)
-                {
-                  placement.rcNormalPosition.left = (root_x - offsetx + impl->shadow.left) * impl->surface_scale;
-                  placement.rcNormalPosition.right = placement.rcNormalPosition.left + unmax_width;
-                }
-              else
-                {
-                  placement.rcNormalPosition.right = (root_x + offsetx + impl->shadow.right) * impl->surface_scale;
-                  placement.rcNormalPosition.left = placement.rcNormalPosition.right - unmax_width;
-                }
-            }
-          else
-            {
-              placement.rcNormalPosition.left = root_x * impl->surface_scale - unmax_width / 2;
-
-              if (offsety * impl->surface_scale < shadow_unmax_height / 2)
-                placement.rcNormalPosition.top = (root_y - offsety + impl->shadow.top) * impl->surface_scale;
-              else
-                placement.rcNormalPosition.top = root_y * impl->surface_scale - unmax_height / 2;
-
-              placement.rcNormalPosition.right = placement.rcNormalPosition.left + unmax_width;
-              placement.rcNormalPosition.bottom = placement.rcNormalPosition.top + unmax_height;
-            }
-
-          GDK_NOTE (MISC, g_print ("Unmaximized window will be at %ld : %ld\n",
-                                   placement.rcNormalPosition.left,
-                                   placement.rcNormalPosition.top));
-
-          API_CALL (SetWindowPlacement, (GDK_SURFACE_HWND (window), &placement));
-        }
-
-      gdk_win32_surface_unmaximize (window);
-
-      if (pointer_outside_of_window)
-        {
-          /* Pointer outside of the window, move pointer into window */
-          GDK_NOTE (MISC, g_print ("Pointer at %d : %d is outside of %d x %d @ %d : %d, move it to %d : %d\n",
-                                   root_x, root_y, wwidth, wheight, wx, wy, wx + wwidth / 2, wy + wheight / 2));
-          root_x = wx + wwidth / 2;
-          /* This is Gnome behaviour. Windows WM would put the pointer
-           * in the middle of the titlebar, but GDK doesn't know where
-           * the titlebar is, if any.
-           */
-          root_y = wy + wheight / 2;
-          SetCursorPos (root_x, root_y);
-        }
-    }
-
-  _gdk_win32_get_window_rect (window, &rect);
-
-  cursor_name = get_cursor_name_from_op (op, edge);
-
-  context->cursor = gdk_cursor_new_from_name (cursor_name, NULL);
-
-  pointer_window = window;
-
-  /* Note: This triggers a WM_CAPTURECHANGED, which will trigger
-   * gdk_win32_surface_end_move_resize_drag(), which will end
-   * our op before it even begins, but only if context->op is not NONE.
-   * This is why we first do the grab, *then* set the op.
-   */
-  gdk_device_grab (device, pointer_window,
-                   FALSE,
-                   GDK_ALL_EVENTS_MASK,
-                   context->cursor,
-                   timestamp);
-
-  context->window = g_object_ref (window);
-  context->op = op;
-  context->edge = edge;
-  context->device = device;
-  context->button = button;
-  context->start_root_x = root_x;
-  context->start_root_y = root_y;
-  context->timestamp = timestamp;
-  context->start_rect = rect;
-
-  GDK_NOTE (EVENTS,
-            g_print ("begin drag moveresize: window %p, toplevel %p, "
-                     "op %u, edge %d, device %p, "
-                     "button %d, coord %d:%d, time %u\n",
-                     pointer_window, window,
-                     context->op, context->edge, context->device,
-                     context->button, context->start_root_x,
-                     context->start_root_y, context->timestamp));
-}
-
-void
-gdk_win32_surface_end_move_resize_drag (GdkSurface *window)
-{
-  GdkWin32Surface *impl = GDK_WIN32_SURFACE (window);
-  GdkW32DragMoveResizeContext *context = &impl->drag_move_resize_context;
-  
-  if (context->op == GDK_WIN32_DRAGOP_RESIZE)
-    _gdk_win32_surface_invalidate_egl_framebuffer (window);
-
-  context->op = GDK_WIN32_DRAGOP_NONE;
-
-  gdk_device_ungrab (context->device, GDK_CURRENT_TIME);
-
-  g_clear_object (&context->cursor);
-  g_clear_object (&context->window);
-
-  GDK_NOTE (EVENTS,
-            g_print ("end drag moveresize: window %p, toplevel %p,"
-                     "op %u, edge %d, device %p, "
-                     "button %d, coord %d:%d, time %u\n",
-                     window, window,
-                     context->op, context->edge, context->device,
-                     context->button, context->start_root_x,
-                     context->start_root_y, context->timestamp));
-}
-
-static void
-gdk_win32_get_window_size_and_position_from_client_rect (GdkSurface *window,
-                                                         RECT      *window_rect,
-                                                         SIZE      *window_size,
-                                                         POINT     *window_position)
-{
-  GdkWin32Surface *impl = GDK_WIN32_SURFACE (window);
-
-  /* Turn client area into window area */
-  _gdk_win32_adjust_client_rect (window, window_rect);
-
-  window_position->x = window_rect->left;
-  window_position->y = window_rect->top;
-  window_size->cx = window_rect->right - window_rect->left;
-  window_size->cy = window_rect->bottom - window_rect->top;
-}
-
-void
-gdk_win32_surface_do_move_resize_drag (GdkSurface *window,
-                                      int        x,
-                                      int        y)
-{
-  RECT rect;
-  RECT new_rect;
-  int diffy, diffx;
-  MINMAXINFO mmi;
-  GdkWin32Surface *impl;
-  GdkW32DragMoveResizeContext *context;
-  int width;
-  int height;
-
-  impl = GDK_WIN32_SURFACE (window);
-  context = &impl->drag_move_resize_context;
-
-  if (!_gdk_win32_get_window_rect (window, &rect))
-    return;
-
-  new_rect = context->start_rect;
-  diffx = (x - context->start_root_x) * impl->surface_scale;
-  diffy = (y - context->start_root_y) * impl->surface_scale;
-
-  switch (context->op)
-    {
-    case GDK_WIN32_DRAGOP_RESIZE:
-
-      switch (context->edge)
-        {
-        case GDK_SURFACE_EDGE_NORTH_WEST:
-          new_rect.left += diffx;
-          new_rect.top += diffy;
-          break;
-
-        case GDK_SURFACE_EDGE_NORTH:
-          new_rect.top += diffy;
-          break;
-
-        case GDK_SURFACE_EDGE_NORTH_EAST:
-          new_rect.right += diffx;
-          new_rect.top += diffy;
-          break;
-
-        case GDK_SURFACE_EDGE_WEST:
-          new_rect.left += diffx;
-          break;
-
-        case GDK_SURFACE_EDGE_EAST:
-          new_rect.right += diffx;
-          break;
-
-        case GDK_SURFACE_EDGE_SOUTH_WEST:
-          new_rect.left += diffx;
-          new_rect.bottom += diffy;
-          break;
-
-        case GDK_SURFACE_EDGE_SOUTH:
-          new_rect.bottom += diffy;
-          break;
-
-        case GDK_SURFACE_EDGE_SOUTH_EAST:
-        default:
-          new_rect.right += diffx;
-          new_rect.bottom += diffy;
-          break;
-        }
-
-      /* When handling WM_GETMINMAXINFO, mmi is already populated
-       * by W32 WM and we apply our stuff on top of that.
-       * Here it isn't, so we should at least clear it.
-       */
-      memset (&mmi, 0, sizeof (mmi));
-
-      if (!_gdk_win32_surface_fill_min_max_info (window, &mmi))
-        break;
-
-      width = new_rect.right - new_rect.left;
-      height = new_rect.bottom - new_rect.top;
-
-      if (width > mmi.ptMaxTrackSize.x)
-        {
-          switch (context->edge)
-            {
-            case GDK_SURFACE_EDGE_NORTH_WEST:
-            case GDK_SURFACE_EDGE_WEST:
-            case GDK_SURFACE_EDGE_SOUTH_WEST:
-              new_rect.left = new_rect.right - mmi.ptMaxTrackSize.x;
-              break;
-
-            case GDK_SURFACE_EDGE_NORTH_EAST:
-            case GDK_SURFACE_EDGE_EAST:
-            case GDK_SURFACE_EDGE_SOUTH_EAST:
-            default:
-              new_rect.right = new_rect.left + mmi.ptMaxTrackSize.x;
-              break;
-            }
-        }
-      else if (width < mmi.ptMinTrackSize.x)
-        {
-          switch (context->edge)
-            {
-            case GDK_SURFACE_EDGE_NORTH_WEST:
-            case GDK_SURFACE_EDGE_WEST:
-            case GDK_SURFACE_EDGE_SOUTH_WEST:
-              new_rect.left = new_rect.right - mmi.ptMinTrackSize.x;
-              break;
-
-            case GDK_SURFACE_EDGE_NORTH_EAST:
-            case GDK_SURFACE_EDGE_EAST:
-            case GDK_SURFACE_EDGE_SOUTH_EAST:
-            default:
-              new_rect.right = new_rect.left + mmi.ptMinTrackSize.x;
-              break;
-            }
-        }
-
-      if (height > mmi.ptMaxTrackSize.y)
-        {
-          switch (context->edge)
-            {
-            case GDK_SURFACE_EDGE_NORTH_WEST:
-            case GDK_SURFACE_EDGE_NORTH:
-            case GDK_SURFACE_EDGE_NORTH_EAST:
-              new_rect.top = new_rect.bottom - mmi.ptMaxTrackSize.y;
-
-            case GDK_SURFACE_EDGE_SOUTH_WEST:
-            case GDK_SURFACE_EDGE_SOUTH:
-            case GDK_SURFACE_EDGE_SOUTH_EAST:
-            default:
-              new_rect.bottom = new_rect.top + mmi.ptMaxTrackSize.y;
-              break;
-            }
-        }
-      else if (height < mmi.ptMinTrackSize.y)
-        {
-          switch (context->edge)
-            {
-            case GDK_SURFACE_EDGE_NORTH_WEST:
-            case GDK_SURFACE_EDGE_NORTH:
-            case GDK_SURFACE_EDGE_NORTH_EAST:
-              new_rect.top = new_rect.bottom - mmi.ptMinTrackSize.y;
-
-            case GDK_SURFACE_EDGE_SOUTH_WEST:
-            case GDK_SURFACE_EDGE_SOUTH:
-            case GDK_SURFACE_EDGE_SOUTH_EAST:
-            default:
-              new_rect.bottom = new_rect.top + mmi.ptMinTrackSize.y;
-              break;
-            }
-        }
-
-      break;
-    case GDK_WIN32_DRAGOP_MOVE:
-      new_rect.left += diffx;
-      new_rect.top += diffy;
-      new_rect.right += diffx;
-      new_rect.bottom += diffy;
-      break;
-    default:
-      break;
-    }
-
-  if (context->op == GDK_WIN32_DRAGOP_RESIZE &&
-      (rect.left != new_rect.left ||
-       rect.right != new_rect.right ||
-       rect.top != new_rect.top ||
-       rect.bottom != new_rect.bottom))
-    {
-      if (GDK_IS_TOPLEVEL (window))
-        {
-          int scale = impl->surface_scale;
-
-          impl->next_layout.configured_rect = new_rect;
-          impl->next_layout.configured_width = (new_rect.right - new_rect.left + scale - 1) / scale;
-          impl->next_layout.configured_height = (new_rect.bottom - new_rect.top + scale - 1) / scale;
-        }
-
-      context->native_move_resize_pending = TRUE;
-    }
-  else if (context->op == GDK_WIN32_DRAGOP_MOVE &&
-           (rect.left != new_rect.left ||
-            rect.top != new_rect.top))
-    {
-      SIZE window_size;
-      POINT window_position;
-
-      context->native_move_resize_pending = FALSE;
-
-      gdk_surface_request_layout (window);
-
-      gdk_win32_get_window_size_and_position_from_client_rect (window,
-                                                              &new_rect,
-                                                              &window_size,
-                                                              &window_position);
-
-      API_CALL (SetWindowPos, (GDK_SURFACE_HWND (window),
-                               SWP_NOZORDER_SPECIFIED,
-                               window_position.x, window_position.y,
-                               0, 0,
-                               SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOSIZE));
-    }
-
-  gdk_surface_request_layout (window);
-}
-
 static void
 gdk_win32_toplevel_begin_resize (GdkToplevel    *toplevel,
                                  GdkSurfaceEdge  edge,
@@ -2355,10 +1867,12 @@ gdk_win32_toplevel_begin_resize (GdkToplevel    *toplevel,
                                  guint32         timestamp)
 {
   GdkSurface *window = GDK_SURFACE (toplevel);
-  GdkWin32Surface *impl;
+  HWND hwnd = GDK_SURFACE_HWND (window);
+  WPARAM winedge = 0;
+  int root_x = 0;
+  int root_y = 0;
 
-  if (GDK_SURFACE_DESTROYED (window) ||
-      IsIconic (GDK_SURFACE_HWND (window)))
+  if (GDK_SURFACE_DESTROYED (window) || IsIconic (hwnd))
     return;
 
   /* Tell Windows to start interactively resizing the window by pretending that
@@ -2367,18 +1881,46 @@ gdk_win32_toplevel_begin_resize (GdkToplevel    *toplevel,
    * will only work with button 1 (left), since Windows only allows window
    * dragging using the left mouse button.
    */
-
   if (button != 1)
     return;
 
-  impl = GDK_WIN32_SURFACE (window);
+  /* Must break the automatic grab that occured when the button was
+   * pressed, otherwise it won't work.
+   */
+  gdk_device_ungrab (device, 0);
 
-  if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-    gdk_win32_surface_end_move_resize_drag (window);
+  switch (edge)
+    {
+    case GDK_SURFACE_EDGE_NORTH_WEST:
+      winedge = HTTOPLEFT;
+    break;
+    case GDK_SURFACE_EDGE_NORTH:
+      winedge = HTTOP;
+    break;
+    case GDK_SURFACE_EDGE_NORTH_EAST:
+      winedge = HTTOPRIGHT;
+    break;
+    case GDK_SURFACE_EDGE_WEST:
+      winedge = HTLEFT;
+    break;
+    case GDK_SURFACE_EDGE_EAST:
+      winedge = HTRIGHT;
+    break;
+    case GDK_SURFACE_EDGE_SOUTH_WEST:
+      winedge = HTBOTTOMLEFT;
+    break;
+    case GDK_SURFACE_EDGE_SOUTH:
+      winedge = HTBOTTOM;
+    break;
+    case GDK_SURFACE_EDGE_SOUTH_EAST:
+    default:
+      winedge = HTBOTTOMRIGHT;
+    break;
+    }
 
-  setup_drag_move_resize_context (window, &impl->drag_move_resize_context,
-                                  GDK_WIN32_DRAGOP_RESIZE, edge, device,
-                                  button, x, y, timestamp);
+  gdk_win32_surface_get_root_coords (window, x, y, &root_x, &root_y);
+
+  DefWindowProcW (hwnd, WM_NCLBUTTONDOWN, winedge, MAKELPARAM (root_x, root_y));
 }
 
 static void
@@ -2390,10 +1932,11 @@ gdk_win32_toplevel_begin_move (GdkToplevel *toplevel,
                                guint32      timestamp)
 {
   GdkSurface *window = GDK_SURFACE (toplevel);
-  GdkWin32Surface *impl;
+  HWND hwnd = GDK_SURFACE_HWND (window);
+  int root_x = 0;
+  int root_y = 0;
 
-  if (GDK_SURFACE_DESTROYED (window) ||
-      IsIconic (GDK_SURFACE_HWND (window)))
+  if (GDK_SURFACE_DESTROYED (window) || IsIconic (hwnd))
     return;
 
   /* Tell Windows to start interactively moving the window by pretending that
@@ -2405,14 +1948,14 @@ gdk_win32_toplevel_begin_move (GdkToplevel *toplevel,
   if (button != 1)
     return;
 
-  impl = GDK_WIN32_SURFACE (window);
+  /* Must break the automatic grab that occured when the button was pressed,
+   * otherwise it won't work.
+   */
+  gdk_device_ungrab (device, 0);
 
-  if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-    gdk_win32_surface_end_move_resize_drag (window);
+  gdk_win32_surface_get_root_coords (window, x, y, &root_x, &root_y);
 
-  setup_drag_move_resize_context (window, &impl->drag_move_resize_context,
-                                  GDK_WIN32_DRAGOP_MOVE, GDK_SURFACE_EDGE_NORTH_WEST,
-                                  device, button, x, y, timestamp);
+  DefWindowProcW (hwnd, WM_NCLBUTTONDOWN, HTCAPTION, MAKELPARAM (root_x, root_y));
 }
 
 
@@ -2889,29 +2432,21 @@ _gdk_win32_surface_request_layout (GdkSurface *surface)
   int scale = impl->surface_scale;
   RECT rect;
 
-  if (impl->drag_move_resize_context.native_move_resize_pending)
+  _gdk_win32_get_window_rect (surface, &rect);
+
+  impl->next_layout.configured_width = (rect.right - rect.left + scale - 1) / scale;
+  impl->next_layout.configured_height = (rect.bottom - rect.top + scale - 1) / scale;
+
+  if (GDK_IS_TOPLEVEL (surface))
     {
-      surface->width = impl->next_layout.configured_width;
-      surface->height = impl->next_layout.configured_height;
+      surface->x = rect.left / scale;
+      surface->y = rect.top / scale;
     }
-  else
+  else if (GDK_IS_POPUP (surface))
     {
-      _gdk_win32_get_window_rect (surface, &rect);
-
-      impl->next_layout.configured_width = (rect.right - rect.left + scale - 1) / scale;
-      impl->next_layout.configured_height = (rect.bottom - rect.top + scale - 1) / scale;
-
-      if (GDK_IS_TOPLEVEL (surface))
-        {
-          surface->x = rect.left / scale;
-          surface->y = rect.top / scale;
-        }
-      else if (GDK_IS_POPUP (surface))
-        {
-          gdk_win32_surface_get_geometry (surface,
-                                         &surface->x, &surface->y,
-                                          NULL, NULL);
-        }
+      gdk_win32_surface_get_geometry (surface,
+                                     &surface->x, &surface->y,
+                                      NULL, NULL);
     }
 }
 
@@ -2924,13 +2459,10 @@ _gdk_win32_surface_compute_size (GdkSurface *surface)
   if (GDK_IS_TOPLEVEL (surface))
     compute_toplevel_size (surface, TRUE, &width, &height);
 
-  if (!impl->drag_move_resize_context.native_move_resize_pending)
-    {
-      surface->width = impl->next_layout.configured_width;
-      surface->height = impl->next_layout.configured_height;
+  surface->width = impl->next_layout.configured_width;
+  surface->height = impl->next_layout.configured_height;
 
-      _gdk_surface_update_size (surface);
-    }
+  _gdk_surface_update_size (surface);
 
   return FALSE;
 }
@@ -3384,7 +2916,6 @@ gdk_win32_surface_get_queued_window_rect (GdkSurface *surface,
                                           RECT       *return_window_rect)
 {
   RECT window_rect;
-  GdkWin32Surface *impl = GDK_WIN32_SURFACE (surface);
 
   _gdk_win32_get_window_client_area_rect (surface, scale, &window_rect);
 
@@ -3394,56 +2925,17 @@ gdk_win32_surface_get_queued_window_rect (GdkSurface *surface,
   *return_window_rect = window_rect;
 }
 
-static void
-gdk_win32_surface_apply_queued_move_resize (GdkSurface *surface,
-                                            RECT        window_rect)
-{
-  if (!IsIconic (GDK_SURFACE_HWND (surface)))
-    {
-      GDK_NOTE (EVENTS, g_print ("Setting window position ... "));
-
-      API_CALL (SetWindowPos, (GDK_SURFACE_HWND (surface),
-                               SWP_NOZORDER_SPECIFIED,
-                               window_rect.left, window_rect.top,
-                               window_rect.right - window_rect.left,
-                               window_rect.bottom - window_rect.top,
-                               SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOREDRAW));
-
-      GDK_NOTE (EVENTS, g_print (" ... set window position\n"));
-
-      return;
-    }
-
-  /* Don't move iconic windows */
-  /* TODO: use SetWindowPlacement() to change non-minimized window position */
-}
-
 RECT
 gdk_win32_surface_handle_queued_move_resize (GdkDrawContext *draw_context)
 {
   GdkSurface *surface;
-  GdkWin32Surface *impl;
   int scale;
   RECT queued_window_rect;
 
   surface = gdk_draw_context_get_surface (draw_context);
-  impl = GDK_WIN32_SURFACE (surface);
   scale = gdk_surface_get_scale_factor (surface);
 
   gdk_win32_surface_get_queued_window_rect (surface, scale, &queued_window_rect);
-
-  /* Apply queued resizes for non-double-buffered windows
-   * before painting them (we paint on the window DC directly,
-   * it must have the right size).
-   * Due to some poorly-undetstood issue delayed
-   * resizing of double-buffered windows can produce weird
-   * artefacts, so these are also resized before we paint.
-   */
-  if (impl->drag_move_resize_context.native_move_resize_pending)
-    {
-      impl->drag_move_resize_context.native_move_resize_pending = FALSE;
-      gdk_win32_surface_apply_queued_move_resize (surface, queued_window_rect);
-    }
 
   return queued_window_rect;
 }

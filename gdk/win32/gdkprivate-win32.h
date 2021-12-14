@@ -394,14 +394,7 @@ guint32 _gdk_win32_keymap_get_decimal_mark (GdkWin32Keymap *keymap);
 
 gboolean _gdk_win32_get_window_rect             (GdkSurface  *window,
                                                  RECT       *rect);
-void     _gdk_win32_do_emit_configure_event     (GdkSurface  *window,
-                                                 RECT        rect);
-void      gdk_win32_surface_do_move_resize_drag  (GdkSurface  *window,
-                                                  int         x,
-                                                  int         y);
-void      gdk_win32_surface_end_move_resize_drag (GdkSurface  *window);
-gboolean _gdk_win32_surface_fill_min_max_info    (GdkSurface  *window,
-                                                  MINMAXINFO *mmi);
+
 
 gboolean _gdk_win32_surface_lacks_wm_decorations (GdkSurface *window);
 

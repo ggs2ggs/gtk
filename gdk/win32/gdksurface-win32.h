@@ -50,64 +50,6 @@ typedef enum
   GDK_DECOR_MAXIMIZE    = 1 << 6
 } GdkWMDecoration;
 
-enum _GdkW32WindowDragOp
-{
-  GDK_WIN32_DRAGOP_NONE = 0,
-  GDK_WIN32_DRAGOP_RESIZE,
-  GDK_WIN32_DRAGOP_MOVE,
-  GDK_WIN32_DRAGOP_COUNT
-};
-
-typedef enum _GdkW32WindowDragOp GdkW32WindowDragOp;
-
-struct _GdkW32DragMoveResizeContext
-{
-  /* The window that is being moved/resized */
-  GdkSurface         *window;
-
-  /* The kind of drag-operation going on. */
-  GdkW32WindowDragOp op;
-
-  /* The edge that was grabbed for resizing. Not used for moving. */
-  GdkSurfaceEdge      edge;
-
-  /* The device used to initiate the op.
-   * We grab it at the beginning and ungrab it at the end.
-   */
-  GdkDevice         *device;
-
-  /* The button pressed down to initiate the op.
-   * The op will be canceled only when *this* button
-   * is released.
-   */
-  int                button;
-
-  /* Initial cursor position when the operation began.
-   * Current cursor position is subtracted from it to find how far
-   * to move window border(s).
-   */
-  int                start_root_x;
-  int                start_root_y;
-
-  /* Initial window rectangle (position and size).
-   * The window is resized/moved relative to this (see start_root_*).
-   */
-  RECT               start_rect;
-
-  /* Not used */
-  guint32            timestamp;
-
-  /* TRUE if during the next redraw we should call SetWindowPos() to push
-   * the window size and position to the native window.
-   */
-  gboolean           native_move_resize_pending;
-
-  /* The cursor we should use while the operation is running. */
-  GdkCursor         *cursor;
-};
-
-typedef struct _GdkW32DragMoveResizeContext GdkW32DragMoveResizeContext;
-
 /* defined in gdkdrop-win32.c */
 typedef struct _drop_target_context drop_target_context;
 
@@ -174,8 +116,6 @@ struct _GdkWin32Surface
 
   /* WGL requires that we use CS_OWNDC and keep the hdc around */
   HDC              hdc;
-
-  GdkW32DragMoveResizeContext drag_move_resize_context;
 
   /* Enable all decorations? */
   gboolean decorate_all;
