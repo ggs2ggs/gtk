@@ -163,10 +163,6 @@ static int debug_indent = 0;
 
 static int both_shift_pressed[2]; /* to store keycodes for shift keys */
 
-/* low-level keyboard hook handle */
-static HHOOK keyboard_hook = NULL;
-static UINT aerosnap_message;
-
 static gboolean pen_touch_input;
 static POINT pen_touch_cursor_position;
 static LONG last_digitizer_time;
@@ -313,124 +309,6 @@ _gdk_win32_surface_procedure (HWND   hwnd,
   return retval;
 }
 
-static LRESULT
-low_level_keystroke_handler (WPARAM message,
-                                       KBDLLHOOKSTRUCT *kbdhook,
-                                       GdkSurface *window)
-{
-  GdkSurface *toplevel = window;
-  static DWORD last_keydown = 0;
-
-  if (message == WM_KEYDOWN &&
-      !GDK_SURFACE_DESTROYED (toplevel) &&
-      _gdk_win32_surface_lacks_wm_decorations (toplevel) && /* For CSD only */
-      last_keydown != kbdhook->vkCode &&
-      ((GetKeyState (VK_LWIN) & 0x8000) ||
-      (GetKeyState (VK_RWIN) & 0x8000)))
-	{
-	  GdkWin32AeroSnapCombo combo = GDK_WIN32_AEROSNAP_COMBO_NOTHING;
-	  gboolean lshiftdown = GetKeyState (VK_LSHIFT) & 0x8000;
-          gboolean rshiftdown = GetKeyState (VK_RSHIFT) & 0x8000;
-          gboolean oneshiftdown = (lshiftdown || rshiftdown) && !(lshiftdown && rshiftdown);
-          gboolean maximized = gdk_toplevel_get_state (GDK_TOPLEVEL (toplevel)) & GDK_TOPLEVEL_STATE_MAXIMIZED;
-
-	  switch (kbdhook->vkCode)
-	    {
-	    case VK_UP:
-	      combo = GDK_WIN32_AEROSNAP_COMBO_UP;
-	      break;
-	    case VK_DOWN:
-	      combo = GDK_WIN32_AEROSNAP_COMBO_DOWN;
-	      break;
-	    case VK_LEFT:
-	      combo = GDK_WIN32_AEROSNAP_COMBO_LEFT;
-	      break;
-	    case VK_RIGHT:
-	      combo = GDK_WIN32_AEROSNAP_COMBO_RIGHT;
-	      break;
-	    }
-
-	  if (oneshiftdown && combo != GDK_WIN32_AEROSNAP_COMBO_NOTHING)
-	    combo += 4;
-
-	  /* These are the only combos that Windows WM does handle for us */
-	  if (combo == GDK_WIN32_AEROSNAP_COMBO_SHIFTLEFT ||
-              combo == GDK_WIN32_AEROSNAP_COMBO_SHIFTRIGHT)
-            combo = GDK_WIN32_AEROSNAP_COMBO_NOTHING;
-
-          /* On Windows 10 the WM will handle this specific combo */
-          if (combo == GDK_WIN32_AEROSNAP_COMBO_DOWN && maximized &&
-              g_win32_check_windows_version (6, 4, 0, G_WIN32_OS_ANY))
-            combo = GDK_WIN32_AEROSNAP_COMBO_NOTHING;
-
-	  if (combo != GDK_WIN32_AEROSNAP_COMBO_NOTHING)
-            PostMessage (GDK_SURFACE_HWND (toplevel), aerosnap_message, (WPARAM) combo, 0);
-	}
-
-  if (message == WM_KEYDOWN)
-    last_keydown = kbdhook->vkCode;
-  else if (message == WM_KEYUP && last_keydown == kbdhook->vkCode)
-    last_keydown = 0;
-
-  return 0;
-}
-
-static LRESULT CALLBACK
-low_level_keyboard_proc (int    code,
-                         WPARAM wParam,
-                         LPARAM lParam)
-{
-  KBDLLHOOKSTRUCT *kbdhook;
-  HWND kbd_focus_owner;
-  GdkSurface *gdk_kbd_focus_owner;
-  LRESULT chain;
-
-  do
-  {
-    if (code < 0)
-      break;
-
-    kbd_focus_owner = GetFocus ();
-
-    if (kbd_focus_owner == NULL)
-      break;
-
-    gdk_kbd_focus_owner = gdk_win32_handle_table_lookup (kbd_focus_owner);
-
-    if (gdk_kbd_focus_owner == NULL)
-      break;
-
-    kbdhook = (KBDLLHOOKSTRUCT *) lParam;
-    chain = low_level_keystroke_handler (wParam, kbdhook, gdk_kbd_focus_owner);
-
-    if (chain != 0)
-      return chain;
-  } while (FALSE);
-
-  return CallNextHookEx (0, code, wParam, lParam);
-}
-
-static void
-set_up_low_level_keyboard_hook (void)
-{
-  HHOOK hook_handle;
-
-  if (keyboard_hook != NULL)
-    return;
-
-  hook_handle = SetWindowsHookEx (WH_KEYBOARD_LL,
-                                  (HOOKPROC) low_level_keyboard_proc,
-                                  _gdk_dll_hinstance,
-                                  0);
-
-  if (hook_handle != NULL)
-    keyboard_hook = hook_handle;
-  else
-    WIN32_API_FAILED ("SetWindowsHookEx");
-
-  aerosnap_message = RegisterWindowMessage ("GDK_WIN32_AEROSNAP_MESSAGE");
-}
-
 void
 _gdk_events_init (GdkDisplay *display)
 {
@@ -540,8 +418,6 @@ _gdk_events_init (GdkDisplay *display)
   g_source_add_poll (source, &event_source->event_poll_fd);
   g_source_set_can_recurse (source, TRUE);
   g_source_attach (source, NULL);
-
-  set_up_low_level_keyboard_hook ();
 }
 
 gboolean
@@ -1543,12 +1419,7 @@ handle_dpi_changed (GdkSurface *window,
 
   _gdk_win32_adjust_client_rect (window, rect);
 
-  if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-    gdk_win32_surface_move_resize (window,
-                                   window->x, window->y,
-                                   window->width, window->height);
-  else
-    gdk_win32_surface_resize (window, window->width, window->height);
+  gdk_win32_surface_resize (window, window->width, window->height);
 }
 
 static void
@@ -1871,10 +1742,6 @@ gdk_event_translate (MSG *msg,
    * #define return to a syntax error...
    */
 #define return GOTO_DONE_INSTEAD
-
-  if (msg->message == aerosnap_message)
-    _gdk_win32_surface_handle_aerosnap (window,
-                                       (GdkWin32AeroSnapCombo) msg->wParam);
 
   switch (msg->message)
     {
@@ -2315,13 +2182,6 @@ gdk_event_translate (MSG *msg,
       generate_button_event (GDK_BUTTON_RELEASE, button,
 			     window, msg);
 
-      impl = GDK_WIN32_SURFACE (window);
-
-      /* End a drag op when the same button that started it is released */
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE &&
-          impl->drag_move_resize_context.button == button)
-        gdk_win32_surface_end_move_resize_drag (window);
-
       return_val = TRUE;
       break;
 
@@ -2415,9 +2275,7 @@ gdk_event_translate (MSG *msg,
       current_root_x = msg->pt.x / impl->surface_scale;
       current_root_y = msg->pt.y / impl->surface_scale;
 
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        gdk_win32_surface_do_move_resize_drag (window, current_root_x, current_root_y);
-      else if (_gdk_input_ignore_core == 0)
+      if (_gdk_input_ignore_core == 0)
 	{
 	  current_x = (gint16) GET_X_LPARAM (msg->lParam) / impl->surface_scale;
 	  current_y = (gint16) GET_Y_LPARAM (msg->lParam) / impl->surface_scale;
@@ -2544,12 +2402,6 @@ gdk_event_translate (MSG *msg,
 
       gdk_winpointer_input_events (window, NULL, msg);
 
-      impl = GDK_WIN32_SURFACE (window);
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        {
-          gdk_win32_surface_end_move_resize_drag (window);
-        }
-
       *ret_valp = 0;
       return_val = TRUE;
       break;
@@ -2578,16 +2430,7 @@ gdk_event_translate (MSG *msg,
       if (IS_POINTER_PRIMARY_WPARAM (msg->wParam) && mouse_window != window)
         crossing_cb = make_crossing_event;
 
-      impl = GDK_WIN32_SURFACE (window);
-
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        {
-          gdk_win32_surface_do_move_resize_drag (window, current_root_x, current_root_y);
-        }
-      else
-        {
-          gdk_winpointer_input_events (window, crossing_cb, msg);
-        }
+      gdk_winpointer_input_events (window, crossing_cb, msg);
 
       *ret_valp = 0;
       return_val = TRUE;
@@ -2997,10 +2840,6 @@ gdk_event_translate (MSG *msg,
 	  _gdk_win32_end_modal_call (GDK_WIN32_MODAL_OP_SIZEMOVE_MASK);
 	}
 
-      impl = GDK_WIN32_SURFACE (window);
-
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        gdk_win32_surface_end_move_resize_drag (window);
       break;
 
     case WM_WINDOWPOSCHANGING:
