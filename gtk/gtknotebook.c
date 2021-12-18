@@ -1219,10 +1219,19 @@ gtk_notebook_class_init (GtkNotebookClass *class)
   /**
    * GtkNotebook::switch-page:
    * @notebook: the object which received the signal.
-   * @page: the new current page
-   * @page_num: the index of the page
+   * @page: the new impending current page
+   * @page_num: the index of impending page
    *
    * Emitted when the user or a function changes the current page.
+   *
+   * Note that while the `page` and `page_num` arguments passed to the signal
+   * handler will represent the new impending page, the
+   * [property@Gtk.Notebook:page] property will not be set to the new page
+   * until the signal handlers have completed. This is a viable way
+   * to handle the page switch in this in-between state.
+   *
+   * If you wish to react to a page switch after it has completed,
+   * consider connecting to the `notify::page` signal.
    */
   notebook_signals[SWITCH_PAGE] =
     g_signal_new (I_("switch-page"),
