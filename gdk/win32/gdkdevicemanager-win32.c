@@ -995,6 +995,24 @@ wintab_check_version (unsigned requested_major,
           (wintab_major == requested_major && wintab_minor >= requested_minor));
 }
 
+static gboolean
+string_contains (const char *haystack,
+                 const char *needle)
+{
+  char *hs_folded = g_utf8_casefold (haystack, -1);
+  char *hs_normalized = g_utf8_normalize (hs_folded, -1, G_NORMALIZE_ALL);
+  char *nd_folded = g_utf8_casefold (needle, -1);
+  char *nd_normalized = g_utf8_normalize (nd_folded, -1, G_NORMALIZE_ALL);
+  gboolean is_contained = g_strstr_len (hs_normalized, -1, nd_normalized) != NULL;
+
+  g_free (nd_normalized);
+  g_free (nd_folded);
+  g_free (hs_normalized);
+  g_free (hs_folded);
+
+  return is_contained;
+}
+
 static void
 wintab_init_check (GdkDeviceManagerWin32 *device_manager)
 {
@@ -1205,6 +1223,7 @@ _wintab_recognize_new_cursors (GdkDeviceManagerWin32 *device_manager,
   BOOL active;
   DWORD physid;
   AXIS axis_x, axis_y, axis_npressure, axis_or[3], axis_tpressure;
+  GdkInputSource source;
   GdkDeviceWintab *device;
   LOGCONTEXT lc;
   int num_axes;
@@ -1230,7 +1249,7 @@ _wintab_recognize_new_cursors (GdkDeviceManagerWin32 *device_manager,
       /* Skip cursors that are already known to us */
       if (gdk_device_manager_find_wintab_device(device_manager, hctx, cursorix) != NULL)
         continue;
-        
+
       active = FALSE;
       (*p_WTInfoA) (WTI_CURSORS + cursorix, CSR_ACTIVE, &active);
       if (!active)
@@ -1261,12 +1280,22 @@ _wintab_recognize_new_cursors (GdkDeviceManagerWin32 *device_manager,
       (*p_WTInfoW) (WTI_CURSORS + cursorix, CSR_NAME, csrname);
       csrname_utf8 = g_utf16_to_utf8 (csrname, -1, NULL, NULL, NULL);
       device_name = g_strconcat (devname_utf8, " ", csrname_utf8, NULL);
+
+      if (wintab_check_version (1, 2))
+        {
+          (*p_WTInfoW) (WTI_CURSORS + cursorix, CSR_TYPE, csrname);
+        }
+      else
+        {
+          source = (string_contains (csrname_utf8, "eraser")) ? GDK_SOURCE_ERASER : GDK_SOURCE_PEN;
+        }
+
       g_free (csrname_utf8);
 
       device = g_object_new (GDK_TYPE_DEVICE_WINTAB,
                               "name", device_name,
                               "type", GDK_DEVICE_TYPE_FLOATING,
-                              "input-source", GDK_SOURCE_PEN,
+                              "input-source", source,
                               "input-mode", GDK_MODE_SCREEN,
                               "has-cursor", lc.lcOptions & CXO_SYSTEM,
                               "display", display,
