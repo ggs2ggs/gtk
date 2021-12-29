@@ -116,6 +116,10 @@ static t_WTOverlap p_WTOverlap;
 static t_WTPacket p_WTPacket;
 static t_WTQueueSizeSet p_WTQueueSizeSet;
 
+/* Wintab spec version supported by the driver */
+static unsigned wintab_major;
+static unsigned wintab_minor;
+
 static gboolean default_display_opened = FALSE;
 
 G_DEFINE_TYPE (GdkDeviceManagerWin32, gdk_device_manager_win32, GDK_TYPE_DEVICE_MANAGER)
@@ -983,6 +987,14 @@ print_cursor (int index)
 }
 #endif
 
+static gboolean
+wintab_check_version (unsigned requested_major,
+                      unsigned requested_minor)
+{
+  return ((wintab_major > requested_major) ||
+          (wintab_major == requested_major && wintab_minor >= requested_minor));
+}
+
 static void
 wintab_init_check (GdkDeviceManagerWin32 *device_manager)
 {
@@ -990,11 +1002,11 @@ wintab_init_check (GdkDeviceManagerWin32 *device_manager)
   GdkWindow *root = gdk_screen_get_root_window (gdk_display_get_default_screen (display));
   static gboolean wintab_initialized = FALSE;
   GdkWindowAttr wa;
-  WORD specversion;
   HCTX *hctx;
   UINT ndevices, ncursors;
   UINT devix;
   AXIS axis_x, axis_y;
+  WORD specversion;
   int i;
   wchar_t devname[100];
   gchar *devname_utf8;
@@ -1055,8 +1067,10 @@ wintab_init_check (GdkDeviceManagerWin32 *device_manager)
     return;
 
   (*p_WTInfoA) (WTI_INTERFACE, IFC_SPECVERSION, &specversion);
-  GDK_NOTE (INPUT, g_print ("Wintab interface version %d.%d\n",
-			    HIBYTE (specversion), LOBYTE (specversion)));
+  wintab_major = HIBYTE (specversion);
+  wintab_minor = LOBYTE (specversion);
+  GDK_NOTE (INPUT, g_print ("Wintab interface version %u.%u\n",
+                            wintab_major, wintab_minor));
   (*p_WTInfoA) (WTI_INTERFACE, IFC_NDEVICES, &ndevices);
   (*p_WTInfoA) (WTI_INTERFACE, IFC_NCURSORS, &ncursors);
 #if DEBUG_WINTAB
@@ -1097,7 +1111,7 @@ wintab_init_check (GdkDeviceManagerWin32 *device_manager)
       (*p_WTInfoA) (WTI_DEVICES + devix, DVC_Y, &axis_y);
 
       defcontext_done = FALSE;
-      if (HIBYTE (specversion) > 1 || LOBYTE (specversion) >= 1)
+      if (wintab_check_version (1, 1))
         {
           /* Try to get device-specific default context */
           /* Some drivers, e.g. Aiptek, don't provide this info */
