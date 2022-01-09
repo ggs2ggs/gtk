@@ -177,20 +177,21 @@ struct _GtkPlacesSidebar {
 
   GActionGroup *action_group;
 
-  guint mounting               : 1;
-  guint  drag_data_received    : 1;
-  guint drop_occurred          : 1;
-  guint show_recent_set        : 1;
-  guint show_recent            : 1;
-  guint show_desktop_set       : 1;
-  guint show_desktop           : 1;
-  guint show_connect_to_server : 1;
-  guint show_enter_location    : 1;
-  guint show_other_locations   : 1;
-  guint show_trash             : 1;
-  guint show_starred_location  : 1;
-  guint local_only             : 1;
-  guint populate_all           : 1;
+  guint mounting                         : 1;
+  guint  drag_data_received              : 1;
+  guint drop_occurred                    : 1;
+  guint show_recent_set                  : 1;
+  guint show_recent                      : 1;
+  guint show_desktop_set                 : 1;
+  guint show_desktop                     : 1;
+  guint show_connect_to_server           : 1;
+  guint show_enter_location              : 1;
+  guint show_other_locations             : 1;
+  guint show_trash                       : 1;
+  guint show_starred_location            : 1;
+  guint local_only                       : 1;
+  guint populate_all                     : 1;
+  guint update_places_after_mount_volume : 1;
 };
 
 struct _GtkPlacesSidebarClass {
@@ -298,9 +299,12 @@ static void  check_unmount_and_eject       (GMount   *mount,
 static gboolean on_button_press_event (GtkWidget      *widget,
                                        GdkEventButton *event,
                                        GtkSidebarRow  *sidebar);
-static gboolean on_button_release_event (GtkWidget      *widget,
-                                         GdkEventButton *event,
-                                         GtkSidebarRow  *sidebar);
+static gboolean on_button_release_event (GtkWidget        *widget,
+                                         GdkEventButton   *event,
+                                         GtkPlacesSidebar *sidebar);
+static gboolean on_sidebar_row_button_release_event (GtkWidget      *widget,
+                                                     GdkEventButton *event,
+                                                     GtkSidebarRow  *sidebar);
 static void popup_menu_cb    (GtkSidebarRow   *row);
 static void long_press_cb    (GtkGesture      *gesture,
                               gdouble          x,
@@ -494,9 +498,6 @@ add_place (GtkPlacesSidebar            *sidebar,
   check_unmount_and_eject (mount, volume, drive,
                            &show_unmount, &show_eject);
 
-  if (show_unmount || show_eject)
-    g_assert (place_type != PLACES_BOOKMARK);
-
   show_eject_button = (show_unmount || show_eject);
 
   row = g_object_new (GTK_TYPE_SIDEBAR_ROW,
@@ -526,7 +527,7 @@ add_place (GtkPlacesSidebar            *sidebar,
   g_signal_connect (event_box, "button-press-event",
                     G_CALLBACK (on_button_press_event), row);
   g_signal_connect (event_box, "button-release-event",
-                    G_CALLBACK (on_button_release_event), row);
+                    G_CALLBACK (on_sidebar_row_button_release_event), row);
 
   gtk_container_add (GTK_CONTAINER (sidebar->list_box), GTK_WIDGET (row));
   gtk_widget_show_all (row);
@@ -849,43 +850,105 @@ on_bookmark_query_info_complete (GObject      *source,
   GtkPlacesSidebar *sidebar = clos->sidebar;
   GFile *root = G_FILE (source);
   GError *error = NULL;
-  GFileInfo *info;
-  gchar *bookmark_name;
-  gchar *mount_uri;
-  gchar *tooltip;
-  GIcon *start_icon;
+  GFileInfo *info = NULL;
+  gchar *bookmark_name = NULL;
+  gchar *mount_uri = NULL;
+  gchar *tooltip = NULL;
+  GIcon *start_icon = NULL;
+  GVolume* volume = NULL;
 
   info = g_file_query_info_finish (root, result, &error);
   if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
     goto out;
 
-  bookmark_name = _gtk_bookmarks_manager_get_bookmark_label (sidebar->bookmarks_manager, root);
-  if (bookmark_name == NULL && info != NULL)
-    bookmark_name = g_strdup (g_file_info_get_display_name (info));
-  else if (bookmark_name == NULL)
+  mount_uri = g_file_get_uri (root);
+
+  g_warn_if_fail (mount_uri != NULL);
+
+  if ((mount_uri != NULL) &&
+      (strlen(mount_uri) > 10) &&
+      (strstr(mount_uri, "volume:///") == mount_uri))
     {
-      /* Don't add non-UTF-8 bookmarks */
-      bookmark_name = g_file_get_basename (root);
-      if (!g_utf8_validate (bookmark_name, -1, NULL))
+      const char* volume_uuid = mount_uri + 10;
+
+      volume = g_volume_monitor_get_volume_for_uuid(sidebar->volume_monitor, volume_uuid);
+    }
+
+  if(volume)
+    {
+      GDrive* drive;
+      GMount* mount;
+
+      drive = g_volume_get_drive(volume);
+
+      g_warn_if_fail (drive != NULL);
+
+      mount = g_volume_get_mount (volume);
+
+      if (mount)
+        {
+          GFile *mount_root;
+
+          start_icon = g_mount_get_symbolic_icon (mount);
+          mount_root = g_mount_get_default_location (mount);
+          bookmark_name = g_mount_get_name (mount);
+          tooltip = g_file_get_parse_name (mount_root);
+
+          add_place (sidebar, PLACES_BOOKMARK,
+                     SECTION_BOOKMARKS,
+                     bookmark_name, start_icon, NULL, mount_uri,
+                     drive, volume, mount, NULL, clos->index, tooltip);
+
+          g_object_unref (mount);
+          g_object_unref (mount_root);
+        }
+      else
+        {
+          start_icon = g_volume_get_symbolic_icon (volume);
+          bookmark_name = g_volume_get_name (volume);
+          tooltip = g_strdup_printf (_("Mount and open “%s”"), bookmark_name);
+
+          add_place (sidebar, PLACES_BOOKMARK,
+                     SECTION_BOOKMARKS,
+                     bookmark_name, start_icon, NULL, mount_uri,
+                     drive, volume, NULL, NULL, clos->index, tooltip);
+        }
+
+      if (drive)
+        g_object_unref (drive);
+
+      g_object_unref (volume);
+
+    }
+  else
+    {
+      bookmark_name = _gtk_bookmarks_manager_get_bookmark_label (sidebar->bookmarks_manager, root);
+      if (bookmark_name == NULL && info != NULL)
+          bookmark_name = g_strdup (g_file_info_get_display_name (info));
+      else if (bookmark_name == NULL)
+      {
+        /* Don't add non-UTF-8 bookmarks */
+        bookmark_name = g_file_get_basename (root);
+        if (!g_utf8_validate (bookmark_name, -1, NULL))
         {
           g_free (bookmark_name);
           goto out;
         }
+      }
+
+      if (info)
+        start_icon = g_object_ref (g_file_info_get_symbolic_icon (info));
+      else
+        start_icon = g_themed_icon_new_with_default_fallbacks (clos->is_native ? ICON_NAME_FOLDER : ICON_NAME_FOLDER_NETWORK);
+
+      tooltip = g_file_get_parse_name (root);
+
+      add_place (sidebar, PLACES_BOOKMARK,
+                 SECTION_BOOKMARKS,
+                 bookmark_name, start_icon, NULL, mount_uri,
+                 NULL, NULL, NULL, NULL, clos->index,
+                 tooltip);
     }
-
-  if (info)
-    start_icon = g_object_ref (g_file_info_get_symbolic_icon (info));
-  else
-    start_icon = g_themed_icon_new_with_default_fallbacks (clos->is_native ? ICON_NAME_FOLDER : ICON_NAME_FOLDER_NETWORK);
-
-  mount_uri = g_file_get_uri (root);
-  tooltip = g_file_get_parse_name (root);
-
-  add_place (sidebar, PLACES_BOOKMARK,
-             SECTION_BOOKMARKS,
-             bookmark_name, start_icon, NULL, mount_uri,
-             NULL, NULL, NULL, NULL, clos->index,
-             tooltip);
 
   g_free (mount_uri);
   g_free (tooltip);
@@ -1015,6 +1078,20 @@ on_account_updated (GObject    *object,
 static void
 update_places (GtkPlacesSidebar *sidebar)
 {
+  if(sidebar->mounting)
+    {
+      /* When we're handling a volume mount operation (in volume_mount_cb) the
+       * volume monitor may trigger this function as a callback. Hence we delay
+       * the update operation to happen after we're finished with handling the
+       * volume mount operation*/
+
+      sidebar->update_places_after_mount_volume = TRUE;
+
+      return;
+    }
+
+  sidebar->update_places_after_mount_volume = FALSE;
+
   GList *mounts, *l, *ll;
   GMount *mount;
   GList *drives;
@@ -2452,6 +2529,11 @@ volume_mount_cb (GObject      *source_object,
       g_object_unref (G_OBJECT (mount));
     }
 
+  if(sidebar->update_places_after_mount_volume)
+    {
+      update_places(sidebar);
+    }
+
   g_object_unref (row);
   g_object_unref (sidebar);
 }
@@ -2531,6 +2613,7 @@ open_row (GtkSidebarRow      *row,
   gchar *uri;
   GDrive *drive;
   GVolume *volume;
+  GMount* mount;
   GtkPlacesSidebarPlaceType place_type;
   GtkPlacesSidebar *sidebar;
 
@@ -2540,6 +2623,7 @@ open_row (GtkSidebarRow      *row,
                 "place-type", &place_type,
                 "drive", &drive,
                 "volume", &volume,
+                "mount", &mount,
                 NULL);
 
   if (place_type == PLACES_OTHER_LOCATIONS)
@@ -2550,6 +2634,32 @@ open_row (GtkSidebarRow      *row,
   else if (place_type == PLACES_STARRED_LOCATION)
     {
       emit_show_starred_location (sidebar, open_flags);
+    }
+  else if (place_type == PLACES_BOOKMARK)
+    {
+      if(mount != NULL)
+        {
+          GFile *root;
+          gchar *real_mount_uri;
+
+          root = g_mount_get_default_location (mount);
+          real_mount_uri = g_file_get_uri (root);
+
+          g_warn_if_fail (real_mount_uri != NULL);
+
+          open_uri (sidebar, real_mount_uri, open_flags);
+
+          g_free (real_mount_uri);
+          g_object_unref (root);
+        }
+      else if(volume != NULL)
+        {
+          open_volume (row, volume, open_flags);
+        }
+      else if (uri != NULL)
+      {
+        open_uri (sidebar, uri, open_flags);
+      }
     }
   else if (uri != NULL)
     {
@@ -3428,6 +3538,18 @@ start_shortcut_cb (GSimpleAction *action,
 }
 
 static void
+bookmark_cur_location (GSimpleAction *action,
+                       GVariant      *parameter,
+                       gpointer       data)
+{
+  GtkPlacesSidebar *sidebar = data;
+
+  g_return_if_fail (sidebar->current_location != NULL);
+
+  _gtk_bookmarks_manager_insert_bookmark (sidebar->bookmarks_manager, sidebar->current_location, -1, NULL);
+}
+
+static void
 stop_shortcut_cb (GSimpleAction *action,
                   GVariant      *parameter,
                   gpointer       data)
@@ -3531,17 +3653,29 @@ static GActionEntry entries[] = {
   { "stop", stop_shortcut_cb, NULL, NULL, NULL },
 };
 
+static GActionEntry cur_location_entries[] = {
+  { "bookmark", bookmark_cur_location, NULL, NULL, NULL },
+};
+
 static void
 add_actions (GtkPlacesSidebar *sidebar)
 {
-  GActionGroup *actions;
+  GActionGroup *actions, *cur_location_actions;
 
   actions = G_ACTION_GROUP (g_simple_action_group_new ());
   g_action_map_add_action_entries (G_ACTION_MAP (actions),
                                    entries, G_N_ELEMENTS (entries),
                                    sidebar);
   gtk_widget_insert_action_group (GTK_WIDGET (sidebar), "row", actions);
+
+  cur_location_actions = G_ACTION_GROUP (g_simple_action_group_new ());
+  g_action_map_add_action_entries (G_ACTION_MAP (cur_location_actions),
+                                   cur_location_entries, G_N_ELEMENTS (cur_location_entries),
+                                   sidebar);
+  gtk_widget_insert_action_group (GTK_WIDGET (sidebar), "cur_location", cur_location_actions);
+
   g_object_unref (actions);
+  g_object_unref (cur_location_actions);
 }
 
 static GtkWidget *
@@ -3811,9 +3945,9 @@ on_button_press_event (GtkWidget      *widget,
 }
 
 static gboolean
-on_button_release_event (GtkWidget      *widget,
-                         GdkEventButton *event,
-                         GtkSidebarRow  *row)
+on_sidebar_row_button_release_event (GtkWidget      *widget,
+                                     GdkEventButton *event,
+                                     GtkSidebarRow  *row)
 {
   gboolean ret = FALSE;
   GtkPlacesSidebarPlaceType row_type;
@@ -3843,6 +3977,57 @@ on_button_release_event (GtkWidget      *widget,
     }
 
   return ret;
+}
+
+static gboolean
+on_button_release_event (GtkWidget        *widget,
+                         GdkEventButton   *event,
+                         GtkPlacesSidebar *sidebar)
+{
+  GtkWidget *event_src_widget;
+
+  event_src_widget = gtk_get_event_widget ((GdkEvent*) event);
+
+  if ((event_src_widget == GTK_WIDGET (sidebar->list_box)) &&
+      (event->button == 3))
+    {
+      if (sidebar->popover)
+        {
+          gtk_widget_destroy (sidebar->popover);
+        }
+
+      GtkWidget *box;
+      GdkRectangle point_to_rect;
+      GActionGroup *actions;
+      GAction *action;
+
+      sidebar->popover = gtk_popover_new (GTK_WIDGET (sidebar));
+
+      g_signal_connect (sidebar->popover, "destroy", G_CALLBACK (on_row_popover_destroy), sidebar);
+
+      setup_popover_shadowing (sidebar->popover);
+      box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+      g_object_set (box, "margin", 10, NULL);
+      gtk_widget_show (box);
+      gtk_container_add (GTK_CONTAINER (sidebar->popover), box);
+
+      add_button (box, _("_Bookmark Current Location"), "cur_location.bookmark");
+
+      point_to_rect.x = (gint)event->x;
+      point_to_rect.y = (gint)event->y;
+      point_to_rect.width = 1;
+      point_to_rect.height = 1;
+
+      actions = gtk_widget_get_action_group (GTK_WIDGET (sidebar), "cur_location");
+      action = g_action_map_lookup_action (G_ACTION_MAP (actions), "bookmark");
+      g_simple_action_set_enabled (G_SIMPLE_ACTION (action), TRUE);
+
+      gtk_popover_set_pointing_to (GTK_POPOVER (sidebar->popover), &point_to_rect);
+
+      gtk_popover_popup (GTK_POPOVER (sidebar->popover));
+    }
+
+  return FALSE;
 }
 
 static void
@@ -4175,6 +4360,9 @@ gtk_places_sidebar_init (GtkPlacesSidebar *sidebar)
                     G_CALLBACK (shell_shows_desktop_changed), sidebar);
   g_object_get (sidebar->gtk_settings, "gtk-shell-shows-desktop", &show_desktop, NULL);
   sidebar->show_desktop = show_desktop;
+
+  g_signal_connect (sidebar->list_box, "button-release-event",
+                    G_CALLBACK (on_button_release_event), sidebar);
 
   /* Cloud providers */
 #ifdef HAVE_CLOUDPROVIDERS
