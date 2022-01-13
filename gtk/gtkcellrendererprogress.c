@@ -374,7 +374,16 @@ recompute_label (GtkCellRendererProgress *cellprogress)
   if (priv->text)
     label = g_strdup (priv->text);
   else if (priv->pulse < 0)
-    label = g_strdup_printf (C_("progress bar label", "%d %%"), priv->value);
+    {
+      GString *gs = g_string_new ("");
+      if (priv->value < 10)
+	g_string_append_unichar (gs, 0x2007); /*figure space*/
+      if (priv->value < 100)
+	g_string_append_unichar (gs, 0x2007); /*figure space*/
+      g_string_append_printf (gs, C_("progress bar label", "%d %%"), priv->value);
+      label = gs->str;
+      label = g_string_free (gs, FALSE);
+    }
   else
     label = NULL;
  
