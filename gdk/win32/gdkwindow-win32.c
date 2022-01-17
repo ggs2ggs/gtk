@@ -445,9 +445,7 @@ RegisterGdkClass (GdkWindowType wtype, GdkWindowTypeHint wtype_hint)
   ATOM klass = 0;
 
   wcl.cbSize = sizeof (WNDCLASSEX);
-  wcl.style = 0; /* DON'T set CS_<H,V>REDRAW. It causes total redraw
-                  * on WM_SIZE and WM_MOVE. Flicker, Performance!
-                  */
+  wcl.style = CS_HREDRAW | CS_VREDRAW;
   wcl.lpfnWndProc = _gdk_win32_window_procedure;
   wcl.cbClsExtra = 0;
   wcl.cbWndExtra = 0;
