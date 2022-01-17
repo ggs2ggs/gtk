@@ -526,8 +526,6 @@ void      gdk_win32_window_end_move_resize_drag (GdkWindow  *window);
 gboolean _gdk_win32_window_fill_min_max_info    (GdkWindow  *window,
                                                  MINMAXINFO *mmi);
 
-gboolean _gdk_win32_window_lacks_wm_decorations (GdkWindow *window);
-
 BOOL WINAPI GtkShowWindow (GdkWindow *window,
                            int        cmd_show);
 

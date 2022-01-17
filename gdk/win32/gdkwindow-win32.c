@@ -364,6 +364,8 @@ _gdk_win32_adjust_client_rect (GdkWindow *window,
 gboolean
 _gdk_win32_window_enable_transparency (GdkWindow *window)
 {
+  return false;
+#if 0
   GdkWindowImplWin32 *impl;
   GdkScreen *screen;
   DWM_BLURBEHIND blur_behind;
@@ -410,6 +412,7 @@ _gdk_win32_window_enable_transparency (GdkWindow *window)
   DeleteObject (empty_region);
 
   return SUCCEEDED (call_result);
+#endif
 }
 
 static const gchar *
@@ -1753,95 +1756,6 @@ gdk_win32_window_set_urgency_hint (GdkWindow *window,
     }
 }
 
-static gboolean
-get_effective_window_decorations (GdkWindow       *window,
-                                  GdkWMDecoration *decoration)
-{
-  GdkWindowImplWin32 *impl;
-
-  impl = (GdkWindowImplWin32 *)window->impl;
-
-  if (gdk_window_get_decorations (window, decoration))
-    return TRUE;
-
-  if (window->window_type != GDK_WINDOW_TOPLEVEL)
-    {
-      return FALSE;
-    }
-
-  if ((impl->hint_flags & GDK_HINT_MIN_SIZE) &&
-      (impl->hint_flags & GDK_HINT_MAX_SIZE) &&
-      impl->hints.min_width == impl->hints.max_width &&
-      impl->hints.min_height == impl->hints.max_height)
-    {
-      *decoration = GDK_DECOR_ALL | GDK_DECOR_RESIZEH | GDK_DECOR_MAXIMIZE;
-
-      if (impl->type_hint == GDK_WINDOW_TYPE_HINT_DIALOG ||
-	  impl->type_hint == GDK_WINDOW_TYPE_HINT_MENU ||
-	  impl->type_hint == GDK_WINDOW_TYPE_HINT_TOOLBAR)
-	{
-	  *decoration |= GDK_DECOR_MINIMIZE;
-	}
-      else if (impl->type_hint == GDK_WINDOW_TYPE_HINT_SPLASHSCREEN)
-	{
-	  *decoration |= GDK_DECOR_MENU | GDK_DECOR_MINIMIZE;
-	}
-
-      return TRUE;
-    }
-  else if (impl->hint_flags & GDK_HINT_MAX_SIZE)
-    {
-      *decoration = GDK_DECOR_ALL | GDK_DECOR_MAXIMIZE;
-      if (impl->type_hint == GDK_WINDOW_TYPE_HINT_DIALOG ||
-	  impl->type_hint == GDK_WINDOW_TYPE_HINT_MENU ||
-	  impl->type_hint == GDK_WINDOW_TYPE_HINT_TOOLBAR)
-	{
-	  *decoration |= GDK_DECOR_MINIMIZE;
-	}
-
-      return TRUE;
-    }
-  else
-    {
-      switch (impl->type_hint)
-	{
-	case GDK_WINDOW_TYPE_HINT_DIALOG:
-	  *decoration = (GDK_DECOR_ALL | GDK_DECOR_MINIMIZE | GDK_DECOR_MAXIMIZE);
-	  return TRUE;
-
-	case GDK_WINDOW_TYPE_HINT_MENU:
-	  *decoration = (GDK_DECOR_ALL | GDK_DECOR_RESIZEH | GDK_DECOR_MINIMIZE | GDK_DECOR_MAXIMIZE);
-	  return TRUE;
-
-	case GDK_WINDOW_TYPE_HINT_TOOLBAR:
-	case GDK_WINDOW_TYPE_HINT_UTILITY:
-	  gdk_window_set_skip_taskbar_hint (window, TRUE);
-	  gdk_window_set_skip_pager_hint (window, TRUE);
-	  *decoration = (GDK_DECOR_ALL | GDK_DECOR_MINIMIZE | GDK_DECOR_MAXIMIZE);
-	  return TRUE;
-
-	case GDK_WINDOW_TYPE_HINT_SPLASHSCREEN:
-	  *decoration = (GDK_DECOR_ALL | GDK_DECOR_RESIZEH | GDK_DECOR_MENU |
-			 GDK_DECOR_MINIMIZE | GDK_DECOR_MAXIMIZE);
-	  return TRUE;
-
-	case GDK_WINDOW_TYPE_HINT_DOCK:
-	  return FALSE;
-
-	case GDK_WINDOW_TYPE_HINT_DESKTOP:
-	  return FALSE;
-
-	default:
-	  /* Fall thru */
-	case GDK_WINDOW_TYPE_HINT_NORMAL:
-	  *decoration = GDK_DECOR_ALL;
-	  return TRUE;
-	}
-    }
-
-  return FALSE;
-}
-
 static void
 gdk_win32_window_set_geometry_hints (GdkWindow         *window,
 			       const GdkGeometry *geometry,
@@ -2578,22 +2492,6 @@ gdk_win32_window_set_group (GdkWindow *window,
   g_warning ("gdk_window_set_group not implemented");
 }
 
-static void
-update_single_bit (LONG    *style,
-                   gboolean all,
-		   int      gdk_bit,
-		   int      style_bit)
-{
-  /* all controls the interpretation of gdk_bit -- if all is TRUE,
-   * gdk_bit indicates whether style_bit is off; if all is FALSE, gdk
-   * bit indicate whether style_bit is on
-   */
-  if ((!all && gdk_bit) || (all && !gdk_bit))
-    *style |= style_bit;
-  else
-    *style &= ~style_bit;
-}
-
 /*
  * Returns TRUE if window has no decorations.
  * Usually it means CSD windows, because GTK
@@ -2607,57 +2505,7 @@ update_single_bit (LONG    *style,
 gboolean
 _gdk_win32_window_lacks_wm_decorations (GdkWindow *window)
 {
-  GdkWindowImplWin32 *impl;
-  LONG style;
-  gboolean has_any_decorations;
-
-  if (GDK_WINDOW_DESTROYED (window))
-    return FALSE;
-
-  /* only toplevels can be layered */
-  if (!WINDOW_IS_TOPLEVEL (window))
-    return FALSE;
-
-  impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-  /* This is because GTK calls gdk_window_set_decorations (window, 0),
-   * even though GdkWMDecoration docs indicate that 0 does NOT mean
-   * "no decorations".
-   */
-  if (impl->decorations &&
-      *impl->decorations == 0)
-    return TRUE;
-
-  if (GDK_WINDOW_HWND (window) == 0)
-    return FALSE;
-
-  style = GetWindowLong (GDK_WINDOW_HWND (window), GWL_STYLE);
-
-  if (style == 0)
-    {
-      DWORD w32_error = GetLastError ();
-
-      GDK_NOTE (MISC, g_print ("Failed to get style of window %p (handle %p): %lu\n",
-                               window, GDK_WINDOW_HWND (window), w32_error));
-      return FALSE;
-    }
-
-  /* Keep this in sync with _gdk_win32_window_update_style_bits() */
-  /* We don't check what get_effective_window_decorations()
-   * has to say, because it gives suggestions based on
-   * various hints, while we want *actual* decorations,
-   * or their absence.
-   */
-  has_any_decorations = FALSE;
-
-  if (style & (WS_BORDER | WS_THICKFRAME | WS_CAPTION |
-               WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX))
-    has_any_decorations = TRUE;
-  else
-    GDK_NOTE (MISC, g_print ("Window %p (handle %p): has no decorations (style %lx)\n",
-                             window, GDK_WINDOW_HWND (window), style));
-
-  return !has_any_decorations;
+  return FALSE;
 }
 
 void
@@ -2714,31 +2562,6 @@ _gdk_win32_window_update_style_bits (GdkWindow *window)
       impl->type_hint == GDK_WINDOW_TYPE_HINT_DND)
     {
       needs_basic_layering = TRUE;
-    }
-
-  if (get_effective_window_decorations (window, &decorations))
-    {
-      all = (decorations & GDK_DECOR_ALL);
-      /* Keep this in sync with the test in _gdk_win32_window_lacks_wm_decorations() */
-      update_single_bit (&new_style, all, decorations & GDK_DECOR_BORDER, WS_BORDER);
-      update_single_bit (&new_style, all, decorations & GDK_DECOR_RESIZEH, WS_THICKFRAME);
-      update_single_bit (&new_style, all, decorations & GDK_DECOR_TITLE, WS_CAPTION);
-      update_single_bit (&new_style, all, decorations & GDK_DECOR_MENU, WS_SYSMENU);
-      update_single_bit (&new_style, all, decorations & GDK_DECOR_MINIMIZE, WS_MINIMIZEBOX);
-      update_single_bit (&new_style, all, decorations & GDK_DECOR_MAXIMIZE, WS_MAXIMIZEBOX);
-    }
-
-  if (needs_basic_layering)
-    {
-      /* SetLayeredWindowAttributes may have been already called, e.g. to set an opacity level.
-       * We only have to call the API in case it has never been called before on the window.
-       */
-      if (SetLastError(0),
-          !GetLayeredWindowAttributes (GDK_WINDOW_HWND (window), NULL, NULL, NULL) &&
-          GetLastError() == 0)
-        {
-          API_CALL (SetLayeredWindowAttributes, (GDK_WINDOW_HWND (window), 0, 255, LWA_ALPHA));
-        }
     }
 
   if (old_style == new_style && old_exstyle == new_exstyle )
@@ -3451,38 +3274,7 @@ static void
 gdk_win32_window_set_opacity (GdkWindow *window,
 			gdouble    opacity)
 {
-  LONG exstyle;
-  typedef BOOL (WINAPI *PFN_SetLayeredWindowAttributes) (HWND, COLORREF, BYTE, DWORD);
-  PFN_SetLayeredWindowAttributes setLayeredWindowAttributes = NULL;
-  GdkWindowImplWin32 *impl;
-
-  g_return_if_fail (GDK_IS_WINDOW (window));
-
-  if (!WINDOW_IS_TOPLEVEL (window) || GDK_WINDOW_DESTROYED (window))
-    return;
-
-  if (opacity < 0)
-    opacity = 0;
-  else if (opacity > 1)
-    opacity = 1;
-
-  exstyle = GetWindowLong (GDK_WINDOW_HWND (window), GWL_EXSTYLE);
-
-  if (!(exstyle & WS_EX_LAYERED))
-    SetWindowLong (GDK_WINDOW_HWND (window),
-		    GWL_EXSTYLE,
-		    exstyle | WS_EX_LAYERED);
-
-  setLayeredWindowAttributes =
-    (PFN_SetLayeredWindowAttributes)GetProcAddress (GetModuleHandle ("user32.dll"), "SetLayeredWindowAttributes");
-
-  if (setLayeredWindowAttributes)
-    {
-      API_CALL (setLayeredWindowAttributes, (GDK_WINDOW_HWND (window),
-					     0,
-					     opacity * 0xff,
-					     LWA_ALPHA));
-    }
+  // FIXME
 }
 
 static cairo_region_t *
@@ -3694,51 +3486,6 @@ GtkShowWindow (GdkWindow *window,
     case SW_SHOWNA:
     case SW_SHOWNOACTIVATE:
     case SW_SHOWNORMAL:
-
-      if (IsWindowVisible (hwnd))
-        break;
-
-      if ((WS_EX_LAYERED & GetWindowLongPtr (hwnd, GWL_EXSTYLE)) != WS_EX_LAYERED)
-        break;
-
-      /* Window was hidden, will be shown. Erase it, GDK will repaint soon,
-       * but not soon enough, so it's possible to see old content before
-       * the next redraw, unless we erase the window first.
-       */
-      GetWindowRect (hwnd, &window_rect);
-      source_point.x = source_point.y = 0;
-
-      window_position.x = window_rect.left;
-      window_position.y = window_rect.top;
-      window_size.cx = window_rect.right - window_rect.left;
-      window_size.cy = window_rect.bottom - window_rect.top;
-
-      blender.BlendOp = AC_SRC_OVER;
-      blender.BlendFlags = 0;
-      blender.AlphaFormat = AC_SRC_ALPHA;
-      blender.SourceConstantAlpha = 255;
-
-      /* Create a surface of appropriate size and clear it */
-      surface = cairo_win32_surface_create_with_dib (CAIRO_FORMAT_ARGB32,
-                                                     window_size.cx,
-                                                     window_size.cy);
-      cairo_surface_set_device_scale (surface, impl->window_scale, impl->window_scale);
-      cr = cairo_create (surface);
-      cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.0);
-      cairo_paint (cr);
-      cairo_destroy (cr);
-      cairo_surface_flush (surface);
-      hdc = cairo_win32_surface_get_dc (surface);
-
-      /* No API_CALL() wrapper, don't check for errors */
-      UpdateLayeredWindow (hwnd, NULL,
-                           &window_position, &window_size,
-                           hdc, &source_point,
-                           0, &blender, ULW_ALPHA);
-
-      cairo_surface_destroy (surface);
-
       break;
     }
 

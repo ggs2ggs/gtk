@@ -1697,44 +1697,6 @@ sync_timer_proc (HWND     hwnd,
   KillTimer (hwnd, sync_timer);
 }
 
-static gboolean
-handle_nchittest (HWND hwnd,
-                  GdkWindow *window,
-                  gint16 screen_x,
-                  gint16 screen_y,
-                  gint *ret_valp)
-{
-  RECT rect;
-  GdkWindowImplWin32 *impl;
-
-  if (window == NULL || window->input_shape == NULL)
-    return FALSE;
-
-  /* If the window has decorations, DefWindowProc() will take
-   * care of NCHITTEST.
-   */
-  if (!_gdk_win32_window_lacks_wm_decorations (window))
-    return FALSE;
-
-  if (!GetWindowRect (hwnd, &rect))
-    return FALSE;
-
-  impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-  rect.left = screen_x - rect.left;
-  rect.top = screen_y - rect.top;
-
-  /* If it's inside the rect, return FALSE and let DefWindowProc() handle it */
-  if (cairo_region_contains_point (window->input_shape,
-                                   rect.left / impl->window_scale,
-                                   rect.top / impl->window_scale))
-    return FALSE;
-
-  /* Otherwise override DefWindowProc() and tell WM that the point is not
-   * within the window
-   */
-  *ret_valp = HTNOWHERE;
-  return TRUE;
-}
 
 static void
 generate_button_event (GdkEventType      type,
@@ -1898,13 +1860,6 @@ _gdk_win32_window_fill_min_max_info (GdkWindow  *window,
            */
           mmi->ptMaxPosition.x = 0;
           mmi->ptMaxPosition.y = 0;
-
-          if (_gdk_win32_window_lacks_wm_decorations (window))
-            {
-              mmi->ptMaxPosition.x += (nearest_info.rcWork.left - nearest_info.rcMonitor.left);
-              mmi->ptMaxPosition.y += (nearest_info.rcWork.top - nearest_info.rcMonitor.top);
-            }
-
           mmi->ptMaxSize.x = nearest_info.rcWork.right - nearest_info.rcWork.left;
           mmi->ptMaxSize.y = nearest_info.rcWork.bottom - nearest_info.rcWork.top;
         }
@@ -3750,13 +3705,6 @@ gdk_event_translate (MSG  *msg,
       
       // Clear graphics tablet state
       _gdk_input_ignore_core = 0;
-      break;
-      
-    case WM_NCHITTEST:
-      /* TODO: pass all messages to DwmDefWindowProc() first! */
-      return_val = handle_nchittest (msg->hwnd, window,
-                                     GET_X_LPARAM (msg->lParam),
-                                     GET_Y_LPARAM (msg->lParam), ret_valp);
       break;
 
       /* Handle WINTAB events here, as we know that the device manager will
