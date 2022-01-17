@@ -1773,12 +1773,9 @@ generate_button_event (GdkEventType      type,
 static gboolean
 handle_wm_sysmenu (GdkWindow *window, MSG *msg, gint *ret_valp)
 {
-  GdkWindowImplWin32 *impl;
   LONG_PTR style, tmp_style;
   gboolean maximized, minimized;
   LONG_PTR additional_styles;
-
-  impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
 
   style = GetWindowLongPtr (msg->hwnd, GWL_STYLE);
 
@@ -1809,40 +1806,6 @@ handle_wm_sysmenu (GdkWindow *window, MSG *msg, gint *ret_valp)
      * only without the style dance, which isn't needed, as it turns out.
      */
     return FALSE;
-
-  /* Note: This code will enable resizing, maximizing and minimizing windows
-   * via window menu even if these are non-CSD windows that were explicitly
-   * forbidden from doing this by removing the appropriate styles,
-   * or if these are CSD windows that were explicitly forbidden from doing
-   * this by removing appropriate decorations from the headerbar and/or
-   * changing hints or properties.
-   *
-   * If doing this for non-CSD windows is not desired,
-   * do a _gdk_win32_window_lacks_wm_decorations() check and return FALSE
-   * if it doesn't pass.
-   *
-   * If doing this for CSD windows with disabled decorations is not desired,
-   * tough luck - GDK can't know which CSD decorations are enabled, and which
-   * are not.
-   *
-   * If doing this for CSD windows with particular hints is not desired,
-   * check window hints here and return FALSE (DefWindowProc() will return
-   * FALSE later) or set *ret_valp to 0 and return TRUE.
-   */
-  tmp_style = style | additional_styles;
-  GDK_NOTE (EVENTS, g_print (" Handling WM_SYSMENU: style 0x%lx -> 0x%lx\n", style, tmp_style));
-  impl->have_temp_styles = TRUE;
-  impl->temp_styles = additional_styles;
-  SetWindowLongPtr (msg->hwnd, GWL_STYLE, tmp_style);
-
-  *ret_valp = DefWindowProc (msg->hwnd, msg->message, msg->wParam, msg->lParam);
-
-  tmp_style = GetWindowLongPtr (msg->hwnd, GWL_STYLE);
-  style = tmp_style & ~additional_styles;
-
-  GDK_NOTE (EVENTS, g_print (" Handling WM_SYSMENU: style 0x%lx <- 0x%lx\n", style, tmp_style));
-  SetWindowLongPtr (msg->hwnd, GWL_STYLE, style);
-  impl->have_temp_styles = FALSE;
 
   return TRUE;
 }
@@ -2588,13 +2551,6 @@ gdk_event_translate (MSG  *msg,
       generate_button_event (GDK_BUTTON_RELEASE, button,
 			     window, msg);
 
-      impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-      /* End a drag op when the same button that started it is released */
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE &&
-          impl->drag_move_resize_context.button == button)
-        gdk_win32_window_end_move_resize_drag (window);
-
       return_val = TRUE;
       break;
 
@@ -2678,12 +2634,7 @@ gdk_event_translate (MSG  *msg,
       current_root_x = (msg->pt.x + _gdk_offset_x) / impl->window_scale;
       current_root_y = (msg->pt.y + _gdk_offset_y) / impl->window_scale;
 
-
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        {
-          gdk_win32_window_do_move_resize_drag (window, current_root_x, current_root_y);
-        }
-      else if (_gdk_input_ignore_core == 0)
+      if (_gdk_input_ignore_core == 0)
 	{
 	  event = gdk_event_new (GDK_MOTION_NOTIFY);
 	  event->motion.window = window;
@@ -2814,12 +2765,6 @@ gdk_event_translate (MSG  *msg,
 
       gdk_winpointer_input_events (display, window, NULL, msg);
 
-      impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        {
-          gdk_win32_window_end_move_resize_drag (window);
-        }
-
       *ret_valp = 0;
       return_val = TRUE;
       break;
@@ -2848,16 +2793,7 @@ gdk_event_translate (MSG  *msg,
       if (IS_POINTER_PRIMARY_WPARAM (msg->wParam) && mouse_window != window)
         crossing_cb = make_crossing_event;
 
-      impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        {
-          gdk_win32_window_do_move_resize_drag (window, current_root_x, current_root_y);
-        }
-      else
-        {
           gdk_winpointer_input_events (display, window, crossing_cb, msg);
-        }
 
       *ret_valp = 0;
       return_val = TRUE;
@@ -3171,26 +3107,6 @@ gdk_event_translate (MSG  *msg,
       return_val = handle_wm_sysmenu (window, msg, ret_valp);
       break;
 
-    case WM_INITMENU:
-      impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-      if (impl->have_temp_styles)
-        {
-          LONG_PTR window_style;
-
-          window_style = GetWindowLongPtr (GDK_WINDOW_HWND (window),
-                                           GWL_STYLE);
-          /* Handling WM_SYSMENU added extra styles to this window,
-           * remove them now.
-           */
-          window_style &= ~impl->temp_styles;
-          SetWindowLongPtr (GDK_WINDOW_HWND (window),
-                            GWL_STYLE,
-                            window_style);
-        }
-
-      break;
-
     case WM_SYSCOMMAND:
       switch (msg->wParam)
 	{
@@ -3200,10 +3116,6 @@ gdk_event_translate (MSG  *msg,
 
     if (msg->wParam == SC_RESTORE)
       gdk_win32_window_invalidate_egl_framebuffer (window);
-	  break;
-        case SC_MAXIMIZE:
-          impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-          impl->maximizing = TRUE;
 	  break;
 	}
 
@@ -3259,11 +3171,6 @@ gdk_event_translate (MSG  *msg,
 	  _modal_move_resize_window = NULL;
 	  _gdk_win32_end_modal_call (GDK_WIN32_MODAL_OP_SIZEMOVE_MASK);
 	}
-
-      impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-      if (impl->drag_move_resize_context.op != GDK_WIN32_DRAGOP_NONE)
-        gdk_win32_window_end_move_resize_drag (window);
       break;
 
     case WM_WINDOWPOSCHANGING:
@@ -3278,28 +3185,6 @@ gdk_event_translate (MSG  *msg,
 				       buf))))),
 				  windowpos->cx, windowpos->cy, windowpos->x, windowpos->y,
 				  GetNextWindow (msg->hwnd, GW_HWNDPREV))));
-
-      if (GDK_WINDOW_IS_MAPPED (window))
-        {
-          impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-          if (impl->maximizing)
-            {
-              MINMAXINFO our_mmi;
-
-              gdk_win32_window_invalidate_egl_framebuffer (window);
-
-              if (_gdk_win32_window_fill_min_max_info (window, &our_mmi))
-                {
-                  windowpos = (WINDOWPOS *) msg->lParam;
-                  windowpos->cx = our_mmi.ptMaxSize.x;
-                  windowpos->cy = our_mmi.ptMaxSize.y;
-                }
-
-              impl->maximizing = FALSE;
-            }
-        }
-
       break;
 
     case WM_WINDOWPOSCHANGED:

@@ -69,21 +69,7 @@ gdk_win32_gl_context_cleanup (GdkGLContext *context)
   GdkWindow *window = gdk_gl_context_get_window (context);
 
   if (window != NULL)
-    {
-      GdkWindowImplWin32 *impl = NULL;
-
       ReleaseDC (GDK_WINDOW_HWND (window), GDK_WIN32_GL_CONTEXT(context)->gl_hdc);
-      impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-      if (impl->suppress_layered > 0)
-        impl->suppress_layered--;
-
-      /* If we don't have any window that forces layered windows off,
-       * trigger update_style_bits() to enable layered windows again
-       */
-      if (impl->suppress_layered == 0)
-        _gdk_win32_window_update_style_bits (window);
-    }
 }
 
 static void
@@ -735,7 +721,6 @@ gdk_win32_gl_context_realize_wgl (GdkGLContext  *context,
   GdkGLContext *share = gdk_gl_context_get_shared_context (context);
   GdkWin32GLContext *context_win32 = GDK_WIN32_GL_CONTEXT (context);
   GdkWindow *window = gdk_gl_context_get_window (context);
-  GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
   GdkWin32Display *display_win32 = GDK_WIN32_DISPLAY (gdk_window_get_display (window));
 
   /* These are the real WGL context items that we will want to use later */
@@ -815,17 +800,6 @@ gdk_win32_gl_context_realize_wgl (GdkGLContext  *context,
                      pixel_format));
 
   GDK_WIN32_GL_CONTEXT_WGL (context)->wgl_context = hglrc;
-
-  /* OpenGL does not work with WS_EX_LAYERED enabled, so we need to
-   * disable WS_EX_LAYERED when we acquire a valid HGLRC
-   */
-  impl->suppress_layered++;
-
-  /* if this is the first time a GL context is acquired for the window,
-   * disable layered windows by triggering update_style_bits()
-   */
-  if (impl->suppress_layered == 1)
-    _gdk_win32_window_update_style_bits (window);
 
   /* Ensure that any other context is created with a legacy bit set */
   gdk_gl_context_set_is_legacy (context, legacy_bit);
@@ -1265,17 +1239,6 @@ gdk_win32_gl_context_realize_egl (GdkGLContext  *context,
                      ctx));
 
   GDK_WIN32_GL_CONTEXT_EGL (context)->egl_context = ctx;
-
-  /* OpenGL does not work with WS_EX_LAYERED enabled, so we need to
-   * disable WS_EX_LAYERED when we acquire a valid HGLRC
-   */
-  impl->suppress_layered++;
-
-  /* if this is the first time a GL context is acquired for the window,
-   * disable layered windows by triggering update_style_bits()
-   */
-  if (impl->suppress_layered == 1)
-    _gdk_win32_window_update_style_bits (window);
 
   /* Ensure that any other context is created with a legacy bit set */
   gdk_gl_context_set_is_legacy (context, legacy_bit);
