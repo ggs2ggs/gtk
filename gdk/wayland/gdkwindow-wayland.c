@@ -1672,6 +1672,7 @@ gdk_wayland_window_handle_configure (GdkWindow *window,
   int width = impl->pending.width;
   int height = impl->pending.height;
   gboolean fixed_size;
+  gboolean was_fixed_size;
   gboolean saved_size;
 
   if (!impl->initial_configure_received)
@@ -1696,6 +1697,7 @@ gdk_wayland_window_handle_configure (GdkWindow *window,
   impl->pending.state = 0;
 
   fixed_size = should_use_fixed_size (new_state);
+  was_fixed_size = should_use_fixed_size (window->state);
 
   saved_size = (width == 0 && height == 0);
   /* According to xdg_shell, an xdg_surface.configure with size 0x0
@@ -1710,7 +1712,9 @@ gdk_wayland_window_handle_configure (GdkWindow *window,
    * In such a scenario, and without letting the compositor know about the new
    * size, the client has to manage all dimensions and ignore any server hints.
    */
-  if (!fixed_size && (saved_size || impl->saved_size_changed))
+  if (!fixed_size &&
+      was_fixed_size &&
+      (saved_size || impl->saved_size_changed))
     {
       width = impl->saved_width;
       height = impl->saved_height;
