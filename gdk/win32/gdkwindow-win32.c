@@ -41,6 +41,7 @@
 #include "gdkwin32window.h"
 #include "gdkglcontext-win32.h"
 #include "gdkdisplay-win32.h"
+#include "gdkframeclockprivate.h"
 
 #include <cairo-win32.h>
 #include <dwmapi.h>
@@ -50,6 +51,8 @@
 static void gdk_window_impl_win32_init       (GdkWindowImplWin32      *window);
 static void gdk_window_impl_win32_class_init (GdkWindowImplWin32Class *klass);
 static void gdk_window_impl_win32_finalize   (GObject                 *object);
+static void gdk_win32_window_invalidate_region (GdkWindow      *window,
+                                                cairo_region_t *region);
 
 static gpointer parent_class = NULL;
 static GSList *modal_window_stack = NULL;
@@ -198,12 +201,6 @@ gdk_window_impl_win32_finalize (GObject *object)
 
   g_free (window_impl->decorations);
 
-  if (window_impl->cache_surface)
-    {
-      cairo_surface_destroy (window_impl->cache_surface);
-      window_impl->cache_surface = NULL;
-    }
-
   if (window_impl->cairo_surface)
     {
       cairo_surface_destroy (window_impl->cairo_surface);
@@ -276,78 +273,6 @@ gdk_win32_window_apply_queued_move_resize (GdkWindow *window,
 
   /* Don't move iconic windows */
   /* TODO: use SetWindowPlacement() to change non-minimized window position */
-}
-
-static gboolean
-gdk_win32_window_begin_paint (GdkWindow *window)
-{
-  GdkWindowImplWin32 *impl;
-  RECT window_rect;
-
-  if (window == NULL || GDK_WINDOW_DESTROYED (window))
-    return TRUE;
-
-  impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-  /* Non-GL windows are moved *after* repaint.
-   * We don't supply our own surface, return TRUE to make GDK create
-   * one by itself.
-   */
-  if (!window->current_paint.use_gl)
-    return TRUE;
-
-  /* GL windows are moved *before* repaint (otherwise
-   * repainting doesn't work), but if there's no move queued up,
-   * return immediately. Doesn't matter what we return, GDK
-   * will create a surface anyway, as if we returned TRUE.
-   */
-  if (!impl->drag_move_resize_context.native_move_resize_pending)
-    return TRUE;
-
-  impl->drag_move_resize_context.native_move_resize_pending = FALSE;
-
-  /* Get the position/size of the window that GDK wants,
-   * apply it.
-   */
-  gdk_win32_window_get_queued_window_rect (window, &window_rect);
-  gdk_win32_window_apply_queued_move_resize (window, window_rect);
-
-  return TRUE;
-}
-
-static void
-gdk_win32_window_end_paint (GdkWindow *window)
-{
-  GdkWindowImplWin32 *impl;
-  RECT window_rect;
-  HDC hdc;
-  POINT window_position;
-  SIZE window_size;
-  POINT source_point;
-  BLENDFUNCTION blender;
-  cairo_t *cr;
-
-  if (window == NULL || GDK_WINDOW_DESTROYED (window))
-    return;
-
-  impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
-
-  /* GL windows are moved *before* repaint */
-  if (window->current_paint.use_gl)
-    return;
-
-  /* No move/resize is queued up, and we don't need to update
-   * the contents of a layered window, so return immediately.
-   */
-  if (!impl->drag_move_resize_context.native_move_resize_pending)
-    return;
-
-  impl->drag_move_resize_context.native_move_resize_pending = FALSE;
-
-  /* Get the position/size of the window that GDK wants. */
-  gdk_win32_window_get_queued_window_rect (window, &window_rect);
-
-      gdk_win32_window_apply_queued_move_resize (window, window_rect);
 }
 
 void
@@ -860,6 +785,8 @@ _gdk_win32_display_create_window_impl (GdkDisplay    *display,
     gdk_winpointer_initialize_window (window);
 
   _gdk_win32_window_enable_transparency (window);
+
+  gdk_window_set_invalidate_handler (window, gdk_win32_window_invalidate_region);
 }
 
 GdkWindow *
@@ -3359,6 +3286,10 @@ _gdk_win32_impl_acquire_dc (GdkWindowImplWin32 *impl)
       GDK_WINDOW_DESTROYED (impl->wrapper))
     return NULL;
 
+  /* repaint_hdc is not reference-counted */
+  if (impl->repaint_hdc)
+    return impl->repaint_hdc;
+
   if (!impl->hdc)
     {
       impl->hdc = GetDC (impl->handle);
@@ -3387,6 +3318,10 @@ _gdk_win32_impl_acquire_dc (GdkWindowImplWin32 *impl)
 static void
 _gdk_win32_impl_release_dc (GdkWindowImplWin32 *impl)
 {
+  /* repaint_hdc is not reference-counted */
+  if (impl->repaint_hdc)
+    return;
+
   g_return_if_fail (impl->hdc_count > 0);
 
   impl->hdc_count--;
@@ -3423,6 +3358,13 @@ gdk_win32_cairo_surface_destroy (void *data)
   impl->cairo_surface = NULL;
 }
 
+static void
+gdk_win32_repaint_cairo_surface_destroy (void *data)
+{
+  GdkWindowImplWin32 *impl = data;
+
+  impl->repaint_cairo_surface = NULL;
+}
 
 static cairo_surface_t *
 gdk_win32_ref_cairo_surface (GdkWindow *window)
@@ -3432,6 +3374,24 @@ gdk_win32_ref_cairo_surface (GdkWindow *window)
   if (GDK_IS_WINDOW_IMPL_WIN32 (impl) &&
       GDK_WINDOW_DESTROYED (impl->wrapper))
     return NULL;
+
+  if (impl->repaint_hdc)
+    {
+      if (!impl->repaint_cairo_surface)
+        {
+          HDC hdc = _gdk_win32_impl_acquire_dc (impl);
+          impl->repaint_cairo_surface = cairo_win32_surface_create_with_format (hdc, CAIRO_FORMAT_ARGB32);
+          cairo_surface_set_device_scale (impl->repaint_cairo_surface,
+                                          impl->window_scale,
+                                          impl->window_scale);
+          cairo_surface_set_user_data (impl->repaint_cairo_surface, &gdk_win32_cairo_key,
+                                       impl, gdk_win32_repaint_cairo_surface_destroy);
+        }
+      else
+        cairo_surface_reference (impl->repaint_cairo_surface);
+
+      return impl->repaint_cairo_surface;
+    }
 
   if (!impl->cairo_surface)
     {
@@ -3674,8 +3634,8 @@ gdk_window_impl_win32_class_init (GdkWindowImplWin32Class *klass)
   impl_class->destroy_foreign = gdk_win32_window_destroy_foreign;
   impl_class->get_shape = gdk_win32_window_get_shape;
   //FIXME?: impl_class->get_input_shape = gdk_win32_window_get_input_shape;
-  impl_class->begin_paint = gdk_win32_window_begin_paint;
-  impl_class->end_paint = gdk_win32_window_end_paint;
+  //impl_class->begin_paint = gdk_win32_window_begin_paint;
+  //impl_class->end_paint = gdk_win32_window_end_paint;
 
   //impl_class->beep = gdk_x11_window_beep;
 
@@ -3786,3 +3746,18 @@ _gdk_win32_window_get_egl_surface (GdkWindow *window,
 
 }
 #endif
+
+static void
+gdk_win32_window_invalidate_region (GdkWindow      *window,
+                                    cairo_region_t *region)
+{
+  GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
+  HRGN hrgn;
+
+  hrgn = cairo_region_to_hrgn (region, 0, 0, impl->window_scale);
+  if (hrgn == NULL)
+    return;
+
+  API_CALL (InvalidateRgn, (GDK_WINDOW_HWND (window), hrgn, FALSE));
+  DeleteObject (hrgn);
+}

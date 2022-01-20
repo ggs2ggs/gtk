@@ -60,6 +60,7 @@
 #include "gdkdisplay-win32.h"
 #include "gdkselection-win32.h"
 #include "gdkdndprivate.h"
+#include "gdkframeclockprivate.h"
 
 #include <windowsx.h>
 #include <tpcshrd.h>
@@ -1592,32 +1593,124 @@ adjust_drag (LONG *drag,
     *drag = curr - ((curr - *drag + inc/2) / inc) * inc;
 }
 
+/* This is mainly to ensure that all GDK_CONFIGURE
+ * events are handled before we do a forced repaint
+ */
+static void
+catch_up_with_events (GdkDisplay *display)
+{
+  GdkEvent *event;
+
+  g_return_if_fail (display != NULL);
+
+  while (event = _gdk_event_unqueue (display))
+    {
+      _gdk_event_emit (event);
+      gdk_event_free (event);
+    }
+}
+
+
 static void
 handle_wm_paint (MSG        *msg,
 		 GdkWindow  *window)
 {
-  HRGN hrgn;
-  HDC hdc;
-  PAINTSTRUCT paintstruct;
-  cairo_region_t *update_region;
-  GdkWindowImplWin32 *impl = GDK_WINDOW_IMPL_WIN32 (window->impl);
+  GdkWindowImplWin32 *impl    = GDK_WINDOW_IMPL_WIN32 (window->impl);
+  GdkDisplay         *display = gdk_window_get_display (window);
+  GdkFrameClock      *clock   = gdk_window_get_frame_clock (window);
+
+  HRGN                hrgn;
+  cairo_region_t     *update_region;
+  HDC                 hdc;
+  PAINTSTRUCT         paintstruct;
+
+  if (GDK_WINDOW_DESTROYED (window))
+    return;
+
+  hrgn = CreateRectRgn (0, 0, 0, 0);
+
+  if (GetUpdateRgn (msg->hwnd, hrgn, FALSE) == ERROR)
+    {
+      WIN32_GDI_FAILED ("GetUpdateRgn");
+    }
+  else
+    {
+      update_region = _gdk_win32_hrgn_to_region (hrgn, impl->window_scale);
+      if (!cairo_region_is_empty (update_region))
+        _gdk_window_invalidate_for_expose (window, update_region);
+      cairo_region_destroy (update_region);
+    }
+
+  DeleteObject (hrgn);
 
   hdc = BeginPaint (msg->hwnd, &paintstruct);
 
-  GDK_NOTE (EVENTS, g_print (" %s %s dc %p",
-			     _gdk_win32_rect_to_string (&paintstruct.rcPaint),
-			     (paintstruct.fErase ? "erase" : ""),
-			     hdc));
+  /* We *must* paint on this DC specifically, otherwise the OS
+   * won't sync our repaints properly.
+   */
+  impl->repaint_hdc = hdc;
 
+  /* Ensure that GtkWindow size matches GdkWindow size */
+  catch_up_with_events (display);
 
-  hrgn = CreateRectRgn(paintstruct.rcPaint.left, paintstruct.rcPaint.top, paintstruct.rcPaint.right, paintstruct.rcPaint.bottom);
-  update_region = _gdk_win32_hrgn_to_region (hrgn, impl->window_scale);
+  /* Normally, we would call
+   *
+   *   _gdk_frame_clock_emit_flush_events (clock)
+   *
+   * here, which ends up calling gdk_window_flush_events(), which does the following:
+   *
+   *   _gdk_event_queue_flush (display);
+   *   _gdk_display_pause_events (display);
+   *
+   *   gdk_frame_clock_request_phase (clock, GDK_FRAME_CLOCK_PHASE_RESUME_EVENTS);
+   *
+   * The last line apparently has unwanted side-effects because now the pausing/
+   * unpausing gets out of sync and _gdk_display_unpause_events spews a bunch of
+   * assertion failures. Why it has this effect I don't know. I don't know why
+   * it even makes that call. We don't want it.
+   *
+   * As a workaround, we just manually pause and unpause, without going through
+   * the clock signals.
+   *
+   */
+  _gdk_event_queue_flush (display);
+  _gdk_display_pause_events (display);
 
-  //if (!cairo_region_is_empty (update_region))
-  _gdk_window_invalidate_for_expose (window, update_region);
+  /* You might think this should go after the layout phase, but GdkFrameclockIdle
+   * also does it in this order. */
+  _gdk_frame_clock_emit_before_paint (clock);
 
-  cairo_region_destroy (update_region);
-  DeleteObject (hrgn);
+  /* This is where one might emit the update() signal, but currently that
+   * breaks everything. E v e r y t h i n g.
+   *
+   *   _gdk_frame_clock_emit_update (clock);
+   *
+   */
+
+  /* FIXME
+   * For reasons that escape me, we have to call the following
+   * function *TWICE*. Otherwise GTK spews a bunch of warnings
+   * about widgets missing an allocation even though they clearly
+   * have one.
+   */
+  _gdk_frame_clock_emit_layout (clock); /* 1 */
+  _gdk_frame_clock_emit_layout (clock); /* 2 */
+
+  /* Now we finally get to the actual painting */
+  _gdk_frame_clock_emit_paint (clock);
+
+  /* Emit another pointless signal that's not even used anywhere. */
+  _gdk_frame_clock_emit_after_paint (clock);
+
+  /* Resume events -- as above, rather than using
+   *
+   *   _gdk_frame_clock_emit_resume_events (clock)
+   *
+   * we manually unpause to avoid side-effects.
+   */
+  _gdk_display_unpause_events (display);
+
+  impl->repaint_hdc = NULL;
 
   EndPaint (msg->hwnd, &paintstruct);
 }
@@ -2718,7 +2811,7 @@ gdk_event_translate (MSG  *msg,
       if (IS_POINTER_PRIMARY_WPARAM (msg->wParam) && mouse_window != window)
         crossing_cb = make_crossing_event;
 
-          gdk_winpointer_input_events (display, window, crossing_cb, msg);
+      gdk_winpointer_input_events (display, window, crossing_cb, msg);
 
       *ret_valp = 0;
       return_val = TRUE;
@@ -2994,6 +3087,8 @@ gdk_event_translate (MSG  *msg,
 
     case WM_PAINT:
       handle_wm_paint (msg, window);
+      return_val = TRUE;
+      *ret_valp = 0;
       break;
 
     case WM_SETCURSOR:

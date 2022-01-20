@@ -47,18 +47,6 @@ typedef struct _GdkWindowImplWin32Class GdkWindowImplWin32Class;
 #define GDK_IS_WINDOW_IMPL_WIN32_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), GDK_TYPE_WINDOW_IMPL_WIN32))
 #define GDK_WINDOW_IMPL_WIN32_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), GDK_TYPE_WINDOW_IMPL_WIN32, GdkWindowImplWin32Class))
 
-struct _GdkRectangleDouble
-{
-  gdouble x;
-  gdouble y;
-  gdouble width;
-  gdouble height;
-};
-
-typedef struct _GdkRectangleDouble GdkRectangleDouble;
-
-typedef enum _GdkW32WindowDragOp GdkW32WindowDragOp;
-
 typedef enum _GdkWin32MonitorDpiType
 {
   MDT_EFFECTIVE_DPI  = 0,
@@ -183,6 +171,9 @@ struct _GdkWindowImplWin32
    * during UpdateLayredWindow() call, for layered windows.
    */
   gdouble          layered_opacity;
+
+  HDC              repaint_hdc; /* only valid during WM_PAINT */
+  cairo_surface_t *repaint_cairo_surface;
 
   HDC              hdc;
   int              hdc_count;
