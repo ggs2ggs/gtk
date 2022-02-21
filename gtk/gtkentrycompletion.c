@@ -514,7 +514,6 @@ gtk_entry_completion_constructed (GObject *object)
   /* pack it all */
   completion->popup_window = gtk_popover_new ();
   gtk_popover_set_position (GTK_POPOVER (completion->popup_window), GTK_POS_BOTTOM);
-  gtk_popover_set_autohide (GTK_POPOVER (completion->popup_window), TRUE);
   gtk_popover_set_has_arrow (GTK_POPOVER (completion->popup_window), FALSE);
   gtk_widget_add_css_class (completion->popup_window, "entry-completion");
 
