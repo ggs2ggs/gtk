@@ -581,6 +581,34 @@ event_mask_string (GdkEventMask mask)
 
 #endif
 
+static gboolean
+point_inside_client_area (HWND hwnd, POINT screen_pt)
+{
+  POINT client_pt = screen_pt;
+  RECT client_rect;
+
+  SetRectEmpty (&client_rect);
+  GetClientRect (hwnd, &client_rect);
+  ScreenToClient (hwnd, &client_pt);
+
+  return PtInRect (&client_rect, client_pt) != 0;
+}
+
+static GdkSurface*
+surface_at_screen_point (POINT screen_pt)
+{
+  HWND hwnd = WindowFromPoint (screen_pt);
+
+  /* For broader compatibility with other backends / windowing
+   * systems, we consider a surface to be under a screen point
+   * only if that point ain't above server-side decorations.
+   * In that case we return NULL, as SSDs aren't our business */
+  if (point_inside_client_area (hwnd, screen_pt))
+    return gdk_win32_handle_table_lookup (hwnd);
+
+  return NULL;
+}
+
 static GdkSurface *
 find_window_for_mouse_event (GdkSurface* reported_window,
 			     MSG*       msg)
@@ -589,8 +617,6 @@ find_window_for_mouse_event (GdkSurface* reported_window,
   GdkDisplay *display;
   GdkDeviceManagerWin32 *device_manager;
   GdkSurface *event_surface;
-  HWND hwnd;
-  RECT rect;
   GdkDeviceGrabInfo *grab;
 
   display = gdk_display_get_default ();
@@ -606,19 +632,10 @@ find_window_for_mouse_event (GdkSurface* reported_window,
     event_surface = grab->surface;
   else
     {
-      event_surface = NULL;
-      hwnd = WindowFromPoint (pt);
-      if (hwnd != NULL)
-	{
-	  POINT client_pt = pt;
+      event_surface = surface_at_screen_point (pt);
 
-	  ScreenToClient (hwnd, &client_pt);
-	  GetClientRect (hwnd, &rect);
-	  if (PtInRect (&rect, client_pt))
-	    event_surface = gdk_win32_handle_table_lookup (hwnd);
-	}
       if (event_surface == NULL)
-	event_surface = grab->surface;
+        event_surface = grab->surface;
     }
 
   /* need to also adjust the coordinates to the new window */
@@ -2215,8 +2232,7 @@ gdk_event_translate (MSG *msg,
 	  SetCapture (GDK_SURFACE_HWND (window));
 	}
 
-      generate_button_event (GDK_BUTTON_PRESS, button,
-			     window, msg);
+      generate_button_event (GDK_BUTTON_PRESS, button, window, msg);
 
       return_val = TRUE;
       break;
@@ -2255,20 +2271,11 @@ gdk_event_translate (MSG *msg,
 	  /* We keep the implicit grab until no buttons at all are held down */
 	  if ((state & GDK_ANY_BUTTON_MASK & ~(GDK_BUTTON1_MASK << (button - 1))) == 0)
 	    {
-              GdkSurface *new_surface = NULL;
+              GdkSurface *new_surface;
 
               ReleaseCapture ();
 
-	      hwnd = WindowFromPoint (msg->pt);
-	      if (hwnd != NULL)
-		{
-		  POINT client_pt = msg->pt;
-
-		  ScreenToClient (hwnd, &client_pt);
-		  GetClientRect (hwnd, &rect);
-		  if (PtInRect (&rect, client_pt))
-                    new_surface = gdk_win32_handle_table_lookup (hwnd);
-		}
+              new_surface = surface_at_screen_point (msg->pt);
 
 	      synthesize_crossing_events (display,
                                           _gdk_device_manager->system_pointer,
@@ -2399,13 +2406,11 @@ gdk_event_translate (MSG *msg,
 
       pen_touch_input = FALSE;
 
-      hwnd = WindowFromPoint (msg->pt);
       ignore_leave = FALSE;
+      hwnd = WindowFromPoint (msg->pt);
       if (hwnd != NULL)
 	{
 	  char classname[64];
-
-	  POINT client_pt = msg->pt;
 
 	  /* The synapitics trackpad drivers have this irritating
 	     feature where it pops up a window right under the pointer
@@ -2415,10 +2420,8 @@ gdk_event_translate (MSG *msg,
 	      strcmp (classname, SYNAPSIS_ICON_WINDOW_CLASS) == 0)
 	    ignore_leave = TRUE;
 
-	  ScreenToClient (hwnd, &client_pt);
-	  GetClientRect (hwnd, &rect);
-	  if (PtInRect (&rect, client_pt))
-            window = gdk_win32_handle_table_lookup (hwnd);
+          if (point_inside_client_area (hwnd, msg->pt))
+            g_set_object (&window, gdk_win32_handle_table_lookup (hwnd));
 	}
 
       if (!ignore_leave)
