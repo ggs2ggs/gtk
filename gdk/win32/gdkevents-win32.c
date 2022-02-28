@@ -2647,6 +2647,7 @@ gdk_event_translate (MSG *msg,
     case WM_MOUSEWHEEL:
     case WM_MOUSEHWHEEL:
     {
+      char classname[64];
       GdkSurface *new_surface = NULL;
 
       GDK_NOTE (EVENTS, g_print (" %d", (short) HIWORD (msg->wParam)));
@@ -2663,29 +2664,25 @@ gdk_event_translate (MSG *msg,
       if (hwnd == NULL)
         break;
 
-      {
-	char classname[64];
+      /* The synapitics trackpad drivers have this irritating
+         feature where it pops up a window right under the pointer
+         when you scroll. We backtrack and to the toplevel and
+         find the innermost child instead. */
+      if (GetClassNameA (hwnd, classname, sizeof(classname)) &&
+          strcmp (classname, SYNAPSIS_ICON_WINDOW_CLASS) == 0)
+        {
+          HWND hwndc;
 
-	/* The synapitics trackpad drivers have this irritating
-	   feature where it pops up a window right under the pointer
-	   when you scroll. We backtrack and to the toplevel and
-	   find the innermost child instead. */
-	if (GetClassNameA (hwnd, classname, sizeof(classname)) &&
-	    strcmp (classname, SYNAPSIS_ICON_WINDOW_CLASS) == 0)
-	  {
-	    HWND hwndc;
+          /* Find our toplevel window */
+          hwnd = GetAncestor (msg->hwnd, GA_ROOT);
 
-	    /* Find our toplevel window */
-	    hwnd = GetAncestor (msg->hwnd, GA_ROOT);
-
-	    /* Walk back up to the outermost child at the desired point */
-	    do {
-	      ScreenToClient (hwnd, &point);
-	      hwndc = ChildWindowFromPoint (hwnd, point);
-	      ClientToScreen (hwnd, &point);
-	    } while (hwndc != hwnd && (hwnd = hwndc, 1));
-	  }
-      }
+          /* Walk back up to the outermost child at the desired point */
+          do {
+            ScreenToClient (hwnd, &point);
+            hwndc = ChildWindowFromPoint (hwnd, point);
+            ClientToScreen (hwnd, &point);
+          } while (hwndc != hwnd && (hwnd = hwndc, 1));
+        }
 
       msg->hwnd = hwnd;
       new_surface = gdk_win32_handle_table_lookup (msg->hwnd);
