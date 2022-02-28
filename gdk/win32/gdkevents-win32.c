@@ -2646,6 +2646,9 @@ gdk_event_translate (MSG *msg,
 
     case WM_MOUSEWHEEL:
     case WM_MOUSEHWHEEL:
+    {
+      GdkSurface *new_surface = NULL;
+
       GDK_NOTE (EVENTS, g_print (" %d", (short) HIWORD (msg->wParam)));
 
       /* WM_MOUSEWHEEL is delivered to the focus window. Work around
@@ -2656,8 +2659,9 @@ gdk_event_translate (MSG *msg,
       point.x = GET_X_LPARAM (msg->lParam);
       point.y = GET_Y_LPARAM (msg->lParam);
 
-      if ((hwnd = WindowFromPoint (point)) == NULL)
-	break;
+      hwnd = WindowFromPoint (point);
+      if (hwnd == NULL)
+        break;
 
       {
 	char classname[64];
@@ -2684,13 +2688,11 @@ gdk_event_translate (MSG *msg,
       }
 
       msg->hwnd = hwnd;
-      if ((new_window = gdk_win32_handle_table_lookup (msg->hwnd)) == NULL)
-	break;
+      new_surface = gdk_win32_handle_table_lookup (msg->hwnd);
+      if (new_surface == NULL)
+        break;
 
-      if (new_window != window)
-	{
-	  g_set_object (&window, new_window);
-	}
+      g_set_object (&window, new_surface);
 
       impl = GDK_WIN32_SURFACE (window);
       ScreenToClient (msg->hwnd, &point);
@@ -2740,8 +2742,8 @@ gdk_event_translate (MSG *msg,
       _gdk_win32_append_event (event);
 
       return_val = TRUE;
-      break;
-
+    }
+    break;
      case WM_MOUSEACTIVATE:
        {
 	 if (GDK_IS_DRAG_SURFACE (window))
