@@ -1742,8 +1742,6 @@ gdk_event_translate (MSG *msg,
   GdkWin32Surface *impl;
   GdkWin32Display *win32_display;
 
-  GdkSurface *new_window;
-
   GdkDeviceManagerWin32 *device_manager_win32;
 
   GdkDeviceGrabInfo *keyboard_grab = NULL;
@@ -2400,7 +2398,6 @@ gdk_event_translate (MSG *msg,
 
       pen_touch_input = FALSE;
 
-      new_window = NULL;
       hwnd = WindowFromPoint (msg->pt);
       ignore_leave = FALSE;
       if (hwnd != NULL)
@@ -2420,21 +2417,21 @@ gdk_event_translate (MSG *msg,
 	  ScreenToClient (hwnd, &client_pt);
 	  GetClientRect (hwnd, &rect);
 	  if (PtInRect (&rect, client_pt))
-	    new_window = gdk_win32_handle_table_lookup (hwnd);
+            window = gdk_win32_handle_table_lookup (hwnd);
 	}
 
       if (!ignore_leave)
 	synthesize_crossing_events (display,
                                     _gdk_device_manager->system_pointer,
-				    mouse_window, new_window,
+                                    mouse_window, window,
 				    GDK_CROSSING_NORMAL,
 				    &msg->pt,
 				    0, /* TODO: Set right mask */
 				    _gdk_win32_get_next_tick (msg->time),
 				    FALSE);
-      g_set_object (&mouse_window, new_window);
-      mouse_window_ignored_leave = ignore_leave ? new_window : NULL;
 
+      g_set_object (&mouse_window, window);
+      mouse_window_ignored_leave = ignore_leave ? window : NULL;
 
       return_val = TRUE;
       break;
