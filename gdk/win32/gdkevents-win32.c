@@ -2255,9 +2255,10 @@ gdk_event_translate (MSG *msg,
 	  /* We keep the implicit grab until no buttons at all are held down */
 	  if ((state & GDK_ANY_BUTTON_MASK & ~(GDK_BUTTON1_MASK << (button - 1))) == 0)
 	    {
-	      ReleaseCapture ();
+              GdkSurface *new_surface = NULL;
 
-	      new_window = NULL;
+              ReleaseCapture ();
+
 	      hwnd = WindowFromPoint (msg->pt);
 	      if (hwnd != NULL)
 		{
@@ -2266,18 +2267,18 @@ gdk_event_translate (MSG *msg,
 		  ScreenToClient (hwnd, &client_pt);
 		  GetClientRect (hwnd, &rect);
 		  if (PtInRect (&rect, client_pt))
-		    new_window = gdk_win32_handle_table_lookup (hwnd);
+                    new_surface = gdk_win32_handle_table_lookup (hwnd);
 		}
 
 	      synthesize_crossing_events (display,
                                           _gdk_device_manager->system_pointer,
-                                          pointer_grab->surface, new_window,
+                                          pointer_grab->surface, new_surface,
 					  GDK_CROSSING_UNGRAB,
 					  &msg->pt,
 					  0, /* TODO: Set right mask */
 					  _gdk_win32_get_next_tick (msg->time),
 					  FALSE);
-	      g_set_object (&mouse_window, new_window);
+              g_set_object (&mouse_window, new_surface);
 	      mouse_window_ignored_leave = NULL;
 	    }
 	}
