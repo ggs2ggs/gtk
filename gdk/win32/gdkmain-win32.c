@@ -47,6 +47,8 @@
 /* for CFSTR_SHELLIDLIST */
 #include <shlobj.h>
 
+extern IMAGE_DOS_HEADER __ImageBase;
+
 static gboolean gdk_synchronize = FALSE;
 
 void
@@ -59,7 +61,6 @@ _gdk_win32_surfaceing_init (void)
   if (gdk_synchronize)
     GdiSetBatchLimit (1);
 
-  _gdk_app_hmodule = GetModuleHandle (NULL);
   _gdk_display_hdc = CreateDC ("DISPLAY", NULL, NULL, NULL);
   _gdk_input_locale = GetKeyboardLayout (0);
   _gdk_win32_keymap_set_active_layout (win32_keymap, _gdk_input_locale);
@@ -84,6 +85,12 @@ _gdk_other_api_failed (const char *where,
 		      const char *api)
 {
   g_warning ("%s: %s failed", where, api);
+}
+
+HINSTANCE
+gdk_win32_get_hinstance (void)
+{
+  return (HINSTANCE) &__ImageBase;
 }
 
 
