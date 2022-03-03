@@ -47,9 +47,24 @@
 /* for CFSTR_SHELLIDLIST */
 #include <shlobj.h>
 
-extern IMAGE_DOS_HEADER __ImageBase;
-
 static gboolean gdk_synchronize = FALSE;
+
+#ifdef DLL_EXPORT
+
+static HINSTANCE _gdk_dll_hinstance;
+
+BOOL WINAPI
+DllMain (HINSTANCE hinstDLL,
+         DWORD     dwReason,
+         LPVOID    reserved)
+{
+  if (dwReason == DLL_PROCESS_ATTACH)
+    _gdk_dll_hinstance = hinstDLL;
+
+  return TRUE;
+}
+
+#endif
 
 void
 _gdk_win32_surfaceing_init (void)
@@ -90,7 +105,13 @@ _gdk_other_api_failed (const char *where,
 HINSTANCE
 gdk_win32_get_hinstance (void)
 {
+#ifdef DLL_EXPORT
+  g_assert (_gdk_dll_hinstance != NULL);
+  return _gdk_dll_hinstance;
+#else
+  extern IMAGE_DOS_HEADER __ImageBase;
   return (HINSTANCE) &__ImageBase;
+#endif
 }
 
 
