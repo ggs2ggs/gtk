@@ -3914,6 +3914,13 @@ gdk_window_update_icon (GdkWindow *window,
   update_wm_hints (window, FALSE);
 }
 
+static int
+sort_pixbufs_by_size (gconstpointer a, gconstpointer b)
+{
+  return gdk_pixbuf_get_height (a) * gdk_pixbuf_get_width (a)
+       - gdk_pixbuf_get_height (b) * gdk_pixbuf_get_width (b);
+}
+
 static void
 gdk_x11_window_set_icon_list (GdkWindow *window,
 			      GList     *pixbufs)
@@ -3936,6 +3943,8 @@ gdk_x11_window_set_icon_list (GdkWindow *window,
 
   display = gdk_window_get_display (window);
   
+  pixbufs = g_list_sort (pixbufs, sort_pixbufs_by_size);
+
   l = pixbufs;
   size = 0;
   n = 0;
