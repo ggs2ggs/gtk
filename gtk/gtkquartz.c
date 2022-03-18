@@ -123,8 +123,6 @@ _gtk_quartz_create_image_from_surface (cairo_surface_t *surface)
   return nsimage;
 }
 
-#ifdef QUARTZ_RELOCATION
-
 /* Bundle-based functions for various directories. These almost work
  * even when the application isn’t in a bundle, because mainBundle
  * paths point to the bin directory in that case. It’s a simple matter
@@ -205,5 +203,3 @@ _gtk_get_data_prefix (void)
 {
   return get_bundle_path ();
 }
-
-#endif /* QUARTZ_RELOCATION */
