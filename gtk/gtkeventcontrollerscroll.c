@@ -398,17 +398,7 @@ gtk_event_controller_scroll_handle_event (GtkEventController *controller,
           scroll->cur_dy += dy;
           dx = dy = 0;
 
-          if (scroll_unit == GDK_SCROLL_UNIT_SURFACE)
-            {
-              dx = (int) scroll->cur_dx / SURFACE_UNIT_DISCRETE_MAPPING;
-              scroll->cur_dx -= dx * SURFACE_UNIT_DISCRETE_MAPPING;
-
-              dy = (int) scroll->cur_dy / SURFACE_UNIT_DISCRETE_MAPPING;
-              scroll->cur_dy -= dy * SURFACE_UNIT_DISCRETE_MAPPING;
-
-              scroll_unit = GDK_SCROLL_UNIT_WHEEL;
-            }
-          else
+          if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
             {
               if (ABS (scroll->cur_dx) >= 1)
                 {
@@ -423,6 +413,16 @@ gtk_event_controller_scroll_handle_event (GtkEventController *controller,
                   scroll->cur_dy -= steps;
                   dy = steps;
                 }
+            }
+          else
+            {
+              dx = (int) scroll->cur_dx / SURFACE_UNIT_DISCRETE_MAPPING;
+              scroll->cur_dx -= dx * SURFACE_UNIT_DISCRETE_MAPPING;
+
+              dy = (int) scroll->cur_dy / SURFACE_UNIT_DISCRETE_MAPPING;
+              scroll->cur_dy -= dy * SURFACE_UNIT_DISCRETE_MAPPING;
+
+              scroll_unit = GDK_SCROLL_UNIT_WHEEL;
             }
         }
     }
