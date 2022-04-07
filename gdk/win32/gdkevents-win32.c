@@ -581,6 +581,34 @@ event_mask_string (GdkEventMask mask)
 
 #endif
 
+static gboolean
+point_inside_client_area (HWND hwnd, POINT screen_pt)
+{
+  POINT client_pt = screen_pt;
+  RECT client_rect;
+
+  SetRectEmpty (&client_rect);
+  GetClientRect (hwnd, &client_rect);
+  ScreenToClient (hwnd, &client_pt);
+
+  return PtInRect (&client_rect, client_pt) != 0;
+}
+
+static GdkSurface*
+surface_at_screen_point (POINT screen_pt)
+{
+  HWND hwnd = WindowFromPoint (screen_pt);
+
+  /* For broader compatibility with other backends / windowing
+   * systems, we consider a surface to be under a screen point
+   * only if that point ain't above server-side decorations.
+   * In that case we return NULL, as SSDs aren't our business */
+  if (point_inside_client_area (hwnd, screen_pt))
+    return gdk_win32_handle_table_lookup (hwnd);
+
+  return NULL;
+}
+
 static GdkSurface *
 find_window_for_mouse_event (GdkSurface* reported_window,
 			     MSG*       msg)
@@ -589,8 +617,6 @@ find_window_for_mouse_event (GdkSurface* reported_window,
   GdkDisplay *display;
   GdkDeviceManagerWin32 *device_manager;
   GdkSurface *event_surface;
-  HWND hwnd;
-  RECT rect;
   GdkDeviceGrabInfo *grab;
 
   display = gdk_display_get_default ();
@@ -606,19 +632,10 @@ find_window_for_mouse_event (GdkSurface* reported_window,
     event_surface = grab->surface;
   else
     {
-      event_surface = NULL;
-      hwnd = WindowFromPoint (pt);
-      if (hwnd != NULL)
-	{
-	  POINT client_pt = pt;
+      event_surface = surface_at_screen_point (pt);
 
-	  ScreenToClient (hwnd, &client_pt);
-	  GetClientRect (hwnd, &rect);
-	  if (PtInRect (&rect, client_pt))
-	    event_surface = gdk_win32_handle_table_lookup (hwnd);
-	}
       if (event_surface == NULL)
-	event_surface = grab->surface;
+        event_surface = grab->surface;
     }
 
   /* need to also adjust the coordinates to the new window */
@@ -1742,8 +1759,6 @@ gdk_event_translate (MSG *msg,
   GdkWin32Surface *impl;
   GdkWin32Display *win32_display;
 
-  GdkSurface *new_window;
-
   GdkDeviceManagerWin32 *device_manager_win32;
 
   GdkDeviceGrabInfo *keyboard_grab = NULL;
@@ -2217,8 +2232,7 @@ gdk_event_translate (MSG *msg,
 	  SetCapture (GDK_SURFACE_HWND (window));
 	}
 
-      generate_button_event (GDK_BUTTON_PRESS, button,
-			     window, msg);
+      generate_button_event (GDK_BUTTON_PRESS, button, window, msg);
 
       return_val = TRUE;
       break;
@@ -2257,29 +2271,21 @@ gdk_event_translate (MSG *msg,
 	  /* We keep the implicit grab until no buttons at all are held down */
 	  if ((state & GDK_ANY_BUTTON_MASK & ~(GDK_BUTTON1_MASK << (button - 1))) == 0)
 	    {
-	      ReleaseCapture ();
+              GdkSurface *new_surface;
 
-	      new_window = NULL;
-	      hwnd = WindowFromPoint (msg->pt);
-	      if (hwnd != NULL)
-		{
-		  POINT client_pt = msg->pt;
+              ReleaseCapture ();
 
-		  ScreenToClient (hwnd, &client_pt);
-		  GetClientRect (hwnd, &rect);
-		  if (PtInRect (&rect, client_pt))
-		    new_window = gdk_win32_handle_table_lookup (hwnd);
-		}
+              new_surface = surface_at_screen_point (msg->pt);
 
 	      synthesize_crossing_events (display,
                                           _gdk_device_manager->system_pointer,
-                                          pointer_grab->surface, new_window,
+                                          pointer_grab->surface, new_surface,
 					  GDK_CROSSING_UNGRAB,
 					  &msg->pt,
 					  0, /* TODO: Set right mask */
 					  _gdk_win32_get_next_tick (msg->time),
 					  FALSE);
-	      g_set_object (&mouse_window, new_window);
+              g_set_object (&mouse_window, new_surface);
 	      mouse_window_ignored_leave = NULL;
 	    }
 	}
@@ -2320,60 +2326,36 @@ gdk_event_translate (MSG *msg,
 
       pen_touch_input = FALSE;
 
-      new_window = window;
+      window = find_window_for_mouse_event (window, msg);
 
-      if (pointer_grab != NULL)
-	{
-	  POINT pt;
-	  pt = msg->pt;
-
-	  new_window = NULL;
-	  hwnd = WindowFromPoint (pt);
-	  if (hwnd != NULL)
-	    {
-	      POINT client_pt = pt;
-
-	      ScreenToClient (hwnd, &client_pt);
-	      GetClientRect (hwnd, &rect);
-	      if (PtInRect (&rect, client_pt))
-		new_window = gdk_win32_handle_table_lookup (hwnd);
-	    }
-
-	  if (!pointer_grab->owner_events &&
-	      new_window != NULL &&
-	      new_window != pointer_grab->surface)
-	    new_window = NULL;
-	}
-
-      if (mouse_window != new_window)
+      if (window != mouse_window)
 	{
 	  GDK_NOTE (EVENTS, g_print (" mouse_window %p -> %p",
-				     mouse_window ? GDK_SURFACE_HWND (mouse_window) : NULL,
-				     new_window ? GDK_SURFACE_HWND (new_window) : NULL));
+                                     mouse_window ? GDK_SURFACE_HWND (mouse_window) : NULL,
+                                     window ? GDK_SURFACE_HWND (window) : NULL));
 	  synthesize_crossing_events (display,
                                       _gdk_device_manager->system_pointer,
-				      mouse_window, new_window,
+                                      mouse_window, window,
 				      GDK_CROSSING_NORMAL,
 				      &msg->pt,
 				      0, /* TODO: Set right mask */
 				      _gdk_win32_get_next_tick (msg->time),
 				      FALSE);
-	  g_set_object (&mouse_window, new_window);
+          g_set_object (&mouse_window, window);
 	  mouse_window_ignored_leave = NULL;
-	  if (new_window != NULL)
-	    track_mouse_event (TME_LEAVE, GDK_SURFACE_HWND (new_window));
+          if (window != NULL)
+            track_mouse_event (TME_LEAVE, GDK_SURFACE_HWND (window));
 	}
-      else if (new_window != NULL &&
-	       new_window == mouse_window_ignored_leave)
+      else if (window != NULL &&
+               window == mouse_window_ignored_leave)
 	{
 	  /* If we ignored a leave event for this window and we're now getting
 	     input again we need to re-arm the mouse tracking, as that was
 	     cancelled by the mouseleave. */
 	  mouse_window_ignored_leave = NULL;
-	  track_mouse_event (TME_LEAVE, GDK_SURFACE_HWND (new_window));
+          track_mouse_event (TME_LEAVE, GDK_SURFACE_HWND (window));
 	}
 
-      g_set_object (&window, find_window_for_mouse_event (window, msg));
       impl = GDK_WIN32_SURFACE (window);
 
       /* If we haven't moved, don't create any GDK event. Windows
@@ -2424,14 +2406,11 @@ gdk_event_translate (MSG *msg,
 
       pen_touch_input = FALSE;
 
-      new_window = NULL;
-      hwnd = WindowFromPoint (msg->pt);
       ignore_leave = FALSE;
+      hwnd = WindowFromPoint (msg->pt);
       if (hwnd != NULL)
 	{
 	  char classname[64];
-
-	  POINT client_pt = msg->pt;
 
 	  /* The synapitics trackpad drivers have this irritating
 	     feature where it pops up a window right under the pointer
@@ -2441,24 +2420,22 @@ gdk_event_translate (MSG *msg,
 	      strcmp (classname, SYNAPSIS_ICON_WINDOW_CLASS) == 0)
 	    ignore_leave = TRUE;
 
-	  ScreenToClient (hwnd, &client_pt);
-	  GetClientRect (hwnd, &rect);
-	  if (PtInRect (&rect, client_pt))
-	    new_window = gdk_win32_handle_table_lookup (hwnd);
+          if (point_inside_client_area (hwnd, msg->pt))
+            g_set_object (&window, gdk_win32_handle_table_lookup (hwnd));
 	}
 
       if (!ignore_leave)
 	synthesize_crossing_events (display,
                                     _gdk_device_manager->system_pointer,
-				    mouse_window, new_window,
+                                    mouse_window, window,
 				    GDK_CROSSING_NORMAL,
 				    &msg->pt,
 				    0, /* TODO: Set right mask */
 				    _gdk_win32_get_next_tick (msg->time),
 				    FALSE);
-      g_set_object (&mouse_window, new_window);
-      mouse_window_ignored_leave = ignore_leave ? new_window : NULL;
 
+      g_set_object (&mouse_window, window);
+      mouse_window_ignored_leave = ignore_leave ? window : NULL;
 
       return_val = TRUE;
       break;
@@ -2672,6 +2649,10 @@ gdk_event_translate (MSG *msg,
 
     case WM_MOUSEWHEEL:
     case WM_MOUSEHWHEEL:
+    {
+      char classname[64];
+      GdkSurface *new_surface = NULL;
+
       GDK_NOTE (EVENTS, g_print (" %d", (short) HIWORD (msg->wParam)));
 
       /* WM_MOUSEWHEEL is delivered to the focus window. Work around
@@ -2682,41 +2663,36 @@ gdk_event_translate (MSG *msg,
       point.x = GET_X_LPARAM (msg->lParam);
       point.y = GET_Y_LPARAM (msg->lParam);
 
-      if ((hwnd = WindowFromPoint (point)) == NULL)
-	break;
+      hwnd = WindowFromPoint (point);
+      if (hwnd == NULL)
+        break;
 
-      {
-	char classname[64];
+      /* The synapitics trackpad drivers have this irritating
+         feature where it pops up a window right under the pointer
+         when you scroll. We backtrack and to the toplevel and
+         find the innermost child instead. */
+      if (GetClassNameA (hwnd, classname, sizeof(classname)) &&
+          strcmp (classname, SYNAPSIS_ICON_WINDOW_CLASS) == 0)
+        {
+          HWND hwndc;
 
-	/* The synapitics trackpad drivers have this irritating
-	   feature where it pops up a window right under the pointer
-	   when you scroll. We backtrack and to the toplevel and
-	   find the innermost child instead. */
-	if (GetClassNameA (hwnd, classname, sizeof(classname)) &&
-	    strcmp (classname, SYNAPSIS_ICON_WINDOW_CLASS) == 0)
-	  {
-	    HWND hwndc;
+          /* Find our toplevel window */
+          hwnd = GetAncestor (msg->hwnd, GA_ROOT);
 
-	    /* Find our toplevel window */
-	    hwnd = GetAncestor (msg->hwnd, GA_ROOT);
-
-	    /* Walk back up to the outermost child at the desired point */
-	    do {
-	      ScreenToClient (hwnd, &point);
-	      hwndc = ChildWindowFromPoint (hwnd, point);
-	      ClientToScreen (hwnd, &point);
-	    } while (hwndc != hwnd && (hwnd = hwndc, 1));
-	  }
-      }
+          /* Walk back up to the outermost child at the desired point */
+          do {
+            ScreenToClient (hwnd, &point);
+            hwndc = ChildWindowFromPoint (hwnd, point);
+            ClientToScreen (hwnd, &point);
+          } while (hwndc != hwnd && (hwnd = hwndc, 1));
+        }
 
       msg->hwnd = hwnd;
-      if ((new_window = gdk_win32_handle_table_lookup (msg->hwnd)) == NULL)
-	break;
+      new_surface = gdk_win32_handle_table_lookup (msg->hwnd);
+      if (new_surface == NULL)
+        break;
 
-      if (new_window != window)
-	{
-	  g_set_object (&window, new_window);
-	}
+      g_set_object (&window, new_surface);
 
       impl = GDK_WIN32_SURFACE (window);
       ScreenToClient (msg->hwnd, &point);
@@ -2767,8 +2743,8 @@ gdk_event_translate (MSG *msg,
       _gdk_win32_append_event (event);
 
       return_val = TRUE;
-      break;
-
+    }
+    break;
      case WM_MOUSEACTIVATE:
        {
 	 if (GDK_IS_DRAG_SURFACE (window))
