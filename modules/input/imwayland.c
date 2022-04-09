@@ -46,7 +46,8 @@ struct _GtkIMContextWaylandGlobal
    * so the context may not exist at the time. Same for leave and focus-out. */
   gboolean focused;
 
-  guint serial;
+  guint serial_acked;
+  guint serial_committed;
 };
 
 struct _GtkIMContextWaylandClass
@@ -265,7 +266,13 @@ text_input_done (void                     *data,
   if (!global->current)
     return;
 
-  valid = serial == global->serial;
+  valid = global->serial_acked <= serial && serial <= global->serial_committed;
+  global->serial_acked = valid ? serial : global->serial_acked;
+
+  /* ignore the done event, if the size of slibing window is too large. */
+  if (global->serial_committed - global->serial_acked >= 3)
+    valid = FALSE;
+
   text_input_delete_surrounding_text_apply(global, valid);
   text_input_commit_apply(global, valid);
   g_signal_emit_by_name (global->current, "retrieve-surrounding", &result);
@@ -461,7 +468,7 @@ commit_state (GtkIMContextWayland *context)
     return;
   if (!context->enabled)
     return;
-  global->serial++;
+  global->serial_committed++;
   zwp_text_input_v3_commit (global->text_input);
   context->surrounding_change = ZWP_TEXT_INPUT_V3_CHANGE_CAUSE_INPUT_METHOD;
 }
@@ -740,7 +747,8 @@ registry_handle_global (void               *data,
       global->text_input =
         zwp_text_input_manager_v3_get_text_input (global->text_input_manager,
                                                   gdk_wayland_seat_get_wl_seat (seat));
-      global->serial = 0;
+      global->serial_acked = 0;
+      global->serial_committed = 0;
       zwp_text_input_v3_add_listener (global->text_input,
                                       &text_input_listener, global);
     }
