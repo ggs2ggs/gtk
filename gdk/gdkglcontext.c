@@ -793,17 +793,15 @@ gdk_gl_context_check_extensions (GdkGLContext *context)
       has_npot = priv->gl_version >= 20;
       has_texture_rectangle = FALSE;
 
-      /* This should check for GL_NV_framebuffer_blit as well - see extension at:
-       *
-       * https://www.khronos.org/registry/gles/extensions/NV/NV_framebuffer_blit.txt
-       *
-       * for ANGLE, we can enable bit blitting if we have the
-       * GL_ANGLE_framebuffer_blit extension
-       */
-      if (epoxy_has_gl_extension ("GL_ANGLE_framebuffer_blit"))
-        priv->has_gl_framebuffer_blit = TRUE;
-      else
-        priv->has_gl_framebuffer_blit = FALSE;
+      /* glBlitFramebuffer is available in GLES 3.0, or in GLES 2.0
+         with the GL_NV_framebuffer_blit extension.  (libepoxy treats
+         glBlitFramebuffer as an alias for glBlitFramebufferNV.)
+
+         Note that the GL_ANGLE_framebuffer_blit extension also
+         provides a limited subset of this functionality.  This is
+         currently not supported (GDK would need to call
+         glBlitFramebufferANGLE instead of glBlitFramebuffer.) */
+      priv->has_gl_framebuffer_blit = priv->gl_version >= 30 || epoxy_has_gl_extension ("GL_NV_framebuffer_blit");
 
       /* No OES version */
       priv->has_frame_terminator = FALSE;
