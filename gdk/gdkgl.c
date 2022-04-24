@@ -382,7 +382,14 @@ gdk_cairo_draw_from_gl (cairo_t              *cr,
       glBindTexture (GL_TEXTURE_2D, source);
 
       if (gdk_gl_context_get_use_es (paint_context))
-        alpha_size = 1;
+        {
+          framebuffer = paint_data->tmp_framebuffer;
+          glBindFramebuffer (GL_FRAMEBUFFER, framebuffer);
+          glFramebufferTexture2D (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                                  GL_TEXTURE_2D, source, 0);
+          glGetIntegerv (GL_ALPHA_BITS, &alpha_size);
+          glBindFramebuffer (GL_FRAMEBUFFER, 0);
+        }
       else
         glGetTexLevelParameteriv (GL_TEXTURE_2D, 0, GL_TEXTURE_ALPHA_SIZE,  &alpha_size);
     }
