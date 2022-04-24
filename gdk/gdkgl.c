@@ -646,9 +646,14 @@ gdk_cairo_draw_from_gl (cairo_t              *cr,
       /* Software fallback */
       int major, minor, version;
       gboolean es_read_bgra = FALSE;
+      guint32 *pixels;
+      int stride, i, j;
 
 #ifdef GDK_WINDOWING_WIN32
-      /* on ANGLE GLES, we need to set the glReadPixel() format as GL_BGRA instead */
+      /* We would prefer to use GL_BGRA for glReadPixels, but this is
+         not allowed in standard OpenGL ES.  ANGLE on Windows permits
+         this (as do some other implementations), but there doesn't
+         seem to be a standard way to check for this capability. */
       if (GDK_WIN32_IS_GL_CONTEXT(paint_context))
         es_read_bgra = TRUE;
 #endif
@@ -694,8 +699,36 @@ gdk_cairo_draw_from_gl (cairo_t              *cr,
         glReadPixels (x, y, width, height, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV,
                       cairo_image_surface_get_data (image));
       else
-        glReadPixels (x, y, width, height, es_read_bgra ? GL_BGRA : GL_RGBA, GL_UNSIGNED_BYTE,
-                      cairo_image_surface_get_data (image));
+        {
+          glReadPixels (x, y, width, height, es_read_bgra ? GL_BGRA : GL_RGBA, GL_UNSIGNED_BYTE,
+                        cairo_image_surface_get_data (image));
+
+          /* If glReadPixels uses GL_RGBA format, swap the channels to
+             the order cairo requires. */
+          if (!es_read_bgra)
+            {
+              stride = cairo_image_surface_get_stride (image) / 4;
+              pixels = (guint32 *) cairo_image_surface_get_data (image);
+              for (i = 0; i < height; i++)
+                {
+                  for (j = 0; j < width; j++)
+                    {
+                      if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+                        {
+                          /* RGBA -> BGRA */
+                          pixels[j] = ((0x00ff00ff & (pixels[j] << 16 | pixels[j] >> 16)) |
+                                       (0xff00ff00 & pixels[j]));
+                        }
+                      else
+                        {
+                          /* RGBA -> ARGB */
+                          pixels[j] = pixels[j] << 24 | pixels[j] >> 8;
+                        }
+                    }
+                  pixels += stride;
+                }
+            }
+        }
 
       glPixelStorei (GL_PACK_ROW_LENGTH, 0);
 
