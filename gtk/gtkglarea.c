@@ -380,6 +380,7 @@ gtk_gl_area_ensure_buffers (GtkGLArea *area)
 {
   GtkGLAreaPrivate *priv = gtk_gl_area_get_instance_private (area);
   GtkWidget *widget = GTK_WIDGET (area);
+  gboolean has_gl_framebuffer_blit;
 
   gtk_widget_realize (widget);
 
@@ -393,7 +394,17 @@ gtk_gl_area_ensure_buffers (GtkGLArea *area)
 
   glGenFramebuffers (1, &priv->frame_buffer);
 
-  if (priv->has_alpha)
+  /* If glBlitFramebuffer is unavailable, prefer textures over render
+     buffers.  This logic should ideally be kept in sync with
+     gdk_gl_context_check_extensions. */
+  if (epoxy_gl_version () >= 30)
+    has_gl_framebuffer_blit = TRUE;
+  else if (epoxy_is_desktop_gl ())
+    has_gl_framebuffer_blit = epoxy_has_gl_extension ("GL_EXT_framebuffer_blit");
+  else
+    has_gl_framebuffer_blit = epoxy_has_gl_extension ("GL_NV_framebuffer_blit");
+
+  if (priv->has_alpha || !has_gl_framebuffer_blit)
     {
       /* For alpha we use textures as that is required for blending to work */
       if (priv->texture == 0)
@@ -460,7 +471,9 @@ gtk_gl_area_allocate_buffers (GtkGLArea *area)
       glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
       glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-      if (gdk_gl_context_get_use_es (priv->context))
+      if (!priv->has_alpha)
+        glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB8, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+      else if (gdk_gl_context_get_use_es (priv->context))
         glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
       else
         glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
