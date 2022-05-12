@@ -49,6 +49,23 @@
 
 static gboolean gdk_synchronize = FALSE;
 
+#ifdef DLL_EXPORT
+
+static HINSTANCE _gdk_dll_hinstance;
+
+BOOL WINAPI
+DllMain (HINSTANCE hinstDLL,
+         DWORD     dwReason,
+         LPVOID    reserved)
+{
+  if (dwReason == DLL_PROCESS_ATTACH)
+    _gdk_dll_hinstance = hinstDLL;
+
+  return TRUE;
+}
+
+#endif
+
 void
 _gdk_win32_surfaceing_init (void)
 {
@@ -59,7 +76,6 @@ _gdk_win32_surfaceing_init (void)
   if (gdk_synchronize)
     GdiSetBatchLimit (1);
 
-  _gdk_app_hmodule = GetModuleHandle (NULL);
   _gdk_display_hdc = CreateDC ("DISPLAY", NULL, NULL, NULL);
   _gdk_input_locale = GetKeyboardLayout (0);
   _gdk_win32_keymap_set_active_layout (win32_keymap, _gdk_input_locale);
@@ -84,6 +100,18 @@ _gdk_other_api_failed (const char *where,
 		      const char *api)
 {
   g_warning ("%s: %s failed", where, api);
+}
+
+HINSTANCE
+gdk_win32_get_hinstance (void)
+{
+#ifdef DLL_EXPORT
+  g_assert (_gdk_dll_hinstance != NULL);
+  return _gdk_dll_hinstance;
+#else
+  extern IMAGE_DOS_HEADER __ImageBase;
+  return (HINSTANCE) &__ImageBase;
+#endif
 }
 
 

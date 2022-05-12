@@ -1003,7 +1003,7 @@ winpointer_notif_window_create (void)
   wndclassex.cbSize = sizeof (wndclassex);
   wndclassex.lpszClassName = L"GdkWin32WinpointerNotificationsWindowClass";
   wndclassex.lpfnWndProc = winpointer_notifications_window_procedure;
-  wndclassex.hInstance = _gdk_dll_hinstance;
+  wndclassex.hInstance = gdk_win32_get_hinstance ();
 
   if ((notifications_window_class = RegisterClassExW (&wndclassex)) == 0)
     {
@@ -1018,7 +1018,7 @@ winpointer_notif_window_create (void)
                                                        0, 0, 0, 0,
                                                        HWND_MESSAGE,
                                                        NULL,
-                                                       _gdk_dll_hinstance,
+                                                       gdk_win32_get_hinstance (),
                                                        NULL)))
     {
       WIN32_API_FAILED ("CreateWindowExW");

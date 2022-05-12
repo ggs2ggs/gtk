@@ -259,8 +259,6 @@ extern GdkDisplay       *_gdk_display;
 extern GdkDeviceManagerWin32 *_gdk_device_manager;
 
 extern HDC               _gdk_display_hdc;
-extern HINSTANCE         _gdk_dll_hinstance;
-extern HINSTANCE         _gdk_app_hmodule;
 
 extern int               _gdk_input_ignore_core;
 
@@ -294,6 +292,8 @@ typedef enum {
 extern GdkWin32ModalOpKind _modal_operation_in_progress;
 
 extern HWND             _modal_move_resize_window;
+
+HINSTANCE gdk_win32_get_hinstance (void);
 
 void  _gdk_win32_begin_modal_call (GdkWin32ModalOpKind kind);
 void  _gdk_win32_end_modal_call (GdkWin32ModalOpKind kind);

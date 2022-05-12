@@ -133,7 +133,8 @@ static const GdkDebugKey gdk_debug_keys[] = {
 };
 
 
-#ifdef G_HAS_CONSTRUCTORS
+#if defined (G_HAS_CONSTRUCTORS) && !defined (G_OS_WIN32)
+#define GDK_USE_CONSTRUCTORS
 #ifdef G_DEFINE_CONSTRUCTOR_NEEDS_PRAGMA
 #pragma G_DEFINE_CONSTRUCTOR_PRAGMA_ARGS(stash_desktop_startup_notification_id)
 #endif
@@ -304,7 +305,7 @@ gdk_pre_parse (void)
   else if (GDK_DEBUG_CHECK (GL_WGL))
     gdk_gl_backend_use (GDK_GL_WGL);
 
-#ifndef G_HAS_CONSTRUCTORS
+#ifndef GDK_USE_CONSTRUCTORS
   stash_desktop_startup_notification_id ();
 #endif
 }

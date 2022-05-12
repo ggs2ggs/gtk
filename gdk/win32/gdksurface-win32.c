@@ -344,7 +344,7 @@ RegisterGdkClass (GdkSurfaceType wtype)
   wcl.lpfnWndProc = _gdk_win32_surface_procedure;
   wcl.cbClsExtra = 0;
   wcl.cbWndExtra = 0;
-  wcl.hInstance = _gdk_dll_hinstance;
+  wcl.hInstance = gdk_win32_get_hinstance ();
   wcl.hIcon = 0;
   wcl.hIconSm = 0;
 
@@ -361,7 +361,7 @@ RegisterGdkClass (GdkSurfaceType wtype)
           if (0 == hAppIcon && 0 == hAppIconSm)
             {
               // fallback : load icon from GTK DLL
-              if (0 != GetModuleFileName (_gdk_dll_hinstance, sLoc, MAX_PATH))
+              if (0 != GetModuleFileName (gdk_win32_get_hinstance (), sLoc, MAX_PATH))
 		{
 		  ExtractIconEx (sLoc, 0, &hAppIcon, &hAppIconSm, 1);
 		}
@@ -593,7 +593,7 @@ _gdk_win32_display_create_surface (GdkDisplay     *display,
 			     window_width, window_height,
 			     owner,
 			     NULL,
-			     _gdk_dll_hinstance,
+                             gdk_win32_get_hinstance (),
 			     surface);
   impl->handle = hwndNew;
 
@@ -2509,7 +2509,7 @@ RegisterGdkDumbClass ()
   wcl.lpfnWndProc = DefWindowProcW;
   wcl.cbClsExtra = 0;
   wcl.cbWndExtra = 0;
-  wcl.hInstance = _gdk_dll_hinstance;
+  wcl.hInstance = gdk_win32_get_hinstance ();
   wcl.hIcon = 0;
   wcl.hIconSm = 0;
   wcl.lpszMenuName = NULL;
@@ -2550,7 +2550,7 @@ ensure_snap_indicator_exists (GdkW32DragMoveResizeContext *context)
                                 0, 0,
                                 NULL,
                                 NULL,
-                                _gdk_dll_hinstance,
+                                gdk_win32_get_hinstance (),
                                 NULL);
 
       context->shape_indicator = handle;
