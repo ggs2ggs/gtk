@@ -47,6 +47,25 @@ enum {
 
 static guint signals[N_SIGNALS] = { 0, };
 
+enum {
+  ALL_BUTTONS,
+  BUTTON_1,
+  BUTTON_2,
+  BUTTON_3,
+  BUTTON_4,
+  BUTTON_5,
+  N_BUTTON_MASKS,
+};
+
+static const guint button_masks[N_BUTTON_MASKS] = {
+  GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK | GDK_BUTTON4_MASK | GDK_BUTTON5_MASK,
+  GDK_BUTTON1_MASK,
+  GDK_BUTTON2_MASK,
+  GDK_BUTTON3_MASK,
+  GDK_BUTTON4_MASK,
+  GDK_BUTTON5_MASK
+};
+
 static gboolean
 gtk_gesture_stylus_handle_event (GtkEventController *controller,
                                  GdkEvent           *event,
@@ -55,8 +74,12 @@ gtk_gesture_stylus_handle_event (GtkEventController *controller,
 {
   GdkModifierType modifiers;
   guint n_signal;
+  guint button;
+  guint button_mask;
 
   GTK_EVENT_CONTROLLER_CLASS (gtk_gesture_stylus_parent_class)->handle_event (controller, event, x, y);
+
+  button = gtk_gesture_single_get_button (GTK_GESTURE_SINGLE (controller));
 
   if (!gdk_event_get_device_tool (event))
     return FALSE;
@@ -64,15 +87,20 @@ gtk_gesture_stylus_handle_event (GtkEventController *controller,
   switch ((guint) gdk_event_get_event_type (event))
     {
     case GDK_BUTTON_PRESS:
+      if (button != ALL_BUTTONS && gdk_button_event_get_button (event) != button)
+        return FALSE;
       n_signal = DOWN;
       break;
     case GDK_BUTTON_RELEASE:
+      if (button != ALL_BUTTONS && gdk_button_event_get_button (event) != button)
+        return FALSE;
       n_signal = UP;
       break;
     case GDK_MOTION_NOTIFY:
       modifiers = gdk_event_get_modifier_state (event);
+      button_mask = (button >= 0 && button < N_BUTTON_MASKS) ? button_masks[button] : 0;
 
-      if (modifiers & GDK_BUTTON1_MASK)
+      if (modifiers & button_mask)
         n_signal = MOTION;
       else
         n_signal = PROXIMITY;
