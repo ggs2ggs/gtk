@@ -5878,17 +5878,17 @@ gtk_text_view_snapshot (GtkWidget   *widget,
 
   draw_text (widget, snapshot);
 
-  snapshot_text_view_child (widget, priv->left_child, snapshot);
-  snapshot_text_view_child (widget, priv->right_child, snapshot);
-  snapshot_text_view_child (widget, priv->top_child, snapshot);
-  snapshot_text_view_child (widget, priv->bottom_child, snapshot);
-  snapshot_text_view_child (widget, priv->center_child, snapshot);
-
   for (iter = priv->anchored_children.head; iter; iter = iter->next)
     {
       const AnchoredChild *vc = iter->data;
       gtk_widget_snapshot_child (widget, vc->widget, snapshot);
     }
+
+  snapshot_text_view_child (widget, priv->left_child, snapshot);
+  snapshot_text_view_child (widget, priv->right_child, snapshot);
+  snapshot_text_view_child (widget, priv->top_child, snapshot);
+  snapshot_text_view_child (widget, priv->bottom_child, snapshot);
+  snapshot_text_view_child (widget, priv->center_child, snapshot);
 }
 
 /**
