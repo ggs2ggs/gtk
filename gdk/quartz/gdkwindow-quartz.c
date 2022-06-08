@@ -804,7 +804,7 @@ _gdk_quartz_window_did_become_main (GdkWindow *window)
   if (window->window_type != GDK_WINDOW_TEMP)
     main_window_stack = g_slist_prepend (main_window_stack, window);
 
-  if (impl->transient_for)
+  if (impl->transient_for && !GDK_WINDOW_DESTROYED (impl->transient_for))
     raise_transient (impl);
 
   clear_toplevel_order ();
@@ -1226,6 +1226,8 @@ _gdk_quartz_window_detach_from_parent (GdkWindow *window)
       parent_impl = GDK_WINDOW_IMPL_QUARTZ (impl->transient_for->impl);
       [parent_impl->toplevel removeChildWindow:impl->toplevel];
       clear_toplevel_order ();
+      g_object_unref (impl->transient_for);
+      impl->transient_for = NULL;
     }
 }
 
@@ -1617,7 +1619,7 @@ gdk_window_quartz_raise (GdkWindow *window)
 
       impl = GDK_WINDOW_IMPL_QUARTZ (window->impl);
 
-      if (impl->transient_for)
+      if (impl->transient_for && !GDK_WINDOW_DESTROYED (impl->transient_for))
         raise_transient (impl);
       else
         [impl->toplevel orderFront:impl->toplevel];
