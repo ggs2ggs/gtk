@@ -233,6 +233,70 @@ _gdk_pixbuf_new_from_resource_at_scale (const char   *resource_path,
 }
 
 static GdkPixbuf *
+pixbuf_from_svg_stream (GInputStream *stream, int width, int height, GError **error)
+{
+  RsvgHandle *handle = NULL;
+  cairo_surface_t *surface = NULL;
+  GdkPixbuf *pixbuf = NULL;
+  RsvgRectangle viewport;
+  cairo_t *cr = NULL;
+
+  handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
+  if (!handle)
+    {
+      goto out;
+    }
+
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+  if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS)
+    {
+      g_set_error_literal (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY,
+                           "Not enough memory to load SVG");
+      goto out;
+    }
+
+  cr = cairo_create (surface);
+  if (cairo_status (cr) != CAIRO_STATUS_SUCCESS)
+    {
+      goto out;
+    }
+
+  viewport.x = 0.0;
+  viewport.y = 0.0;
+  viewport.width = width;
+  viewport.height = height;
+
+  if (rsvg_handle_render_document (handle, cr, &viewport, error))
+    {
+      pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0, width, height);
+      if (!pixbuf)
+        {
+          g_set_error (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY,
+                       "Not enough memory to convert SVG to pixbuf");
+        }
+    }
+
+ out:
+
+  if (cr)
+    {
+      cairo_destroy (cr);
+    }
+
+  if (surface)
+    {
+      cairo_surface_destroy (surface);
+    }
+
+  if (handle)
+    {
+      g_object_unref (handle);
+    }
+
+  return pixbuf;
+}
+
+static GdkPixbuf *
 load_symbolic_svg (const char     *escaped_file_data,
                    int             width,
                    int             height,
@@ -273,7 +337,7 @@ load_symbolic_svg (const char     *escaped_file_data,
                       NULL);
 
   stream = g_memory_input_stream_new_from_data (data, -1, g_free);
-  pixbuf = gdk_pixbuf_new_from_stream_at_scale (stream, width, height, TRUE, NULL, error);
+  pixbuf = pixbuf_from_svg_stream (stream, width, height, error);
   g_object_unref (stream);
 
   return pixbuf;
