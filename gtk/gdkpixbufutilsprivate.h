@@ -51,6 +51,7 @@ GdkPixbuf *gtk_make_symbolic_pixbuf_from_data       (const char    *data,
                                                      int            width,
                                                      int            height,
                                                      double         scale,
+                                                     const char    *path,
                                                      const char    *debug_output_to,
                                                      GError       **error);
 GdkPixbuf *gtk_make_symbolic_pixbuf_from_file       (GFile         *file,

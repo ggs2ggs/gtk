@@ -107,7 +107,7 @@ main (int argc, char **argv)
 
   basename = g_path_get_basename (path);
 
-  symbolic = gtk_make_symbolic_pixbuf_from_data (data, len, width, height, 1.0, debug ? basename : NULL, &error);
+  symbolic = gtk_make_symbolic_pixbuf_from_data (data, len, width, height, 1.0, path, debug ? basename : NULL, &error);
   if (symbolic == NULL)
     {
       g_printerr (_("Can’t load file: %s\n"), error->message);
