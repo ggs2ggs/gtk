@@ -16,6 +16,8 @@
 
 #include "config.h"
 
+#include <math.h>
+#include <librsvg/rsvg.h>
 #include <gdk/gdk.h>
 #include "gdkpixbufutilsprivate.h"
 #include "gtkscalerprivate.h"
@@ -336,16 +338,28 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
   /* Fetch size from the original icon */
   {
     GInputStream *stream = g_memory_input_stream_new_from_data (file_data, file_len, NULL);
-    GdkPixbuf *reference = gdk_pixbuf_new_from_stream (stream, NULL, error);
+    RsvgHandle *handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
+    gdouble svg_width, svg_height;
+    gboolean has_size;
 
     g_object_unref (stream);
 
-    if (!reference)
+    if (!handle)
       return NULL;
 
-    icon_width = gdk_pixbuf_get_width (reference);
-    icon_height = gdk_pixbuf_get_height (reference);
-    g_object_unref (reference);
+    has_size = rsvg_handle_get_intrinsic_size_in_pixels (handle, &svg_width, &svg_height);
+    g_object_unref (handle);
+
+    if (!has_size)
+      {
+        /* FIXME: get a better error domain/code */
+        g_set_error_literal (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_CORRUPT_IMAGE,
+                             "Symbolic icon has no intrinsic size; please set one in its SVG");
+        return NULL;
+      }
+
+    icon_width = ceil (svg_width);
+    icon_height = ceil (svg_height);
   }
 
   escaped_file_data = g_base64_encode ((guchar *) file_data, file_len);
