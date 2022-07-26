@@ -1422,10 +1422,11 @@ _gtk_tree_selection_internal_select_node (GtkTreeSelection *selection,
 	  dirty = gtk_tree_selection_real_unselect_all (selection);
 	}
       /* Did we try to select the same node again? */
-      else if (selection->type == GTK_SELECTION_SINGLE &&
-	       anchor_path && gtk_tree_path_compare (path, anchor_path) == 0)
+      else if (anchor_path && gtk_tree_path_compare (path, anchor_path) == 0)
 	{
-	  if ((mode & GTK_TREE_SELECT_MODE_TOGGLE) == GTK_TREE_SELECT_MODE_TOGGLE)
+	  /* Toggle for GTK_SELECTION_SINGLE, do nothing for GTK_SELECTION_BROWSE */
+	  if (selection->type == GTK_SELECTION_SINGLE &&
+	      (mode & GTK_TREE_SELECT_MODE_TOGGLE) == GTK_TREE_SELECT_MODE_TOGGLE)
 	    {
 	      dirty = gtk_tree_selection_real_unselect_all (selection);
 	    }
