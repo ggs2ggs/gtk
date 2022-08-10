@@ -303,6 +303,28 @@ pixbuf_from_svg_stream (GInputStream *stream, int width, int height, const char 
   return pixbuf;
 }
 
+static char *
+make_stylesheet (const char *fg_string,
+                 const char *success_color_string,
+                 const char *warning_color_string,
+                 const char *error_color_string)
+{
+  return g_strconcat ("    rect,circle,path {\n"
+                      "      fill: ", fg_string," !important;\n"
+                      "    }\n"
+                      "    .warning {\n"
+                      "      fill: ", warning_color_string, " !important;\n"
+                      "    }\n"
+                      "    .error {\n"
+                      "      fill: ", error_color_string ," !important;\n"
+                      "    }\n"
+                      "    .success {\n"
+                      "      fill: ", success_color_string, " !important;\n"
+                      "    }\n",
+                      NULL);
+}
+
+
 static GdkPixbuf *
 load_symbolic_svg (const char     *escaped_file_data,
                    int             width,
@@ -318,6 +340,7 @@ load_symbolic_svg (const char     *escaped_file_data,
 {
   GInputStream *stream;
   GdkPixbuf *pixbuf;
+  char *stylesheet = make_stylesheet (fg_string, success_color_string, warning_color_string, error_color_string);
   char *data;
 
   data = g_strconcat ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
@@ -326,19 +349,8 @@ load_symbolic_svg (const char     *escaped_file_data,
                       "     xmlns:xi=\"http://www.w3.org/2001/XInclude\"\n"
                       "     width=\"", icon_width_str, "\"\n"
                       "     height=\"", icon_height_str, "\">\n"
-                      "  <style type=\"text/css\">\n"
-                      "    rect,circle,path {\n"
-                      "      fill: ", fg_string," !important;\n"
-                      "    }\n"
-                      "    .warning {\n"
-                      "      fill: ", warning_color_string, " !important;\n"
-                      "    }\n"
-                      "    .error {\n"
-                      "      fill: ", error_color_string ," !important;\n"
-                      "    }\n"
-                      "    .success {\n"
-                      "      fill: ", success_color_string, " !important;\n"
-                      "    }\n"
+                      "  <style type=\"text/css\">\n",
+                      stylesheet,
                       "  </style>\n"
                       "  <xi:include href=\"data:text/xml;base64,", escaped_file_data, "\"/>\n"
                       "</svg>",
@@ -347,6 +359,7 @@ load_symbolic_svg (const char     *escaped_file_data,
   stream = g_memory_input_stream_new_from_data (data, -1, g_free);
   pixbuf = pixbuf_from_svg_stream (stream, width, height, path, error);
   g_object_unref (stream);
+  g_free (stylesheet);
 
   return pixbuf;
 }
