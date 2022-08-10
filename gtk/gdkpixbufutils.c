@@ -233,20 +233,12 @@ _gdk_pixbuf_new_from_resource_at_scale (const char   *resource_path,
 }
 
 static GdkPixbuf *
-pixbuf_from_svg_stream (GInputStream *stream, int width, int height, const char *path, GError **error)
+pixbuf_from_rsvg_handle (RsvgHandle *handle, int width, int height, const char *path, GError **error)
 {
-  RsvgHandle *handle = NULL;
-  cairo_surface_t *surface = NULL;
+  cairo_surface_t *surface;
   GdkPixbuf *pixbuf = NULL;
   RsvgRectangle viewport;
   cairo_t *cr = NULL;
-
-  handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
-  if (!handle)
-    {
-      g_prefix_error (error, "Could not load symbolic icon from %s: ", path);
-      goto out;
-    }
 
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
   if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS)
@@ -295,11 +287,6 @@ pixbuf_from_svg_stream (GInputStream *stream, int width, int height, const char 
       cairo_surface_destroy (surface);
     }
 
-  if (handle)
-    {
-      g_object_unref (handle);
-    }
-
   return pixbuf;
 }
 
@@ -339,9 +326,10 @@ load_symbolic_svg (const char     *escaped_file_data,
                    GError        **error)
 {
   GInputStream *stream;
-  GdkPixbuf *pixbuf;
+  GdkPixbuf *pixbuf = NULL;
   char *stylesheet = make_stylesheet (fg_string, success_color_string, warning_color_string, error_color_string);
   char *data;
+  RsvgHandle *handle;
 
   data = g_strconcat ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
                       "<svg version=\"1.1\"\n"
@@ -357,7 +345,31 @@ load_symbolic_svg (const char     *escaped_file_data,
                       NULL);
 
   stream = g_memory_input_stream_new_from_data (data, -1, g_free);
-  pixbuf = pixbuf_from_svg_stream (stream, width, height, path, error);
+
+  handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
+  if (handle)
+    {
+      pixbuf = pixbuf_from_rsvg_handle (stream, width, height, path, error);
+      g_object_unref (handle);
+    }
+  else
+    {
+      g_prefix_error (error, "Could not load symbolic icon from %s: ", path);
+    }
+
+  if (!rsvg_handle_set_stylesheet (handle, (const guint8 *) stylesheet, strlen (stylesheet), error))
+    {
+      g_prefix_error (error, "Could not set stylesheet for %s:", path);
+      goto out;
+    }
+
+  pixbuf = pixbuf_from_rsvg_handle (handle, width, height, path, error);
+
+ out:
+
+  if (handle)
+    g_object_unref (handle);
+
   g_object_unref (stream);
   g_free (stylesheet);
 
