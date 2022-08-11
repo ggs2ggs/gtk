@@ -313,7 +313,8 @@ make_stylesheet (const char *fg_string,
 
 
 static GdkPixbuf *
-load_symbolic_svg (const char     *escaped_file_data,
+load_symbolic_svg (const char     *file_data,
+                   gsize           file_data_len,
                    int             width,
                    int             height,
                    const char     *icon_width_str,
@@ -330,6 +331,7 @@ load_symbolic_svg (const char     *escaped_file_data,
   char *stylesheet = make_stylesheet (fg_string, success_color_string, warning_color_string, error_color_string);
   char *data;
   RsvgHandle *handle;
+  char *escaped_file_data = g_base64_encode ((guchar *) file_data, file_data_len);
 
   data = g_strconcat ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
                       "<svg version=\"1.1\"\n"
@@ -372,6 +374,7 @@ load_symbolic_svg (const char     *escaped_file_data,
 
   g_object_unref (stream);
   g_free (stylesheet);
+  g_free (escaped_file_data);
 
   return pixbuf;
 }
@@ -432,7 +435,6 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
   GdkPixbuf *pixbuf = NULL;
   int plane;
   int icon_width, icon_height;
-  char *escaped_file_data;
 
   /* Fetch size from the original icon */
   {
@@ -465,7 +467,6 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
     icon_height = ceil (svg_height);
   }
 
-  escaped_file_data = g_base64_encode ((guchar *) file_data, file_len);
   icon_width_str = g_strdup_printf ("%d", icon_width);
   icon_height_str = g_strdup_printf ("%d", icon_height);
 
@@ -488,7 +489,8 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
        * channels, with the color of the fg being implicitly
        * the "rest", as all color fractions should add up to 1.
        */
-      loaded = load_symbolic_svg (escaped_file_data, width, height,
+      loaded = load_symbolic_svg (file_data, file_len,
+                                  width, height,
                                   icon_width_str,
                                   icon_height_str,
                                   g_string,
@@ -525,8 +527,6 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
 
       g_object_unref (loaded);
     }
-
-  g_free (escaped_file_data);
 
 out:
   g_free (icon_width_str);
