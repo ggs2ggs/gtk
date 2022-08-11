@@ -329,34 +329,15 @@ load_symbolic_svg (const char     *file_data,
   GInputStream *stream;
   GdkPixbuf *pixbuf = NULL;
   char *stylesheet = make_stylesheet (fg_string, success_color_string, warning_color_string, error_color_string);
-  char *data;
   RsvgHandle *handle;
-  char *escaped_file_data = g_base64_encode ((guchar *) file_data, file_data_len);
 
-  data = g_strconcat ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
-                      "<svg version=\"1.1\"\n"
-                      "     xmlns=\"http://www.w3.org/2000/svg\"\n"
-                      "     xmlns:xi=\"http://www.w3.org/2001/XInclude\"\n"
-                      "     width=\"", icon_width_str, "\"\n"
-                      "     height=\"", icon_height_str, "\">\n"
-                      "  <style type=\"text/css\">\n",
-                      stylesheet,
-                      "  </style>\n"
-                      "  <xi:include href=\"data:text/xml;base64,", escaped_file_data, "\"/>\n"
-                      "</svg>",
-                      NULL);
-
-  stream = g_memory_input_stream_new_from_data (data, -1, g_free);
+  stream = g_memory_input_stream_new_from_data (file_data, file_data_len, NULL);
 
   handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
-  if (handle)
-    {
-      pixbuf = pixbuf_from_rsvg_handle (stream, width, height, path, error);
-      g_object_unref (handle);
-    }
-  else
+  if (!handle)
     {
       g_prefix_error (error, "Could not load symbolic icon from %s: ", path);
+      goto out;
     }
 
   if (!rsvg_handle_set_stylesheet (handle, (const guint8 *) stylesheet, strlen (stylesheet), error))
@@ -374,7 +355,6 @@ load_symbolic_svg (const char     *file_data,
 
   g_object_unref (stream);
   g_free (stylesheet);
-  g_free (escaped_file_data);
 
   return pixbuf;
 }
