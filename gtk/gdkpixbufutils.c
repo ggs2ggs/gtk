@@ -313,12 +313,9 @@ make_stylesheet (const char *fg_string,
 
 
 static GdkPixbuf *
-load_symbolic_svg (const char     *file_data,
-                   gsize           file_data_len,
+load_symbolic_svg (RsvgHandle     *handle,
                    int             width,
                    int             height,
-                   const char     *icon_width_str,
-                   const char     *icon_height_str,
                    const char     *fg_string,
                    const char     *success_color_string,
                    const char     *warning_color_string,
@@ -326,19 +323,8 @@ load_symbolic_svg (const char     *file_data,
                    const char     *path,
                    GError        **error)
 {
-  GInputStream *stream;
   GdkPixbuf *pixbuf = NULL;
   char *stylesheet = make_stylesheet (fg_string, success_color_string, warning_color_string, error_color_string);
-  RsvgHandle *handle;
-
-  stream = g_memory_input_stream_new_from_data (file_data, file_data_len, NULL);
-
-  handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
-  if (!handle)
-    {
-      g_prefix_error (error, "Could not load symbolic icon from %s: ", path);
-      goto out;
-    }
 
   if (!rsvg_handle_set_stylesheet (handle, (const guint8 *) stylesheet, strlen (stylesheet), error))
     {
@@ -350,10 +336,6 @@ load_symbolic_svg (const char     *file_data,
 
  out:
 
-  if (handle)
-    g_object_unref (handle);
-
-  g_object_unref (stream);
   g_free (stylesheet);
 
   return pixbuf;
@@ -409,30 +391,28 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
 {
   const char *r_string = "rgb(255,0,0)";
   const char *g_string = "rgb(0,255,0)";
-  char *icon_width_str;
-  char *icon_height_str;
   GdkPixbuf *loaded;
   GdkPixbuf *pixbuf = NULL;
   int plane;
   int icon_width, icon_height;
+  GInputStream *stream = g_memory_input_stream_new_from_data (file_data, file_len, NULL);
+
+  RsvgHandle *handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
+  g_object_unref (stream);
+  stream = NULL;
+
+  if (!handle)
+    {
+      g_prefix_error (error, "Could not load symbolic icon from %s: ", path);
+      return NULL;
+    }
 
   /* Fetch size from the original icon */
   {
-    GInputStream *stream = g_memory_input_stream_new_from_data (file_data, file_len, NULL);
-    RsvgHandle *handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
     gdouble svg_width, svg_height;
     gboolean has_size;
 
-    g_object_unref (stream);
-
-    if (!handle)
-      {
-        g_prefix_error (error, "Could not load symbolic icon from %s: ", path);
-        return NULL;
-      }
-
     has_size = rsvg_handle_get_intrinsic_size_in_pixels (handle, &svg_width, &svg_height);
-    g_object_unref (handle);
 
     if (!has_size)
       {
@@ -440,15 +420,13 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
         g_set_error (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_CORRUPT_IMAGE,
                      "Symbolic icon %s has no intrinsic size; please set one in its SVG",
                      path);
+        g_object_unref (handle);
         return NULL;
       }
 
     icon_width = ceil (svg_width);
     icon_height = ceil (svg_height);
   }
-
-  icon_width_str = g_strdup_printf ("%d", icon_width);
-  icon_height_str = g_strdup_printf ("%d", icon_height);
 
   if (width == 0)
     width = icon_width * scale;
@@ -469,10 +447,8 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
        * channels, with the color of the fg being implicitly
        * the "rest", as all color fractions should add up to 1.
        */
-      loaded = load_symbolic_svg (file_data, file_len,
+      loaded = load_symbolic_svg (handle,
                                   width, height,
-                                  icon_width_str,
-                                  icon_height_str,
                                   g_string,
                                   plane == 0 ? r_string : g_string,
                                   plane == 1 ? r_string : g_string,
@@ -509,8 +485,7 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
     }
 
 out:
-  g_free (icon_width_str);
-  g_free (icon_height_str);
+  g_object_unref (handle);
 
   return pixbuf;
 }
