@@ -19,6 +19,7 @@
 
 #include "config.h"
 
+
 #include "deprecated/gtkfilechooserwidget.h"
 #include "gtkfilechooserwidgetprivate.h"
 
@@ -6806,26 +6807,39 @@ captured_key (GtkEventControllerKey *controller,
   GtkFileChooserWidget *impl = data;
   gboolean handled;
 
-  if (impl->operation_mode == OPERATION_MODE_SEARCH ||
-      impl->operation_mode == OPERATION_MODE_ENTER_LOCATION ||
-      (impl->operation_mode == OPERATION_MODE_BROWSE &&
-       impl->location_mode == LOCATION_MODE_FILENAME_ENTRY))
-    return GDK_EVENT_PROPAGATE;
+  GtkWidget *focus = gtk_root_get_focus (gtk_widget_get_root (GTK_WIDGET (impl)));
 
-  if (keyval == GDK_KEY_slash || keyval == GDK_KEY_asciitilde || keyval == GDK_KEY_period)
-    return GDK_EVENT_PROPAGATE;
+  if (!focus)
+    return FALSE;
 
-  if (impl->location_entry)
+  handled = gtk_event_controller_key_forward (controller, focus);
+
+  // If the currently focused widget can consume input, let it have it.
+  if (handled)
+    return TRUE;
+
+  // Do not force change focus if focus is on an editable widget
+  if (GTK_IS_EDITABLE(focus))
+    return FALSE;
+
+  if (impl->action == GTK_FILE_CHOOSER_ACTION_SAVE)
     {
-      GtkWidget *focus = gtk_root_get_focus (gtk_widget_get_root (GTK_WIDGET (impl)));
+      gtk_widget_grab_focus (impl->location_entry);
 
-      if (focus && gtk_widget_is_ancestor (focus, impl->location_entry))
-        return GDK_EVENT_PROPAGATE;
+      // Replay key event to file name
+      handled = gtk_event_controller_key_forward (controller, GTK_WIDGET (impl->location_entry));
+
+      return handled;
     }
 
-  handled = gtk_event_controller_key_forward (controller, GTK_WIDGET (impl->search_entry));
-  if (handled == GDK_EVENT_STOP)
+  // If we are already within a search, starting a new one via operation_mode_set
+  // will break things as the looked-up object is temporary
+  if (get_current_model (impl) == G_LIST_MODEL (impl->search_model))
+    gtk_widget_grab_focus (impl->search_entry);
+  else
     operation_mode_set (impl, OPERATION_MODE_SEARCH);
+
+  handled = gtk_event_controller_key_forward (controller, GTK_WIDGET (impl->search_entry));
 
   return handled;
 }
@@ -6863,7 +6877,6 @@ post_process_ui (GtkFileChooserWidget *impl)
 
   controller = gtk_event_controller_key_new ();
   g_signal_connect (controller, "key-pressed", G_CALLBACK (captured_key), impl);
-  g_signal_connect (controller, "key-released", G_CALLBACK (captured_key), impl);
   gtk_event_controller_set_propagation_phase (controller, GTK_PHASE_CAPTURE);
   gtk_widget_add_controller (GTK_WIDGET (impl), controller);
 
