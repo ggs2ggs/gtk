@@ -117,6 +117,7 @@ struct _GtkDropTarget
 
   GdkContentFormats *formats;
   GdkDragAction actions;
+  GdkDragAction preferred;
   guint preload : 1;
 
   guint dropping : 1;
@@ -376,7 +377,7 @@ gtk_drop_target_motion (GtkDropTarget  *self,
                         double          x,
                         double          y)
 {
-  return make_action_unique (self->actions & gdk_drop_get_actions (self->drop));
+  return self->preferred;
 }
 
 static gboolean
@@ -424,15 +425,14 @@ gtk_drop_target_handle_event (GtkEventController *controller,
     case GDK_DRAG_MOTION:
       {
         GtkWidget *widget = gtk_event_controller_get_widget (controller);
-        GdkDragAction preferred;
 
         /* sanity check */
         g_return_val_if_fail (self->drop == gdk_dnd_event_get_drop (event), FALSE);
 
         graphene_point_init (&self->coords, x, y);
-        g_signal_emit (self, signals[MOTION], 0, x, y, &preferred);
-        if (preferred &&
-            gtk_drop_status (self->drop, self->actions, preferred))
+        g_signal_emit (self, signals[MOTION], 0, x, y, &self->preferred);
+        if (self->preferred &&
+            gtk_drop_status (self->drop, self->actions, self->preferred))
           {
             gtk_widget_set_state_flags (widget, GTK_STATE_FLAG_DROP_ACTIVE, FALSE);
           }
@@ -479,7 +479,6 @@ gtk_drop_target_handle_crossing (GtkEventController    *controller,
   if (crossing->direction == GTK_CROSSING_IN)
     {
       gboolean accept = FALSE;
-      GdkDragAction preferred;
 
       if (self->drop != NULL)
         return;
@@ -497,9 +496,9 @@ gtk_drop_target_handle_crossing (GtkEventController    *controller,
       graphene_point_init (&self->coords, x, y);
       gtk_drop_target_start_drop (self, crossing->drop);
 
-      g_signal_emit (self, signals[ENTER], 0, x, y, &preferred);
-      if (preferred &&
-          gtk_drop_status (self->drop, self->actions, preferred))
+      g_signal_emit (self, signals[ENTER], 0, x, y, &self->preferred);
+      if (self->preferred &&
+          gtk_drop_status (self->drop, self->actions, self->preferred))
         {
           gtk_widget_set_state_flags (widget, GTK_STATE_FLAG_DROP_ACTIVE, FALSE);
         }
