@@ -387,6 +387,7 @@ gdk_registry_handle_global (void               *data,
                             uint32_t            version)
 {
   GdkWaylandDisplay *display_wayland = data;
+  GdkDisplay *display = GDK_DISPLAY (display_wayland);
   struct wl_output *output;
 
   GDK_NOTE (MISC,
@@ -465,15 +466,19 @@ gdk_registry_handle_global (void               *data,
     }
   else if (strcmp (interface, "gtk_primary_selection_device_manager") == 0)
     {
+      display_wayland->gtk_primary_selection_manager_id = id;
       display_wayland->gtk_primary_selection_manager =
         wl_registry_bind(display_wayland->wl_registry, id,
                          &gtk_primary_selection_device_manager_interface, 1);
+      _gdk_wayland_device_manager_init_gtk_primary_selection (display->device_manager);
     }
   else if (strcmp (interface, "zwp_primary_selection_device_manager_v1") == 0)
     {
+      display_wayland->zwp_primary_selection_manager_v1_id = id;
       display_wayland->zwp_primary_selection_manager_v1 =
         wl_registry_bind(display_wayland->wl_registry, id,
                          &zwp_primary_selection_device_manager_v1_interface, 1);
+      _gdk_wayland_device_manager_init_zwp_primary_selection (display->device_manager);
     }
   else if (strcmp (interface, "zwp_tablet_manager_v2") == 0)
     {
@@ -533,6 +538,20 @@ gdk_registry_handle_global_remove (void               *data,
   GdkDisplay *display = GDK_DISPLAY (display_wayland);
 
   GDK_NOTE (MISC, g_message ("remove global %u", id));
+  if (display_wayland->zwp_primary_selection_manager_v1_id == id)
+    {
+      _gdk_wayland_device_manager_remove_zwp_primary_selection (display->device_manager);
+      display_wayland->zwp_primary_selection_manager_v1_id = 0;
+      g_clear_pointer (&display_wayland->zwp_primary_selection_manager_v1,
+                       zwp_primary_selection_device_manager_v1_destroy);
+    }
+  if (display_wayland->gtk_primary_selection_manager_id == id)
+    {
+      _gdk_wayland_device_manager_remove_gtk_primary_selection (display->device_manager);
+      display_wayland->gtk_primary_selection_manager_id = 0;
+      g_clear_pointer (&display_wayland->gtk_primary_selection_manager,
+                       gtk_primary_selection_device_manager_destroy);
+    }
   _gdk_wayland_device_manager_remove_seat (display->device_manager, id);
   _gdk_wayland_screen_remove_output (display_wayland->screen, id);
 

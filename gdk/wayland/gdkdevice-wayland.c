@@ -5117,6 +5117,64 @@ gdk_wayland_seat_get_slaves (GdkSeat             *seat,
 }
 
 static void
+gdk_wayland_seat_init_zwp_primary_selection (GdkWaylandSeat *seat)
+{
+  GdkWaylandSeat *wayland_seat = GDK_WAYLAND_SEAT (seat);
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (wayland_seat->display);
+
+  if (wayland_seat->gtk_primary_data_device)
+    return;
+
+  if (display_wayland->zwp_primary_selection_manager_v1)
+    {
+      wayland_seat->zwp_primary_data_device_v1 =
+        zwp_primary_selection_device_manager_v1_get_device (display_wayland->zwp_primary_selection_manager_v1,
+                                                            wayland_seat->wl_seat);
+      zwp_primary_selection_device_v1_add_listener (wayland_seat->zwp_primary_data_device_v1,
+                                                    &zwp_primary_device_v1_listener,
+                                                    seat);
+    }
+}
+
+static void
+gdk_wayland_seat_remove_zwp_primary_selection (GdkWaylandSeat *seat)
+{
+  GdkWaylandSeat *wayland_seat = GDK_WAYLAND_SEAT (seat);
+
+  g_clear_pointer (&wayland_seat->zwp_primary_data_device_v1,
+                   zwp_primary_selection_device_v1_destroy);
+}
+
+static void
+gdk_wayland_seat_init_gtk_primary_selection (GdkWaylandSeat *seat)
+{
+  GdkWaylandSeat *wayland_seat = GDK_WAYLAND_SEAT (seat);
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (wayland_seat->display);
+
+  if (wayland_seat->zwp_primary_data_device_v1)
+    return;
+
+  if (display_wayland->gtk_primary_selection_manager)
+    {
+      seat->gtk_primary_data_device =
+        gtk_primary_selection_device_manager_get_device (display_wayland->gtk_primary_selection_manager,
+                                                         seat->wl_seat);
+      gtk_primary_selection_device_add_listener (seat->gtk_primary_data_device,
+                                                 &gtk_primary_device_listener,
+                                                 seat);
+    }
+}
+
+static void
+gdk_wayland_seat_remove_gtk_primary_selection (GdkWaylandSeat *seat)
+{
+  GdkWaylandSeat *wayland_seat = GDK_WAYLAND_SEAT (seat);
+
+  g_clear_pointer (&wayland_seat->gtk_primary_data_device,
+                   gtk_primary_selection_device_destroy);
+}
+
+static void
 gdk_wayland_seat_class_init (GdkWaylandSeatClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -5182,24 +5240,8 @@ _gdk_wayland_device_manager_add_seat (GdkDeviceManager *device_manager,
   wl_seat_add_listener (seat->wl_seat, &seat_listener, seat);
   wl_seat_set_user_data (seat->wl_seat, seat);
 
-  if (display_wayland->zwp_primary_selection_manager_v1)
-    {
-      seat->zwp_primary_data_device_v1 =
-        zwp_primary_selection_device_manager_v1_get_device (display_wayland->zwp_primary_selection_manager_v1,
-                                                            seat->wl_seat);
-      zwp_primary_selection_device_v1_add_listener (seat->zwp_primary_data_device_v1,
-                                                    &zwp_primary_device_v1_listener,
-                                                    seat);
-    }
-  else if (display_wayland->gtk_primary_selection_manager)
-    {
-      seat->gtk_primary_data_device =
-        gtk_primary_selection_device_manager_get_device (display_wayland->gtk_primary_selection_manager,
-                                                         seat->wl_seat);
-      gtk_primary_selection_device_add_listener (seat->gtk_primary_data_device,
-                                                 &gtk_primary_device_listener,
-                                                 seat);
-    }
+  gdk_wayland_seat_init_zwp_primary_selection (seat);
+  gdk_wayland_seat_init_gtk_primary_selection (seat);
 
   seat->data_device =
     wl_data_device_manager_get_data_device (display_wayland->data_device_manager,
@@ -5242,6 +5284,78 @@ _gdk_wayland_device_manager_remove_seat (GdkDeviceManager *manager,
 
       gdk_display_remove_seat (display, GDK_SEAT (seat));
       break;
+    }
+
+  g_list_free (seats);
+}
+
+void
+_gdk_wayland_device_manager_init_zwp_primary_selection (GdkDeviceManager *device_manager)
+{
+  GdkDisplay *display = gdk_device_manager_get_display (device_manager);
+  GList *l, *seats;
+
+  seats = gdk_display_list_seats (display);
+
+  for (l = seats; l != NULL; l = l->next)
+    {
+      GdkWaylandSeat *seat = l->data;
+
+      gdk_wayland_seat_init_zwp_primary_selection (seat);
+    }
+
+  g_list_free (seats);
+}
+
+void
+_gdk_wayland_device_manager_remove_zwp_primary_selection (GdkDeviceManager *device_manager)
+{
+  GdkDisplay *display = gdk_device_manager_get_display (device_manager);
+  GList *l, *seats;
+
+  seats = gdk_display_list_seats (display);
+
+  for (l = seats; l != NULL; l = l->next)
+    {
+      GdkWaylandSeat *seat = l->data;
+
+      gdk_wayland_seat_remove_zwp_primary_selection (seat);
+    }
+
+  g_list_free (seats);
+}
+
+void
+_gdk_wayland_device_manager_init_gtk_primary_selection (GdkDeviceManager *device_manager)
+{
+  GdkDisplay *display = gdk_device_manager_get_display (device_manager);
+  GList *l, *seats;
+
+  seats = gdk_display_list_seats (display);
+
+  for (l = seats; l != NULL; l = l->next)
+    {
+      GdkWaylandSeat *seat = l->data;
+
+      gdk_wayland_seat_init_gtk_primary_selection (seat);
+    }
+
+  g_list_free (seats);
+}
+
+void
+_gdk_wayland_device_manager_remove_gtk_primary_selection (GdkDeviceManager *device_manager)
+{
+  GdkDisplay *display = gdk_device_manager_get_display (device_manager);
+  GList *l, *seats;
+
+  seats = gdk_display_list_seats (display);
+
+  for (l = seats; l != NULL; l = l->next)
+    {
+      GdkWaylandSeat *seat = l->data;
+
+      gdk_wayland_seat_remove_gtk_primary_selection (seat);
     }
 
   g_list_free (seats);

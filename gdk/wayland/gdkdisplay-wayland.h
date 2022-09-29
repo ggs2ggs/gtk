@@ -75,6 +75,8 @@ struct _GdkWaylandDisplay
 
   uint32_t xdg_wm_base_id;
   uint32_t zxdg_shell_v6_id;
+  uint32_t zwp_primary_selection_manager_v1_id;
+  uint32_t gtk_primary_selection_manager_id;
   GdkWaylandShellVariant shell_variant;
 
   /* Wayland fields below */
