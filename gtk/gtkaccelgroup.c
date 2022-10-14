@@ -1473,7 +1473,7 @@ gtk_accelerator_parse (const gchar     *accelerator,
  * This is only useful for system-level components, applications
  * should use gtk_accelerator_parse() instead.
  *
- * Returns: a newly allocated accelerator name.
+ * Returns: (transfer full): a newly allocated accelerator name.
  *
  * Since: 3.4
  */
@@ -1514,7 +1514,7 @@ gtk_accelerator_name_with_keycode (GdkDisplay      *display,
  * If you need to display accelerators in the user interface,
  * see gtk_accelerator_get_label().
  *
- * Returns: a newly-allocated accelerator name
+ * Returns: (transfer full): a newly-allocated accelerator name
  */
 gchar*
 gtk_accelerator_name (guint           accelerator_key,
@@ -1660,7 +1660,7 @@ gtk_accelerator_name (guint           accelerator_key,
  * This is only useful for system-level components, applications
  * should use gtk_accelerator_parse() instead.
  *
- * Returns: a newly-allocated string representing the accelerator.
+ * Returns: (transfer full): a newly-allocated string representing the accelerator.
  *
  * Since: 3.4
  */
@@ -1697,7 +1697,7 @@ gtk_accelerator_get_label_with_keycode (GdkDisplay      *display,
  * Converts an accelerator keyval and modifier mask into a string
  * which can be used to represent the accelerator to the user.
  *
- * Returns: a newly-allocated string representing the accelerator.
+ * Returns: (transfer full): a newly-allocated string representing the accelerator.
  *
  * Since: 2.6
  */

@@ -1542,7 +1542,7 @@ gtk_builder_set_translation_domain (GtkBuilder  *builder,
  *
  * Gets the translation domain of @builder.
  *
- * Returns: the translation domain. This string is owned
+ * Returns: (transfer none) (nullable): the translation domain. This string is owned
  * by the builder object and must not be modified or freed.
  *
  * Since: 2.12

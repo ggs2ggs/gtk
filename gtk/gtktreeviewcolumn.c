@@ -2371,7 +2371,7 @@ gtk_tree_view_column_set_title (GtkTreeViewColumn *tree_column,
  * 
  * Returns the title of the widget.
  * 
- * Returns: the title of the column. This string should not be
+ * Returns: (transfer none): the title of the column. This string should not be
  * modified or freed.
  **/
 const gchar *
@@ -3120,7 +3120,7 @@ gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column)
  *
  * Returns the button used in the treeview column header
  *
- * Returns: (transfer none): The button for the column header.
+ * Returns: (transfer none) (nullable): The button for the column header.
  *
  * Since: 3.0
  */

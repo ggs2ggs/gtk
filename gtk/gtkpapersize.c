@@ -679,7 +679,7 @@ gtk_paper_size_get_display_name (GtkPaperSize *size)
  * Gets the PPD name of the #GtkPaperSize, which
  * may be %NULL.
  *
- * Returns: the PPD name of @size
+ * Returns: (transfer none) (nullable): the PPD name of @size
  *
  * Since: 2.10
  */

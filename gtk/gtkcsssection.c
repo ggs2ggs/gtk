@@ -186,7 +186,7 @@ gtk_css_section_get_parent (const GtkCssSection *section)
  * for example because the CSS was loaded via
  * @gtk_css_provider_load_from_data(), then %NULL is returned.
  *
- * Returns: (transfer none): the #GFile that @section was parsed from
+ * Returns: (transfer none) (nullable): the #GFile that @section was parsed from
  *     or %NULL if @section was parsed from other data
  *
  * Since: 3.2

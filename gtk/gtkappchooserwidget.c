@@ -1436,7 +1436,7 @@ gtk_app_chooser_widget_set_default_text (GtkAppChooserWidget *self,
  * Returns the text that is shown if there are not applications
  * that can handle the content type.
  *
- * Returns: the value of #GtkAppChooserWidget:default-text
+ * Returns: (transfer none) (nullable): the value of #GtkAppChooserWidget:default-text
  *
  * Since: 3.0
  */

@@ -995,7 +995,7 @@ gtk_file_chooser_set_current_name  (GtkFileChooser *chooser,
  * change the extension of the typed filename based on the chosen format, say,
  * from “.jpg” to “.png”.
  *
- * Returns: The raw text from the file chooser’s “Name” entry.  Free this with
+ * Returns: (transfer full): The raw text from the file chooser’s “Name” entry.  Free this with
  * g_free().  Note that this string is not a full pathname or URI; it is
  * whatever the contents of the entry are.  Note also that this string is in
  * UTF-8 encoding, which is not necessarily the system’s encoding for filenames.

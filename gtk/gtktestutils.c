@@ -289,7 +289,7 @@ gtk_test_spin_button_click (GtkSpinButton  *spinner,
  * so this function is genrally only useful in test programs with
  * predetermined locales, see gtk_test_init() for more details.
  *
- * Returns: (transfer none): a GtkLabel widget if any is found.
+ * Returns: (transfer none) (nullable): a GtkLabel widget if any is found.
  *
  * Since: 2.14
  **/
@@ -397,7 +397,7 @@ widget_geo_cmp (gconstpointer a,
  * widget, relative to another labeling widget. Such as finding a
  * button or text entry widget, given its corresponding label widget.
  *
- * Returns: (transfer none): a widget of type @widget_type if any is found.
+ * Returns: (transfer none) (nullable): a widget of type @widget_type if any is found.
  *
  * Since: 2.14
  **/

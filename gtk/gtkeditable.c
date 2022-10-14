@@ -264,7 +264,7 @@ gtk_editable_delete_text (GtkEditable *editable,
  * 
  * Note that positions are specified in characters, not bytes.
  *
- * Returns: a pointer to the contents of the widget as a
+ * Returns: (transfer full): a pointer to the contents of the widget as a
  *      string. This string is allocated by the #GtkEditable
  *      implementation and should be freed by the caller.
  */

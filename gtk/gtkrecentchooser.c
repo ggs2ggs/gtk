@@ -709,7 +709,7 @@ gtk_recent_chooser_set_current_uri (GtkRecentChooser  *chooser,
  *
  * Gets the URI currently selected by @chooser.
  *
- * Returns: a newly allocated string holding a URI.
+ * Returns: (transfer full) (nullable): a newly allocated string holding a URI.
  *
  * Since: 2.10
  */
@@ -727,7 +727,7 @@ gtk_recent_chooser_get_current_uri (GtkRecentChooser *chooser)
  * 
  * Gets the #GtkRecentInfo currently selected by @chooser.
  *
- * Returns: a #GtkRecentInfo.  Use gtk_recent_info_unref() when
+ * Returns: (transfer full) (nullable): a #GtkRecentInfo.  Use gtk_recent_info_unref() when
  *   when you have finished using it.
  *
  * Since: 2.10

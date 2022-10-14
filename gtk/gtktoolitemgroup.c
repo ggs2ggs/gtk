@@ -2008,8 +2008,8 @@ gtk_tool_item_group_set_ellipsize (GtkToolItemGroup   *group,
  *
  * Gets the label of @group.
  *
- * Returns: the label of @group. The label is an internal string of @group
- *     and must not be modified. Note that %NULL is returned if a custom
+ * Returns: (transfer none) (nullable): the label of @group. The label is an internal string
+ *     of @group and must not be modified. Note that %NULL is returned if a custom
  *     label has been set with gtk_tool_item_group_set_label_widget()
  *
  * Since: 2.20
@@ -2240,7 +2240,7 @@ gtk_tool_item_group_get_n_items (GtkToolItemGroup *group)
  *
  * Gets the tool item at @index in group.
  *
- * Returns: (transfer none): the #GtkToolItem at index
+ * Returns: (transfer none) (nullable): the #GtkToolItem at index
  *
  * Since: 2.20
  */
@@ -2265,7 +2265,7 @@ gtk_tool_item_group_get_nth_item (GtkToolItemGroup *group,
  *
  * Gets the tool item at position (x, y).
  *
- * Returns: (transfer none): the #GtkToolItem at position (x, y)
+ * Returns: (transfer none) (nullable): the #GtkToolItem at position (x, y)
  *
  * Since: 2.20
  */
