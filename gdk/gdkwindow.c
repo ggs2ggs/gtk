@@ -3481,7 +3481,7 @@ gdk_window_flush (GdkWindow *window)
  * but no area outside of this region will be affected by drawing
  * primitives.
  * 
- * Returns: a #cairo_region_t. This must be freed with cairo_region_destroy()
+ * Returns: (transfer full): a #cairo_region_t. This must be freed with cairo_region_destroy()
  *          when you are done.
  **/
 cairo_region_t*
@@ -3508,7 +3508,7 @@ gdk_window_get_clip_region (GdkWindow *window)
  * obscured by other windows, but no area outside of this region
  * is visible.
  * 
- * Returns: a #cairo_region_t. This must be freed with cairo_region_destroy()
+ * Returns: (transfer full): a #cairo_region_t. This must be freed with cairo_region_destroy()
  *          when you are done.
  **/
 cairo_region_t *
@@ -4628,7 +4628,7 @@ _gdk_window_invalidate_for_expose (GdkWindow       *window,
  * gdk_window_get_update_area() returns %NULL. You are responsible for
  * calling cairo_region_destroy() on the returned region if it’s non-%NULL.
  *
- * Returns: the update area for @window
+ * Returns: (transfer full) (nullable): the update area for @window
  **/
 cairo_region_t *
 gdk_window_get_update_area (GdkWindow *window)
