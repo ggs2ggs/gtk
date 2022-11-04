@@ -1297,11 +1297,55 @@ enum
   RANGE_UNSELECT
 };
 
+static void
+gtk_tree_selection_real_find_start_end (GtkTreeSelection *selection,
+                                        GtkTreePath      *start_path,
+                                        GtkTreePath      *end_path,
+                                        GtkRBNode       **start_node,
+                                        GtkRBNode       **end_node,
+                                        GtkRBTree       **start_tree,
+                                        GtkRBTree       **end_tree)
+{
+  GtkTreeSelectionPrivate *priv = selection->priv;
+
+  switch (gtk_tree_path_compare (start_path, end_path))
+    {
+    case 1:
+      _gtk_tree_view_find_node (priv->tree_view,
+				end_path,
+				start_tree,
+				start_node);
+      _gtk_tree_view_find_node (priv->tree_view,
+				start_path,
+				end_tree,
+				end_node);
+      break;
+    case 0:
+      _gtk_tree_view_find_node (priv->tree_view,
+				start_path,
+				start_tree,
+				start_node);
+      *end_tree = *start_tree;
+      *end_node = *start_node;
+      break;
+    case -1:
+      _gtk_tree_view_find_node (priv->tree_view,
+				start_path,
+				start_tree,
+				start_node);
+      _gtk_tree_view_find_node (priv->tree_view,
+				end_path,
+				end_tree,
+				end_node);
+      break;
+    }
+}
+
 static gint
 gtk_tree_selection_real_modify_range (GtkTreeSelection *selection,
                                       gint              mode,
-				      GtkTreePath      *start_path,
-				      GtkTreePath      *end_path)
+                                      GtkTreePath      *start_path,
+                                      GtkTreePath      *end_path)
 {
   GtkTreeSelectionPrivate *priv = selection->priv;
   GtkRBNode *start_node = NULL, *end_node = NULL;
@@ -1309,45 +1353,19 @@ gtk_tree_selection_real_modify_range (GtkTreeSelection *selection,
   GtkTreePath *anchor_path = NULL;
   gboolean dirty = FALSE;
 
-  switch (gtk_tree_path_compare (start_path, end_path))
-    {
-    case 1:
-      _gtk_tree_view_find_node (priv->tree_view,
-				end_path,
-				&start_tree,
-				&start_node);
-      _gtk_tree_view_find_node (priv->tree_view,
-				start_path,
-				&end_tree,
-				&end_node);
-      anchor_path = start_path;
-      break;
-    case 0:
-      _gtk_tree_view_find_node (priv->tree_view,
-				start_path,
-				&start_tree,
-				&start_node);
-      end_tree = start_tree;
-      end_node = start_node;
-      anchor_path = start_path;
-      break;
-    case -1:
-      _gtk_tree_view_find_node (priv->tree_view,
-				start_path,
-				&start_tree,
-				&start_node);
-      _gtk_tree_view_find_node (priv->tree_view,
-				end_path,
-				&end_tree,
-				&end_node);
-      anchor_path = start_path;
-      break;
-    }
+  gtk_tree_selection_real_find_start_end (selection,
+                                          start_path,
+                                          end_path,
+                                          &start_node,
+                                          &end_node,
+                                          &start_tree,
+                                          &end_tree);
 
   /* Invalid start or end node? */
   if (start_node == NULL || end_node == NULL)
     return dirty;
 
+  anchor_path = start_path;
   if (anchor_path)
     _gtk_tree_view_set_anchor_path (priv->tree_view, anchor_path);
 
