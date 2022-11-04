@@ -2968,6 +2968,10 @@ gtk_window_supports_client_shadow (GtkWindow *window)
     }
 #endif
 
+#ifdef GDK_WINDOWING_MACOS
+  return FALSE;
+#endif
+
   return TRUE;
 }
 
@@ -2979,9 +2983,13 @@ gtk_window_enable_csd (GtkWindow *window)
 
   /* We need a visual with alpha for client shadows */
   if (priv->use_client_shadow)
-    gtk_widget_add_css_class (widget, "csd");
+    {
+      gtk_widget_add_css_class (widget, "csd");
+    }
   else
-    gtk_widget_add_css_class (widget, "solid-csd");
+    {
+      /* gtk_widget_add_css_class (widget, "solid-csd"); */
+    }
 
   priv->client_decorated = TRUE;
 }
