@@ -4375,3 +4375,9 @@ menubutton {
     }
   }
 }
+
+.native-window-controls {
+  margin-left: 12px;
+  // FIXME: This doesn't seem to work until the value reaches the width of the control:
+  margin-right: 12px;
+}

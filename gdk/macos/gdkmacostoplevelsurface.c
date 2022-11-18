@@ -317,6 +317,88 @@ _gdk_macos_toplevel_surface_begin_move (GdkToplevel *toplevel,
     [(GdkMacosWindow *)nswindow beginManualMove];
 }
 
+static void
+_gdk_macos_toplevel_get_window_controls_size(GdkToplevel *toplevel, float* width, float* height)
+{
+  NSWindow *nswindow;
+  NSRect button_close;
+  NSRect button_maximize;
+
+  g_assert (GDK_IS_MACOS_SURFACE (toplevel));
+
+  if (GDK_SURFACE_DESTROYED (toplevel))
+    return;
+
+  nswindow = _gdk_macos_surface_get_native (GDK_MACOS_SURFACE (toplevel));
+  if (!nswindow)
+    return;
+
+  button_close = [nswindow standardWindowButton:NSWindowCloseButton].frame;
+  button_maximize = [nswindow standardWindowButton:NSWindowZoomButton].frame;
+  *width = button_maximize.origin.x + button_maximize.size.width - button_close.origin.x;
+  *height = button_close.size.height;
+}
+
+static void
+_gdk_macos_toplevel_draw_window_control(GdkToplevel *toplevel, bool start, float x, float y)
+{
+  NSRect frame;
+  NSButton *button_close, *button_min, *button_max;
+  NSWindow *nswindow;
+  NSView *titlebar;
+
+  NSLayoutAttribute layout = start ? NSLayoutAttributeLeft : NSLayoutAttributeRight;
+
+  g_assert (GDK_IS_MACOS_SURFACE (toplevel));
+
+  if (GDK_SURFACE_DESTROYED (toplevel))
+    return;
+
+  nswindow = _gdk_macos_surface_get_native (GDK_MACOS_SURFACE (toplevel));
+
+  if (!nswindow)
+    return;
+
+  button_close = [nswindow standardWindowButton:NSWindowCloseButton];
+  button_min = [nswindow standardWindowButton:NSWindowMiniaturizeButton];
+  button_max = [nswindow standardWindowButton:NSWindowZoomButton];
+
+  titlebar = button_close.superview;
+
+  if (!start) {
+    x = x - (int)titlebar.frame.size.width;
+  }
+
+  NSArray* buttons = @[button_close, button_min, button_max];
+  float margin = button_min.frame.origin.x - button_close.frame.origin.x;
+  for (NSUInteger i = 0; i < buttons.count; i++) {
+    NSButton* button = buttons[i];
+    [button setHidden:NO];
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    [titlebar addConstraints:@[
+      [NSLayoutConstraint constraintWithItem:button
+        attribute:NSLayoutAttributeTop
+        relatedBy:NSLayoutRelationEqual
+        toItem:titlebar
+        attribute:NSLayoutAttributeTop
+        multiplier:1
+        constant:y],
+      [NSLayoutConstraint constraintWithItem:button
+        attribute:layout
+        relatedBy:NSLayoutRelationEqual
+        toItem:titlebar
+        attribute:layout
+        multiplier:1
+        constant:x + margin * i]
+    ]];
+  }
+
+  // Private API to invalidate previous tracking area. Without this osx assume
+  // the buttons are still at their original position.
+  // REVIEW NOTE: this doesn't work for some reasons, I need to investigate a bit more.
+  NSView *frameView = [[nswindow contentView] superview];
+  [frameView _tileTitlebarAndRedisplay:NO];
+}
 
 static void
 toplevel_iface_init (GdkToplevelInterface *iface)
@@ -327,6 +409,8 @@ toplevel_iface_init (GdkToplevelInterface *iface)
   iface->focus = _gdk_macos_toplevel_surface_focus;
   iface->begin_resize = _gdk_macos_toplevel_surface_begin_resize;
   iface->begin_move = _gdk_macos_toplevel_surface_begin_move;
+  iface->draw_window_control = _gdk_macos_toplevel_draw_window_control;
+  iface->get_window_control_size = _gdk_macos_toplevel_get_window_controls_size;
 }
 
 G_DEFINE_TYPE_WITH_CODE (GdkMacosToplevelSurface, _gdk_macos_toplevel_surface, GDK_TYPE_MACOS_SURFACE,
