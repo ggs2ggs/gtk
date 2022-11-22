@@ -4193,6 +4193,19 @@ gtk_window_enable_csd (GtkWindow *window)
 }
 
 static void
+gtk_window_disable_csd (GtkWindow *window)
+{
+  GtkWindowPrivate *priv = window->priv;
+  GtkWidget *widget = GTK_WIDGET (window);
+
+  /* Only one of these will actually be set, but removing both is harmless */
+  gtk_style_context_remove_class (gtk_widget_get_style_context (widget), GTK_STYLE_CLASS_CSD);
+  gtk_style_context_remove_class (gtk_widget_get_style_context (widget), "solid-csd");
+
+  priv->client_decorated = FALSE;
+}
+
+static void
 on_titlebar_title_notify (GtkHeaderBar *titlebar,
                           GParamSpec   *pspec,
                           GtkWindow    *self)
@@ -6145,10 +6158,7 @@ gtk_window_should_use_csd (GtkWindow *window)
 
 #ifdef GDK_WINDOWING_WAYLAND
   if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (GTK_WIDGET (window))))
-    {
-      GdkDisplay *gdk_display = gtk_widget_get_display (GTK_WIDGET (window));
-      return !gdk_wayland_display_prefers_ssd (gdk_display);
-    }
+    return TRUE;
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
@@ -6182,6 +6192,31 @@ create_decoration (GtkWidget *widget)
       gtk_widget_show_all (priv->titlebar);
       priv->title_box = priv->titlebar;
     }
+  else if (priv->title_box == priv->titlebar)
+    gtk_widget_show_all (priv->title_box);
+
+  update_window_buttons (window);
+}
+
+static void update_shadow_width (GtkWindow *window, GtkBorder *border);
+
+static void
+destroy_decoration (GtkWidget *widget)
+{
+  GtkWindow *window = GTK_WINDOW (widget);
+  GtkWindowPrivate *priv = window->priv;
+  GtkBorder border = {0};
+
+  priv->use_client_shadow = FALSE;
+  update_shadow_width(window, &border);
+
+  gtk_window_disable_csd (window);
+
+  if (priv->type == GTK_WINDOW_POPUP)
+    return;
+
+  if (priv->title_box == priv->titlebar)
+    gtk_widget_hide (priv->title_box);
 
   update_window_buttons (window);
 }
@@ -7374,6 +7409,42 @@ update_realized_window_properties (GtkWindow     *window,
 }
 
 static void
+handle_decoration_state_change (GtkWidget *widget)
+{
+  GtkAllocation allocation;
+  GdkWindow *window = gtk_widget_get_window (widget);
+
+  allocation.x = 0;
+  allocation.y = 0;
+  allocation.width = gdk_window_get_width (window);
+  allocation.height = gdk_window_get_height (window);
+
+  gtk_widget_size_allocate (widget, &allocation);
+  gtk_widget_queue_resize (widget);
+}
+
+static void
+wayland_handle_decoration (GdkWindow *gdk_window,
+                           gboolean   ssd,
+                           void      *user_data)
+{
+  GtkWidget *widget = user_data;
+  GtkWindow *window = GTK_WINDOW (widget);
+  GtkWindowPrivate *priv = window->priv;
+
+  if (priv->client_decorated && ssd)
+    {
+      destroy_decoration(widget);
+      handle_decoration_state_change(widget);
+    }
+  else if (!priv->client_decorated && !ssd)
+    {
+      create_decoration(widget);
+      handle_decoration_state_change(widget);
+    }
+}
+
+static void
 gtk_window_realize (GtkWidget *widget)
 {
   GtkAllocation allocation;
@@ -7570,16 +7641,6 @@ gtk_window_realize (GtkWidget *widget)
   if (!priv->decorated || priv->client_decorated)
     gdk_window_set_decorations (gdk_window, 0);
 
-#ifdef GDK_WINDOWING_WAYLAND
-  if (GDK_IS_WAYLAND_WINDOW (gdk_window))
-    {
-      if (priv->client_decorated)
-        gdk_wayland_window_announce_csd (gdk_window);
-      else
-        gdk_wayland_window_announce_ssd (gdk_window);
-    }
-#endif
-
   if (!priv->deletable)
     gdk_window_set_functions (gdk_window, GDK_FUNC_ALL | GDK_FUNC_CLOSE);
 
@@ -7624,6 +7685,13 @@ gtk_window_realize (GtkWidget *widget)
       if (GDK_IS_X11_WINDOW (gdk_window))
         gdk_x11_window_set_user_time (gdk_window, priv->initial_timestamp);
     }
+#endif
+
+#ifdef GDK_WINDOWING_WAYLAND
+  if (GDK_IS_WAYLAND_DISPLAY (gtk_widget_get_display (widget)))
+    GDK_PRIVATE_CALL (gdk_wayland_window_set_decoration_listener) (gdk_window,
+                                                                   wayland_handle_decoration,
+                                                                   widget);
 #endif
 
   child_allocation.x = 0;

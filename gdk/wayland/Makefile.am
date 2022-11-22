@@ -38,8 +38,8 @@ BUILT_SOURCES = 				\
 	xdg-output-unstable-v1-client-protocol.h		\
 	keyboard-shortcuts-inhibit-unstable-v1-client-protocol.h \
 	keyboard-shortcuts-inhibit-unstable-v1-protocol.c	\
-	server-decoration-client-protocol.h		\
-	server-decoration-protocol.c			\
+	xdg-decoration-unstable-v1-client-protocol.h		\
+	xdg-decoration-unstable-v1-protocol.c			\
 	gtk-shell-client-protocol.h		\
 	gtk-shell-protocol.c			\
 	primary-selection-unstable-v1-client-protocol.h		\
@@ -128,7 +128,6 @@ xdg-activation-v1-client-protocol.h : $(WAYLAND_PROTOCOLS_DATADIR)/staging/xdg-a
 EXTRA_DIST += 					\
 	protocol/gtk-primary-selection.xml	\
 	protocol/gtk-shell.xml			\
-	protocol/server-decoration.xml	\
 	meson.build
 
 -include $(top_srcdir)/git.mk
