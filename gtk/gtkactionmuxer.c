@@ -1363,6 +1363,23 @@ gtk_action_muxer_get_parent (GtkActionMuxer *muxer)
   return muxer->parent;
 }
 
+static gboolean
+muxer_will_cycle (GtkActionMuxer *muxer,
+                  GtkActionMuxer *parent)
+{
+  GtkActionMuxer *ancestor;
+
+  for (ancestor = parent;
+       ancestor != NULL;
+       ancestor = gtk_action_muxer_get_parent (ancestor))
+    {
+      if (ancestor == muxer)
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 /*< private >
  * gtk_action_muxer_set_parent:
  * @muxer: a `GtkActionMuxer`
@@ -1376,6 +1393,7 @@ gtk_action_muxer_set_parent (GtkActionMuxer *muxer,
 {
   g_return_if_fail (GTK_IS_ACTION_MUXER (muxer));
   g_return_if_fail (parent == NULL || GTK_IS_ACTION_MUXER (parent));
+  g_return_if_fail (parent == NULL || !muxer_will_cycle (muxer, parent));
 
   if (muxer->parent == parent)
     return;
