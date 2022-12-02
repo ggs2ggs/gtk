@@ -473,7 +473,9 @@ add_button (GtkWidget *button, gpointer data)
 static void
 setup_search (GtkFileChooserDialog *dialog)
 {
-  gboolean use_header;
+  gboolean   use_header;
+  GtkWidget *button;
+  GtkWidget *image;
 
   if (dialog->priv->search_setup)
     return;
@@ -481,33 +483,70 @@ setup_search (GtkFileChooserDialog *dialog)
   dialog->priv->search_setup = TRUE;
 
   g_object_get (dialog, "use-header-bar", &use_header, NULL);
+
+  button = gtk_toggle_button_new ();
+  gtk_widget_set_focus_on_click (button, FALSE);
+  gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
+  image = gtk_image_new_from_icon_name ("edit-find-symbolic", GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_style_context_add_class (gtk_widget_get_style_context (button), "image-button");
+  gtk_style_context_remove_class (gtk_widget_get_style_context (button), "text-button");
+  gtk_widget_show (image);
+  gtk_widget_show (button);
+
+  g_object_bind_property (button, "active",
+                          dialog->priv->widget, "search-mode",
+                          G_BINDING_BIDIRECTIONAL);
+
   if (use_header)
     {
-      GtkWidget *button;
-      GtkWidget *image;
       GtkWidget *header;
-
-      button = gtk_toggle_button_new ();
-      gtk_widget_set_focus_on_click (button, FALSE);
-      gtk_widget_set_valign (button, GTK_ALIGN_CENTER);
-      image = gtk_image_new_from_icon_name ("edit-find-symbolic", GTK_ICON_SIZE_MENU);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_style_context_add_class (gtk_widget_get_style_context (button), "image-button");
-      gtk_style_context_remove_class (gtk_widget_get_style_context (button), "text-button");
-      gtk_widget_show (image);
-      gtk_widget_show (button);
 
       header = gtk_dialog_get_header_bar (GTK_DIALOG (dialog));
       gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 
-      g_object_bind_property (button, "active",
-                              dialog->priv->widget, "search-mode",
-                              G_BINDING_BIDIRECTIONAL);
       g_object_bind_property (dialog->priv->widget, "subtitle",
                               header, "subtitle",
                               G_BINDING_SYNC_CREATE);
 
       gtk_container_forall (GTK_CONTAINER (header), add_button, dialog);
+    }
+  else
+    {
+      GtkWidget *content_area;
+      GList     *l, *c1, *c2, *c3, *c4;
+
+      content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+      c1 = gtk_container_get_children (GTK_CONTAINER (content_area));
+      c2 = gtk_container_get_children (GTK_CONTAINER (c1->data));
+      c3 = gtk_container_get_children (GTK_CONTAINER (c2->data));
+      c4 = gtk_container_get_children (GTK_CONTAINER (c3->data));
+
+      for (l = c4; l; l = l->next)
+        {
+          if (GTK_IS_BOX (l->data))
+            {
+              GList *c5, *c6, *c7, *c8;
+
+              c5 = gtk_container_get_children (GTK_CONTAINER (l->data));
+              c6 = gtk_container_get_children (GTK_CONTAINER (c5->data));
+              c7 = gtk_container_get_children (GTK_CONTAINER (c6->data));
+              c8 = gtk_container_get_children (GTK_CONTAINER (c7->data));
+
+              gtk_box_pack_start (GTK_BOX (c8->data), button, FALSE, FALSE, 0);
+
+              g_list_free (c5);
+              g_list_free (c6);
+              g_list_free (c7);
+              g_list_free (c8);
+              break;
+            }
+        }
+
+      g_list_free (c1);
+      g_list_free (c2);
+      g_list_free (c3);
+      g_list_free (c4);
     }
 }
 

@@ -536,6 +536,8 @@ static void        gtk_file_chooser_widget_set_choice    (GtkFileChooser  *choos
 static const char *gtk_file_chooser_widget_get_choice    (GtkFileChooser  *chooser,
                                                           const char      *id);
 
+static gchar      *gtk_file_chooser_widget_get_subtitle  (GtkFileChooserWidget *impl);
+
 
 static void add_selection_to_recent_list (GtkFileChooserWidget *impl);
 
@@ -806,8 +808,8 @@ error_creating_folder_dialog (GtkFileChooserWidget *impl,
                               GFile                 *file,
                               GError                *error)
 {
-  error_dialog (impl, 
-                _("The folder could not be created"), 
+  error_dialog (impl,
+                _("The folder could not be created"),
                 error);
 }
 
@@ -2788,8 +2790,7 @@ location_switch_to_filename_entry (GtkFileChooserWidget *impl)
    * browse_header_box container, so there's no point in switching
    * to it.
    */
-  if (priv->operation_mode == OPERATION_MODE_SEARCH ||
-      priv->operation_mode == OPERATION_MODE_RECENT)
+  if (priv->operation_mode == OPERATION_MODE_SEARCH)
     return;
 
   gtk_revealer_set_reveal_child (GTK_REVEALER (priv->browse_header_revealer), TRUE);
@@ -3117,7 +3118,6 @@ location_bar_update (GtkFileChooserWidget *impl)
           if (have_selected)
             put_recent_folder_in_pathbar (impl, &iter);
         }
-      visible = FALSE;
       break;
 
     case OPERATION_MODE_SEARCH:
@@ -3211,12 +3211,13 @@ operation_mode_set_recent (GtkFileChooserWidget *impl)
 
   gtk_stack_set_visible_child_name (GTK_STACK (priv->browse_files_stack), "list");
   gtk_stack_set_visible_child_name (GTK_STACK (priv->browse_header_stack), "pathbar");
-  gtk_revealer_set_reveal_child (GTK_REVEALER (priv->browse_header_revealer), FALSE);
+  gtk_revealer_set_reveal_child (GTK_REVEALER (priv->browse_header_revealer), TRUE);
   location_bar_update (impl);
   recent_start_loading (impl);
   file = g_file_new_for_uri ("recent:///");
   gtk_places_sidebar_set_location (GTK_PLACES_SIDEBAR (priv->places_sidebar), file);
-  g_object_notify (G_OBJECT (impl), "subtitle");
+  if (gtk_file_chooser_widget_get_subtitle (impl) != NULL)
+    g_object_notify (G_OBJECT (impl), "subtitle");
   g_object_unref (file);
   gtk_widget_set_sensitive (priv->filter_combo, TRUE);
 }
