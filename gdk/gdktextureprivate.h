@@ -18,6 +18,7 @@ struct _GdkTexture
   GdkMemoryFormat format;
   int width;
   int height;
+  GdkColorSpace *color_space;
 
   gpointer render_key;
   gpointer render_data;
@@ -30,6 +31,7 @@ struct _GdkTextureClass {
   /* mandatory: Download in the given format into data */
   void                  (* download)                    (GdkTexture             *texture,
                                                          GdkMemoryFormat         format,
+                                                         GdkColorSpace          *color_space,
                                                          guchar                 *data,
                                                          gsize                   stride);
 };
@@ -37,10 +39,12 @@ struct _GdkTextureClass {
 gboolean                gdk_texture_can_load            (GBytes                 *bytes);
 
 GdkTexture *            gdk_texture_new_for_surface     (cairo_surface_t        *surface);
-cairo_surface_t *       gdk_texture_download_surface    (GdkTexture             *texture);
+cairo_surface_t *       gdk_texture_download_surface    (GdkTexture             *texture,
+                                                         GdkColorSpace          *color_space);
 
 void                    gdk_texture_do_download         (GdkTexture             *texture,
                                                          GdkMemoryFormat         format,
+                                                         GdkColorSpace          *color_space,
                                                          guchar                 *data,
                                                          gsize                   stride);
 GdkMemoryFormat         gdk_texture_get_format          (GdkTexture             *self);

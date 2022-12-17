@@ -110,6 +110,7 @@
     <file>icons/scalable/status/weather-severe-alert-symbolic.svg</file>
     <file>icons/scalable/status/weather-showers-symbolic.svg</file>
     <file>icons/scalable/status/weather-snow-symbolic.svg</file>
+    <file>hdr-example.heif</file>
 
     <file alias='icons/scalable/apps/org.gtk.WidgetFactory4.svg'>data/scalable/apps/org.gtk.WidgetFactory4.svg</file>
 
@@ -120,5 +121,12 @@
     <file>portland-rose.jpg</file>
     <file>nyc.jpg</file>
     <file>beach.jpg</file>
+    <file>linear-gradient-color.png</file>
+    <file>linear-gradient-monochrome.png</file>
+    <file>srgb-gradient-color.png</file>
+    <file>srgb-gradient-monochrome.png</file>
+    <file>color-profile-check.png</file>
+    <file>color-profile-check.jpeg</file>
+    <file>color-profile-check.tiff</file>
   </gresource>
 </gresources>

@@ -13,6 +13,7 @@ tests = [
   { 'name': 'array' },
   { 'name': 'cairo' },
   { 'name': 'clipboard', 'parallel': false, },
+  { 'name': 'colorspace' },
   { 'name': 'contentformats' },
   { 'name': 'contentserializer' },
   { 'name': 'cursor' },
@@ -57,6 +58,7 @@ endforeach
 internal_tests = [
   'image',
   'texture',
+  'color'
 ]
 
 foreach t : internal_tests

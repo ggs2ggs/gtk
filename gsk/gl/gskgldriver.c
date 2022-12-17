@@ -40,7 +40,9 @@
 
 #include <gdk/gdkglcontextprivate.h>
 #include <gdk/gdkdisplayprivate.h>
+#include <gdk/gdkmemoryformatprivate.h>
 #include <gdk/gdkmemorytextureprivate.h>
+#include <gdk/gdkcolorspaceprivate.h>
 #include <gdk/gdkprofilerprivate.h>
 #include <gdk/gdktextureprivate.h>
 
@@ -689,6 +691,138 @@ gsk_gl_driver_cache_texture (GskGLDriver         *self,
   g_hash_table_insert (self->texture_id_to_key, GUINT_TO_POINTER (texture_id), k);
 }
 
+static void
+draw_rect (GskGLCommandQueue *command_queue,
+           float              min_x,
+           float              min_y,
+           float              max_x,
+           float              max_y,
+           gboolean           flip)
+{
+  GskGLDrawVertex *vertices = gsk_gl_command_queue_add_vertices (command_queue);
+  float min_u = 0;
+  float max_u = 1;
+  float min_v = flip ? 0 : 1;
+  float max_v = flip ? 1 : 0;
+  guint16 c = FP16_ZERO;
+
+  vertices[0] = (GskGLDrawVertex) { .position = { min_x, min_y }, .uv = { min_u, min_v }, .color = { c, c, c, c } };
+  vertices[1] = (GskGLDrawVertex) { .position = { min_x, max_y }, .uv = { min_u, max_v }, .color = { c, c, c, c } };
+  vertices[2] = (GskGLDrawVertex) { .position = { max_x, min_y }, .uv = { max_u, min_v }, .color = { c, c, c, c } };
+  vertices[3] = (GskGLDrawVertex) { .position = { max_x, max_y }, .uv = { max_u, max_v }, .color = { c, c, c, c } };
+  vertices[4] = (GskGLDrawVertex) { .position = { min_x, max_y }, .uv = { min_u, max_v }, .color = { c, c, c, c } };
+  vertices[5] = (GskGLDrawVertex) { .position = { max_x, min_y }, .uv = { max_u, min_v }, .color = { c, c, c, c } };
+}
+
+static void
+set_viewport_for_size (GskGLDriver  *self,
+                       GskGLProgram *program,
+                       float         width,
+                       float         height)
+{
+  float viewport[4] = { 0, 0, width, height };
+
+  gsk_gl_uniform_state_set4fv (program->uniforms,
+                               program->program_info,
+                               UNIFORM_SHARED_VIEWPORT, 0,
+                               1,
+                               (const float *)&viewport);
+  self->stamps[UNIFORM_SHARED_VIEWPORT]++;
+}
+
+#define ORTHO_NEAR_PLANE   -10000
+#define ORTHO_FAR_PLANE     10000
+
+static void
+set_projection_for_size (GskGLDriver  *self,
+                         GskGLProgram *program,
+                         float         width,
+                         float         height)
+{
+  graphene_matrix_t projection;
+
+  graphene_matrix_init_ortho (&projection, 0, width, 0, height, ORTHO_NEAR_PLANE, ORTHO_FAR_PLANE);
+  graphene_matrix_scale (&projection, 1, -1, 1);
+
+  gsk_gl_uniform_state_set_matrix (program->uniforms,
+                                   program->program_info,
+                                   UNIFORM_SHARED_PROJECTION, 0,
+                                   &projection);
+  self->stamps[UNIFORM_SHARED_PROJECTION]++;
+}
+
+static void
+reset_modelview (GskGLDriver  *self,
+                 GskGLProgram *program)
+{
+  graphene_matrix_t modelview;
+
+  graphene_matrix_init_identity (&modelview);
+
+  gsk_gl_uniform_state_set_matrix (program->uniforms,
+                                   program->program_info,
+                                   UNIFORM_SHARED_MODELVIEW, 0,
+                                   &modelview);
+  self->stamps[UNIFORM_SHARED_MODELVIEW]++;
+}
+
+static GskGLTexture *
+gsk_gl_driver_convert_texture (GskGLDriver   *self,
+                               int            texture_id,
+                               int            width,
+                               int            height,
+                               int            format,
+                               int            min_filter,
+                               int            max_filter,
+                               GskConversion  conversion)
+{
+  GskGLRenderTarget *target;
+  int prev_fbo;
+  GskGLProgram *program;
+
+  if ((conversion & (GSK_CONVERSION_LINEARIZE | GSK_CONVERSION_PREMULTIPLY)) == (GSK_CONVERSION_LINEARIZE | GSK_CONVERSION_PREMULTIPLY))
+    program = self->linearize_premultiply_no_clip;
+  else if (conversion & GSK_CONVERSION_LINEARIZE)
+    program = self->linearize_no_clip;
+  else if (conversion & GSK_CONVERSION_PREMULTIPLY)
+    program = self->premultiply_no_clip;
+  else
+    g_assert_not_reached ();
+
+  gdk_gl_context_make_current (self->command_queue->context);
+
+  gsk_gl_driver_create_render_target (self,
+                                      width, height,
+                                      format,
+                                      min_filter, max_filter,
+                                      &target);
+
+  prev_fbo = gsk_gl_command_queue_bind_framebuffer (self->command_queue, target->framebuffer_id);
+  gsk_gl_command_queue_clear (self->command_queue, 0, &GRAPHENE_RECT_INIT (0, 0, width, height));
+
+  gsk_gl_command_queue_begin_draw (self->command_queue,
+                                   program->program_info,
+                                   width, height);
+
+  set_projection_for_size (self, program, width, height);
+  set_viewport_for_size (self, program, width, height);
+  reset_modelview (self, program);
+
+  gsk_gl_program_set_uniform_texture (program,
+                                      UNIFORM_SHARED_SOURCE, 0,
+                                      GL_TEXTURE_2D, GL_TEXTURE0, texture_id);
+
+  draw_rect (self->command_queue, 0, 0, width, height, (conversion & GSK_CONVERSION_FLIP) != 0);
+
+  gsk_gl_command_queue_end_draw (self->command_queue);
+
+  gsk_gl_command_queue_bind_framebuffer (self->command_queue, prev_fbo);
+
+  texture_id = gsk_gl_driver_release_render_target (self, target, FALSE);
+
+  return g_hash_table_lookup (self->textures, GUINT_TO_POINTER (texture_id));
+}
+
 /**
  * gsk_gl_driver_load_texture:
  * @self: a `GdkTexture`
@@ -719,20 +853,29 @@ gsk_gl_driver_load_texture (GskGLDriver *self,
                             int          mag_filter)
 {
   GdkGLContext *context;
-  GdkMemoryTexture *downloaded_texture;
+  GdkMemoryTexture *downloaded_texture = NULL;
+  guint texture_id = 0;
   GskGLTexture *t;
-  guint texture_id;
   int height;
   int width;
   int format;
+  GskConversion conversion;
 
   g_return_val_if_fail (GSK_IS_GL_DRIVER (self), 0);
   g_return_val_if_fail (GDK_IS_TEXTURE (texture), 0);
   g_return_val_if_fail (GSK_IS_GL_COMMAND_QUEUE (self->command_queue), 0);
 
   context = self->command_queue->context;
+  width = gdk_texture_get_width (texture);
+  height = gdk_texture_get_height (texture);
 
-  format = GL_RGBA8;
+  format = gdk_memory_format_prefers_high_depth (gdk_texture_get_format (texture)) ? GL_RGBA16F : GL_RGBA8;
+
+  if ((t = gdk_texture_get_render_data (texture, self)))
+    {
+      if (t->min_filter == min_filter && t->mag_filter == mag_filter)
+        return t->texture_id;
+    }
 
   if (GDK_IS_GL_TEXTURE (texture))
     {
@@ -741,41 +884,77 @@ gsk_gl_driver_load_texture (GskGLDriver *self,
 
       if (gdk_gl_context_is_shared (context, texture_context))
         {
-          /* A GL texture from the same GL context is a simple task... */
-          return gdk_gl_texture_get_id (gl_texture);
-        }
-      else
-        {
-          downloaded_texture = gdk_memory_texture_from_texture (texture, gdk_texture_get_format (texture));
-        }
-    }
-  else
-    {
-      if ((t = gdk_texture_get_render_data (texture, self)))
-        {
-          if (t->min_filter == min_filter && t->mag_filter == mag_filter)
-            return t->texture_id;
-        }
+          GdkColorSpace *color_space;
+          guint gl_texture_id;
+          GdkGLTextureFlags flags;
 
-      downloaded_texture = gdk_memory_texture_from_texture (texture, gdk_texture_get_format (texture));
+          gl_texture_id = gdk_gl_texture_get_id (gl_texture);
+          color_space = gdk_texture_get_color_space (texture);
+          flags = gdk_gl_texture_get_flags (gl_texture);
+
+          /* A GL texture from the same GL context is a simple task... */
+          if (color_space == gdk_color_space_get_srgb_linear () &&
+              flags == GDK_GL_TEXTURE_PREMULTIPLIED)
+            {
+              return gl_texture_id;
+            }
+          else if (color_space == gdk_color_space_get_srgb () ||
+                   color_space == gdk_color_space_get_srgb_linear ())
+            {
+              conversion = 0;
+
+              if (color_space == gdk_color_space_get_srgb ())
+                conversion |= GSK_CONVERSION_LINEARIZE;
+
+              if ((flags & GDK_GL_TEXTURE_PREMULTIPLIED) == 0)
+                conversion |= GSK_CONVERSION_PREMULTIPLY;
+
+              if ((flags & GDK_GL_TEXTURE_FLIPPED) != 0)
+                conversion |= GSK_CONVERSION_FLIP;
+
+              t = gsk_gl_driver_convert_texture (self,
+                                                 gl_texture_id,
+                                                 width, height,
+                                                 format,
+                                                 min_filter, mag_filter,
+                                                 conversion);
+              if (gdk_texture_set_render_data (texture, self, t, gsk_gl_texture_destroyed))
+                t->user = texture;
+
+              return t->texture_id;
+            }
+          /* FIXME: do colorspace conversion in a shader */
+        }
     }
+
+  downloaded_texture = gdk_memory_texture_from_texture (texture,
+                                                        gdk_texture_get_format (texture),
+                                                        gdk_texture_get_color_space (texture));
 
   /* The download_texture() call may have switched the GL context. Make sure
-   * the right context is at work again. */
+   * the right context is at work again.
+   */
   gdk_gl_context_make_current (context);
 
-  width = gdk_texture_get_width (texture);
-  height = gdk_texture_get_height (texture);
   texture_id = gsk_gl_command_queue_upload_texture (self->command_queue,
                                                     GDK_TEXTURE (downloaded_texture),
-                                                    min_filter,
-                                                    mag_filter);
+                                                    min_filter, mag_filter,
+                                                    &conversion);
 
   t = gsk_gl_texture_new (texture_id,
                            width, height, format, min_filter, mag_filter,
                            self->current_frame_id);
 
   g_hash_table_insert (self->textures, GUINT_TO_POINTER (texture_id), t);
+
+  g_clear_object (&downloaded_texture);
+
+  if (conversion)
+    t = gsk_gl_driver_convert_texture (self,
+                                       texture_id,
+                                       width, height, format,
+                                       min_filter, mag_filter,
+                                       conversion);
 
   if (gdk_texture_set_render_data (texture, self, t, gsk_gl_texture_destroyed))
     t->user = texture;
@@ -834,6 +1013,8 @@ gsk_gl_driver_create_texture (GskGLDriver *self,
   g_hash_table_insert (self->textures,
                        GUINT_TO_POINTER (texture->texture_id),
                        texture);
+
+  texture->last_used_in_frame = self->current_frame_id;
 
   return texture;
 }
@@ -1202,6 +1383,7 @@ gsk_gl_driver_add_texture_slices (GskGLDriver        *self,
   GskGLTextureSlice *slices;
   GskGLTexture *t;
   guint n_slices;
+  int format;
   guint cols;
   guint rows;
   int tex_width;
@@ -1219,6 +1401,9 @@ gsk_gl_driver_add_texture_slices (GskGLDriver        *self,
 
   tex_width = texture->width;
   tex_height = texture->height;
+
+  format = gdk_memory_format_prefers_high_depth (gdk_texture_get_format (texture)) ? GL_RGBA16F : GL_RGBA8;
+
   cols = (texture->width / max_texture_size) + 1;
   rows = (texture->height / max_texture_size) + 1;
 
@@ -1232,7 +1417,8 @@ gsk_gl_driver_add_texture_slices (GskGLDriver        *self,
   n_slices = cols * rows;
   slices = g_new0 (GskGLTextureSlice, n_slices);
   memtex = gdk_memory_texture_from_texture (texture,
-                                            gdk_texture_get_format (texture));
+                                            gdk_texture_get_format (texture),
+                                            gdk_texture_get_color_space (texture));
 
   for (guint col = 0; col < cols; col ++)
     {
@@ -1244,13 +1430,38 @@ gsk_gl_driver_add_texture_slices (GskGLDriver        *self,
           int slice_index = (col * rows) + row;
           GdkTexture *subtex;
           guint texture_id;
+          GskConversion conversion;
 
           subtex = gdk_memory_texture_new_subtexture (memtex,
                                                       x, y,
                                                       slice_width, slice_height);
           texture_id = gsk_gl_command_queue_upload_texture (self->command_queue,
                                                             subtex,
-                                                            GL_NEAREST, GL_NEAREST);
+                                                            GL_NEAREST, GL_NEAREST,
+                                                            &conversion);
+
+          if (conversion)
+            {
+              t = gsk_gl_texture_new (texture_id,
+                                      slice_width, slice_height,
+                                      format,
+                                      GL_NEAREST, GL_NEAREST,
+                                      0);
+              g_hash_table_insert (self->textures, GUINT_TO_POINTER (texture_id), t);
+
+              t = gsk_gl_driver_convert_texture (self,
+                                                 texture_id,
+                                                 slice_width, slice_height,
+                                                 format,
+                                                 GL_NEAREST, GL_NEAREST,
+                                                 conversion);
+
+              texture_id = t->texture_id;
+              t->texture_id = 0;
+              g_hash_table_steal (self->textures, GUINT_TO_POINTER (texture_id));
+              gsk_gl_texture_free (t);
+            }
+
           g_object_unref (subtex);
 
           slices[slice_index].rect.x = x;
@@ -1336,8 +1547,10 @@ create_texture_from_texture_destroy (gpointer data)
 }
 
 GdkTexture *
-gsk_gl_driver_create_gdk_texture (GskGLDriver *self,
-                                  guint        texture_id)
+gsk_gl_driver_create_gdk_texture (GskGLDriver       *self,
+                                  guint              texture_id,
+                                  GdkGLTextureFlags  flags,
+                                  GdkColorSpace     *color_space)
 {
   GskGLTextureState *state;
   GskGLTexture *texture;
@@ -1365,10 +1578,12 @@ gsk_gl_driver_create_gdk_texture (GskGLDriver *self,
   texture->texture_id = 0;
   gsk_gl_texture_free (texture);
 
-  return gdk_gl_texture_new (self->command_queue->context,
-                             texture_id,
-                             width,
-                             height,
-                             create_texture_from_texture_destroy,
-                             state);
+  return gdk_gl_texture_new_with_color_space (self->command_queue->context,
+                                              texture_id,
+                                              width,
+                                              height,
+                                              flags,
+                                              color_space,
+                                              create_texture_from_texture_destroy,
+                                              state);
 }

@@ -21,7 +21,9 @@
 
 #include "gdkmemorytextureprivate.h"
 
+#include "gdkcolorspaceprivate.h"
 #include "gdkmemoryformatprivate.h"
+#include "gdkcolorspaceprivate.h"
 #include "gsk/gl/fp16private.h"
 
 /**
@@ -58,6 +60,7 @@ gdk_memory_texture_dispose (GObject *object)
 static void
 gdk_memory_texture_download (GdkTexture      *texture,
                              GdkMemoryFormat  format,
+                             GdkColorSpace   *color_space,
                              guchar          *data,
                              gsize            stride)
 {
@@ -65,9 +68,11 @@ gdk_memory_texture_download (GdkTexture      *texture,
 
   gdk_memory_convert (data, stride,
                       format,
+                      color_space,
                       (guchar *) g_bytes_get_data (self->bytes, NULL),
                       self->stride,
                       texture->format,
+                      gdk_texture_get_color_space (texture),
                       gdk_texture_get_width (texture),
                       gdk_texture_get_height (texture));
 }
@@ -136,6 +141,9 @@ gdk_memory_sanitize (GBytes          *bytes,
  * The `GBytes` must contain @stride × @height pixels
  * in the given format.
  *
+ * This function calls [ctor@Gdk.MemoryTexture.new_with_color_space]
+ * with the sRGB color space.
+ *
  * Returns: (type GdkMemoryTexture): A newly-created `GdkTexture`
  */
 GdkTexture *
@@ -145,18 +153,58 @@ gdk_memory_texture_new (int              width,
                         GBytes          *bytes,
                         gsize            stride)
 {
-  GdkMemoryTexture *self;
-
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
   g_return_val_if_fail (bytes != NULL, NULL);
   g_return_val_if_fail (stride >= width * gdk_memory_format_bytes_per_pixel (format), NULL);
+
+  return gdk_memory_texture_new_with_color_space (width, height,
+                                                  format,
+                                                  gdk_color_space_get_srgb (),
+                                                  bytes, stride);
+}
+
+/**
+ * gdk_memory_texture_new_with_color_space:
+ * @width: the width of the texture
+ * @height: the height of the texture
+ * @format: the format of the data
+ * @color_space: a `GdkColorSpace`
+ * @bytes: the `GBytes` containing the pixel data
+ * @stride: rowstride for the data
+ *
+ * Creates a new texture for a blob of image data with a given color space.
+ *
+ * The `GBytes` must contain @stride x @height pixels
+ * in the given format.
+ *
+ * Returns: A newly-created `GdkTexture`
+ *
+ * Since: 4.10
+ */
+GdkTexture *
+gdk_memory_texture_new_with_color_space (int              width,
+                                         int              height,
+                                         GdkMemoryFormat  format,
+                                         GdkColorSpace   *color_space,
+                                         GBytes          *bytes,
+                                         gsize            stride)
+{
+  GdkMemoryTexture *self;
+
+  g_return_val_if_fail (width > 0, NULL);
+  g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (GDK_IS_COLOR_SPACE (color_space), NULL);
+  g_return_val_if_fail (bytes != NULL, NULL);
+  g_return_val_if_fail (stride >= width * gdk_memory_format_bytes_per_pixel (format), NULL);
+  g_return_val_if_fail (gdk_color_space_supports_format (color_space, format), NULL);
 
   bytes = gdk_memory_sanitize (bytes, width, height, format, stride, &stride);
 
   self = g_object_new (GDK_TYPE_MEMORY_TEXTURE,
                        "width", width,
                        "height", height,
+                       "color-space", color_space,
                        NULL);
 
   GDK_TEXTURE (self)->format = format;
@@ -201,7 +249,8 @@ gdk_memory_texture_new_subtexture (GdkMemoryTexture  *source,
 
 GdkMemoryTexture *
 gdk_memory_texture_from_texture (GdkTexture      *texture,
-                                 GdkMemoryFormat  format)
+                                 GdkMemoryFormat  format,
+                                 GdkColorSpace   *color_space)
 {
   GdkTexture *result;
   GBytes *bytes;
@@ -214,20 +263,22 @@ gdk_memory_texture_from_texture (GdkTexture      *texture,
     {
       GdkMemoryTexture *memtex = GDK_MEMORY_TEXTURE (texture);
 
-      if (gdk_texture_get_format (texture) == format)
+      if (gdk_texture_get_format (texture) == format &&
+          gdk_texture_get_color_space (texture) == color_space)
         return g_object_ref (memtex);
     }
 
   stride = texture->width * gdk_memory_format_bytes_per_pixel (format);
   data = g_malloc_n (stride, texture->height);
 
-  gdk_texture_do_download (texture, format, data, stride);
+  gdk_texture_do_download (texture, format, color_space, data, stride);
   bytes = g_bytes_new_take (data, stride);
-  result = gdk_memory_texture_new (texture->width,
-                                   texture->height,
-                                   format,
-                                   bytes,
-                                   stride);
+  result = gdk_memory_texture_new_with_color_space (texture->width,
+                                                    texture->height,
+                                                    format,
+                                                    color_space,
+                                                    bytes,
+                                                    stride);
   g_bytes_unref (bytes);
 
   return GDK_MEMORY_TEXTURE (result);

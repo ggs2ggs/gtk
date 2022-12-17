@@ -23,6 +23,7 @@
 #include "gdkdisplayprivate.h"
 #include "gdkglcontextprivate.h"
 #include "gdkmemoryformatprivate.h"
+#include "gdkcolorspace.h"
 #include "gdkmemorytextureprivate.h"
 #include "gdktextureprivate.h"
 
@@ -38,6 +39,7 @@ struct _GdkGLTexture {
   GdkTexture parent_instance;
 
   GdkGLContext *context;
+  GdkGLTextureFlags flags;
   guint id;
 
   GdkTexture *saved;
@@ -115,6 +117,7 @@ typedef struct _Download Download;
 struct _Download
 {
   GdkMemoryFormat format;
+  GdkColorSpace *color_space;
   guchar *data;
   gsize stride;
 };
@@ -157,7 +160,7 @@ gdk_gl_texture_do_download (gpointer texture_,
   expected_stride = texture->width * gdk_memory_format_bytes_per_pixel (download->format);
 
   if (download->stride == expected_stride &&
-      !gdk_gl_context_get_use_es (self->context) && 
+      !gdk_gl_context_get_use_es (self->context) &&
       gdk_memory_format_gl_format (download->format, TRUE, &gl_internal_format, &gl_format, &gl_type))
     {
       glGetTexImage (GL_TEXTURE_2D,
@@ -193,7 +196,7 @@ gdk_gl_texture_do_download (gpointer texture_,
           (download->stride == expected_stride))
         {
           glReadPixels (0, 0,
-                        texture->width, texture->height, 
+                        texture->width, texture->height,
                         gl_read_format,
                         gl_read_type,
                         download->data);
@@ -204,7 +207,7 @@ gdk_gl_texture_do_download (gpointer texture_,
           guchar *pixels = g_malloc_n (texture->width * actual_bpp, texture->height);
 
           glReadPixels (0, 0,
-                        texture->width, texture->height, 
+                        texture->width, texture->height,
                         gl_read_format,
                         gl_read_type,
                         pixels);
@@ -212,9 +215,11 @@ gdk_gl_texture_do_download (gpointer texture_,
           gdk_memory_convert (download->data,
                               download->stride,
                               download->format,
+                              download->color_space,
                               pixels,
                               texture->width * actual_bpp,
                               actual_format,
+                              gdk_color_space_get_srgb (),
                               texture->width,
                               texture->height);
 
@@ -228,6 +233,7 @@ gdk_gl_texture_do_download (gpointer texture_,
 static void
 gdk_gl_texture_download (GdkTexture      *texture,
                          GdkMemoryFormat  format,
+                         GdkColorSpace   *color_space,
                          guchar          *data,
                          gsize            stride)
 {
@@ -236,11 +242,12 @@ gdk_gl_texture_download (GdkTexture      *texture,
 
   if (self->saved)
     {
-      gdk_texture_do_download (self->saved, format, data, stride);
+      gdk_texture_do_download (self->saved, format, color_space, data, stride);
       return;
     }
 
   download.format = format;
+  download.color_space = color_space;
   download.data = data;
   download.stride = stride;
 
@@ -275,6 +282,12 @@ gdk_gl_texture_get_id (GdkGLTexture *self)
   return self->id;
 }
 
+GdkGLTextureFlags
+gdk_gl_texture_get_flags (GdkGLTexture *self)
+{
+  return self->flags;
+}
+
 /**
  * gdk_gl_texture_release:
  * @self: a `GdkTexture` wrapping a GL texture
@@ -295,7 +308,8 @@ gdk_gl_texture_release (GdkGLTexture *self)
 
   texture = GDK_TEXTURE (self);
   self->saved = GDK_TEXTURE (gdk_memory_texture_from_texture (texture,
-                                                              gdk_texture_get_format (texture)));
+                                                              gdk_texture_get_format (texture),
+                                                              gdk_texture_get_color_space (texture)));
 
   if (self->destroy)
     {
@@ -428,6 +442,10 @@ gdk_gl_texture_determine_format (GdkGLTexture *self)
  * which will happen when the GdkTexture object is finalized, or due to
  * an explicit call of [method@Gdk.GLTexture.release].
  *
+ * The texture data is assumed to be premultiplied, not flipped, and in the
+ * sRGB colorspace, see [ctor@Gdk.GLTexture.new_with_color_profile] to override
+ * this.
+ *
  * Return value: (transfer full) (type GdkGLTexture): A newly-created
  *   `GdkTexture`
  */
@@ -439,6 +457,46 @@ gdk_gl_texture_new (GdkGLContext   *context,
                     GDestroyNotify  destroy,
                     gpointer        data)
 {
+  return gdk_gl_texture_new_with_color_space (context, id,
+                                              width, height,
+                                              GDK_GL_TEXTURE_PREMULTIPLIED,
+                                              gdk_color_space_get_srgb (),
+                                              destroy, data);
+}
+
+/**
+ * gdk_gl_texture_new_with_color_space:
+ * @context: a `GdkGLContext`
+ * @id: the ID of a texture that was created with @context
+ * @width: the nominal width of the texture
+ * @height: the nominal height of the texture
+ * @flags: flags that describe the content of the texture
+ * @color_space: the `GdkColorSpace` for the content of the texture
+ * @destroy: a destroy notify that will be called when the GL resources
+ *   are released
+ * @data: data that gets passed to @destroy
+ *
+ * Creates a new texture for an existing GL texture with a given color space
+ * and flags.
+ *
+ * Note that the GL texture must not be modified until @destroy is called,
+ * which will happen when the `GdkTexture` object is finalized, or due to
+ * an explicit call of [method@Gdk.GLTexture.release].
+ *
+ * Return value: (transfer full): A newly-created `GdkTexture`
+ *
+ * Since: 4.10
+ */
+GdkTexture *
+gdk_gl_texture_new_with_color_space (GdkGLContext      *context,
+                                     guint              id,
+                                     int                width,
+                                     int                height,
+                                     GdkGLTextureFlags  flags,
+                                     GdkColorSpace     *color_space,
+                                     GDestroyNotify     destroy,
+                                     gpointer           data)
+{
   GdkGLTexture *self;
 
   g_return_val_if_fail (GDK_IS_GL_CONTEXT (context), NULL);
@@ -449,10 +507,12 @@ gdk_gl_texture_new (GdkGLContext   *context,
   self = g_object_new (GDK_TYPE_GL_TEXTURE,
                        "width", width,
                        "height", height,
+                       "color-space", color_space,
                        NULL);
 
   self->context = g_object_ref (context);
   self->id = id;
+  self->flags = flags;
   self->destroy = destroy;
   self->data = data;
 
@@ -460,4 +520,3 @@ gdk_gl_texture_new (GdkGLContext   *context,
 
   return GDK_TEXTURE (self);
 }
-

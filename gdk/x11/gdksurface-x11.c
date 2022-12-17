@@ -1013,6 +1013,8 @@ setup_toplevel_window (GdkSurface    *surface,
   
   /* This will set WM_CLIENT_MACHINE and WM_LOCALE_NAME */
   XSetWMProperties (xdisplay, xid, NULL, NULL, NULL, 0, NULL, NULL, NULL);
+
+  gdk_surface_set_color_space (surface, GDK_X11_DISPLAY (display)->color_space);
   
   if (!gdk_running_in_sandbox ())
     {
@@ -3187,7 +3189,7 @@ gdk_surface_update_icon (GdkSurface *surface,
 
       toplevel->icon_pixmap = gdk_x11_surface_create_pixmap_surface (surface, width, height);
 
-      cairo_surface = gdk_texture_download_surface (best_icon);
+      cairo_surface = gdk_texture_download_surface (best_icon, NULL);
 
       cr = cairo_create (toplevel->icon_pixmap);
       cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
