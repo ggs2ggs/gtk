@@ -16,6 +16,7 @@ harfbuzz_req	   = '>= 2.6.0'
 fribidi_req        = '>= 0.19.7'
 cairo_req          = '>= 1.14.0'
 gdk_pixbuf_req     = '>= 2.30.0'
+rsvg_req           = '>= 2.52.0'
 introspection_req  = '>= 1.39.0'
 wayland_proto_req  = '>= 1.25'
 wayland_req        = '>= 1.21.0'
@@ -417,6 +418,7 @@ pangocairo_dep = dependency('pangocairo', version: pango_req,
 pixbuf_dep     = dependency('gdk-pixbuf-2.0', version: gdk_pixbuf_req,
                             fallback : ['gdk-pixbuf', 'gdkpixbuf_dep'],
                             default_options: ['png=enabled', 'jpeg=enabled', 'builtin_loaders=png,jpeg', 'man=false'])
+rsvg_dep       = dependency('librsvg-2.0', version: rsvg_req)
 png_dep        = dependency(is_msvc_like ? 'png' : 'libpng',
                             fallback: ['libpng', 'libpng_dep'],
                             required: true)

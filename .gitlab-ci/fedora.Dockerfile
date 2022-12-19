@@ -51,7 +51,7 @@ RUN dnf -y install \
     libjpeg-turbo-devel \
     libmount-devel \
     libpng-devel \
-    librsvg2 \
+    librsvg2-devel \
     libselinux-devel \
     libtiff-devel \
     libubsan \

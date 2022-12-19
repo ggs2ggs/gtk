@@ -16,6 +16,8 @@
 
 #include "config.h"
 
+#include <math.h>
+#include <librsvg/rsvg.h>
 #include <gdk/gdk.h>
 #include "gdkpixbufutilsprivate.h"
 #include "gtkscalerprivate.h"
@@ -231,29 +233,70 @@ _gdk_pixbuf_new_from_resource_at_scale (const char   *resource_path,
 }
 
 static GdkPixbuf *
-load_symbolic_svg (const char     *escaped_file_data,
-                   int             width,
-                   int             height,
-                   const char     *icon_width_str,
-                   const char     *icon_height_str,
-                   const char     *fg_string,
-                   const char     *success_color_string,
-                   const char     *warning_color_string,
-                   const char     *error_color_string,
-                   GError        **error)
+pixbuf_from_rsvg_handle (RsvgHandle *handle, int width, int height, const char *path, GError **error)
 {
-  GInputStream *stream;
-  GdkPixbuf *pixbuf;
-  char *data;
+  cairo_surface_t *surface;
+  GdkPixbuf *pixbuf = NULL;
+  RsvgRectangle viewport;
+  cairo_t *cr = NULL;
 
-  data = g_strconcat ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
-                      "<svg version=\"1.1\"\n"
-                      "     xmlns=\"http://www.w3.org/2000/svg\"\n"
-                      "     xmlns:xi=\"http://www.w3.org/2001/XInclude\"\n"
-                      "     width=\"", icon_width_str, "\"\n"
-                      "     height=\"", icon_height_str, "\">\n"
-                      "  <style type=\"text/css\">\n"
-                      "    rect,circle,path {\n"
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+  if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS)
+    {
+      g_set_error (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY,
+                   "Not enough memory to load %s",
+                   path);
+      goto out;
+    }
+
+  cr = cairo_create (surface);
+  if (cairo_status (cr) != CAIRO_STATUS_SUCCESS)
+    {
+      goto out;
+    }
+
+  viewport.x = 0.0;
+  viewport.y = 0.0;
+  viewport.width = width;
+  viewport.height = height;
+
+  if (rsvg_handle_render_document (handle, cr, &viewport, error))
+    {
+      pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0, width, height);
+      if (!pixbuf)
+        {
+          g_set_error (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY,
+                       "Not enough memory to convert SVG from %s to pixbuf",
+                       path);
+        }
+    }
+  else
+    {
+      g_prefix_error (error, "Could not render symbolic icon from %s: ", path);
+    }
+
+ out:
+
+  if (cr)
+    {
+      cairo_destroy (cr);
+    }
+
+  if (surface)
+    {
+      cairo_surface_destroy (surface);
+    }
+
+  return pixbuf;
+}
+
+static char *
+make_stylesheet (const char *fg_string,
+                 const char *success_color_string,
+                 const char *warning_color_string,
+                 const char *error_color_string)
+{
+  return g_strconcat ("    rect,circle,path {\n"
                       "      fill: ", fg_string," !important;\n"
                       "    }\n"
                       "    .warning {\n"
@@ -264,15 +307,36 @@ load_symbolic_svg (const char     *escaped_file_data,
                       "    }\n"
                       "    .success {\n"
                       "      fill: ", success_color_string, " !important;\n"
-                      "    }\n"
-                      "  </style>\n"
-                      "  <xi:include href=\"data:text/xml;base64,", escaped_file_data, "\"/>\n"
-                      "</svg>",
+                      "    }\n",
                       NULL);
+}
 
-  stream = g_memory_input_stream_new_from_data (data, -1, g_free);
-  pixbuf = gdk_pixbuf_new_from_stream_at_scale (stream, width, height, TRUE, NULL, error);
-  g_object_unref (stream);
+
+static GdkPixbuf *
+load_symbolic_svg (RsvgHandle     *handle,
+                   int             width,
+                   int             height,
+                   const char     *fg_string,
+                   const char     *success_color_string,
+                   const char     *warning_color_string,
+                   const char     *error_color_string,
+                   const char     *path,
+                   GError        **error)
+{
+  GdkPixbuf *pixbuf = NULL;
+  char *stylesheet = make_stylesheet (fg_string, success_color_string, warning_color_string, error_color_string);
+
+  if (!rsvg_handle_set_stylesheet (handle, (const guint8 *) stylesheet, strlen (stylesheet), error))
+    {
+      g_prefix_error (error, "Could not set stylesheet for %s:", path);
+      goto out;
+    }
+
+  pixbuf = pixbuf_from_rsvg_handle (handle, width, height, path, error);
+
+ out:
+
+  g_free (stylesheet);
 
   return pixbuf;
 }
@@ -313,44 +377,56 @@ extract_plane (GdkPixbuf *src,
     }
 }
 
+/* @path is just used for error messages */
 GdkPixbuf *
 gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
                                     gsize        file_len,
                                     int          width,
                                     int          height,
                                     double       scale,
+                                    const char  *path,
                                     const char  *debug_output_basename,
                                     GError     **error)
 
 {
   const char *r_string = "rgb(255,0,0)";
   const char *g_string = "rgb(0,255,0)";
-  char *icon_width_str;
-  char *icon_height_str;
   GdkPixbuf *loaded;
   GdkPixbuf *pixbuf = NULL;
   int plane;
   int icon_width, icon_height;
-  char *escaped_file_data;
+  GInputStream *stream = g_memory_input_stream_new_from_data (file_data, file_len, NULL);
+
+  RsvgHandle *handle = rsvg_handle_new_from_stream_sync (stream, NULL, RSVG_HANDLE_FLAGS_NONE, NULL, error);
+  g_object_unref (stream);
+  stream = NULL;
+
+  if (!handle)
+    {
+      g_prefix_error (error, "Could not load symbolic icon from %s: ", path);
+      return NULL;
+    }
 
   /* Fetch size from the original icon */
   {
-    GInputStream *stream = g_memory_input_stream_new_from_data (file_data, file_len, NULL);
-    GdkPixbuf *reference = gdk_pixbuf_new_from_stream (stream, NULL, error);
+    gdouble svg_width, svg_height;
+    gboolean has_size;
 
-    g_object_unref (stream);
+    has_size = rsvg_handle_get_intrinsic_size_in_pixels (handle, &svg_width, &svg_height);
 
-    if (!reference)
-      return NULL;
+    if (!has_size)
+      {
+        /* FIXME: get a better error domain/code */
+        g_set_error (error, GDK_PIXBUF_ERROR, GDK_PIXBUF_ERROR_CORRUPT_IMAGE,
+                     "Symbolic icon %s has no intrinsic size; please set one in its SVG",
+                     path);
+        g_object_unref (handle);
+        return NULL;
+      }
 
-    icon_width = gdk_pixbuf_get_width (reference);
-    icon_height = gdk_pixbuf_get_height (reference);
-    g_object_unref (reference);
+    icon_width = ceil (svg_width);
+    icon_height = ceil (svg_height);
   }
-
-  escaped_file_data = g_base64_encode ((guchar *) file_data, file_len);
-  icon_width_str = g_strdup_printf ("%d", icon_width);
-  icon_height_str = g_strdup_printf ("%d", icon_height);
 
   if (width == 0)
     width = icon_width * scale;
@@ -371,13 +447,13 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
        * channels, with the color of the fg being implicitly
        * the "rest", as all color fractions should add up to 1.
        */
-      loaded = load_symbolic_svg (escaped_file_data, width, height,
-                                  icon_width_str,
-                                  icon_height_str,
+      loaded = load_symbolic_svg (handle,
+                                  width, height,
                                   g_string,
                                   plane == 0 ? r_string : g_string,
                                   plane == 1 ? r_string : g_string,
                                   plane == 2 ? r_string : g_string,
+                                  path,
                                   error);
       if (loaded == NULL)
         goto out;
@@ -408,11 +484,8 @@ gtk_make_symbolic_pixbuf_from_data (const char  *file_data,
       g_object_unref (loaded);
     }
 
-  g_free (escaped_file_data);
-
 out:
-  g_free (icon_width_str);
-  g_free (icon_height_str);
+  g_object_unref (handle);
 
   return pixbuf;
 }
@@ -435,7 +508,7 @@ gtk_make_symbolic_pixbuf_from_resource (const char  *path,
 
   data = g_bytes_get_data (bytes, &size);
 
-  pixbuf = gtk_make_symbolic_pixbuf_from_data (data, size, width, height, scale, NULL, error);
+  pixbuf = gtk_make_symbolic_pixbuf_from_data (data, size, width, height, scale, path, NULL, error);
 
   g_bytes_unref (bytes);
 
@@ -456,7 +529,7 @@ gtk_make_symbolic_pixbuf_from_path (const char  *path,
   if (!g_file_get_contents (path, &data, &size, error))
     return NULL;
 
-  pixbuf = gtk_make_symbolic_pixbuf_from_data (data, size, width, height, scale, NULL, error);
+  pixbuf = gtk_make_symbolic_pixbuf_from_data (data, size, width, height, scale, path, NULL, error);
 
   g_free (data);
 
@@ -473,11 +546,14 @@ gtk_make_symbolic_pixbuf_from_file (GFile       *file,
   char *data;
   gsize size;
   GdkPixbuf *pixbuf;
+  char *uri;
 
   if (!g_file_load_contents (file, NULL, &data, &size, NULL, error))
     return NULL;
 
-  pixbuf = gtk_make_symbolic_pixbuf_from_data (data, size, width, height, scale, NULL, error);
+  uri = g_file_get_uri (file);
+  pixbuf = gtk_make_symbolic_pixbuf_from_data (data, size, width, height, scale, uri, NULL, error);
+  g_free (uri);
 
   g_free (data);
 

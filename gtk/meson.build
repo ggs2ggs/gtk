@@ -1059,6 +1059,7 @@ gtk_deps = [
   cairogobj_dep,
   fontconfig_dep,
   pixbuf_dep,
+  rsvg_dep,
   epoxy_dep,
   libm,
   graphene_dep,
