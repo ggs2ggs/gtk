@@ -535,7 +535,7 @@ _gtk_header_bar_shows_app_menu (GtkHeaderBar *bar)
   /* As the decoration-button-layout style property is deprecated, use
    * its value only if it has been explicitly set. Otherwise, base the
    * result on the gtk-decoration-layout GtkSettings property. */
-  if (layout_desc && strcmp (layout_desc, "<default>"))
+  if (layout_desc && strcmp (layout_desc, "<default>") != 0)
     ret = strstr (layout_desc, "menu");
   else
     ret = priv->shows_app_menu;
