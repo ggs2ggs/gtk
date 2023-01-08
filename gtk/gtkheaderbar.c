@@ -88,6 +88,7 @@ struct _GtkHeaderBarPrivate
   GtkWidget *titlebar_icon;
 
   GtkCssGadget *gadget;
+  guint shows_app_menu : 1;
 };
 
 typedef struct _Child Child;
@@ -299,6 +300,7 @@ _gtk_header_bar_update_window_buttons (GtkHeaderBar *bar)
     }
 
   priv->titlebar_icon = NULL;
+  priv->shows_app_menu = FALSE;
 
   if (!priv->shows_wm_decorations)
     return;
@@ -394,6 +396,7 @@ _gtk_header_bar_update_window_buttons (GtkHeaderBar *bar)
                   if (!_gtk_header_bar_update_window_icon (bar, window))
                     gtk_image_set_from_icon_name (GTK_IMAGE (priv->titlebar_icon),
                                                   "application-x-executable-symbolic", GTK_ICON_SIZE_MENU);
+                  priv->shows_app_menu = TRUE;
                 }
               else if (strcmp (t[j], "minimize") == 0 &&
                        is_sovereign_window)
@@ -529,12 +532,17 @@ _gtk_header_bar_shows_app_menu (GtkHeaderBar *bar)
                         "decoration-button-layout", &layout_desc,
                         NULL);
 
-  ret = priv->shows_wm_decorations &&
-        (layout_desc && strstr (layout_desc, "menu"));
+  /* As the decoration-button-layout style property is deprecated, use
+   * its value only if it has been explicitly set. Otherwise, base the
+   * result on the gtk-decoration-layout GtkSettings property. */
+  if (layout_desc && strcmp (layout_desc, "<default>"))
+    ret = strstr (layout_desc, "menu");
+  else
+    ret = priv->shows_app_menu;
 
   g_free (layout_desc);
 
-  return ret;
+  return priv->shows_wm_decorations && ret;
 }
 
 /* As an intended side effect, this function allows @child
