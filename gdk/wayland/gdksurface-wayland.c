@@ -1050,6 +1050,25 @@ gdk_wayland_surface_hide (GdkSurface *surface)
   _gdk_surface_clear_update_area (surface);
 }
 
+static gboolean
+gdk_wayland_surface_is_on_monitor (GdkSurface *surface,
+                                   GdkMonitor *monitor)
+{
+  GdkWaylandSurface *impl;
+  struct wl_output *output;
+
+  impl = GDK_WAYLAND_SURFACE (surface);
+
+  for (GSList *l = impl->display_server.outputs; l; l = l->next)
+    {
+      output = l->data;
+      if (gdk_wayland_monitor_get_wl_output (monitor) == output)
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 void
 gdk_wayland_surface_move_resize (GdkSurface *surface,
                                  int         x,
@@ -1239,6 +1258,7 @@ gdk_wayland_surface_class_init (GdkWaylandSurfaceClass *klass)
   object_class->finalize = gdk_wayland_surface_finalize;
 
   surface_class->hide = gdk_wayland_surface_hide;
+  surface_class->is_on_monitor = gdk_wayland_surface_is_on_monitor;
   surface_class->get_geometry = gdk_wayland_surface_get_geometry;
   surface_class->get_root_coords = gdk_wayland_surface_get_root_coords;
   surface_class->get_device_state = gdk_wayland_surface_get_device_state;

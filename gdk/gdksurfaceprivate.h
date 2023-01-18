@@ -23,6 +23,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "gdkenumtypes.h"
 #include "gdksurface.h"
+#include "gdkmonitor.h"
 #include "gdktoplevel.h"
 
 G_BEGIN_DECLS
@@ -114,6 +115,8 @@ struct _GdkSurfaceClass
   cairo_surface_t *
                (* ref_cairo_surface)    (GdkSurface      *surface);
   void         (* hide)                 (GdkSurface      *surface);
+  gboolean     (* is_on_monitor)        (GdkSurface      *surface,
+                                         GdkMonitor      *monitor);
   void         (* get_geometry)         (GdkSurface      *surface,
                                          int             *x,
                                          int             *y,

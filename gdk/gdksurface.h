@@ -65,6 +65,9 @@ GDK_AVAILABLE_IN_ALL
 GdkDisplay *  gdk_surface_get_display           (GdkSurface     *surface);
 GDK_AVAILABLE_IN_ALL
 void          gdk_surface_hide                  (GdkSurface     *surface);
+GDK_AVAILABLE_IN_4_8
+gboolean      gdk_surface_is_on_monitor         (GdkSurface     *surface,
+                                                 GdkMonitor     *monitor);
 
 GDK_AVAILABLE_IN_ALL
 void          gdk_surface_set_input_region      (GdkSurface     *surface,

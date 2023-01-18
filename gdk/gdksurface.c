@@ -1802,6 +1802,32 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   surface->y = 0;
 }
 
+/**
+ * gdk_surface_is_on_monitor:
+ * @surface: a `GdkSurface`
+ * @monitor: a `GdkMonitor`
+ *
+ * Returns: %TRUE if part or all of @surface exists on @monitor
+ */
+
+gboolean
+gdk_surface_is_on_monitor (GdkSurface *surface,
+                           GdkMonitor *monitor)
+{
+  GdkSurfaceClass *class;
+
+  g_return_val_if_fail (GDK_IS_SURFACE (surface), FALSE);
+  g_return_val_if_fail (GDK_IS_MONITOR (monitor), FALSE);
+  g_return_val_if_fail (!GDK_SURFACE_DESTROYED (surface), FALSE);
+
+  class = GDK_SURFACE_GET_CLASS (surface);
+
+  if (class->is_on_monitor)
+    return class->is_on_monitor (surface, monitor);
+
+  return FALSE;
+}
+
 static void
 gdk_surface_set_cursor_internal (GdkSurface *surface,
                                  GdkDevice *device,

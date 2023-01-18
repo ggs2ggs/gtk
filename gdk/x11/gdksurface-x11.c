@@ -1645,6 +1645,17 @@ gdk_x11_surface_hide (GdkSurface *surface)
   impl->glx_frame_counter = 0;
 }
 
+static gboolean
+gdk_x11_surface_is_on_monitor (GdkSurface *surface,
+                               GdkMonitor *monitor)
+{
+  GdkX11Surface *impl = GDK_X11_SURFACE (surface);
+
+  gdk_x11_surface_check_monitor (surface, monitor);
+
+  return g_list_find (impl->surface_is_on_monitor, monitor) != NULL;
+}
+
 static inline void
 x11_surface_move (GdkSurface *surface,
                   int         x,
@@ -4829,6 +4840,7 @@ gdk_x11_surface_class_init (GdkX11SurfaceClass *klass)
   object_class->finalize = gdk_x11_surface_finalize;
   
   impl_class->hide = gdk_x11_surface_hide;
+  impl_class->is_on_monitor = gdk_x11_surface_is_on_monitor;
   impl_class->get_geometry = gdk_x11_surface_get_geometry;
   impl_class->get_root_coords = gdk_x11_surface_get_root_coords;
   impl_class->get_device_state = gdk_x11_surface_get_device_state;
