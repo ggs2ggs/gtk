@@ -1568,6 +1568,8 @@ scroll_unit_name (GdkScrollUnit unit)
     return "Wheel";
   else if (unit == GDK_SCROLL_UNIT_SURFACE)
     return "Surface";
+  else if (unit == GDK_SCROLL_UNIT_SURFACE_CONTINUOUS)
+    return "Surface continuous";
   else
     return "Incorrect value";
 }

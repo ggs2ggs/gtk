@@ -1445,6 +1445,12 @@ flush_smooth_scroll_event (GdkWaylandSeat *seat,
 {
   GdkEvent *event;
   GdkDevice *source;
+  GdkScrollUnit unit;
+
+  if (seat->pointer_info.frame.source == WL_POINTER_AXIS_SOURCE_CONTINUOUS)
+    unit = GDK_SCROLL_UNIT_SURFACE_CONTINUOUS;
+  else
+    unit = GDK_SCROLL_UNIT_SURFACE;
 
   source = get_scroll_device (seat, seat->pointer_info.frame.source);
   event = gdk_scroll_event_new (seat->pointer_info.focus,
@@ -1454,7 +1460,7 @@ flush_smooth_scroll_event (GdkWaylandSeat *seat,
                                 device_get_modifiers (seat->logical_pointer),
                                 delta_x, delta_y,
                                 is_stop,
-                                GDK_SCROLL_UNIT_SURFACE);
+                                unit);
 
   _gdk_wayland_display_deliver_event (seat->display, event);
 }

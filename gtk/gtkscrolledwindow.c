@@ -183,8 +183,6 @@
 /* Scrolled off indication */
 #define UNDERSHOOT_SIZE 40
 
-#define MAGIC_SCROLL_FACTOR 2.5
-
 typedef struct _GtkScrolledWindowClass         GtkScrolledWindowClass;
 
 struct _GtkScrolledWindow
@@ -1165,28 +1163,36 @@ check_update_scrollbar_proximity (GtkScrolledWindow *sw,
 }
 
 static double
-get_wheel_detent_scroll_step (GtkScrolledWindow *sw,
-                              GtkOrientation     orientation)
+get_scroll_distance (GtkScrolledWindow        *scrolled_window,
+                     GtkEventControllerScroll *scroll,
+                     double                    delta,
+                     GtkAdjustment            *adj)
 {
-  GtkScrolledWindowPrivate *priv = gtk_scrolled_window_get_instance_private (sw);
-  GtkScrollbar *scrollbar;
-  GtkAdjustment *adj;
+  GdkScrollUnit scroll_unit;
+  GtkSettings *settings;
+  double scroll_factor;
   double page_size;
-  double scroll_step;
+  double wheel_scroll_step;
 
-  if (orientation == GTK_ORIENTATION_HORIZONTAL)
-    scrollbar = GTK_SCROLLBAR (priv->hscrollbar);
-  else
-    scrollbar = GTK_SCROLLBAR (priv->vscrollbar);
+  scroll_unit = gtk_event_controller_scroll_get_unit (scroll);
+  settings = gtk_widget_get_settings (GTK_WIDGET (scrolled_window));
 
-  if (!scrollbar)
-    return 0;
+  if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
+    {
+      g_object_get (settings, "gtk-scroll-speed-mouse", &scroll_factor, NULL);
 
-  adj = gtk_scrollbar_get_adjustment (scrollbar);
-  page_size = gtk_adjustment_get_page_size (adj);
-  scroll_step = pow (page_size, 2.0 / 3.0);
+      page_size = gtk_adjustment_get_page_size (adj);
+      wheel_scroll_step = pow (page_size, 2.0 / 3.0);
+      scroll_factor *= wheel_scroll_step;
+    }
+  else if(scroll_unit == GDK_SCROLL_UNIT_SURFACE)
+      g_object_get (settings, "gtk-scroll-speed-touchpad", &scroll_factor,
+                    NULL);
+  else if(scroll_unit == GDK_SCROLL_UNIT_SURFACE_CONTINUOUS)
+      g_object_get (settings, "gtk-scroll-speed-trackpoint", &scroll_factor,
+                    NULL);
 
-  return scroll_step;
+  return delta * scroll_factor;
 }
 
 static gboolean
@@ -1331,21 +1337,13 @@ scrolled_window_scroll (GtkScrolledWindow        *scrolled_window,
       may_hscroll (scrolled_window))
     {
       GtkAdjustment *adj;
+      double distance;
       double new_value;
-      GdkScrollUnit scroll_unit;
 
       adj = gtk_scrollbar_get_adjustment (GTK_SCROLLBAR (priv->hscrollbar));
-      scroll_unit = gtk_event_controller_scroll_get_unit (scroll);
+      distance = get_scroll_distance (scrolled_window, scroll, delta_x, adj);
 
-      if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
-        {
-          delta_x *= get_wheel_detent_scroll_step (scrolled_window,
-                                                   GTK_ORIENTATION_HORIZONTAL);
-        }
-      else if (scroll_unit == GDK_SCROLL_UNIT_SURFACE)
-        delta_x *= MAGIC_SCROLL_FACTOR;
-
-      new_value = priv->unclamped_hadj_value + delta_x;
+      new_value = priv->unclamped_hadj_value + distance;
       _gtk_scrolled_window_set_adjustment_value (scrolled_window, adj,
                                                  new_value);
     }
@@ -1354,21 +1352,13 @@ scrolled_window_scroll (GtkScrolledWindow        *scrolled_window,
       may_vscroll (scrolled_window))
     {
       GtkAdjustment *adj;
+      double distance;
       double new_value;
-      GdkScrollUnit scroll_unit;
 
       adj = gtk_scrollbar_get_adjustment (GTK_SCROLLBAR (priv->vscrollbar));
-      scroll_unit = gtk_event_controller_scroll_get_unit (scroll);
+      distance = get_scroll_distance (scrolled_window, scroll, delta_y, adj);
 
-      if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
-        {
-          delta_y *= get_wheel_detent_scroll_step (scrolled_window,
-                                                   GTK_ORIENTATION_VERTICAL);
-        }
-      else if (scroll_unit == GDK_SCROLL_UNIT_SURFACE)
-        delta_y *= MAGIC_SCROLL_FACTOR;
-
-      new_value = priv->unclamped_vadj_value + delta_y;
+      new_value = priv->unclamped_vadj_value + distance;
       _gtk_scrolled_window_set_adjustment_value (scrolled_window, adj,
                                                  new_value);
     }
@@ -1419,13 +1409,18 @@ scroll_controller_decelerate (GtkEventControllerScroll *scroll,
                               double                    initial_vel_y,
                               GtkScrolledWindow        *scrolled_window)
 {
-  GdkScrollUnit scroll_unit;
+  GtkScrolledWindowPrivate *priv =
+    gtk_scrolled_window_get_instance_private (scrolled_window);
+
   gboolean shifted;
   GdkModifierType state;
 
-  scroll_unit = gtk_event_controller_scroll_get_unit (scroll);
-  state = gtk_event_controller_get_current_event_state (GTK_EVENT_CONTROLLER (scroll));
+  GtkAdjustment *hadj;
+  GtkAdjustment *vadj;
+  double initial_vel_distance_x;
+  double initial_vel_distance_y;
 
+  state = gtk_event_controller_get_current_event_state (GTK_EVENT_CONTROLLER (scroll));
   shifted = (state & GDK_SHIFT_MASK) != 0;
 
   if (shifted)
@@ -1437,23 +1432,18 @@ scroll_controller_decelerate (GtkEventControllerScroll *scroll,
       initial_vel_y = tmp;
     }
 
-  if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
-    {
-      initial_vel_x *= get_wheel_detent_scroll_step (scrolled_window,
-                                                     GTK_ORIENTATION_HORIZONTAL);
+  hadj = gtk_scrollbar_get_adjustment (GTK_SCROLLBAR (priv->hscrollbar));
+  vadj = gtk_scrollbar_get_adjustment (GTK_SCROLLBAR (priv->vscrollbar));
 
-      initial_vel_y *= get_wheel_detent_scroll_step (scrolled_window,
-                                                     GTK_ORIENTATION_VERTICAL);
-    }
-  else
-    {
-      initial_vel_x *= MAGIC_SCROLL_FACTOR;
-      initial_vel_y *= MAGIC_SCROLL_FACTOR;
-    }
+  initial_vel_distance_x = get_scroll_distance (scrolled_window, scroll,
+                                                initial_vel_x, hadj);
+
+  initial_vel_distance_y = get_scroll_distance (scrolled_window, scroll,
+                                                initial_vel_y, vadj);
 
   gtk_scrolled_window_decelerate (scrolled_window,
-                                  initial_vel_x,
-                                  initial_vel_y);
+                                  initial_vel_distance_x,
+                                  initial_vel_distance_y);
 }
 
 static void

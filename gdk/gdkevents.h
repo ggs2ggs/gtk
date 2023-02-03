@@ -267,8 +267,9 @@ typedef enum
 /**
  * GdkScrollUnit:
  * @GDK_SCROLL_UNIT_WHEEL: The delta is in number of wheel clicks.
- * @GDK_SCROLL_UNIT_SURFACE: The delta is in surface pixels to scroll directly
- *   on screen.
+ * @GDK_SCROLL_UNIT_SURFACE: A unit used for high-precision scroll devices.
+ * @GDK_SCROLL_UNIT_SURFACE_CONTINUOUS: Special case of
+ *   %GDK_SCROLL_UNIT_SURFACE.
  *
  * Specifies the unit of scroll deltas.
  *
@@ -277,22 +278,21 @@ typedef enum
  * direction... This is the same logic for negative values but in the north
  * direction.
  *
- * If you get %GDK_SCROLL_UNIT_SURFACE, are managing a scrollable view and get a
- * value of 123, you have to scroll 123 surface logical pixels right if it's
- * @delta_x or down if it's @delta_y. This is the same logic for negative values
- * but you have to scroll left instead of right if it's @delta_x and up instead
- * of down if it's @delta_y.
+ * If you get %GDK_SCROLL_UNIT_SURFACE, deltas are represented in a continuous
+ * unit space. This unit concerns high-precision scroll devices like touchpads.
+ * On Wayland, it is raised when `wl_pointer.axis_source` is `finger`.
  *
- * 1 surface logical pixel is equal to 1 real screen pixel multiplied by the
- * final scale factor of your graphical interface (the product of the desktop
- * scale factor and eventually a custom scale factor in your app).
+ * %GDK_SCROLL_UNIT_SURFACE_CONTINUOUS is the same as %GDK_SCROLL_UNIT_SURFACE
+ * but is raised on Wayland when `wl_pointer.axis_source` is `continuous`. An
+ * exemple of concerned scroll device is trackpoint.
  *
  * Since: 4.8
  */
 typedef enum
 {
   GDK_SCROLL_UNIT_WHEEL,
-  GDK_SCROLL_UNIT_SURFACE
+  GDK_SCROLL_UNIT_SURFACE,
+  GDK_SCROLL_UNIT_SURFACE_CONTINUOUS
 } GdkScrollUnit;
 
 /**

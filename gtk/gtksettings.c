@@ -199,6 +199,9 @@ enum {
   PROP_LONG_PRESS_TIME,
   PROP_KEYNAV_USE_CARET,
   PROP_OVERLAY_SCROLLING,
+  PROP_SCROLL_SPEED_MOUSE,
+  PROP_SCROLL_SPEED_TOUCHPAD,
+  PROP_SCROLL_SPEED_TRACKPOINT,
 
   NUM_PROPERTIES
 };
@@ -937,6 +940,33 @@ gtk_settings_class_init (GtkSettingsClass *class)
   pspecs[PROP_OVERLAY_SCROLLING] = g_param_spec_boolean ("gtk-overlay-scrolling", NULL, NULL,
                                                          TRUE,
                                                          GTK_PARAM_READWRITE);
+
+  /**
+   * GtkSettings:gtk-scroll-speed-mouse:
+   *
+   * The speed at which the content should scroll with the mouse.
+   */
+  pspecs[PROP_SCROLL_SPEED_MOUSE] = g_param_spec_double ("gtk-scroll-speed-mouse", NULL, NULL,
+                                                         0.0, 100.0, 1.0,
+                                                         GTK_PARAM_READWRITE);
+
+  /**
+   * GtkSettings:gtk-scroll-speed-touchpad:
+   *
+   * The speed at which the content should scroll with the touchpad.
+   */
+  pspecs[PROP_SCROLL_SPEED_TOUCHPAD] = g_param_spec_double ("gtk-scroll-speed-touchpad", NULL, NULL,
+                                                            0.0, 100.0, 1.0,
+                                                            GTK_PARAM_READWRITE);
+
+  /**
+   * GtkSettings:gtk-scroll-speed-trackpoint:
+   *
+   * The speed at which the content should scroll with the trackpoint.
+   */
+  pspecs[PROP_SCROLL_SPEED_TRACKPOINT] = g_param_spec_double ("gtk-scroll-speed-trackpoint", NULL, NULL,
+                                                              0.0, 100.0, 1.0,
+                                                              GTK_PARAM_READWRITE);
 
   g_object_class_install_properties (gobject_class, NUM_PROPERTIES, pspecs);
 }
