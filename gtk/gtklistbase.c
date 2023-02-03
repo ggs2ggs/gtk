@@ -1076,6 +1076,26 @@ gtk_list_base_move_cursor (GtkWidget *widget,
 }
 
 static void
+gtk_list_base_grab_focus_on_item_action (GtkWidget  *widget,
+					 const char *action_name,
+					 GVariant   *parameter)
+{
+  GtkListBase *self = GTK_LIST_BASE (widget);
+  guint pos;
+  gboolean select, modify, extend, rc;
+
+  if (!g_variant_check_format_string (parameter, "(ubbb)", FALSE))
+    return;
+
+  g_variant_get (parameter, "(ubbb)", &pos, &select, &modify, &extend);
+
+  rc = gtk_list_base_grab_focus_on_item (GTK_LIST_BASE (self), pos, select, modify, extend);
+  if (!rc)
+    g_warning ("%s %p %s action failed for position %d",
+	       G_OBJECT_TYPE_NAME (widget), widget, action_name, pos);
+}
+
+static void
 gtk_list_base_add_move_binding (GtkWidgetClass *widget_class,
                                 guint           keyval,
                                 GtkOrientation  orientation,
@@ -1185,6 +1205,30 @@ gtk_list_base_class_init (GtkListBaseClass *klass)
                                    "list.scroll-to-item",
                                    "u",
                                    gtk_list_base_scroll_to_item_action);
+
+  /**
+   * GtkListBase|list.focus-on-item:
+   * @position: position of the item to focus
+   * @select: %TRUE to select the item
+   * @modify: if selecting, %TRUE to toggle the existing selection, %FALSE to always select
+   * @extend: if selecting, %TRUE to extend the selection, %FALSE to only operate on this item
+   *
+   * Tries to grab focus on the given item. If select is %TRUE changes selection.
+   *
+   * If @extend is %TRUE and the model supports selecting ranges, the
+   * affected items are all items from the last selected item to the item
+   * in @position.
+   * If @extend is %FALSE or selecting ranges is not supported, only the
+   * item in @position is affected.
+   *
+   * If @modify is %TRUE, the affected items will be set to the same state.
+   * If @modify is %FALSE, the affected items will be selected and
+   * all other items will be deselected.
+   */
+  gtk_widget_class_install_action (widget_class,
+                                   "list.focus-on-item",
+                                   "(ubbb)",
+                                   gtk_list_base_grab_focus_on_item_action);
 
   /**
    * GtkListBase|list.select-item:
