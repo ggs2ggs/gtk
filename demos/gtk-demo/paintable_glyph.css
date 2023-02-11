@@ -1,0 +1,21 @@
+.toolbar {
+  padding: 10px;
+}
+box.sidebar {
+  padding: 20px;
+  border-spacing: 20px;
+}
+glyphpicker,
+colorpicker > grid,
+fontcolors .custom-colors,
+fontvariations > grid {
+  border-spacing: 10px;
+}
+.sidebar box.row,
+fontcolors > grid {
+  border-spacing: 10px;
+}
+.picture-parent-box gridview > child {
+  -gtk-icon-size: 32px;
+  margin: 8px;
+}
