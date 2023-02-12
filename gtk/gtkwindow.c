@@ -4152,16 +4152,7 @@ gtk_window_supports_client_shadow (GtkWindow *window)
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
-  if (GDK_IS_WIN32_DISPLAY (display))
-    {
-      if (!gdk_screen_is_composited (screen))
-        return FALSE;
-
-      /* We need a visual with alpha */
-      visual = gdk_screen_get_rgba_visual (screen);
-      if (!visual)
-        return FALSE;
-    }
+  return FALSE;
 #endif
 
   return TRUE;
@@ -6126,6 +6117,10 @@ gtk_window_should_use_csd (GtkWindow *window)
   GtkWindowPrivate *priv = window->priv;
   const gchar *csd_env;
 
+#ifdef GDK_WINDOWING_WIN32
+  return FALSE;
+#endif
+
   if (priv->csd_requested)
     return TRUE;
 
@@ -6148,12 +6143,6 @@ gtk_window_should_use_csd (GtkWindow *window)
       GdkDisplay *gdk_display = gtk_widget_get_display (GTK_WIDGET (window));
       return !gdk_wayland_display_prefers_ssd (gdk_display);
     }
-#endif
-
-#ifdef GDK_WINDOWING_WIN32
-  if (g_strcmp0 (csd_env, "0") != 0 &&
-      GDK_IS_WIN32_DISPLAY (gtk_widget_get_display (GTK_WIDGET (window))))
-    return TRUE;
 #endif
 
   return (g_strcmp0 (csd_env, "1") == 0);

@@ -47,56 +47,6 @@ typedef struct _GdkWindowImplWin32Class GdkWindowImplWin32Class;
 #define GDK_IS_WINDOW_IMPL_WIN32_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), GDK_TYPE_WINDOW_IMPL_WIN32))
 #define GDK_WINDOW_IMPL_WIN32_GET_CLASS(obj)    (G_TYPE_INSTANCE_GET_CLASS ((obj), GDK_TYPE_WINDOW_IMPL_WIN32, GdkWindowImplWin32Class))
 
-enum _GdkWin32AeroSnapCombo
-{
-  GDK_WIN32_AEROSNAP_COMBO_NOTHING = 0,
-  GDK_WIN32_AEROSNAP_COMBO_UP,
-  GDK_WIN32_AEROSNAP_COMBO_DOWN,
-  GDK_WIN32_AEROSNAP_COMBO_LEFT,
-  GDK_WIN32_AEROSNAP_COMBO_RIGHT,
-  /* Same order as non-shift variants. We use it to do things like:
-   * AEROSNAP_UP + 4 = AEROSNAP_SHIFTUP
-   */
-  GDK_WIN32_AEROSNAP_COMBO_SHIFTUP,
-  GDK_WIN32_AEROSNAP_COMBO_SHIFTDOWN,
-  GDK_WIN32_AEROSNAP_COMBO_SHIFTLEFT,
-  GDK_WIN32_AEROSNAP_COMBO_SHIFTRIGHT
-};
-
-typedef enum _GdkWin32AeroSnapCombo GdkWin32AeroSnapCombo;
-
-enum _GdkWin32AeroSnapState
-{
-  GDK_WIN32_AEROSNAP_STATE_UNDETERMINED = 0,
-  GDK_WIN32_AEROSNAP_STATE_HALFLEFT,
-  GDK_WIN32_AEROSNAP_STATE_HALFRIGHT,
-  GDK_WIN32_AEROSNAP_STATE_FULLUP,
-  /* Maximize state is only used by edge-snap */
-  GDK_WIN32_AEROSNAP_STATE_MAXIMIZE
-};
-
-typedef enum _GdkWin32AeroSnapState GdkWin32AeroSnapState;
-
-struct _GdkRectangleDouble
-{
-  gdouble x;
-  gdouble y;
-  gdouble width;
-  gdouble height;
-};
-
-typedef struct _GdkRectangleDouble GdkRectangleDouble;
-
-enum _GdkW32WindowDragOp
-{
-  GDK_WIN32_DRAGOP_NONE = 0,
-  GDK_WIN32_DRAGOP_RESIZE,
-  GDK_WIN32_DRAGOP_MOVE,
-  GDK_WIN32_DRAGOP_COUNT
-};
-
-typedef enum _GdkW32WindowDragOp GdkW32WindowDragOp;
-
 typedef enum _GdkWin32MonitorDpiType
 {
   MDT_EFFECTIVE_DPI  = 0,
@@ -109,12 +59,6 @@ struct _GdkW32DragMoveResizeContext
 {
   /* The window that is being moved/resized */
   GdkWindow         *window;
-
-  /* The kind of drag-operation going on. */
-  GdkW32WindowDragOp op;
-
-  /* The edge that was grabbed for resizing. Not used for moving. */
-  GdkWindowEdge      edge;
 
   /* The device used to initiate the op.
    * We grab it at the beginning and ungrab it at the end.
@@ -150,32 +94,6 @@ struct _GdkW32DragMoveResizeContext
   /* The cursor we should use while the operation is running. */
   GdkCursor         *cursor;
 
-  /* This window looks like an outline and is drawn under the window
-   * that is being dragged. It indicates the shape the dragged window
-   * will take if released at a particular point.
-   * Indicator window size always matches the target indicator shape,
-   * the the actual indicator drawn on it might not, depending on
-   * how much time elapsed since the animation started.
-   */
-  HWND               shape_indicator;
-
-  /* Used to draw the indicator */
-  cairo_surface_t   *indicator_surface;
-  gint               indicator_surface_width;
-  gint               indicator_surface_height;
-
-  /* Size/position of shape_indicator */
-  GdkRectangle       indicator_window_rect;
-
-  /* Indicator will animate to occupy this rectangle */
-  GdkRectangle       indicator_target;
-
-  /* Indicator will start animating from this rectangle */
-  GdkRectangle       indicator_start;
-
-  /* Timestamp of the animation start */
-  gint64             indicator_start_time;
-
   /* Timer that drives the animation */
   guint              timer;
 
@@ -185,41 +103,6 @@ struct _GdkW32DragMoveResizeContext
    * Set to 0 to tell GDK to use current time.
    */
   gint64             draw_timestamp;
-
-  /* Indicates that a transformation was revealed:
-   *
-   * For drag-resize: If it's FALSE,
-   * then the pointer have not yet hit a trigger that triggers fullup.
-   * If TRUE, then the pointer did hit a trigger that triggers fullup
-   * at some point during this drag op.
-   * This is used to prevent drag-resize from triggering
-   * a transformation when first approaching a trigger of the work area -
-   * one must drag it all the way to the very trigger to trigger; afterwards
-   * a transformation will start triggering at some distance from the trigger
-   * for as long as the op is still running. This is how AeroSnap works.
-   *
-   * For drag-move: If it's FALSE,
-   * then the pointer have not yet hit a trigger, even if it is
-   * already within a edge region.
-   * If it's TRUE, then the pointer did hit a trigger within an
-   * edge region, and have not yet left an edge region
-   * (passing from one edge region into another doesn't count).
-   */
-  gboolean           revealed;
-
-  /* Arrays of GdkRectangle pairs, describing the areas of the virtual
-   * desktop that trigger various AeroSnap window transofrmations
-   * Coordinates are GDK screen coordinates.
-   */
-  GArray            *halfleft_regions;
-  GArray            *halfright_regions;
-  GArray            *maximize_regions;
-  GArray            *fullup_regions;
-
-  /* Current pointer position will result in this kind of snapping,
-   * if the drag op is finished.
-   */
-  GdkWin32AeroSnapState current_snap;
 };
 
 typedef struct _GdkW32DragMoveResizeContext GdkW32DragMoveResizeContext;
@@ -268,24 +151,6 @@ struct _GdkWindowImplWin32
   guint inhibit_configure : 1;
   guint override_redirect : 1;
 
-  /* Set to TRUE if window is using true layered mode adjustments
-   * via UpdateLayeredWindow().
-   * Layered windows that get SetLayeredWindowAttributes() called
-   * on them are not true layered windows.
-   */
-  guint layered : 1;
-
-  /* If TRUE, the @temp_styles is set to the styles that were temporarily
-   * added to this window.
-   */
-  guint have_temp_styles : 1;
-
-  /* If TRUE, the window is in the process of being maximized.
-   * This is set by WM_SYSCOMMAND and by gdk_win32_window_maximize (),
-   * and is unset when WM_WINDOWPOSCHANGING is handled.
-   */
-  guint maximizing : 1;
-
   /* GDK does not keep window contents around, it just draws new
    * stuff over the window where changes occurred.
    * cache_surface retains old window contents, because
@@ -307,39 +172,17 @@ struct _GdkWindowImplWin32
    */
   gdouble          layered_opacity;
 
+  HDC              repaint_hdc; /* only valid during WM_PAINT */
+  cairo_surface_t *repaint_cairo_surface;
+
   HDC              hdc;
   int              hdc_count;
   HBITMAP          saved_dc_bitmap; /* Original bitmap for dc */
 
   GdkW32DragMoveResizeContext drag_move_resize_context;
 
-  /* Remembers where the window was snapped.
-   * Some snap operations change their meaning if
-   * the window is already snapped.
-   */
-  GdkWin32AeroSnapState snap_state;
-
-  /* Remembers window position before it was snapped.
-   * This is used to unsnap it.
-   * Position and size are percentages of the workarea
-   * of the monitor on which the window was before it was snapped.
-   */
-  GdkRectangleDouble *snap_stash;
-
-  /* Also remember the same position, but in absolute form. */
-  GdkRectangle *snap_stash_int;
-
   /* Decorations set by gdk_window_set_decorations() or NULL if unset */
   GdkWMDecoration* decorations;
-
-  /* No. of windows to force layered windows off */
-  guint suppress_layered;
-
-  /* Temporary styles that this window got for the purpose of
-   * handling WM_SYSMENU.
-   * They are removed at the first opportunity (usually WM_INITMENU).
-   */
-  LONG_PTR temp_styles;
 
   /* scale of window on HiDPI */
   gint window_scale;
