@@ -27,6 +27,11 @@
 
 typedef struct _GdkMemoryFormatDescription GdkMemoryFormatDescription;
 
+typedef guint16 gv4hi __attribute__ ((vector_size(16)));
+typedef guint8 gv4li __attribute__ ((vector_size(8)));
+typedef float gv4sf __attribute__ ((vector_size(16)));
+
+
 #define TYPED_FUNCS(name, T, R, G, B, A, bpp, scale) \
 static void \
 name ## _to_float (float        *dest, \
@@ -172,20 +177,25 @@ name (guchar *dest, \
       const guchar *src, \
       gsize n) \
 { \
-  for (; n > 0; n--) \
+    gv4hi mask = {R2, G2, B2, A2, R2 + 4, G2 + 4, B2 + 4, A2 + 4};\
+    for (; n > 0; n -= 2) \
     { \
-      guchar a = src[A1]; \
-      guint16 r = (guint16)src[R1] * a + 127; \
-      guint16 g = (guint16)src[G1] * a + 127; \
-      guint16 b = (guint16)src[B1] * a + 127; \
-      dest[R2] = (r + (r >> 8) + 1) >> 8; \
-      dest[G2] = (g + (g >> 8) + 1) >> 8; \
-      dest[B2] = (b + (b >> 8) + 1) >> 8; \
-      dest[A2] = a; \
-      dest += 4; \
-      src += 4; \
+        gv4hi vsrc = {src[R1], src[G1], src[B1], src[A1], \
+                      src[R1 + 4],  src[G1 + 4], src[B1 + 4], src[A1 + 4] }; \
+        gv4hi a = {src[A1], src[A1], src[A1], src[A1], \
+                   src[A1 + 4], src[A1 + 4], src[A1 + 4], src[A1 + 4] }; \
+        vsrc = vsrc * a + 127; \
+        vsrc = (vsrc + (vsrc >> 8) + 1 ) >> 8; \
+        gv4li vdst = __builtin_convertvector(__builtin_shuffle(vsrc, mask), gv4li); \
+        memcpy(dest, &vdst, sizeof(char)*8); \
+        dest[A2]  = src[A1]; \
+        dest[A2 + 4]  = src[A1 + 4]; \
+        dest += 8; \
+        src += 8; \
     } \
-}
+} \
+
+
 
 PREMULTIPLY_FUNC(r8g8b8a8_to_r8g8b8a8_premultiplied, 0, 1, 2, 3, 0, 1, 2, 3)
 PREMULTIPLY_FUNC(r8g8b8a8_to_b8g8r8a8_premultiplied, 0, 1, 2, 3, 2, 1, 0, 3)
@@ -486,9 +496,11 @@ premultiply (float *rgba,
 {
   for (gsize i = 0; i < n; i++)
     {
-      rgba[0] *= rgba[3];
-      rgba[1] *= rgba[3];
-      rgba[2] *= rgba[3];
+      float a = rgba[3];
+      gv4sf src = *(gv4sf*) rgba;
+      src *= a;
+      memcpy(rgba, &src, 4*sizeof(float));
+      rgba[3] = a;
       rgba += 4;
     }
 }
@@ -499,12 +511,13 @@ unpremultiply (float *rgba,
 {
   for (gsize i = 0; i < n; i++)
     {
-      if (rgba[3] > 1/255.0)
-        {
-          rgba[0] /= rgba[3];
-          rgba[1] /= rgba[3];
-          rgba[2] /= rgba[3];
-        }
+      if (rgba[3] > 1/255.0) {
+        float a = rgba[3];
+        gv4sf src = *(gv4sf*) rgba;
+        src /= a;
+        memcpy(rgba, &src, 4*sizeof(float));
+        rgba[3] = a;
+      }
       rgba += 4;
     }
 }
@@ -592,3 +605,4 @@ gdk_memory_convert (guchar              *dest_data,
 
   g_free (tmp);
 }
+
