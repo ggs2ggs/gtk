@@ -1515,6 +1515,13 @@ settings_update_fontconfig (GtkSettings *settings)
             update_needed = TRUE;
         }
 #endif
+#if defined (HAVE_PANGOWIN32) && PANGO_VERSION_CHECK (1, 50, 15)
+      if (PANGO_IS_WIN32_FONT_MAP (fontmap))
+        {
+          pango_win32_font_map_config_changed (PANGO_WIN32_FONT_MAP (fontmap));
+          update_needed = TRUE;
+        }
+#endif
 
       last_update_timestamp = timestamp;
       last_update_needed = update_needed;

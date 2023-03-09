@@ -397,6 +397,7 @@ pangoft_dep    = dependency('pangoft2', version: pango_req,
 if win32_enabled
   # for GTK_IM_CONTEXT_IME
   pangowin32_dep = dependency('pangowin32')
+  cdata.set('HAVE_PANGOWIN32', true)
 endif
 
 pangocairo_dep = dependency('pangocairo', version: pango_req)
