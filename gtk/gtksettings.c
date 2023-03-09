@@ -35,12 +35,10 @@
 
 #ifdef GDK_WINDOWING_X11
 #include "x11/gdkx.h"
-#include <pango/pangofc-fontmap.h>
 #endif
 
 #ifdef GDK_WINDOWING_WAYLAND
 #include "wayland/gdkwayland.h"
-#include <pango/pangofc-fontmap.h>
 #endif
 
 #ifdef GDK_WINDOWING_BROADWAY
@@ -53,6 +51,10 @@
 
 #ifdef GDK_WINDOWING_WIN32
 #include "win32/gdkwin32.h"
+#endif
+
+#ifdef HAVE_PANGOFC
+#include <pango/pangofc-fontmap.h>
 #endif
 
 #ifdef GDK_WINDOWING_MACOS
@@ -1490,7 +1492,6 @@ settings_update_font_options (GtkSettings *settings)
 static gboolean
 settings_update_fontconfig (GtkSettings *settings)
 {
-#if defined(GDK_WINDOWING_X11) || defined(GDK_WINDOWING_WAYLAND)
   static guint    last_update_timestamp;
   static gboolean last_update_needed;
 
@@ -1500,15 +1501,12 @@ settings_update_fontconfig (GtkSettings *settings)
                 "gtk-fontconfig-timestamp", &timestamp,
                 NULL);
 
-  /* if timestamp is the same as last_update_timestamp, we already have
-   * updated fontconig on this timestamp (another screen requested it perhaps?),
-   * just return the cached result.*/
-
   if (timestamp != last_update_timestamp)
     {
       PangoFontMap *fontmap = pango_cairo_font_map_get_default ();
       gboolean update_needed = FALSE;
 
+#ifdef HAVE_PANGOFC
       /* bug 547680 */
       if (PANGO_IS_FC_FONT_MAP (fontmap) && !FcConfigUptoDate (NULL))
         {
@@ -1516,15 +1514,13 @@ settings_update_fontconfig (GtkSettings *settings)
           if (FcInitReinitialize ())
             update_needed = TRUE;
         }
+#endif
 
       last_update_timestamp = timestamp;
       last_update_needed = update_needed;
     }
 
   return last_update_needed;
-#else
-  return FALSE;
-#endif /* GDK_WINDOWING_X11 || GDK_WINDOWING_WAYLAND */
 }
 
 static void

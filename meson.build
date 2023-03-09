@@ -424,6 +424,8 @@ if os_unix
   platform_gio_dep = giounix_dep
 endif
 
+cdata.set('HAVE_PANGOFC', os_unix or dependency('pangofc', required: false).found())
+
 tracker3_dep = dependency('tracker-sparql-3.0', required: get_option('tracker'))
 cdata.set('HAVE_TRACKER3', tracker3_dep.found())
 
