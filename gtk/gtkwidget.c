@@ -3433,6 +3433,8 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 G_GNUC_END_IGNORE_DEPRECATIONS
 
   gtk_widget_pop_verify_invariants (widget);
+
+  gtk_widget_realize_at_context (widget);
 }
 
 /**
@@ -3464,6 +3466,8 @@ gtk_widget_unrealize (GtkWidget *widget)
       g_assert (!priv->realized);
     }
 
+
+  gtk_widget_unrealize_at_context (widget);
   gtk_widget_pop_verify_invariants (widget);
   g_object_unref (widget);
 }

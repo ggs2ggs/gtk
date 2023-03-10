@@ -755,6 +755,12 @@ gtk_at_context_realize (GtkATContext *self)
   GTK_AT_CONTEXT_GET_CLASS (self)->realize (self);
 
   self->realized = TRUE;
+
+  if (self->updated_platform)
+    {
+      GTK_AT_CONTEXT_GET_CLASS (self)->platform_change (self, self->updated_platform);
+      self->updated_platform = 0;
+    }
 }
 
 void
@@ -1231,9 +1237,10 @@ void
 gtk_at_context_platform_changed (GtkATContext                *self,
                                  GtkAccessiblePlatformChange  change)
 {
-  gtk_at_context_realize (self);
-
-  GTK_AT_CONTEXT_GET_CLASS (self)->platform_change (self, change);
+  if (gtk_at_context_is_realized (self))
+    GTK_AT_CONTEXT_GET_CLASS (self)->platform_change (self, change);
+  else
+    self->updated_platform |= change;
 }
 
 void
