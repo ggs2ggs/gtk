@@ -359,6 +359,15 @@ common_ldflags = cc.get_supported_link_arguments([
   '-Wl,-z,now',
 ])
 
+if win32_enabled
+  if cc.get_id() == 'msvc'
+    common_ldflags += cc.get_supported_link_arguments([
+      # The resource file is already specified.
+      '/MANIFEST:NO'
+    ])
+  endif
+endif
+
 confinc = include_directories('.')
 gdkinc = include_directories('gdk')
 gskinc = include_directories('gsk')
