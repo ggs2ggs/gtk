@@ -245,6 +245,17 @@ gtk_application_impl_quartz_active_window_changed (GtkApplicationImpl *impl,
 
   if (G_IS_ACTION_GROUP (window))
     gtk_action_muxer_insert (quartz->muxer, "win", G_ACTION_GROUP (window));
+
+  const gchar **prefixes = gtk_widget_list_action_prefixes (GTK_WIDGET(window));
+  if (prefixes)
+    {
+      for (const gchar *prefix, **it = prefixes; (prefix = *it); ++it)
+        {
+          GActionGroup *group = gtk_widget_get_action_group (GTK_WIDGET(window), prefix);
+          gtk_action_muxer_insert (quartz->muxer, prefix, group);
+        }
+      g_free (prefixes);
+    }
 }
 
 static void
