@@ -1,8 +1,8 @@
 [wrap-git]
 directory = cairo
-url = https://gitlab.freedesktop.org/cairo/cairo.git
-push-url = ssh://git@gitlab.freedesktop.org:cairo/cairo.git
-revision = 1.17.6
+url = https://gitlab.freedesktop.org/kepstin/cairo.git
+push-url = ssh://git@gitlab.freedesktop.org:kepstin/cairo.git
+revision = windows-fontconfig-option
 depth = 1
 
 [provide]
