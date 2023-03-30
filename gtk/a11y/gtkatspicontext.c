@@ -911,7 +911,7 @@ gtk_at_spi_context_state_change (GtkATContext                *ctx,
   GtkAccessible *accessible = gtk_at_context_get_accessible (ctx);
   GtkAccessibleValue *value;
 
-  if (GTK_IS_WIDGET (accessible) && !gtk_widget_get_realized (GTK_WIDGET (accessible)))
+  if (!gtk_at_context_is_realized (ctx))
     return;
 
   if (changed_states & GTK_ACCESSIBLE_STATE_CHANGE_HIDDEN)
@@ -1136,25 +1136,20 @@ gtk_at_spi_context_platform_change (GtkATContext                *ctx,
 {
   GtkAtSpiContext *self = GTK_AT_SPI_CONTEXT (ctx);
   GtkAccessible *accessible = gtk_at_context_get_accessible (ctx);
-  GtkWidget *widget;
 
-  if (!GTK_IS_WIDGET (accessible))
-    return;
-
-  widget = GTK_WIDGET (accessible);
-  if (!gtk_widget_get_realized (widget))
+  if (!gtk_at_context_is_realized (ctx))
     return;
 
   if (changed_platform & GTK_ACCESSIBLE_PLATFORM_CHANGE_FOCUSABLE)
     {
-      gboolean state = gtk_accessible_get_platform_state (GTK_ACCESSIBLE (widget),
+      gboolean state = gtk_accessible_get_platform_state (accessible,
                                                           GTK_ACCESSIBLE_PLATFORM_STATE_FOCUSABLE);
       emit_state_changed (self, "focusable", state);
     }
 
   if (changed_platform & GTK_ACCESSIBLE_PLATFORM_CHANGE_FOCUSED)
     {
-      gboolean state = gtk_accessible_get_platform_state (GTK_ACCESSIBLE (widget),
+      gboolean state = gtk_accessible_get_platform_state (accessible,
                                                           GTK_ACCESSIBLE_PLATFORM_STATE_FOCUSED);
       emit_state_changed (self, "focused", state);
       emit_focus (self, state);
@@ -1162,7 +1157,7 @@ gtk_at_spi_context_platform_change (GtkATContext                *ctx,
 
   if (changed_platform & GTK_ACCESSIBLE_PLATFORM_CHANGE_ACTIVE)
     {
-      gboolean state = gtk_accessible_get_platform_state (GTK_ACCESSIBLE (widget),
+      gboolean state = gtk_accessible_get_platform_state (accessible,
                                                           GTK_ACCESSIBLE_PLATFORM_STATE_ACTIVE);
       emit_state_changed (self, "active", state);
 
