@@ -118,7 +118,6 @@
 #define CF_DIBV5 17
 #endif
 
-
 /* Define some combinations of GdkDebugFlags */
 #define GDK_DEBUG_EVENTS_OR_INPUT (GDK_DEBUG_EVENTS|GDK_DEBUG_INPUT)
 #define GDK_DEBUG_MISC_OR_EVENTS (GDK_DEBUG_MISC|GDK_DEBUG_EVENTS)
@@ -540,6 +539,16 @@ void     _gdk_win32_screen_set_font_resolution (GdkWin32Screen *win32_screen);
 void _gdk_win32_windowing_init (void);
 void _gdk_dnd_init    (void);
 void _gdk_events_init (GdkDisplay *display);
+
+typedef gboolean (*message_handler_t)(UINT     uMsg,
+                                      WPARAM   wParam,
+                                      LPARAM   lParam,
+                                      LRESULT *result);
+
+void notif_window_add (UINT              uMsg,
+                       message_handler_t handler);
+
+extern HWND notif_window_handle;
 
 typedef enum _GdkWin32ProcessorCheckType
 {
