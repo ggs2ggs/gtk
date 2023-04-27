@@ -306,78 +306,27 @@ gdk_win32_display_get_next_serial (GdkDisplay *display)
 	return 0;
 }
 
-static LRESULT CALLBACK
-inner_display_change_window_procedure (HWND   hwnd,
-                                       UINT   message,
-                                       WPARAM wparam,
-                                       LPARAM lparam)
+static gboolean
+display_changed (UINT uMsg,
+                 WPARAM wParam,
+                 LPARAM lParam,
+                 LRESULT *result)
 {
-  switch (message)
+  switch (uMsg)
     {
-    case WM_DESTROY:
-      {
-        PostQuitMessage (0);
-        return 0;
-      }
     case WM_DISPLAYCHANGE:
       {
         GdkWin32Display *win32_display = GDK_WIN32_DISPLAY (_gdk_display);
+        GdkWin32Screen *win32_screen = GDK_WIN32_SCREEN (win32_display->screen);
 
-        _gdk_win32_screen_on_displaychange_event (GDK_WIN32_SCREEN (win32_display->screen));
-        return 0;
+        _gdk_win32_screen_on_displaychange_event (win32_screen);
+
+        return TRUE;
       }
-    default:
-      /* Otherwise call DefWindowProcW(). */
-      GDK_NOTE (EVENTS, g_print (" DefWindowProcW"));
-      return DefWindowProc (hwnd, message, wparam, lparam);
+    break;
     }
-}
 
-static LRESULT CALLBACK
-display_change_window_procedure (HWND   hwnd,
-                                 UINT   message,
-                                 WPARAM wparam,
-                                 LPARAM lparam)
-{
-  LRESULT retval;
-
-  GDK_NOTE (EVENTS, g_print ("%s%*s%s %p",
-			     (debug_indent > 0 ? "\n" : ""),
-			     debug_indent, "",
-			     _gdk_win32_message_to_string (message), hwnd));
-  debug_indent += 2;
-  retval = inner_display_change_window_procedure (hwnd, message, wparam, lparam);
-  debug_indent -= 2;
-
-  GDK_NOTE (EVENTS, g_print (" => %" G_GINT64_FORMAT "%s", (gint64) retval, (debug_indent == 0 ? "\n" : "")));
-
-  return retval;
-}
-
-/* Use a hidden window to be notified about display changes */
-static void
-register_display_change_notification (GdkDisplay *display)
-{
-  GdkWin32Display *display_win32 = GDK_WIN32_DISPLAY (display);
-  WNDCLASS wclass = { 0, };
-  ATOM klass;
-
-  wclass.lpszClassName = "GdkDisplayChange";
-  wclass.lpfnWndProc = display_change_window_procedure;
-  wclass.hInstance = _gdk_app_hmodule;
-
-  klass = RegisterClass (&wclass);
-  if (klass)
-    {
-      display_win32->hwnd = CreateWindow (MAKEINTRESOURCE (klass),
-                                          NULL, WS_POPUP,
-                                          0, 0, 0, 0, NULL, NULL,
-                                          _gdk_app_hmodule, NULL);
-      if (!display_win32->hwnd)
-        {
-          UnregisterClass (MAKEINTRESOURCE (klass), _gdk_app_hmodule);
-        }
-    }
+  return FALSE;
 }
 
 GdkDisplay *
@@ -422,7 +371,7 @@ _gdk_win32_display_open (const gchar *display_name)
   /* Precalculate display name */
   (void) gdk_display_get_name (_gdk_display);
 
-  register_display_change_notification (_gdk_display);
+  notif_window_add (WM_DISPLAYCHANGE, display_changed);
 
   g_signal_emit_by_name (_gdk_display, "opened");
 
