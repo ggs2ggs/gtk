@@ -316,7 +316,7 @@ gdk_pre_parse (void)
  * that. An internal function that should not be used by applications.
  *
  * Returns: (nullable) (transfer none): the default display, if it
- *   could be opened, otherwise %NULL.
+ *   could be opened, otherwise `NULL`.
  */
 GdkDisplay *
 gdk_display_open_default (void)
@@ -338,7 +338,7 @@ gdk_display_open_default (void)
  * gdk_get_startup_notification_id:
  *
  * Returns the original value of the DESKTOP_STARTUP_ID environment
- * variable if it was defined and valid, or %NULL otherwise.
+ * variable if it was defined and valid, or `NULL` otherwise.
  *
  * Returns: (nullable) (transfer none): the original value of the
  *   DESKTOP_STARTUP_ID environment variable

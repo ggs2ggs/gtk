@@ -99,7 +99,7 @@ typedef int (*GtkListBoxSortFunc) (GtkListBoxRow *row1,
 /**
  * GtkListBoxUpdateHeaderFunc:
  * @row: the row to update
- * @before: (nullable): the row before @row, or %NULL if it is first
+ * @before: (nullable): the row before @row, or `NULL` if it is first
  * @user_data: (closure): user data
  *
  * Whenever @row changes or which row is before @row changes this

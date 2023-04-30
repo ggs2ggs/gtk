@@ -1933,7 +1933,7 @@ gtk_icon_view_remove_editable (GtkCellArea            *area,
  *
  * Sets the current keyboard focus to be at @path, and selects it.  This is
  * useful when you want to focus the user’s attention on a particular item.
- * If @cell is not %NULL, then focus is given to the cell specified by
+ * If @cell is not `NULL`, then focus is given to the cell specified by
  * it. Additionally, if @start_editing is true, then editing should be
  * started in the specified cell.
  *
@@ -1990,8 +1990,8 @@ gtk_icon_view_set_cursor (GtkIconView     *icon_view,
  *   focus cell
  *
  * Fills in @path and @cell with the current cursor path and cell.
- * If the cursor isn’t currently set, then *@path will be %NULL.
- * If no cell currently has focus, then *@cell will be %NULL.
+ * If the cursor isn’t currently set, then *@path will be `NULL`.
+ * If no cell currently has focus, then *@cell will be `NULL`.
  *
  * The returned `GtkTreePath` must be freed with gtk_tree_path_free().
  *
@@ -4068,7 +4068,7 @@ gtk_icon_view_new_with_model (GtkTreeModel *model)
  * Gets the path for the icon at the given position.
  *
  * Returns: (nullable) (transfer full): The `GtkTreePath` corresponding
- * to the icon or %NULL if no icon exists at that position.
+ * to the icon or `NULL` if no icon exists at that position.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -4143,7 +4143,7 @@ gtk_icon_view_get_item_at_pos (GtkIconView      *icon_view,
  * @rect: (out): rectangle to fill with cell rect
  *
  * Fills the bounding rectangle in widget coordinates for the cell specified by
- * @path and @cell. If @cell is %NULL the main cell area is used.
+ * @path and @cell. If @cell is `NULL` the main cell area is used.
  *
  * This function is only valid if @icon_view is realized.
  *
@@ -4561,7 +4561,7 @@ gtk_icon_view_get_selection_mode (GtkIconView *icon_view)
  *
  * Sets the model for a `GtkIconView`.
  * If the @icon_view already has a model set, it will remove
- * it before setting the new model.  If @model is %NULL, then
+ * it before setting the new model.  If @model is `NULL`, then
  * it will unset the old model.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
@@ -4673,7 +4673,7 @@ gtk_icon_view_set_model (GtkIconView *icon_view,
  * gtk_icon_view_get_model:
  * @icon_view: a `GtkIconView`
  *
- * Returns the model the `GtkIconView` is based on.  Returns %NULL if the
+ * Returns the model the `GtkIconView` is based on.  Returns `NULL` if the
  * model is unset.
  *
  * Returns: (nullable) (transfer none): The currently used `GtkTreeModel`

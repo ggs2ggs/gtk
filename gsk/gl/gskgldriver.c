@@ -483,7 +483,7 @@ gsk_gl_driver_new (GskGLCommandQueue  *command_queue,
  * Retrieves a driver for a shared display. Generally this is shared across all GL
  * contexts for a display so that fewer programs are necessary for driving output.
  *
- * Returns: (transfer full): a `GskGLDriver` if successful; otherwise %NULL and
+ * Returns: (transfer full): a `GskGLDriver` if successful; otherwise `NULL` and
  *   @error is set.
  */
 GskGLDriver *

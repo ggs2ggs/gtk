@@ -1054,7 +1054,7 @@ gtk_text_buffer_get_property (GObject         *object,
 
 /**
  * gtk_text_buffer_new:
- * @table: (nullable): a tag table, or %NULL to create a new one
+ * @table: (nullable): a tag table, or `NULL` to create a new one
  *
  * Creates a new text buffer.
  *
@@ -1802,12 +1802,12 @@ gtk_text_buffer_insert_range_interactive (GtkTextBuffer     *buffer,
  * @text: UTF-8 text
  * @len: length of @text, or -1
  * @first_tag: first tag to apply to @text
- * @...: %NULL-terminated list of tags to apply
+ * @...: `NULL`-terminated list of tags to apply
  *
  * Inserts @text into @buffer at @iter, applying the list of tags to
  * the newly-inserted text.
  *
- * The last tag specified must be %NULL to terminate the list.
+ * The last tag specified must be `NULL` to terminate the list.
  * Equivalent to calling [method@Gtk.TextBuffer.insert],
  * then [method@Gtk.TextBuffer.apply_tag] on the inserted text;
  * this is just a convenience function.
@@ -2453,7 +2453,7 @@ gtk_text_buffer_set_mark (GtkTextBuffer     *buffer,
  *
  * Creates a mark at position @where.
  *
- * If @mark_name is %NULL, the mark is anonymous; otherwise, the mark
+ * If @mark_name is `NULL`, the mark is anonymous; otherwise, the mark
  * can be retrieved by name using [method@Gtk.TextBuffer.get_mark].
  * If a mark has left gravity, and text is inserted at the mark’s
  * current location, the mark will be moved to the left of the
@@ -2494,7 +2494,7 @@ gtk_text_buffer_create_mark (GtkTextBuffer     *buffer,
  * Adds the mark at position @where.
  *
  * The mark must not be added to another buffer, and if its name
- * is not %NULL then there must not be another mark in the buffer
+ * is not `NULL` then there must not be another mark in the buffer
  * with the same name.
  *
  * Emits the [signal@Gtk.TextBuffer::mark-set] signal as notification
@@ -2614,7 +2614,7 @@ gtk_text_buffer_delete_mark (GtkTextBuffer *buffer,
  * @buffer: a `GtkTextBuffer`
  * @name: a mark name
  *
- * Returns the mark named @name in buffer @buffer, or %NULL if no such
+ * Returns the mark named @name in buffer @buffer, or `NULL` if no such
  * mark exists in the buffer.
  *
  * Returns: (nullable) (transfer none): a `GtkTextMark`
@@ -2830,7 +2830,7 @@ gtk_text_buffer_select_range (GtkTextBuffer     *buffer,
  * @buffer: a `GtkTextBuffer`
  * @tag_name: (nullable): name of the new tag
  * @first_property_name: (nullable): name of first property to set
- * @...: %NULL-terminated list of property names and values
+ * @...: `NULL`-terminated list of property names and values
  *
  * Creates a tag and adds it to the tag table for @buffer.
  *
@@ -2838,9 +2838,9 @@ gtk_text_buffer_select_range (GtkTextBuffer     *buffer,
  * tag to the buffer’s tag table. The returned tag is owned by
  * the buffer’s tag table, so the ref count will be equal to one.
  *
- * If @tag_name is %NULL, the tag is anonymous.
+ * If @tag_name is `NULL`, the tag is anonymous.
  *
- * If @tag_name is non-%NULL, a tag called @tag_name must not already
+ * If @tag_name is non-`NULL`, a tag called @tag_name must not already
  * exist in the tag table for this buffer.
  *
  * The @first_property_name argument and subsequent arguments are a list
@@ -3926,7 +3926,7 @@ remove_all_selection_clipboards (GtkTextBuffer *buffer)
  *
  * Pastes the contents of a clipboard.
  *
- * If @override_location is %NULL, the pasted text will be inserted
+ * If @override_location is `NULL`, the pasted text will be inserted
  * at the cursor position, or the buffer selection will be replaced
  * if the selection is non-empty.
  *
@@ -4214,7 +4214,7 @@ gtk_text_buffer_copy_clipboard (GtkTextBuffer *buffer,
  *
  * If the selection has length 0, then @start and @end are filled
  * in with the same value. @start and @end will be in ascending order.
- * If @start and @end are %NULL, then they are not filled in, but the
+ * If @start and @end are `NULL`, then they are not filled in, but the
  * return value still indicates whether text is selected.
  *
  * Returns: whether the selection has nonzero length

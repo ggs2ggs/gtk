@@ -545,7 +545,7 @@ gtk_list_box_class_init (GtkListBoxClass *klass)
    * @box: the `GtkListBox`
    * @row: (nullable): the selected row
    *
-   * Emitted when a new row is selected, or (with a %NULL @row)
+   * Emitted when a new row is selected, or (with a `NULL` @row)
    * when the selection is cleared.
    *
    * When the @box is using %GTK_SELECTION_MULTIPLE, this signal will not
@@ -747,7 +747,7 @@ gtk_list_box_init (GtkListBox *box)
  * gtk_list_box_get_selected_row:
  * @box: a `GtkListBox`
  *
- * Gets the selected row, or %NULL if no rows are selected.
+ * Gets the selected row, or `NULL` if no rows are selected.
  *
  * Note that the box may allow multiple selection, in which
  * case you should use [method@Gtk.ListBox.selected_foreach] to
@@ -771,7 +771,7 @@ gtk_list_box_get_selected_row (GtkListBox *box)
  * Gets the n-th child in the list (not counting headers).
  *
  * If @index_ is negative or larger than the number of items in the
- * list, %NULL is returned.
+ * list, `NULL` is returned.
  *
  * Returns: (transfer none) (nullable): the child `GtkWidget`
  */
@@ -1239,7 +1239,7 @@ gtk_list_box_set_filter_func (GtkListBox           *box,
  * The @update_header can look at the current header widget using
  * [method@Gtk.ListBoxRow.get_header] and either update the state of the widget
  * as needed, or set a new one using [method@Gtk.ListBoxRow.set_header]. If no
- * header is needed, set the header to %NULL.
+ * header is needed, set the header to `NULL`.
  *
  * Note that you may get many calls @update_header to this for a particular
  * row when e.g. changing things that don’t affect the header. In this case
@@ -3701,7 +3701,7 @@ gtk_list_box_check_model_compat (GtkListBox *box)
  * @box: a `GtkListBox`
  * @model: (nullable): the `GListModel` to be bound to @box
  * @create_widget_func: (nullable): a function that creates widgets for items
- *   or %NULL in case you also passed %NULL as @model
+ *   or `NULL` in case you also passed `NULL` as @model
  * @user_data: (closure): user data passed to @create_widget_func
  * @user_data_free_func: function for freeing @user_data
  *
@@ -3712,7 +3712,7 @@ gtk_list_box_check_model_compat (GtkListBox *box)
  *
  * The contents of @box are cleared and then filled with widgets that
  * represent items from @model. @box is updated whenever @model changes.
- * If @model is %NULL, @box is left empty.
+ * If @model is `NULL`, @box is left empty.
  *
  * It is undefined to add or remove widgets directly (for example, with
  * [method@Gtk.ListBox.insert]) while @box is bound to a model.

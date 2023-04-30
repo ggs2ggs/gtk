@@ -529,7 +529,7 @@ gtk_page_setup_load_file (GtkPageSetup *setup,
  * Reads the page setup from the file @file_name.
  *
  * Returns a new `GtkPageSetup` object with the restored
- * page setup, or %NULL if an error occurred.
+ * page setup, or `NULL` if an error occurred.
  * See [method@Gtk.PageSetup.to_file].
  *
  * Returns: the restored `GtkPageSetup`
@@ -668,7 +668,7 @@ out:
  * @key_file.
  *
  * Returns a new `GtkPageSetup` object with the restored
- * page setup, or %NULL if an error occurred.
+ * page setup, or `NULL` if an error occurred.
  *
  * Returns: the restored `GtkPageSetup`
  */
@@ -752,7 +752,7 @@ enum_to_string (GType type,
  * @setup: a `GtkPageSetup`
  * @key_file: the `GKeyFile` to save the page setup to
  * @group_name: (nullable): the group to add the settings to in @key_file,
- *   or %NULL to use the default name “Page Setup”
+ *   or `NULL` to use the default name “Page Setup”
  *
  * This function adds the page setup from @setup to @key_file.
  */

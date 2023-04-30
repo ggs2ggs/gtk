@@ -201,7 +201,7 @@ string_is_function (const char *string,
  * Tries to parse the given string into an action.
  *
  * On success, the parsed action is returned. When parsing
- * failed, %NULL is returned.
+ * failed, `NULL` is returned.
  *
  * The accepted strings are:
  *

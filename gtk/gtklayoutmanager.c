@@ -270,7 +270,7 @@ gtk_layout_manager_set_widget (GtkLayoutManager *layout_manager,
  *
  * This function is called by `GtkWidget` when getting rooted and unrooted,
  * and will call `GtkLayoutManagerClass.root()` or `GtkLayoutManagerClass.unroot()`
- * depending on whether @root is a `GtkWidget` or %NULL.
+ * depending on whether @root is a `GtkWidget` or `NULL`.
  */
 void
 gtk_layout_manager_set_root (GtkLayoutManager *layout_manager,

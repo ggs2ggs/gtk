@@ -611,7 +611,7 @@ gtk_im_multicontext_get_context_id (GtkIMMulticontext *context)
  * This causes the currently active delegate of @context to be
  * replaced by the delegate corresponding to the new context id.
  *
- * Setting this to a non-%NULL value overrides the system-wide
+ * Setting this to a non-`NULL` value overrides the system-wide
  * IM module setting. See the [property@Gtk.Settings:gtk-im-module]
  * property.
  */

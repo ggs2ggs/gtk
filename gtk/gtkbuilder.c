@@ -299,7 +299,7 @@ gtk_builder_class_init (GtkBuilderClass *klass)
   * The translation domain used when translating property values that
   * have been marked as translatable.
   *
-  * If the translation domain is %NULL, `GtkBuilder` uses gettext(),
+  * If the translation domain is `NULL`, `GtkBuilder` uses gettext(),
   * otherwise g_dgettext().
   */
   builder_props[PROP_TRANSLATION_DOMAIN] =
@@ -1850,7 +1850,7 @@ gtk_builder_get_current_object (GtkBuilder *builder)
  *
  * [method@Gtk.Widget.init_template] for example will set the current
  * object to the widget the template is inited for. For functions like
- * [ctor@Gtk.Builder.new_from_resource], the current object will be %NULL.
+ * [ctor@Gtk.Builder.new_from_resource], the current object will be `NULL`.
  */
 void
 gtk_builder_set_current_object (GtkBuilder *builder,
@@ -1892,7 +1892,7 @@ gtk_builder_get_scope (GtkBuilder *builder)
  *
  * Sets the scope the builder should operate in.
  *
- * If @scope is %NULL, a new [class@Gtk.BuilderCScope] will be created.
+ * If @scope is `NULL`, a new [class@Gtk.BuilderCScope] will be created.
  */
 void
 gtk_builder_set_scope (GtkBuilder      *builder,
@@ -2861,7 +2861,7 @@ gtk_builder_get_template_type (GtkBuilder *builder,
  * This is using the create_closure() implementation of @builder's
  * [iface@Gtk.BuilderScope].
  *
- * If no closure could be created, %NULL will be returned and @error
+ * If no closure could be created, `NULL` will be returned and @error
  * will be set.
  *
  * Returns: (nullable): A new closure for invoking @function_name
@@ -2939,7 +2939,7 @@ gtk_builder_new_from_resource (const char *resource_path)
  *
  * Parses the UI definition in @string.
  *
- * If @string is %NULL-terminated, then @length should be -1.
+ * If @string is `NULL`-terminated, then @length should be -1.
  * If @length is not -1, then it is the length of @string.
  *
  * If there is an error parsing @string then the program will be

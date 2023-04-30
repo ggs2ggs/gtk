@@ -808,7 +808,7 @@ gtk_entry_class_init (GtkEntryClass *class)
    *
    * See [class@Gtk.IMContext].
    *
-   * Setting this to a non-%NULL value overrides the system-wide IM
+   * Setting this to a non-`NULL` value overrides the system-wide IM
    * module setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module]
    * property.
    */
@@ -2404,7 +2404,7 @@ gtk_entry_get_alignment (GtkEntry *entry)
  *
  * Sets the icon shown in the specified position using a `GdkPaintable`.
  *
- * If @paintable is %NULL, no icon will be shown in the specified position.
+ * If @paintable is `NULL`, no icon will be shown in the specified position.
  */
 void
 gtk_entry_set_icon_from_paintable (GtkEntry             *entry,
@@ -2463,7 +2463,7 @@ gtk_entry_set_icon_from_paintable (GtkEntry             *entry,
  * If the icon name isn’t known, a “broken image” icon will be
  * displayed instead.
  *
- * If @icon_name is %NULL, no icon will be shown in the
+ * If @icon_name is `NULL`, no icon will be shown in the
  * specified position.
  */
 void
@@ -2519,7 +2519,7 @@ gtk_entry_set_icon_from_icon_name (GtkEntry             *entry,
  * If the icon isn’t known, a “broken image” icon will be
  * displayed instead.
  *
- * If @icon is %NULL, no icon will be shown in the
+ * If @icon is `NULL`, no icon will be shown in the
  * specified position.
  */
 void
@@ -2628,7 +2628,7 @@ gtk_entry_get_icon_activatable (GtkEntry             *entry,
  *
  * Retrieves the `GdkPaintable` used for the icon.
  *
- * If no `GdkPaintable` was used for the icon, %NULL is returned.
+ * If no `GdkPaintable` was used for the icon, `NULL` is returned.
  *
  * Returns: (transfer none) (nullable): A `GdkPaintable`
  *   if no icon is set for this position or the icon set is not
@@ -2659,7 +2659,7 @@ gtk_entry_get_icon_paintable (GtkEntry             *entry,
  *
  * Retrieves the `GIcon` used for the icon.
  *
- * %NULL will be returned if there is no icon or if the icon was
+ * `NULL` will be returned if there is no icon or if the icon was
  * set by some other method (e.g., by `GdkPaintable` or icon name).
  *
  * Returns: (transfer none) (nullable): A `GIcon`
@@ -2689,7 +2689,7 @@ gtk_entry_get_icon_gicon (GtkEntry             *entry,
  *
  * Retrieves the icon name used for the icon.
  *
- * %NULL is returned if there is no icon or if the icon was set
+ * `NULL` is returned if there is no icon or if the icon was set
  * by some other method (e.g., by `GdkPaintable` or gicon).
  *
  * Returns: (nullable): An icon name
@@ -3027,7 +3027,7 @@ gtk_entry_get_icon_tooltip_text (GtkEntry             *entry,
  * Sets @tooltip as the contents of the tooltip for the icon
  * at the specified position.
  *
- * Use %NULL for @tooltip to remove an existing tooltip.
+ * Use `NULL` for @tooltip to remove an existing tooltip.
  *
  * See also [method@Gtk.Widget.set_tooltip_text] and
  * [method@Gtk.Entry.set_icon_tooltip_markup].
@@ -3113,7 +3113,7 @@ gtk_entry_get_icon_tooltip_markup (GtkEntry             *entry,
  *
  * @tooltip is assumed to be marked up with Pango Markup.
  *
- * Use %NULL for @tooltip to remove an existing tooltip.
+ * Use `NULL` for @tooltip to remove an existing tooltip.
  *
  * See also [method@Gtk.Widget.set_tooltip_markup] and
  * [method@Gtk.Entry.set_icon_tooltip_text].
@@ -3198,7 +3198,7 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
  *
  * All further configuration of the completion mechanism is
  * done on @completion using the `GtkEntryCompletion` API.
- * Completion is disabled if @completion is set to %NULL.
+ * Completion is disabled if @completion is set to `NULL`.
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
  */
@@ -3449,7 +3449,7 @@ gtk_entry_set_placeholder_text (GtkEntry    *entry,
  *   placeholder text as a string. This string points to
  *   internally allocated storage in the widget and must
  *   not be freed, modified or stored. If no placeholder
- *   text has been set, %NULL will be returned.
+ *   text has been set, `NULL` will be returned.
  */
 const char *
 gtk_entry_get_placeholder_text (GtkEntry *entry)

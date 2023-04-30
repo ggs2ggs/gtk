@@ -303,7 +303,7 @@ gtk_media_stream_class_init (GtkMediaStreamClass *class)
   /**
    * GtkMediaStream:error: (attributes org.gtk.Property.get=gtk_media_stream_get_error)
    *
-   * %NULL for a properly working stream or the `GError`
+   * `NULL` for a properly working stream or the `GError`
    * that the stream is in.
    */
   properties[PROP_ERROR] =
@@ -709,7 +709,7 @@ gtk_media_stream_is_seeking (GtkMediaStream *self)
  * a [class@Gtk.MediaFile] will unset errors when a new source is
  * set, e.g. with [method@Gtk.MediaFile.set_file].
  *
- * Returns: (nullable) (transfer none): %NULL if not in an
+ * Returns: (nullable) (transfer none): `NULL` if not in an
  *   error state or the `GError` of the stream
  */
 const GError *

@@ -2048,7 +2048,7 @@ gtk_popover_get_child (GtkPopover *popover)
  * gtk_popover_set_default_widget: (attributes org.gtk.Method.set_property=default-widget)
  * @popover: a `GtkPopover`
  * @widget: (nullable): a child widget of @popover to set as
- *   the default, or %NULL to unset the default widget for the popover
+ *   the default, or `NULL` to unset the default widget for the popover
  *
  * Sets the default widget of a `GtkPopover`.
  *

@@ -208,7 +208,7 @@ gtk_tooltip_dispose (GObject *object)
  * Sets the text of the tooltip to be @markup.
  *
  * The string must be marked up with Pango markup.
- * If @markup is %NULL, the label will be hidden.
+ * If @markup is `NULL`, the label will be hidden.
  */
 void
 gtk_tooltip_set_markup (GtkTooltip  *tooltip,
@@ -226,7 +226,7 @@ gtk_tooltip_set_markup (GtkTooltip  *tooltip,
  *
  * Sets the text of the tooltip to be @text.
  *
- * If @text is %NULL, the label will be hidden.
+ * If @text is `NULL`, the label will be hidden.
  * See also [method@Gtk.Tooltip.set_markup].
  */
 void
@@ -244,7 +244,7 @@ gtk_tooltip_set_text (GtkTooltip  *tooltip,
  * @paintable: (nullable): a `GdkPaintable`
  *
  * Sets the icon of the tooltip (which is in front of the text) to be
- * @paintable.  If @paintable is %NULL, the image will be hidden.
+ * @paintable.  If @paintable is `NULL`, the image will be hidden.
  */
 void
 gtk_tooltip_set_icon (GtkTooltip   *tooltip,
@@ -263,7 +263,7 @@ gtk_tooltip_set_icon (GtkTooltip   *tooltip,
  *
  * Sets the icon of the tooltip (which is in front of the text) to be
  * the icon indicated by @icon_name with the size indicated
- * by @size.  If @icon_name is %NULL, the image will be hidden.
+ * by @size.  If @icon_name is `NULL`, the image will be hidden.
  */
 void
 gtk_tooltip_set_icon_from_icon_name (GtkTooltip  *tooltip,
@@ -282,7 +282,7 @@ gtk_tooltip_set_icon_from_icon_name (GtkTooltip  *tooltip,
  *
  * Sets the icon of the tooltip (which is in front of the text)
  * to be the icon indicated by @gicon with the size indicated
- * by @size. If @gicon is %NULL, the image will be hidden.
+ * by @size. If @gicon is `NULL`, the image will be hidden.
  */
 void
 gtk_tooltip_set_icon_from_gicon (GtkTooltip  *tooltip,
@@ -297,7 +297,7 @@ gtk_tooltip_set_icon_from_gicon (GtkTooltip  *tooltip,
 /**
  * gtk_tooltip_set_custom:
  * @tooltip: a `GtkTooltip`
- * @custom_widget: (nullable): a `GtkWidget`, or %NULL to unset the old custom widget.
+ * @custom_widget: (nullable): a `GtkWidget`, or `NULL` to unset the old custom widget.
  *
  * Replaces the widget packed into the tooltip with
  * @custom_widget. @custom_widget does not get destroyed when the tooltip goes

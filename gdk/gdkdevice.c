@@ -495,7 +495,7 @@ gdk_device_get_property (GObject    *object,
  * Obtains the surface underneath @device, returning the location of the
  * device in @win_x and @win_y.
  *
- * Returns %NULL if the surface tree under @device is not known to GDK
+ * Returns `NULL` if the surface tree under @device is not known to GDK
  * (for example, belongs to another application).
  *
  * Returns: (nullable) (transfer none): the `GdkSurface` under the

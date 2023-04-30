@@ -334,7 +334,7 @@ gtk_tim_sort_get_progress (GtkTimSort *self)
  * @out_change: (optional): Return location for changed
  *     area. If a change did not cause any changes (for example,
  *     if an already sorted array gets sorted), out_change
- *     will be set to %NULL and 0.
+ *     will be set to `NULL` and 0.
  *
  * Performs another step in the sorting process. If a
  * step was performed, true is returned and @out_change is

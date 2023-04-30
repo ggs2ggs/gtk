@@ -100,7 +100,7 @@ gdk_rectangle_union (const GdkRectangle *src1,
  * If the rectangles do not intersect, @dest’s width and height is set
  * to 0 and its x and y values are undefined. If you are only interested
  * in whether the rectangles intersect, but not in the intersecting area
- * itself, pass %NULL for @dest.
+ * itself, pass `NULL` for @dest.
  *
  * Returns: true if the rectangles intersect.
  */

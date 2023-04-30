@@ -1295,7 +1295,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    *
    * Note that this property may be ignored on some platforms.
    *
-   * If this is %NULL, GTK uses a default label.
+   * If this is `NULL`, GTK uses a default label.
    */
   g_object_class_install_property (gobject_class,
 				   PROP_CUSTOM_TAB_LABEL,
@@ -1475,7 +1475,7 @@ gtk_print_operation_set_print_settings (GtkPrintOperation *op,
  *
  * Returns the current print settings.
  *
- * Note that the return value is %NULL until either
+ * Note that the return value is `NULL` until either
  * [method@Gtk.PrintOperation.set_print_settings] or
  * [method@Gtk.PrintOperation.run] have been called.
  *
@@ -1842,7 +1842,7 @@ gtk_print_operation_set_allow_async (GtkPrintOperation  *op,
 /**
  * gtk_print_operation_set_custom_tab_label: (attributes org.gtk.Method.set_property=custom-tab-label)
  * @op: a `GtkPrintOperation`
- * @label: (nullable): the label to use, or %NULL to use the default label
+ * @label: (nullable): the label to use, or `NULL` to use the default label
  *
  * Sets the label for the tab holding custom widgets.
  */

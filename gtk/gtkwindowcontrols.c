@@ -643,7 +643,7 @@ gtk_window_controls_set_side (GtkWindowControls *self,
  *
  * Gets the decoration layout of this `GtkWindowControls`.
  *
- * Returns: (nullable): the decoration layout or %NULL if it is unset
+ * Returns: (nullable): the decoration layout or `NULL` if it is unset
  */
 const char *
 gtk_window_controls_get_decoration_layout (GtkWindowControls *self)
@@ -656,7 +656,7 @@ gtk_window_controls_get_decoration_layout (GtkWindowControls *self)
 /**
  * gtk_window_controls_set_decoration_layout: (attributes org.gtk.Method.set_property=decoration-layout)
  * @self: a `GtkWindowControls`
- * @layout: (nullable): a decoration layout, or %NULL to unset the layout
+ * @layout: (nullable): a decoration layout, or `NULL` to unset the layout
  *
  * Sets the decoration layout for the title buttons.
  *

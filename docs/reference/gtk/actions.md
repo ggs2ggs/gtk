@@ -32,13 +32,13 @@ correct type.
 Here are some rules about an action:
 
 - the name is immutable (in the sense that it will never change) and
-  it is never %NULL
+  it is never `NULL`
 - the enabled flag can change
 - the parameter type is immutable
-- the parameter type is optional: it can be %NULL
-- if the parameter type is %NULL then action activation must be done
-  without a parameter (ie: a %NULL GVariant pointer)
-- if the parameter type is non-%NULL then the parameter must have this
+- the parameter type is optional: it can be `NULL`
+- if the parameter type is `NULL` then action activation must be done
+  without a parameter (ie: a `NULL` GVariant pointer)
+- if the parameter type is non-`NULL` then the parameter must have this
   type
 - the state can change, but it cannot change type
 - if the action was stateful when it was created, it will always have a

@@ -318,7 +318,7 @@ gtk_frame_get_property (GObject         *object,
  *
  * Creates a new `GtkFrame`, with optional label @label.
  *
- * If @label is %NULL, the label is omitted.
+ * If @label is `NULL`, the label is omitted.
  *
  * Returns: a new `GtkFrame` widget
  */
@@ -354,10 +354,10 @@ gtk_frame_set_label (GtkFrame *frame,
  *
  * Returns the frame labels text.
  *
- * If the frame's label widget is not a `GtkLabel`, %NULL
+ * If the frame's label widget is not a `GtkLabel`, `NULL`
  * is returned.
  *
- * Returns: (nullable): the text in the label, or %NULL if there
+ * Returns: (nullable): the text in the label, or `NULL` if there
  *    was no label widget or the label widget was not a `GtkLabel`.
  *    This string is owned by GTK and must not be modified or freed.
  */

@@ -200,7 +200,7 @@ gtk_list_item_manager_get_root (GtkListItemManager *self)
  * represents a row with an existing widget, @offset will always be 0.
  *
  * Returns: (type GtkListTile): the tile for @position or
- *   %NULL if position is out of range
+ *   `NULL` if position is out of range
  **/
 gpointer
 gtk_list_item_manager_get_nth (GtkListItemManager *self,
@@ -1121,7 +1121,7 @@ gtk_list_item_manager_get_model (GtkListItemManager *self)
  * gtk_list_item_manager_acquire_list_item:
  * @self: a `GtkListItemManager`
  * @position: the row in the model to create a list item for
- * @prev_sibling: the widget this widget should be inserted before or %NULL
+ * @prev_sibling: the widget this widget should be inserted before or `NULL`
  *   if it should be the first widget
  *
  * Creates a list item widget to use for @position. No widget may
@@ -1162,15 +1162,15 @@ gtk_list_item_manager_acquire_list_item (GtkListItemManager *self,
  * gtk_list_item_manager_try_acquire_list_item_from_change:
  * @self: a `GtkListItemManager`
  * @position: the row in the model to create a list item for
- * @prev_sibling: the widget this widget should be inserted after or %NULL
+ * @prev_sibling: the widget this widget should be inserted after or `NULL`
  *   if it should be the first widget
  *
  * Like gtk_list_item_manager_acquire_list_item(), but only tries to acquire list
  * items from those previously released as part of @change.
- * If no matching list item is found, %NULL is returned and the caller should use
+ * If no matching list item is found, `NULL` is returned and the caller should use
  * gtk_list_item_manager_acquire_list_item().
  *
- * Returns: (nullable): a properly setup widget to use in @position or %NULL if
+ * Returns: (nullable): a properly setup widget to use in @position or `NULL` if
  *   no item for reuse existed
  **/
 static GtkWidget *
@@ -1270,7 +1270,7 @@ gtk_list_item_manager_update_list_item (GtkListItemManager *self,
  * gtk_list_item_manager_release_list_item:
  * @self: a `GtkListItemManager`
  * @change: (nullable): The change associated with this release or
- *   %NULL if this is a final removal
+ *   `NULL` if this is a final removal
  * @item: an item previously acquired with
  *   gtk_list_item_manager_acquire_list_item()
  *

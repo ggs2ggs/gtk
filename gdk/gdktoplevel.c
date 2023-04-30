@@ -604,7 +604,7 @@ gdk_toplevel_supports_edge_constraints (GdkToplevel *toplevel)
  * gdk_toplevel_inhibit_system_shortcuts:
  * @toplevel: a `GdkToplevel`
  * @event: (nullable): the `GdkEvent` that is triggering the inhibit
- *   request, or %NULL if none is available
+ *   request, or `NULL` if none is available
  *
  * Requests that the @toplevel inhibit the system shortcuts.
  *

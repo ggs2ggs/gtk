@@ -1066,7 +1066,7 @@ gtk_constraint_expression_set_variable (GtkConstraintExpression *expression,
  *   a.x + a.width - b.x - b.width = 0
  * ]|
  *
- * If @solver is not %NULL, this function will notify a `GtkConstraintSolver`
+ * If @solver is not `NULL`, this function will notify a `GtkConstraintSolver`
  * of every variable that was added or removed from @a_expr.
  */
 void
@@ -1354,7 +1354,7 @@ gtk_constraint_expression_get_coefficient (GtkConstraintExpression *expression,
  *
  * Replaces every term containing @out_var inside @expression with @expr.
  *
- * If @solver is not %NULL, this function will notify the `GtkConstraintSolver`
+ * If @solver is not `NULL`, this function will notify the `GtkConstraintSolver`
  * for every variable added to or removed from @expression.
  */
 void

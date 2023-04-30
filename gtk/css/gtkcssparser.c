@@ -153,7 +153,7 @@ gtk_css_parser_unref (GtkCssParser *self)
  * @self: a `GtkCssParser`
  *
  * Gets the file being parsed. If no file is associated with @self -
- * for example when raw data is parsed - %NULL is returned.
+ * for example when raw data is parsed - `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The file being parsed
  */
@@ -889,7 +889,7 @@ gtk_css_parser_try_token (GtkCssParser    *self,
  * its name.
  *
  * If the current token is not an identifier, an error is emitted
- * and %NULL is returned.
+ * and `NULL` is returned.
  *
  * Returns: (transfer full): the name of the consumed identifier
  */
@@ -920,7 +920,7 @@ gtk_css_parser_consume_ident (GtkCssParser *self)
  * If the current token is a string, consumes it and return the string.
  *
  * If the current token is not a string, an error is emitted
- * and %NULL is returned.
+ * and `NULL` is returned.
  *
  * Returns: (transfer full): the name of the consumed string
  **/
@@ -965,7 +965,7 @@ gtk_css_parser_parse_url_arg (GtkCssParser *parser,
  * If the parser matches the `<url>` token from the [CSS
  * specification](https://drafts.csswg.org/css-values-4/#url-value),
  * consumes it, resolves the URL and returns the resulting `GFile`.
- * On failure, an error is emitted and %NULL is returned.
+ * On failure, an error is emitted and `NULL` is returned.
  *
  * Returns: (nullable) (transfer full): the resulting URL
  **/

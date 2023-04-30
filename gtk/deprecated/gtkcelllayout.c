@@ -447,7 +447,7 @@ gtk_cell_layout_set_attributesv (GtkCellLayout   *cell_layout,
  * gtk_cell_layout_set_attributes:
  * @cell_layout: a `GtkCellLayout`
  * @cell: a `GtkCellRenderer`
- * @...: a %NULL-terminated list of attributes
+ * @...: a `NULL`-terminated list of attributes
  *
  * Sets the attributes in the parameter list as the attributes
  * of @cell_layout.
@@ -520,7 +520,7 @@ gtk_cell_layout_add_attribute (GtkCellLayout   *cell_layout,
  * for setting the column value, and should set the value of @cell_layout’s
  * cell renderer(s) as appropriate.
  *
- * @func may be %NULL to remove a previously set function.
+ * @func may be `NULL` to remove a previously set function.
  *
  * Deprecated: 4.10
  */
@@ -608,7 +608,7 @@ gtk_cell_layout_get_cells (GtkCellLayout *cell_layout)
  * @cell_layout: a `GtkCellLayout`
  *
  * Returns the underlying `GtkCellArea` which might be @cell_layout
- * if called on a `GtkCellArea` or might be %NULL if no `GtkCellArea`
+ * if called on a `GtkCellArea` or might be `NULL` if no `GtkCellArea`
  * is used by @cell_layout.
  *
  * Returns: (transfer none) (nullable): the cell area used by @cell_layout

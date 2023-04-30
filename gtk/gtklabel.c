@@ -968,7 +968,7 @@ nope:
 /**
  * gtk_label_get_measuring_layout:
  * @self: the label
- * @existing_layout: %NULL or an existing layout already in use.
+ * @existing_layout: `NULL` or an existing layout already in use.
  * @width: the width to measure with in pango units, or -1 for infinite
  *
  * Gets a layout that can be used for measuring sizes.
@@ -2789,7 +2789,7 @@ gtk_label_class_init (GtkLabelClass *class)
  *
  * Creates a new label with the given text inside it.
  *
- * You can pass %NULL to get an empty label widget.
+ * You can pass `NULL` to get an empty label widget.
  *
  * Returns: the new `GtkLabel`
  **/
@@ -2955,7 +2955,7 @@ label_mnemonic_widget_weak_notify (gpointer      data,
 /**
  * gtk_label_set_mnemonic_widget: (attributes org.gtk.Method.set_property=mnemonic-widget)
  * @self: a `GtkLabel`
- * @widget: (nullable): the target `GtkWidget`, or %NULL to unset
+ * @widget: (nullable): the target `GtkWidget`, or `NULL` to unset
  *
  * Associate the label with its mnemonic target.
  *
@@ -3014,7 +3014,7 @@ gtk_label_set_mnemonic_widget (GtkLabel  *self,
  * See [method@Gtk.Label.set_mnemonic_widget].
  *
  * Returns: (nullable) (transfer none): the target of the label’s mnemonic,
- *   or %NULL if none has been set and the default algorithm will be used.
+ *   or `NULL` if none has been set and the default algorithm will be used.
  **/
 GtkWidget *
 gtk_label_get_mnemonic_widget (GtkLabel *self)
@@ -6009,11 +6009,11 @@ gtk_label_set_tabs (GtkLabel      *self,
  *
  * Gets the tabs for @self.
  *
- * The returned array will be %NULL if “standard” (8-space) tabs are used.
+ * The returned array will be `NULL` if “standard” (8-space) tabs are used.
  * Free the return value with [method@Pango.TabArray.free].
  *
  * Returns: (nullable) (transfer full): copy of default tab array,
- *   or %NULL if standard tabs are used; must be freed with
+ *   or `NULL` if standard tabs are used; must be freed with
  *   [method@Pango.TabArray.free].
  *
  * Since: 4.8

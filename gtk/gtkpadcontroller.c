@@ -387,14 +387,14 @@ gtk_pad_controller_init (GtkPadController *controller)
 /**
  * gtk_pad_controller_new:
  * @group: `GActionGroup` to trigger actions from
- * @pad: (nullable): A %GDK_SOURCE_TABLET_PAD device, or %NULL to handle all pads
+ * @pad: (nullable): A %GDK_SOURCE_TABLET_PAD device, or `NULL` to handle all pads
  *
  * Creates a new `GtkPadController` that will associate events from @pad to
  * actions.
  *
- * A %NULL pad may be provided so the controller manages all pad devices
+ * A `NULL` pad may be provided so the controller manages all pad devices
  * generically, it is discouraged to mix `GtkPadController` objects with
- * %NULL and non-%NULL @pad argument on the same toplevel window, as execution
+ * `NULL` and non-`NULL` @pad argument on the same toplevel window, as execution
  * order is not guaranteed.
  *
  * The `GtkPadController` is created with no mapped actions. In order to

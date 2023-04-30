@@ -629,7 +629,7 @@ gtk_cell_renderer_progress_class_init (GtkCellRendererProgressClass *klass)
    * GtkCellRendererProgress:text:
    *
    * The "text" property determines the label which will be drawn
-   * over the progress bar. Setting this property to %NULL causes the default
+   * over the progress bar. Setting this property to `NULL` causes the default
    * label to be displayed. Setting this property to an empty string causes
    * no label to be displayed.
    **/

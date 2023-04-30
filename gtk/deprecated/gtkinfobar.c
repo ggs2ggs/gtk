@@ -673,12 +673,12 @@ add_buttons_valist (GtkInfoBar  *info_bar,
  * @info_bar: a `GtkInfoBar`
  * @first_button_text: button text
  * @...: response ID for first button, then more text-response_id pairs,
- *   ending with %NULL
+ *   ending with `NULL`
  *
  * Adds multiple buttons.
  *
  * This is the same as calling [method@Gtk.InfoBar.add_button]
- * repeatedly. The variable argument list should be %NULL-terminated
+ * repeatedly. The variable argument list should be `NULL`-terminated
  * as with [ctor@Gtk.InfoBar.new_with_buttons]. Each button must have both
  * text and response ID.
  *
@@ -715,11 +715,11 @@ gtk_info_bar_new (void)
  * gtk_info_bar_new_with_buttons:
  * @first_button_text: (nullable): ext to go in first button
  * @...: response ID for first button, then additional buttons, ending
- *    with %NULL
+ *    with `NULL`
  *
  * Creates a new `GtkInfoBar` with buttons.
  *
- * Button text/response ID pairs should be listed, with a %NULL pointer
+ * Button text/response ID pairs should be listed, with a `NULL` pointer
  * ending the list. A response ID can be any positive number,
  * or one of the values in the `GtkResponseType` enumeration. If the
  * user clicks one of these dialog buttons, GtkInfoBar will emit

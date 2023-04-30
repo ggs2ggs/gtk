@@ -181,7 +181,7 @@ lookup_immodule (GdkDisplay  *display,
  * Return the context_id of the best IM context type
  * for the given window.
  *
- * Returns: the context ID (will never be %NULL)
+ * Returns: the context ID (will never be `NULL`)
  */
 const char *
 _gtk_im_module_get_default_context_id (GdkDisplay *display)

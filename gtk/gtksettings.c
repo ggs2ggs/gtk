@@ -509,7 +509,7 @@ gtk_settings_class_init (GtkSettingsClass *class)
    *
    * Name of the cursor theme to use.
    *
-   * Use %NULL to use the default theme.
+   * Use `NULL` to use the default theme.
    */
   pspecs[PROP_CURSOR_THEME_NAME] = g_param_spec_string ("gtk-cursor-theme-name", NULL, NULL,
                                                         NULL,
@@ -1132,7 +1132,7 @@ gtk_settings_get_for_display (GdkDisplay *display)
  * See [func@Gtk.Settings.get_for_display].
  *
  * Returns: (nullable) (transfer none): a `GtkSettings` object. If there is
- *   no default display, then returns %NULL.
+ *   no default display, then returns `NULL`.
  */
 GtkSettings*
 gtk_settings_get_default (void)

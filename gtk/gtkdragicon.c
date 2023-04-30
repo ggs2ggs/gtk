@@ -524,7 +524,7 @@ gtk_drag_icon_get_child (GtkDragIcon *self)
  *
  * Supported types include strings, `GdkRGBA` and `GtkTextBuffer`.
  * If GTK does not know how to create a widget for a given value,
- * it will return %NULL.
+ * it will return `NULL`.
  *
  * This method is used to set the default drag icon on drag-and-drop
  * operations started by `GtkDragSource`, so you don't need to set

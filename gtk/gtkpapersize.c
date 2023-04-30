@@ -211,7 +211,7 @@ gtk_paper_size_new_from_info (const PaperInfo *info)
  * [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)
  * paper name.
  *
- * If @name is %NULL, the default paper size is returned,
+ * If @name is `NULL`, the default paper size is returned,
  * see [func@Gtk.PaperSize.get_default].
  *
  * Returns: a new `GtkPaperSize`, use [method@Gtk.PaperSize.free]
@@ -653,7 +653,7 @@ gtk_paper_size_get_display_name (GtkPaperSize *size)
  * @size: a `GtkPaperSize` object
  *
  * Gets the PPD name of the `GtkPaperSize`, which
- * may be %NULL.
+ * may be `NULL`.
  *
  * Returns: the PPD name of @size
  */
@@ -908,7 +908,7 @@ gtk_paper_size_get_default_right_margin (GtkPaperSize *size,
  * gtk_paper_size_new_from_key_file:
  * @key_file: the `GKeyFile` to retrieve the papersize from
  * @group_name: (nullable): the name of the group in the key file to read,
- *   or %NULL to read the first group
+ *   or `NULL` to read the first group
  * @error: (nullable): return location for an error
  *
  * Reads a paper size from the group @group_name in the key file

@@ -709,7 +709,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    *
    * The value for this drop operation.
    *
-   * This is %NULL if the data has not been loaded yet or no drop
+   * This is `NULL` if the data has not been loaded yet or no drop
    * operation is going on.
    *
    * Data may be available before the [signal@Gtk.DropTarget::drop]
@@ -896,7 +896,7 @@ gtk_drop_target_new (GType         type,
  *
  * Gets the data formats that this drop target accepts.
  *
- * If the result is %NULL, all formats are expected to be supported.
+ * If the result is `NULL`, all formats are expected to be supported.
  *
  * Returns: (nullable) (transfer none): the supported data formats
  */
@@ -1042,7 +1042,7 @@ gtk_drop_target_get_preload (GtkDropTarget *self)
  *
  * Gets the currently handled drop operation.
  *
- * If no drop operation is going on, %NULL is returned.
+ * If no drop operation is going on, `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The current drop
  *
@@ -1062,7 +1062,7 @@ gtk_drop_target_get_drop (GtkDropTarget *self)
  *
  * Gets the currently handled drop operation.
  *
- * If no drop operation is going on, %NULL is returned.
+ * If no drop operation is going on, `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The current drop
  *
@@ -1102,7 +1102,7 @@ gtk_drop_target_get_value (GtkDropTarget *self)
  * Rejects the ongoing drop operation.
  *
  * If no drop operation is ongoing, i.e when [property@Gtk.DropTarget:current-drop]
- * is %NULL, this function does nothing.
+ * is `NULL`, this function does nothing.
  *
  * This function should be used when delaying the decision
  * on whether to accept a drag or not until after reading

@@ -816,7 +816,7 @@ gtk_directory_list_update_monitoring (GtkDirectoryList *self)
  *
  * Sets the @file to be enumerated and starts the enumeration.
  *
- * If @file is %NULL, the result will be an empty list.
+ * If @file is `NULL`, the result will be an empty list.
  */
 void
 gtk_directory_list_set_file (GtkDirectoryList *self,
@@ -864,7 +864,7 @@ gtk_directory_list_get_file (GtkDirectoryList *self)
  *
  * Sets the @attributes to be enumerated and starts the enumeration.
  *
- * If @attributes is %NULL, the list of file infos will still be created, it will just
+ * If @attributes is `NULL`, the list of file infos will still be created, it will just
  * not contain any extra attributes.
  */
 void
@@ -983,7 +983,7 @@ gtk_directory_list_is_loading (GtkDirectoryList *self)
  * An error being set does not mean that no files were loaded, and all
  * successfully queried files will remain in the list.
  *
- * Returns: (nullable) (transfer none): The loading error or %NULL if
+ * Returns: (nullable) (transfer none): The loading error or `NULL` if
  *   loading finished successfully
  */
 const GError *

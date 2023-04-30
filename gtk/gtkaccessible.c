@@ -610,7 +610,7 @@ gtk_accessible_reset_property (GtkAccessible         *self,
  * relation change must be communicated to assistive technologies.
  *
  * If the [enum@Gtk.AccessibleRelation] requires a list of references,
- * you should pass each reference individually, followed by %NULL, e.g.
+ * you should pass each reference individually, followed by `NULL`, e.g.
  *
  * ```c
  * gtk_accessible_update_relation (accessible,
@@ -840,7 +840,7 @@ static const char *role_names[] = {
  *
  * Converts a `GtkAccessibleRole` value to the equivalent role name.
  *
- * If @domain is not %NULL, the returned string will be localized.
+ * If @domain is not `NULL`, the returned string will be localized.
  *
  * Returns: (transfer none): the name of the role
  */

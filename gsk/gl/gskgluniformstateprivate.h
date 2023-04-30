@@ -561,7 +561,7 @@ gsk_gl_uniform_state_set_texture (GskGLUniformState   *state,
  * @state: a `GskGLUniformState`
  * @program: a program id > 0
  * @location: the uniform location
- * @color: a color to set or %NULL for transparent
+ * @color: a color to set or `NULL` for transparent
  *
  * Sets a uniform to the color described by @color. This is a convenience
  * function to allow callers to avoid having to translate colors to floats

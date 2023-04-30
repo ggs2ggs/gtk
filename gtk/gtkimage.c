@@ -400,7 +400,7 @@ gtk_image_get_property (GObject     *object,
  * Creates a new `GtkImage` displaying the file @filename.
  *
  * If the file isn’t found or can’t be loaded, the resulting `GtkImage`
- * will display a “broken image” icon. This function never returns %NULL,
+ * will display a “broken image” icon. This function never returns `NULL`,
  * it always returns a valid `GtkImage` widget.
  *
  * If you need to detect failures to load the file, use
@@ -432,7 +432,7 @@ gtk_image_new_from_file   (const char *filename)
  * Creates a new `GtkImage` displaying the resource file @resource_path.
  *
  * If the file isn’t found or can’t be loaded, the resulting `GtkImage` will
- * display a “broken image” icon. This function never returns %NULL,
+ * display a “broken image” icon. This function never returns `NULL`,
  * it always returns a valid `GtkImage` widget.
  *
  * If you need to detect failures to load the file, use

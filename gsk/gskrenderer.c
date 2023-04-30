@@ -224,7 +224,7 @@ gsk_renderer_init (GskRenderer *self)
  *
  * Retrieves the `GdkSurface` set using gsk_enderer_realize().
  *
- * If the renderer has not been realized yet, %NULL will be returned.
+ * If the renderer has not been realized yet, `NULL` will be returned.
  *
  * Returns: (transfer none) (nullable): a `GdkSurface`
  */
@@ -343,7 +343,7 @@ gsk_renderer_unrealize (GskRenderer *renderer)
  * gsk_renderer_render_texture:
  * @renderer: a realized `GskRenderer`
  * @root: a `GskRenderNode`
- * @viewport: (nullable): the section to draw or %NULL to use @root's bounds
+ * @viewport: (nullable): the section to draw or `NULL` to use @root's bounds
  *
  * Renders the scene graph, described by a tree of `GskRenderNode` instances,
  * to a `GdkTexture`.
@@ -406,7 +406,7 @@ gsk_renderer_render_texture (GskRenderer           *renderer,
  * gsk_renderer_render:
  * @renderer: a realized `GskRenderer`
  * @root: a `GskRenderNode`
- * @region: (nullable): the `cairo_region_t` that must be redrawn or %NULL
+ * @region: (nullable): the `cairo_region_t` that must be redrawn or `NULL`
  *   for the whole window
  *
  * Renders the scene graph, described by a tree of `GskRenderNode` instances

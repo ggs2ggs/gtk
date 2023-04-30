@@ -570,7 +570,7 @@ gtk_grid_attach (GtkGrid   *grid,
  * @grid: a `GtkGrid`
  * @child: the widget to add
  * @sibling: (nullable): the child of @grid that @child will be placed
- *   next to, or %NULL to place @child at the beginning or end
+ *   next to, or `NULL` to place @child at the beginning or end
  * @side: the side of @sibling that @child is positioned next to
  * @width: the number of columns that @child will span
  * @height: the number of rows that @child will span
@@ -578,11 +578,11 @@ gtk_grid_attach (GtkGrid   *grid,
  * Adds a widget to the grid.
  *
  * The widget is placed next to @sibling, on the side determined by
- * @side. When @sibling is %NULL, the widget is placed in row (for
+ * @side. When @sibling is `NULL`, the widget is placed in row (for
  * left or right placement) or column 0 (for top or bottom placement),
  * at the end indicated by @side.
  *
- * Attaching widgets labeled `[1]`, `[2]`, `[3]` with `@sibling == %NULL` and
+ * Attaching widgets labeled `[1]`, `[2]`, `[3]` with `@sibling == `NULL`` and
  * `@side == %GTK_POS_LEFT` yields a layout of `[3][2][1]`.
  */
 void

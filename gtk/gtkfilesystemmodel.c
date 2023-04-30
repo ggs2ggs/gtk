@@ -854,7 +854,7 @@ _gtk_file_system_model_new (void)
 /**
  * _gtk_file_system_model_new_for_directory:
  * @directory: the directory to show.
- * @attributes: (nullable): attributes to immediately load or %NULL for all
+ * @attributes: (nullable): attributes to immediately load or `NULL` for all
  *
  * Creates a new `GtkFileSystemModel` object.
  *
@@ -1041,7 +1041,7 @@ _gtk_file_system_model_update_files (GtkFileSystemModel *model,
 /**
  * _gtk_file_system_model_set_filter:
  * @mode: a `GtkFileSystemModel`
- * @filter: (nullable): %NULL or filter to use
+ * @filter: (nullable): `NULL` or filter to use
  *
  * Sets a filter to be used for deciding if a row should be visible or not.
  * Whether this filter applies to directories can be toggled with

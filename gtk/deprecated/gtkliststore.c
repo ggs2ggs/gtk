@@ -1325,7 +1325,7 @@ gtk_list_store_insert (GtkListStore *list_store,
  * @iter: (out): An unset `GtkTreeIter` to set to the new row
  * @sibling: (nullable): A valid `GtkTreeIter`
  *
- * Inserts a new row before @sibling. If @sibling is %NULL, then the row will
+ * Inserts a new row before @sibling. If @sibling is `NULL`, then the row will
  * be appended to the end of the list. @iter will be changed to point to this
  * new row. The row will be empty after this function is called. To fill in
  * values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
@@ -1362,7 +1362,7 @@ gtk_list_store_insert_before (GtkListStore *list_store,
  * @iter: (out): An unset `GtkTreeIter` to set to the new row
  * @sibling: (nullable): A valid `GtkTreeIter`
  *
- * Inserts a new row after @sibling. If @sibling is %NULL, then the row will be
+ * Inserts a new row after @sibling. If @sibling is `NULL`, then the row will be
  * prepended to the beginning of the list. @iter will be changed to point to
  * this new row. The row will be empty after this function is called. To fill
  * in values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
@@ -1893,7 +1893,7 @@ gtk_list_store_move_to (GtkListStore *store,
  * @position: (nullable): A `GtkTreeIter`
  *
  * Moves @iter in @store to the position before @position. Note that this
- * function only works with unsorted stores. If @position is %NULL, @iter
+ * function only works with unsorted stores. If @position is `NULL`, @iter
  * will be moved to the end of the list.
  *
  * Deprecated: 4.10: Use list models
@@ -1926,7 +1926,7 @@ gtk_list_store_move_before (GtkListStore *store,
  * @position: (nullable): A `GtkTreeIter`
  *
  * Moves @iter in @store to the position after @position. Note that this
- * function only works with unsorted stores. If @position is %NULL, @iter
+ * function only works with unsorted stores. If @position is `NULL`, @iter
  * will be moved to the start of the list.
  *
  * Deprecated: 4.10: Use list models

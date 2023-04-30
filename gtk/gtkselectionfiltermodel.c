@@ -346,7 +346,7 @@ gtk_selection_filter_model_set_model (GtkSelectionFilterModel *self,
  * gtk_selection_filter_model_get_model: (attributes org.gtk.Method.get_property=model)
  * @self: a `GtkSelectionFilterModel`
  *
- * Gets the model currently filtered or %NULL if none.
+ * Gets the model currently filtered or `NULL` if none.
  *
  * Returns: (nullable) (transfer none): The model that gets filtered
  */

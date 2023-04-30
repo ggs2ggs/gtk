@@ -86,7 +86,7 @@ typedef struct _GdkDisplayPrivate GdkDisplayPrivate;
 struct _GdkDisplayPrivate {
   /* The base context that all other contexts inherit from.
    * This context is never exposed to public API and is
-   * allowed to have a %NULL surface.
+   * allowed to have a `NULL` surface.
    */
   GdkGLContext *gl_context;
   GError *gl_error;
@@ -1164,7 +1164,7 @@ gdk_display_notify_startup_complete (GdkDisplay  *display,
  * gdk_display_get_startup_notification_id:
  * @display: a `GdkDisplay`
  *
- * Gets the startup notification ID for a Wayland display, or %NULL
+ * Gets the startup notification ID for a Wayland display, or `NULL`
  * if no ID has been defined.
  *
  * Returns: (nullable): the startup notification ID for @display
@@ -1347,7 +1347,7 @@ gdk_display_create_gl_context (GdkDisplay  *self,
  * Gets the GL context returned from [vfunc@Gdk.Display.init_gl]
  * previously.
  *
- * If that function has not been called yet or did fail, %NULL is
+ * If that function has not been called yet or did fail, `NULL` is
  * returned.
  * Call [method@Gdk.Display.prepare_gl] to avoid this.
  *
@@ -1937,7 +1937,7 @@ gdk_display_remove_seat (GdkDisplay *display,
  * Returns the default `GdkSeat` for this display.
  *
  * Note that a display may not have a seat. In this case,
- * this function will return %NULL.
+ * this function will return `NULL`.
  *
  * Returns: (transfer none) (nullable): the default seat.
  **/

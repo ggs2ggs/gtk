@@ -25,7 +25,7 @@
  *
  * Although `GtkGesture` is quite generalized to serve as a base for
  * multi-touch gestures, it is suitable to implement single-touch and
- * pointer-based gestures (using the special %NULL `GdkEventSequence`
+ * pointer-based gestures (using the special `NULL` `GdkEventSequence`
  * value for these).
  *
  * The number of touches that a `GtkGesture` need to be recognized is
@@ -924,7 +924,7 @@ gtk_gesture_init (GtkGesture *gesture)
  * Returns the logical `GdkDevice` that is currently operating
  * on @gesture.
  *
- * This returns %NULL if the gesture is not being interacted.
+ * This returns `NULL` if the gesture is not being interacted.
  *
  * Returns: (nullable) (transfer none): a `GdkDevice`
  */
@@ -1269,7 +1269,7 @@ gtk_gesture_get_last_target (GtkGesture        *gesture,
 /**
  * gtk_gesture_get_point:
  * @gesture: a `GtkGesture`
- * @sequence: (nullable): a `GdkEventSequence`, or %NULL for pointer events
+ * @sequence: (nullable): a `GdkEventSequence`, or `NULL` for pointer events
  * @x: (out) (optional): return location for X axis of the sequence coordinates
  * @y: (out) (optional): return location for Y axis of the sequence coordinates
  *

@@ -300,7 +300,7 @@ gdk_gl_texture_builder_new (void)
  * @self: a `GdkGLTextureBuilder`
  *
  * Gets the context previously set via gdk_gl_texture_builder_set_context() or
- * %NULL if none was set.
+ * `NULL` if none was set.
  *
  * Returns: (transfer none) (nullable): The context
  *
@@ -317,7 +317,7 @@ gdk_gl_texture_builder_get_context (GdkGLTextureBuilder *self)
 /**
  * gdk_gl_texture_builder_set_context: (attributes org.gdk.Method.set_property=context)
  * @self: a `GdkGLTextureBuilder`
- * @context: (nullable): The context the texture beongs to or %NULL to unset
+ * @context: (nullable): The context the texture beongs to or `NULL` to unset
  *
  * Sets the context to be used for the texture. This is the context that owns
  * the texture.

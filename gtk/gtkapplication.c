@@ -652,7 +652,7 @@ gtk_application_class_init (GtkApplicationClass *class)
  *
  * Note that commandline arguments are not passed to [func@Gtk.init].
  *
- * If `application_id` is not %NULL, then it must be valid. See
+ * If `application_id` is not `NULL`, then it must be valid. See
  * `g_application_id_is_valid()`.
  *
  * If no application ID is given then some features (most notably application
@@ -1117,7 +1117,7 @@ gtk_application_get_accels_for_action (GtkApplication *application,
  *
  * If you are unsure, check it with [func@Gtk.accelerator_parse] first.
  *
- * Returns: (transfer full): a %NULL-terminated array of actions for `accel`
+ * Returns: (transfer full): a `NULL`-terminated array of actions for `accel`
  */
 char **
 gtk_application_get_actions_for_accel (GtkApplication *application,

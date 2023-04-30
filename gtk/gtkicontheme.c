@@ -1652,7 +1652,7 @@ gtk_icon_theme_add_resource_path (GtkIconTheme *self,
  * gtk_icon_theme_set_theme_name:
  * @self: a `GtkIconTheme`
  * @theme_name: (nullable): name of icon theme to use instead of
- *   configured theme, or %NULL to unset a previously set custom theme
+ *   configured theme, or `NULL` to unset a previously set custom theme
  *
  * Sets the name of the icon theme that the `GtkIconTheme` object uses
  * overriding system configuration.
@@ -3643,7 +3643,7 @@ new_resource_file (const char *filename)
  *
  * Gets the `GFile` that was used to load the icon.
  *
- * Returns %NULL if the icon was not loaded from a file.
+ * Returns `NULL` if the icon was not loaded from a file.
  *
  * Returns: (nullable) (transfer full): the `GFile` for the icon
  */
@@ -3673,11 +3673,11 @@ gtk_icon_paintable_get_file (GtkIconPaintable *icon)
  * "image-missing". The icon chosen is returned by this function.
  *
  * If the icon was created without an icon theme, this function
- * returns %NULL.
+ * returns `NULL`.
  *
  *
  * Returns: (nullable) (type filename): the themed icon-name for the
- *   icon, or %NULL if its not a themed icon.
+ *   icon, or `NULL` if its not a themed icon.
  */
 const char *
 gtk_icon_paintable_get_icon_name (GtkIconPaintable *icon)

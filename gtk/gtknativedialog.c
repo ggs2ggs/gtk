@@ -229,7 +229,7 @@ gtk_native_dialog_class_init (GtkNativeDialogClass *class)
   /**
    * GtkNativeDialog:transient-for: (attributes org.gtk.Property.get=gtk_native_dialog_get_transient_for org.gtk.Property.set=gtk_native_dialog_set_transient_for)
    *
-   * The transient parent of the dialog, or %NULL for none.
+   * The transient parent of the dialog, or `NULL` for none.
    */
   native_props[PROP_TRANSIENT_FOR] =
     g_param_spec_object ("transient-for", NULL, NULL,
@@ -461,7 +461,7 @@ gtk_native_dialog_set_title (GtkNativeDialog *self,
  *
  * Gets the title of the `GtkNativeDialog`.
  *
- * Returns: (nullable): the title of the dialog, or %NULL if none has
+ * Returns: (nullable): the title of the dialog, or `NULL` if none has
  *    been set explicitly. The returned string is owned by the widget
  *    and must not be modified or freed.
  */
@@ -495,7 +495,7 @@ parent_destroyed (GtkWidget       *parent,
  * This allows window managers to e.g. keep the dialog on top of the
  * main window, or center the dialog over the main window.
  *
- * Passing %NULL for @parent unsets the current transient window.
+ * Passing `NULL` for @parent unsets the current transient window.
  */
 void
 gtk_native_dialog_set_transient_for (GtkNativeDialog *self,
@@ -526,7 +526,7 @@ gtk_native_dialog_set_transient_for (GtkNativeDialog *self,
  * Fetches the transient parent for this window.
  *
  * Returns: (nullable) (transfer none): the transient parent for this window,
- *   or %NULL if no transient parent has been set.
+ *   or `NULL` if no transient parent has been set.
  */
 GtkWindow *
 gtk_native_dialog_get_transient_for (GtkNativeDialog *self)

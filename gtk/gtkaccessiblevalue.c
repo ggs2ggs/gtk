@@ -171,7 +171,7 @@ gtk_accessible_value_to_string (const GtkAccessibleValue *self)
  *
  * Checks whether @value_a and @value_b are equal.
  *
- * This function is %NULL-safe.
+ * This function is `NULL`-safe.
  *
  * Returns: true if the given `GtkAccessibleValue` instances are equal,
  *   and false otherwise
@@ -1556,9 +1556,9 @@ gtk_accessible_attribute_init_value (const GtkAccessibleCollect *cstate,
  * Collects and consumes the next item in the @args variadic arguments list,
  * and returns a `GtkAccessibleValue` for it.
  *
- * If the collection fails, @error is set and %NULL is returned.
+ * If the collection fails, @error is set and `NULL` is returned.
  *
- * The returned value could be %NULL even on success, in which case the state
+ * The returned value could be `NULL` even on success, in which case the state
  * should be reset to its default value by the caller.
  *
  * Returns: (transfer full) (nullable): a `GtkAccessibleValue`
@@ -1584,9 +1584,9 @@ gtk_accessible_value_collect_for_state (GtkAccessibleState   state,
  * Retrieves the value stored inside @value and returns a `GtkAccessibleValue`
  * for the given @state.
  *
- * If the collection fails, @error is set and %NULL is returned.
+ * If the collection fails, @error is set and `NULL` is returned.
  *
- * The returned value could be %NULL even on success, in which case the state
+ * The returned value could be `NULL` even on success, in which case the state
  * should be reset to its default value by the caller.
  *
  * Returns: (transfer full) (nullable): a `GtkAccessibleValue`
@@ -1737,7 +1737,7 @@ gtk_accessible_value_collect_for_property (GtkAccessibleProperty   property,
  *
  * If the collection fails, @error is set.
  *
- * The returned value could be %NULL even on success, in which case the property
+ * The returned value could be `NULL` even on success, in which case the property
  * should be reset to its default value by the caller.
  *
  * Returns: (transfer full) (nullable): a `GtkAccessibleValue`
@@ -1850,9 +1850,9 @@ gtk_accessible_value_get_default_for_relation (GtkAccessibleRelation relation)
  * Collects and consumes the next item in the @args variadic arguments list,
  * and returns a `GtkAccessibleValue` for it.
  *
- * If the collection fails, @error is set and %NULL is returned.
+ * If the collection fails, @error is set and `NULL` is returned.
  *
- * The returned value could be %NULL even on success, in which case the relation
+ * The returned value could be `NULL` even on success, in which case the relation
  * should be reset to its default value by the caller.
  *
  * Returns: (transfer full) (nullable): a `GtkAccessibleValue`
@@ -1878,9 +1878,9 @@ gtk_accessible_value_collect_for_relation (GtkAccessibleRelation   relation,
  * Retrieves the value stored inside @value and returns a `GtkAccessibleValue`
  * for the given @relation.
  *
- * If the collection fails, @error is set and %NULL is returned.
+ * If the collection fails, @error is set and `NULL` is returned.
  *
- * The returned value could be %NULL even on success, in which case the relation
+ * The returned value could be `NULL` even on success, in which case the relation
  * should be reset to its default value by the caller.
  *
  * Returns: (transfer full) (nullable): a `GtkAccessibleValue`

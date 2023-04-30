@@ -99,7 +99,7 @@ gtk_custom_filter_init (GtkCustomFilter *self)
  * Creates a new filter using the given @match_func to filter
  * items.
  *
- * If @match_func is %NULL, the filter matches all items.
+ * If @match_func is `NULL`, the filter matches all items.
  *
  * If the filter func changes its filtering behavior,
  * gtk_filter_changed() needs to be called.
@@ -129,7 +129,7 @@ gtk_custom_filter_new (GtkCustomFilterFunc match_func,
  *
  * Sets the function used for filtering items.
  *
- * If @match_func is %NULL, the filter matches all items.
+ * If @match_func is `NULL`, the filter matches all items.
  *
  * If the filter func changes its filtering behavior,
  * gtk_filter_changed() needs to be called.

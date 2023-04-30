@@ -701,7 +701,7 @@ _gdk_macos_surface_set_native (GdkMacosSurface *self,
  * The NSWindow's contentView is an implementation detail and may change
  * between releases of GTK.
  *
- * Returns: (nullable): a #NSWindow or %NULL
+ * Returns: (nullable): a #NSWindow or `NULL`
  *
  * Since: 4.8
  */

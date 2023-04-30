@@ -4455,7 +4455,7 @@ gtk_places_sidebar_get_open_flags (GtkPlacesSidebar *sidebar)
 /*
  * gtk_places_sidebar_set_location:
  * @sidebar: a places sidebar
- * @location: (nullable): location to select, or %NULL for no current path
+ * @location: (nullable): location to select, or `NULL` for no current path
  *
  * Sets the location that is being shown in the widgets surrounding the
  * @sidebar, for example, in a folder view in a file manager.  In turn, the
@@ -4515,7 +4515,7 @@ gtk_places_sidebar_set_location (GtkPlacesSidebar *sidebar,
  * gtk_places_sidebar_get_location:
  * @sidebar: a places sidebar
  *
- * Gets the currently selected location in the @sidebar. This can be %NULL when
+ * Gets the currently selected location in the @sidebar. This can be `NULL` when
  * nothing is selected, for example, when gtk_places_sidebar_set_location() has
  * been called with a location that is not among the sidebar’s list of places to
  * show.
@@ -4523,7 +4523,7 @@ gtk_places_sidebar_set_location (GtkPlacesSidebar *sidebar,
  * You can use this function to get the selection in the @sidebar.
  *
  * Returns: (nullable) (transfer full): a GFile with the selected location, or
- * %NULL if nothing is visually selected.
+ * `NULL` if nothing is visually selected.
  */
 GFile *
 gtk_places_sidebar_get_location (GtkPlacesSidebar *sidebar)
@@ -4874,7 +4874,7 @@ gtk_places_sidebar_get_shortcuts (GtkPlacesSidebar *sidebar)
  * the “Alt-1”, “Alt-2”, etc. shortcuts, which activate the corresponding bookmark.
  *
  * Returns: (nullable) (transfer full): The bookmark specified by the index @n, or
- * %NULL if no such index exist.  Note that the indices start at 0, even though
+ * `NULL` if no such index exist.  Note that the indices start at 0, even though
  * the file chooser starts them with the keyboard shortcut "Alt-1".
  */
 GFile *

@@ -1827,7 +1827,7 @@ gtk_stack_get_page (GtkStack  *stack,
  *
  * Finds the child with the name given as the argument.
  *
- * Returns %NULL if there is no child with this name.
+ * Returns `NULL` if there is no child with this name.
  *
  * Returns: (transfer none) (nullable): the requested child
  *   of the `GtkStack`
@@ -2134,7 +2134,7 @@ gtk_stack_get_interpolate_size (GtkStack *stack)
  *
  * Gets the currently visible child of @stack.
  *
- * Returns %NULL if there are no visible children.
+ * Returns `NULL` if there are no visible children.
  *
  * Returns: (transfer none) (nullable): the visible child of the `GtkStack`
  */
@@ -2154,7 +2154,7 @@ gtk_stack_get_visible_child (GtkStack *stack)
  *
  * Returns the name of the currently visible child of @stack.
  *
- * Returns %NULL if there is no visible child.
+ * Returns `NULL` if there is no visible child.
  *
  * Returns: (transfer none) (nullable): the name of the visible child
  *   of the `GtkStack`

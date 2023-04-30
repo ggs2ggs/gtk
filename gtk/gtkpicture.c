@@ -409,7 +409,7 @@ gtk_picture_class_init (GtkPictureClass *class)
   /**
    * GtkPicture:file: (attributes org.gtk.Property.get=gtk_picture_get_file org.gtk.Property.set=gtk_picture_set_file)
    *
-   * The `GFile` that is displayed or %NULL if none.
+   * The `GFile` that is displayed or `NULL` if none.
    */
   properties[PROP_FILE] =
       g_param_spec_object ("file", NULL, NULL,
@@ -688,7 +688,7 @@ gtk_picture_set_file (GtkPicture *self,
  * Gets the `GFile` currently displayed if @self is displaying a file.
  *
  * If @self is not displaying a file, for example when
- * [method@Gtk.Picture.set_paintable] was used, then %NULL is returned.
+ * [method@Gtk.Picture.set_paintable] was used, then `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The `GFile` displayed by @self.
  */
@@ -807,7 +807,7 @@ gtk_picture_set_pixbuf (GtkPicture *self,
  *
  * Makes @self display the given @paintable.
  *
- * If @paintable is %NULL, nothing will be displayed.
+ * If @paintable is `NULL`, nothing will be displayed.
  *
  * See [ctor@Gtk.Picture.new_for_paintable] for details.
  */
@@ -1033,7 +1033,7 @@ gtk_picture_get_content_fit (GtkPicture *self)
  *
  * This text will be made available to accessibility tools.
  *
- * If the picture cannot be described textually, set this property to %NULL.
+ * If the picture cannot be described textually, set this property to `NULL`.
  */
 void
 gtk_picture_set_alternative_text (GtkPicture *self,
@@ -1060,7 +1060,7 @@ gtk_picture_set_alternative_text (GtkPicture *self,
  *
  * Gets the alternative textual description of the picture.
  *
- * The returned string will be %NULL if the picture cannot be described textually.
+ * The returned string will be `NULL` if the picture cannot be described textually.
  *
  * Returns: (nullable) (transfer none): the alternative textual description of @self.
  */

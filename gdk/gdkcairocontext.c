@@ -64,7 +64,7 @@ gdk_cairo_context_init (GdkCairoContext *self)
  * of @context.
  *
  * A call to [method@Gdk.DrawContext.begin_frame] with this
- * @context must have been done or this function will return %NULL.
+ * @context must have been done or this function will return `NULL`.
  *
  * The returned context is guaranteed to be valid until
  * [method@Gdk.DrawContext.end_frame] is called.

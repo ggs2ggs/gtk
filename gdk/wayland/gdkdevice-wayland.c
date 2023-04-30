@@ -619,7 +619,7 @@ gdk_wayland_device_set_selection (GdkDevice             *gdk_device,
  *
  * For `GdkDevice`s that possibly coalesce multiple hardware
  * devices (eg. mouse, keyboard, touch,...), this function
- * will return %NULL.
+ * will return `NULL`.
  *
  * This is most notably implemented for devices of type
  * %GDK_SOURCE_PEN, %GDK_SOURCE_TABLET_PAD.

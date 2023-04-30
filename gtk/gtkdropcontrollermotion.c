@@ -229,7 +229,7 @@ gtk_drop_controller_motion_class_init (GtkDropControllerMotionClass *klass)
    * The ongoing drop operation over the controller's widget or
    * its descendant.
    *
-   * If no drop operation is going on, this property returns %NULL.
+   * If no drop operation is going on, this property returns `NULL`.
    *
    * The event controller should not modify the @drop, but it might
    * want to query its properties.

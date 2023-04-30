@@ -2087,7 +2087,7 @@ gtk_combo_box_get_active_iter (GtkComboBox     *combo_box,
  *
  * Sets the current active item to be the one referenced by @iter.
  *
- * If @iter is %NULL, the active item is unset.
+ * If @iter is `NULL`, the active item is unset.
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
  */
@@ -2113,7 +2113,7 @@ gtk_combo_box_set_active_iter (GtkComboBox     *combo_box,
  *
  * Sets the model used by @combo_box to be @model.
  *
- * Will unset a previously set model (if applicable). If model is %NULL,
+ * Will unset a previously set model (if applicable). If model is `NULL`,
  * then it will unset the model.
  *
  * Note that this function does not clear the cell renderers, you have to
@@ -2610,7 +2610,7 @@ gtk_combo_box_get_row_separator_func (GtkComboBox *combo_box)
  * Sets the row separator function, which is used to determine
  * whether a row should be drawn as a separator.
  *
- * If the row separator function is %NULL, no separators are drawn.
+ * If the row separator function is `NULL`, no separators are drawn.
  * This is the default value.
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
@@ -2899,8 +2899,8 @@ gtk_combo_box_get_id_column (GtkComboBox *combo_box)
  * must not free it.
  *
  * If the [property@Gtk.ComboBox:id-column] property of @combo_box is
- * not set, or if no row is active, or if the active row has a %NULL
- * ID value, then %NULL is returned.
+ * not set, or if no row is active, or if the active row has a `NULL`
+ * ID value, then `NULL` is returned.
  *
  * Returns: (nullable): the ID of the active row
  *
@@ -2948,14 +2948,14 @@ gtk_combo_box_get_active_id (GtkComboBox *combo_box)
  * Changes the active row of @combo_box to the one that has an ID equal to
  * @active_id.
  *
- * If @active_id is %NULL, the active row is unset. Rows having
- * a %NULL ID string cannot be made active by this function.
+ * If @active_id is `NULL`, the active row is unset. Rows having
+ * a `NULL` ID string cannot be made active by this function.
  *
  * If the [property@Gtk.ComboBox:id-column] property of @combo_box is
  * unset or if no row has the given ID then the function does nothing
  * and returns false.
  *
- * Returns: true if a row with a matching ID was found. If a %NULL
+ * Returns: true if a row with a matching ID was found. If a `NULL`
  *   @active_id was given to unset the active row, the function
  *   always returns true.
  *

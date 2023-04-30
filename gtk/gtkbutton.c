@@ -883,7 +883,7 @@ gtk_button_set_label (GtkButton   *button,
  * Fetches the text from the label of the button.
  *
  * If the label text has not been set with [method@Gtk.Button.set_label]
- * the return value will be %NULL. This will be the case if you create
+ * the return value will be `NULL`. This will be the case if you create
  * an empty button with [ctor@Gtk.Button.new] to use as a container.
  *
  * Returns: (nullable): The text of the label widget. This string is owned
@@ -1010,7 +1010,7 @@ gtk_button_set_icon_name (GtkButton  *button,
  * Returns the icon name of the button.
  *
  * If the icon name has not been set with [method@Gtk.Button.set_icon_name]
- * the return value will be %NULL. This will be the case if you create
+ * the return value will be `NULL`. This will be the case if you create
  * an empty button with [ctor@Gtk.Button.new] to use as a container.
  *
  * Returns: (nullable): The icon name set via [method@Gtk.Button.set_icon_name]

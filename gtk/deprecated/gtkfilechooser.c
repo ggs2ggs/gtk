@@ -767,7 +767,7 @@ gtk_file_chooser_get_shortcut_folders (GtkFileChooser *chooser)
  * @chooser: a `GtkFileChooser`
  * @id: id for the added choice
  * @label: user-visible label for the added choice
- * @options: (nullable) (array zero-terminated=1): ids for the options of the choice, or %NULL for a boolean choice
+ * @options: (nullable) (array zero-terminated=1): ids for the options of the choice, or `NULL` for a boolean choice
  * @option_labels: (nullable) (array zero-terminated=1): user-visible labels for the options, must be the same length as @options
  *
  * Adds a 'choice' to the file chooser.

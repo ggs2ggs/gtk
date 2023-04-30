@@ -2124,7 +2124,7 @@ gtk_scrolled_window_new (void)
 /**
  * gtk_scrolled_window_set_hadjustment: (attributes org.gtk.Method.set_property=hadjustment)
  * @scrolled_window: a `GtkScrolledWindow`
- * @hadjustment: (nullable): the `GtkAdjustment` to use, or %NULL to create a new one
+ * @hadjustment: (nullable): the `GtkAdjustment` to use, or `NULL` to create a new one
  *
  * Sets the `GtkAdjustment` for the horizontal scrollbar.
  */
@@ -2193,7 +2193,7 @@ gtk_scrolled_window_set_hadjustment (GtkScrolledWindow *scrolled_window,
 /**
  * gtk_scrolled_window_set_vadjustment: (attributes org.gtk.Method.set_property=vadjustment)
  * @scrolled_window: a `GtkScrolledWindow`
- * @vadjustment: (nullable): the `GtkAdjustment` to use, or %NULL to create a new one
+ * @vadjustment: (nullable): the `GtkAdjustment` to use, or `NULL` to create a new one
  *
  * Sets the `GtkAdjustment` for the vertical scrollbar.
  */

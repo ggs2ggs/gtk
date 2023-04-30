@@ -128,7 +128,7 @@ gtk_text_mark_class_init (GtkTextMarkClass *klass)
   /**
    * GtkTextMark:name:
    *
-   * The name of the mark or %NULL if the mark is anonymous.
+   * The name of the mark or `NULL` if the mark is anonymous.
    */
   g_object_class_install_property (object_class,
                                    PROP_NAME,
@@ -246,7 +246,7 @@ gtk_text_mark_get_property (GObject    *object,
  * Creates a text mark.
  *
  * Add it to a buffer using [method@Gtk.TextBuffer.add_mark].
- * If @name is %NULL, the mark is anonymous; otherwise, the mark can be
+ * If @name is `NULL`, the mark is anonymous; otherwise, the mark can be
  * retrieved by name using [method@Gtk.TextBuffer.get_mark]. If a mark
  * has left gravity, and text is inserted at the mark’s current location,
  * the mark will be moved to the left of the newly-inserted text. If the
@@ -293,7 +293,7 @@ gtk_text_mark_get_visible (GtkTextMark *mark)
  *
  * Returns the mark name.
  *
- * Returns %NULL for anonymous marks.
+ * Returns `NULL` for anonymous marks.
  *
  * Returns: (nullable): mark name
  */
@@ -339,7 +339,7 @@ gtk_text_mark_get_deleted (GtkTextMark *mark)
  *
  * Gets the buffer this mark is located inside.
  *
- * Returns %NULL if the mark is deleted.
+ * Returns `NULL` if the mark is deleted.
  *
  * Returns: (transfer none) (nullable): the mark’s `GtkTextBuffer`
  */

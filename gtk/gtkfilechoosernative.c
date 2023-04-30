@@ -532,8 +532,8 @@ gtk_file_chooser_native_init (GtkFileChooserNative *self)
  * @title: (nullable): Title of the native
  * @parent: (nullable): Transient parent of the native
  * @action: Open or save mode for the dialog
- * @accept_label: (nullable): text to go in the accept button, or %NULL for the default
- * @cancel_label: (nullable): text to go in the cancel button, or %NULL for the default
+ * @accept_label: (nullable): text to go in the accept button, or `NULL` for the default
+ * @cancel_label: (nullable): text to go in the cancel button, or `NULL` for the default
  *
  * Creates a new `GtkFileChooserNative`.
  *
@@ -789,7 +789,7 @@ gtk_file_chooser_native_class_init (GtkFileChooserNativeClass *class)
    * GtkFileChooserNative:accept-label: (attributes org.gtk.Property.get=gtk_file_chooser_native_get_accept_label org.gtk.Property.set=gtk_file_chooser_native_set_accept_label)
    *
    * The text used for the label on the accept button in the dialog, or
-   * %NULL to use the default text.
+   * `NULL` to use the default text.
    */
  native_props[PROP_ACCEPT_LABEL] =
       g_param_spec_string ("accept-label", NULL, NULL,
@@ -800,7 +800,7 @@ gtk_file_chooser_native_class_init (GtkFileChooserNativeClass *class)
    * GtkFileChooserNative:cancel-label: (attributes org.gtk.Property.get=gtk_file_chooser_native_get_cancel_label org.gtk.Property.set=gtk_file_chooser_native_set_cancel_label)
    *
    * The text used for the label on the cancel button in the dialog, or
-   * %NULL to use the default text.
+   * `NULL` to use the default text.
    */
   native_props[PROP_CANCEL_LABEL] =
       g_param_spec_string ("cancel-label", NULL, NULL,

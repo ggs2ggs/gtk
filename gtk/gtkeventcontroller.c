@@ -615,7 +615,7 @@ gtk_event_controller_get_target (GtkEventController *controller)
  *
  * Returns the event that is currently being handled by the controller.
  *
- * At other times, %NULL is returned.
+ * At other times, `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): the event that is currently
  *   handled by @controller
@@ -657,7 +657,7 @@ gtk_event_controller_get_current_event_time (GtkEventController *controller)
  * Returns the device of the event that is currently being
  * handled by the controller.
  *
- * At other times, %NULL is returned.
+ * At other times, `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): device of the event is
  *   currently handled by @controller

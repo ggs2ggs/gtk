@@ -874,7 +874,7 @@ gtk_entry_completion_get_entry (GtkEntryCompletion *completion)
  * Sets the model for a `GtkEntryCompletion`.
  *
  * If @completion already has a model set, it will remove it
- * before setting the new model. If model is %NULL, then it
+ * before setting the new model. If model is `NULL`, then it
  * will unset the model.
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
@@ -919,7 +919,7 @@ gtk_entry_completion_set_model (GtkEntryCompletion *completion,
  *
  * Returns the model the `GtkEntryCompletion` is using as data source.
  *
- * Returns %NULL if the model is unset.
+ * Returns `NULL` if the model is unset.
  *
  * Returns: (nullable) (transfer none): A `GtkTreeModel`
  *
@@ -1255,7 +1255,7 @@ gtk_entry_completion_cursor_on_match (GtkEntryCompletion *completion,
  * Computes the common prefix that is shared by all rows in @completion
  * that start with @key.
  *
- * If no row matches @key, %NULL will be returned.
+ * If no row matches @key, `NULL` will be returned.
  * Note that a text column must have been set for this function to work,
  * see [method@Gtk.EntryCompletion.set_text_column] for details.
  *
@@ -1366,7 +1366,7 @@ gtk_entry_completion_real_insert_prefix (GtkEntryCompletion *completion,
  * @completion: a `GtkEntryCompletion`
  *
  * Get the original text entered by the user that triggered
- * the completion or %NULL if there’s no completion ongoing.
+ * the completion or `NULL` if there’s no completion ongoing.
  *
  * Returns: (nullable): the prefix for the current completion
  *

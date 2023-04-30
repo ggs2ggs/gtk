@@ -323,7 +323,7 @@ gdk_display_manager_get_default_display (GdkDisplayManager *manager)
  *
  *     gdk_display_manager_get_default_display (gdk_display_manager_get ())
  *
- * Returns: (nullable) (transfer none): a `GdkDisplay`, or %NULL if
+ * Returns: (nullable) (transfer none): a `GdkDisplay`, or `NULL` if
  *   there is no default display
  */
 GdkDisplay *
@@ -373,7 +373,7 @@ gdk_display_manager_list_displays (GdkDisplayManager *manager)
  *
  * Opens a display.
  *
- * Returns: (nullable) (transfer none): a `GdkDisplay`, or %NULL
+ * Returns: (nullable) (transfer none): a `GdkDisplay`, or `NULL`
  *   if the display could not be opened
  */
 GdkDisplay *

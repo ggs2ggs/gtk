@@ -1059,7 +1059,7 @@ gtk_gl_area_new (void)
 /**
  * gtk_gl_area_set_error:
  * @area: a `GtkGLArea`
- * @error: (nullable): a new `GError`, or %NULL to unset the error
+ * @error: (nullable): a new `GError`, or `NULL` to unset the error
  *
  * Sets an error on the area which will be shown instead of the
  * GL rendering.

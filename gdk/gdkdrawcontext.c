@@ -450,7 +450,7 @@ gdk_draw_context_end_frame (GdkDrawContext *context)
  * surface that the @context determined needs to be repainted.
  *
  * If @context is not in between calls to [method@Gdk.DrawContext.begin_frame]
- * and [method@Gdk.DrawContext.end_frame], %NULL will be returned.
+ * and [method@Gdk.DrawContext.end_frame], `NULL` will be returned.
  *
  * Returns: (transfer none) (nullable): a Cairo region
  */

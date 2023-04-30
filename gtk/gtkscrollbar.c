@@ -249,7 +249,7 @@ gtk_scrollbar_init (GtkScrollbar *self)
 /**
  * gtk_scrollbar_new:
  * @orientation: the scrollbar’s orientation.
- * @adjustment: (nullable): the [class@Gtk.Adjustment] to use, or %NULL
+ * @adjustment: (nullable): the [class@Gtk.Adjustment] to use, or `NULL`
  *   to create a new adjustment.
  *
  * Creates a new scrollbar with the given orientation.

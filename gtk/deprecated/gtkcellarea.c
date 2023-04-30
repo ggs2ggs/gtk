@@ -2441,7 +2441,7 @@ gtk_cell_area_class_find_cell_property (GtkCellAreaClass   *aclass,
  * Returns all cell properties of a cell area class.
  *
  * Returns: (array length=n_properties) (transfer container): a newly
- *     allocated %NULL-terminated array of `GParamSpec`*.  The array
+ *     allocated `NULL`-terminated array of `GParamSpec`*.  The array
  *     must be freed with g_free().
  *
  * Deprecated: 4.10
@@ -2469,7 +2469,7 @@ gtk_cell_area_class_list_cell_properties (GtkCellAreaClass  *aclass,
  * @area: a `GtkCellArea`
  * @renderer: a `GtkCellRenderer` to be placed inside @area
  * @first_prop_name: the name of the first cell property to set
- * @...: a %NULL-terminated list of property names and values, starting
+ * @...: a `NULL`-terminated list of property names and values, starting
  *     with @first_prop_name
  *
  * Adds @renderer to @area, setting cell properties at the same time.
@@ -2510,7 +2510,7 @@ gtk_cell_area_add_with_properties (GtkCellArea        *area,
  * @area: a `GtkCellArea`
  * @renderer: a `GtkCellRenderer` which is a cell inside @area
  * @first_prop_name: the name of the first cell property to set
- * @...: a %NULL-terminated list of property names and values, starting
+ * @...: a `NULL`-terminated list of property names and values, starting
  *           with @first_prop_name
  *
  * Sets one or more cell properties for @cell in @area.
@@ -2539,7 +2539,7 @@ gtk_cell_area_cell_set (GtkCellArea        *area,
  * @renderer: a `GtkCellRenderer` which is inside @area
  * @first_prop_name: the name of the first cell property to get
  * @...: return location for the first cell property, followed
- *     optionally by more name/return location pairs, followed by %NULL
+ *     optionally by more name/return location pairs, followed by `NULL`
  *
  * Gets the values of one or more cell properties for @renderer in @area.
  *
@@ -2611,7 +2611,7 @@ area_set_cell_property (GtkCellArea     *area,
  * @area: a `GtkCellArea`
  * @renderer: a `GtkCellRenderer` which inside @area
  * @first_property_name: the name of the first cell property to set
- * @var_args: a %NULL-terminated list of property names and values, starting
+ * @var_args: a `NULL`-terminated list of property names and values, starting
  *           with @first_prop_name
  *
  * Sets one or more cell properties for @renderer in @area.
@@ -2674,7 +2674,7 @@ gtk_cell_area_cell_set_valist (GtkCellArea        *area,
  * @renderer: a `GtkCellRenderer` inside @area
  * @first_property_name: the name of the first property to get
  * @var_args: return location for the first property, followed
- *     optionally by more name/return location pairs, followed by %NULL
+ *     optionally by more name/return location pairs, followed by `NULL`
  *
  * Gets the values of one or more cell properties for @renderer in @area.
  *

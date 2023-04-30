@@ -240,7 +240,7 @@ gtk_widget_paintable_class_init (GtkWidgetPaintableClass *klass)
   /**
    * GtkWidgetPaintable:widget: (attributes org.gtk.Property.get=gtk_widget_paintable_get_widget org.gtk.Property.set=gtk_widget_paintable_set_widget)
    *
-   * The observed widget or %NULL if none.
+   * The observed widget or `NULL` if none.
    */
   properties[PROP_WIDGET] =
     g_param_spec_object ("widget", NULL, NULL,
@@ -295,7 +295,7 @@ gtk_widget_paintable_snapshot_widget (GtkWidgetPaintable *self)
  * gtk_widget_paintable_get_widget: (attributes org.gtk.Method.get_property=widget)
  * @self: a `GtkWidgetPaintable`
  *
- * Returns the widget that is observed or %NULL if none.
+ * Returns the widget that is observed or `NULL` if none.
  *
  * Returns: (transfer none) (nullable): the observed widget.
  */

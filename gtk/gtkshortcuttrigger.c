@@ -110,7 +110,7 @@ gtk_shortcut_trigger_trigger (GtkShortcutTrigger *self,
  * Tries to parse the given string into a trigger.
  *
  * On success, the parsed trigger is returned.
- * When parsing failed, %NULL is returned.
+ * When parsing failed, `NULL` is returned.
  *
  * The accepted strings are:
  *
@@ -480,7 +480,7 @@ gtk_never_trigger_init (GtkNeverTrigger *self)
  * Gets the never trigger.
  *
  * This is a singleton for a trigger that never triggers.
- * Use this trigger instead of %NULL because it implements
+ * Use this trigger instead of `NULL` because it implements
  * all virtual functions.
  *
  * Returns: (type GtkNeverTrigger) (transfer none): The never trigger

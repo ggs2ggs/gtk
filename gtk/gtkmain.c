@@ -1858,8 +1858,8 @@ gtk_get_current_event_time (void)
  * gtk_get_event_widget:
  * @event: a `GdkEvent`
  *
- * If @event is %NULL or the event was not associated with any widget,
- * returns %NULL, otherwise returns the widget that received the event
+ * If @event is `NULL` or the event was not associated with any widget,
+ * returns `NULL`, otherwise returns the widget that received the event
  * originally.
  *
  * Returns: (transfer none) (nullable): the widget that originally

@@ -1034,7 +1034,7 @@ gtk_drop_down_get_selected (GtkDropDown *self)
  * gtk_drop_down_get_selected_item: (attributes org.gtk.Method.get_property=selected-item)
  * @self: a `GtkDropDown`
  *
- * Gets the selected item. If no item is selected, %NULL is returned.
+ * Gets the selected item. If no item is selected, `NULL` is returned.
  *
  * Returns: (transfer none) (type GObject) (nullable): The selected item
  */

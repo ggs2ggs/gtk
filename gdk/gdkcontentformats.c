@@ -81,11 +81,11 @@ G_DEFINE_BOXED_TYPE (GdkContentFormats, gdk_content_formats,
  *
  * Canonicalizes the given mime type and interns the result.
  *
- * If @string is not a valid mime type, %NULL is returned instead.
+ * If @string is not a valid mime type, `NULL` is returned instead.
  * See RFC 2048 for the syntax if mime types.
  *
  * Returns: (nullable): An interned string for the canonicalized
- *   mime type or %NULL if the string wasn't a valid mime type
+ *   mime type or `NULL` if the string wasn't a valid mime type
  */
 const char *
 gdk_intern_mime_type (const char *string)
@@ -189,7 +189,7 @@ gdk_content_formats_new_for_gtype (GType type)
  * Strings printed via [method@Gdk.ContentFormats.to_string]
  * can be read in again successfully using this function.
  *
- * If @string does not describe valid content formats, %NULL
+ * If @string does not describe valid content formats, `NULL`
  * is returned.
  *
  * Returns: (nullable): the content formats if @string is valid
@@ -450,9 +450,9 @@ gdk_content_formats_match_gtype (const GdkContentFormats *first,
  * Finds the first mime type from @first that is also contained
  * in @second.
  *
- * If no matching mime type is found, %NULL is returned.
+ * If no matching mime type is found, `NULL` is returned.
  *
- * Returns: (nullable): The first common mime type or %NULL if none
+ * Returns: (nullable): The first common mime type or `NULL` if none
  */
 const char *
 gdk_content_formats_match_mime_type (const GdkContentFormats *first,
@@ -527,7 +527,7 @@ gdk_content_formats_contain_mime_type (const GdkContentFormats *formats,
  * Gets the `GType`s included in @formats.
  *
  * Note that @formats may not contain any `GType`s, in particular when
- * they are empty. In that case %NULL will be returned.
+ * they are empty. In that case `NULL` will be returned.
  *
  * Returns: (transfer none) (nullable) (array length=n_gtypes zero-terminated=1):
  *   %G_TYPE_INVALID-terminated array of types included in @formats
@@ -553,10 +553,10 @@ gdk_content_formats_get_gtypes (const GdkContentFormats *formats,
  * Gets the mime types included in @formats.
  *
  * Note that @formats may not contain any mime types, in particular
- * when they are empty. In that case %NULL will be returned.
+ * when they are empty. In that case `NULL` will be returned.
  *
  * Returns: (transfer none) (nullable) (array length=n_mime_types zero-terminated=1):
- *   %NULL-terminated array of interned strings of mime types included
+ *   `NULL`-terminated array of interned strings of mime types included
  *   in @formats
  */
 const char * const *

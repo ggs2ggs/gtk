@@ -241,7 +241,7 @@ is_keycode (const char *string)
  * well. This is only useful for system-level components, applications should
  * use [func@Gtk.accelerator_parse] instead.
  *
- * If @accelerator_codes is given and the result stored in it is non-%NULL,
+ * If @accelerator_codes is given and the result stored in it is non-`NULL`,
  * the result must be freed with g_free().
  *
  * If a keycode is present in the accelerator and no @accelerator_codes
@@ -516,7 +516,7 @@ gtk_accelerator_parse (const char      *accelerator,
 
 /**
  * gtk_accelerator_name_with_keycode:
- * @display: (nullable): a `GdkDisplay` or %NULL to use the default display
+ * @display: (nullable): a `GdkDisplay` or `NULL` to use the default display
  * @accelerator_key: accelerator keyval
  * @keycode: accelerator keycode
  * @accelerator_mods: accelerator modifier mask
@@ -632,7 +632,7 @@ gtk_accelerator_name (guint           accelerator_key,
 
 /**
  * gtk_accelerator_get_label_with_keycode:
- * @display: (nullable): a `GdkDisplay` or %NULL to use the default display
+ * @display: (nullable): a `GdkDisplay` or `NULL` to use the default display
  * @accelerator_key: accelerator keyval
  * @keycode: accelerator keycode
  * @accelerator_mods: accelerator modifier mask

@@ -392,7 +392,7 @@ gdk_clipboard_class_init (GdkClipboardClass *class)
   /**
    * GdkClipboard:content: (attributes org.gtk.Property.get=gdk_clipboard_get_content)
    *
-   * The `GdkContentProvider` or %NULL if the clipboard is empty or contents are
+   * The `GdkContentProvider` or `NULL` if the clipboard is empty or contents are
    * provided otherwise.
    */
   properties[PROP_CONTENT] =
@@ -473,7 +473,7 @@ gdk_clipboard_get_formats (GdkClipboard *clipboard)
  * A clipboard is considered local if it was last claimed
  * by the running application.
  *
- * Note that [method@Gdk.Clipboard.get_content] may return %NULL
+ * Note that [method@Gdk.Clipboard.get_content] may return `NULL`
  * even on a local clipboard. In this case the clipboard is empty.
  *
  * Returns: true if the clipboard is local
@@ -495,7 +495,7 @@ gdk_clipboard_is_local (GdkClipboard *clipboard)
  * Returns the `GdkContentProvider` currently set on @clipboard.
  *
  * If the @clipboard is empty or its contents are not owned by the
- * current process, %NULL will be returned.
+ * current process, `NULL` will be returned.
  *
  * Returns: (transfer none) (nullable): The content of a clipboard
  *   if the clipboard does not maintain any content
@@ -628,7 +628,7 @@ gdk_clipboard_read_internal (GdkClipboard        *clipboard,
 /**
  * gdk_clipboard_read_async:
  * @clipboard: a `GdkClipboard`
- * @mime_types: (array zero-terminated=1): a %NULL-terminated array of mime types to choose from
+ * @mime_types: (array zero-terminated=1): a `NULL`-terminated array of mime types to choose from
  * @io_priority: the I/O priority of the request
  * @cancellable: (nullable): optional `GCancellable` object
  * @callback: (scope async): callback to call when the request is satisfied
@@ -888,7 +888,7 @@ gdk_clipboard_read_value_finish (GdkClipboard  *clipboard,
 /**
  * gdk_clipboard_read_texture_async:
  * @clipboard: a `GdkClipboard`
- * @cancellable: (nullable): optional `GCancellable` object, %NULL to ignore.
+ * @cancellable: (nullable): optional `GCancellable` object, `NULL` to ignore.
  * @callback: (scope async): callback to call when the request is satisfied
  * @user_data: (closure): the data to pass to callback function
  *
@@ -1188,7 +1188,7 @@ gdk_clipboard_claim_remote (GdkClipboard      *clipboard,
  * gdk_clipboard_set_content:
  * @clipboard: a `GdkClipboard`
  * @provider: (transfer none) (nullable): the new contents of @clipboard
- *   or %NULL to clear the clipboard
+ *   or `NULL` to clear the clipboard
  *
  * Sets a new content provider on @clipboard.
  *

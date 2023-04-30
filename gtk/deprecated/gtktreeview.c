@@ -10192,7 +10192,7 @@ gtk_tree_view_new_with_model (GtkTreeModel *model)
  * gtk_tree_view_get_model:
  * @tree_view: a `GtkTreeView`
  *
- * Returns the model the `GtkTreeView` is based on.  Returns %NULL if the
+ * Returns the model the `GtkTreeView` is based on.  Returns `NULL` if the
  * model is unset.
  *
  * Returns: (transfer none) (nullable): A `GtkTreeModel`
@@ -10215,7 +10215,7 @@ gtk_tree_view_get_model (GtkTreeView *tree_view)
  * @model: (nullable): The model.
  *
  * Sets the model for a `GtkTreeView`.  If the @tree_view already has a model
- * set, it will remove it before setting the new model.  If @model is %NULL,
+ * set, it will remove it before setting the new model.  If @model is `NULL`,
  * then it will unset the old model.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -10826,7 +10826,7 @@ gtk_tree_view_insert_column (GtkTreeView       *tree_view,
  * @position: The position to insert the new column in
  * @title: The title to set the header to
  * @cell: The `GtkCellRenderer`
- * @...: A %NULL-terminated list of attributes
+ * @...: A `NULL`-terminated list of attributes
  *
  * Creates a new `GtkTreeViewColumn` and inserts it into the @tree_view at
  * @position.  If @position is -1, then the newly created column is inserted at
@@ -10949,7 +10949,7 @@ gtk_tree_view_get_n_columns (GtkTreeView *tree_view)
  *
  * Gets the `GtkTreeViewColumn` at the given position in the #tree_view.
  *
- * Returns: (nullable) (transfer none): The `GtkTreeViewColumn`, or %NULL if the
+ * Returns: (nullable) (transfer none): The `GtkTreeViewColumn`, or `NULL` if the
  * position is outside the range of columns.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -10998,7 +10998,7 @@ gtk_tree_view_get_columns (GtkTreeView *tree_view)
  * @column: The `GtkTreeViewColumn` to be moved.
  * @base_column: (nullable): The `GtkTreeViewColumn` to be moved relative to
  *
- * Moves @column to be after to @base_column.  If @base_column is %NULL, then
+ * Moves @column to be after to @base_column.  If @base_column is `NULL`, then
  * @column is placed in the first position.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -11053,10 +11053,10 @@ gtk_tree_view_move_column_after (GtkTreeView       *tree_view,
 /**
  * gtk_tree_view_set_expander_column:
  * @tree_view: A `GtkTreeView`
- * @column: (nullable): %NULL, or the column to draw the expander arrow at.
+ * @column: (nullable): `NULL`, or the column to draw the expander arrow at.
  *
  * Sets the column to draw the expander arrow at. It must be in @tree_view.
- * If @column is %NULL, then the expander arrow is always at the first
+ * If @column is `NULL`, then the expander arrow is always at the first
  * visible column.
  *
  * If you do not want expander arrow to appear in your tree, set the
@@ -11086,7 +11086,7 @@ gtk_tree_view_set_expander_column (GtkTreeView       *tree_view,
  * @tree_view: A `GtkTreeView`
  *
  * Returns the column that is the current expander column,
- * or %NULL if none has been set.
+ * or `NULL` if none has been set.
  * This column has the expander arrow drawn next to it.
  *
  * Returns: (transfer none) (nullable): The expander column.
@@ -11121,7 +11121,7 @@ gtk_tree_view_get_expander_column (GtkTreeView *tree_view)
  * arguments passed to @func are: the @tree_view, the `GtkTreeViewColumn` being
  * dragged, the two `GtkTreeViewColumn`s determining the drop spot, and
  * @user_data.  If either of the `GtkTreeViewColumn` arguments for the drop spot
- * are %NULL, then they indicate an edge.  If @func is set to be %NULL, then
+ * are `NULL`, then they indicate an edge.  If @func is set to be `NULL`, then
  * @tree_view reverts to the default behavior of allowing all columns to be
  * dropped everywhere.
  *
@@ -11192,9 +11192,9 @@ gtk_tree_view_scroll_to_point (GtkTreeView *tree_view,
  * @col_align: The horizontal alignment of the column specified by @column.
  *
  * Moves the alignments of @tree_view to the position specified by @column and
- * @path.  If @column is %NULL, then no horizontal scrolling occurs.  Likewise,
- * if @path is %NULL no vertical scrolling occurs.  At a minimum, one of @column
- * or @path need to be non-%NULL.  @row_align determines where the row is
+ * @path.  If @column is `NULL`, then no horizontal scrolling occurs.  Likewise,
+ * if @path is `NULL` no vertical scrolling occurs.  At a minimum, one of @column
+ * or @path need to be non-`NULL`.  @row_align determines where the row is
  * placed, and @col_align determines where @column is placed.  Both are expected
  * to be between 0.0 and 1.0. 0.0 means left/top alignment, 1.0 means
  * right/bottom alignment, 0.5 means center.
@@ -11983,8 +11983,8 @@ gtk_tree_view_real_set_cursor (GtkTreeView     *tree_view,
  *   pointer to be filled with the current focus column
  *
  * Fills in @path and @focus_column with the current path and focus column.  If
- * the cursor isn’t currently set, then *@path will be %NULL.  If no column
- * currently has focus, then *@focus_column will be %NULL.
+ * the cursor isn’t currently set, then *@path will be `NULL`.  If no column
+ * currently has focus, then *@focus_column will be `NULL`.
  *
  * The returned `GtkTreePath` must be freed with gtk_tree_path_free() when
  * you are done with it.
@@ -12024,7 +12024,7 @@ gtk_tree_view_get_cursor (GtkTreeView        *tree_view,
  *
  * Sets the current keyboard focus to be at @path, and selects it.  This is
  * useful when you want to focus the user’s attention on a particular row.  If
- * @focus_column is not %NULL, then focus is given to the column specified by
+ * @focus_column is not `NULL`, then focus is given to the column specified by
  * it. Additionally, if @focus_column is specified, and @start_editing is
  * true, then editing should be started in the specified cell.
  * This function is often followed by @gtk_widget_grab_focus (@tree_view)
@@ -12056,8 +12056,8 @@ gtk_tree_view_set_cursor (GtkTreeView       *tree_view,
  *
  * Sets the current keyboard focus to be at @path, and selects it.  This is
  * useful when you want to focus the user’s attention on a particular row.  If
- * @focus_column is not %NULL, then focus is given to the column specified by
- * it. If @focus_column and @focus_cell are not %NULL, and @focus_column
+ * @focus_column is not `NULL`, then focus is given to the column specified by
+ * it. If @focus_column and @focus_cell are not `NULL`, and @focus_column
  * contains 2 or more editable or activatable cells, then focus is given to
  * the cell specified by @focus_cell. Additionally, if @focus_column is
  * specified, and @start_editing is true, then editing should be started in
@@ -12142,9 +12142,9 @@ gtk_tree_view_set_cursor_on_cell (GtkTreeView       *tree_view,
  * That is, @x and @y are relative to an events coordinates. Widget-relative
  * coordinates must be converted using
  * gtk_tree_view_convert_widget_to_bin_window_coords(). It is primarily for
- * things like popup menus. If @path is non-%NULL, then it will be filled
+ * things like popup menus. If @path is non-`NULL`, then it will be filled
  * with the `GtkTreePath` at that point.  This path should be freed with
- * gtk_tree_path_free().  If @column is non-%NULL, then it will be filled
+ * gtk_tree_path_free().  If @column is non-`NULL`, then it will be filled
  * with the column at that point.  @cell_x and @cell_y return the coordinates
  * relative to the cell background (i.e. the @background_area passed to
  * gtk_cell_renderer_render()).  This function is only meaningful if
@@ -12300,14 +12300,14 @@ gtk_tree_view_get_cell_area_y_offset (GtkTreeView   *tree_view,
 /**
  * gtk_tree_view_get_cell_area:
  * @tree_view: a `GtkTreeView`
- * @path: (nullable): a `GtkTreePath` for the row, or %NULL to get only horizontal coordinates
- * @column: (nullable): a `GtkTreeViewColumn` for the column, or %NULL to get only vertical coordinates
+ * @path: (nullable): a `GtkTreePath` for the row, or `NULL` to get only horizontal coordinates
+ * @column: (nullable): a `GtkTreeViewColumn` for the column, or `NULL` to get only vertical coordinates
  * @rect: (out): rectangle to fill with cell rect
  *
  * Fills the bounding rectangle in bin_window coordinates for the cell at the
  * row specified by @path and the column specified by @column.  If @path is
- * %NULL, or points to a path not currently displayed, the @y and @height fields
- * of the rectangle will be filled with 0. If @column is %NULL, the @x and @width
+ * `NULL`, or points to a path not currently displayed, the @y and @height fields
+ * of the rectangle will be filled with 0. If @column is `NULL`, the @x and @width
  * fields will be filled with 0.  The sum of all cell rects does not cover the
  * entire tree; there are extra pixels in between rows, for example. The
  * returned rectangle is equivalent to the @cell_area passed to
@@ -12428,14 +12428,14 @@ gtk_tree_view_get_row_y_offset (GtkTreeView   *tree_view,
 /**
  * gtk_tree_view_get_background_area:
  * @tree_view: a `GtkTreeView`
- * @path: (nullable): a `GtkTreePath` for the row, or %NULL to get only horizontal coordinates
- * @column: (nullable): a `GtkTreeViewColumn` for the column, or %NULL to get only vertical coordinates
+ * @path: (nullable): a `GtkTreePath` for the row, or `NULL` to get only horizontal coordinates
+ * @column: (nullable): a `GtkTreeViewColumn` for the column, or `NULL` to get only vertical coordinates
  * @rect: (out): rectangle to fill with cell background rect
  *
  * Fills the bounding rectangle in bin_window coordinates for the cell at the
  * row specified by @path and the column specified by @column.  If @path is
- * %NULL, or points to a node not found in the tree, the @y and @height fields of
- * the rectangle will be filled with 0. If @column is %NULL, the @x and @width
+ * `NULL`, or points to a node not found in the tree, the @y and @height fields of
+ * the rectangle will be filled with 0. If @column is `NULL`, the @x and @width
  * fields will be filled with 0.  The returned rectangle is equivalent to the
  * @background_area passed to gtk_cell_renderer_render().  These background
  * areas tile to cover the entire bin window.  Contrast with the @cell_area,
@@ -13041,7 +13041,7 @@ gtk_tree_view_unset_rows_drag_dest (GtkTreeView *tree_view)
  * @pos: Specifies whether to drop before, after or into the row
  *
  * Sets the row that is highlighted for feedback.
- * If @path is %NULL, an existing highlight is removed.
+ * If @path is `NULL`, an existing highlight is removed.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  */
@@ -13146,7 +13146,7 @@ gtk_tree_view_get_drag_dest_row (GtkTreeView              *tree_view,
  * @path: (out) (optional) (nullable): Return location for the path of
  *   the highlighted row
  * @pos: (out) (optional): Return location for the drop position, or
- *   %NULL
+ *   `NULL`
  *
  * Determines the destination row for a given position.  @drag_x and
  * @drag_y are expected to be in widget coordinates.  This function is only
@@ -13581,7 +13581,7 @@ gtk_tree_view_set_search_equal_func (GtkTreeView                *tree_view,
  * @tree_view: A `GtkTreeView`
  *
  * Returns the `GtkEntry` which is currently in use as interactive search
- * entry for @tree_view.  In case the built-in entry is being used, %NULL
+ * entry for @tree_view.  In case the built-in entry is being used, `NULL`
  * will be returned.
  *
  * Returns: (transfer none) (nullable): the entry currently in use as search entry.
@@ -13608,7 +13608,7 @@ gtk_tree_view_get_search_entry (GtkTreeView *tree_view)
  *
  * Sets the entry which the interactive search code will use for this
  * @tree_view.  This is useful when you want to provide a search entry
- * in our interface at all time at a fixed position.  Passing %NULL for
+ * in our interface at all time at a fixed position.  Passing `NULL` for
  * @entry will make the interactive search code use the built-in popup
  * entry again.
  *
@@ -14470,7 +14470,7 @@ gtk_tree_view_get_row_separator_func (GtkTreeView *tree_view)
  *
  * Sets the row separator function, which is used to determine
  * whether a row should be drawn as a separator. If the row separator
- * function is %NULL, no separators are drawn. This is the default value.
+ * function is `NULL`, no separators are drawn. This is the default value.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -14733,7 +14733,7 @@ gtk_tree_view_set_tooltip_row (GtkTreeView *tree_view,
  * @cell: (nullable): a `GtkCellRenderer`
  *
  * Sets the tip area of @tooltip to the area @path, @column and @cell have
- * in common.  For example if @path is %NULL and @column is set, the tip
+ * in common.  For example if @path is `NULL` and @column is set, the tip
  * area will be set to the full area covered by @column.  See also
  * gtk_tooltip_set_tip_area().
  *

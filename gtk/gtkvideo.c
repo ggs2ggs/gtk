@@ -496,7 +496,7 @@ gtk_video_new_for_resource (const char *resource_path)
  * gtk_video_get_media_stream: (attributes org.gtk.Method.get_property=media-stream)
  * @self: a `GtkVideo`
  *
- * Gets the media stream managed by @self or %NULL if none.
+ * Gets the media stream managed by @self or `NULL` if none.
  *
  * Returns: (nullable) (transfer none): The media stream managed by @self
  */
@@ -586,7 +586,7 @@ gtk_video_notify_cb (GtkMediaStream *stream,
 /**
  * gtk_video_set_media_stream: (attributes org.gtk.Method.set_property=media-stream)
  * @self: a `GtkVideo`
- * @stream: (nullable): The media stream to play or %NULL to unset
+ * @stream: (nullable): The media stream to play or `NULL` to unset
  *
  * Sets the media stream to be played back.
  *
@@ -658,7 +658,7 @@ gtk_video_set_media_stream (GtkVideo       *self,
  * gtk_video_get_file: (attributes org.gtk.Method.get_property=file)
  * @self: a `GtkVideo`
  *
- * Gets the file played by @self or %NULL if not playing back
+ * Gets the file played by @self or `NULL` if not playing back
  * a file.
  *
  * Returns: (nullable) (transfer none): The file played by @self

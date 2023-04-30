@@ -229,12 +229,12 @@ gdk_seat_get_capabilities (GdkSeat *seat)
  *   only if selected by @event_mask. In either mode, unreported events are
  *   discarded.
  * @cursor: (nullable): the cursor to display while the grab is active.
- *   If this is %NULL then the normal cursors are used for @surface and
+ *   If this is `NULL` then the normal cursors are used for @surface and
  *   its descendants, and the cursor for @surface is used elsewhere.
- * @event: (nullable): the event that is triggering the grab, or %NULL if none
+ * @event: (nullable): the event that is triggering the grab, or `NULL` if none
  *   is available.
  * @prepare_func: (nullable) (scope call): function to prepare the surface
- *   to be grabbed, it can be %NULL if @surface is visible before this call.
+ *   to be grabbed, it can be `NULL` if @surface is visible before this call.
  * @prepare_func_data: (closure): user data to pass to @prepare_func
  *
  * Grabs the seat so that all events corresponding to the given @capabilities

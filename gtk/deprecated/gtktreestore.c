@@ -1331,7 +1331,7 @@ gtk_tree_store_remove (GtkTreeStore *tree_store,
  *
  * Creates a new row at @position.
  *
- * If parent is non-%NULL, then the row will be made a child of @parent.
+ * If parent is non-`NULL`, then the row will be made a child of @parent.
  * Otherwise, the row will be created at the toplevel.
  *
  * If @position is `-1` or is larger than the number of rows at that level,
@@ -1398,9 +1398,9 @@ gtk_tree_store_insert (GtkTreeStore *tree_store,
  *
  * Inserts a new row before @sibling.
  *
- * If @sibling is %NULL, then the row will be appended to @parent’s children.
+ * If @sibling is `NULL`, then the row will be appended to @parent’s children.
  *
- * If @parent and @sibling are %NULL, then the row will be appended to the
+ * If @parent and @sibling are `NULL`, then the row will be appended to the
  * toplevel.
  *
  * If both @sibling and @parent are set, then @parent must be the parent
@@ -1484,9 +1484,9 @@ gtk_tree_store_insert_before (GtkTreeStore *tree_store,
  *
  * Inserts a new row after @sibling.
  *
- * If @sibling is %NULL, then the row will be prepended to @parent’s children.
+ * If @sibling is `NULL`, then the row will be prepended to @parent’s children.
  *
- * If @parent and @sibling are %NULL, then the row will be prepended to the
+ * If @parent and @sibling are `NULL`, then the row will be prepended to the
  * toplevel.
  *
  * If both @sibling and @parent are set, then @parent must be the parent
@@ -1749,7 +1749,7 @@ gtk_tree_store_insert_with_valuesv (GtkTreeStore *tree_store,
  *
  * Prepends a new row to @tree_store.
  *
- * If @parent is non-%NULL, then it will prepend the new row before the first
+ * If @parent is non-`NULL`, then it will prepend the new row before the first
  * child of @parent, otherwise it will prepend a row to the top level. The
  * `iter` parameter will be changed to point to this new row.  The row will
  * be empty after this function is called. To fill in values, you need to
@@ -1812,7 +1812,7 @@ gtk_tree_store_prepend (GtkTreeStore *tree_store,
  *
  * Appends a new row to @tree_store.
  *
- * If @parent is non-%NULL, then it will append the new row after the last
+ * If @parent is non-`NULL`, then it will append the new row after the last
  * child of @parent, otherwise it will append a row to the top level.
  *
  * The @iter parameter will be changed to point to this new row. The row will
@@ -2911,7 +2911,7 @@ free_paths_and_out:
  *
  * Note that this function only works with unsorted stores.
  *
- * If @position is %NULL, @iter will be moved to the end of the level.
+ * If @position is `NULL`, @iter will be moved to the end of the level.
  *
  * Deprecated: 4.10: Use [class@Gtk.TreeListModel] instead
  **/
@@ -2935,7 +2935,7 @@ gtk_tree_store_move_before (GtkTreeStore *tree_store,
  *
  * Note that this function only works with unsorted stores.
  *
- * If @position is %NULL, @iter will be moved to the start of the level.
+ * If @position is `NULL`, @iter will be moved to the start of the level.
  *
  * Deprecated: 4.10: Use [class@Gtk.TreeListModel] instead
  **/

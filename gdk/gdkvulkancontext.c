@@ -39,7 +39,7 @@
  * the characteristics of the surface.
  *
  * Support for `GdkVulkanContext` is platform-specific and context creation
- * can fail, returning %NULL context.
+ * can fail, returning `NULL` context.
  */
 
 typedef struct _GdkVulkanContextPrivate GdkVulkanContextPrivate;

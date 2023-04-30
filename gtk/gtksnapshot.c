@@ -319,7 +319,7 @@ gtk_snapshot_free_to_node (GtkSnapshot *snapshot)
  * gtk_snapshot_free_to_paintable: (skip)
  * @snapshot: (transfer full): a `GtkSnapshot`
  * @size: (nullable): The size of the resulting paintable
- *   or %NULL to use the bounds of the snapshot
+ *   or `NULL` to use the bounds of the snapshot
  *
  * Returns a paintable for the node that was
  * constructed by @snapshot and frees @snapshot.
@@ -778,7 +778,7 @@ gtk_snapshot_ensure_identity (GtkSnapshot *snapshot)
  * gtk_snapshot_push_repeat:
  * @snapshot: a `GtkSnapshot`
  * @bounds: the bounds within which to repeat
- * @child_bounds: (nullable): the bounds of the child or %NULL
+ * @child_bounds: (nullable): the bounds of the child or `NULL`
  *   to use the full size of the collected child node
  *
  * Creates a node that repeats the child node.
@@ -1571,7 +1571,7 @@ gtk_snapshot_pop_collect (GtkSnapshot *snapshot)
  * Returns the render node that was constructed
  * by @snapshot.
  *
- * Note that this function may return %NULL if nothing has been
+ * Note that this function may return `NULL` if nothing has been
  * added to the snapshot or if its content does not produce pixels
  * to be rendered.
  *
@@ -1580,7 +1580,7 @@ gtk_snapshot_pop_collect (GtkSnapshot *snapshot)
  * be called after this is [method@GObject.Object.unref].
  *
  * Returns: (transfer full) (nullable): the constructed `GskRenderNode` or
- *   %NULL if there are no nodes to render.
+ *   `NULL` if there are no nodes to render.
  */
 GskRenderNode *
 gtk_snapshot_to_node (GtkSnapshot *snapshot)
@@ -1606,7 +1606,7 @@ gtk_snapshot_to_node (GtkSnapshot *snapshot)
  * gtk_snapshot_to_paintable:
  * @snapshot: a `GtkSnapshot`
  * @size: (nullable): The size of the resulting paintable
- *   or %NULL to use the bounds of the snapshot
+ *   or `NULL` to use the bounds of the snapshot
  *
  * Returns a paintable encapsulating the render node
  * that was constructed by @snapshot.

@@ -465,7 +465,7 @@ gdk_texture_new_from_resource (const char *resource_path)
  * The file format is detected automatically. The supported formats
  * are PNG, JPEG and TIFF, though more formats might be available.
  *
- * If %NULL is returned, then @error will be set.
+ * If `NULL` is returned, then @error will be set.
  *
  * This function is threadsafe, so that you can e.g. use GTask
  * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
@@ -558,7 +558,7 @@ gdk_texture_new_from_bytes_pixbuf (GBytes  *bytes,
  * The file format is detected automatically. The supported formats
  * are PNG, JPEG and TIFF, though more formats might be available.
  *
- * If %NULL is returned, then @error will be set.
+ * If `NULL` is returned, then @error will be set.
  *
  * This function is threadsafe, so that you can e.g. use GTask
  * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
@@ -604,7 +604,7 @@ gdk_texture_new_from_bytes (GBytes  *bytes,
  * The file format is detected automatically. The supported formats
  * are PNG, JPEG and TIFF, though more formats might be available.
  *
- * If %NULL is returned, then @error will be set.
+ * If `NULL` is returned, then @error will be set.
  *
  * This function is threadsafe, so that you can e.g. use GTask
  * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread

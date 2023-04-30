@@ -183,7 +183,7 @@ Each relation name is part of the `GtkAccessibleRelation` enumeration.
 
 *Note*: When using gtk_accessible_update_relation() with a relation that
 requires a list of `GtkAccessible` instances, you should pass every
-accessible object separately, followed by %NULL. 
+accessible object separately, followed by `NULL`. 
 
 ## Application development rules
 

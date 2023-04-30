@@ -946,7 +946,7 @@ gtk_sort_list_model_set_model (GtkSortListModel *self,
  * gtk_sort_list_model_get_model: (attributes org.gtk.Method.get_property=model)
  * @self: a `GtkSortListModel`
  *
- * Gets the model currently sorted or %NULL if none.
+ * Gets the model currently sorted or `NULL` if none.
  *
  * Returns: (nullable) (transfer none): The model that gets sorted
  */

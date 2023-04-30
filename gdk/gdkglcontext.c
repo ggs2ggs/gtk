@@ -36,7 +36,7 @@
  * the integration of your rendering with that of other widgets.
  *
  * Support for `GdkGLContext` is platform-specific and context creation
- * can fail, returning %NULL context.
+ * can fail, returning `NULL` context.
  *
  * A `GdkGLContext` has to be made "current" in order to start using
  * it, otherwise any OpenGL call will be ignored.
@@ -722,10 +722,10 @@ gdk_gl_context_class_init (GdkGLContextClass *klass)
   /**
    * GdkGLContext:shared-context: (attributes org.gtk.Property.get=gdk_gl_context_get_shared_context)
    *
-   * Always %NULL
+   * Always `NULL`
    *
    * As many contexts can share data now and no single shared context exists
-   * anymore, this function has been deprecated and now always returns %NULL.
+   * anymore, this function has been deprecated and now always returns `NULL`.
    *
    * Deprecated: 4.4: Use [method@Gdk.GLContext.is_shared] to check if contexts
    *   can be shared.
@@ -1677,9 +1677,9 @@ gdk_gl_context_get_surface (GdkGLContext *context)
  * Used to retrieves the `GdkGLContext` that this @context share data with.
  *
  * As many contexts can share data now and no single shared context exists
- * anymore, this function has been deprecated and now always returns %NULL.
+ * anymore, this function has been deprecated and now always returns `NULL`.
  *
- * Returns: (nullable) (transfer none): %NULL
+ * Returns: (nullable) (transfer none): `NULL`
  *
  * Deprecated: 4.4: Use [method@Gdk.GLContext.is_shared] to check if contexts
  *   can be shared.

@@ -982,7 +982,7 @@ gtk_window_class_init (GtkWindowClass *klass)
    *
    * Normally, the connection between the application and the window
    * will remain until the window is destroyed, but you can explicitly
-   * remove it by setting the :application property to %NULL.
+   * remove it by setting the :application property to `NULL`.
    */
   window_props[PROP_APPLICATION] =
       g_param_spec_object ("application", NULL, NULL,
@@ -2168,7 +2168,7 @@ gtk_window_new (void)
  * this window from other windows they may have open. A good title might
  * include the application name and current document filename, for example.
  *
- * Passing %NULL does the same as setting the title to an empty string.
+ * Passing `NULL` does the same as setting the title to an empty string.
  */
 void
 gtk_window_set_title (GtkWindow  *window,
@@ -2649,7 +2649,7 @@ gtk_window_unset_transient_for (GtkWindow *window)
  * convenience functions in GTK will sometimes call
  * gtk_window_set_transient_for() on your behalf.
  *
- * Passing %NULL for @parent unsets the current transient window.
+ * Passing `NULL` for @parent unsets the current transient window.
  *
  * On Windows, this function puts the child window on top of the parent,
  * much as the window manager would have done on X.
@@ -2767,7 +2767,7 @@ gtk_window_release_application (GtkWindow *window)
 /**
  * gtk_window_set_application: (attributes org.gtk.Method.set_property=application)
  * @window: a `GtkWindow`
- * @application: (nullable): a `GtkApplication`, or %NULL to unset
+ * @application: (nullable): a `GtkApplication`, or `NULL` to unset
  *
  * Sets or unsets the `GtkApplication` associated with the window.
  *
@@ -2777,7 +2777,7 @@ gtk_window_release_application (GtkWindow *window)
  *
  * Normally, the connection between the application and the window will
  * remain until the window is destroyed, but you can explicitly remove
- * it by setting the @application to %NULL.
+ * it by setting the @application to `NULL`.
  *
  * This is equivalent to calling [method@Gtk.Application.remove_window]
  * and/or [method@Gtk.Application.add_window] on the old/new applications
@@ -5129,13 +5129,13 @@ synthesize_focus_change_events (GtkWindow       *window,
 /**
  * gtk_window_set_focus: (attributes org.gtk.Method.set_property=focus-widget)
  * @window: a `GtkWindow`
- * @focus: (nullable): widget to be the new focus widget, or %NULL to unset
+ * @focus: (nullable): widget to be the new focus widget, or `NULL` to unset
  *   any focus widget for the toplevel window.
  *
  * Sets the focus widget.
  *
  * If @focus is not the current focus widget, and is focusable,
- * sets it as the focus widget for the window. If @focus is %NULL,
+ * sets it as the focus widget for the window. If @focus is `NULL`,
  * unsets the focus widget for this window. To set the focus to a
  * particular widget in the toplevel, it is usually more convenient
  * to use [method@Gtk.Widget.grab_focus] instead of this function.

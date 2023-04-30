@@ -208,7 +208,7 @@ gdk_cursor_class_init (GdkCursorClass *cursor_class)
    *
    * Name of this this cursor.
    *
-   * The name will be %NULL if the cursor was created from a texture.
+   * The name will be `NULL` if the cursor was created from a texture.
    */
   g_object_class_install_property (object_class,
                                    PROP_NAME,
@@ -222,7 +222,7 @@ gdk_cursor_class_init (GdkCursorClass *cursor_class)
    *
    * The texture displayed by this cursor.
    *
-   * The texture will be %NULL if the cursor was created from a name.
+   * The texture will be `NULL` if the cursor was created from a name.
    */
   g_object_class_install_property (object_class,
                                    PROP_TEXTURE,
@@ -286,7 +286,7 @@ gdk_cursor_equal (gconstpointer a,
 /**
  * gdk_cursor_new_from_name:
  * @name: the name of the cursor
- * @fallback: (nullable): %NULL or the `GdkCursor` to fall back to when
+ * @fallback: (nullable): `NULL` or the `GdkCursor` to fall back to when
  *   this one cannot be supported
  *
  * Creates a new cursor by looking up @name in the current cursor
@@ -307,7 +307,7 @@ gdk_cursor_equal (gconstpointer a,
  * | ![](se_resize_cursor.png) "se-resize" | ![](ew_resize_cursor.png) "ew-resize" | ![](ns_resize_cursor.png) "ns-resize" | ![](nesw_resize_cursor.png) "nesw-resize" |
  * | ![](nwse_resize_cursor.png) "nwse-resize" | ![](zoom_in_cursor.png) "zoom-in" | ![](zoom_out_cursor.png) "zoom-out" | |
  *
- * Returns: (nullable): a new `GdkCursor`, or %NULL if there is no
+ * Returns: (nullable): a new `GdkCursor`, or `NULL` if there is no
  *   cursor with the given name
  */
 GdkCursor *
@@ -366,7 +366,7 @@ gdk_cursor_new_from_texture (GdkTexture *texture,
  * this can happen when the texture is too large or when the `GdkDisplay`
  * it is used on does not support textured cursors.
  *
- * Returns: (transfer none) (nullable): the fallback of the cursor or %NULL
+ * Returns: (transfer none) (nullable): the fallback of the cursor or `NULL`
  *   to use the default cursor as fallback
  */
 GdkCursor *
@@ -383,9 +383,9 @@ gdk_cursor_get_fallback (GdkCursor *cursor)
  *
  * Returns the name of the cursor.
  *
- * If the cursor is not a named cursor, %NULL will be returned.
+ * If the cursor is not a named cursor, `NULL` will be returned.
  *
- * Returns: (transfer none) (nullable): the name of the cursor or %NULL
+ * Returns: (transfer none) (nullable): the name of the cursor or `NULL`
  *   if it is not a named cursor
  */
 const char *
@@ -402,9 +402,9 @@ gdk_cursor_get_name (GdkCursor *cursor)
  *
  * Returns the texture for the cursor.
  *
- * If the cursor is a named cursor, %NULL will be returned.
+ * If the cursor is a named cursor, `NULL` will be returned.
  *
- * Returns: (transfer none) (nullable): the texture for cursor or %NULL
+ * Returns: (transfer none) (nullable): the texture for cursor or `NULL`
  *   if it is a named cursor
  */
 GdkTexture *

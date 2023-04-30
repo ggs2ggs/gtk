@@ -270,7 +270,7 @@ gtk_media_controls_class_init (GtkMediaControlsClass *klass)
   /**
    * GtkMediaControls:media-stream: (attributes org.gtk.Property.get=gtk_media_controls_get_media_stream org.gtk.Property.set=gtk_media_controls_set_media_stream)
    *
-   * The media-stream managed by this object or %NULL if none.
+   * The media-stream managed by this object or `NULL` if none.
    */
   properties[PROP_MEDIA_STREAM] =
     g_param_spec_object ("media-stream", NULL, NULL,
@@ -323,7 +323,7 @@ gtk_media_controls_new (GtkMediaStream *stream)
  * gtk_media_controls_get_media_stream: (attributes org.gtk.Method.get_property=media-stream)
  * @controls: a `GtkMediaControls`
  *
- * Gets the media stream managed by @controls or %NULL if none.
+ * Gets the media stream managed by @controls or `NULL` if none.
  *
  * Returns: (nullable) (transfer none): The media stream managed by @controls
  */

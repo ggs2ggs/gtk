@@ -1887,7 +1887,7 @@ gtk_column_view_get_sorter (GtkColumnView *self)
  * and [method@Gtk.ColumnViewColumn.set_sorter] has been called
  * on @column to associate a sorter with the column.
  *
- * If @column is %NULL, the view will be unsorted.
+ * If @column is `NULL`, the view will be unsorted.
  */
 void
 gtk_column_view_sort_by_column (GtkColumnView       *self,

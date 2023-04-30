@@ -1404,7 +1404,7 @@ gdk_x11_display_init_leader_surface (GdkX11Display *self)
  *   See the XOpenDisplay() for details.
  *
  * Tries to open a new display to the X server given by
- * @display_name. If opening the display fails, %NULL is
+ * @display_name. If opening the display fails, `NULL` is
  * returned.
  *
  * Returns: (nullable) (transfer full): The new display
@@ -1985,7 +1985,7 @@ gdk_x11_display_finalize (GObject *object)
  *
  * Find the `GdkDisplay` corresponding to @xdisplay, if any exists.
 *
- * Returns: (transfer none) (type GdkX11Display): the `GdkDisplay`, if found, otherwise %NULL.
+ * Returns: (transfer none) (type GdkX11Display): the `GdkDisplay`, if found, otherwise `NULL`.
  **/
 GdkDisplay *
 gdk_x11_lookup_xdisplay (Display *xdisplay)
@@ -2169,7 +2169,7 @@ broadcast_xmessage (GdkDisplay *display,
  * @message_type: startup notification message type ("new", "change",
  * or "remove")
  * @...: a list of key/value pairs (as strings), terminated by a
- * %NULL key. (A %NULL value for a key will cause that key to be
+ * `NULL` key. (A `NULL` value for a key will cause that key to be
  * skipped in the output.)
  *
  * Sends a startup notification message of type @message_type to
@@ -2694,7 +2694,7 @@ gdk_x11_display_error_trap_pop_ignored (GdkDisplay *display)
 /**
  * gdk_x11_set_sm_client_id:
  * @sm_client_id: (nullable): the client id assigned by the session manager
- *    when the connection was opened, or %NULL to remove the property.
+ *    when the connection was opened, or `NULL` to remove the property.
  *
  * Sets the `SM_CLIENT_ID` property on the application’s leader window so that
  * the window manager can save the application’s state using the X11R6 ICCCM

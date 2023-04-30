@@ -105,7 +105,7 @@ gtk_custom_sorter_init (GtkCustomSorter *self)
  * Creates a new `GtkSorter` that works by calling
  * @sort_func to compare items.
  *
- * If @sort_func is %NULL, all items are considered equal.
+ * If @sort_func is `NULL`, all items are considered equal.
  *
  * Returns: a new `GtkCustomSorter`
  */
@@ -132,7 +132,7 @@ gtk_custom_sorter_new (GCompareDataFunc sort_func,
  *
  * Sets (or unsets) the function used for sorting items.
  *
- * If @sort_func is %NULL, all items are considered equal.
+ * If @sort_func is `NULL`, all items are considered equal.
  *
  * If the sort func changes its sorting behavior,
  * gtk_sorter_changed() needs to be called.

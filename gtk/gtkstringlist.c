@@ -611,7 +611,7 @@ gtk_string_list_remove (GtkStringList *self,
  *
  * Gets the string that is at @position in @self.
  *
- * If @self does not contain @position items, %NULL is returned.
+ * If @self does not contain @position items, `NULL` is returned.
  *
  * This function returns the const char *. To get the
  * object wrapping it, use g_list_model_get_item().

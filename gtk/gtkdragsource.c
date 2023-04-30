@@ -662,7 +662,7 @@ gtk_drag_source_get_content (GtkDragSource *source)
  * or in a handler for the [signal@Gtk.DragSource::prepare] signal.
  *
  * You may consider setting the content provider back to
- * %NULL in a [signal@Gtk.DragSource::drag-end] signal handler.
+ * `NULL` in a [signal@Gtk.DragSource::drag-end] signal handler.
  */
 void
 gtk_drag_source_set_content (GtkDragSource      *source,
@@ -733,7 +733,7 @@ gtk_drag_source_set_actions (GtkDragSource *source,
  * The hotspot coordinates determine the point on the icon
  * that gets aligned with the hotspot of the cursor.
  *
- * If @paintable is %NULL, a default icon is used.
+ * If @paintable is `NULL`, a default icon is used.
  *
  * This function can be called before a drag is started, or in
  * a [signal@Gtk.DragSource::prepare] or

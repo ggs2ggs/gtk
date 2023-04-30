@@ -523,7 +523,7 @@ gtk_single_selection_get_model (GtkSingleSelection *self)
  *
  * Sets the model that @self should wrap.
  *
- * If @model is %NULL, @self will be empty.
+ * If @model is `NULL`, @self will be empty.
  */
 void
 gtk_single_selection_set_model (GtkSingleSelection *self,
@@ -652,7 +652,7 @@ gtk_single_selection_set_selected (GtkSingleSelection *self,
  *
  * Gets the selected item.
  *
- * If no item is selected, %NULL is returned.
+ * If no item is selected, `NULL` is returned.
  *
  * Returns: (transfer none) (type GObject) (nullable): The selected item
  */

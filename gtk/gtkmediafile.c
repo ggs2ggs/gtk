@@ -153,7 +153,7 @@ gtk_media_file_class_init (GtkMediaFileClass *class)
   /**
    * GtkMediaFile:file: (attributes org.gtk.Property.get=gtk_media_file_get_file org.gtk.Property.set=gtk_media_file_set_file)
    *
-   * The file being played back or %NULL if not playing a file.
+   * The file being played back or `NULL` if not playing a file.
    */
   properties[PROP_FILE] =
     g_param_spec_object ("file", NULL, NULL,
@@ -163,9 +163,9 @@ gtk_media_file_class_init (GtkMediaFileClass *class)
   /**
    * GtkMediaFile:input-stream: (attributes org.gtk.Property.get=gtk_media_file_get_input_stream org.gtk.Property.set=gtk_media_file_set_input_stream)
    *
-   * The stream being played back or %NULL if not playing a stream.
+   * The stream being played back or `NULL` if not playing a stream.
    *
-   * This is %NULL when playing a file.
+   * This is `NULL` when playing a file.
    */
   properties[PROP_INPUT_STREAM] =
     g_param_spec_object ("input-stream", NULL, NULL,
@@ -529,7 +529,7 @@ gtk_media_file_set_file (GtkMediaFile *self,
  * Returns the file that @self is currently playing from.
  *
  * When @self is not playing or not playing from a file,
- * %NULL is returned.
+ * `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The currently playing file
  */
@@ -589,7 +589,7 @@ gtk_media_file_set_input_stream (GtkMediaFile *self,
  * Returns the stream that @self is currently playing from.
  *
  * When @self is not playing or not playing from a stream,
- * %NULL is returned.
+ * `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The currently playing stream
  */

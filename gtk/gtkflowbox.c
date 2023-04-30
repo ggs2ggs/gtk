@@ -4214,7 +4214,7 @@ gtk_flow_box_insert (GtkFlowBox *box,
  * Gets the nth child in the @box.
  *
  * Returns: (transfer none) (nullable): the child widget, which will
- *   always be a `GtkFlowBoxChild` or %NULL in case no child widget
+ *   always be a `GtkFlowBoxChild` or `NULL` in case no child widget
  *   with the given index exists.
  */
 GtkFlowBoxChild *
@@ -4243,7 +4243,7 @@ gtk_flow_box_get_child_at_index (GtkFlowBox *box,
  * Both @x and @y are assumed to be relative to the origin of @box.
  *
  * Returns: (transfer none) (nullable): the child widget, which will
- *   always be a `GtkFlowBoxChild` or %NULL in case no child widget
+ *   always be a `GtkFlowBoxChild` or `NULL` in case no child widget
  *   exists for the given x and y coordinates.
  */
 GtkFlowBoxChild *
@@ -4354,7 +4354,7 @@ gtk_flow_box_check_model_compat (GtkFlowBox *box)
  *
  * The contents of @box are cleared and then filled with widgets that
  * represent items from @model. @box is updated whenever @model changes.
- * If @model is %NULL, @box is left empty.
+ * If @model is `NULL`, @box is left empty.
  *
  * It is undefined to add or remove widgets directly (for example, with
  * [method@Gtk.FlowBox.insert]) while @box is bound to a model.

@@ -36,10 +36,10 @@
  *
  * 1. The unbound stage where the listitem is not currently connected to
  *    an item in the list. In that case, the [property@Gtk.ListItem:item]
- *    property is set to %NULL.
+ *    property is set to `NULL`.
  *
  * 2. The bound stage where the listitem references an item from the list.
- *    The [property@Gtk.ListItem:item] property is not %NULL.
+ *    The [property@Gtk.ListItem:item] property is not `NULL`.
  */
 
 enum
@@ -274,7 +274,7 @@ gtk_list_item_do_notify (GtkListItem *list_item,
  *
  * Gets the model item that associated with @self.
  *
- * If @self is unbound, this function returns %NULL.
+ * If @self is unbound, this function returns `NULL`.
  *
  * Returns: (nullable) (transfer none) (type GObject): The item displayed
  **/
@@ -296,7 +296,7 @@ gtk_list_item_get_item (GtkListItem *self)
  * @self: a `GtkListItem`
  *
  * Gets the child previously set via gtk_list_item_set_child() or
- * %NULL if none was set.
+ * `NULL` if none was set.
  *
  * Returns: (transfer none) (nullable): The child
  */
@@ -314,7 +314,7 @@ gtk_list_item_get_child (GtkListItem *self)
 /**
  * gtk_list_item_set_child: (attributes org.gtk.Method.set_property=child)
  * @self: a `GtkListItem`
- * @child: (nullable): The list item's child or %NULL to unset
+ * @child: (nullable): The list item's child or `NULL` to unset
  *
  * Sets the child to be used for this listitem.
  *

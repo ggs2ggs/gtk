@@ -4126,7 +4126,7 @@ gdk_win32_surface_focus (GdkSurface *window,
  * @display: a %GdkDisplay
  * @anid: a HWND window handle
  *
- * Returns: (nullable): the %GdkSurface associated with the given @anid, or %NULL.
+ * Returns: (nullable): the %GdkSurface associated with the given @anid, or `NULL`.
  */
 GdkSurface *
 gdk_win32_surface_lookup_for_display (GdkDisplay *display,

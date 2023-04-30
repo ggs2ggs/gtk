@@ -826,7 +826,7 @@ gdk_wayland_display_get_next_serial (GdkDisplay *display)
  * gdk_wayland_display_get_startup_notification_id:
  * @display: (type GdkWaylandDisplay): a `GdkDisplay`
  *
- * Gets the startup notification ID for a Wayland display, or %NULL
+ * Gets the startup notification ID for a Wayland display, or `NULL`
  * if no ID has been defined.
  *
  * Returns: (nullable): the startup notification ID for @display

@@ -766,7 +766,7 @@ gtk_cell_renderer_activate (GtkCellRenderer      *cell,
  * widget created by the `GtkCellRenderer`Class.start_editing virtual function.
  *
  * Returns: (nullable) (transfer none): A new `GtkCellEditable` for editing this
- *   @cell, or %NULL if editing is not possible
+ *   @cell, or `NULL` if editing is not possible
  *
  * Deprecated: 4.10
  **/

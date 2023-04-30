@@ -303,7 +303,7 @@ gtk_no_selection_get_model (GtkNoSelection *self)
  *
  * Sets the model that @self should wrap.
  *
- * If @model is %NULL, this model will be empty.
+ * If @model is `NULL`, this model will be empty.
  */
 void
 gtk_no_selection_set_model (GtkNoSelection *self,

@@ -595,7 +595,7 @@ gtk_column_view_column_ensure_cells (GtkColumnViewColumn *self)
  *
  * Gets the column view that's currently displaying this column.
  *
- * If @self has not been added to a column view yet, %NULL is returned.
+ * If @self has not been added to a column view yet, `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The column view displaying @self.
  */
@@ -771,7 +771,7 @@ gtk_column_view_column_remove_from_sorter (GtkColumnViewColumn *self)
  *
  * Associates a sorter with the column.
  *
- * If @sorter is %NULL, the column will not let users change
+ * If @sorter is `NULL`, the column will not let users change
  * the sorting by clicking on its header.
  *
  * This sorter can be made active by clicking on the column

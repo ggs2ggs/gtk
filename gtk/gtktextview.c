@@ -1072,7 +1072,7 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
     *
     * See [class@Gtk.IMMulticontext].
     *
-    * Setting this to a non-%NULL value overrides the system-wide IM module
+    * Setting this to a non-`NULL` value overrides the system-wide IM module
     * setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module] property.
     */
    g_object_class_install_property (gobject_class,
@@ -2082,7 +2082,7 @@ gtk_text_view_new (void)
  *
  * Creates a new `GtkTextView` widget displaying the buffer @buffer.
  *
- * One buffer can be shared among many widgets. @buffer may be %NULL
+ * One buffer can be shared among many widgets. @buffer may be `NULL`
  * to create a default buffer, in which case this function is equivalent
  * to [ctor@Gtk.TextView.new]. The text view adds its own reference count
  * to the buffer; it does not take over an existing reference.
@@ -2280,7 +2280,7 @@ gtk_text_view_get_buffer (GtkTextView *text_view)
  * characters of the directionality opposite to the base direction
  * of the paragraph are inserted.
  *
- * If @iter is %NULL, the actual cursor position is used.
+ * If @iter is `NULL`, the actual cursor position is used.
  *
  * Note that if @iter happens to be the actual cursor position, and
  * there is currently an IM preedit sequence being entered, the
@@ -2349,7 +2349,7 @@ gtk_text_view_get_iter_at_location (GtkTextView *text_view,
  * gtk_text_view_get_iter_at_position:
  * @text_view: a `GtkTextView`
  * @iter: (out): a `GtkTextIter`
- * @trailing: (out) (optional): if non-%NULL, location to store
+ * @trailing: (out) (optional): if non-`NULL`, location to store
  *    an integer indicating where in the grapheme the user clicked.
  *    It will either be zero, or the number of characters in the grapheme.
  *    0 represents the trailing edge of the grapheme.
@@ -2450,7 +2450,7 @@ gtk_text_view_get_line_yrange (GtkTextView       *text_view,
  * the coordinate @y.
  *
  * @y is in buffer coordinates, convert from window coordinates with
- * [method@Gtk.TextView.window_to_buffer_coords]. If non-%NULL,
+ * [method@Gtk.TextView.window_to_buffer_coords]. If non-`NULL`,
  * @line_top will be filled with the coordinate of the top edge
  * of the line.
  */
@@ -3727,11 +3727,11 @@ gtk_text_view_set_tabs (GtkTextView   *text_view,
  * Gets the default tabs for @text_view.
  *
  * Tags in the buffer may override the defaults. The returned array
- * will be %NULL if “standard” (8-space) tabs are used. Free the
+ * will be `NULL` if “standard” (8-space) tabs are used. Free the
  * return value with [method@Pango.TabArray.free].
  *
  * Returns: (nullable) (transfer full): copy of default tab array,
- *   or %NULL if standard tabs are used; must be freed with
+ *   or `NULL` if standard tabs are used; must be freed with
  *   [method@Pango.TabArray.free].
  */
 PangoTabArray*
@@ -10157,7 +10157,7 @@ gtk_text_view_insert_emoji (GtkTextView *text_view)
  * Sets a menu model to add when constructing the context
  * menu for @text_view.
  *
- * You can pass %NULL to remove a previously set extra menu.
+ * You can pass `NULL` to remove a previously set extra menu.
  */
 void
 gtk_text_view_set_extra_menu (GtkTextView *text_view,
@@ -10179,7 +10179,7 @@ gtk_text_view_set_extra_menu (GtkTextView *text_view,
  * @text_view: a `GtkTextView`
  *
  * Gets the menu model that gets added to the context menu
- * or %NULL if none has been set.
+ * or `NULL` if none has been set.
  *
  * Returns: (transfer none): the menu model
  */

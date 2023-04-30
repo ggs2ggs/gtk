@@ -471,7 +471,7 @@ gtk_tree_model_base_init (gpointer g_class)
        * @path: a `GtkTreePath` identifying the tree node whose children
        *     have been reordered
        * @iter: a valid `GtkTreeIter` pointing to the node whose children
-       *     have been reordered, or %NULL if the depth of @path is 0
+       *     have been reordered, or `NULL` if the depth of @path is 0
        * @new_order: an array of integers mapping the current position
        *     of each child to its old position before the re-ordering,
        *     i.e. @new_order`[newpos] = oldpos`
@@ -629,7 +629,7 @@ gtk_tree_path_new (void)
  * For example, the string “10:4:0” would create a path of depth
  * 3 pointing to the 11th child of the root node, the 5th
  * child of that 11th child, and the 1st child of that 5th child.
- * If an invalid path string is passed in, %NULL is returned.
+ * If an invalid path string is passed in, `NULL` is returned.
  *
  * Returns: (nullable): A newly-created `GtkTreePath`
  *
@@ -746,7 +746,7 @@ gtk_tree_path_new_from_indicesv (int *indices,
  * This string is a “:” separated list of numbers.
  * For example, “4:10:0:3” would be an acceptable
  * return value for this string. If the path has
- * depth 0, %NULL is returned.
+ * depth 0, `NULL` is returned.
  *
  * Returns: (nullable): A newly-allocated string
  *
@@ -935,7 +935,7 @@ gtk_tree_path_get_indices_with_depth (GtkTreePath *path,
  * gtk_tree_path_free:
  * @path: (nullable): a `GtkTreePath`
  *
- * Frees @path. If @path is %NULL, it simply returns.
+ * Frees @path. If @path is `NULL`, it simply returns.
  *
  * Deprecated: 4.10
  */
@@ -1591,7 +1591,7 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model,
  * set to be invalid. @parent will remain a valid node after this
  * function has been called.
  *
- * If @parent is %NULL returns the first node, equivalent to
+ * If @parent is `NULL` returns the first node, equivalent to
  * `gtk_tree_model_get_iter_first (tree_model, iter);`
  *
  * Returns: true, if @iter has been set to the first child
@@ -1649,7 +1649,7 @@ gtk_tree_model_iter_has_child (GtkTreeModel *tree_model,
  *
  * Returns the number of children that @iter has.
  *
- * As a special case, if @iter is %NULL, then the number
+ * As a special case, if @iter is `NULL`, then the number
  * of toplevel nodes is returned.
  *
  * Returns: the number of children of @iter
@@ -1682,7 +1682,7 @@ gtk_tree_model_iter_n_children (GtkTreeModel *tree_model,
  * The first index is 0. If @n is too big, or @parent has no children,
  * @iter is set to an invalid iterator and false is returned. @parent
  * will remain a valid node after this function has been called. As a
- * special case, if @parent is %NULL, then the @n-th root node
+ * special case, if @parent is `NULL`, then the @n-th root node
  * is set.
  *
  * Returns: true, if @parent has an @n-th child
@@ -2020,7 +2020,7 @@ gtk_tree_model_row_deleted (GtkTreeModel *tree_model,
  * @path: a `GtkTreePath` pointing to the tree node whose children
  *   have been reordered
  * @iter: a valid `GtkTreeIter` pointing to the node whose children
- *   have been reordered, or %NULL if the depth of @path is 0
+ *   have been reordered, or `NULL` if the depth of @path is 0
  * @new_order: an array of integers mapping the current position of
  *   each child to its old position before the re-ordering,
  *   i.e. @new_order`[newpos] = oldpos`
@@ -2052,7 +2052,7 @@ gtk_tree_model_rows_reordered (GtkTreeModel *tree_model,
  * @path: a `GtkTreePath` pointing to the tree node whose children
  *   have been reordered
  * @iter: (nullable): a valid `GtkTreeIter` pointing to the node
- *   whose children have been reordered, or %NULL if the depth
+ *   whose children have been reordered, or `NULL` if the depth
  *   of @path is 0
  * @new_order: (array length=length): an array of integers
  *   mapping the current position of each child to its old
@@ -2408,7 +2408,7 @@ gtk_tree_row_reference_unref_path (GtkTreePath  *path,
  * This reference will keep pointing to the node pointed to
  * by @path, so long as it exists. Any changes that occur on @model are
  * propagated, and the path is updated appropriately. If
- * @path isn’t a valid path in @model, then %NULL is returned.
+ * @path isn’t a valid path in @model, then `NULL` is returned.
  *
  * Returns: (nullable): a newly allocated `GtkTreeRowReference`
  *
@@ -2440,7 +2440,7 @@ gtk_tree_row_reference_new (GtkTreeModel *model,
  *
  * This reference will keep pointing to the node pointed to
  * by @path, so long as it exists. If @path isn’t a valid
- * path in @model, then %NULL is returned. However, unlike
+ * path in @model, then `NULL` is returned. However, unlike
  * references created with gtk_tree_row_reference_new(), it
  * does not listen to the model for changes. The creator of
  * the row reference must do this explicitly using
@@ -2525,7 +2525,7 @@ gtk_tree_row_reference_new_proxy (GObject      *proxy,
  * @reference: a `GtkTreeRowReference`
  *
  * Returns a path that the row reference currently points to,
- * or %NULL if the path pointed to is no longer valid.
+ * or `NULL` if the path pointed to is no longer valid.
  *
  * Returns: (nullable) (transfer full): a current path
  *
@@ -2567,7 +2567,7 @@ gtk_tree_row_reference_get_model (GtkTreeRowReference *reference)
  * gtk_tree_row_reference_valid:
  * @reference: (nullable): a `GtkTreeRowReference`
  *
- * Returns true if the @reference is non-%NULL and refers to
+ * Returns true if the @reference is non-`NULL` and refers to
  * a current valid path.
  *
  * Returns: true if @reference points to a valid path
@@ -2606,7 +2606,7 @@ gtk_tree_row_reference_copy (GtkTreeRowReference *reference)
  * gtk_tree_row_reference_free:
  * @reference: (nullable): a `GtkTreeRowReference`
  *
- * Free’s @reference. @reference may be %NULL
+ * Free’s @reference. @reference may be `NULL`
  *
  * Deprecated: 4.10
  */

@@ -212,7 +212,7 @@ gtk_text_tag_class_init (GtkTextTagClass *klass)
    *
    * The name used to refer to the tag.
    *
-   * %NULL for anonymous tags.
+   * `NULL` for anonymous tags.
    */
   g_object_class_install_property (object_class,
                                    PROP_NAME,

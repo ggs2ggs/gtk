@@ -1235,7 +1235,7 @@ gdk_surface_create_cairo_context (GdkSurface *surface)
  * If the creation of the `GdkVulkanContext` failed, @error will be set.
  *
  * Returns: (transfer full): the newly created `GdkVulkanContext`, or
- *   %NULL on error
+ *   `NULL` on error
  */
 GdkVulkanContext *
 gdk_surface_create_vulkan_context (GdkSurface  *surface,
@@ -1385,7 +1385,7 @@ gdk_surface_paint_on_clock (GdkFrameClock *clock,
 /*
  * gdk_surface_invalidate_rect:
  * @surface: a `GdkSurface`
- * @rect: (nullable): rectangle to invalidate or %NULL to
+ * @rect: (nullable): rectangle to invalidate or `NULL` to
  *   invalidate the whole surface
  *
  * Invalidate a rectangular region of @surface.
@@ -1780,7 +1780,7 @@ gdk_surface_set_cursor_internal (GdkSurface *surface,
  * Retrieves a `GdkCursor` pointer for the cursor currently set on the
  * `GdkSurface`.
  *
- * If the return value is %NULL then there is no custom cursor set on
+ * If the return value is `NULL` then there is no custom cursor set on
  * the surface, and it is using the cursor for its parent surface.
  *
  * Use [method@Gdk.Surface.set_cursor] to unset the cursor of the surface.
@@ -1802,7 +1802,7 @@ gdk_surface_get_cursor (GdkSurface *surface)
  *
  * Sets the default mouse pointer for a `GdkSurface`.
  *
- * Passing %NULL for the @cursor argument means that @surface will use
+ * Passing `NULL` for the @cursor argument means that @surface will use
  * the cursor of its parent surface. Most surfaces should use this default.
  * Note that @cursor must be for the same display as @surface.
  *
@@ -1860,7 +1860,7 @@ gdk_surface_set_cursor (GdkSurface *surface,
  * Retrieves a `GdkCursor` pointer for the @device currently set on the
  * specified `GdkSurface`.
  *
- * If the return value is %NULL then there is no custom cursor set on the
+ * If the return value is `NULL` then there is no custom cursor set on the
  * specified surface, and it is using the cursor for its parent surface.
  *
  * Use [method@Gdk.Surface.set_cursor] to unset the cursor of the surface.
@@ -1886,7 +1886,7 @@ gdk_surface_get_device_cursor (GdkSurface *surface,
  *
  * Sets a specific `GdkCursor` for a given device when it gets inside @surface.
  *
- * Passing %NULL for the @cursor argument means that @surface will use the
+ * Passing `NULL` for the @cursor argument means that @surface will use the
  * cursor of its parent surface. Most surfaces should use this default.
  *
  * Use [ctor@Gdk.Cursor.new_from_name] or [ctor@Gdk.Cursor.new_from_texture]
@@ -1930,7 +1930,7 @@ gdk_surface_set_device_cursor (GdkSurface *surface,
  * `GdkEventConfigure`. [method@Gdk.Surface.get_position] in contrast gets
  * the position from the most recent configure event.
  *
- * Any of the return location arguments to this function may be %NULL,
+ * Any of the return location arguments to this function may be `NULL`,
  * if you aren’t interested in getting the value of that field.
  *
  * Note: If @surface is not a toplevel, it is much better to call
@@ -2597,7 +2597,7 @@ gdk_surface_get_scale (GdkSurface *surface)
 /**
  * gdk_surface_set_opaque_region:
  * @surface: a top-level `GdkSurface`
- * @region: (nullable): a region, or %NULL to make the entire
+ * @region: (nullable): a region, or `NULL` to make the entire
  *   surface opaque
  *
  * Marks a region of the `GdkSurface` as opaque.

@@ -801,7 +801,7 @@ gtk_filter_list_model_set_model (GtkFilterListModel *self,
  * gtk_filter_list_model_get_model: (attributes org.gtk.Method.get_property=model)
  * @self: a `GtkFilterListModel`
  *
- * Gets the model currently filtered or %NULL if none.
+ * Gets the model currently filtered or `NULL` if none.
  *
  * Returns: (nullable) (transfer none): The model that gets filtered
  */

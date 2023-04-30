@@ -972,7 +972,7 @@ gtk_expander_set_label (GtkExpander *expander,
  *
  * This is including any embedded underlines indicating mnemonics and
  * Pango markup, as set by [method@Gtk.Expander.set_label]. If the label
- * text has not been set the return value will be %NULL. This will be the
+ * text has not been set the return value will be `NULL`. This will be the
  * case if you create an empty button with gtk_button_new() to use as a
  * container.
  *

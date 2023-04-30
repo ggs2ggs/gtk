@@ -272,7 +272,7 @@ gdk_content_provider_content_changed (GdkContentProvider *provider)
  * @mime_type: the mime type to provide the data in
  * @stream: the `GOutputStream` to write to
  * @io_priority: I/O priority of the request.
- * @cancellable: (nullable): optional `GCancellable` object, %NULL to ignore.
+ * @cancellable: (nullable): optional `GCancellable` object, `NULL` to ignore.
  * @callback: (scope async): callback to call when the request is satisfied
  * @user_data: (closure): the data to pass to callback function
  *

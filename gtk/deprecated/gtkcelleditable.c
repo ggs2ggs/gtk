@@ -105,7 +105,7 @@ gtk_cell_editable_default_init (GtkCellEditableInterface *iface)
  * gtk_cell_editable_start_editing:
  * @cell_editable: A `GtkCellEditable`
  * @event: (nullable): The `GdkEvent` that began the editing process, or
- *   %NULL if editing was initiated programmatically
+ *   `NULL` if editing was initiated programmatically
  *
  * Begins editing on a @cell_editable.
  *

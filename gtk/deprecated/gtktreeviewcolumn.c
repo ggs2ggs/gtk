@@ -1494,7 +1494,7 @@ gtk_tree_view_column_new_with_area (GtkCellArea *area)
  * gtk_tree_view_column_new_with_attributes:
  * @title: The title to set the header to
  * @cell: The `GtkCellRenderer`
- * @...: A %NULL-terminated list of attributes
+ * @...: A `NULL`-terminated list of attributes
  *
  * Creates a new `GtkTreeViewColumn` with a number of default values.
  * This is equivalent to calling gtk_tree_view_column_set_title(),
@@ -1650,7 +1650,7 @@ gtk_tree_view_column_set_attributesv (GtkTreeViewColumn *tree_column,
  * gtk_tree_view_column_set_attributes:
  * @tree_column: A `GtkTreeViewColumn`
  * @cell_renderer: the `GtkCellRenderer` we’re setting the attributes of
- * @...: A %NULL-terminated list of attributes
+ * @...: A `NULL`-terminated list of attributes
  *
  * Sets the attributes in the list as the attributes of @tree_column.
  *
@@ -1689,7 +1689,7 @@ gtk_tree_view_column_set_attributes (GtkTreeViewColumn *tree_column,
  * This
  * function is used instead of the standard attributes mapping for
  * setting the column value, and should set the value of @tree_column's
- * cell renderer as appropriate.  @func may be %NULL to remove an
+ * cell renderer as appropriate.  @func may be `NULL` to remove an
  * older one.
  *
  * Deprecated: 4.10: Use GtkColumnView instead
@@ -2434,7 +2434,7 @@ gtk_tree_view_column_get_clickable (GtkTreeViewColumn *tree_column)
  * @tree_column: A `GtkTreeViewColumn`.
  * @widget: (nullable): A child `GtkWidget`
  *
- * Sets the widget in the header to be @widget.  If widget is %NULL, then the
+ * Sets the widget in the header to be @widget.  If widget is `NULL`, then the
  * header button is set with a `GtkLabel` set to the title of @tree_column.
  *
  * Deprecated: 4.10: Use GtkColumnView instead
@@ -2467,7 +2467,7 @@ gtk_tree_view_column_set_widget (GtkTreeViewColumn *tree_column,
  *
  * Returns the `GtkWidget` in the button on the column header.
  *
- * If a custom widget has not been set then %NULL is returned.
+ * If a custom widget has not been set then `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The `GtkWidget` in the column header
  *
@@ -3072,7 +3072,7 @@ gtk_tree_view_column_queue_resize (GtkTreeViewColumn *tree_column)
  * @tree_column: A `GtkTreeViewColumn`
  *
  * Returns the `GtkTreeView` wherein @tree_column has been inserted.
- * If @column is currently not inserted in any tree view, %NULL is
+ * If @column is currently not inserted in any tree view, `NULL` is
  * returned.
  *
  * Returns: (nullable) (transfer none): The tree view wherein @column

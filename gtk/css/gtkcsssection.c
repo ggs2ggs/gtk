@@ -27,7 +27,7 @@ struct _GtkCssSection
   GtkCssSection      *parent;
   GFile              *file;
   GtkCssLocation      start_location;
-  GtkCssLocation      end_location;   /* end location if parser is %NULL */
+  GtkCssLocation      end_location;   /* end location if parser is `NULL` */
 };
 
 G_DEFINE_BOXED_TYPE (GtkCssSection, gtk_css_section, gtk_css_section_ref, gtk_css_section_unref)

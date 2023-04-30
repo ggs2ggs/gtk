@@ -446,7 +446,7 @@ gtk_multi_selection_get_model (GtkMultiSelection *self)
  *
  * Sets the model that @self should wrap.
  *
- * If @model is %NULL, @self will be empty.
+ * If @model is `NULL`, @self will be empty.
  */
 void
 gtk_multi_selection_set_model (GtkMultiSelection *self,

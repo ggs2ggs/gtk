@@ -915,7 +915,7 @@ gtk_scale_get_property (GObject      *object,
  * gtk_scale_new:
  * @orientation: the scale’s orientation.
  * @adjustment: (nullable): the [class@Gtk.Adjustment] which sets
- *   the range of the scale, or %NULL to create a new adjustment.
+ *   the range of the scale, or `NULL` to create a new adjustment.
  *
  * Creates a new `GtkScale`.
  *
@@ -1562,7 +1562,7 @@ gtk_scale_finalize (GObject *object)
  * to be freed by the caller.
  *
  * Returns: (transfer none) (nullable): the [class@Pango.Layout]
- *   for this scale, or %NULL if the [property@Gtk.Scale:draw-value]
+ *   for this scale, or `NULL` if the [property@Gtk.Scale:draw-value]
  *   property is false.
  */
 PangoLayout *
@@ -1671,7 +1671,7 @@ gtk_scale_clear_marks (GtkScale *scale)
  * and GTK makes it easy for the user to position the scale exactly at the
  * marks value.
  *
- * If @markup is not %NULL, text is shown next to the tick mark.
+ * If @markup is not `NULL`, text is shown next to the tick mark.
  *
  * To remove marks from a scale, use [method@Gtk.Scale.clear_marks].
  */

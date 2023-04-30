@@ -870,7 +870,7 @@ gtk_text_class_init (GtkTextClass *class)
    *
    * See [class@Gtk.IMMulticontext].
    *
-   * Setting this to a non-%NULL value overrides the system-wide
+   * Setting this to a non-`NULL` value overrides the system-wide
    * IM module setting. See the [property@Gtk.Settings:gtk-im-module]
    * property.
    */
@@ -6740,7 +6740,7 @@ gtk_text_set_placeholder_text (GtkText    *self,
  * Retrieves the text that will be displayed when
  * @self is empty and unfocused
  *
- * If no placeholder text has been set, %NULL will be returned.
+ * If no placeholder text has been set, `NULL` will be returned.
  *
  * Returns: (nullable) (transfer none): the placeholder text
  */

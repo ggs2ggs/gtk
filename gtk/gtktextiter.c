@@ -1022,7 +1022,7 @@ gtk_text_iter_get_visible_text (const GtkTextIter  *start,
  *
  * If the element at @iter is a paintable, the paintable is returned.
  *
- * Otherwise, %NULL is returned.
+ * Otherwise, `NULL` is returned.
  *
  * Returns: (transfer none) (nullable): the paintable at @iter
  **/
@@ -1053,7 +1053,7 @@ gtk_text_iter_get_paintable (const GtkTextIter *iter)
  * If the location at @iter contains a child anchor, the
  * anchor is returned.
  *
- * Otherwise, %NULL is returned.
+ * Otherwise, `NULL` is returned.
  *
  * Returns: (transfer none) (nullable): the anchor at @iter
  **/
@@ -1192,7 +1192,7 @@ gtk_text_iter_get_toggled_tags  (const GtkTextIter  *iter,
  *
  * Returns true if @tag is toggled on at exactly this point.
  *
- * If @tag is %NULL, returns true if any tag is toggled on at this point.
+ * If @tag is `NULL`, returns true if any tag is toggled on at this point.
  *
  * Note that if this function returns true, it means that
  * @iter is at the beginning of the tagged range, and that the
@@ -1242,7 +1242,7 @@ gtk_text_iter_starts_tag (const GtkTextIter *iter,
  *
  * Returns true if @tag is toggled off at exactly this point.
  *
- * If @tag is %NULL, returns true if any tag is toggled off at this point.
+ * If @tag is `NULL`, returns true if any tag is toggled off at this point.
  *
  * Note that if this function returns true, it means that
  * @iter is at the end of the tagged range, but that the character
@@ -4239,7 +4239,7 @@ gtk_text_iter_forward_to_line_end (GtkTextIter *iter)
  *
  * Moves forward to the next toggle (on or off) of the
  * @tag, or to the next toggle of any tag if
- * @tag is %NULL.
+ * @tag is `NULL`.
  *
  * If no matching tag toggles are found,
  * returns false, otherwise true. Does not return toggles
@@ -4326,7 +4326,7 @@ gtk_text_iter_forward_to_tag_toggle (GtkTextIter *iter,
  *
  * Moves backward to the next toggle (on or off) of the
  * @tag, or to the next toggle of any tag if
- * @tag is %NULL.
+ * @tag is `NULL`.
  *
  * If no matching tag toggles are found,
  * returns false, otherwise true. Does not return toggles
@@ -4445,7 +4445,7 @@ matches_pred (GtkTextIter *iter,
  *
  * If @pred returns true, returns true and stops scanning.
  * If @pred never returns true, @iter is set to @limit if
- * @limit is non-%NULL, otherwise to the end iterator.
+ * @limit is non-`NULL`, otherwise to the end iterator.
  *
  * Returns: whether a match was found
  */
@@ -4960,7 +4960,7 @@ strbreakup (const char *string,
  * @flags: flags affecting how the search is done
  * @match_start: (out caller-allocates) (optional): return location for start of match
  * @match_end: (out caller-allocates) (optional): return location for end of match
- * @limit: (nullable): location of last possible @match_end, or %NULL for the end of the buffer
+ * @limit: (nullable): location of last possible @match_end, or `NULL` for the end of the buffer
  *
  * Searches forward for @str.
  *
@@ -5290,7 +5290,7 @@ lines_window_free (LinesWindow *win)
  * @flags: bitmask of flags affecting the search
  * @match_start: (out caller-allocates) (optional): return location for start of match
  * @match_end: (out caller-allocates) (optional): return location for end of match
- * @limit: (nullable): location of last possible @match_start, or %NULL for start of buffer
+ * @limit: (nullable): location of last possible @match_start, or `NULL` for start of buffer
  *
  * Same as [method@Gtk.TextIter.forward_search], but moves backward.
  *

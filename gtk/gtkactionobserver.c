@@ -168,7 +168,7 @@ gtk_action_observer_action_removed (GtkActionObserver   *observer,
  * action. The @action_and_target string should be used to check if the
  * reported target is the one that the observer is interested in.
  *
- * Either @action_name or @action_and_target may be %NULL.
+ * Either @action_name or @action_and_target may be `NULL`.
  */
 void
 gtk_action_observer_primary_accel_changed (GtkActionObserver   *observer,

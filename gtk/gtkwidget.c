@@ -1238,7 +1238,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    *
    * The `GtkRoot` widget of the widget tree containing this widget.
    *
-   * This will be %NULL if the widget is not contained in a root widget.
+   * This will be `NULL` if the widget is not contained in a root widget.
    */
   widget_props[PROP_ROOT] =
       g_param_spec_object ("root", NULL, NULL,
@@ -1399,7 +1399,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * Also see [method@Gtk.Tooltip.set_text].
    *
    * This is a convenience property which will take care of getting the
-   * tooltip shown if the given string is not %NULL:
+   * tooltip shown if the given string is not `NULL`:
    * [property@Gtk.Widget:has-tooltip] will automatically be set to true
    * and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
    * the default signal handler.
@@ -1421,7 +1421,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * Also see [method@Gtk.Tooltip.set_markup].
    *
    * This is a convenience property which will take care of getting the
-   * tooltip shown if the given string is not %NULL:
+   * tooltip shown if the given string is not `NULL`:
    * [property@Gtk.Widget:has-tooltip] will automatically be set to true
    * and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
    * the default signal handler.
@@ -4125,7 +4125,7 @@ out:
  * is closest to the two widgets.
  *
  * Returns: (nullable): the closest common ancestor of @widget_a and
- *   @widget_b or %NULL if @widget_a and @widget_b do not
+ *   @widget_b or `NULL` if @widget_a and @widget_b do not
  *   share a common ancestor.
  */
 GtkWidget *
@@ -4266,7 +4266,7 @@ gtk_widget_compute_point (GtkWidget              *widget,
  * @mods: key modifier of binding to install
  * @callback: the callback to call upon activation
  * @format_string: (nullable): GVariant format string for arguments
- *   or %NULL for no arguments
+ *   or `NULL` for no arguments
  * @...: arguments, as given by format string
  *
  * Creates a new shortcut for @widget_class that calls the given @callback
@@ -4316,7 +4316,7 @@ gtk_widget_class_add_binding (GtkWidgetClass  *widget_class,
  * @mods: key modifier of binding to install
  * @signal: the signal to execute
  * @format_string: (nullable): GVariant format string for arguments
- *   or %NULL for no arguments
+ *   or `NULL` for no arguments
  * @...: arguments, as given by format string
  *
  * Creates a new shortcut for @widget_class that emits the given action
@@ -4366,7 +4366,7 @@ gtk_widget_class_add_binding_signal (GtkWidgetClass  *widget_class,
  * @mods: key modifier of binding to install
  * @action_name: the action to activate
  * @format_string: (nullable): GVariant format string for arguments
- *   or %NULL for no arguments
+ *   or `NULL` for no arguments
  * @...: arguments, as given by format string
  *
  * Creates a new shortcut for @widget_class that activates the given
@@ -6166,7 +6166,7 @@ gtk_widget_get_parent (GtkWidget *widget)
  *
  * Returns the `GtkRoot` widget of @widget.
  *
- * This function will return %NULL if the widget is not contained
+ * This function will return `NULL` if the widget is not contained
  * inside a widget tree with a root widget.
  *
  * `GtkRoot` widgets will return themselves here.
@@ -6187,7 +6187,7 @@ gtk_widget_get_root (GtkWidget *widget)
  *
  * Returns the nearest `GtkNative` ancestor of @widget.
  *
- * This function will return %NULL if the widget is not
+ * This function will return `NULL` if the widget is not
  * contained inside a widget tree with a native ancestor.
  *
  * `GtkNative` widgets will return themselves here.
@@ -6573,7 +6573,7 @@ gtk_widget_set_font_map_recurse (GtkWidget *widget, gpointer user_data)
 /**
  * gtk_widget_set_font_map:
  * @widget: a `GtkWidget`
- * @font_map: (nullable): a `PangoFontMap`, or %NULL to unset any
+ * @font_map: (nullable): a `PangoFontMap`, or `NULL` to unset any
  *   previously set font map
  *
  * Sets the font map to use for Pango rendering.
@@ -10020,7 +10020,7 @@ gtk_widget_set_tooltip_markup (GtkWidget  *widget,
  *
  * If the tooltip has not been set using
  * [method@Gtk.Widget.set_tooltip_markup], this
- * function returns %NULL.
+ * function returns `NULL`.
  *
  * Returns: (nullable): the tooltip text
  */
@@ -10267,10 +10267,10 @@ gtk_widget_do_pick (GtkWidget    *widget,
  * The point must be given in widget coordinates, so (0, 0) is assumed
  * to be the top left of @widget's content area.
  *
- * Usually widgets will return %NULL if the given coordinate is not
+ * Usually widgets will return `NULL` if the given coordinate is not
  * contained in @widget checked via [method@Gtk.Widget.contains].
  * Otherwise they will recursively try to find a child that does
- * not return %NULL. Widgets are however free to customize their
+ * not return `NULL`. Widgets are however free to customize their
  * picking algorithm.
  *
  * This function is used on the toplevel to determine the widget
@@ -11012,7 +11012,7 @@ _gtk_widget_get_action_muxer (GtkWidget *widget,
  * gtk_widget_insert_action_group:
  * @widget: a `GtkWidget`
  * @name: the prefix for actions in @group
- * @group: (nullable): a `GActionGroup`, or %NULL to remove
+ * @group: (nullable): a `GActionGroup`, or `NULL` to remove
  *   the previously inserted group for @name
  *
  * Inserts @group into @widget.
@@ -11026,7 +11026,7 @@ _gtk_widget_get_action_muxer (GtkWidget *widget,
  * the same prefix will still be inherited from the parent, unless
  * the group contains an action with the same name.
  *
- * If @group is %NULL, a previously inserted group for @name is
+ * If @group is `NULL`, a previously inserted group for @name is
  * removed from @widget.
  */
 void
@@ -11468,7 +11468,7 @@ gtk_widget_class_set_template_scope (GtkWidgetClass  *widget_class,
  * of your instance’s life cycle, it will be released automatically when
  * `GObjectClass.dispose()` runs on your instance and if a @struct_offset
  * that is `!= 0` is specified, then the automatic location in your instance
- * public or private data will be set to %NULL. You can however access an
+ * public or private data will be set to `NULL`. You can however access an
  * automated child pointer the first time your classes `GObjectClass.dispose()`
  * runs, or alternatively in [signal@Gtk.Widget::destroy].
  *
@@ -12147,7 +12147,7 @@ gtk_widget_get_prev_sibling (GtkWidget *widget)
  * Inserts @widget into the child widget list of @parent.
  *
  * It will be placed after @previous_sibling, or at the beginning if
- * @previous_sibling is %NULL.
+ * @previous_sibling is `NULL`.
  *
  * After calling this function, `gtk_widget_get_prev_sibling(widget)`
  * will return @previous_sibling.
@@ -12190,7 +12190,7 @@ gtk_widget_insert_after (GtkWidget *widget,
  * Inserts @widget into the child widget list of @parent.
  *
  * It will be placed before @next_sibling, or at the end if
- * @next_sibling is %NULL.
+ * @next_sibling is `NULL`.
  *
  * After calling this function, `gtk_widget_get_next_sibling(widget)`
  * will return @next_sibling.
@@ -12303,7 +12303,7 @@ gtk_widget_snapshot_child (GtkWidget   *widget,
 /**
  * gtk_widget_set_focus_child:
  * @widget: a `GtkWidget`
- * @child: (nullable): a direct child widget of @widget or %NULL
+ * @child: (nullable): a direct child widget of @widget or `NULL`
  *   to unset the focus child of @widget
  *
  * Set @child as the current focus child of @widget.
@@ -12399,9 +12399,9 @@ gtk_widget_set_cursor (GtkWidget *widget,
  * with [method@Gtk.Widget.set_cursor]. See those functions for
  * details.
  *
- * On top of that, this function allows @name to be %NULL, which
+ * On top of that, this function allows @name to be `NULL`, which
  * will do the same as calling [method@Gtk.Widget.set_cursor]
- * with a %NULL cursor.
+ * with a `NULL` cursor.
  */
 void
 gtk_widget_set_cursor_from_name (GtkWidget  *widget,
@@ -12432,7 +12432,7 @@ gtk_widget_set_cursor_from_name (GtkWidget  *widget,
  * See [method@Gtk.Widget.set_cursor] for details.
  *
  * Returns: (nullable) (transfer none): the cursor
- *   currently in use or %NULL if the cursor is inherited
+ *   currently in use or `NULL` if the cursor is inherited
  */
 GdkCursor *
 gtk_widget_get_cursor (GtkWidget *widget)
@@ -13039,7 +13039,7 @@ gtk_widget_has_css_class (GtkWidget  *widget,
  *
  * Returns the list of style classes applied to @widget.
  *
- * Returns: (transfer full): a %NULL-terminated list of
+ * Returns: (transfer full): a `NULL`-terminated list of
  *   css classes currently applied to @widget. The returned
  *   list must freed using g_strfreev().
  */
@@ -13069,7 +13069,7 @@ gtk_widget_get_css_classes (GtkWidget *widget)
  * gtk_widget_set_css_classes: (attributes org.gtk.Method.set_property=css-classes)
  * @widget: a `GtkWidget`
  * @classes: (transfer none) (array zero-terminated=1):
- *   %NULL-terminated list of style classes to apply to @widget.
+ *   `NULL`-terminated list of style classes to apply to @widget.
  *
  * Clear all style classes applied to @widget
  * and replace them with @classes.

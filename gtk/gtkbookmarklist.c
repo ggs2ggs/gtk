@@ -516,7 +516,7 @@ gtk_bookmark_list_new (const char *filename,
  *
  * Sets the @attributes to be enumerated and starts the enumeration.
  *
- * If @attributes is %NULL, no attributes will be queried, but a list
+ * If @attributes is `NULL`, no attributes will be queried, but a list
  * of `GFileInfo`s will still be created.
  */
 void

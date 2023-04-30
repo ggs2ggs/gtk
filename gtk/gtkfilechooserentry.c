@@ -879,10 +879,10 @@ _gtk_file_chooser_entry_set_base_folder (GtkFileChooserEntry *chooser_entry,
  * folder (see _gtk_file_chooser_entry_set_base_folder()), but if the
  * user has entered a relative or absolute path, then it will be
  * different. If the user has entered unparsable text, or text which
- * the entry cannot handle, this will return %NULL.
+ * the entry cannot handle, this will return `NULL`.
  *
  * Returns: (nullable) (transfer full): the file for the current folder
- *   or %NULL if the current folder can not be determined
+ *   or `NULL` if the current folder can not be determined
  */
 GFile *
 _gtk_file_chooser_entry_get_current_folder (GtkFileChooserEntry *chooser_entry)

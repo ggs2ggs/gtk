@@ -690,9 +690,9 @@ gtk_at_context_create (GtkAccessibleRole  accessible_role,
  * @self: the `GtkATContext` to clone
  * @role: the accessible role of the clone, or %GTK_ACCESSIBLE_ROLE_NONE to
  *   use the same accessible role of @self
- * @accessible: (nullable): the accessible creating the context, or %NULL to
+ * @accessible: (nullable): the accessible creating the context, or `NULL` to
  *   use the same `GtkAccessible` of @self
- * @display: (nullable): the display connection, or %NULL to use the same
+ * @display: (nullable): the display connection, or `NULL` to use the same
  *   `GdkDisplay` of @self
  *
  * Clones the state of the given `GtkATContext`, using @role, @accessible,
@@ -809,7 +809,7 @@ gtk_at_context_update (GtkATContext *self)
  *
  * Sets the @value for the given @state of a `GtkATContext`.
  *
- * If @value is %NULL, the state is unset.
+ * If @value is `NULL`, the state is unset.
  *
  * This function will accumulate state changes until gtk_at_context_update()
  * is called.
@@ -876,7 +876,7 @@ gtk_at_context_get_accessible_state (GtkATContext       *self,
  *
  * Sets the @value for the given @property of a `GtkATContext`.
  *
- * If @value is %NULL, the property is unset.
+ * If @value is `NULL`, the property is unset.
  *
  * This function will accumulate property changes until gtk_at_context_update()
  * is called.
@@ -943,7 +943,7 @@ gtk_at_context_get_accessible_property (GtkATContext          *self,
  *
  * Sets the @value for the given @relation of a `GtkATContext`.
  *
- * If @value is %NULL, the relation is unset.
+ * If @value is `NULL`, the relation is unset.
  *
  * This function will accumulate relation changes until gtk_at_context_update()
  * is called.

@@ -285,14 +285,14 @@ construct_title_label (GtkHeaderBar *bar)
  *
  * Sets the title for the `GtkHeaderBar`.
  *
- * When set to %NULL, the headerbar will display the title of
+ * When set to `NULL`, the headerbar will display the title of
  * the window it is contained in.
  *
  * The title should help a user identify the current view.
  * To achieve the same style as the builtin title, use the
  * “title” style class.
  *
- * You should set the title widget to %NULL, for the window
+ * You should set the title widget to `NULL`, for the window
  * title label to be visible again.
  */
 void
@@ -757,7 +757,7 @@ gtk_header_bar_set_show_title_buttons (GtkHeaderBar *bar,
 /**
  * gtk_header_bar_set_decoration_layout: (attributes org.gtk.Method.set_property=decoration-layout)
  * @bar: a `GtkHeaderBar`
- * @layout: (nullable): a decoration layout, or %NULL to unset the layout
+ * @layout: (nullable): a decoration layout, or `NULL` to unset the layout
  *
  * Sets the decoration layout for this header bar.
  *

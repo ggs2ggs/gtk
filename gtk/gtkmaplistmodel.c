@@ -628,7 +628,7 @@ gtk_map_list_model_set_model (GtkMapListModel *self,
  * gtk_map_list_model_get_model: (attributes org.gtk.Method.get_property=model)
  * @self: a `GtkMapListModel`
  *
- * Gets the model that is currently being mapped or %NULL if none.
+ * Gets the model that is currently being mapped or `NULL` if none.
  *
  * Returns: (nullable) (transfer none): The model that gets mapped
  */

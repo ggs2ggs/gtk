@@ -226,7 +226,7 @@ gtk_color_chooser_set_use_alpha (GtkColorChooser *chooser,
  * Calling this function for the first time has the side effect
  * of removing the default color palette from the color chooser.
  *
- * If @colors is %NULL, removes all previously added palettes.
+ * If @colors is `NULL`, removes all previously added palettes.
  *
  * Deprecated: 4.10: Use [class@Gtk.ColorDialog] instead
  */

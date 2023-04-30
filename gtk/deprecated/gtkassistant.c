@@ -1634,7 +1634,7 @@ gtk_assistant_get_n_pages (GtkAssistant *assistant)
  *
  * Returns the child widget contained in page number @page_num.
  *
- * Returns: (nullable) (transfer none): the child widget, or %NULL
+ * Returns: (nullable) (transfer none): the child widget, or `NULL`
  *   if @page_num is out of bounds
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
@@ -1839,7 +1839,7 @@ gtk_assistant_remove_page (GtkAssistant *assistant,
 /**
  * gtk_assistant_set_forward_page_func:
  * @assistant: a `GtkAssistant`
- * @page_func: (nullable): the `GtkAssistantPageFunc`, or %NULL
+ * @page_func: (nullable): the `GtkAssistantPageFunc`, or `NULL`
  *   to use the default one
  * @data: user data for @page_func
  * @destroy: destroy notifier for @data
@@ -1848,7 +1848,7 @@ gtk_assistant_remove_page (GtkAssistant *assistant,
  *
  * This function will be used to determine what will be
  * the next page when the user presses the forward button.
- * Setting @page_func to %NULL will make the assistant to
+ * Setting @page_func to `NULL` will make the assistant to
  * use the default forward function, which just goes to the
  * next visible page.
  *

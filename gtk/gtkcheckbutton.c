@@ -910,7 +910,7 @@ gtk_check_button_set_active (GtkCheckButton *self,
  * Returns the label of the check button or `NULL` if [property@CheckButton:child] is set.
  *
  * Returns: (nullable) (transfer none): The label @self shows next
- *   to the indicator. If no label is shown, %NULL will be returned.
+ *   to the indicator. If no label is shown, `NULL` will be returned.
  */
 const char *
 gtk_check_button_get_label (GtkCheckButton *self)
@@ -928,7 +928,7 @@ gtk_check_button_get_label (GtkCheckButton *self)
 /**
  * gtk_check_button_set_label: (attributes org.gtk.Method.set_property=label)
  * @self: a `GtkCheckButton`
- * @label: (nullable): The text shown next to the indicator, or %NULL
+ * @label: (nullable): The text shown next to the indicator, or `NULL`
  *   to show no text
  *
  * Sets the text of @self.

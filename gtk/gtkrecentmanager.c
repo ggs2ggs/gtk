@@ -1147,7 +1147,7 @@ build_recent_info (GBookmarkFile *bookmarks,
  * like its MIME type, or its display name.
  *
  * Returns: (nullable): a `GtkRecentInfo` containing information
- *   about the resource pointed by @uri, or %NULL if the URI was
+ *   about the resource pointed by @uri, or `NULL` if the URI was
  *   not registered in the recently used resources list. Free with
  *   [method@Gtk.RecentInfo.unref].
  */
@@ -1202,7 +1202,7 @@ gtk_recent_manager_lookup_item (GtkRecentManager  *manager,
  * @manager: a `GtkRecentManager`
  * @uri: the URI of a recently used resource
  * @new_uri: (nullable): the new URI of the recently used resource, or
- *    %NULL to remove the item pointed by @uri in the list
+ *    `NULL` to remove the item pointed by @uri in the list
  * @error: (nullable): a return location for a `GError`
  *
  * Changes the location of a recently used resource from @uri to @new_uri.
@@ -1779,7 +1779,7 @@ gtk_recent_info_get_application_info (GtkRecentInfo  *info,
  * Retrieves the list of applications that have registered this resource.
  *
  * Returns: (array length=length zero-terminated=1) (transfer full): a newly
- *   allocated %NULL-terminated array of strings. Use g_strfreev() to free it.
+ *   allocated `NULL`-terminated array of strings. Use g_strfreev() to free it.
  */
 char **
 gtk_recent_info_get_applications (GtkRecentInfo *info,
@@ -2138,7 +2138,7 @@ gtk_recent_info_get_short_name (GtkRecentInfo *info)
  * of [method@Gtk.RecentInfo.get_uri].
  *
  * Returns: (nullable): a newly allocated UTF-8 string containing the
- *   resource’s URI or %NULL. Use g_free() when done using it.
+ *   resource’s URI or `NULL`. Use g_free() when done using it.
  */
 char *
 gtk_recent_info_get_uri_display (GtkRecentInfo *info)
@@ -2196,11 +2196,11 @@ gtk_recent_info_get_age (GtkRecentInfo *info)
  *
  * Returns all groups registered for the recently used item @info.
  *
- * The array of returned group names will be %NULL terminated, so
- * length might optionally be %NULL.
+ * The array of returned group names will be `NULL` terminated, so
+ * length might optionally be `NULL`.
  *
  * Returns: (array length=length zero-terminated=1) (transfer full):
- *   a newly allocated %NULL terminated array of strings.
+ *   a newly allocated `NULL` terminated array of strings.
  *   Use g_strfreev() to free it.
  */
 char **
@@ -2272,7 +2272,7 @@ gtk_recent_info_has_group (GtkRecentInfo *info,
  * gtk_recent_info_create_app_info:
  * @info: a `GtkRecentInfo`
  * @app_name: (nullable): the name of the application that should
- *   be mapped to a `GAppInfo`; if %NULL is used then the default
+ *   be mapped to a `GAppInfo`; if `NULL` is used then the default
  *   application for the MIME type is used
  * @error: (nullable): return location for a `GError`
  *

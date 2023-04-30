@@ -181,7 +181,7 @@ gsk_shader_paintable_init (GskShaderPaintable *self)
  *
  * Creates a paintable that uses the @shader to create
  * pixels. The shader must not require input textures.
- * If @data is %NULL, all uniform values are set to zero.
+ * If @data is `NULL`, all uniform values are set to zero.
  *
  * Returns: (transfer full): a new `GskShaderPaintable`
  */

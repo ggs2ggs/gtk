@@ -553,7 +553,7 @@ gtk_box_get_baseline_position (GtkBox *box)
  * Inserts @child in the position after @sibling in the list
  * of @box children.
  *
- * If @sibling is %NULL, insert @child at the first position.
+ * If @sibling is `NULL`, insert @child at the first position.
  */
 void
 gtk_box_insert_child_after (GtkBox    *box,
@@ -589,7 +589,7 @@ gtk_box_insert_child_after (GtkBox    *box,
  * Moves @child to the position after @sibling in the list
  * of @box children.
  *
- * If @sibling is %NULL, move @child to the first position.
+ * If @sibling is `NULL`, move @child to the first position.
  */
 void
 gtk_box_reorder_child_after (GtkBox    *box,

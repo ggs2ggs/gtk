@@ -2752,7 +2752,7 @@ get_line_at_y (GtkTextLayout *layout,
  * @target_iter: the iterator in which the result is stored
  * @y: the y position
  * @line_top: location to store the y coordinate of the
- *   top of the line. (Can by %NULL)
+ *   top of the line. (Can by `NULL`)
  *
  * Get the iter at the beginning of the line which is displayed
  * at the given y.

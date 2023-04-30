@@ -460,7 +460,7 @@ gsk_gl_shader_class_init (GskGLShaderClass *klass)
    * Resource containing the source code for the shader.
    *
    * If the shader source is not coming from a resource, this
-   * will be %NULL.
+   * will be `NULL`.
    */
   gsk_gl_shader_properties[GLSHADER_PROP_RESOURCE] =
     g_param_spec_string ("resource", NULL, NULL,
@@ -977,7 +977,7 @@ gsk_gl_shader_get_arg_vec4 (GskGLShader     *shader,
  * gsk_gl_shader_format_args_va:
  * @shader: a `GskGLShader`
  * @uniforms: name-Value pairs for the uniforms of @shader, ending
- *     with a %NULL name
+ *     with a `NULL` name
  *
  * Formats the uniform data as needed for feeding the named uniforms
  * values into the shader.
@@ -1063,7 +1063,7 @@ gsk_gl_shader_format_args_va (GskGLShader *shader,
  * gsk_gl_shader_format_args:
  * @shader: a `GskGLShader`
  * @...: name-Value pairs for the uniforms of @shader, ending with
- *     a %NULL name
+ *     a `NULL` name
  *
  * Formats the uniform data as needed for feeding the named uniforms
  * values into the shader.

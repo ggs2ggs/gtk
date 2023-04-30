@@ -107,7 +107,7 @@ struct _GdkDeleteEvent
  *   event. See [flags@Gdk.ModifierType]
  * @x: the x coordinate of the pointer relative to the surface.
  * @y: the y coordinate of the pointer relative to the surface.
- * @axes: @x, @y translated to the axes of @device, or %NULL if @device is
+ * @axes: @x, @y translated to the axes of @device, or `NULL` if @device is
  *   the mouse.
  * @history: (element-type GdkTimeCoord): a list of time and coordinates
  *   for other motion events that were compressed before delivering the
@@ -138,7 +138,7 @@ struct _GdkMotionEvent
  *   often be simulated by pressing both mouse buttons together.
  * @x: the x coordinate of the pointer relative to the surface.
  * @y: the y coordinate of the pointer relative to the surface.
- * @axes: @x, @y translated to the axes of @device, or %NULL if @device is
+ * @axes: @x, @y translated to the axes of @device, or `NULL` if @device is
  *   the mouse.
  * @tool: a `GdkDeviceTool`
  *
@@ -164,7 +164,7 @@ struct _GdkButtonEvent
  *   buttons. See [flags@Gdk.ModifierType]
  * @x: the x coordinate of the pointer relative to the surface
  * @y: the y coordinate of the pointer relative to the surface
- * @axes: @x, @y translated to the axes of the event's device, or %NULL
+ * @axes: @x, @y translated to the axes of the event's device, or `NULL`
  *   if @device is the mouse
  * @sequence: the event sequence that the event belongs to
  * @emulated: whether the event is the result of a pointer emulation
@@ -347,7 +347,7 @@ struct _GdkProximityEvent
  * @implicit: true if the broken grab was implicit
  * @grab_surface: If this event is caused by another grab in the same
  *   application, @grab_surface contains the new grab surface. Otherwise
- *   @grab_surface is %NULL.
+ *   @grab_surface is `NULL`.
  *
  * Generated when a pointer or keyboard grab is broken. On X11, this happens
  * when the grab surface becomes unviewable (i.e. it or one of its ancestors

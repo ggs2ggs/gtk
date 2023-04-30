@@ -4117,7 +4117,7 @@ gtk_real_tree_model_filter_convert_child_path_to_path (GtkTreeModelFilter *filte
  * Converts @child_path to a path relative to @filter. That is, @child_path
  * points to a path in the child model. The rerturned path will point to the
  * same row in the filtered model. If @child_path isn’t a valid path on the
- * child model or points to a row which is not visible in @filter, then %NULL
+ * child model or points to a row which is not visible in @filter, then `NULL`
  * is returned.
  *
  * Returns: (nullable) (transfer full): A newly allocated `GtkTreePath`
@@ -4161,7 +4161,7 @@ gtk_tree_model_filter_convert_child_path_to_path (GtkTreeModelFilter *filter,
  * Converts @filter_path to a path on the child model of @filter. That is,
  * @filter_path points to a location in @filter. The returned path will
  * point to the same location in the model not being filtered. If @filter_path
- * does not point to a location in the child model, %NULL is returned.
+ * does not point to a location in the child model, `NULL` is returned.
  *
  * Returns: (nullable) (transfer full): A newly allocated `GtkTreePath`
  *

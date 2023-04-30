@@ -104,7 +104,7 @@ gtk_accessible_attribute_set_unref (GtkAccessibleAttributeSet *self)
  *
  * Adds @attribute to the attributes set, and sets its value.
  *
- * If @value is %NULL, the @attribute is reset to its default value.
+ * If @value is `NULL`, the @attribute is reset to its default value.
  *
  * If you want to remove @attribute from the set, use gtk_accessible_attribute_set_remove()
  * instead.

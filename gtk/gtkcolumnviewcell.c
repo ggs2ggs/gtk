@@ -37,10 +37,10 @@
  *
  * 1. The unbound stage where the listitem is not currently connected to
  *    an item in the list. In that case, the [property@Gtk.ColumnViewCell:item]
- *    property is set to %NULL.
+ *    property is set to `NULL`.
  *
  * 2. The bound stage where the listitem references an item from the list.
- *    The [property@Gtk.ColumnViewCell:item] property is not %NULL.
+ *    The [property@Gtk.ColumnViewCell:item] property is not `NULL`.
  *
  * Since: 4.12
  */
@@ -250,7 +250,7 @@ gtk_column_view_cell_do_notify (GtkColumnViewCell *column_view_cell,
  *
  * Gets the model item that associated with @self.
  *
- * If @self is unbound, this function returns %NULL.
+ * If @self is unbound, this function returns `NULL`.
  *
  * Returns: (nullable) (transfer none) (type GObject): The item displayed
  *
@@ -272,7 +272,7 @@ gtk_column_view_cell_get_item (GtkColumnViewCell *self)
  * @self: a `GtkColumnViewCell`
  *
  * Gets the child previously set via gtk_column_view_cell_set_child() or
- * %NULL if none was set.
+ * `NULL` if none was set.
  *
  * Returns: (transfer none) (nullable): The child
  *
@@ -289,7 +289,7 @@ gtk_column_view_cell_get_child (GtkColumnViewCell *self)
 /**
  * gtk_column_view_cell_set_child: (attributes org.gtk.Method.set_property=child)
  * @self: a `GtkColumnViewCell`
- * @child: (nullable): The list item's child or %NULL to unset
+ * @child: (nullable): The list item's child or `NULL` to unset
  *
  * Sets the child to be used for this listitem.
  *

@@ -1928,10 +1928,10 @@ gsk_transform_transform (GskTransform *next,
  *
  * Inverts the given transform.
  *
- * If @self is not invertible, %NULL is returned.
- * Note that inverting %NULL also returns %NULL, which is
- * the correct inverse of %NULL. If you need to differentiate
- * between those cases, you should check @self is not %NULL
+ * If @self is not invertible, `NULL` is returned.
+ * Note that inverting `NULL` also returns `NULL`, which is
+ * the correct inverse of `NULL`. If you need to differentiate
+ * between those cases, you should check @self is not `NULL`
  * before calling this function.
  *
  * Returns: (nullable): The inverted transform
@@ -2008,7 +2008,7 @@ GskTransformCategory
  * Creates a new identity transform.
  *
  * This function is meant to be used by language
- * bindings. For C code, this is equivalent to using %NULL.
+ * bindings. For C code, this is equivalent to using `NULL`.
  *
  * Returns: A new identity transform
  */
@@ -2375,7 +2375,7 @@ fail:
  * can be read in again successfully using this function.
  *
  * If @string does not describe a valid transform, false is
- * returned and %NULL is put in @out_transform.
+ * returned and `NULL` is put in @out_transform.
  *
  * Returns: true if @string described a valid transform.
  */

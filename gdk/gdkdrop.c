@@ -534,7 +534,7 @@ gdk_drop_set_actions (GdkDrop       *self,
  * If this is an in-app drag-and-drop operation, returns the `GdkDrag`
  * that corresponds to this drop.
  *
- * If it is not, %NULL is returned.
+ * If it is not, `NULL` is returned.
  *
  * Returns: (transfer none) (nullable): the corresponding `GdkDrag`
  */
@@ -842,7 +842,7 @@ gdk_drop_read_value_internal (GdkDrop             *self,
  * @self: a `GdkDrop`
  * @type: a `GType` to read
  * @io_priority: the I/O priority of the request.
- * @cancellable: (nullable): optional `GCancellable` object, %NULL to ignore.
+ * @cancellable: (nullable): optional `GCancellable` object, `NULL` to ignore.
  * @callback: (scope async): callback to call when the request is satisfied
  * @user_data: (closure): the data to pass to callback function
  *

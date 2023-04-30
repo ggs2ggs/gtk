@@ -405,7 +405,7 @@ gtk_slice_list_model_set_model (GtkSliceListModel *self,
  * gtk_slice_list_model_get_model: (attributes org.gtk.Method.get_property=model)
  * @self: a `GtkSliceListModel`
  *
- * Gets the model that is currently being used or %NULL if none.
+ * Gets the model that is currently being used or `NULL` if none.
  *
  * Returns: (nullable) (transfer none): The model in use
  */

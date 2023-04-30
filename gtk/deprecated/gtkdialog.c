@@ -739,14 +739,14 @@ gtk_dialog_new_empty (const char      *title,
  * @parent: (nullable): Transient parent of the dialog
  * @flags: from `GtkDialogFlags`
  * @first_button_text: (nullable): text to go in first button
- * @...: response ID for first button, then additional buttons, ending with %NULL
+ * @...: response ID for first button, then additional buttons, ending with `NULL`
  *
  * Creates a new `GtkDialog` with the given title and transient parent.
  *
  * The @flags argument can be used to make the dialog modal, have it
  * destroyed along with its transient parent, or make it use a headerbar.
  *
- * Button text/response ID pairs should be listed in pairs, with a %NULL
+ * Button text/response ID pairs should be listed in pairs, with a `NULL`
  * pointer ending the list. Button text can be arbitrary text. A response
  * ID can be any positive number, or one of the values in the
  * [enum@Gtk.ResponseType] enumeration. If the user clicks one of these
@@ -969,7 +969,7 @@ gtk_dialog_add_buttons_valist (GtkDialog      *dialog,
  * Adds multiple buttons.
  *
  * This is the same as calling [method@Gtk.Dialog.add_button]
- * repeatedly. The variable argument list should be %NULL-terminated
+ * repeatedly. The variable argument list should be `NULL`-terminated
  * as with [ctor@Gtk.Dialog.new_with_buttons]. Each button must have both
  * text and response ID.
  *

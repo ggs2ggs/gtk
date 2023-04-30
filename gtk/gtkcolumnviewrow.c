@@ -250,7 +250,7 @@ gtk_column_view_row_do_notify (GtkColumnViewRow *column_view_row,
  *
  * Gets the model item that associated with @self.
  *
- * If @self is unbound, this function returns %NULL.
+ * If @self is unbound, this function returns `NULL`.
  *
  * Returns: (nullable) (transfer none) (type GObject): The item displayed
  *

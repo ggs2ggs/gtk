@@ -58,7 +58,7 @@
  * own scopes for that purpose.
  *
  * In the case that symbols are not explicitly added; GTK will uses
- * `GModule`’s introspective features (by opening the module %NULL) to
+ * `GModule`’s introspective features (by opening the module `NULL`) to
  * look at the application’s symbol table. From here it tries to match
  * the signal function names given in the interface description with
  * symbols in the application.
@@ -483,7 +483,7 @@ gtk_builder_cscope_add_callback_symbol (GtkBuilderCScope *self,
  * @self: a `GtkBuilderCScope`
  * @first_callback_name: The name of the callback, as expected in the XML
  * @first_callback_symbol: (scope async): The callback pointer
- * @...: A list of callback name and callback symbol pairs terminated with %NULL
+ * @...: A list of callback name and callback symbol pairs terminated with `NULL`
  *
  * A convenience function to add many callbacks.
  *

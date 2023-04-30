@@ -149,7 +149,7 @@ struct _GtkBuildableIface
    * @buildable: a `GtkBuildable`
    * @builder: a `GtkBuilder`
    * @child: child to add
-   * @type: (nullable): kind of child or %NULL
+   * @type: (nullable): kind of child or `NULL`
    *
    * Adds a child to @buildable. @type is an optional string
    * describing how the child should be added.
@@ -170,7 +170,7 @@ struct _GtkBuildableIface
    * GtkBuildableIface::custom_tag_start:
    * @buildable: a `GtkBuildable`
    * @builder: a `GtkBuilder` used to construct this object
-   * @child: (nullable): child object or %NULL for non-child tags
+   * @child: (nullable): child object or `NULL` for non-child tags
    * @tagname: name of tag
    * @parser: (out): a `GtkBuildableParser` to fill in
    * @data: (out): return location for user data that will be passed in
@@ -191,7 +191,7 @@ struct _GtkBuildableIface
    * GtkBuildableIface::custom_tag_end:
    * @buildable: A `GtkBuildable`
    * @builder: `GtkBuilder` used to construct this object
-   * @child: (nullable): child object or %NULL for non-child tags
+   * @child: (nullable): child object or `NULL` for non-child tags
    * @tagname: name of tag
    * @data: user data that will be passed in to parser functions
    *
@@ -207,7 +207,7 @@ struct _GtkBuildableIface
     * GtkBuildableIface::custom_finished:
     * @buildable: a `GtkBuildable`
     * @builder: a `GtkBuilder`
-    * @child: (nullable): child object or %NULL for non-child tags
+    * @child: (nullable): child object or `NULL` for non-child tags
     * @tagname: the name of the tag
     * @data: user data created in custom_tag_start
     *
