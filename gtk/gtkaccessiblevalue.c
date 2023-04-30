@@ -61,7 +61,7 @@ G_DEFINE_BOXED_TYPE (GtkAccessibleValue, gtk_accessible_value,
  * gtk_accessible_value_alloc:
  * @value_class: a `GtkAccessibleValueClass` structure
  *
- * Allocates a new `GtkAccessibleValue` subclass using @value_class as the
+ * Allocates a new `GtkAccessibleValue` subclass using `value_class` as the
  * type definition.
  *
  * Returns: (transfer full): the newly allocated `GtkAccessibleValue`
@@ -131,7 +131,7 @@ gtk_accessible_value_unref (GtkAccessibleValue *self)
  * @self: a `GtkAccessibleValue`
  * @buffer: a `GString`
  *
- * Prints the contents of a `GtkAccessibleValue` into the given @buffer.
+ * Prints the contents of a `GtkAccessibleValue` into the given `buffer`.
  */
 void
 gtk_accessible_value_print (const GtkAccessibleValue *self,
@@ -169,7 +169,7 @@ gtk_accessible_value_to_string (const GtkAccessibleValue *self)
  * @value_a: (nullable): the first `GtkAccessibleValue`
  * @value_b: (nullable): the second `GtkAccessibleValue`
  *
- * Checks whether @value_a and @value_b are equal.
+ * Checks whether `value_a` and `value_b` are equal.
  *
  * This function is `NULL`-safe.
  *
@@ -632,7 +632,7 @@ typedef struct {
   const char *name;
 
   /* The constructor and getter will be derived by the
-   * @ctype field and by the collected value, except for the
+   * `ctype` field and by the collected value, except for the
    * GTK_ACCESSIBLE_COLLECT_TOKEN collection type. You can
    * override the default ones by filling out these two
    * pointers
@@ -923,7 +923,7 @@ typedef void                 (* GtkAccessibleValueEnumInit)     (GValue      *va
  * @state: a `GtkAccessibleState`
  *
  * Retrieves the `GtkAccessibleValue` that contains the default for the
- * given @state.
+ * given `state`.
  *
  * Returns: (transfer full): the `GtkAccessibleValue`
  */
@@ -1553,10 +1553,10 @@ gtk_accessible_attribute_init_value (const GtkAccessibleCollect *cstate,
  * @error: return location for a `GError`
  * @args: a `va_list` reference
  *
- * Collects and consumes the next item in the @args variadic arguments list,
+ * Collects and consumes the next item in the `args` variadic arguments list,
  * and returns a `GtkAccessibleValue` for it.
  *
- * If the collection fails, @error is set and `NULL` is returned.
+ * If the collection fails, `error` is set and `NULL` is returned.
  *
  * The returned value could be `NULL` even on success, in which case the state
  * should be reset to its default value by the caller.
@@ -1581,10 +1581,10 @@ gtk_accessible_value_collect_for_state (GtkAccessibleState   state,
  * @value: a `GValue`
  * @error: return location for a `GError`
  *
- * Retrieves the value stored inside @value and returns a `GtkAccessibleValue`
- * for the given @state.
+ * Retrieves the value stored inside `value` and returns a `GtkAccessibleValue`
+ * for the given `state`.
  *
- * If the collection fails, @error is set and `NULL` is returned.
+ * If the collection fails, `error` is set and `NULL` is returned.
  *
  * The returned value could be `NULL` even on success, in which case the state
  * should be reset to its default value by the caller.
@@ -1621,7 +1621,7 @@ gtk_accessible_value_parse_for_state (GtkAccessibleState   state,
  * @state: a `GtkAccessibleState`
  * @value: an uninitialized `GValue`
  *
- * Initializes @value with the appropriate type for the @state.
+ * Initializes `value` with the appropriate type for the `state`.
  *
  * This function is mostly meant for language bindings, in conjunction
  * with gtk_accessible_update_relation_state().
@@ -1642,7 +1642,7 @@ gtk_accessible_state_init_value (GtkAccessibleState  state,
  * @property: a `GtkAccessibleProperty`
  *
  * Retrieves the `GtkAccessibleValue` that contains the default for the
- * given @property.
+ * given `property`.
  *
  * Returns: (transfer full): the `GtkAccessibleValue`
  */
@@ -1707,10 +1707,10 @@ gtk_accessible_value_get_default_for_property (GtkAccessibleProperty property)
  * @error: return location for a `GError`
  * @args: a `va_list` reference
  *
- * Collects and consumes the next item in the @args variadic arguments list,
+ * Collects and consumes the next item in the `args` variadic arguments list,
  * and returns a `GtkAccessibleValue` for it.
  *
- * If the collection fails, @error is set.
+ * If the collection fails, `error` is set.
  *
  * Returns: (transfer full) (nullable): a `GtkAccessibleValue`
  */
@@ -1732,10 +1732,10 @@ gtk_accessible_value_collect_for_property (GtkAccessibleProperty   property,
  * @value: a `GValue`
  * @error: return location for a `GError`
  *
- * Retrieves the value stored inside @value and returns a `GtkAccessibleValue`
- * for the given @property.
+ * Retrieves the value stored inside `value` and returns a `GtkAccessibleValue`
+ * for the given `property`.
  *
- * If the collection fails, @error is set.
+ * If the collection fails, `error` is set.
  *
  * The returned value could be `NULL` even on success, in which case the property
  * should be reset to its default value by the caller.
@@ -1772,7 +1772,7 @@ gtk_accessible_value_parse_for_property (GtkAccessibleProperty   property,
  * @property: a `GtkAccessibleProperty`
  * @value: an uninitialized `GValue`
  *
- * Initializes @value with the appropriate type for the @property.
+ * Initializes `value` with the appropriate type for the `property`.
  *
  * This function is mostly meant for language bindings, in conjunction
  * with gtk_accessible_update_property_value().
@@ -1793,7 +1793,7 @@ gtk_accessible_property_init_value (GtkAccessibleProperty  property,
  * @relation: a `GtkAccessibleRelation`
  *
  * Retrieves the `GtkAccessibleValue` that contains the default for the
- * given @relation.
+ * given `relation`.
  *
  * Returns: (transfer full): the `GtkAccessibleValue`
  */
@@ -1847,10 +1847,10 @@ gtk_accessible_value_get_default_for_relation (GtkAccessibleRelation relation)
  * @error: return location for a `GError`
  * @args: a `va_list` reference
  *
- * Collects and consumes the next item in the @args variadic arguments list,
+ * Collects and consumes the next item in the `args` variadic arguments list,
  * and returns a `GtkAccessibleValue` for it.
  *
- * If the collection fails, @error is set and `NULL` is returned.
+ * If the collection fails, `error` is set and `NULL` is returned.
  *
  * The returned value could be `NULL` even on success, in which case the relation
  * should be reset to its default value by the caller.
@@ -1875,10 +1875,10 @@ gtk_accessible_value_collect_for_relation (GtkAccessibleRelation   relation,
  * @value: a `GValue`
  * @error: return location for a `GError`
  *
- * Retrieves the value stored inside @value and returns a `GtkAccessibleValue`
- * for the given @relation.
+ * Retrieves the value stored inside `value` and returns a `GtkAccessibleValue`
+ * for the given `relation`.
  *
- * If the collection fails, @error is set and `NULL` is returned.
+ * If the collection fails, `error` is set and `NULL` is returned.
  *
  * The returned value could be `NULL` even on success, in which case the relation
  * should be reset to its default value by the caller.
@@ -1915,7 +1915,7 @@ gtk_accessible_value_parse_for_relation (GtkAccessibleRelation   relation,
  * @relation: a `GtkAccessibleRelation`
  * @value: an uninitialized `GValue`
  *
- * Initializes @value with the appropriate type for the @relation.
+ * Initializes `value` with the appropriate type for the `relation`.
  *
  * This function is mostly meant for language bindings, in conjunction
  * with gtk_accessible_update_relation_value().

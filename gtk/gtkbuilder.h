@@ -188,7 +188,7 @@ GClosure *   gtk_builder_create_closure          (GtkBuilder    *builder,
  * @object: the `GtkBuildable` on which the warning occurred
  * @type: the unexpected type value
  *
- * This macro should be used to emit a warning about and unexpected @type value
+ * This macro should be used to emit a warning about and unexpected `type` value
  * in a `GtkBuildable` add_child implementation.
  */
 #define GTK_BUILDER_WARN_INVALID_CHILD_TYPE(object, type) \

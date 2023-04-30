@@ -69,11 +69,11 @@ gtk_style_animation_unref (GtkStyleAnimation *animation)
  * @animation: The animation to query
  * @at_time_us: The timestamp to query for
  *
- * Checks if @animation will not change its values anymore after
- * @at_time_us. This happens for example when the animation has reached its
+ * Checks if `animation` will not change its values anymore after
+ * `at_time_us`. This happens for example when the animation has reached its
  * final value or when it has been paused.
  *
- * Returns: true if @animation will not change anymore after @at_time_us
+ * Returns: true if `animation` will not change anymore after `at_time_us`
  **/
 gboolean
 _gtk_style_animation_is_static (GtkStyleAnimation *animation)

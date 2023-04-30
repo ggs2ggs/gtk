@@ -79,7 +79,7 @@ gtk_event_controller_legacy_class_init (GtkEventControllerLegacyClass *klass)
    * @controller: the object which received the signal
    * @event: the `GdkEvent` which triggered this signal
    *
-   * Emitted for each GDK event delivered to @controller.
+   * Emitted for each GDK event delivered to `controller`.
    *
    * Returns: true to stop other handlers from being invoked for the event
    *   and the emission of this signal. false to propagate the event further.

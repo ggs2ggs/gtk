@@ -330,7 +330,7 @@ gtk_print_job_new (const char       *title,
  *
  * Gets the `GtkPrintSettings` of the print job.
  *
- * Returns: (transfer none): the settings of @job
+ * Returns: (transfer none): the settings of `job`
  */
 GtkPrintSettings *
 gtk_print_job_get_settings (GtkPrintJob *job)
@@ -346,7 +346,7 @@ gtk_print_job_get_settings (GtkPrintJob *job)
  *
  * Gets the `GtkPrinter` of the print job.
  *
- * Returns: (transfer none): the printer of @job
+ * Returns: (transfer none): the printer of `job`
  */
 GtkPrinter *
 gtk_print_job_get_printer (GtkPrintJob *job)
@@ -362,7 +362,7 @@ gtk_print_job_get_printer (GtkPrintJob *job)
  *
  * Gets the job title.
  *
- * Returns: the title of @job
+ * Returns: the title of `job`
  */
 const char *
 gtk_print_job_get_title (GtkPrintJob *job)
@@ -378,7 +378,7 @@ gtk_print_job_get_title (GtkPrintJob *job)
  *
  * Gets the status of the print job.
  *
- * Returns: the status of @job
+ * Returns: the status of `job`
  */
 GtkPrintStatus
 gtk_print_job_get_status (GtkPrintJob *job)
@@ -491,7 +491,7 @@ gtk_print_job_set_source_fd (GtkPrintJob  *job,
  * Gets a cairo surface onto which the pages of
  * the print job should be rendered.
  *
- * Returns: (transfer none): the cairo surface of @job
+ * Returns: (transfer none): the cairo surface of `job`
  */
 cairo_surface_t *
 gtk_print_job_get_surface (GtkPrintJob  *job,
@@ -685,8 +685,8 @@ gtk_print_job_get_property (GObject    *object,
  * gtk_print_job_send:
  * @job: a `GtkPrintJob`
  * @callback: function to call when the job completes or an error occurs
- * @user_data: (closure): user data that gets passed to @callback
- * @dnotify: destroy notify for @user_data
+ * @user_data: (closure): user data that gets passed to `callback`
+ * @dnotify: destroy notify for `user_data`
  *
  * Sends the print job off to the printer.
  */
@@ -759,7 +759,7 @@ gtk_print_job_get_page_ranges (GtkPrintJob *job,
  * @job: a `GtkPrintJob`
  * @ranges: (array length=n_ranges) (transfer full): pointer to an array of
  *    `GtkPageRange` structs
- * @n_ranges: the length of the @ranges array
+ * @n_ranges: the length of the `ranges` array
  *
  * Sets the page ranges for this job.
  */

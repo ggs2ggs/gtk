@@ -322,7 +322,7 @@ gtk_file_chooser_get_create_folders (GtkFileChooser *chooser)
  * Note that the name passed in here is a UTF-8 string rather
  * than a filename. This function is meant for such uses as a
  * suggested name in a “Save As...” dialog.  You can pass
- * “Untitled.doc” or a similarly suitable suggestion for the @name.
+ * “Untitled.doc” or a similarly suitable suggestion for the `name`.
  *
  * If you want to preselect a particular existing file, you should
  * use [method@Gtk.FileChooser.set_file] instead.
@@ -390,7 +390,7 @@ gtk_file_chooser_unselect_all (GtkFileChooser *chooser)
  * @file: (nullable): the `GFile` for the new folder
  * @error: location to store error
  *
- * Sets the current folder for @chooser from a `GFile`.
+ * Sets the current folder for `chooser` from a `GFile`.
  *
  * Returns: true if the folder could be changed successfully, false
  *   otherwise.
@@ -413,7 +413,7 @@ gtk_file_chooser_set_current_folder (GtkFileChooser  *chooser,
  * gtk_file_chooser_get_current_folder:
  * @chooser: a `GtkFileChooser`
  *
- * Gets the current folder of @chooser as `GFile`.
+ * Gets the current folder of `chooser` as `GFile`.
  *
  * Returns: (transfer full) (nullable): the `GFile` for the current folder.
  *
@@ -454,7 +454,7 @@ gtk_file_chooser_unselect_file (GtkFileChooser *chooser,
  * @chooser: a `GtkFileChooser`
  *
  * Lists all the selected files and subfolders in the current folder
- * of @chooser as `GFile`.
+ * of `chooser` as `GFile`.
  *
  * Returns: (transfer full): a list model containing a `GFile` for each
  *   selected file and subfolder in the current folder. Free the returned
@@ -476,14 +476,14 @@ gtk_file_chooser_get_files (GtkFileChooser *chooser)
  * @file: the `GFile` to set as current
  * @error: (nullable): location to store the error
  *
- * Sets @file as the current filename for the file chooser.
+ * Sets `file` as the current filename for the file chooser.
  *
  * This includes changing to the file’s parent folder and actually selecting
- * the file in list. If the @chooser is in %GTK_FILE_CHOOSER_ACTION_SAVE mode,
+ * the file in list. If the `chooser` is in %GTK_FILE_CHOOSER_ACTION_SAVE mode,
  * the file’s base name will also appear in the dialog’s file name entry.
  *
- * If the file name isn’t in the current folder of @chooser, then the current
- * folder of @chooser will be changed to the folder containing @file.
+ * If the file name isn’t in the current folder of `chooser`, then the current
+ * folder of `chooser` will be changed to the folder containing `file`.
  *
  * Note that the file must exist, or nothing will be done except
  * for the directory change.
@@ -624,12 +624,12 @@ gtk_file_chooser_remove_shortcut_folder (GtkFileChooser  *chooser,
  * @chooser: a `GtkFileChooser`
  * @filter: (transfer none): a `GtkFileFilter`
  *
- * Adds @filter to the list of filters that the user can select between.
+ * Adds `filter` to the list of filters that the user can select between.
  *
  * When a filter is selected, only files that are passed by that
  * filter are displayed.
  *
- * Note that the @chooser takes ownership of the filter if it is floating,
+ * Note that the `chooser` takes ownership of the filter if it is floating,
  * so you have to ref and sink it if you want to keep a reference.
  *
  * Deprecated: 4.10: Use [class@Gtk.FileDialog] instead
@@ -648,7 +648,7 @@ gtk_file_chooser_add_filter (GtkFileChooser *chooser,
  * @chooser: a `GtkFileChooser`
  * @filter: a `GtkFileFilter`
  *
- * Removes @filter from the list of filters that the user can select between.
+ * Removes `filter` from the list of filters that the user can select between.
  *
  * Deprecated: 4.10: Use [class@Gtk.FileDialog] instead
  */
@@ -671,7 +671,7 @@ gtk_file_chooser_remove_filter (GtkFileChooser *chooser,
  * [method@Gtk.FileChooser.remove_filter] for changing individual filters.
  *
  * You should not modify the returned list model. Future changes to
- * @chooser may or may not affect the returned model.
+ * `chooser` may or may not affect the returned model.
  *
  * Returns: (transfer full): a `GListModel` containing the current set
  *   of user-selectable filters.
@@ -748,7 +748,7 @@ gtk_file_chooser_get_filter (GtkFileChooser *chooser)
  * Queries the list of shortcut folders in the file chooser.
  *
  * You should not modify the returned list model. Future changes to
- * @chooser may or may not affect the returned model.
+ * `chooser` may or may not affect the returned model.
  *
  * Returns: (transfer full): A list model of `GFile`s
  *
@@ -768,7 +768,7 @@ gtk_file_chooser_get_shortcut_folders (GtkFileChooser *chooser)
  * @id: id for the added choice
  * @label: user-visible label for the added choice
  * @options: (nullable) (array zero-terminated=1): ids for the options of the choice, or `NULL` for a boolean choice
- * @option_labels: (nullable) (array zero-terminated=1): user-visible labels for the options, must be the same length as @options
+ * @option_labels: (nullable) (array zero-terminated=1): user-visible labels for the options, must be the same length as `options`
  *
  * Adds a 'choice' to the file chooser.
  *

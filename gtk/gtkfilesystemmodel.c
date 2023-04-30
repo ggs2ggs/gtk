@@ -858,11 +858,11 @@ _gtk_file_system_model_new (void)
  *
  * Creates a new `GtkFileSystemModel` object.
  *
- * The `GtkFileSystemModel` object wraps the given @directory as a
+ * The `GtkFileSystemModel` object wraps the given `directory` as a
  * `GtkTreeModel`. The model will query the given directory with the
- * given @attributes and add all files inside the directory automatically.
+ * given `attributes` and add all files inside the directory automatically.
  * If supported, it will also monitor the drectory and update the model's
- * contents to reflect changes, if the @directory supports monitoring.
+ * contents to reflect changes, if the `directory` supports monitoring.
  *
  * Returns: the newly created `GtkFileSystemModel`
  **/
@@ -977,12 +977,12 @@ _gtk_file_system_model_set_filter_folders (GtkFileSystemModel *model,
  * _gtk_file_system_model_get_cancellable:
  * @model: the model
  *
- * Gets the cancellable used by the @model. This is the cancellable used
- * internally by the @model that will be cancelled when @model is
+ * Gets the cancellable used by the `model`. This is the cancellable used
+ * internally by the `model` that will be cancelled when `model` is
  * disposed. So you can use it for operations that should be cancelled
  * when the model goes away.
  *
- * Returns: The cancellable used by @model
+ * Returns: The cancellable used by `model`
  **/
 GCancellable *
 _gtk_file_system_model_get_cancellable (GtkFileSystemModel *model)
@@ -1018,8 +1018,8 @@ _gtk_file_system_model_get_info_for_file (GtkFileSystemModel *model,
  * @infos: the new file infos
  *
  * Tells the file system model that the files changed and that the
- * new @infos should be used for it now.  If these files are not
- * part of @model, it will get added automatically.
+ * new `infos` should be used for it now.  If these files are not
+ * part of `model`, it will get added automatically.
  **/
 void
 _gtk_file_system_model_update_files (GtkFileSystemModel *model,
@@ -1067,7 +1067,7 @@ _gtk_file_system_model_set_filter (GtkFileSystemModel      *model,
  *
  * This is a convenience function that calls g_file_query_info_async() on
  * the given file, and when successful, adds it to the model.
- * Upon failure, the @file is discarded.
+ * Upon failure, the `file` is discarded.
  **/
 void
 _gtk_file_system_model_add_and_query_file (GtkFileSystemModel *model,

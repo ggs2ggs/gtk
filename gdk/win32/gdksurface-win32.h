@@ -262,7 +262,7 @@ struct _GdkWin32Surface
   /* left/right/top/bottom width of the shadow/resize-grip around the window */
   RECT shadow;
 
-  /* left+right and top+bottom from @shadow */
+  /* left+right and top+bottom from `shadow` */
   int shadow_x;
   int shadow_y;
 
@@ -272,7 +272,7 @@ struct _GdkWin32Surface
   guint zero_shadow : 1;
   guint inhibit_configure : 1;
 
-  /* If TRUE, the @temp_styles is set to the styles that were temporarily
+  /* If TRUE, the `temp_styles` is set to the styles that were temporarily
    * added to this window.
    */
   guint have_temp_styles : 1;

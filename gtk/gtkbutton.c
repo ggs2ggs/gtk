@@ -695,7 +695,7 @@ gtk_button_new_from_icon_name (const char *icon_name)
  *
  * Creates a new `GtkButton` containing a label.
  *
- * If characters in @label are preceded by an underscore, they are underlined.
+ * If characters in `label` are preceded by an underscore, they are underlined.
  * If you need a literal underscore character in a label, use “__” (two
  * underscores). The first underlined character represents a keyboard
  * accelerator called a mnemonic. Pressing <kbd>Alt</kbd> and that key
@@ -837,7 +837,7 @@ gtk_button_finish_activate (GtkButton *button,
  * @button: a `GtkButton`
  * @label: a string
  *
- * Sets the text of the label of the button to @label.
+ * Sets the text of the label of the button to `label`.
  *
  * This will also clear any previously set labels.
  */
@@ -973,7 +973,7 @@ gtk_button_state_flags_changed (GtkWidget     *widget,
  *
  * Adds a `GtkImage` with the given icon name as a child.
  *
- * If @button already contains a child widget, that child widget will
+ * If `button` already contains a child widget, that child widget will
  * be removed and replaced with the image.
  */
 void
@@ -1049,13 +1049,13 @@ gtk_button_get_action_helper (GtkButton *button)
  * @button: a `GtkButton`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @button.
+ * Sets the child widget of `button`.
  *
  * Note that by using this API, you take full responsibility for setting
- * up the proper accessibility label and description information for @button.
+ * up the proper accessibility label and description information for `button`.
  * Most likely, you'll either set the accessibility label or description
- * for @button explicitly, or you'll set a labelled-by or described-by
- * relations from @child to @button.
+ * for `button` explicitly, or you'll set a labelled-by or described-by
+ * relations from `child` to `button`.
  */
 void
 gtk_button_set_child (GtkButton *button,
@@ -1084,9 +1084,9 @@ gtk_button_set_child (GtkButton *button,
  * gtk_button_get_child: (attributes org.gtk.Method.get_property=child)
  * @button: a `GtkButton`
  *
- * Gets the child widget of @button.
+ * Gets the child widget of `button`.
  *
- * Returns: (nullable) (transfer none): the child widget of @button
+ * Returns: (nullable) (transfer none): the child widget of `button`
  */
 GtkWidget *
 gtk_button_get_child (GtkButton *button)
@@ -1106,7 +1106,7 @@ gtk_button_get_child (GtkButton *button)
  * Sets whether the button size can be smaller than the natural size of
  * its contents.
  *
- * For text buttons, setting @can_shrink to true will ellipsize the label.
+ * For text buttons, setting `can_shrink` to true will ellipsize the label.
  *
  * For icons and custom children, this function has no effect.
  *

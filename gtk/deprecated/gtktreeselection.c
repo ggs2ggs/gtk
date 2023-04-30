@@ -267,7 +267,7 @@ _gtk_tree_selection_new_with_tree_view (GtkTreeView *tree_view)
  * @selection: A `GtkTreeSelection`.
  * @tree_view: The `GtkTreeView`.
  *
- * Sets the `GtkTreeView` of @selection.  This function should not be invoked, as
+ * Sets the `GtkTreeView` of `selection`.  This function should not be invoked, as
  * it is used internally by `GtkTreeView`.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
@@ -289,7 +289,7 @@ _gtk_tree_selection_set_tree_view (GtkTreeSelection *selection,
  * @selection: A `GtkTreeSelection`.
  * @type: The selection mode
  *
- * Sets the selection mode of the @selection.  If the previous type was
+ * Sets the selection mode of the `selection`.  If the previous type was
  * %GTK_SELECTION_MULTIPLE, then the anchor is kept selected, if it was
  * previously selected.
  *
@@ -365,7 +365,7 @@ gtk_tree_selection_set_mode (GtkTreeSelection *selection,
  * gtk_tree_selection_get_mode:
  * @selection: a `GtkTreeSelection`
  *
- * Gets the selection mode for @selection. See
+ * Gets the selection mode for `selection`. See
  * gtk_tree_selection_set_mode().
  *
  * Returns: the current selection mode
@@ -453,7 +453,7 @@ gtk_tree_selection_get_user_data (GtkTreeSelection *selection)
  * gtk_tree_selection_get_tree_view:
  * @selection: A `GtkTreeSelection`
  *
- * Returns the tree view associated with @selection.
+ * Returns the tree view associated with `selection`.
  *
  * Returns: (transfer none): A `GtkTreeView`
  *
@@ -473,11 +473,11 @@ gtk_tree_selection_get_tree_view (GtkTreeSelection *selection)
  * @model: (out) (optional) (transfer none): A pointer to set to the `GtkTreeModel`
  * @iter: (out) (optional): The `GtkTreeIter`
  *
- * Sets @iter to the currently selected node if @selection is set to
- * %GTK_SELECTION_SINGLE or %GTK_SELECTION_BROWSE.  @iter may be NULL if you
- * just want to test if @selection has any selected nodes.  @model is filled
+ * Sets `iter` to the currently selected node if `selection` is set to
+ * %GTK_SELECTION_SINGLE or %GTK_SELECTION_BROWSE.  `iter` may be NULL if you
+ * just want to test if `selection` has any selected nodes.  `model` is filled
  * with the current model as a convenience.  This function will not work if you
- * use @selection is %GTK_SELECTION_MULTIPLE.
+ * use `selection` is %GTK_SELECTION_MULTIPLE.
  *
  * Returns: TRUE, if there is a selected node.
  *
@@ -669,7 +669,7 @@ gtk_tree_selection_count_selected_rows_helper (GtkTreeRBTree *tree,
  * gtk_tree_selection_count_selected_rows:
  * @selection: A `GtkTreeSelection`.
  *
- * Returns the number of rows that have been selected in @tree.
+ * Returns the number of rows that have been selected in `tree`.
  *
  * Returns: The number of rows selected.
  *
@@ -859,7 +859,7 @@ out:
  * @selection: A `GtkTreeSelection`.
  * @path: The `GtkTreePath` to be selected.
  *
- * Select the row at @path.
+ * Select the row at `path`.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
  **/
@@ -901,7 +901,7 @@ gtk_tree_selection_select_path (GtkTreeSelection *selection,
  * @selection: A `GtkTreeSelection`.
  * @path: The `GtkTreePath` to be unselected.
  *
- * Unselects the row at @path.
+ * Unselects the row at `path`.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
  **/
@@ -1004,10 +1004,10 @@ gtk_tree_selection_unselect_iter (GtkTreeSelection *selection,
  * @selection: A `GtkTreeSelection`.
  * @path: A `GtkTreePath` to check selection on.
  *
- * Returns true if the row pointed to by @path is currently selected.  If @path
+ * Returns true if the row pointed to by `path` is currently selected.  If `path`
  * does not point to a valid location, false is returned
  *
- * Returns: true if @path is selected.
+ * Returns: true if `path` is selected.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
  **/
@@ -1043,9 +1043,9 @@ gtk_tree_selection_path_is_selected (GtkTreeSelection *selection,
  * @selection: A `GtkTreeSelection`
  * @iter: A valid `GtkTreeIter`
  *
- * Returns true if the row at @iter is currently selected.
+ * Returns true if the row at `iter` is currently selected.
  *
- * Returns: true, if @iter is selected
+ * Returns: true, if `iter` is selected
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
  **/
@@ -1137,7 +1137,7 @@ gtk_tree_selection_real_select_all (GtkTreeSelection *selection)
  * gtk_tree_selection_select_all:
  * @selection: A `GtkTreeSelection`.
  *
- * Selects all the nodes. @selection must be set to %GTK_SELECTION_MULTIPLE
+ * Selects all the nodes. `selection` must be set to %GTK_SELECTION_MULTIPLE
  * mode.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
@@ -1358,8 +1358,8 @@ gtk_tree_selection_real_modify_range (GtkTreeSelection *selection,
  * @start_path: The initial node of the range.
  * @end_path: The final node of the range.
  *
- * Selects a range of nodes, determined by @start_path and @end_path inclusive.
- * @selection must be set to %GTK_SELECTION_MULTIPLE mode.
+ * Selects a range of nodes, determined by `start_path` and `end_path` inclusive.
+ * `selection` must be set to %GTK_SELECTION_MULTIPLE mode.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
  **/
@@ -1384,7 +1384,7 @@ gtk_tree_selection_select_range (GtkTreeSelection *selection,
  * @start_path: The initial node of the range.
  * @end_path: The initial node of the range.
  *
- * Unselects a range of nodes, determined by @start_path and @end_path
+ * Unselects a range of nodes, determined by `start_path` and `end_path`
  * inclusive.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView

@@ -389,12 +389,12 @@ gtk_pad_controller_init (GtkPadController *controller)
  * @group: `GActionGroup` to trigger actions from
  * @pad: (nullable): A %GDK_SOURCE_TABLET_PAD device, or `NULL` to handle all pads
  *
- * Creates a new `GtkPadController` that will associate events from @pad to
+ * Creates a new `GtkPadController` that will associate events from `pad` to
  * actions.
  *
  * A `NULL` pad may be provided so the controller manages all pad devices
  * generically, it is discouraged to mix `GtkPadController` objects with
- * `NULL` and non-`NULL` @pad argument on the same toplevel window, as execution
+ * `NULL` and non-`NULL` `pad` argument on the same toplevel window, as execution
  * order is not guaranteed.
  *
  * The `GtkPadController` is created with no mapped actions. In order to
@@ -465,11 +465,11 @@ gtk_pad_controller_add_entry (GtkPadController        *controller,
 /**
  * gtk_pad_controller_set_action_entries:
  * @controller: a `GtkPadController`
- * @entries: (array length=n_entries): the action entries to set on @controller
- * @n_entries: the number of elements in @entries
+ * @entries: (array length=n_entries): the action entries to set on `controller`
+ * @n_entries: the number of elements in `entries`
  *
  * A convenience function to add a group of action entries on
- * @controller.
+ * `controller`.
  *
  * See [struct@Gtk.PadActionEntry] and [method@Gtk.PadController.set_action].
  */
@@ -497,13 +497,13 @@ gtk_pad_controller_set_action_entries (GtkPadController        *controller,
  *   be deemed user-visible.
  * @action_name: action name that will be activated in the `GActionGroup`
  *
- * Adds an individual action to @controller.
+ * Adds an individual action to `controller`.
  *
  * This action will only be activated if the given button/ring/strip number
- * in @index is interacted while the current mode is @mode. -1 may be used
+ * in `index` is interacted while the current mode is `mode`. -1 may be used
  * for simple cases, so the action is triggered on all modes.
  *
- * The given @label should be considered user-visible, so internationalization
+ * The given `label` should be considered user-visible, so internationalization
  * rules apply. Some windowing systems may be able to use those for user
  * feedback.
  */

@@ -1543,8 +1543,8 @@ gtk_column_view_set_model (GtkColumnView     *self,
  *
  * Gets the list of columns in this column view.
  *
- * This list is constant over the lifetime of @self and can be used to
- * monitor changes to the columns of @self by connecting to the
+ * This list is constant over the lifetime of `self` and can be used to
+ * monitor changes to the columns of `self` by connecting to the
  * ::items-changed signal.
  *
  * Returns: (transfer none): The list managing the columns
@@ -1646,7 +1646,7 @@ gtk_column_view_get_show_column_separators (GtkColumnView *self)
  * @column: a `GtkColumnViewColumn` that hasn't been added to a
  *   `GtkColumnView` yet
  *
- * Appends the @column to the end of the columns in @self.
+ * Appends the `column` to the end of the columns in `self`.
  */
 void
 gtk_column_view_append_column (GtkColumnView       *self,
@@ -1663,9 +1663,9 @@ gtk_column_view_append_column (GtkColumnView       *self,
 /**
  * gtk_column_view_remove_column:
  * @self: a `GtkColumnView`
- * @column: a `GtkColumnViewColumn` that's part of @self
+ * @column: a `GtkColumnViewColumn` that's part of `self`
  *
- * Removes the @column from the list of columns of @self.
+ * Removes the `column` from the list of columns of `self`.
  */
 void
 gtk_column_view_remove_column (GtkColumnView       *self,
@@ -1708,12 +1708,12 @@ gtk_column_view_remove_column (GtkColumnView       *self,
 /**
  * gtk_column_view_insert_column:
  * @self: a `GtkColumnView`
- * @position: the position to insert @column at
+ * @position: the position to insert `column` at
  * @column: the `GtkColumnViewColumn` to insert
  *
- * Inserts a column at the given position in the columns of @self.
+ * Inserts a column at the given position in the columns of `self`.
  *
- * If @column is already a column of @self, it will be repositioned.
+ * If `column` is already a column of `self`, it will be repositioned.
  */
 void
 gtk_column_view_insert_column (GtkColumnView       *self,
@@ -1860,7 +1860,7 @@ gtk_column_view_get_list_view (GtkColumnView *self)
  * gtk_column_view_set_model (view, selection);
  * ```
  *
- * Returns: (nullable) (transfer none): the `GtkSorter` of @self
+ * Returns: (nullable) (transfer none): the `GtkSorter` of `self`
  */
 GtkSorter *
 gtk_column_view_get_sorter (GtkColumnView *self)
@@ -1885,9 +1885,9 @@ gtk_column_view_get_sorter (GtkColumnView *self)
  * This call only has an effect if the sorter returned by
  * [method@Gtk.ColumnView.get_sorter] is set on a sort model,
  * and [method@Gtk.ColumnViewColumn.set_sorter] has been called
- * on @column to associate a sorter with the column.
+ * on `column` to associate a sorter with the column.
  *
- * If @column is `NULL`, the view will be unsorted.
+ * If `column` is `NULL`, the view will be unsorted.
  */
 void
 gtk_column_view_sort_by_column (GtkColumnView       *self,

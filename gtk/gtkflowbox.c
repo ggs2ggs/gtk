@@ -589,7 +589,7 @@ gtk_flow_box_child_new (void)
  * @self: a `GtkFlowBoxChild`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @self.
+ * Sets the child widget of `self`.
  */
 void
 gtk_flow_box_child_set_child (GtkFlowBoxChild *self,
@@ -615,9 +615,9 @@ gtk_flow_box_child_set_child (GtkFlowBoxChild *self,
  * gtk_flow_box_child_get_child: (attributes org.gtk.Method.get_property=child)
  * @self: a `GtkFlowBoxChild`
  *
- * Gets the child widget of @self.
+ * Gets the child widget of `self`.
  *
- * Returns: (nullable) (transfer none): the child widget of @self
+ * Returns: (nullable) (transfer none): the child widget of `self`
  */
 GtkWidget *
 gtk_flow_box_child_get_child (GtkFlowBoxChild *self)
@@ -631,9 +631,9 @@ gtk_flow_box_child_get_child (GtkFlowBoxChild *self)
  * gtk_flow_box_child_get_index:
  * @child: a `GtkFlowBoxChild`
  *
- * Gets the current index of the @child in its `GtkFlowBox` container.
+ * Gets the current index of the `child` in its `GtkFlowBox` container.
  *
- * Returns: the index of the @child, or -1 if the @child is not
+ * Returns: the index of the `child`, or -1 if the `child` is not
  *   in a flow box
  */
 int
@@ -655,10 +655,10 @@ gtk_flow_box_child_get_index (GtkFlowBoxChild *child)
  * gtk_flow_box_child_is_selected:
  * @child: a `GtkFlowBoxChild`
  *
- * Returns whether the @child is currently selected in its
+ * Returns whether the `child` is currently selected in its
  * `GtkFlowBox` container.
  *
- * Returns: true if @child is selected
+ * Returns: true if `child` is selected
  */
 gboolean
 gtk_flow_box_child_is_selected (GtkFlowBoxChild *child)
@@ -672,7 +672,7 @@ gtk_flow_box_child_is_selected (GtkFlowBoxChild *child)
  * gtk_flow_box_child_changed:
  * @child: a `GtkFlowBoxChild`
  *
- * Marks @child as changed, causing any state that depends on this
+ * Marks `child` as changed, causing any state that depends on this
  * to be updated.
  *
  * This affects sorting and filtering.
@@ -3054,7 +3054,7 @@ gtk_flow_box_unmap (GtkWidget *widget)
  * @box: a `GtkFlowBox`
  * @widget: the child widget to remove
  *
- * Removes a child from @box.
+ * Removes a child from `box`.
  */
 void
 gtk_flow_box_remove (GtkFlowBox *box,
@@ -3104,9 +3104,9 @@ gtk_flow_box_remove (GtkFlowBox *box,
  * gtk_flow_box_remove_all:
  * @box: a `GtkFlowBox`
  *
- * Removes all children from @box.
+ * Removes all children from `box`.
  *
- * This function does nothing if @box is backed by a model.
+ * This function does nothing if `box` is backed by a model.
  *
  * Since: 4.12
  */
@@ -3780,7 +3780,7 @@ gtk_flow_box_class_init (GtkFlowBoxClass *class)
    * GtkFlowBox::activate-cursor-child:
    * @box: the `GtkFlowBox` on which the signal is emitted
    *
-   * Emitted when the user activates the @box.
+   * Emitted when the user activates the `box`.
    *
    * This is a [keybinding signal](class.SignalAction.html).
    */
@@ -3814,7 +3814,7 @@ gtk_flow_box_class_init (GtkFlowBoxClass *class)
    * GtkFlowBox::move-cursor:
    * @box: the `GtkFlowBox` on which the signal is emitted
    * @step: the granularity of the move, as a `GtkMovementStep`
-   * @count: the number of @step units to move
+   * @count: the number of `step` units to move
    * @extend: whether to extend the selection
    * @modify: whether to modify the selection
    *
@@ -4108,7 +4108,7 @@ gtk_flow_box_insert_widget (GtkFlowBox    *box,
  * @self: a `GtkFlowBox
  * @child: the `GtkWidget` to add
  *
- * Adds @child to the start of @self.
+ * Adds `child` to the start of `self`.
  *
  * If a sort function is set, the widget will
  * actually be inserted at the calculated position.
@@ -4132,7 +4132,7 @@ gtk_flow_box_prepend (GtkFlowBox *self,
  * @self: a `GtkFlowBox
  * @child: the `GtkWidget` to add
  *
- * Adds @child to the end of @self.
+ * Adds `child` to the end of `self`.
  *
  * If a sort function is set, the widget will
  * actually be inserted at the calculated position.
@@ -4155,15 +4155,15 @@ gtk_flow_box_append (GtkFlowBox *self,
  * gtk_flow_box_insert:
  * @box: a `GtkFlowBox`
  * @widget: the `GtkWidget` to add
- * @position: the position to insert @child in
+ * @position: the position to insert `child` in
  *
- * Inserts the @widget into @box at @position.
+ * Inserts the `widget` into `box` at `position`.
  *
  * If a sort function is set, the widget will actually be inserted
  * at the calculated position.
  *
- * If @position is -1, or larger than the total number of children
- * in the @box, then the @widget will be appended to the end.
+ * If `position` is -1, or larger than the total number of children
+ * in the `box`, then the `widget` will be appended to the end.
  */
 void
 gtk_flow_box_insert (GtkFlowBox *box,
@@ -4211,7 +4211,7 @@ gtk_flow_box_insert (GtkFlowBox *box,
  * @box: a `GtkFlowBox`
  * @idx: the position of the child
  *
- * Gets the nth child in the @box.
+ * Gets the nth child in the `box`.
  *
  * Returns: (transfer none) (nullable): the child widget, which will
  *   always be a `GtkFlowBoxChild` or `NULL` in case no child widget
@@ -4238,9 +4238,9 @@ gtk_flow_box_get_child_at_index (GtkFlowBox *box,
  * @x: the x coordinate of the child
  * @y: the y coordinate of the child
  *
- * Gets the child in the (@x, @y) position.
+ * Gets the child in the (`x`, `y`) position.
  *
- * Both @x and @y are assumed to be relative to the origin of @box.
+ * Both `x` and `y` are assumed to be relative to the origin of `box`.
  *
  * Returns: (transfer none) (nullable): the child widget, which will
  *   always be a `GtkFlowBoxChild` or `NULL` in case no child widget
@@ -4263,9 +4263,9 @@ gtk_flow_box_get_child_at_pos (GtkFlowBox *box,
  * gtk_flow_box_set_hadjustment:
  * @box: a `GtkFlowBox`
  * @adjustment: an adjustment which should be adjusted
- *    when the focus is moved among the descendents of @container
+ *    when the focus is moved among the descendents of `container`
  *
- * Hooks up an adjustment to focus handling in @box.
+ * Hooks up an adjustment to focus handling in `box`.
  *
  * The adjustment is also used for autoscrolling during
  * rubberband selection. See [method@Gtk.ScrolledWindow.get_hadjustment]
@@ -4298,9 +4298,9 @@ gtk_flow_box_set_hadjustment (GtkFlowBox    *box,
  * gtk_flow_box_set_vadjustment:
  * @box: a `GtkFlowBox`
  * @adjustment: an adjustment which should be adjusted
- *    when the focus is moved among the descendents of @container
+ *    when the focus is moved among the descendents of `container`
  *
- * Hooks up an adjustment to focus handling in @box.
+ * Hooks up an adjustment to focus handling in `box`.
  *
  * The adjustment is also used for autoscrolling during
  * rubberband selection. See [method@Gtk.ScrolledWindow.get_vadjustment]
@@ -4342,22 +4342,22 @@ gtk_flow_box_check_model_compat (GtkFlowBox *box)
 /**
  * gtk_flow_box_bind_model:
  * @box: a `GtkFlowBox`
- * @model: (nullable): the `GListModel` to be bound to @box
+ * @model: (nullable): the `GListModel` to be bound to `box`
  * @create_widget_func: a function that creates widgets for items
- * @user_data: (closure): user data passed to @create_widget_func
- * @user_data_free_func: function for freeing @user_data
+ * @user_data: (closure): user data passed to `create_widget_func`
+ * @user_data_free_func: function for freeing `user_data`
  *
- * Binds @model to @box.
+ * Binds `model` to `box`.
  *
- * If @box was already bound to a model, that previous binding is
+ * If `box` was already bound to a model, that previous binding is
  * destroyed.
  *
- * The contents of @box are cleared and then filled with widgets that
- * represent items from @model. @box is updated whenever @model changes.
- * If @model is `NULL`, @box is left empty.
+ * The contents of `box` are cleared and then filled with widgets that
+ * represent items from `model`. `box` is updated whenever `model` changes.
+ * If `model` is `NULL`, `box` is left empty.
  *
  * It is undefined to add or remove widgets directly (for example, with
- * [method@Gtk.FlowBox.insert]) while @box is bound to a model.
+ * [method@Gtk.FlowBox.insert]) while `box` is bound to a model.
  *
  * Note that using a model is incompatible with the filtering and sorting
  * functionality in `GtkFlowBox`. When using a model, filtering and sorting
@@ -4427,7 +4427,7 @@ gtk_flow_box_get_homogeneous (GtkFlowBox *box)
  * @homogeneous: true to create equal allotments,
  *   false for variable allotments
  *
- * Sets whether or not all children of @box are given
+ * Sets whether or not all children of `box` are given
  * equal space in the box.
  */
 void
@@ -4529,7 +4529,7 @@ gtk_flow_box_get_column_spacing (GtkFlowBox *box)
  * @n_children: the minimum number of children per line
  *
  * Sets the minimum number of children to line up
- * in @box’s orientation before flowing.
+ * in `box`’s orientation before flowing.
  */
 void
 gtk_flow_box_set_min_children_per_line (GtkFlowBox *box,
@@ -4568,11 +4568,11 @@ gtk_flow_box_get_min_children_per_line (GtkFlowBox *box)
  * @n_children: the maximum number of children per line
  *
  * Sets the maximum number of children to request and
- * allocate space for in @box’s orientation.
+ * allocate space for in `box`’s orientation.
  *
  * Setting the maximum number of children per line
  * limits the overall natural size request to be no more
- * than @n_children children long in the given orientation.
+ * than `n_children` children long in the given orientation.
  */
 void
 gtk_flow_box_set_max_children_per_line (GtkFlowBox *box,
@@ -4611,7 +4611,7 @@ gtk_flow_box_get_max_children_per_line (GtkFlowBox *box)
  * @box: a `GtkFlowBox`
  * @single: true to emit child-activated on a single click
  *
- * If @single is true, children will be activated when you click
+ * If `single` is true, children will be activated when you click
  * on them, otherwise you need to double-click.
  */
 void
@@ -4693,9 +4693,9 @@ gtk_flow_box_get_selected_children (GtkFlowBox *box)
 /**
  * gtk_flow_box_select_child:
  * @box: a `GtkFlowBox`
- * @child: a child of @box
+ * @child: a child of `box`
  *
- * Selects a single child of @box, if the selection
+ * Selects a single child of `box`, if the selection
  * mode allows it.
  */
 void
@@ -4711,9 +4711,9 @@ gtk_flow_box_select_child (GtkFlowBox      *box,
 /**
  * gtk_flow_box_unselect_child:
  * @box: a `GtkFlowBox`
- * @child: a child of @box
+ * @child: a child of `box`
  *
- * Unselects a single child of @box, if the selection
+ * Unselects a single child of `box`, if the selection
  * mode allows it.
  */
 void
@@ -4730,7 +4730,7 @@ gtk_flow_box_unselect_child (GtkFlowBox      *box,
  * gtk_flow_box_select_all:
  * @box: a `GtkFlowBox`
  *
- * Select all children of @box, if the selection
+ * Select all children of `box`, if the selection
  * mode allows it.
  */
 void
@@ -4752,7 +4752,7 @@ gtk_flow_box_select_all (GtkFlowBox *box)
  * gtk_flow_box_unselect_all:
  * @box: a `GtkFlowBox`
  *
- * Unselect all children of @box, if the selection
+ * Unselect all children of `box`, if the selection
  * mode allows it.
  */
 void
@@ -4779,7 +4779,7 @@ gtk_flow_box_unselect_all (GtkFlowBox *box)
  *
  * A function used by gtk_flow_box_selected_foreach().
  *
- * It will be called on every selected child of the @box.
+ * It will be called on every selected child of the `box`.
  */
 
 /**
@@ -4818,7 +4818,7 @@ gtk_flow_box_selected_foreach (GtkFlowBox            *box,
  * @box: a `GtkFlowBox`
  * @mode: the new selection mode
  *
- * Sets how selection works in @box.
+ * Sets how selection works in `box`.
  */
 void
 gtk_flow_box_set_selection_mode (GtkFlowBox       *box,
@@ -4854,7 +4854,7 @@ gtk_flow_box_set_selection_mode (GtkFlowBox       *box,
  * gtk_flow_box_get_selection_mode: (attributes org.gtk.Method.get_property=selection-mode)
  * @box: a `GtkFlowBox`
  *
- * Gets the selection mode of @box.
+ * Gets the selection mode of `box`.
  *
  * Returns: the `GtkSelectionMode`
  */
@@ -4886,16 +4886,16 @@ gtk_flow_box_get_selection_mode (GtkFlowBox *box)
  * @box: a `GtkFlowBox`
  * @filter_func: (nullable): callback that
  *   lets you filter which children to show
- * @user_data: (closure): user data passed to @filter_func
- * @destroy: destroy notifier for @user_data
+ * @user_data: (closure): user data passed to `filter_func`
+ * @destroy: destroy notifier for `user_data`
  *
- * By setting a filter function on the @box one can decide dynamically
+ * By setting a filter function on the `box` one can decide dynamically
  * which of the children to show.
  *
  * For instance, to implement a search function that only shows the
  * children matching the search terms.
  *
- * The @filter_func will be called for each child after the call, and
+ * The `filter_func` will be called for each child after the call, and
  * it will continue to be called each time a child changes (via
  * [method@Gtk.FlowBoxChild.changed]) or when
  * [method@Gtk.FlowBox.invalidate_filter] is called.
@@ -4934,7 +4934,7 @@ gtk_flow_box_set_filter_func (GtkFlowBox           *box,
  * Updates the filtering for all children.
  *
  * Call this function when the result of the filter
- * function on the @box is changed due to an external
+ * function on the `box` is changed due to an external
  * factor. For instance, this would be used if the
  * filter function just looked for a specific search
  * term, and the entry with the string has changed.
@@ -4959,7 +4959,7 @@ gtk_flow_box_invalidate_filter (GtkFlowBox *box)
  * A function to compare two children to determine which
  * should come first.
  *
- * Returns: < 0 if @child1 should be before @child2, 0 if
+ * Returns: < 0 if `child1` should be before `child2`, 0 if
  *   they are equal, and > 0 otherwise
  */
 
@@ -4967,14 +4967,14 @@ gtk_flow_box_invalidate_filter (GtkFlowBox *box)
  * gtk_flow_box_set_sort_func:
  * @box: a `GtkFlowBox`
  * @sort_func: (nullable): the sort function
- * @user_data: (closure): user data passed to @sort_func
- * @destroy: destroy notifier for @user_data
+ * @user_data: (closure): user data passed to `sort_func`
+ * @destroy: destroy notifier for `user_data`
  *
- * By setting a sort function on the @box, one can dynamically
+ * By setting a sort function on the `box`, one can dynamically
  * reorder the children of the box, based on the contents of
  * the children.
  *
- * The @sort_func will be called for each child after the call,
+ * The `sort_func` will be called for each child after the call,
  * and will continue to be called each time a child changes (via
  * [method@Gtk.FlowBoxChild.changed]) and when
  * [method@Gtk.FlowBox.invalidate_sort] is called.
@@ -5036,7 +5036,7 @@ gtk_flow_box_reorder_foreach (gpointer data,
  * Updates the sorting for all children.
  *
  * Call this when the result of the sort function on
- * @box is changed due to an external factor.
+ * `box` is changed due to an external factor.
  */
 void
 gtk_flow_box_invalidate_sort (GtkFlowBox *box)

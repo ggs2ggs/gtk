@@ -475,7 +475,7 @@ gtk_css_dimension_value_new (double     value,
  * gtk_css_number_value_get_calc_term_order:
  * @value: Value to compute order for
  *
- * Determines the position of @value when printed as part of a calc()
+ * Determines the position of `value` when printed as part of a calc()
  * expression. Values with lower numbers are printed first. Note that
  * these numbers are arbitrary, so when adding new types of values to
  * print, feel free to change them in implementations so that they

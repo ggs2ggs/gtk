@@ -601,9 +601,9 @@ gtk_window_handle_new (void)
  * gtk_window_handle_get_child: (attributes org.gtk.Method.get_property=child)
  * @self: a `GtkWindowHandle`
  *
- * Gets the child widget of @self.
+ * Gets the child widget of `self`.
  *
- * Returns: (nullable) (transfer none): the child widget of @self
+ * Returns: (nullable) (transfer none): the child widget of `self`
  */
 GtkWidget *
 gtk_window_handle_get_child (GtkWindowHandle *self)
@@ -618,7 +618,7 @@ gtk_window_handle_get_child (GtkWindowHandle *self)
  * @self: a `GtkWindowHandle`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @self.
+ * Sets the child widget of `self`.
  */
 void
 gtk_window_handle_set_child (GtkWindowHandle *self,

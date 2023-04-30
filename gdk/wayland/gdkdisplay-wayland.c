@@ -829,7 +829,7 @@ gdk_wayland_display_get_next_serial (GdkDisplay *display)
  * Gets the startup notification ID for a Wayland display, or `NULL`
  * if no ID has been defined.
  *
- * Returns: (nullable): the startup notification ID for @display
+ * Returns: (nullable): the startup notification ID for `display`
  *
  * Deprecated: 4.10.
  */
@@ -1068,7 +1068,7 @@ get_cursor_theme (GdkWaylandDisplay *display_wayland,
  * @name: the new cursor theme
  * @size: the size to use for cursors
  *
- * Sets the cursor theme for the given @display.
+ * Sets the cursor theme for the given `display`.
  */
 void
 gdk_wayland_display_set_cursor_theme (GdkDisplay *display,

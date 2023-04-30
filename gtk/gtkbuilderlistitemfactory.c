@@ -304,7 +304,7 @@ gtk_builder_list_item_factory_init (GtkBuilderListItemFactory *self)
  * @bytes: the `GBytes` containing the ui file to instantiate
  *
  * Creates a new `GtkBuilderListItemFactory` that instantiates widgets
- * using @bytes as the data to pass to `GtkBuilder`.
+ * using `bytes` as the data to pass to `GtkBuilder`.
  *
  * Returns: a new `GtkBuilderListItemFactory`
  **/
@@ -326,7 +326,7 @@ gtk_builder_list_item_factory_new_from_bytes (GtkBuilderScope *scope,
  * @resource_path: valid path to a resource that contains the data
  *
  * Creates a new `GtkBuilderListItemFactory` that instantiates widgets
- * using data read from the given @resource_path to pass to `GtkBuilder`.
+ * using data read from the given `resource_path` to pass to `GtkBuilder`.
  *
  * Returns: a new `GtkBuilderListItemFactory`
  **/

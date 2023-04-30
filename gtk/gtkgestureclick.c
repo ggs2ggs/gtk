@@ -372,9 +372,9 @@ gtk_gesture_click_class_init (GtkGestureClickClass *klass)
    *
    * Emitted when a button or touch is released.
    *
-   * @n_press will report the number of press that is paired to
+   * `n_press` will report the number of press that is paired to
    * this event, note that [signal@Gtk.GestureClick::stopped] may
-   * have been emitted between the press and its release, @n_press
+   * have been emitted between the press and its release, `n_press`
    * will only start over at the next press.
    */
   signals[RELEASED] =

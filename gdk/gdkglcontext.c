@@ -1033,12 +1033,12 @@ gdk_gl_context_get_matching_version (GdkGLContext *context,
  *
  * Sets the major and minor version of OpenGL to request.
  *
- * Setting @major and @minor to zero will use the default values.
+ * Setting `major` and `minor` to zero will use the default values.
  *
- * Setting @major and @minor lower than the minimum versions required
+ * Setting `major` and `minor` lower than the minimum versions required
  * by GTK will result in the context choosing the minimum version.
  *
- * The @context must not be realized or made current prior to calling
+ * The `context` must not be realized or made current prior to calling
  * this function.
  */
 void
@@ -1086,9 +1086,9 @@ gdk_gl_context_check_gl_version (GdkGLContext       *self,
  * @major: (out) (nullable): return location for the major version to request
  * @minor: (out) (nullable): return location for the minor version to request
  *
- * Retrieves required OpenGL version set as a requirement for the @context
+ * Retrieves required OpenGL version set as a requirement for the `context`
  * realization. It will not change even if a greater OpenGL version is supported
- * and used after the @context is realized. See
+ * and used after the `context` is realized. See
  * [method@Gdk.GLContext.get_version] for the real version in use.
  *
  * See [method@Gdk.GLContext.set_required_version].
@@ -1163,11 +1163,11 @@ gdk_gl_context_set_is_legacy (GdkGLContext *context,
 /**
  * gdk_gl_context_is_shared:
  * @self: a `GdkGLContext`
- * @other: the `GdkGLContext` that should be compatible with @self
+ * @other: the `GdkGLContext` that should be compatible with `self`
  *
  * Checks if the two GL contexts can share resources.
  *
- * When they can, the texture IDs from @other can be used in @self. This
+ * When they can, the texture IDs from `other` can be used in `self`. This
  * is particularly useful when passing `GdkGLTexture` objects between
  * different contexts.
  *
@@ -1306,10 +1306,10 @@ gdk_gl_context_is_api_allowed (GdkGLContext  *self,
  *
  * Not all platforms support OpenGL ES.
  *
- * The @context must not have been realized.
+ * The `context` must not have been realized.
  *
  * By default, GDK will attempt to automatically detect whether the
- * underlying GL implementation is OpenGL or OpenGL ES once the @context
+ * underlying GL implementation is OpenGL or OpenGL ES once the `context`
  * is realized.
  *
  * You should check the return value of [method@Gdk.GLContext.get_use_es]
@@ -1344,10 +1344,10 @@ gdk_gl_context_set_use_es (GdkGLContext *context,
  * gdk_gl_context_get_use_es:
  * @context: a `GdkGLContext`
  *
- * Checks whether the @context is using an OpenGL or OpenGL ES profile.
+ * Checks whether the `context` is using an OpenGL or OpenGL ES profile.
  *
  * Returns: true if the `GdkGLContext` is using an OpenGL ES profile;
- * false if other profile is in use of if the @context has not yet
+ * false if other profile is in use of if the `context` has not yet
  * been realized.
  */
 gboolean
@@ -1596,7 +1596,7 @@ gdk_gl_context_check_is_current (GdkGLContext *context)
  * gdk_gl_context_make_current:
  * @context: a `GdkGLContext`
  *
- * Makes the @context the current one.
+ * Makes the `context` the current one.
  */
 void
 gdk_gl_context_make_current (GdkGLContext *context)
@@ -1642,7 +1642,7 @@ gdk_gl_context_make_current (GdkGLContext *context)
  * gdk_gl_context_get_display:
  * @context: a `GdkGLContext`
  *
- * Retrieves the display the @context is created for
+ * Retrieves the display the `context` is created for
  *
  * Returns: (nullable) (transfer none): a `GdkDisplay`
  */
@@ -1658,7 +1658,7 @@ gdk_gl_context_get_display (GdkGLContext *context)
  * gdk_gl_context_get_surface:
  * @context: a `GdkGLContext`
  *
- * Retrieves the surface used by the @context.
+ * Retrieves the surface used by the `context`.
  *
  * Returns: (nullable) (transfer none): a `GdkSurface`
  */
@@ -1674,7 +1674,7 @@ gdk_gl_context_get_surface (GdkGLContext *context)
  * gdk_gl_context_get_shared_context: (attributes org.gtk.Method.get_property=shared-context)
  * @context: a `GdkGLContext`
  *
- * Used to retrieves the `GdkGLContext` that this @context share data with.
+ * Used to retrieves the `GdkGLContext` that this `context` share data with.
  *
  * As many contexts can share data now and no single shared context exists
  * anymore, this function has been deprecated and now always returns `NULL`.
@@ -1698,9 +1698,9 @@ gdk_gl_context_get_shared_context (GdkGLContext *context)
  * @major: (out): return location for the major version
  * @minor: (out): return location for the minor version
  *
- * Retrieves the OpenGL version of the @context.
+ * Retrieves the OpenGL version of the `context`.
  *
- * The @context must be realized prior to calling this function.
+ * The `context` must be realized prior to calling this function.
  */
 void
 gdk_gl_context_get_version (GdkGLContext *context,
@@ -1746,7 +1746,7 @@ gdk_gl_context_clear_current (void)
  * @surface: surface to clear for
  *
  * Does a gdk_gl_context_clear_current() if the current context is attached
- * to @surface, leaves the current context alone otherwise.
+ * to `surface`, leaves the current context alone otherwise.
  **/
 void
 gdk_gl_context_clear_current_if_surface (GdkSurface *surface)

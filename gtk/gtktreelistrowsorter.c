@@ -559,7 +559,7 @@ gtk_tree_list_row_sorter_init (GtkTreeListRowSorter *self)
  * @sorter: (nullable) (transfer full): a `GtkSorter`
  *
  * Create a special-purpose sorter that applies the sorting
- * of @sorter to the levels of a `GtkTreeListModel`.
+ * of `sorter` to the levels of a `GtkTreeListModel`.
  *
  * Note that this sorter relies on [property@Gtk.TreeListModel:passthrough]
  * being false as it can only sort [class@Gtk.TreeListRow]s.
@@ -590,7 +590,7 @@ gtk_tree_list_row_sorter_new (GtkSorter *sorter)
  * Sets the sorter to use for items with the same parent.
  *
  * This sorter will be passed the [property@Gtk.TreeListRow:item] of
- * the tree list rows passed to @self.
+ * the tree list rows passed to `self`.
  */
 void
 gtk_tree_list_row_sorter_set_sorter (GtkTreeListRowSorter *self,
@@ -619,7 +619,7 @@ gtk_tree_list_row_sorter_set_sorter (GtkTreeListRowSorter *self,
  * gtk_tree_list_row_sorter_get_sorter:
  * @self: a `GtkTreeListRowSorter`
  *
- * Returns the sorter used by @self.
+ * Returns the sorter used by `self`.
  *
  * Returns: (transfer none) (nullable): the sorter used
  */

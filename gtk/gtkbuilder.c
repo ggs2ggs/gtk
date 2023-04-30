@@ -1207,14 +1207,14 @@ gtk_builder_new (void)
  * @error: (nullable): return location for an error
  *
  * Parses a file containing a UI definition and merges it with
- * the current contents of @builder.
+ * the current contents of `builder`.
  *
  * This function is useful if you need to call
  * [method@Gtk.Builder.set_current_object]) to add user data to
  * callbacks before loading GtkBuilder UI. Otherwise, you probably
  * want [ctor@Gtk.Builder.new_from_file] instead.
  *
- * If an error occurs, 0 will be returned and @error will be assigned a
+ * If an error occurs, 0 will be returned and `error` will be assigned a
  * `GError` from the `GTK_BUILDER_ERROR`, `G_MARKUP_ERROR` or `G_FILE_ERROR`
  * domains.
  *
@@ -1279,15 +1279,15 @@ gtk_builder_add_from_file (GtkBuilder   *builder,
  *
  * Parses a file containing a UI definition building only the
  * requested objects and merges them with the current contents
- * of @builder.
+ * of `builder`.
  *
- * Upon errors, 0 will be returned and @error will be assigned a
+ * Upon errors, 0 will be returned and `error` will be assigned a
  * `GError` from the %GTK_BUILDER_ERROR, %G_MARKUP_ERROR or %G_FILE_ERROR
  * domain.
  *
  * If you are adding an object that depends on an object that is not
  * its child (for instance a `GtkTreeView` that depends on its
- * `GtkTreeModel`), you have to explicitly list all of them in @object_ids.
+ * `GtkTreeModel`), you have to explicitly list all of them in `object_ids`.
  *
  * Returns: true on success, false if an error occurred
  */
@@ -1351,7 +1351,7 @@ gtk_builder_set_allow_template_parents (GtkBuilder *builder,
  * @object: the object that is being extended
  * @template_type: the type that the template is for
  * @buffer: the string to parse
- * @length: the length of @buffer (may be -1 if @buffer is nul-terminated)
+ * @length: the length of `buffer` (may be -1 if `buffer` is nul-terminated)
  * @error: (nullable): return location for an error
  *
  * Main private entry point for building composite components
@@ -1390,7 +1390,7 @@ gtk_builder_extend_with_template (GtkBuilder   *builder,
   priv->template_type = template_type;
 
   /* We specifically allow this function to be called multiple times with
-   * the same @template_type as that is used in applications like Builder
+   * the same `template_type` as that is used in applications like Builder
    * to implement UI merging.
    */
   name = g_type_name (template_type);
@@ -1432,14 +1432,14 @@ gtk_builder_extend_with_template (GtkBuilder   *builder,
  * @error: (nullable): return location for an error
  *
  * Parses a resource file containing a UI definition
- * and merges it with the current contents of @builder.
+ * and merges it with the current contents of `builder`.
  *
  * This function is useful if you need to call
  * [method@Gtk.Builder.set_current_object] to add user data to
  * callbacks before loading GtkBuilder UI. Otherwise, you probably
  * want [ctor@Gtk.Builder.new_from_resource] instead.
  *
- * If an error occurs, 0 will be returned and @error will be assigned a
+ * If an error occurs, 0 will be returned and `error` will be assigned a
  * `GError` from the %GTK_BUILDER_ERROR, %G_MARKUP_ERROR or %G_RESOURCE_ERROR
  * domain.
  *
@@ -1511,15 +1511,15 @@ gtk_builder_add_from_resource (GtkBuilder   *builder,
  *
  * Parses a resource file containing a UI definition, building
  * only the requested objects and merges them with the current
- * contents of @builder.
+ * contents of `builder`.
  *
- * Upon errors, 0 will be returned and @error will be assigned a
+ * Upon errors, 0 will be returned and `error` will be assigned a
  * `GError` from the %GTK_BUILDER_ERROR, %G_MARKUP_ERROR or %G_RESOURCE_ERROR
  * domain.
  *
  * If you are adding an object that depends on an object that is not
  * its child (for instance a `GtkTreeView` that depends on its
- * `GtkTreeModel`), you have to explicitly list all of them in @object_ids.
+ * `GtkTreeModel`), you have to explicitly list all of them in `object_ids`.
  *
  * Returns: true on success, false if an error occurred
  */
@@ -1581,18 +1581,18 @@ gtk_builder_add_objects_from_resource (GtkBuilder   *builder,
  * gtk_builder_add_from_string:
  * @builder: a `GtkBuilder`
  * @buffer: the string to parse
- * @length: the length of @buffer (may be -1 if @buffer is nul-terminated)
+ * @length: the length of `buffer` (may be -1 if `buffer` is nul-terminated)
  * @error: (nullable): return location for an error
  *
  * Parses a string containing a UI definition and merges it
- * with the current contents of @builder.
+ * with the current contents of `builder`.
  *
  * This function is useful if you need to call
  * [method@Gtk.Builder.set_current_object] to add user data to
  * callbacks before loading `GtkBuilder` UI. Otherwise, you probably
  * want [ctor@Gtk.Builder.new_from_string] instead.
  *
- * Upon errors false will be returned and @error will be assigned a
+ * Upon errors false will be returned and `error` will be assigned a
  * `GError` from the %GTK_BUILDER_ERROR, %G_MARKUP_ERROR or
  * %G_VARIANT_PARSE_ERROR domain.
  *
@@ -1639,20 +1639,20 @@ gtk_builder_add_from_string (GtkBuilder   *builder,
  * gtk_builder_add_objects_from_string:
  * @builder: a `GtkBuilder`
  * @buffer: the string to parse
- * @length: the length of @buffer (may be -1 if @buffer is nul-terminated)
+ * @length: the length of `buffer` (may be -1 if `buffer` is nul-terminated)
  * @object_ids: (array zero-terminated=1) (element-type utf8): nul-terminated array of objects to build
  * @error: (nullable): return location for an error
  *
  * Parses a string containing a UI definition, building only the
  * requested objects and merges them with the current contents of
- * @builder.
+ * `builder`.
  *
- * Upon errors false will be returned and @error will be assigned a
+ * Upon errors false will be returned and `error` will be assigned a
  * `GError` from the %GTK_BUILDER_ERROR or %G_MARKUP_ERROR domain.
  *
  * If you are adding an object that depends on an object that is not
  * its child (for instance a `GtkTreeView` that depends on its
- * `GtkTreeModel`), you have to explicitly list all of them in @object_ids.
+ * `GtkTreeModel`), you have to explicitly list all of them in `object_ids`.
  *
  * Returns: true on success, false if an error occurred
  */
@@ -1697,12 +1697,12 @@ gtk_builder_add_objects_from_string (GtkBuilder   *builder,
  * @builder: a `GtkBuilder`
  * @name: name of object to get
  *
- * Gets the object named @name.
+ * Gets the object named `name`.
  *
  * Note that this function does not increment the reference count
  * of the returned object.
  *
- * Returns: (nullable) (transfer none): the object named @name
+ * Returns: (nullable) (transfer none): the object named `name`
  */
 GObject *
 gtk_builder_get_object (GtkBuilder  *builder,
@@ -1720,7 +1720,7 @@ gtk_builder_get_object (GtkBuilder  *builder,
  * gtk_builder_get_objects:
  * @builder: a `GtkBuilder`
  *
- * Gets all objects that have been constructed by @builder.
+ * Gets all objects that have been constructed by `builder`.
  *
  * Note that this function does not increment the reference
  * counts of the returned objects.
@@ -1752,7 +1752,7 @@ gtk_builder_get_objects (GtkBuilder *builder)
  * @builder: a `GtkBuilder`
  * @domain: (nullable): the translation domain
  *
- * Sets the translation domain of @builder.
+ * Sets the translation domain of `builder`.
  */
 void
 gtk_builder_set_translation_domain (GtkBuilder  *builder,
@@ -1774,7 +1774,7 @@ gtk_builder_set_translation_domain (GtkBuilder  *builder,
  * gtk_builder_get_translation_domain: (attributes org.gtk.Method.get_property=translation-domain)
  * @builder: a `GtkBuilder`
  *
- * Gets the translation domain of @builder.
+ * Gets the translation domain of `builder`.
  *
  * Returns: (transfer none) (nullable): the translation domain
  */
@@ -1794,13 +1794,13 @@ gtk_builder_get_translation_domain (GtkBuilder *builder)
  * @name: the name of the object exposed to the builder
  * @object: the object to expose
  *
- * Add @object to the @builder object pool so it can be
+ * Add `object` to the `builder` object pool so it can be
  * referenced just like any other object built by builder.
  *
- * Only a single object may be added using @name. However,
+ * Only a single object may be added using `name`. However,
  * it is not an error to expose the same object under multiple
  * names. `gtk_builder_get_object()` may be used to determine
- * if an object has already been added with @name.
+ * if an object has already been added with `name`.
  */
 void
 gtk_builder_expose_object (GtkBuilder    *builder,
@@ -1842,7 +1842,7 @@ gtk_builder_get_current_object (GtkBuilder *builder)
  * @builder: a `GtkBuilder`
  * @current_object: (nullable) (transfer none): the new current object
  *
- * Sets the current object for the @builder.
+ * Sets the current object for the `builder`.
  *
  * The current object can be thought of as the `this` object that the
  * builder is working for and will often be used as the default object
@@ -1892,7 +1892,7 @@ gtk_builder_get_scope (GtkBuilder *builder)
  *
  * Sets the scope the builder should operate in.
  *
- * If @scope is `NULL`, a new [class@Gtk.BuilderCScope] will be created.
+ * If `scope` is `NULL`, a new [class@Gtk.BuilderCScope] will be created.
  */
 void
 gtk_builder_set_scope (GtkBuilder      *builder,
@@ -2001,14 +2001,14 @@ _gtk_builder_finish (GtkBuilder  *builder,
  *
  * Demarshals a value from a string.
  *
- * This function calls g_value_init() on the @value argument,
+ * This function calls g_value_init() on the `value` argument,
  * so it need not be initialised beforehand.
  *
  * Can handle char, uchar, boolean, int, uint, long,
  * ulong, enum, flags, float, double, string, `GdkRGBA` and
  * `GtkAdjustment` type values.
  *
- * Upon errors false will be returned and @error will be
+ * Upon errors false will be returned and `error` will be
  * assigned a `GError` from the %GTK_BUILDER_ERROR domain.
  *
  * Returns: true on success
@@ -2130,10 +2130,10 @@ error:
  * Unlike [method@Gtk.Builder.value_from_string], this function
  * takes a `GType` instead of `GParamSpec`.
  *
- * Calls g_value_init() on the @value argument, so it
+ * Calls g_value_init() on the `value` argument, so it
  * need not be initialised beforehand.
  *
- * Upon errors false will be returned and @error will be
+ * Upon errors false will be returned and `error` will be
  * assigned a `GError` from the %GTK_BUILDER_ERROR domain.
  *
  * Returns: true on success
@@ -2762,7 +2762,7 @@ _gtk_builder_flags_from_string (GType         type,
  * for that purpose. This is mainly used when implementing
  * the `GtkBuildable` interface on a type.
  *
- * Returns: the `GType` found for @type_name or %G_TYPE_INVALID
+ * Returns: the `GType` found for `type_name` or %G_TYPE_INVALID
  *   if no type was found
  */
 GType
@@ -2856,15 +2856,15 @@ gtk_builder_get_template_type (GtkBuilder *builder,
  * @object: (nullable): Object to create the closure with
  * @error: (nullable): return location for an error
  *
- * Creates a closure to invoke the function called @function_name.
+ * Creates a closure to invoke the function called `function_name`.
  *
- * This is using the create_closure() implementation of @builder's
+ * This is using the create_closure() implementation of `builder`'s
  * [iface@Gtk.BuilderScope].
  *
- * If no closure could be created, `NULL` will be returned and @error
+ * If no closure could be created, `NULL` will be returned and `error`
  * will be set.
  *
- * Returns: (nullable): A new closure for invoking @function_name
+ * Returns: (nullable): A new closure for invoking `function_name`
  */
 GClosure *
 gtk_builder_create_closure (GtkBuilder             *builder,
@@ -2887,7 +2887,7 @@ gtk_builder_create_closure (GtkBuilder             *builder,
  * gtk_builder_new_from_file: (constructor)
  * @filename: (type filename): filename of user interface description file
  *
- * Parses the UI definition in the file @filename.
+ * Parses the UI definition in the file `filename`.
  *
  * If there is an error opening the file or parsing the description then
  * the program will be aborted. You should only ever attempt to parse
@@ -2912,7 +2912,7 @@ gtk_builder_new_from_file (const char *filename)
  * gtk_builder_new_from_resource: (constructor)
  * @resource_path: a `GResource` resource path
  *
- * Parses the UI definition at @resource_path.
+ * Parses the UI definition at `resource_path`.
  *
  * If there is an error locating the resource or parsing the
  * description, then the program will be aborted.
@@ -2935,18 +2935,18 @@ gtk_builder_new_from_resource (const char *resource_path)
 /**
  * gtk_builder_new_from_string: (constructor)
  * @string: a user interface (XML) description
- * @length: the length of @string, or -1
+ * @length: the length of `string`, or -1
  *
- * Parses the UI definition in @string.
+ * Parses the UI definition in `string`.
  *
- * If @string is `NULL`-terminated, then @length should be -1.
- * If @length is not -1, then it is the length of @string.
+ * If `string` is `NULL`-terminated, then `length` should be -1.
+ * If `length` is not -1, then it is the length of `string`.
  *
- * If there is an error parsing @string then the program will be
+ * If there is an error parsing `string` then the program will be
  * aborted. You should not attempt to parse user interface description
  * from untrusted sources.
  *
- * Returns: (transfer full): a `GtkBuilder` containing the interface described by @string
+ * Returns: (transfer full): a `GtkBuilder` containing the interface described by `string`
  */
 GtkBuilder *
 gtk_builder_new_from_string (const char *string,
@@ -2969,7 +2969,7 @@ gtk_builder_new_from_string (const char *string,
  * @error: an error
  *
  * Calls g_prefix_error() to prepend a filename:line:column marker
- * to the given error. The filename is taken from @builder, and
+ * to the given error. The filename is taken from `builder`, and
  * the line and column are obtained by calling
  * g_markup_parse_context_get_position().
  *
@@ -2996,8 +2996,8 @@ _gtk_builder_prefix_error (GtkBuilder                *builder,
  * @element_name: name of the element whose start tag is being handled
  * @error: return location for the error
  *
- * Sets @error to a suitable error indicating that an @element_name
- * tag is not expected in the custom markup for @object.
+ * Sets `error` to a suitable error indicating that an `element_name`
+ * tag is not expected in the custom markup for `object`.
  *
  * This is intended to be called in a start_element vfunc.
  */
@@ -3027,12 +3027,12 @@ _gtk_builder_error_unhandled_tag (GtkBuilder                *builder,
  * @error: return location for an error
  *
  * Checks that the parent element of the currently handled
- * start tag is @parent_name and set @error if it isn't.
+ * start tag is `parent_name` and set `error` if it isn't.
  *
  * This is intended to be called in start_element vfuncs to
  * ensure that element nesting is as intended.
  *
- * Returns: true if @parent_name is the parent element
+ * Returns: true if `parent_name` is the parent element
  */
 gboolean
 _gtk_builder_check_parent (GtkBuilder                *builder,
@@ -3116,8 +3116,8 @@ gtk_builder_lookup_object (GtkBuilder   *builder,
 /*< private >
  * @builder: a `GtkBuilder`
  * @name: object name to look up
- * @line: line number where @name was encountered
- * @col: column number where @name was encountered
+ * @line: line number where `name` was encountered
+ * @col: column number where `name` was encountered
  *
  * Looks up an object by name. Similar to gtk_builder_get_object(),
  * but sets an error if lookup fails during custom_tag_end,
@@ -3161,7 +3161,7 @@ _gtk_builder_lookup_object (GtkBuilder  *builder,
  *
  * Finds whether any object lookups have failed.
  *
- * Returns: true if @error has been set
+ * Returns: true if `error` has been set
  */
 gboolean
 _gtk_builder_lookup_failed (GtkBuilder  *builder,

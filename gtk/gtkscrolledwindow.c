@@ -651,7 +651,7 @@ gtk_scrolled_window_class_init (GtkScrolledWindowClass *class)
   /**
    * GtkScrolledWindow:min-content-width: (attributes org.gtk.Property.get=gtk_scrolled_window_get_min_content_width org.gtk.Property.set=gtk_scrolled_window_set_min_content_width)
    *
-   * The minimum content width of @scrolled_window.
+   * The minimum content width of `scrolled_window`.
    */
   properties[PROP_MIN_CONTENT_WIDTH] =
       g_param_spec_int ("min-content-width", NULL, NULL,
@@ -661,7 +661,7 @@ gtk_scrolled_window_class_init (GtkScrolledWindowClass *class)
   /**
    * GtkScrolledWindow:min-content-height: (attributes org.gtk.Property.get=gtk_scrolled_window_get_min_content_height org.gtk.Property.set=gtk_scrolled_window_set_min_content_height)
    *
-   * The minimum content height of @scrolled_window.
+   * The minimum content height of `scrolled_window`.
    */
   properties[PROP_MIN_CONTENT_HEIGHT] =
       g_param_spec_int ("min-content-height", NULL, NULL,
@@ -700,7 +700,7 @@ gtk_scrolled_window_class_init (GtkScrolledWindowClass *class)
   /**
    * GtkScrolledWindow:max-content-width: (attributes org.gtk.Property.get=gtk_scrolled_window_get_max_content_width org.gtk.Property.set=gtk_scrolled_window_set_max_content_width)
    *
-   * The maximum content width of @scrolled_window.
+   * The maximum content width of `scrolled_window`.
    */
   properties[PROP_MAX_CONTENT_WIDTH] =
       g_param_spec_int ("max-content-width", NULL, NULL,
@@ -710,7 +710,7 @@ gtk_scrolled_window_class_init (GtkScrolledWindowClass *class)
   /**
    * GtkScrolledWindow:max-content-height: (attributes org.gtk.Property.get=gtk_scrolled_window_get_max_content_height org.gtk.Property.set=gtk_scrolled_window_set_max_content_height)
    *
-   * The maximum content height of @scrolled_window.
+   * The maximum content height of `scrolled_window`.
    */
   properties[PROP_MAX_CONTENT_HEIGHT] =
       g_param_spec_int ("max-content-height", NULL, NULL,
@@ -819,7 +819,7 @@ gtk_scrolled_window_class_init (GtkScrolledWindowClass *class)
    * A similar behavior without edge resistance is provided by the
    * [signal@Gtk.ScrolledWindow::edge-reached] signal.
    *
-   * Note: The @pos argument is LTR/RTL aware, so callers should be
+   * Note: The `pos` argument is LTR/RTL aware, so callers should be
    * aware too if intending to provide behavior on horizontal edges.
    */
   signals[EDGE_OVERSHOT] =
@@ -841,7 +841,7 @@ gtk_scrolled_window_class_init (GtkScrolledWindowClass *class)
    * A similar behavior with edge resistance is provided by the
    * [signal@Gtk.ScrolledWindow::edge-overshot] signal.
    *
-   * Note: The @pos argument is LTR/RTL aware, so callers should be
+   * Note: The `pos` argument is LTR/RTL aware, so callers should be
    * aware too if intending to provide behavior on horizontal edges.
    */
   signals[EDGE_REACHED] =
@@ -2305,7 +2305,7 @@ gtk_scrolled_window_get_vadjustment (GtkScrolledWindow *scrolled_window)
  * gtk_scrolled_window_get_hscrollbar:
  * @scrolled_window: a `GtkScrolledWindow`
  *
- * Returns the horizontal scrollbar of @scrolled_window.
+ * Returns the horizontal scrollbar of `scrolled_window`.
  *
  * Returns: (transfer none): the horizontal scrollbar of the scrolled window.
  */
@@ -2323,7 +2323,7 @@ gtk_scrolled_window_get_hscrollbar (GtkScrolledWindow *scrolled_window)
  * gtk_scrolled_window_get_vscrollbar:
  * @scrolled_window: a `GtkScrolledWindow`
  *
- * Returns the vertical scrollbar of @scrolled_window.
+ * Returns the vertical scrollbar of `scrolled_window`.
  *
  * Returns: (transfer none): the vertical scrollbar of the scrolled window.
  */
@@ -2478,7 +2478,7 @@ gtk_scrolled_window_unset_placement (GtkScrolledWindow *scrolled_window)
  * @scrolled_window: a `GtkScrolledWindow`
  * @has_frame: whether to draw a frame around scrolled window contents
  *
- * Changes the frame drawn around the contents of @scrolled_window.
+ * Changes the frame drawn around the contents of `scrolled_window`.
  */
 void
 gtk_scrolled_window_set_has_frame (GtkScrolledWindow *scrolled_window,
@@ -2507,7 +2507,7 @@ gtk_scrolled_window_set_has_frame (GtkScrolledWindow *scrolled_window,
  *
  * Gets whether the scrolled window draws a frame.
  *
- * Returns: true if the @scrolled_window has a frame
+ * Returns: true if the `scrolled_window` has a frame
  */
 gboolean
 gtk_scrolled_window_get_has_frame (GtkScrolledWindow *scrolled_window)
@@ -3844,7 +3844,7 @@ gtk_scrolled_window_unrealize (GtkWidget *widget)
  * gtk_scrolled_window_get_min_content_width: (attributes org.gtk.Method.get_property=min-content-width)
  * @scrolled_window: a `GtkScrolledWindow`
  *
- * Gets the minimum content width of @scrolled_window.
+ * Gets the minimum content width of `scrolled_window`.
  *
  * Returns: the minimum content width
  */
@@ -3863,7 +3863,7 @@ gtk_scrolled_window_get_min_content_width (GtkScrolledWindow *scrolled_window)
  * @scrolled_window: a `GtkScrolledWindow`
  * @width: the minimal content width
  *
- * Sets the minimum width that @scrolled_window should keep visible.
+ * Sets the minimum width that `scrolled_window` should keep visible.
  *
  * Note that this can and (usually will) be smaller than the minimum
  * size of the content.
@@ -3895,7 +3895,7 @@ gtk_scrolled_window_set_min_content_width (GtkScrolledWindow *scrolled_window,
  * gtk_scrolled_window_get_min_content_height: (attributes org.gtk.Method.get_property=min-content-height)
  * @scrolled_window: a `GtkScrolledWindow`
  *
- * Gets the minimal content height of @scrolled_window.
+ * Gets the minimal content height of `scrolled_window`.
  *
  * Returns: the minimal content height
  */
@@ -3914,7 +3914,7 @@ gtk_scrolled_window_get_min_content_height (GtkScrolledWindow *scrolled_window)
  * @scrolled_window: a `GtkScrolledWindow`
  * @height: the minimal content height
  *
- * Sets the minimum height that @scrolled_window should keep visible.
+ * Sets the minimum height that `scrolled_window` should keep visible.
  *
  * Note that this can and (usually will) be smaller than the minimum
  * size of the content.
@@ -3990,9 +3990,9 @@ gtk_scrolled_window_get_overlay_scrolling (GtkScrolledWindow *scrolled_window)
  * @scrolled_window: a `GtkScrolledWindow`
  * @width: the maximum content width
  *
- * Sets the maximum width that @scrolled_window should keep visible.
+ * Sets the maximum width that `scrolled_window` should keep visible.
  *
- * The @scrolled_window will grow up to this width before it starts
+ * The `scrolled_window` will grow up to this width before it starts
  * scrolling the content.
  *
  * It is a programming error to set the maximum content width to a
@@ -4039,9 +4039,9 @@ gtk_scrolled_window_get_max_content_width (GtkScrolledWindow *scrolled_window)
  * @scrolled_window: a `GtkScrolledWindow`
  * @height: the maximum content height
  *
- * Sets the maximum height that @scrolled_window should keep visible.
+ * Sets the maximum height that `scrolled_window` should keep visible.
  *
- * The @scrolled_window will grow up to this height before it starts
+ * The `scrolled_window` will grow up to this height before it starts
  * scrolling the content.
  *
  * It is a programming error to set the maximum content height to a value
@@ -4178,7 +4178,7 @@ gtk_scrolled_window_get_propagate_natural_height (GtkScrolledWindow *scrolled_wi
  * @scrolled_window: a `GtkScrolledWindow`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @scrolled_window.
+ * Sets the child widget of `scrolled_window`.
  */
 void
 gtk_scrolled_window_set_child (GtkScrolledWindow *scrolled_window,
@@ -4272,9 +4272,9 @@ gtk_scrolled_window_set_child (GtkScrolledWindow *scrolled_window,
  * gtk_scrolled_window_get_child: (attributes org.gtk.Method.get_property=child)
  * @scrolled_window: a `GtkScrolledWindow`
  *
- * Gets the child widget of @scrolled_window.
+ * Gets the child widget of `scrolled_window`.
  *
- * Returns: (nullable) (transfer none): the child widget of @scrolled_window
+ * Returns: (nullable) (transfer none): the child widget of `scrolled_window`
  */
 GtkWidget *
 gtk_scrolled_window_get_child (GtkScrolledWindow *scrolled_window)

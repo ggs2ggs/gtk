@@ -403,7 +403,7 @@ gtk_drag_icon_init (GtkDragIcon *self)
  * gtk_drag_icon_get_for_drag:
  * @drag: a `GdkDrag`
  *
- * Gets the `GtkDragIcon` in use with @drag.
+ * Gets the `GtkDragIcon` in use with `drag`.
  *
  * If no drag icon exists yet, a new one will be created
  * and shown.
@@ -444,7 +444,7 @@ gtk_drag_icon_get_for_drag (GdkDrag *drag)
  * @hot_x: X coordinate of the hotspot
  * @hot_y: Y coordinate of the hotspot
  *
- * Creates a `GtkDragIcon` that shows @paintable, and associates
+ * Creates a `GtkDragIcon` that shows `paintable`, and associates
  * it with the drag operation.
  *
  * The hotspot position on the paintable is aligned with the
@@ -520,7 +520,7 @@ gtk_drag_icon_get_child (GtkDragIcon *self)
  * @value: a `GValue`
  *
  * Creates a widget that can be used as a drag icon for the given
- * @value.
+ * `value`.
  *
  * Supported types include strings, `GdkRGBA` and `GtkTextBuffer`.
  * If GTK does not know how to create a widget for a given value,
@@ -531,7 +531,7 @@ gtk_drag_icon_get_child (GtkDragIcon *self)
  * a drag icon using this function there.
  *
  * Returns: (nullable) (transfer full): A new `GtkWidget`
- *   for displaying @value as a drag icon.
+ *   for displaying `value` as a drag icon.
  */
 GtkWidget *
 gtk_drag_icon_create_widget_for_value (const GValue *value)

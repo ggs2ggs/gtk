@@ -167,7 +167,7 @@ gdk_seat_class_init (GdkSeatClass *klass)
    * @seat: the object on which the signal is emitted
    * @tool: the just removed `GdkDeviceTool`
    *
-   * Emitted whenever a tool is no longer known to this @seat.
+   * Emitted whenever a tool is no longer known to this `seat`.
    */
   signals [TOOL_REMOVED] =
     g_signal_new (g_intern_static_string ("tool-removed"),
@@ -223,21 +223,21 @@ gdk_seat_get_capabilities (GdkSeat *seat)
  * @surface: the `GdkSurface` which will own the grab
  * @capabilities: capabilities that will be grabbed
  * @owner_events: if false then all device events are reported with respect to
- *   @surface and are only reported if selected by @event_mask. If true then
+ *   `surface` and are only reported if selected by `event_mask`. If true then
  *   pointer events for this application are reported as normal, but pointer
- *   events outside this application are reported with respect to @surface and
- *   only if selected by @event_mask. In either mode, unreported events are
+ *   events outside this application are reported with respect to `surface` and
+ *   only if selected by `event_mask`. In either mode, unreported events are
  *   discarded.
  * @cursor: (nullable): the cursor to display while the grab is active.
- *   If this is `NULL` then the normal cursors are used for @surface and
- *   its descendants, and the cursor for @surface is used elsewhere.
+ *   If this is `NULL` then the normal cursors are used for `surface` and
+ *   its descendants, and the cursor for `surface` is used elsewhere.
  * @event: (nullable): the event that is triggering the grab, or `NULL` if none
  *   is available.
  * @prepare_func: (nullable) (scope call): function to prepare the surface
- *   to be grabbed, it can be `NULL` if @surface is visible before this call.
- * @prepare_func_data: (closure): user data to pass to @prepare_func
+ *   to be grabbed, it can be `NULL` if `surface` is visible before this call.
+ * @prepare_func_data: (closure): user data to pass to `prepare_func`
  *
- * Grabs the seat so that all events corresponding to the given @capabilities
+ * Grabs the seat so that all events corresponding to the given `capabilities`
  * are passed to this application.
  *
  * The grab remains in place until the seat is ungrabbed with
@@ -257,7 +257,7 @@ gdk_seat_get_capabilities (GdkSeat *seat)
  * Note that if the event mask of a `GdkSurface` has selected both button press
  * and button release events, or touch begin and touch end, then a press event
  * will cause an automatic grab until the button is released, equivalent to a
- * grab on the surface with @owner_events set to true. This is done because
+ * grab on the surface with `owner_events` set to true. This is done because
  * most applications expect to receive paired press and release events.
  *
  * If you set up anything at the time you take the grab that needs to be

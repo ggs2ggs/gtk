@@ -44,8 +44,8 @@
  *
  * For the rationale, see listsort.txt.
  *
- * @param n the length of the array to be sorted
- * @return the length of the minimum run to be merged
+ * `param` n the length of the array to be sorted
+ * `return` the length of the minimum run to be merged
  */
 static gsize
 compute_min_run (gsize n)
@@ -116,8 +116,8 @@ gtk_tim_sort_compare (GtkTimSort *self,
 /**
  * Pushes the specified run onto the pending-run stack.
  *
- * @param runBase index of the first element in the run
- * @param runLen  the number of elements in the run
+ * `param` runBase index of the first element in the run
+ * `param` runLen  the number of elements in the run
  */
 static void
 gtk_tim_sort_push_run (GtkTimSort *self,
@@ -141,8 +141,8 @@ gtk_tim_sort_push_run (GtkTimSort *self,
  * number of elements, increasing its size if necessary.  The size
  * increases exponentially to ensure amortized linear time complexity.
  *
- * @param min_capacity the minimum required capacity of the tmp array
- * @return tmp, whether or not it grew
+ * `param` min_capacity the minimum required capacity of the tmp array
+ * `return` tmp, whether or not it grew
  */
 static gpointer
 gtk_tim_sort_ensure_capacity (GtkTimSort *self,
@@ -241,7 +241,7 @@ gtk_tim_sort_set_runs (GtkTimSort *self,
  *
  * Sets the maximum size of a merge step. Every time
  * gtk_tim_sort_step() is called and a merge operation has to be
- * done, the @max_merge_size will be used to limit the size of
+ * done, the `max_merge_size` will be used to limit the size of
  * the merge.
  *
  * The benefit is that merges happen faster, and if you're using
@@ -252,7 +252,7 @@ gtk_tim_sort_set_runs (GtkTimSort *self,
  * various optimizations benefit from larger merges, so the total
  * runtime of the sorting will increase with the number of merges.
  *
- * A good estimate is to set a @max_merge_size to 1024 for around
+ * A good estimate is to set a `max_merge_size` to 1024 for around
  * 1ms runtimes, if your compare function is fast.
  *
  * By default, max_merge_size is set to unlimited.
@@ -337,7 +337,7 @@ gtk_tim_sort_get_progress (GtkTimSort *self)
  *     will be set to `NULL` and 0.
  *
  * Performs another step in the sorting process. If a
- * step was performed, true is returned and @out_change is
+ * step was performed, true is returned and `out_change` is
  * set to the smallest area that contains all changes while
  * sorting.
  *

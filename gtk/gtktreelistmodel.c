@@ -734,13 +734,13 @@ gtk_tree_list_model_init (GtkTreeListModel *self)
  * gtk_tree_list_model_new:
  * @root: (transfer full): The `GListModel` to use as root
  * @passthrough: true to pass through items from the models
- * @autoexpand: true to set the autoexpand property and expand the @root model
+ * @autoexpand: true to set the autoexpand property and expand the `root` model
  * @create_func: Function to call to create the `GListModel` for the children
  *   of an item
- * @user_data: (closure): Data to pass to @create_func
- * @user_destroy: Function to call to free @user_data
+ * @user_data: (closure): Data to pass to `create_func`
+ * @user_destroy: Function to call to free `user_data`
  *
- * Creates a new empty `GtkTreeListModel` displaying @root
+ * Creates a new empty `GtkTreeListModel` displaying `root`
  * with all rows collapsed.
  *
  * Returns: a newly created `GtkTreeListModel`.
@@ -776,7 +776,7 @@ gtk_tree_list_model_new (GListModel                      *root,
  * gtk_tree_list_model_get_model: (attributes org.gtk.Method.get_property=model)
  * @self: a `GtkTreeListModel`
  *
- * Gets the root model that @self was created with.
+ * Gets the root model that `self` was created with.
  *
  * Returns: (transfer none): the root model
  */
@@ -794,7 +794,7 @@ gtk_tree_list_model_get_model (GtkTreeListModel *self)
  *
  * Gets whether the model is passing through original row items.
  *
- * If this function returns false, the `GListModel` functions for @self
+ * If this function returns false, the `GListModel` functions for `self`
  * return custom `GtkTreeListRow` objects. You need to call
  * [method@Gtk.TreeListRow.get_item] on these objects to get the original
  * item.
@@ -865,7 +865,7 @@ gtk_tree_list_model_get_autoexpand (GtkTreeListModel *self)
  *
  * Gets the row object for the given row.
  *
- * If @position is greater than the number of items in @self,
+ * If `position` is greater than the number of items in `self`,
  * `NULL` is returned.
  *
  * The row object can be used to expand and collapse rows as
@@ -873,10 +873,10 @@ gtk_tree_list_model_get_autoexpand (GtkTreeListModel *self)
  * documentation for details.
  *
  * This row object is persistent and will refer to the current
- * item as long as the row is present in @self, independent of
+ * item as long as the row is present in `self`, independent of
  * other rows being added or removed.
  *
- * If @self is set to not be passthrough, this function is
+ * If `self` is set to not be passthrough, this function is
  * equivalent to calling g_list_model_get_item().
  *
  * Do not confuse this function with [method@Gtk.TreeListModel.get_child_row].
@@ -903,15 +903,15 @@ gtk_tree_list_model_get_row (GtkTreeListModel *self,
  * @self: a `GtkTreeListModel`
  * @position: position of the child to get
  *
- * Gets the row item corresponding to the child at index @position for
- * @self's root model.
+ * Gets the row item corresponding to the child at index `position` for
+ * `self`'s root model.
  *
- * If @position is greater than the number of children in the root model,
+ * If `position` is greater than the number of children in the root model,
  * `NULL` is returned.
  *
  * Do not confuse this function with [method@Gtk.TreeListModel.get_row].
  *
- * Returns: (nullable) (transfer full): the child in @position
+ * Returns: (nullable) (transfer full): the child in `position`
  **/
 GtkTreeListRow *
 gtk_tree_list_model_get_child_row (GtkTreeListModel *self,
@@ -1109,7 +1109,7 @@ gtk_tree_list_row_init (GtkTreeListRow *self)
  * gtk_tree_list_row_get_position:
  * @self: a `GtkTreeListRow`
  *
- * Returns the position in the `GtkTreeListModel` that @self occupies
+ * Returns the position in the `GtkTreeListModel` that `self` occupies
  * at the moment.
  *
  * Returns: The position in the model
@@ -1304,7 +1304,7 @@ gtk_tree_list_row_get_item (GtkTreeListRow *self)
  * gtk_tree_list_row_get_children: (attributes org.gtk.Method.get_property=children)
  * @self: a `GtkTreeListRow`
  *
- * If the row is expanded, gets the model holding the children of @self.
+ * If the row is expanded, gets the model holding the children of `self`.
  *
  * This model is the model created by the
  * [callback@Gtk.TreeListModelCreateModelFunc]
@@ -1328,19 +1328,19 @@ gtk_tree_list_row_get_children (GtkTreeListRow *self)
  * gtk_tree_list_row_get_parent:
  * @self: a `GtkTreeListRow`
  *
- * Gets the row representing the parent for @self.
+ * Gets the row representing the parent for `self`.
  *
  * That is the row that would need to be collapsed
  * to make this row disappear.
  *
- * If @self is a row corresponding to the root model,
+ * If `self` is a row corresponding to the root model,
  * `NULL` is returned.
  *
  * The value returned by this function never changes
  * until the row is removed from its model at which point
  * it will forever return `NULL`.
  *
- * Returns: (nullable) (transfer full): The parent of @self
+ * Returns: (nullable) (transfer full): The parent of `self`
  */
 GtkTreeListRow *
 gtk_tree_list_row_get_parent (GtkTreeListRow *self)
@@ -1364,10 +1364,10 @@ gtk_tree_list_row_get_parent (GtkTreeListRow *self)
  * @self: a `GtkTreeListRow`
  * @position: position of the child to get
  *
- * If @self is not expanded or @position is greater than the
+ * If `self` is not expanded or `position` is greater than the
  * number of children, `NULL` is returned.
  *
- * Returns: (nullable) (transfer full): the child in @position
+ * Returns: (nullable) (transfer full): the child in `position`
  */
 GtkTreeListRow *
 gtk_tree_list_row_get_child_row (GtkTreeListRow *self,

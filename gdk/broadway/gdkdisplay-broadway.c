@@ -337,7 +337,7 @@ gdk_broadway_display_hide_keyboard (GdkBroadwayDisplay *display)
  *
  * Forces a specific window scale for all windows on this display,
  * instead of using the default or user configured scale. This
- * is can be used to disable scaling support by setting @scale to
+ * is can be used to disable scaling support by setting `scale` to
  * 1, or to programmatically set the window scale.
  *
  * Once the scale is set by this call it will not change in

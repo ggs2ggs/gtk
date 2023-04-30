@@ -1152,7 +1152,7 @@ gtk_box_layout_set_spacing (GtkBoxLayout *box_layout,
  * gtk_box_layout_get_spacing: (attributes org.gtk.Method.get_property=spacing)
  * @box_layout: a `GtkBoxLayout`
  *
- * Returns the space that @box_layout puts between children.
+ * Returns the space that `box_layout` puts between children.
  *
  * Returns: the spacing of the layout
  */
@@ -1174,7 +1174,7 @@ gtk_box_layout_get_spacing (GtkBoxLayout *box_layout)
  * The baseline position affects only horizontal boxes with at least one
  * baseline aligned child. If there is more vertical space available than
  * requested, and the baseline is not allocated by the parent then the
- * given @position is used to allocate the baseline within the extra
+ * given `position` is used to allocate the baseline within the extra
  * space available.
  */
 void

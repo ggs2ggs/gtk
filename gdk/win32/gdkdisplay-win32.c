@@ -55,7 +55,7 @@ static int debug_indent = 0;
  * @function: (scope notified): filter callback
  * @data: (closure): data to pass to filter callback
  *
- * Adds an event filter to @window, allowing you to intercept messages
+ * Adds an event filter to `window`, allowing you to intercept messages
  * before they reach GDK. This is a low-level operation and makes it
  * easy to break GDK and/or GTK, so you have to know what you're
  * doing.
@@ -97,7 +97,7 @@ gdk_win32_display_add_filter (GdkWin32Display           *display,
  * @display: A `GdkWin32Display`
  * @filter: A message filter
  *
- * Release a reference to @filter.  Note this function may
+ * Release a reference to `filter`.  Note this function may
  * mutate the list storage, so you need to handle this
  * if iterating over a list of filters.
  */

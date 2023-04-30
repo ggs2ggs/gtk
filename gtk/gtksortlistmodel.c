@@ -867,9 +867,9 @@ gtk_sort_list_model_init (GtkSortListModel *self)
 /**
  * gtk_sort_list_model_new:
  * @model: (nullable) (transfer full): the model to sort
- * @sorter: (nullable) (transfer full): the `GtkSorter` to sort @model with,
+ * @sorter: (nullable) (transfer full): the `GtkSorter` to sort `model` with,
  *
- * Creates a new sort list model that uses the @sorter to sort @model.
+ * Creates a new sort list model that uses the `sorter` to sort `model`.
  *
  * Returns: a new `GtkSortListModel`
  */
@@ -901,7 +901,7 @@ gtk_sort_list_model_new (GListModel *model,
  *
  * Sets the model to be sorted.
  *
- * The @model's item type must conform to the item type of @self.
+ * The `model`'s item type must conform to the item type of `self`.
  */
 void
 gtk_sort_list_model_set_model (GtkSortListModel *self,
@@ -961,9 +961,9 @@ gtk_sort_list_model_get_model (GtkSortListModel *self)
 /**
  * gtk_sort_list_model_set_sorter: (attributes org.gtk.Method.set_property=sorter)
  * @self: a `GtkSortListModel`
- * @sorter: (nullable): the `GtkSorter` to sort @model with
+ * @sorter: (nullable): the `GtkSorter` to sort `model` with
  *
- * Sets a new sorter on @self.
+ * Sets a new sorter on `self`.
  */
 void
 gtk_sort_list_model_set_sorter (GtkSortListModel *self,
@@ -989,7 +989,7 @@ gtk_sort_list_model_set_sorter (GtkSortListModel *self,
  * gtk_sort_list_model_get_sorter: (attributes org.gtk.Method.get_property=sorter)
  * @self: a `GtkSortListModel`
  *
- * Gets the sorter that is used to sort @self.
+ * Gets the sorter that is used to sort `self`.
  *
  * Returns: (nullable) (transfer none): the sorter of `self`
  */

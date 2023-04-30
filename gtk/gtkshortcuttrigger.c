@@ -87,9 +87,9 @@ gtk_shortcut_trigger_init (GtkShortcutTrigger *self)
  * @event: the event to check
  * @enable_mnemonics: true if mnemonics should trigger. Usually the
  *   value of this property is determined by checking that the passed
- *   in @event is a Key event and has the right modifiers set.
+ *   in `event` is a Key event and has the right modifiers set.
  *
- * Checks if the given @event triggers @self.
+ * Checks if the given `event` triggers `self`.
  *
  * Returns: Whether the event triggered the shortcut
  */
@@ -248,7 +248,7 @@ gtk_shortcut_trigger_print (GtkShortcutTrigger *self,
  * presentation to end users for example in menu items
  * or in help texts.
  *
- * The @display in use may influence the resulting string in
+ * The `display` in use may influence the resulting string in
  * various forms, such as resolving hardware keycodes or by
  * causing display-specific modifier names.
  *
@@ -282,7 +282,7 @@ gtk_shortcut_trigger_to_label (GtkShortcutTrigger *self,
  * This function is returning a translated string for presentation
  * to end users for example in menu items or in help texts.
  *
- * The @display in use may influence the resulting string in
+ * The `display` in use may influence the resulting string in
  * various forms, such as resolving hardware keycodes or by
  * causing display-specific modifier names.
  *
@@ -316,10 +316,10 @@ gtk_shortcut_trigger_print_label (GtkShortcutTrigger *self,
  * architectures or even different versions of GTK. Do not use this
  * function as a basis for building protocols or file formats.
  *
- * The types of @trigger is `gconstpointer` only to allow use of this
+ * The types of `trigger` is `gconstpointer` only to allow use of this
  * function with `GHashTable`. They must each be a `GtkShortcutTrigger`.
  *
- * Returns: a hash value corresponding to @trigger
+ * Returns: a hash value corresponding to `trigger`
  */
 guint
 gtk_shortcut_trigger_hash (gconstpointer trigger)
@@ -336,12 +336,12 @@ gtk_shortcut_trigger_hash (gconstpointer trigger)
  * @trigger1: (type GtkShortcutTrigger): a `GtkShortcutTrigger`
  * @trigger2: (type GtkShortcutTrigger): a `GtkShortcutTrigger`
  *
- * Checks if @trigger1 and @trigger2 trigger under the same conditions.
+ * Checks if `trigger1` and `trigger2` trigger under the same conditions.
  *
- * The types of @one and @two are `gconstpointer` only to allow use of this
+ * The types of `one` and `two` are `gconstpointer` only to allow use of this
  * function with `GHashTable`. They must each be a `GtkShortcutTrigger`.
  *
- * Returns: true if @trigger1 and @trigger2 are equal
+ * Returns: true if `trigger1` and `trigger2` are equal
  */
 gboolean
 gtk_shortcut_trigger_equal (gconstpointer trigger1,
@@ -355,14 +355,14 @@ gtk_shortcut_trigger_equal (gconstpointer trigger1,
  * @trigger1: (type GtkShortcutTrigger): a `GtkShortcutTrigger`
  * @trigger2: (type GtkShortcutTrigger): a `GtkShortcutTrigger`
  *
- * The types of @trigger1 and @trigger2 are `gconstpointer` only to allow
+ * The types of `trigger1` and `trigger2` are `gconstpointer` only to allow
  * use of this function as a `GCompareFunc`.
  *
  * They must each be a `GtkShortcutTrigger`.
  *
  * Returns: An integer less than, equal to, or greater than zero if
- *   @trigger1 is found, respectively, to be less than, to match,
- *   or be greater than @trigger2.
+ *   `trigger1` is found, respectively, to be less than, to match,
+ *   or be greater than `trigger2`.
  */
 int
 gtk_shortcut_trigger_compare (gconstpointer trigger1,
@@ -690,7 +690,7 @@ gtk_keyval_trigger_init (GtkKeyvalTrigger *self)
  * @modifiers: the modifiers that need to be present
  *
  * Creates a `GtkShortcutTrigger` that will trigger whenever
- * the key with the given @keyval and @modifiers is pressed.
+ * the key with the given `keyval` and `modifiers` is pressed.
  *
  * Returns: A new `GtkShortcutTrigger`
  */
@@ -709,7 +709,7 @@ gtk_keyval_trigger_new (guint           keyval,
  * @self: a keyval `GtkShortcutTrigger`
  *
  * Gets the modifiers that must be present to succeed
- * triggering @self.
+ * triggering `self`.
  *
  * Returns: the modifiers
  */
@@ -726,7 +726,7 @@ gtk_keyval_trigger_get_modifiers (GtkKeyvalTrigger *self)
  * @self: a keyval `GtkShortcutTrigger`
  *
  * Gets the keyval that must be pressed to succeed
- * triggering @self.
+ * triggering `self`.
  *
  * Returns: the keyval
  */
@@ -928,7 +928,7 @@ gtk_mnemonic_trigger_init (GtkMnemonicTrigger *self)
  * @keyval: The keyval to trigger for
  *
  * Creates a `GtkShortcutTrigger` that will trigger whenever the key with
- * the given @keyval is pressed and mnemonics have been activated.
+ * the given `keyval` is pressed and mnemonics have been activated.
  *
  * Mnemonics are activated by calling code when a key event with the right
  * modifiers is detected.
@@ -947,7 +947,7 @@ gtk_mnemonic_trigger_new (guint keyval)
  * gtk_mnemonic_trigger_get_keyval: (attributes org.gtk.Method.get_property=keyval)
  * @self: a mnemonic `GtkShortcutTrigger`
  *
- * Gets the keyval that must be pressed to succeed triggering @self.
+ * Gets the keyval that must be pressed to succeed triggering `self`.
  *
  * Returns: the keyval
  */
@@ -1216,7 +1216,7 @@ gtk_alternative_trigger_new (GtkShortcutTrigger *first,
  * @self: an alternative `GtkShortcutTrigger`
  *
  * Gets the first of the two alternative triggers that may
- * trigger @self.
+ * trigger `self`.
  *
  * [method@Gtk.AlternativeTrigger.get_second] will return
  * the other one.
@@ -1236,7 +1236,7 @@ gtk_alternative_trigger_get_first (GtkAlternativeTrigger *self)
  * @self: an alternative `GtkShortcutTrigger`
  *
  * Gets the second of the two alternative triggers that may
- * trigger @self.
+ * trigger `self`.
  *
  * [method@Gtk.AlternativeTrigger.get_first] will return
  * the other one.

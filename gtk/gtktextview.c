@@ -1150,13 +1150,13 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
    * GtkTextView::move-cursor:
    * @text_view: the object which received the signal
    * @step: the granularity of the move, as a `GtkMovementStep`
-   * @count: the number of @step units to move
+   * @count: the number of `step` units to move
    * @extend_selection: true if the move should extend the selection
    *
    * Gets emitted when the user initiates a cursor movement.
    *
    * The ::move-cursor signal is a [keybinding signal](class.SignalAction.html).
-   * If the cursor is not visible in @text_view, this signal causes
+   * If the cursor is not visible in `text_view`, this signal causes
    * the viewport to be moved instead.
    *
    * Applications should not connect to it, but may emit it with
@@ -1196,7 +1196,7 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
    * GtkTextView::move-viewport:
    * @text_view: the object which received the signal
    * @step: the granularity of the movement, as a `GtkScrollStep`
-   * @count: the number of @step units to move
+   * @count: the number of `step` units to move
    *
    * Gets emitted to move the viewport.
    *
@@ -1269,13 +1269,13 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
    * GtkTextView::delete-from-cursor:
    * @text_view: the object which received the signal
    * @type: the granularity of the deletion, as a `GtkDeleteType`
-   * @count: the number of @type units to delete
+   * @count: the number of `type` units to delete
    *
    * Gets emitted when the user initiates a text deletion.
    *
    * The ::delete-from-cursor signal is a [keybinding signal](class.SignalAction.html).
    *
-   * If the @type is %GTK_DELETE_CHARS, GTK deletes the selection
+   * If the `type` is %GTK_DELETE_CHARS, GTK deletes the selection
    * if there is one, otherwise it deletes the requested number
    * of characters.
    *
@@ -1477,7 +1477,7 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
    * @start: where the selection should start
    * @end: where the selection should end
    *
-   * Emitted when the selection needs to be extended at @location.
+   * Emitted when the selection needs to be extended at `location`.
    *
    * Returns: %GDK_EVENT_STOP to stop other handlers from being invoked for the
    *   event. %GDK_EVENT_PROPAGATE to propagate the event further.
@@ -1502,7 +1502,7 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
    * GtkTextView::insert-emoji:
    * @text_view: the object which received the signal
    *
-   * Gets emitted to present the Emoji chooser for the @text_view.
+   * Gets emitted to present the Emoji chooser for the `text_view`.
    *
    * The ::insert-emoji signal is a [keybinding signal](class.SignalAction.html).
    *
@@ -2080,9 +2080,9 @@ gtk_text_view_new (void)
  * gtk_text_view_new_with_buffer:
  * @buffer: a `GtkTextBuffer`
  *
- * Creates a new `GtkTextView` widget displaying the buffer @buffer.
+ * Creates a new `GtkTextView` widget displaying the buffer `buffer`.
  *
- * One buffer can be shared among many widgets. @buffer may be `NULL`
+ * One buffer can be shared among many widgets. `buffer` may be `NULL`
  * to create a default buffer, in which case this function is equivalent
  * to [ctor@Gtk.TextView.new]. The text view adds its own reference count
  * to the buffer; it does not take over an existing reference.
@@ -2106,10 +2106,10 @@ gtk_text_view_new_with_buffer (GtkTextBuffer *buffer)
  * @text_view: a `GtkTextView`
  * @buffer: (nullable): a `GtkTextBuffer`
  *
- * Sets @buffer as the buffer being displayed by @text_view.
+ * Sets `buffer` as the buffer being displayed by `text_view`.
  *
  * The previous buffer displayed by the text view is unreferenced, and
- * a reference is added to @buffer. If you owned a reference to @buffer
+ * a reference is added to `buffer`. If you owned a reference to `buffer`
  * before passing it to this function, you must remove that reference
  * yourself; `GtkTextView` will not “adopt” it.
  */
@@ -2271,7 +2271,7 @@ gtk_text_view_get_buffer (GtkTextView *text_view)
  * @weak: (out) (optional): location to store the weak cursor position
  *
  * Determine the positions of the strong and weak cursors if the
- * insertion point is at @iter.
+ * insertion point is at `iter`.
  *
  * The position of each cursor is stored as a zero-width rectangle.
  * The strong cursor location is the location where characters of
@@ -2280,9 +2280,9 @@ gtk_text_view_get_buffer (GtkTextView *text_view)
  * characters of the directionality opposite to the base direction
  * of the paragraph are inserted.
  *
- * If @iter is `NULL`, the actual cursor position is used.
+ * If `iter` is `NULL`, the actual cursor position is used.
  *
- * Note that if @iter happens to be the actual cursor position, and
+ * Note that if `iter` happens to be the actual cursor position, and
  * there is currently an IM preedit sequence being entered, the
  * returned locations will be adjusted to account for the preedit
  * cursor’s offset within the preedit sequence.
@@ -2322,7 +2322,7 @@ gtk_text_view_get_cursor_locations (GtkTextView       *text_view,
  * @x: x position, in buffer coordinates
  * @y: y position, in buffer coordinates
  *
- * Retrieves the iterator at buffer coordinates @x and @y.
+ * Retrieves the iterator at buffer coordinates `x` and `y`.
  *
  * Buffer coordinates are coordinates for the entire buffer, not just
  * the currently-displayed portion. If you have coordinates from an
@@ -2357,7 +2357,7 @@ gtk_text_view_get_iter_at_location (GtkTextView *text_view,
  * @y: y position, in buffer coordinates
  *
  * Retrieves the iterator pointing to the character at buffer
- * coordinates @x and @y.
+ * coordinates `x` and `y`.
  *
  * Buffer coordinates are coordinates for the entire buffer, not just
  * the currently-displayed portion. If you have coordinates from an event,
@@ -2388,9 +2388,9 @@ gtk_text_view_get_iter_at_position (GtkTextView *text_view,
  * gtk_text_view_get_iter_location:
  * @text_view: a `GtkTextView`
  * @iter: a `GtkTextIter`
- * @location: (out): bounds of the character at @iter
+ * @location: (out): bounds of the character at `iter`
  *
- * Gets a rectangle which roughly contains the character at @iter.
+ * Gets a rectangle which roughly contains the character at `iter`.
  *
  * The rectangle position is in buffer coordinates; use
  * [method@Gtk.TextView.buffer_to_window_coords] to convert these
@@ -2416,7 +2416,7 @@ gtk_text_view_get_iter_location (GtkTextView       *text_view,
  * @y: (out): return location for a y coordinate
  * @height: (out): return location for a height
  *
- * Gets the y coordinate of the top of the line containing @iter,
+ * Gets the y coordinate of the top of the line containing `iter`,
  * and the height of the line.
  *
  * The coordinate is a buffer coordinate; convert to window
@@ -2447,11 +2447,11 @@ gtk_text_view_get_line_yrange (GtkTextView       *text_view,
  * @line_top: (out): return location for top coordinate of the line
  *
  * Gets the `GtkTextIter` at the start of the line containing
- * the coordinate @y.
+ * the coordinate `y`.
  *
- * @y is in buffer coordinates, convert from window coordinates with
+ * `y` is in buffer coordinates, convert from window coordinates with
  * [method@Gtk.TextView.window_to_buffer_coords]. If non-`NULL`,
- * @line_top will be filled with the coordinate of the top edge
+ * `line_top` will be filled with the coordinate of the top edge
  * of the line.
  */
 void
@@ -2696,14 +2696,14 @@ _gtk_text_view_scroll_to_iter (GtkTextView   *text_view,
  * @xalign: horizontal alignment of mark within visible area
  * @yalign: vertical alignment of mark within visible area
  *
- * Scrolls @text_view so that @iter is on the screen in the position
- * indicated by @xalign and @yalign.
+ * Scrolls `text_view` so that `iter` is on the screen in the position
+ * indicated by `xalign` and `yalign`.
  *
  * An alignment of 0.0 indicates left or top, 1.0 indicates right or
- * bottom, 0.5 means center. If @use_align is false, the text scrolls
+ * bottom, 0.5 means center. If `use_align` is false, the text scrolls
  * the minimal distance to get the mark onscreen, possibly not scrolling
  * at all. The effective screen for purposes of this function is reduced
- * by a margin of size @within_margin.
+ * by a margin of size `within_margin`.
  *
  * Note that this function uses the currently-computed height of the
  * lines in the text buffer. Line heights are computed in an idle
@@ -2959,14 +2959,14 @@ flush_update_im_spot_location (GtkTextView *text_view)
  * @xalign: horizontal alignment of mark within visible area
  * @yalign: vertical alignment of mark within visible area
  *
- * Scrolls @text_view so that @mark is on the screen in the position
- * indicated by @xalign and @yalign.
+ * Scrolls `text_view` so that `mark` is on the screen in the position
+ * indicated by `xalign` and `yalign`.
  *
  * An alignment of 0.0 indicates left or top, 1.0 indicates right or
- * bottom, 0.5 means center. If @use_align is false, the text scrolls
+ * bottom, 0.5 means center. If `use_align` is false, the text scrolls
  * the minimal distance to get the mark onscreen, possibly not scrolling
  * at all. The effective screen for purposes of this function is reduced
- * by a margin of size @within_margin.
+ * by a margin of size `within_margin`.
  */
 void
 gtk_text_view_scroll_to_mark (GtkTextView *text_view,
@@ -3004,9 +3004,9 @@ gtk_text_view_scroll_to_mark (GtkTextView *text_view,
 /**
  * gtk_text_view_scroll_mark_onscreen:
  * @text_view: a `GtkTextView`
- * @mark: a mark in the buffer for @text_view
+ * @mark: a mark in the buffer for `text_view`
  *
- * Scrolls @text_view the minimum distance such that @mark is contained
+ * Scrolls `text_view` the minimum distance such that `mark` is contained
  * within the visible area of the widget.
  */
 void
@@ -3070,7 +3070,7 @@ gtk_text_view_move_mark_onscreen (GtkTextView *text_view,
  * @text_view: a `GtkTextView`
  * @visible_rect: (out): rectangle to fill
  *
- * Fills @visible_rect with the currently-visible
+ * Fills `visible_rect` with the currently-visible
  * region of the buffer, in buffer coordinates.
  *
  * Convert to window coordinates with
@@ -3225,9 +3225,9 @@ gtk_text_view_get_editable (GtkTextView *text_view)
  * @text_view: a `GtkTextView`
  * @pixels_above_lines: pixels above paragraphs
  *
- * Sets the default number of blank pixels above paragraphs in @text_view.
+ * Sets the default number of blank pixels above paragraphs in `text_view`.
  *
- * Tags in the buffer for @text_view may override the defaults.
+ * Tags in the buffer for `text_view` may override the defaults.
  */
 void
 gtk_text_view_set_pixels_above_lines (GtkTextView *text_view,
@@ -3278,9 +3278,9 @@ gtk_text_view_get_pixels_above_lines (GtkTextView *text_view)
  * @pixels_below_lines: pixels below paragraphs
  *
  * Sets the default number of pixels of blank space
- * to put below paragraphs in @text_view.
+ * to put below paragraphs in `text_view`.
  *
- * May be overridden by tags applied to @text_view’s buffer.
+ * May be overridden by tags applied to `text_view`’s buffer.
  */
 void
 gtk_text_view_set_pixels_below_lines (GtkTextView *text_view,
@@ -3333,7 +3333,7 @@ gtk_text_view_get_pixels_below_lines (GtkTextView *text_view)
  * Sets the default number of pixels of blank space to leave between
  * display/wrapped lines within a paragraph.
  *
- * May be overridden by tags in @text_view’s buffer.
+ * May be overridden by tags in `text_view`’s buffer.
  */
 void
 gtk_text_view_set_pixels_inside_wrap (GtkTextView *text_view,
@@ -3381,7 +3381,7 @@ gtk_text_view_get_pixels_inside_wrap (GtkTextView *text_view)
  * @text_view: a `GtkTextView`
  * @justification: justification
  *
- * Sets the default justification of text in @text_view.
+ * Sets the default justification of text in `text_view`.
  *
  * Tags in the view’s buffer may override the default.
  */
@@ -3413,7 +3413,7 @@ gtk_text_view_set_justification (GtkTextView     *text_view,
  * gtk_text_view_get_justification: (attributes org.gtk.Method.get_property=justification)
  * @text_view: a `GtkTextView`
  *
- * Gets the default justification of paragraphs in @text_view.
+ * Gets the default justification of paragraphs in `text_view`.
  *
  * Tags in the buffer may override the default.
  *
@@ -3432,7 +3432,7 @@ gtk_text_view_get_justification (GtkTextView *text_view)
  * @text_view: a `GtkTextView`
  * @left_margin: left margin in pixels
  *
- * Sets the default left margin for text in @text_view.
+ * Sets the default left margin for text in `text_view`.
  *
  * Tags in the buffer may override the default.
  *
@@ -3466,7 +3466,7 @@ gtk_text_view_set_left_margin (GtkTextView *text_view,
  * gtk_text_view_get_left_margin: (attributes org.gtk.Method.get_property=left-margin)
  * @text_view: a `GtkTextView`
  *
- * Gets the default left margin size of paragraphs in the @text_view.
+ * Gets the default left margin size of paragraphs in the `text_view`.
  *
  * Tags in the buffer may override the default.
  *
@@ -3519,7 +3519,7 @@ gtk_text_view_set_right_margin (GtkTextView *text_view,
  * gtk_text_view_get_right_margin: (attributes org.gtk.Method.get_property=right-margin)
  * @text_view: a `GtkTextView`
  *
- * Gets the default right margin for text in @text_view.
+ * Gets the default right margin for text in `text_view`.
  *
  * Tags in the buffer may override the default.
  *
@@ -3538,7 +3538,7 @@ gtk_text_view_get_right_margin (GtkTextView *text_view)
  * @text_view: a `GtkTextView`
  * @top_margin: top margin in pixels
  *
- * Sets the top margin for text in @text_view.
+ * Sets the top margin for text in `text_view`.
  *
  * Note that this function is confusingly named.
  * In CSS terms, the value set here is padding.
@@ -3571,7 +3571,7 @@ gtk_text_view_set_top_margin (GtkTextView *text_view,
  * gtk_text_view_get_top_margin: (attributes org.gtk.Method.get_property=top-margin)
  * @text_view: a `GtkTextView`
  *
- * Gets the top margin for text in the @text_view.
+ * Gets the top margin for text in the `text_view`.
  *
  * Returns: top margin in pixels
  */
@@ -3588,7 +3588,7 @@ gtk_text_view_get_top_margin (GtkTextView *text_view)
  * @text_view: a `GtkTextView`
  * @bottom_margin: bottom margin in pixels
  *
- * Sets the bottom margin for text in @text_view.
+ * Sets the bottom margin for text in `text_view`.
  *
  * Note that this function is confusingly named.
  * In CSS terms, the value set here is padding.
@@ -3617,7 +3617,7 @@ gtk_text_view_set_bottom_margin (GtkTextView *text_view,
  * gtk_text_view_get_bottom_margin: (attributes org.gtk.Method.get_property=bottom-margin)
  * @text_view: a `GtkTextView`
  *
- * Gets the bottom margin for text in the @text_view.
+ * Gets the bottom margin for text in the `text_view`.
  *
  * Returns: bottom margin in pixels
  */
@@ -3634,7 +3634,7 @@ gtk_text_view_get_bottom_margin (GtkTextView *text_view)
  * @text_view: a `GtkTextView`
  * @indent: indentation in pixels
  *
- * Sets the default indentation for paragraphs in @text_view.
+ * Sets the default indentation for paragraphs in `text_view`.
  *
  * Tags in the buffer may override the default.
  */
@@ -3666,7 +3666,7 @@ gtk_text_view_set_indent (GtkTextView *text_view,
  * gtk_text_view_get_indent: (attributes org.gtk.Method.get_property=indent)
  * @text_view: a `GtkTextView`
  *
- * Gets the default indentation of paragraphs in @text_view.
+ * Gets the default indentation of paragraphs in `text_view`.
  *
  * Tags in the view’s buffer may override the default.
  * The indentation may be negative.
@@ -3686,7 +3686,7 @@ gtk_text_view_get_indent (GtkTextView *text_view)
  * @text_view: a `GtkTextView`
  * @tabs: tabs as a `PangoTabArray`
  *
- * Sets the default tab stops for paragraphs in @text_view.
+ * Sets the default tab stops for paragraphs in `text_view`.
  *
  * Tags in the buffer may override the default.
  */
@@ -3724,7 +3724,7 @@ gtk_text_view_set_tabs (GtkTextView   *text_view,
  * gtk_text_view_get_tabs: (attributes org.gtk.Method.get_property=tabs)
  * @text_view: a `GtkTextView`
  *
- * Gets the default tabs for @text_view.
+ * Gets the default tabs for `text_view`.
  *
  * Tags in the buffer may override the defaults. The returned array
  * will be `NULL` if “standard” (8-space) tabs are used. Free the
@@ -4499,7 +4499,7 @@ find_child_for_window_type (GtkTextView       *text_view,
  *
  * See [method@Gtk.TextView.set_gutter].
  *
- * @win must be one of %GTK_TEXT_WINDOW_LEFT, %GTK_TEXT_WINDOW_RIGHT,
+ * `win` must be one of %GTK_TEXT_WINDOW_LEFT, %GTK_TEXT_WINDOW_RIGHT,
  * %GTK_TEXT_WINDOW_TOP, or %GTK_TEXT_WINDOW_BOTTOM.
  *
  * Returns: (transfer none) (nullable): a `GtkWidget`
@@ -4530,9 +4530,9 @@ gtk_text_view_get_gutter (GtkTextView       *text_view,
  * @win: a `GtkTextWindowType`
  * @widget: (nullable): a `GtkWidget`
  *
- * Places @widget into the gutter specified by @win.
+ * Places `widget` into the gutter specified by `win`.
  *
- * @win must be one of %GTK_TEXT_WINDOW_LEFT, %GTK_TEXT_WINDOW_RIGHT,
+ * `win` must be one of %GTK_TEXT_WINDOW_LEFT, %GTK_TEXT_WINDOW_RIGHT,
  * %GTK_TEXT_WINDOW_TOP, or %GTK_TEXT_WINDOW_BOTTOM.
  */
 void
@@ -5985,7 +5985,7 @@ gtk_text_view_snapshot (GtkWidget   *widget,
  * @text_view: a `GtkTextView`
  * @child: the child to remove
  *
- * Removes a child widget from @text_view.
+ * Removes a child widget from `text_view`.
  */
 void
 gtk_text_view_remove (GtkTextView *text_view,
@@ -7149,7 +7149,7 @@ gtk_text_view_toggle_overwrite (GtkTextView *text_view)
  *
  * Returns whether the `GtkTextView` is in overwrite mode or not.
  *
- * Returns: whether @text_view is in overwrite mode or not.
+ * Returns: whether `text_view` is in overwrite mode or not.
  */
 gboolean
 gtk_text_view_get_overwrite (GtkTextView *text_view)
@@ -7186,7 +7186,7 @@ gtk_text_view_set_overwrite (GtkTextView *text_view,
  *
  * Sets the behavior of the text widget when the <kbd>Tab</kbd> key is pressed.
  *
- * If @accepts_tab is true, a tab character is inserted. If @accepts_tab
+ * If `accepts_tab` is true, a tab character is inserted. If `accepts_tab`
  * is false the keyboard focus is moved to the next widget in the focus
  * chain.
  *
@@ -7355,8 +7355,8 @@ gtk_text_view_extend_selection (GtkTextView            *text_view,
 	{
 	  GtkTextIter tmp;
 
-          /* @start is not contained in a word: the selection is extended to all
-           * the white spaces between the end of the word preceding @start and
+          /* `start` is not contained in a word: the selection is extended to all
+           * the white spaces between the end of the word preceding `start` and
            * the start of the one following.
            */
 
@@ -9546,7 +9546,7 @@ gtk_text_view_buffer_to_window_coords (GtkTextView      *text_view,
  * @buffer_x: (out) (optional): buffer x coordinate return location
  * @buffer_y: (out) (optional): buffer y coordinate return location
  *
- * Converts coordinates on the window identified by @win to buffer
+ * Converts coordinates on the window identified by `win` to buffer
  * coordinates.
  */
 void
@@ -9655,9 +9655,9 @@ add_child (GtkTextView   *text_view,
  * gtk_text_view_add_child_at_anchor:
  * @text_view: a `GtkTextView`
  * @child: a `GtkWidget`
- * @anchor: a `GtkTextChildAnchor` in the `GtkTextBuffer` for @text_view
+ * @anchor: a `GtkTextChildAnchor` in the `GtkTextBuffer` for `text_view`
  *
- * Adds a child widget in the text buffer, at the given @anchor.
+ * Adds a child widget in the text buffer, at the given `anchor`.
  */
 void
 gtk_text_view_add_child_at_anchor (GtkTextView          *text_view,
@@ -9707,13 +9707,13 @@ ensure_child (GtkTextView        *text_view,
  * @xpos: X position of child in window coordinates
  * @ypos: Y position of child in window coordinates
  *
- * Adds @child at a fixed coordinate in the `GtkTextView`'s text window.
+ * Adds `child` at a fixed coordinate in the `GtkTextView`'s text window.
  *
- * The @xpos and @ypos must be in buffer coordinates (see
+ * The `xpos` and `ypos` must be in buffer coordinates (see
  * [method@Gtk.TextView.get_iter_location] to convert to
  * buffer coordinates).
  *
- * @child will scroll with the text view.
+ * `child` will scroll with the text view.
  *
  * If instead you want a widget that will not move with the
  * `GtkTextView` contents see `GtkOverlay`.
@@ -9770,7 +9770,7 @@ gtk_text_view_move_overlay (GtkTextView *text_view,
  * @text_view: a `GtkTextView`
  * @iter: a `GtkTextIter`
  *
- * Moves the given @iter forward by one display (wrapped) line.
+ * Moves the given `iter` forward by one display (wrapped) line.
  *
  * A display line is different from a paragraph. Paragraphs are
  * separated by newlines or other paragraph separator characters.
@@ -9780,7 +9780,7 @@ gtk_text_view_move_overlay (GtkTextView *text_view,
  * they depend on the view’s width; paragraphs are the same in all
  * views, since they depend on the contents of the `GtkTextBuffer`.
  *
- * Returns: true if @iter was moved and is not on the end iterator
+ * Returns: true if `iter` was moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_forward_display_line (GtkTextView *text_view,
@@ -9799,7 +9799,7 @@ gtk_text_view_forward_display_line (GtkTextView *text_view,
  * @text_view: a `GtkTextView`
  * @iter: a `GtkTextIter`
  *
- * Moves the given @iter backward by one display (wrapped) line.
+ * Moves the given `iter` backward by one display (wrapped) line.
  *
  * A display line is different from a paragraph. Paragraphs are
  * separated by newlines or other paragraph separator characters.
@@ -9809,7 +9809,7 @@ gtk_text_view_forward_display_line (GtkTextView *text_view,
  * they depend on the view’s width; paragraphs are the same in all
  * views, since they depend on the contents of the `GtkTextBuffer`.
  *
- * Returns: true if @iter was moved and is not on the end iterator
+ * Returns: true if `iter` was moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_backward_display_line (GtkTextView *text_view,
@@ -9828,7 +9828,7 @@ gtk_text_view_backward_display_line (GtkTextView *text_view,
  * @text_view: a `GtkTextView`
  * @iter: a `GtkTextIter`
  *
- * Moves the given @iter forward to the next display line end.
+ * Moves the given `iter` forward to the next display line end.
  *
  * A display line is different from a paragraph. Paragraphs are
  * separated by newlines or other paragraph separator characters.
@@ -9838,7 +9838,7 @@ gtk_text_view_backward_display_line (GtkTextView *text_view,
  * they depend on the view’s width; paragraphs are the same in all
  * views, since they depend on the contents of the `GtkTextBuffer`.
  *
- * Returns: true if @iter was moved and is not on the end iterator
+ * Returns: true if `iter` was moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_forward_display_line_end (GtkTextView *text_view,
@@ -9857,7 +9857,7 @@ gtk_text_view_forward_display_line_end (GtkTextView *text_view,
  * @text_view: a `GtkTextView`
  * @iter: a `GtkTextIter`
  *
- * Moves the given @iter backward to the next display line start.
+ * Moves the given `iter` backward to the next display line start.
  *
  * A display line is different from a paragraph. Paragraphs are
  * separated by newlines or other paragraph separator characters.
@@ -9867,7 +9867,7 @@ gtk_text_view_forward_display_line_end (GtkTextView *text_view,
  * they depend on the view’s width; paragraphs are the same in all
  * views, since they depend on the contents of the `GtkTextBuffer`.
  *
- * Returns: true if @iter was moved and is not on the end iterator
+ * Returns: true if `iter` was moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_backward_display_line_start (GtkTextView *text_view,
@@ -9886,12 +9886,12 @@ gtk_text_view_backward_display_line_start (GtkTextView *text_view,
  * @text_view: a `GtkTextView`
  * @iter: a `GtkTextIter`
  *
- * Determines whether @iter is at the start of a display line.
+ * Determines whether `iter` is at the start of a display line.
  *
  * See [method@Gtk.TextView.forward_display_line] for an
  * explanation of display lines vs. paragraphs.
  *
- * Returns: true if @iter begins a wrapped line
+ * Returns: true if `iter` begins a wrapped line
  */
 gboolean
 gtk_text_view_starts_display_line (GtkTextView       *text_view,
@@ -9915,17 +9915,17 @@ gtk_text_view_starts_display_line (GtkTextView       *text_view,
  * Move the iterator a given number of characters visually, treating
  * it as the strong cursor position.
  *
- * If @count is positive, then the new strong cursor position will
- * be @count positions to the right of the old cursor position.
- * If @count is negative then the new strong cursor position will
- * be @count positions to the left of the old cursor position.
+ * If `count` is positive, then the new strong cursor position will
+ * be `count` positions to the right of the old cursor position.
+ * If `count` is negative then the new strong cursor position will
+ * be `count` positions to the left of the old cursor position.
  *
  * In the presence of bi-directional text, the correspondence
  * between logical and visual order will depend on the direction
  * of the current run, and there may be jumps when the cursor
  * is moved off of the end of a run.
  *
- * Returns: true if @iter moved and is not on the end iterator
+ * Returns: true if `iter` moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_move_visually (GtkTextView *text_view,
@@ -10155,7 +10155,7 @@ gtk_text_view_insert_emoji (GtkTextView *text_view)
  * @model: (nullable): a `GMenuModel`
  *
  * Sets a menu model to add when constructing the context
- * menu for @text_view.
+ * menu for `text_view`.
  *
  * You can pass `NULL` to remove a previously set extra menu.
  */

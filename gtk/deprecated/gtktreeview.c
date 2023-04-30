@@ -1048,7 +1048,7 @@ gtk_tree_view_class_init (GtkTreeViewClass *class)
   /**
    * GtkTreeView:hover-selection:
    *
-   * Enables or disables the hover selection mode of @tree_view.
+   * Enables or disables the hover selection mode of `tree_view`.
    * Hover selection makes the selected row follow the pointer.
    * Currently, this works only for the selection modes
    * %GTK_SELECTION_SINGLE and %GTK_SELECTION_BROWSE.
@@ -1064,7 +1064,7 @@ gtk_tree_view_class_init (GtkTreeViewClass *class)
   /**
    * GtkTreeView:hover-expand:
    *
-   * Enables or disables the hover expansion mode of @tree_view.
+   * Enables or disables the hover expansion mode of `tree_view`.
    * Hover expansion makes rows expand or collapse if the pointer moves
    * over them.
    *
@@ -1316,7 +1316,7 @@ gtk_tree_view_class_init (GtkTreeViewClass *class)
    * gtk_tree_view_set_cursor_on_cell() when moving horizontally
    * `GtkTreeView`::move-cursor does not reset the current selection.
    *
-   * Returns: true if @step is supported, false otherwise.
+   * Returns: true if `step` is supported, false otherwise.
    */
   tree_view_signals[MOVE_CURSOR] =
     g_signal_new (I_("move-cursor"),
@@ -7530,7 +7530,7 @@ column_sizing_notify (GObject    *object,
  * @tree_view: a `GtkTreeView`
  * @enable: true to enable fixed height mode
  *
- * Enables or disables the fixed height mode of @tree_view.
+ * Enables or disables the fixed height mode of `tree_view`.
  * Fixed height mode speeds up `GtkTreeView` by assuming that all
  * rows have the same height.
  * Only enable this option if all rows are the same height and all
@@ -7582,9 +7582,9 @@ gtk_tree_view_set_fixed_height_mode (GtkTreeView *tree_view,
  * gtk_tree_view_get_fixed_height_mode:
  * @tree_view: a `GtkTreeView`
  *
- * Returns whether fixed height mode is turned on for @tree_view.
+ * Returns whether fixed height mode is turned on for `tree_view`.
  *
- * Returns: true if @tree_view is in fixed height mode
+ * Returns: true if `tree_view` is in fixed height mode
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -10173,7 +10173,7 @@ gtk_tree_view_new (void)
  * gtk_tree_view_new_with_model:
  * @model: the model.
  *
- * Creates a new `GtkTreeView` widget with the model initialized to @model.
+ * Creates a new `GtkTreeView` widget with the model initialized to `model`.
  *
  * Returns: A newly created `GtkTreeView` widget.
  *
@@ -10214,8 +10214,8 @@ gtk_tree_view_get_model (GtkTreeView *tree_view)
  * @tree_view: A `GtkTreeView`.
  * @model: (nullable): The model.
  *
- * Sets the model for a `GtkTreeView`.  If the @tree_view already has a model
- * set, it will remove it before setting the new model.  If @model is `NULL`,
+ * Sets the model for a `GtkTreeView`.  If the `tree_view` already has a model
+ * set, it will remove it before setting the new model.  If `model` is `NULL`,
  * then it will unset the old model.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -10368,7 +10368,7 @@ gtk_tree_view_set_model (GtkTreeView  *tree_view,
  * gtk_tree_view_get_selection:
  * @tree_view: A `GtkTreeView`.
  *
- * Gets the `GtkTreeSelection` associated with @tree_view.
+ * Gets the `GtkTreeSelection` associated with `tree_view`.
  *
  * Returns: (transfer none): A `GtkTreeSelection` object.
  *
@@ -10453,7 +10453,7 @@ gtk_tree_view_do_set_vadjustment (GtkTreeView   *tree_view,
  * gtk_tree_view_get_headers_visible:
  * @tree_view: A `GtkTreeView`.
  *
- * Returns true if the headers on the @tree_view are visible.
+ * Returns true if the headers on the `tree_view` are visible.
  *
  * Returns: Whether the headers are visible or not.
  *
@@ -10667,11 +10667,11 @@ gtk_tree_view_get_activate_on_single_click (GtkTreeView *tree_view)
  * @tree_view: A `GtkTreeView`.
  * @column: The `GtkTreeViewColumn` to add.
  *
- * Appends @column to the list of columns. If @tree_view has “fixed_height”
- * mode enabled, then @column must have its “sizing” property set to be
+ * Appends `column` to the list of columns. If `tree_view` has “fixed_height”
+ * mode enabled, then `column` must have its “sizing” property set to be
  * GTK_TREE_VIEW_COLUMN_FIXED.
  *
- * Returns: The number of columns in @tree_view after appending.
+ * Returns: The number of columns in `tree_view` after appending.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -10691,9 +10691,9 @@ gtk_tree_view_append_column (GtkTreeView       *tree_view,
  * @tree_view: A `GtkTreeView`.
  * @column: The `GtkTreeViewColumn` to remove.
  *
- * Removes @column from @tree_view.
+ * Removes `column` from `tree_view`.
  *
- * Returns: The number of columns in @tree_view after removing.
+ * Returns: The number of columns in `tree_view` after removing.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -10756,14 +10756,14 @@ gtk_tree_view_remove_column (GtkTreeView       *tree_view,
  * gtk_tree_view_insert_column:
  * @tree_view: A `GtkTreeView`.
  * @column: The `GtkTreeViewColumn` to be inserted.
- * @position: The position to insert @column in.
+ * @position: The position to insert `column` in.
  *
- * This inserts the @column into the @tree_view at @position.  If @position is
- * -1, then the column is inserted at the end. If @tree_view has
- * “fixed_height” mode enabled, then @column must have its “sizing” property
+ * This inserts the `column` into the `tree_view` at `position`.  If `position` is
+ * -1, then the column is inserted at the end. If `tree_view` has
+ * “fixed_height” mode enabled, then `column` must have its “sizing” property
  * set to be GTK_TREE_VIEW_COLUMN_FIXED.
  *
- * Returns: The number of columns in @tree_view after insertion.
+ * Returns: The number of columns in `tree_view` after insertion.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -10826,15 +10826,15 @@ gtk_tree_view_insert_column (GtkTreeView       *tree_view,
  * @position: The position to insert the new column in
  * @title: The title to set the header to
  * @cell: The `GtkCellRenderer`
- * @...: A `NULL`-terminated list of attributes
+ * `...`: A `NULL`-terminated list of attributes
  *
- * Creates a new `GtkTreeViewColumn` and inserts it into the @tree_view at
- * @position.  If @position is -1, then the newly created column is inserted at
- * the end.  The column is initialized with the attributes given. If @tree_view
+ * Creates a new `GtkTreeViewColumn` and inserts it into the `tree_view` at
+ * `position`.  If `position` is -1, then the newly created column is inserted at
+ * the end.  The column is initialized with the attributes given. If `tree_view`
  * has “fixed_height” mode enabled, then the new column will have its sizing
  * property set to be GTK_TREE_VIEW_COLUMN_FIXED.
  *
- * Returns: The number of columns in @tree_view after insertion.
+ * Returns: The number of columns in `tree_view` after insertion.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -10883,14 +10883,14 @@ gtk_tree_view_insert_column_with_attributes (GtkTreeView     *tree_view,
  * @title: column title
  * @cell: cell renderer for column
  * @func: function to set attributes of cell renderer
- * @data: data for @func
- * @dnotify: destroy notifier for @data
+ * @data: data for `func`
+ * @dnotify: destroy notifier for `data`
  *
  * Convenience function that inserts a new column into the `GtkTreeView`
  * with the given cell renderer and a `GtkTreeCellDataFunc` to set cell renderer
  * attributes (normally using data from the model). See also
  * gtk_tree_view_column_set_cell_data_func(), gtk_tree_view_column_pack_start().
- * If @tree_view has “fixed_height” mode enabled, then the new column will have its
+ * If `tree_view` has “fixed_height” mode enabled, then the new column will have its
  * “sizing” property set to be GTK_TREE_VIEW_COLUMN_FIXED.
  *
  * Returns: number of columns in the tree view post-insert
@@ -10926,9 +10926,9 @@ gtk_tree_view_insert_column_with_data_func  (GtkTreeView               *tree_vie
  * gtk_tree_view_get_n_columns:
  * @tree_view: a `GtkTreeView`
  *
- * Queries the number of columns in the given @tree_view.
+ * Queries the number of columns in the given `tree_view`.
  *
- * Returns: The number of columns in the @tree_view
+ * Returns: The number of columns in the `tree_view`
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -10975,7 +10975,7 @@ gtk_tree_view_get_column (GtkTreeView *tree_view,
  * gtk_tree_view_get_columns:
  * @tree_view: A `GtkTreeView`
  *
- * Returns a `GList` of all the `GtkTreeViewColumn`s currently in @tree_view.
+ * Returns a `GList` of all the `GtkTreeViewColumn`s currently in `tree_view`.
  * The returned list must be freed with g_list_free ().
  *
  * Returns: (element-type GtkTreeViewColumn) (transfer container): A list of `GtkTreeViewColumn`s
@@ -10998,8 +10998,8 @@ gtk_tree_view_get_columns (GtkTreeView *tree_view)
  * @column: The `GtkTreeViewColumn` to be moved.
  * @base_column: (nullable): The `GtkTreeViewColumn` to be moved relative to
  *
- * Moves @column to be after to @base_column.  If @base_column is `NULL`, then
- * @column is placed in the first position.
+ * Moves `column` to be after to `base_column`.  If `base_column` is `NULL`, then
+ * `column` is placed in the first position.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -11055,8 +11055,8 @@ gtk_tree_view_move_column_after (GtkTreeView       *tree_view,
  * @tree_view: A `GtkTreeView`
  * @column: (nullable): `NULL`, or the column to draw the expander arrow at.
  *
- * Sets the column to draw the expander arrow at. It must be in @tree_view.
- * If @column is `NULL`, then the expander arrow is always at the first
+ * Sets the column to draw the expander arrow at. It must be in `tree_view`.
+ * If `column` is `NULL`, then the expander arrow is always at the first
  * visible column.
  *
  * If you do not want expander arrow to appear in your tree, set the
@@ -11112,17 +11112,17 @@ gtk_tree_view_get_expander_column (GtkTreeView *tree_view)
  * gtk_tree_view_set_column_drag_function:
  * @tree_view: A `GtkTreeView`.
  * @func: (nullable): A function to determine which columns are reorderable
- * @user_data: (closure): User data to be passed to @func
- * @destroy: (nullable): Destroy notifier for @user_data
+ * @user_data: (closure): User data to be passed to `func`
+ * @destroy: (nullable): Destroy notifier for `user_data`
  *
  * Sets a user function for determining where a column may be dropped when
  * dragged.  This function is called on every column pair in turn at the
  * beginning of a column drag to determine where a drop can take place.  The
- * arguments passed to @func are: the @tree_view, the `GtkTreeViewColumn` being
+ * arguments passed to `func` are: the `tree_view`, the `GtkTreeViewColumn` being
  * dragged, the two `GtkTreeViewColumn`s determining the drop spot, and
- * @user_data.  If either of the `GtkTreeViewColumn` arguments for the drop spot
- * are `NULL`, then they indicate an edge.  If @func is set to be `NULL`, then
- * @tree_view reverts to the default behavior of allowing all columns to be
+ * `user_data`.  If either of the `GtkTreeViewColumn` arguments for the drop spot
+ * are `NULL`, then they indicate an edge.  If `func` is set to be `NULL`, then
+ * `tree_view` reverts to the default behavior of allowing all columns to be
  * dropped everywhere.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -11152,12 +11152,12 @@ gtk_tree_view_set_column_drag_function (GtkTreeView               *tree_view,
  * @tree_y: Y coordinate of new top-left pixel of visible area, or -1
  *
  * Scrolls the tree view such that the top-left corner of the visible
- * area is @tree_x, @tree_y, where @tree_x and @tree_y are specified
- * in tree coordinates.  The @tree_view must be realized before
+ * area is `tree_x`, `tree_y`, where `tree_x` and `tree_y` are specified
+ * in tree coordinates.  The `tree_view` must be realized before
  * this function is called.  If it isn't, you probably want to be
  * using gtk_tree_view_scroll_to_cell().
  *
- * If either @tree_x or @tree_y are -1, then that direction isn’t scrolled.
+ * If either `tree_x` or `tree_y` are -1, then that direction isn’t scrolled.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -11188,24 +11188,24 @@ gtk_tree_view_scroll_to_point (GtkTreeView *tree_view,
  * @path: (nullable): The path of the row to move to
  * @column: (nullable): The `GtkTreeViewColumn` to move horizontally to
  * @use_align: whether to use alignment arguments, or false.
- * @row_align: The vertical alignment of the row specified by @path.
- * @col_align: The horizontal alignment of the column specified by @column.
+ * @row_align: The vertical alignment of the row specified by `path`.
+ * @col_align: The horizontal alignment of the column specified by `column`.
  *
- * Moves the alignments of @tree_view to the position specified by @column and
- * @path.  If @column is `NULL`, then no horizontal scrolling occurs.  Likewise,
- * if @path is `NULL` no vertical scrolling occurs.  At a minimum, one of @column
- * or @path need to be non-`NULL`.  @row_align determines where the row is
- * placed, and @col_align determines where @column is placed.  Both are expected
+ * Moves the alignments of `tree_view` to the position specified by `column` and
+ * `path`.  If `column` is `NULL`, then no horizontal scrolling occurs.  Likewise,
+ * if `path` is `NULL` no vertical scrolling occurs.  At a minimum, one of `column`
+ * or `path` need to be non-`NULL`.  `row_align` determines where the row is
+ * placed, and `col_align` determines where `column` is placed.  Both are expected
  * to be between 0.0 and 1.0. 0.0 means left/top alignment, 1.0 means
  * right/bottom alignment, 0.5 means center.
  *
- * If @use_align is false, then the alignment arguments are ignored, and the
+ * If `use_align` is false, then the alignment arguments are ignored, and the
  * tree does the minimum amount of work to scroll the cell onto the screen.
  * This means that the cell will be scrolled to the edge closest to its current
  * position.  If the cell is currently visible on the screen, nothing is done.
  *
- * This function only works if the model is set, and @path is a valid row on the
- * model.  If the model changes before the @tree_view is realized, the centered
+ * This function only works if the model is set, and `path` is a valid row on the
+ * model.  If the model changes before the `tree_view` is realized, the centered
  * path will be modified to reflect this change.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -11311,7 +11311,7 @@ gtk_tree_view_scroll_to_cell (GtkTreeView       *tree_view,
  * @path: The `GtkTreePath` to be activated.
  * @column: (nullable): The `GtkTreeViewColumn` to be activated.
  *
- * Activates the cell determined by @path and @column.
+ * Activates the cell determined by `path` and `column`.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -11360,7 +11360,7 @@ gtk_tree_view_expand_all_emission_helper (GtkTreeRBTree *tree,
  * gtk_tree_view_expand_all:
  * @tree_view: A `GtkTreeView`.
  *
- * Recursively expands all nodes in the @tree_view.
+ * Recursively expands all nodes in the `tree_view`.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -11394,7 +11394,7 @@ gtk_tree_view_expand_all (GtkTreeView *tree_view)
  * gtk_tree_view_collapse_all:
  * @tree_view: A `GtkTreeView`.
  *
- * Recursively collapses all visible, expanded nodes in @tree_view.
+ * Recursively collapses all visible, expanded nodes in `tree_view`.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -11435,8 +11435,8 @@ gtk_tree_view_collapse_all (GtkTreeView *tree_view)
  * @tree_view: A `GtkTreeView`.
  * @path: path to a row.
  *
- * Expands the row at @path. This will also expand all parent rows of
- * @path as necessary.
+ * Expands the row at `path`. This will also expand all parent rows of
+ * `path` as necessary.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -11703,7 +11703,7 @@ gtk_tree_view_real_collapse_row (GtkTreeView   *tree_view,
 /**
  * gtk_tree_view_collapse_row:
  * @tree_view: a `GtkTreeView`
- * @path: path to a row in the @tree_view
+ * @path: path to a row in the `tree_view`
  *
  * Collapses a row (hides its child rows, if they exist).
  *
@@ -11769,7 +11769,7 @@ gtk_tree_view_map_expanded_rows_helper (GtkTreeView            *tree_view,
  * @func: (scope call): A function to be called
  * @data: User data to be passed to the function.
  *
- * Calls @func on all expanded rows.
+ * Calls `func` on all expanded rows.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -11798,7 +11798,7 @@ gtk_tree_view_map_expanded_rows (GtkTreeView            *tree_view,
  * @tree_view: A `GtkTreeView`.
  * @path: A `GtkTreePath` to test expansion state.
  *
- * Returns true if the node pointed to by @path is expanded in @tree_view.
+ * Returns true if the node pointed to by `path` is expanded in `tree_view`.
  *
  * Returns: true if `path` is expanded.
  *
@@ -11851,7 +11851,7 @@ gtk_tree_view_get_reorderable (GtkTreeView *tree_view)
  * This function is a convenience function to allow you to reorder
  * models that support the `GtkTreeDragSourceIface` and the
  * `GtkTreeDragDestIface`.  Both `GtkTreeStore` and `GtkListStore` support
- * these.  If @reorderable is true, then the user can reorder the
+ * these.  If `reorderable` is true, then the user can reorder the
  * model by dragging and dropping rows. The developer can listen to
  * these changes by connecting to the model’s `GtkTreeModel::row-inserted`
  * and `GtkTreeModel::row-deleted` signals. The reordering is implemented
@@ -11982,9 +11982,9 @@ gtk_tree_view_real_set_cursor (GtkTreeView     *tree_view,
  * @focus_column: (out) (transfer none) (optional) (nullable): A
  *   pointer to be filled with the current focus column
  *
- * Fills in @path and @focus_column with the current path and focus column.  If
- * the cursor isn’t currently set, then *@path will be `NULL`.  If no column
- * currently has focus, then *@focus_column will be `NULL`.
+ * Fills in `path` and `focus_column` with the current path and focus column.  If
+ * the cursor isn’t currently set, then *`path` will be `NULL`.  If no column
+ * currently has focus, then *`focus_column` will be `NULL`.
  *
  * The returned `GtkTreePath` must be freed with gtk_tree_path_free() when
  * you are done with it.
@@ -12022,16 +12022,16 @@ gtk_tree_view_get_cursor (GtkTreeView        *tree_view,
  * @focus_column: (nullable): A `GtkTreeViewColumn`
  * @start_editing: true if the specified cell should start being edited.
  *
- * Sets the current keyboard focus to be at @path, and selects it.  This is
+ * Sets the current keyboard focus to be at `path`, and selects it.  This is
  * useful when you want to focus the user’s attention on a particular row.  If
- * @focus_column is not `NULL`, then focus is given to the column specified by
- * it. Additionally, if @focus_column is specified, and @start_editing is
+ * `focus_column` is not `NULL`, then focus is given to the column specified by
+ * it. Additionally, if `focus_column` is specified, and `start_editing` is
  * true, then editing should be started in the specified cell.
- * This function is often followed by @gtk_widget_grab_focus (@tree_view)
+ * This function is often followed by `gtk_widget_grab_focus` (`tree_view`)
  * in order to give keyboard focus to the widget.  Please note that editing
  * can only happen when the widget is realized.
  *
- * If @path is invalid for @model, the current cursor (if any) will be unset
+ * If `path` is invalid for `model`, the current cursor (if any) will be unset
  * and the function will return without failing.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -12054,19 +12054,19 @@ gtk_tree_view_set_cursor (GtkTreeView       *tree_view,
  * @focus_cell: (nullable): A `GtkCellRenderer`
  * @start_editing: true if the specified cell should start being edited.
  *
- * Sets the current keyboard focus to be at @path, and selects it.  This is
+ * Sets the current keyboard focus to be at `path`, and selects it.  This is
  * useful when you want to focus the user’s attention on a particular row.  If
- * @focus_column is not `NULL`, then focus is given to the column specified by
- * it. If @focus_column and @focus_cell are not `NULL`, and @focus_column
+ * `focus_column` is not `NULL`, then focus is given to the column specified by
+ * it. If `focus_column` and `focus_cell` are not `NULL`, and `focus_column`
  * contains 2 or more editable or activatable cells, then focus is given to
- * the cell specified by @focus_cell. Additionally, if @focus_column is
- * specified, and @start_editing is true, then editing should be started in
+ * the cell specified by `focus_cell`. Additionally, if `focus_column` is
+ * specified, and `start_editing` is true, then editing should be started in
  * the specified cell.  This function is often followed by
- * @gtk_widget_grab_focus (@tree_view) in order to give keyboard focus to the
+ * `gtk_widget_grab_focus` (`tree_view`) in order to give keyboard focus to the
  * widget.  Please note that editing can only happen when the widget is
  * realized.
  *
- * If @path is invalid for @model, the current cursor (if any) will be unset
+ * If `path` is invalid for `model`, the current cursor (if any) will be unset
  * and the function will return without failing.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -12138,18 +12138,18 @@ gtk_tree_view_set_cursor_on_cell (GtkTreeView       *tree_view,
  * @cell_y: (out) (optional): A pointer where the Y coordinate
  *   relative to the cell can be placed
  *
- * Finds the path at the point (@x, @y), relative to bin_window coordinates.
- * That is, @x and @y are relative to an events coordinates. Widget-relative
+ * Finds the path at the point (`x`, `y`), relative to bin_window coordinates.
+ * That is, `x` and `y` are relative to an events coordinates. Widget-relative
  * coordinates must be converted using
  * gtk_tree_view_convert_widget_to_bin_window_coords(). It is primarily for
- * things like popup menus. If @path is non-`NULL`, then it will be filled
+ * things like popup menus. If `path` is non-`NULL`, then it will be filled
  * with the `GtkTreePath` at that point.  This path should be freed with
- * gtk_tree_path_free().  If @column is non-`NULL`, then it will be filled
- * with the column at that point.  @cell_x and @cell_y return the coordinates
- * relative to the cell background (i.e. the @background_area passed to
+ * gtk_tree_path_free().  If `column` is non-`NULL`, then it will be filled
+ * with the column at that point.  `cell_x` and `cell_y` return the coordinates
+ * relative to the cell background (i.e. the `background_area` passed to
  * gtk_cell_renderer_render()).  This function is only meaningful if
- * @tree_view is realized.  Therefore this function will always return false
- * if @tree_view is not realized or does not have a model.
+ * `tree_view` is realized.  Therefore this function will always return false
+ * if `tree_view` is not realized or does not have a model.
  *
  * For converting widget coordinates (eg. the ones you get from
  * GtkWidget::query-tooltip), please see
@@ -12305,13 +12305,13 @@ gtk_tree_view_get_cell_area_y_offset (GtkTreeView   *tree_view,
  * @rect: (out): rectangle to fill with cell rect
  *
  * Fills the bounding rectangle in bin_window coordinates for the cell at the
- * row specified by @path and the column specified by @column.  If @path is
- * `NULL`, or points to a path not currently displayed, the @y and @height fields
- * of the rectangle will be filled with 0. If @column is `NULL`, the @x and @width
+ * row specified by `path` and the column specified by `column`.  If `path` is
+ * `NULL`, or points to a path not currently displayed, the `y` and `height` fields
+ * of the rectangle will be filled with 0. If `column` is `NULL`, the `x` and `width`
  * fields will be filled with 0.  The sum of all cell rects does not cover the
  * entire tree; there are extra pixels in between rows, for example. The
- * returned rectangle is equivalent to the @cell_area passed to
- * gtk_cell_renderer_render().  This function is only valid if @tree_view is
+ * returned rectangle is equivalent to the `cell_area` passed to
+ * gtk_cell_renderer_render().  This function is only valid if `tree_view` is
  * realized.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -12433,12 +12433,12 @@ gtk_tree_view_get_row_y_offset (GtkTreeView   *tree_view,
  * @rect: (out): rectangle to fill with cell background rect
  *
  * Fills the bounding rectangle in bin_window coordinates for the cell at the
- * row specified by @path and the column specified by @column.  If @path is
- * `NULL`, or points to a node not found in the tree, the @y and @height fields of
- * the rectangle will be filled with 0. If @column is `NULL`, the @x and @width
+ * row specified by `path` and the column specified by `column`.  If `path` is
+ * `NULL`, or points to a node not found in the tree, the `y` and `height` fields of
+ * the rectangle will be filled with 0. If `column` is `NULL`, the `x` and `width`
  * fields will be filled with 0.  The returned rectangle is equivalent to the
- * @background_area passed to gtk_cell_renderer_render().  These background
- * areas tile to cover the entire bin window.  Contrast with the @cell_area,
+ * `background_area` passed to gtk_cell_renderer_render().  These background
+ * areas tile to cover the entire bin window.  Contrast with the `cell_area`,
  * returned by gtk_tree_view_get_cell_area(), which returns only the cell
  * itself, excluding surrounding borders and the tree expander area.
  *
@@ -12488,7 +12488,7 @@ gtk_tree_view_get_background_area (GtkTreeView        *tree_view,
  * @tree_view: a `GtkTreeView`
  * @visible_rect: (out): rectangle to fill
  *
- * Fills @visible_rect with the currently-visible region of the
+ * Fills `visible_rect` with the currently-visible region of the
  * buffer, in tree coordinates. Convert to bin_window coordinates with
  * gtk_tree_view_convert_tree_to_bin_window_coords().
  * Tree coordinates start at 0,0 for row 0 of the tree, and cover the entire
@@ -12708,12 +12708,12 @@ gtk_tree_view_convert_bin_window_to_tree_coords (GtkTreeView *tree_view,
  * @start_path: (out) (optional): Return location for start of region
  * @end_path: (out) (optional): Return location for end of region
  *
- * Sets @start_path and @end_path to be the first and last visible path.
+ * Sets `start_path` and `end_path` to be the first and last visible path.
  * Note that there may be invisible paths in between.
  *
  * The paths should be freed with gtk_tree_path_free() after use.
  *
- * Returns: true, if valid paths were placed in @start_path and @end_path.
+ * Returns: true, if valid paths were placed in `start_path` and `end_path`.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  */
@@ -12778,13 +12778,13 @@ gtk_tree_view_get_visible_range (GtkTreeView  *tree_view,
  * @cell_y: (out) (optional): A pointer where the Y coordinate relative to the
  *   cell can be placed
  *
- * Determine whether the point (@x, @y) in @tree_view is blank, that is no
+ * Determine whether the point (`x`, `y`) in `tree_view` is blank, that is no
  * cell content nor an expander arrow is drawn at the location. If so, the
  * location can be considered as the background. You might wish to take
  * special action on clicks on the background, such as clearing a current
  * selection, having a custom context menu or starting rubber banding.
  *
- * The @x and @y coordinate that are provided must be relative to bin_window
+ * The `x` and `y` coordinate that are provided must be relative to bin_window
  * coordinates.  Widget-relative coordinates must be converted using
  * gtk_tree_view_convert_widget_to_bin_window_coords().
  *
@@ -12792,7 +12792,7 @@ gtk_tree_view_get_visible_range (GtkTreeView  *tree_view,
  * GtkWidget::query-tooltip), please see
  * gtk_tree_view_convert_widget_to_bin_window_coords().
  *
- * The @path, @column, @cell_x and @cell_y arguments will be filled in
+ * The `path`, `column`, `cell_x` and `cell_y` arguments will be filled in
  * likewise as for gtk_tree_view_get_path_at_pos().  Please see
  * gtk_tree_view_get_path_at_pos() for more information.
  *
@@ -12892,7 +12892,7 @@ unset_reorderable (GtkTreeView *tree_view)
  * @actions: the bitmask of possible actions for a drag from this
  *    widget
  *
- * Turns @tree_view into a drag source for automatic DND. Calling this
+ * Turns `tree_view` into a drag source for automatic DND. Calling this
  * method sets `GtkTreeView`:reorderable to false.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -12926,7 +12926,7 @@ gtk_tree_view_enable_model_drag_source (GtkTreeView       *tree_view,
  * @actions: the bitmask of possible actions for a drag from this
  *    widget
  *
- * Turns @tree_view into a drop destination for automatic DND. Calling
+ * Turns `tree_view` into a drop destination for automatic DND. Calling
  * this method sets `GtkTreeView`:reorderable to false.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -13041,7 +13041,7 @@ gtk_tree_view_unset_rows_drag_dest (GtkTreeView *tree_view)
  * @pos: Specifies whether to drop before, after or into the row
  *
  * Sets the row that is highlighted for feedback.
- * If @path is `NULL`, an existing highlight is removed.
+ * If `path` is `NULL`, an existing highlight is removed.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  */
@@ -13148,10 +13148,10 @@ gtk_tree_view_get_drag_dest_row (GtkTreeView              *tree_view,
  * @pos: (out) (optional): Return location for the drop position, or
  *   `NULL`
  *
- * Determines the destination row for a given position.  @drag_x and
- * @drag_y are expected to be in widget coordinates.  This function is only
- * meaningful if @tree_view is realized.  Therefore this function will always
- * return false if @tree_view is not realized or does not have a model.
+ * Determines the destination row for a given position.  `drag_x` and
+ * `drag_y` are expected to be in widget coordinates.  This function is only
+ * meaningful if `tree_view` is realized.  Therefore this function will always
+ * return false if `tree_view` is not realized or does not have a model.
  *
  * Returns: whether there is a row at the given position, true if this
  * is indeed the case.
@@ -13262,9 +13262,9 @@ gtk_treeview_snapshot_border (GtkSnapshot           *snapshot,
 /**
  * gtk_tree_view_create_row_drag_icon:
  * @tree_view: a `GtkTreeView`
- * @path: a `GtkTreePath` in @tree_view
+ * @path: a `GtkTreePath` in `tree_view`
  *
- * Creates a `cairo_surface_t` representation of the row at @path.
+ * Creates a `cairo_surface_t` representation of the row at `path`.
  * This image is used for a drag icon.
  *
  * Returns: (transfer full) (nullable): a newly-allocated surface of the drag icon.
@@ -13421,7 +13421,7 @@ gtk_tree_view_create_row_drag_icon (GtkTreeView  *tree_view,
  * @tree_view: A `GtkTreeView`
  * @enable_search: true, if the user can search interactively
  *
- * If @enable_search is set, then the user can type in text to search through
+ * If `enable_search` is set, then the user can type in text to search through
  * the tree interactively (this is sometimes called "typeahead find").
  *
  * Note that even if this is false, the user can still initiate a search
@@ -13493,14 +13493,14 @@ gtk_tree_view_get_search_column (GtkTreeView *tree_view)
  * @tree_view: A `GtkTreeView`
  * @column: the column of the model to search in, or -1 to disable searching
  *
- * Sets @column as the column where the interactive search code should
+ * Sets `column` as the column where the interactive search code should
  * search in for the current model.
  *
  * If the search column is set, users can use the “start-interactive-search”
  * key binding to bring up search popup. The enable-search property controls
  * whether simply typing text will also start an interactive search.
  *
- * Note that @column refers to a column of the current model. The search
+ * Note that `column` refers to a column of the current model. The search
  * column is reset to -1 when the model is changed.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -13546,8 +13546,8 @@ gtk_tree_view_get_search_equal_func (GtkTreeView *tree_view)
  * gtk_tree_view_set_search_equal_func:
  * @tree_view: A `GtkTreeView`
  * @search_equal_func: the compare function to use during the search
- * @search_user_data: (nullable): user data to pass to @search_equal_func
- * @search_destroy: (nullable): Destroy notifier for @search_user_data
+ * @search_user_data: (nullable): user data to pass to `search_equal_func`
+ * @search_destroy: (nullable): Destroy notifier for `search_user_data`
  *
  * Sets the compare function for the interactive search capabilities; note
  * that somewhat like strcmp() returning 0 for equality
@@ -13581,7 +13581,7 @@ gtk_tree_view_set_search_equal_func (GtkTreeView                *tree_view,
  * @tree_view: A `GtkTreeView`
  *
  * Returns the `GtkEntry` which is currently in use as interactive search
- * entry for @tree_view.  In case the built-in entry is being used, `NULL`
+ * entry for `tree_view`.  In case the built-in entry is being used, `NULL`
  * will be returned.
  *
  * Returns: (transfer none) (nullable): the entry currently in use as search entry.
@@ -13604,12 +13604,12 @@ gtk_tree_view_get_search_entry (GtkTreeView *tree_view)
 /**
  * gtk_tree_view_set_search_entry:
  * @tree_view: A `GtkTreeView`
- * @entry: (nullable): the entry the interactive search code of @tree_view should use
+ * @entry: (nullable): the entry the interactive search code of `tree_view` should use
  *
  * Sets the entry which the interactive search code will use for this
- * @tree_view.  This is useful when you want to provide a search entry
+ * `tree_view`.  This is useful when you want to provide a search entry
  * in our interface at all time at a fixed position.  Passing `NULL` for
- * @entry will make the interactive search code use the built-in popup
+ * `entry` will make the interactive search code use the built-in popup
  * entry again.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -14278,7 +14278,7 @@ gtk_tree_view_stop_editing (GtkTreeView *tree_view,
  * @tree_view: a `GtkTreeView`
  * @hover: true to enable hover selection mode
  *
- * Enables or disables the hover selection mode of @tree_view.
+ * Enables or disables the hover selection mode of `tree_view`.
  * Hover selection makes the selected row follow the pointer.
  * Currently, this works only for the selection modes
  * %GTK_SELECTION_SINGLE and %GTK_SELECTION_BROWSE.
@@ -14305,9 +14305,9 @@ gtk_tree_view_set_hover_selection (GtkTreeView *tree_view,
  * gtk_tree_view_get_hover_selection:
  * @tree_view: a `GtkTreeView`
  *
- * Returns whether hover selection mode is turned on for @tree_view.
+ * Returns whether hover selection mode is turned on for `tree_view`.
  *
- * Returns: true if @tree_view is in hover selection mode
+ * Returns: true if `tree_view` is in hover selection mode
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -14326,7 +14326,7 @@ gtk_tree_view_get_hover_selection (GtkTreeView *tree_view)
  * @tree_view: a `GtkTreeView`
  * @expand: true to enable hover selection mode
  *
- * Enables or disables the hover expansion mode of @tree_view.
+ * Enables or disables the hover expansion mode of `tree_view`.
  * Hover expansion makes rows expand or collapse if the pointer
  * moves over them.
  *
@@ -14352,9 +14352,9 @@ gtk_tree_view_set_hover_expand (GtkTreeView *tree_view,
  * gtk_tree_view_get_hover_expand:
  * @tree_view: a `GtkTreeView`
  *
- * Returns whether hover expansion mode is turned on for @tree_view.
+ * Returns whether hover expansion mode is turned on for `tree_view`.
  *
- * Returns: true if @tree_view is in hover expansion mode
+ * Returns: true if `tree_view` is in hover expansion mode
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -14373,7 +14373,7 @@ gtk_tree_view_get_hover_expand (GtkTreeView *tree_view)
  * @tree_view: a `GtkTreeView`
  * @enable: true to enable rubber banding
  *
- * Enables or disables rubber banding in @tree_view.  If the selection mode
+ * Enables or disables rubber banding in `tree_view`.  If the selection mode
  * is %GTK_SELECTION_MULTIPLE, rubber banding will allow the user to select
  * multiple rows by dragging the mouse.
  *
@@ -14399,11 +14399,11 @@ gtk_tree_view_set_rubber_banding (GtkTreeView *tree_view,
  * gtk_tree_view_get_rubber_banding:
  * @tree_view: a `GtkTreeView`
  *
- * Returns whether rubber banding is turned on for @tree_view.  If the
+ * Returns whether rubber banding is turned on for `tree_view`.  If the
  * selection mode is %GTK_SELECTION_MULTIPLE, rubber banding will allow the
  * user to select multiple rows by dragging the mouse.
  *
- * Returns: true if rubber banding in @tree_view is enabled.
+ * Returns: true if rubber banding in `tree_view` is enabled.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -14420,10 +14420,10 @@ gtk_tree_view_get_rubber_banding (GtkTreeView *tree_view)
  * @tree_view: a `GtkTreeView`
  *
  * Returns whether a rubber banding operation is currently being done
- * in @tree_view.
+ * in `tree_view`.
  *
  * Returns: true if a rubber banding operation is currently being
- * done in @tree_view.
+ * done in `tree_view`.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/
@@ -14465,8 +14465,8 @@ gtk_tree_view_get_row_separator_func (GtkTreeView *tree_view)
  * gtk_tree_view_set_row_separator_func:
  * @tree_view: a `GtkTreeView`
  * @func: (nullable): a `GtkTreeView`RowSeparatorFunc
- * @data: (nullable): user data to pass to @func
- * @destroy: (nullable): destroy notifier for @data
+ * @data: (nullable): user data to pass to `func`
+ * @destroy: (nullable): destroy notifier for `data`
  *
  * Sets the row separator function, which is used to determine
  * whether a row should be drawn as a separator. If the row separator
@@ -14500,7 +14500,7 @@ gtk_tree_view_set_row_separator_func (GtkTreeView                 *tree_view,
  * gtk_tree_view_get_grid_lines:
  * @tree_view: a `GtkTreeView`
  *
- * Returns which grid lines are enabled in @tree_view.
+ * Returns which grid lines are enabled in `tree_view`.
  *
  * Returns: a `GtkTreeView`GridLines value indicating which grid lines
  * are enabled.
@@ -14523,7 +14523,7 @@ gtk_tree_view_get_grid_lines (GtkTreeView *tree_view)
  * @grid_lines: a `GtkTreeView`GridLines value indicating which grid lines to
  * enable.
  *
- * Sets which grid lines to draw in @tree_view.
+ * Sets which grid lines to draw in `tree_view`.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  */
@@ -14551,9 +14551,9 @@ gtk_tree_view_set_grid_lines (GtkTreeView           *tree_view,
  * gtk_tree_view_get_enable_tree_lines:
  * @tree_view: a `GtkTreeView`.
  *
- * Returns whether or not tree lines are drawn in @tree_view.
+ * Returns whether or not tree lines are drawn in `tree_view`.
  *
- * Returns: true if tree lines are drawn in @tree_view, false
+ * Returns: true if tree lines are drawn in `tree_view`, false
  * otherwise.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -14573,7 +14573,7 @@ gtk_tree_view_get_enable_tree_lines (GtkTreeView *tree_view)
  * @tree_view: a `GtkTreeView`
  * @enabled: true to enable tree line drawing, false otherwise.
  *
- * Sets whether to draw lines interconnecting the expanders in @tree_view.
+ * Sets whether to draw lines interconnecting the expanders in `tree_view`.
  * This does not have any visible effects for lists.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -14608,7 +14608,7 @@ gtk_tree_view_set_enable_tree_lines (GtkTreeView *tree_view,
  * @enabled: true to enable expander drawing, false otherwise.
  *
  * Sets whether to draw and enable expanders and indent child rows in
- * @tree_view.  When disabled there will be no expanders visible in trees
+ * `tree_view`.  When disabled there will be no expanders visible in trees
  * and there will be no way to expand and collapse rows by default.  Also
  * note that hiding the expanders will disable the default indentation.  You
  * can set a custom indentation in this case using
@@ -14638,9 +14638,9 @@ gtk_tree_view_set_show_expanders (GtkTreeView *tree_view,
  * gtk_tree_view_get_show_expanders:
  * @tree_view: a `GtkTreeView`.
  *
- * Returns whether or not expanders are drawn in @tree_view.
+ * Returns whether or not expanders are drawn in `tree_view`.
  *
- * Returns: true if expanders are drawn in @tree_view, false
+ * Returns: true if expanders are drawn in `tree_view`, false
  * otherwise.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
@@ -14658,9 +14658,9 @@ gtk_tree_view_get_show_expanders (GtkTreeView *tree_view)
 /**
  * gtk_tree_view_set_level_indentation:
  * @tree_view: a `GtkTreeView`
- * @indentation: the amount, in pixels, of extra indentation in @tree_view.
+ * @indentation: the amount, in pixels, of extra indentation in `tree_view`.
  *
- * Sets the amount of extra indentation for child levels to use in @tree_view
+ * Sets the amount of extra indentation for child levels to use in `tree_view`
  * in addition to the default indentation.  The value should be specified in
  * pixels, a value of 0 disables this feature and in this case only the default
  * indentation will be used.
@@ -14684,10 +14684,10 @@ gtk_tree_view_set_level_indentation (GtkTreeView *tree_view,
  * @tree_view: a `GtkTreeView`.
  *
  * Returns the amount, in pixels, of extra indentation for child levels
- * in @tree_view.
+ * in `tree_view`.
  *
  * Returns: the amount of extra indentation for child levels in
- * @tree_view.  A return value of 0 means that this feature is disabled.
+ * `tree_view`.  A return value of 0 means that this feature is disabled.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  */
@@ -14707,7 +14707,7 @@ gtk_tree_view_get_level_indentation (GtkTreeView *tree_view)
  * @tooltip: a `GtkTooltip`
  * @path: a `GtkTreePath`
  *
- * Sets the tip area of @tooltip to be the area covered by the row at @path.
+ * Sets the tip area of `tooltip` to be the area covered by the row at `path`.
  * See also gtk_tree_view_set_tooltip_column() for a simpler alternative.
  * See also gtk_tooltip_set_tip_area().
  *
@@ -14732,14 +14732,14 @@ gtk_tree_view_set_tooltip_row (GtkTreeView *tree_view,
  * @column: (nullable): a `GtkTreeViewColumn`
  * @cell: (nullable): a `GtkCellRenderer`
  *
- * Sets the tip area of @tooltip to the area @path, @column and @cell have
- * in common.  For example if @path is `NULL` and @column is set, the tip
- * area will be set to the full area covered by @column.  See also
+ * Sets the tip area of `tooltip` to the area `path`, `column` and `cell` have
+ * in common.  For example if `path` is `NULL` and `column` is set, the tip
+ * area will be set to the full area covered by `column`.  See also
  * gtk_tooltip_set_tip_area().
  *
- * Note that if @path is not specified and @cell is set and part of a column
+ * Note that if `path` is not specified and `cell` is set and part of a column
  * containing the expander, the tooltip might not show and hide at the correct
- * position.  In such cases @path must be set to the current node under the
+ * position.  In such cases `path` must be set to the current node under the
  * mouse cursor for this function to operate correctly.
  *
  * See also gtk_tree_view_set_tooltip_column() for a simpler alternative.
@@ -14830,16 +14830,16 @@ gtk_tree_view_set_tooltip_cell (GtkTreeView       *tree_view,
  * @iter: (out) (optional): a pointer to receive a `GtkTreeIter`
  *
  * This function is supposed to be used in a ::query-tooltip
- * signal handler for `GtkTreeView`. The @x, @y and @keyboard_tip values
+ * signal handler for `GtkTreeView`. The `x`, `y` and `keyboard_tip` values
  * which are received in the signal handler, should be passed to this
  * function without modification.
  *
  * The return value indicates whether there is a tree view row at the given
  * coordinates (true) or not (false) for mouse tooltips. For keyboard
  * tooltips the row returned will be the cursor row. When true, then any of
- * @model, @path and @iter which have been provided will be set to point to
- * that row and the corresponding model. @x and @y will always be converted
- * to be relative to @tree_view’s bin_window if @keyboard_tooltip is false.
+ * `model`, `path` and `iter` which have been provided will be set to point to
+ * that row and the corresponding model. `x` and `y` will always be converted
+ * to be relative to `tree_view`’s bin_window if `keyboard_tooltip` is false.
  *
  * Returns: whether or not the given tooltip context points to a row
  *
@@ -14949,15 +14949,15 @@ gtk_tree_view_set_tooltip_query_cb (GtkWidget  *widget,
 /**
  * gtk_tree_view_set_tooltip_column:
  * @tree_view: a `GtkTreeView`
- * @column: an integer, which is a valid column number for @tree_view’s model
+ * @column: an integer, which is a valid column number for `tree_view`’s model
  *
  * If you only plan to have simple (text-only) tooltips on full rows, you
  * can use this function to have `GtkTreeView` handle these automatically
- * for you. @column should be set to the column in @tree_view’s model
+ * for you. `column` should be set to the column in `tree_view`’s model
  * containing the tooltip texts, or -1 to disable this feature.
  *
  * When enabled, `GtkWidget:has-tooltip` will be set to true and
- * @tree_view will connect a `GtkWidget::query-tooltip` signal handler.
+ * `tree_view` will connect a `GtkWidget::query-tooltip` signal handler.
  *
  * Note that the signal handler sets the text with gtk_tooltip_set_markup(),
  * so &, <, etc have to be escaped in the text.
@@ -15000,8 +15000,8 @@ gtk_tree_view_set_tooltip_column (GtkTreeView *tree_view,
  * gtk_tree_view_get_tooltip_column:
  * @tree_view: a `GtkTreeView`
  *
- * Returns the column of @tree_view’s model which is being used for
- * displaying tooltips on @tree_view’s rows.
+ * Returns the column of `tree_view`’s model which is being used for
+ * displaying tooltips on `tree_view`’s rows.
  *
  * Returns: the index of the tooltip column that is currently being
  * used, or -1 if this is disabled.

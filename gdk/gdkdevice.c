@@ -492,10 +492,10 @@ gdk_device_get_property (GObject    *object,
  * @win_y: (out) (optional): return location for the Y coordinate
  *   of the device location relative to the surface origin
  *
- * Obtains the surface underneath @device, returning the location of the
- * device in @win_x and @win_y.
+ * Obtains the surface underneath `device`, returning the location of the
+ * device in `win_x` and `win_y`.
  *
- * Returns `NULL` if the surface tree under @device is not known to GDK
+ * Returns `NULL` if the surface tree under `device` is not known to GDK
  * (for example, belongs to another application).
  *
  * Returns: (nullable) (transfer none): the `GdkSurface` under the
@@ -578,7 +578,7 @@ gdk_device_get_source (GdkDevice *device)
  * @device: a pointer `GdkDevice`
  * @index_: the index of the axi.
  *
- * Returns the axis use for @index_.
+ * Returns the axis use for `index_`.
  *
  * Returns: a `GdkAxisUse` specifying how the axis is used.
  */
@@ -601,7 +601,7 @@ gdk_device_get_axis_use (GdkDevice *device,
  * gdk_device_get_display: (attributes org.gtk.Method.get_property=display)
  * @device: a `GdkDevice`
  *
- * Returns the `GdkDisplay` to which @device pertains.
+ * Returns the `GdkDisplay` to which `device` pertains.
  *
  * Returns: (transfer none): a `GdkDisplay`
  */
@@ -1188,7 +1188,7 @@ gdk_device_update_tool (GdkDevice     *device,
  * gdk_device_get_num_touches:
  * @device: a `GdkDevice`
  *
- * Retrieves the number of touch points associated to @device.
+ * Retrieves the number of touch points associated to `device`.
  *
  * Returns: the number of touch points
  */
@@ -1204,7 +1204,7 @@ gdk_device_get_num_touches (GdkDevice *device)
  * gdk_device_get_device_tool: (attributes org.gtk.Method.get_property=tool)
  * @device: a `GdkDevice`
  *
- * Retrieves the current tool for @device.
+ * Retrieves the current tool for `device`.
  *
  * Returns: (transfer none) (nullable): the `GdkDeviceTool`
  */
@@ -1224,7 +1224,7 @@ gdk_device_get_device_tool (GdkDevice *device)
  *
  * This is only relevant for keyboard devices.
  *
- * Returns: true if Caps Lock is on for @device
+ * Returns: true if Caps Lock is on for `device`
  */
 gboolean
 gdk_device_get_caps_lock_state (GdkDevice *device)
@@ -1245,7 +1245,7 @@ gdk_device_get_caps_lock_state (GdkDevice *device)
  *
  * This is only relevant for keyboard devices.
  *
- * Returns: true if Num Lock is on for @device
+ * Returns: true if Num Lock is on for `device`
  */
 gboolean
 gdk_device_get_num_lock_state (GdkDevice *device)
@@ -1266,7 +1266,7 @@ gdk_device_get_num_lock_state (GdkDevice *device)
  *
  * This is only relevant for keyboard devices.
  *
- * Returns: true if Scroll Lock is on for @device
+ * Returns: true if Scroll Lock is on for `device`
  */
 gboolean
 gdk_device_get_scroll_lock_state (GdkDevice *device)

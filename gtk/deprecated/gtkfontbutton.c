@@ -885,7 +885,7 @@ gtk_font_button_get_use_font (GtkFontButton *font_button)
  * @font_button: a `GtkFontButton`
  * @use_font: If true, font name will be written using font chosen.
  *
- * If @use_font is true, the font name will be written
+ * If `use_font` is true, the font name will be written
  * using the selected font.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialogButton] instead
@@ -933,7 +933,7 @@ gtk_font_button_get_use_size (GtkFontButton *font_button)
  * @use_size: If true, font name will be written using the
  *   selected size.
  *
- * If @use_size is true, the font name will be written using
+ * If `use_size` is true, the font name will be written using
  * the selected size.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialogButton] instead

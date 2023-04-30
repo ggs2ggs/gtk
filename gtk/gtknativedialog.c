@@ -495,7 +495,7 @@ parent_destroyed (GtkWidget       *parent,
  * This allows window managers to e.g. keep the dialog on top of the
  * main window, or center the dialog over the main window.
  *
- * Passing `NULL` for @parent unsets the current transient window.
+ * Passing `NULL` for `parent` unsets the current transient window.
  */
 void
 gtk_native_dialog_set_transient_for (GtkNativeDialog *self,

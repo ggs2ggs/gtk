@@ -107,10 +107,10 @@ gdk_popup_default_init (GdkPopupInterface *iface)
  * @height: the unconstrained popup height to layout
  * @layout: the `GdkPopupLayout` object used to layout
  *
- * Present @popup after having processed the `GdkPopupLayout` rules.
+ * Present `popup` after having processed the `GdkPopupLayout` rules.
  *
  * If the popup was previously now showing, it will be showed,
- * otherwise it will change position according to @layout.
+ * otherwise it will change position according to `layout`.
  *
  * After calling this function, the result should be handled in response
  * to the [signal@Gdk.Surface::layout] signal being emitted. The resulting
@@ -119,7 +119,7 @@ gdk_popup_default_init (GdkPopupInterface *iface)
  * parameters in the layout signal. Use [method@Gdk.Popup.get_rect_anchor]
  * and [method@Gdk.Popup.get_surface_anchor] to get the resulting anchors.
  *
- * Presenting may fail, for example if the @popup is set to autohide
+ * Presenting may fail, for example if the `popup` is set to autohide
  * and is immediately hidden upon being presented. If presenting failed,
  * the [signal@Gdk.Surface::layout] signal will not me emitted.
  *
@@ -148,7 +148,7 @@ gdk_popup_present (GdkPopup       *popup,
  * The value returned may change after calling [method@Gdk.Popup.present],
  * or after the [signal@Gdk.Surface::layout] signal is emitted.
  *
- * Returns: the current surface anchor value of @popup
+ * Returns: the current surface anchor value of `popup`
  */
 GdkGravity
 gdk_popup_get_surface_anchor (GdkPopup *popup)
@@ -167,7 +167,7 @@ gdk_popup_get_surface_anchor (GdkPopup *popup)
  * The value returned may change after calling [method@Gdk.Popup.present],
  * or after the [signal@Gdk.Surface::layout] signal is emitted.
  *
- * Returns: the current rectangle anchor value of @popup
+ * Returns: the current rectangle anchor value of `popup`
  */
 GdkGravity
 gdk_popup_get_rect_anchor (GdkPopup *popup)
@@ -206,7 +206,7 @@ gdk_popup_get_parent (GdkPopup *popup)
  *
  * Obtains the position of the popup relative to its parent.
  *
- * Returns: the X coordinate of @popup position
+ * Returns: the X coordinate of `popup` position
  */
 int
 gdk_popup_get_position_x (GdkPopup *popup)
@@ -222,7 +222,7 @@ gdk_popup_get_position_x (GdkPopup *popup)
  *
  * Obtains the position of the popup relative to its parent.
  *
- * Returns: the Y coordinate of @popup position
+ * Returns: the Y coordinate of `popup` position
  */
 int
 gdk_popup_get_position_y (GdkPopup *popup)
@@ -238,7 +238,7 @@ gdk_popup_get_position_y (GdkPopup *popup)
  *
  * Returns whether this popup is set to hide on outside clicks.
  *
- * Returns: true if @popup will autohide
+ * Returns: true if `popup` will autohide
  */
 gboolean
 gdk_popup_get_autohide (GdkPopup *popup)

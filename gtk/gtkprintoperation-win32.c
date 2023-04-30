@@ -2072,8 +2072,8 @@ _gtk_print_operation_platform_backend_resize_preview_surface (GtkPrintOperation 
  * @settings: a `GtkPrintSettings`
  *
  * Runs a page setup dialog, letting the user modify the values from
- * @page_setup. If the user cancels the dialog, the returned `GtkPageSetup`
- * is identical to the passed in @page_setup, otherwise it contains the
+ * `page_setup`. If the user cancels the dialog, the returned `GtkPageSetup`
+ * is identical to the passed in `page_setup`, otherwise it contains the
  * modifications done in the dialog.
  *
  * Note that this function may use a recursive mainloop to show the page
@@ -2221,12 +2221,12 @@ gtk_print_run_page_setup_dialog (GtkWindow        *parent,
  * @settings: a `GtkPrintSettings`
  * @done_cb: (scope async): a function to call when the user saves
  *    the modified page setup
- * @data: user data to pass to @done_cb
+ * @data: user data to pass to `done_cb`
  *
- * Runs a page setup dialog, letting the user modify the values from @page_setup.
+ * Runs a page setup dialog, letting the user modify the values from `page_setup`.
  *
  * In contrast to gtk_print_run_page_setup_dialog(), this function  returns after
- * showing the page setup dialog on platforms that support this, and calls @done_cb
+ * showing the page setup dialog on platforms that support this, and calls `done_cb`
  * from a signal handler for the ::response signal of the dialog.
  */
 void

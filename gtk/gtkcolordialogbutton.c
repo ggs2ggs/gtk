@@ -421,7 +421,7 @@ gtk_color_dialog_button_new (GtkColorDialog *dialog)
  * gtk_color_dialog_button_get_dialog:
  * @self: a `GtkColorDialogButton`
  *
- * Returns the `GtkColorDialog` of @self.
+ * Returns the `GtkColorDialog` of `self`.
  *
  * Returns: (transfer none) (nullable): the `GtkColorDialog`
  *

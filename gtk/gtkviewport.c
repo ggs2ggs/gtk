@@ -679,7 +679,7 @@ clear_focus_change_handler (GtkViewport *viewport)
  * @viewport: a `GtkViewport`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @viewport.
+ * Sets the child widget of `viewport`.
  */
 void
 gtk_viewport_set_child (GtkViewport *viewport,
@@ -706,9 +706,9 @@ gtk_viewport_set_child (GtkViewport *viewport,
  * gtk_viewport_get_child: (attributes org.gtk.Method.get_property=child)
  * @viewport: a `GtkViewport`
  *
- * Gets the child widget of @viewport.
+ * Gets the child widget of `viewport`.
  *
- * Returns: (nullable) (transfer none): the child widget of @viewport
+ * Returns: (nullable) (transfer none): the child widget of `viewport`
  */
 GtkWidget *
 gtk_viewport_get_child (GtkViewport *viewport)

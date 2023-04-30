@@ -52,7 +52,7 @@
  *
  * A `GtkBuilderScope` implementation for the C language.
  *
- * `GtkBuilderCScope` instances use symbols explicitly added to @builder
+ * `GtkBuilderCScope` instances use symbols explicitly added to `builder`
  * with prior calls to [method@Gtk.BuilderCScope.add_callback_symbol].
  * If developers want to do that, they are encouraged to create their
  * own scopes for that purpose.
@@ -437,7 +437,7 @@ gtk_builder_cscope_new (void)
  * @self: a `GtkBuilderCScope`
  * @callback_symbols: (scope async): The callback pointer
  *
- * Adds the @callback_symbol to the scope of @builder under its
+ * Adds the `callback_symbol` to the scope of `builder` under its
  * own name.
  *
  * This is a convenience wrapper of [method@Gtk.BuilderCScope.add_callback_symbol].
@@ -451,8 +451,8 @@ gtk_builder_cscope_new (void)
  * @callback_name: The name of the callback, as expected in the XML
  * @callback_symbol: (scope async): The callback pointer
  *
- * Adds the @callback_symbol to the scope of @builder under the
- * given @callback_name.
+ * Adds the `callback_symbol` to the scope of `builder` under the
+ * given `callback_name`.
  *
  * Using this function overrides the behavior of
  * [method@Gtk.Builder.create_closure] for any callback symbols that
@@ -483,7 +483,7 @@ gtk_builder_cscope_add_callback_symbol (GtkBuilderCScope *self,
  * @self: a `GtkBuilderCScope`
  * @first_callback_name: The name of the callback, as expected in the XML
  * @first_callback_symbol: (scope async): The callback pointer
- * @...: A list of callback name and callback symbol pairs terminated with `NULL`
+ * `...`: A list of callback name and callback symbol pairs terminated with `NULL`
  *
  * A convenience function to add many callbacks.
  *
@@ -532,7 +532,7 @@ gtk_builder_cscope_add_callback_symbols (GtkBuilderCScope *self,
  * gtk_builder_cscope_add_callback_symbol().
  *
  * Returns: (nullable) (transfer none): The callback symbol
- *   in @builder for @callback_name
+ *   in `builder` for `callback_name`
  */
 GCallback
 gtk_builder_cscope_lookup_callback_symbol (GtkBuilderCScope *self,

@@ -495,7 +495,7 @@ gtk_bookmark_list_get_filename (GtkBookmarkList *self)
  * @filename: (type filename) (nullable): The bookmark file to load
  * @attributes: (nullable): The attributes to query
  *
- * Creates a new `GtkBookmarkList` with the given @attributes.
+ * Creates a new `GtkBookmarkList` with the given `attributes`.
  *
  * Returns: a new `GtkBookmarkList`
  */
@@ -514,9 +514,9 @@ gtk_bookmark_list_new (const char *filename,
  * @self: a `GtkBookmarkList`
  * @attributes: (nullable): the attributes to enumerate
  *
- * Sets the @attributes to be enumerated and starts the enumeration.
+ * Sets the `attributes` to be enumerated and starts the enumeration.
  *
- * If @attributes is `NULL`, no attributes will be queried, but a list
+ * If `attributes` is `NULL`, no attributes will be queried, but a list
  * of `GFileInfo`s will still be created.
  */
 void
@@ -601,11 +601,11 @@ gtk_bookmark_list_get_io_priority (GtkBookmarkList *self)
  *
  * Returns true if the files are currently being loaded.
  *
- * Files will be added to @self from time to time while loading is
+ * Files will be added to `self` from time to time while loading is
  * going on. The order in which are added is undefined and may change
  * in between runs.
  *
- * Returns: true if @self is loading
+ * Returns: true if `self` is loading
  */
 gboolean
 gtk_bookmark_list_is_loading (GtkBookmarkList *self)

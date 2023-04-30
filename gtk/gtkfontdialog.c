@@ -426,7 +426,7 @@ gtk_font_dialog_get_font_map (GtkFontDialog *self)
  *
  * Sets the fontmap from which fonts are selected.
  *
- * If @fontmap is `NULL`, the default fontmap is used.
+ * If `fontmap` is `NULL`, the default fontmap is used.
  *
  * Since: 4.10
  */
@@ -622,12 +622,12 @@ G_GNUC_END_IGNORE_DEPRECATIONS
  * @initial_value: (nullable): the initial value
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a font selection operation by
  * presenting a dialog to the user for selecting a font family.
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FontDialog.choose_family_finish]
  * to obtain the result.
  *
@@ -681,7 +681,7 @@ gtk_font_dialog_choose_family (GtkFontDialog        *self,
  * and returns the resulting family.
  *
  * This function never returns an error. If the operation is
- * not finished successfully, the value passed as @initial_value
+ * not finished successfully, the value passed as `initial_value`
  * to [method@Gtk.FontDialog.choose_family] is returned.
 
  * Returns: (nullable) (transfer full): the selected family
@@ -710,13 +710,13 @@ gtk_font_dialog_choose_family_finish (GtkFontDialog  *self,
  * @initial_value: (nullable): the initial value
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a font selection operation by
  * presenting a dialog to the user for selecting a font face
  * (i.e. a font family and style, but not a specific font size).
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FontDialog.choose_face_finish]
  * to obtain the result.
  *
@@ -793,12 +793,12 @@ gtk_font_dialog_choose_face_finish (GtkFontDialog  *self,
  * @initial_value: (nullable): the font to select initially
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a font selection operation by
  * presenting a dialog to the user for selecting a font.
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FontDialog.choose_font_finish]
  * to obtain the result.
  *
@@ -874,7 +874,7 @@ gtk_font_dialog_choose_font_finish (GtkFontDialog  *self,
  * @initial_value: (nullable): the font to select initially
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a font selection operation by
  * presenting a dialog to the user for selecting a font and
@@ -883,7 +883,7 @@ gtk_font_dialog_choose_font_finish (GtkFontDialog  *self,
  * Font features affect how the font is rendered, for example
  * enabling glyph variants or ligatures.
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FontDialog.choose_font_and_features_finish]
  * to obtain the result.
  *
@@ -935,7 +935,7 @@ gtk_font_dialog_choose_font_and_features (GtkFontDialog        *self,
  * call and returns the resulting font description and font features.
  *
  * Returns: `TRUE` if a font was selected. Otherwise `FALSE` is returned
- *   and @error is set
+ *   and `error` is set
  *
  * Since: 4.10
  */

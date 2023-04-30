@@ -676,7 +676,7 @@ gtk_file_dialog_get_initial_file (GtkFileDialog *self)
  * This function is a shortcut for calling both
  * gtk_file_dialog_set_initial_folder() and
  * gtk_file_dialog_set_initial_name() with the directory and
- * name of @file respectively.
+ * name of `file` respectively.
  *
  * Since: 4.10
  */
@@ -917,12 +917,12 @@ finish_multiple_files_op (GtkFileDialog  *self,
  * @parent: (nullable): the parent `GtkWindow`
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a file selection operation by
  * presenting a file chooser dialog to the user.
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FileDialog.open_finish]
  * to obtain the result.
  *
@@ -965,7 +965,7 @@ gtk_file_dialog_open (GtkFileDialog       *self,
  * returns the resulting file.
  *
  * Returns: (nullable) (transfer full): the file that was selected.
- *   Otherwise, `NULL` is returned and @error is set
+ *   Otherwise, `NULL` is returned and `error` is set
  *
  * Since: 4.10
  */
@@ -987,16 +987,16 @@ gtk_file_dialog_open_finish (GtkFileDialog   *self,
  * @parent: (nullable): the parent `GtkWindow`
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a directory selection operation by
  * presenting a file chooser dialog to the user.
  *
- * If you pass @initial_folder, the file chooser will initially be
+ * If you pass `initial_folder`, the file chooser will initially be
  * opened in the parent directory of that folder, otherwise, it
  * will be in the directory [property@Gtk.FileDialog:initial-folder].
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FileDialog.select_folder_finish]
  * to obtain the result.
  *
@@ -1039,7 +1039,7 @@ gtk_file_dialog_select_folder (GtkFileDialog       *self,
  * returns the resulting file.
  *
  * Returns: (nullable) (transfer full): the file that was selected.
- *   Otherwise, `NULL` is returned and @error is set
+ *   Otherwise, `NULL` is returned and `error` is set
  *
  * Since: 4.10
  */
@@ -1061,12 +1061,12 @@ gtk_file_dialog_select_folder_finish (GtkFileDialog  *self,
  * @parent: (nullable): the parent `GtkWindow`
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a file save operation by
  * presenting a file chooser dialog to the user.
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FileDialog.save_finish]
  * to obtain the result.
  *
@@ -1109,7 +1109,7 @@ gtk_file_dialog_save (GtkFileDialog       *self,
  * returns the resulting file.
  *
  * Returns: (nullable) (transfer full): the file that was selected.
- *   Otherwise, `NULL` is returned and @error is set
+ *   Otherwise, `NULL` is returned and `error` is set
  *
  * Since: 4.10
  */
@@ -1131,7 +1131,7 @@ gtk_file_dialog_save_finish (GtkFileDialog   *self,
  * @parent: (nullable): the parent `GtkWindow`
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a multi-file selection operation by
  * presenting a file chooser dialog to the user.
@@ -1139,7 +1139,7 @@ gtk_file_dialog_save_finish (GtkFileDialog   *self,
  * The file chooser will initially be opened in the directory
  * [property@Gtk.FileDialog:initial-folder].
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FileDialog.open_multiple_finish]
  * to obtain the result.
  *
@@ -1183,7 +1183,7 @@ gtk_file_dialog_open_multiple (GtkFileDialog       *self,
  *
  * Returns: (nullable) (transfer full): the file that was selected,
  *   as a `GListModel` of `GFiles`. Otherwise, `NULL` is returned
- *   and @error is set
+ *   and `error` is set
  *
  * Since: 4.10
  */
@@ -1205,7 +1205,7 @@ gtk_file_dialog_open_multiple_finish (GtkFileDialog   *self,
  * @parent: (nullable): the parent `GtkWindow`
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a multi-directory selection operation by
  * presenting a file chooser dialog to the user.
@@ -1213,7 +1213,7 @@ gtk_file_dialog_open_multiple_finish (GtkFileDialog   *self,
  * The file chooser will initially be opened in the directory
  * [property@Gtk.FileDialog:initial-folder].
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.FileDialog.select_multiple_folders_finish]
  * to obtain the result.
  *
@@ -1257,7 +1257,7 @@ gtk_file_dialog_select_multiple_folders (GtkFileDialog       *self,
  *
  * Returns: (nullable) (transfer full): the file that was selected,
  *   as a `GListModel` of `GFiles`. Otherwise, `NULL` is returned
- *   and @error is set
+ *   and `error` is set
  *
  * Since: 4.10
  */

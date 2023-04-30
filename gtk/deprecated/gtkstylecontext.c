@@ -337,10 +337,10 @@ gtk_style_context_new_for_node (GtkCssNode *node)
  *   %GTK_STYLE_PROVIDER_PRIORITY_FALLBACK and
  *   %GTK_STYLE_PROVIDER_PRIORITY_USER
  *
- * Adds a style provider to @context, to be used in style construction.
+ * Adds a style provider to `context`, to be used in style construction.
  *
  * Note that a style provider added by this function only affects
- * the style of the widget to which @context belongs. If you want
+ * the style of the widget to which `context` belongs. If you want
  * to affect the style of all widgets, use
  * [func@Gtk.StyleContext.add_provider_for_display].
  *
@@ -383,7 +383,7 @@ gtk_style_context_add_provider (GtkStyleContext  *context,
  * @context: a `GtkStyleContext`
  * @provider: a `GtkStyleProvider`
  *
- * Removes @provider from the style providers list in @context.
+ * Removes `provider` from the style providers list in `context`.
  *
  * Deprecated: 4.10
  */
@@ -507,7 +507,7 @@ gtk_style_context_get_scale (GtkStyleContext *context)
  * @context: a `GtkStyleContext`
  * @node: the node to save to
  *
- * Saves the @context state to a node.
+ * Saves the `context` state to a node.
  *
  * This allows temporary modifications done through
  * [method@Gtk.StyleContext.add_class],
@@ -515,7 +515,7 @@ gtk_style_context_get_scale (GtkStyleContext *context)
  * [method@Gtk.StyleContext.set_state] etc.
  *
  * Rendering using [func@Gtk.render_background] or similar
- * functions are done using the given @node.
+ * functions are done using the given `node`.
  *
  * To undo, call [method@Gtk.StyleContext.restore].
  * The matching call to [method@Gtk.StyleContext.restore]
@@ -538,7 +538,7 @@ gtk_style_context_save_to_node (GtkStyleContext *context,
  * gtk_style_context_save:
  * @context: a `GtkStyleContext`
  *
- * Saves the @context state.
+ * Saves the `context` state.
  *
  * This allows temporary modifications done through
  * [method@Gtk.StyleContext.add_class],
@@ -577,7 +577,7 @@ gtk_style_context_save (GtkStyleContext *context)
  * gtk_style_context_restore:
  * @context: a `GtkStyleContext`
  *
- * Restores @context state to a previous stage.
+ * Restores `context` state to a previous stage.
  *
  * See [method@Gtk.StyleContext.save].
  *
@@ -604,7 +604,7 @@ gtk_style_context_restore (GtkStyleContext *context)
  * @context: a `GtkStyleContext`
  * @class_name: class name to use in styling
  *
- * Adds a style class to @context, so later uses of the
+ * Adds a style class to `context`, so later uses of the
  * style context will make use of this new class for styling.
  *
  * In the CSS file format, a `GtkEntry` defining a “search”
@@ -641,7 +641,7 @@ gtk_style_context_add_class (GtkStyleContext *context,
  * @context: a `GtkStyleContext`
  * @class_name: class name to remove
  *
- * Removes @class_name from @context.
+ * Removes `class_name` from `context`.
  *
  * Deprecated: 4.10: Use [method@Gtk.Widget.remove_css_class] instead
  */
@@ -667,10 +667,10 @@ gtk_style_context_remove_class (GtkStyleContext *context,
  * @context: a `GtkStyleContext`
  * @class_name: a class name
  *
- * Returns true if @context currently has defined the
+ * Returns true if `context` currently has defined the
  * given class name.
  *
- * Returns: true if @context has @class_name defined
+ * Returns: true if `context` has `class_name` defined
  *
  * Deprecated: 4.10: Use [method@Gtk.Widget.has_css_class] instead
  **/
@@ -705,7 +705,7 @@ _gtk_style_context_peek_property (GtkStyleContext *context,
  * @context: a `GtkStyleContext`
  * @display: a `GdkDisplay`
  *
- * Attaches @context to the given display.
+ * Attaches `context` to the given display.
  *
  * The display is used to add style information from “global”
  * style providers, such as the display's `GtkSettings` instance.
@@ -750,7 +750,7 @@ gtk_style_context_set_display (GtkStyleContext *context,
  * gtk_style_context_get_display:
  * @context: a `GtkStyleContext`
  *
- * Returns the `GdkDisplay` to which @context is attached.
+ * Returns the `GdkDisplay` to which `context` is attached.
  *
  * Returns: (transfer none): a `GdkDisplay`.
  *
@@ -796,9 +796,9 @@ gtk_style_context_resolve_color (GtkStyleContext    *context,
  * @color_name: color name to lookup
  * @color: (out): Return location for the looked up color
  *
- * Looks up and resolves a color name in the @context color map.
+ * Looks up and resolves a color name in the `context` color map.
  *
- * Returns: true if @color_name was found and resolved, false otherwise
+ * Returns: true if `color_name` was found and resolved, false otherwise
  *
  * Deprecated: 4.10: This api will be removed in GTK 5
  */
@@ -958,14 +958,14 @@ _gtk_style_context_get_cursor_color (GtkStyleContext *context,
  *
  * The string representation always includes information about
  * the name, state, id, visibility and style classes of the CSS
- * node that is backing @context. Depending on the flags, more
+ * node that is backing `context`. Depending on the flags, more
  * information may be included.
  *
  * This function is intended for testing and debugging of the
  * CSS implementation in GTK. There are no guarantees about
  * the format of the returned string, it may change.
  *
- * Returns: a newly allocated string representing @context
+ * Returns: a newly allocated string representing `context`
  *
  * Deprecated: 4.10: This api will be removed in GTK 5
  */

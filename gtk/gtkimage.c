@@ -397,7 +397,7 @@ gtk_image_get_property (GObject     *object,
  * gtk_image_new_from_file:
  * @filename: (type filename): a filename
  *
- * Creates a new `GtkImage` displaying the file @filename.
+ * Creates a new `GtkImage` displaying the file `filename`.
  *
  * If the file isn’t found or can’t be loaded, the resulting `GtkImage`
  * will display a “broken image” icon. This function never returns `NULL`,
@@ -429,7 +429,7 @@ gtk_image_new_from_file   (const char *filename)
  * gtk_image_new_from_resource:
  * @resource_path: a resource path
  *
- * Creates a new `GtkImage` displaying the resource file @resource_path.
+ * Creates a new `GtkImage` displaying the resource file `resource_path`.
  *
  * If the file isn’t found or can’t be loaded, the resulting `GtkImage` will
  * display a “broken image” icon. This function never returns `NULL`,
@@ -461,7 +461,7 @@ gtk_image_new_from_resource (const char *resource_path)
  * gtk_image_new_from_pixbuf:
  * @pixbuf: (nullable): a `GdkPixbuf`
  *
- * Creates a new `GtkImage` displaying @pixbuf.
+ * Creates a new `GtkImage` displaying `pixbuf`.
  *
  * The `GtkImage` does not assume a reference to the pixbuf; you still
  * need to unref it if you own references. `GtkImage` will add its own
@@ -492,13 +492,13 @@ gtk_image_new_from_pixbuf (GdkPixbuf *pixbuf)
  * gtk_image_new_from_paintable:
  * @paintable: (nullable): a `GdkPaintable`
  *
- * Creates a new `GtkImage` displaying @paintable.
+ * Creates a new `GtkImage` displaying `paintable`.
  *
  * The `GtkImage` does not assume a reference to the paintable; you still
  * need to unref it if you own references. `GtkImage` will add its own
  * reference rather than adopting yours.
  *
- * The `GtkImage` will track changes to the @paintable and update
+ * The `GtkImage` will track changes to the `paintable` and update
  * its size and contents in response to it.
  *
  * Returns: a new `GtkImage`
@@ -1263,7 +1263,7 @@ gtk_image_set_icon_size (GtkImage    *image,
  * gtk_image_get_icon_size: (attributes org.gtk.Method.get_property=icon-size)
  * @image: a `GtkImage`
  *
- * Gets the icon size used by the @image when rendering icons.
+ * Gets the icon size used by the `image` when rendering icons.
  *
  * Returns: the image size used by icons
  */

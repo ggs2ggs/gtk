@@ -289,7 +289,7 @@ gdk_cursor_equal (gconstpointer a,
  * @fallback: (nullable): `NULL` or the `GdkCursor` to fall back to when
  *   this one cannot be supported
  *
- * Creates a new cursor by looking up @name in the current cursor
+ * Creates a new cursor by looking up `name` in the current cursor
  * theme.
  *
  * A recommended set of cursor names that will work across different
@@ -358,7 +358,7 @@ gdk_cursor_new_from_texture (GdkTexture *texture,
  * gdk_cursor_get_fallback: (attributes org.gtk.Method.get_property=fallback)
  * @cursor: a `GdkCursor`
  *
- * Returns the fallback for this @cursor.
+ * Returns the fallback for this `cursor`.
  *
  * The fallback will be used if this cursor is not available on a given
  * `GdkDisplay`. For named cursors, this can happen when using nonstandard

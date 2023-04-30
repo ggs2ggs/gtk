@@ -821,7 +821,7 @@ gtk_expander_measure (GtkWidget      *widget,
  * gtk_expander_new:
  * @label: (nullable): the text of the label
  *
- * Creates a new expander using @label as the text of the label.
+ * Creates a new expander using `label` as the text of the label.
  *
  * Returns: a new `GtkExpander` widget.
  */
@@ -836,9 +836,9 @@ gtk_expander_new (const char *label)
  * @label: (nullable): the text of the label with an underscore
  *   in front of the mnemonic character
  *
- * Creates a new expander using @label as the text of the label.
+ * Creates a new expander using `label` as the text of the label.
  *
- * If characters in @label are preceded by an underscore, they are
+ * If characters in `label` are preceded by an underscore, they are
  * underlined. If you need a literal underscore character in a label,
  * use “__” (two underscores). The first underlined character represents
  * a keyboard accelerator called a mnemonic.
@@ -915,7 +915,7 @@ gtk_expander_set_expanded (GtkExpander *expander,
 
 /**
  * gtk_expander_get_expanded: (attributes org.gtk.Method.get_property=expanded)
- * @expander:a `GtkExpander`
+ * `expander`:a `GtkExpander`
  *
  * Queries a `GtkExpander` and returns its current state.
  *
@@ -936,7 +936,7 @@ gtk_expander_get_expanded (GtkExpander *expander)
  * @expander: a `GtkExpander`
  * @label: (nullable): a string
  *
- * Sets the text of the label of the expander to @label.
+ * Sets the text of the label of the expander to `label`.
  *
  * This will also clear any previously set labels.
  */
@@ -1178,7 +1178,7 @@ gtk_expander_get_resize_toplevel (GtkExpander *expander)
  * @expander: a `GtkExpander`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @expander.
+ * Sets the child widget of `expander`.
  */
 void
 gtk_expander_set_child (GtkExpander *expander,
@@ -1230,9 +1230,9 @@ gtk_expander_set_child (GtkExpander *expander,
  * gtk_expander_get_child: (attributes org.gtk.Method.get_property=child)
  * @expander: a `GtkExpander`
  *
- * Gets the child widget of @expander.
+ * Gets the child widget of `expander`.
  *
- * Returns: (nullable) (transfer none): the child widget of @expander
+ * Returns: (nullable) (transfer none): the child widget of `expander`
  */
 GtkWidget *
 gtk_expander_get_child (GtkExpander *expander)

@@ -91,7 +91,7 @@ gtk_filter_class_init (GtkFilterClass *class)
    *
    * `GtkFilterListModel` handles this signal automatically.
    *
-   * Depending on the @change parameter, not all items need
+   * Depending on the `change` parameter, not all items need
    * to be checked, but only some. Refer to the [enum@Gtk.FilterChange]
    * documentation for details.
    */
@@ -119,7 +119,7 @@ gtk_filter_init (GtkFilter *self)
  * @self: a `GtkFilter`
  * @item: (type GObject) (transfer none): The item to check
  *
- * Checks if the given @item is matched by the filter or not.
+ * Checks if the given `item` is matched by the filter or not.
  *
  * Returns: true if the filter matches the item and a filter model should
  *   keep it, false if not.
@@ -138,7 +138,7 @@ gtk_filter_match (GtkFilter *self,
  * gtk_filter_get_strictness:
  * @self: a `GtkFilter`
  *
- * Gets the known strictness of @filters.
+ * Gets the known strictness of `filters`.
  *
  * If the strictness is not known, %GTK_FILTER_MATCH_SOME is returned.
  *
@@ -148,7 +148,7 @@ gtk_filter_match (GtkFilter *self,
  * This function is meant purely for optimization purposes, filters can
  * choose to omit implementing it, but `GtkFilterListModel` uses it.
  *
- * Returns: the strictness of @self
+ * Returns: the strictness of `self`
  */
 GtkFilterMatch
 gtk_filter_get_strictness (GtkFilter *self)
@@ -169,7 +169,7 @@ gtk_filter_get_strictness (GtkFilter *self)
  * of the filter should then check items again via
  * [method@Gtk.Filter.match].
  *
- * Depending on the @change parameter, not all items need to
+ * Depending on the `change` parameter, not all items need to
  * be changed, but only some. Refer to the [enum@Gtk.FilterChange]
  * documentation for details.
  *

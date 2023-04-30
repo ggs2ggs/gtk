@@ -758,8 +758,8 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    * Emitted when the print operation run has finished doing
    * everything required for printing.
    *
-   * @result gives you information about what happened during the run.
-   * If @result is %GTK_PRINT_OPERATION_RESULT_ERROR then you can call
+   * `result` gives you information about what happened during the run.
+   * If `result` is %GTK_PRINT_OPERATION_RESULT_ERROR then you can call
    * [method@Gtk.PrintOperation.get_error] for more information.
    *
    * If you enabled print status tracking then
@@ -839,7 +839,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    * Emitted once for every page that is printed.
    *
    * This gives the application a chance to modify the page setup.
-   * Any changes done to @setup will be in force only for printing
+   * Any changes done to `setup` will be in force only for printing
    * this page.
    */
   signals[REQUEST_PAGE_SETUP] =
@@ -862,8 +862,8 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    *
    * Emitted for every page that is printed.
    *
-   * The signal handler must render the @page_nr's page onto the cairo
-   * context obtained from @context using
+   * The signal handler must render the `page_nr`'s page onto the cairo
+   * context obtained from `context` using
    * [method@Gtk.PrintContext.get_cairo_context].
    *
    * ```c
@@ -1046,7 +1046,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    *
    * To implement a custom print preview, an application must return
    * true from its handler for this signal. In order to use the
-   * provided @context for the preview implementation, it must be
+   * provided `context` for the preview implementation, it must be
    * given a suitable cairo context with
    * [method@Gtk.PrintContext.set_cairo_context].
    *
@@ -1129,7 +1129,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    * [signal@Gtk.PrintOperation::request-page-setup] and
    * [signal@Gtk.PrintOperation::draw-page] signals are 0-based, i.e.
    * if the user chooses to print all pages, the last ::draw-page signal
-   * will be for page @n_pages - 1.
+   * will be for page `n_pages` - 1.
    */
   g_object_class_install_property (gobject_class,
 				   PROP_N_PAGES,
@@ -1197,7 +1197,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    *
    * The transformation for the cairo context obtained from
    * `GtkPrintContext` is set up in such a way that distances
-   * are measured in units of @unit.
+   * are measured in units of `unit`.
    */
   g_object_class_install_property (gobject_class,
 				   PROP_UNIT,
@@ -1388,7 +1388,7 @@ gtk_print_operation_new (void)
  * @op: a `GtkPrintOperation`
  * @default_page_setup: (nullable): a `GtkPageSetup`
  *
- * Makes @default_page_setup the default page setup for @op.
+ * Makes `default_page_setup` the default page setup for `op`.
  *
  * This page setup will be used by [method@Gtk.PrintOperation.run],
  * but it can be overridden on a per-page basis by connecting
@@ -1440,7 +1440,7 @@ gtk_print_operation_get_default_page_setup (GtkPrintOperation *op)
  * @op: a `GtkPrintOperation`
  * @print_settings: (nullable): `GtkPrintSettings`
  *
- * Sets the print settings for @op.
+ * Sets the print settings for `op`.
  *
  * This is typically used to re-establish print settings
  * from a previous print operation, see [method@Gtk.PrintOperation.run].
@@ -1479,7 +1479,7 @@ gtk_print_operation_set_print_settings (GtkPrintOperation *op,
  * [method@Gtk.PrintOperation.set_print_settings] or
  * [method@Gtk.PrintOperation.run] have been called.
  *
- * Returns: (transfer none) (nullable): the current print settings of @op.
+ * Returns: (transfer none) (nullable): the current print settings of `op`.
  **/
 GtkPrintSettings *
 gtk_print_operation_get_print_settings (GtkPrintOperation *op)
@@ -1535,7 +1535,7 @@ gtk_print_operation_set_job_name (GtkPrintOperation *op,
  * [signal@Gtk.PrintOperation::request-page-setup]
  * and [signal@Gtk.PrintOperation::draw-page] signals are 0-based, i.e.
  * if the user chooses to print all pages, the last ::draw-page signal
- * will be for page @n_pages - 1.
+ * will be for page `n_pages` - 1.
  */
 void
 gtk_print_operation_set_n_pages (GtkPrintOperation *op,
@@ -1592,7 +1592,7 @@ gtk_print_operation_set_current_page (GtkPrintOperation *op,
  * @op: a `GtkPrintOperation`
  * @full_page: true to set up the `GtkPrintContext` for the full page
  *
- * If @full_page is true, the transformation for the cairo context
+ * If `full_page` is true, the transformation for the cairo context
  * obtained from `GtkPrintContext` puts the origin at the top left
  * corner of the page.
  *
@@ -1625,7 +1625,7 @@ gtk_print_operation_set_use_full_page (GtkPrintOperation *op,
  *
  * Sets up the transformation for the cairo context obtained from
  * `GtkPrintContext` in such a way that distances are measured in
- * units of @unit.
+ * units of `unit`.
  */
 void
 gtk_print_operation_set_unit (GtkPrintOperation *op,
@@ -1788,7 +1788,7 @@ gtk_print_operation_is_finished (GtkPrintOperation *op)
  * @op: a `GtkPrintOperation`
  * @show_progress: true to show a progress dialog
  *
- * If @show_progress is true, the print operation will show
+ * If `show_progress` is true, the print operation will show
  * a progress dialog during the print operation.
  */
 void
@@ -2986,7 +2986,7 @@ gtk_print_operation_get_error (GtkPrintOperation  *op,
  *
  * Normally that this function does not return until the rendering
  * of all pages is complete. You can connect to the
- * [signal@Gtk.PrintOperation::status-changed] signal on @op to obtain
+ * [signal@Gtk.PrintOperation::status-changed] signal on `op` to obtain
  * some information about the progress of the print operation.
  *
  * Furthermore, it may use a recursive mainloop to show the print dialog.

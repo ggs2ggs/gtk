@@ -358,11 +358,11 @@ gtk_cell_layout_default_get_cells (GtkCellLayout *cell_layout)
  * gtk_cell_layout_pack_start:
  * @cell_layout: a `GtkCellLayout`
  * @cell: a `GtkCellRenderer`
- * @expand: true if @cell is to be given extra space allocated to @cell_layout
+ * @expand: true if `cell` is to be given extra space allocated to `cell_layout`
  *
- * Packs the @cell into the beginning of @cell_layout. If @expand is false,
- * then the @cell is allocated no more space than it needs. Any unused space
- * is divided evenly between cells for which @expand is true.
+ * Packs the `cell` into the beginning of `cell_layout`. If `expand` is false,
+ * then the `cell` is allocated no more space than it needs. Any unused space
+ * is divided evenly between cells for which `expand` is true.
  *
  * Note that reusing the same cell renderer is not supported.
  *
@@ -383,11 +383,11 @@ gtk_cell_layout_pack_start (GtkCellLayout   *cell_layout,
  * gtk_cell_layout_pack_end:
  * @cell_layout: a `GtkCellLayout`
  * @cell: a `GtkCellRenderer`
- * @expand: true if @cell is to be given extra space allocated to @cell_layout
+ * @expand: true if `cell` is to be given extra space allocated to `cell_layout`
  *
- * Adds the @cell to the end of @cell_layout. If @expand is false, then the
- * @cell is allocated no more space than it needs. Any unused space is
- * divided evenly between cells for which @expand is true.
+ * Adds the `cell` to the end of `cell_layout`. If `expand` is false, then the
+ * `cell` is allocated no more space than it needs. Any unused space is
+ * divided evenly between cells for which `expand` is true.
  *
  * Note that reusing the same cell renderer is not supported.
  *
@@ -408,8 +408,8 @@ gtk_cell_layout_pack_end (GtkCellLayout   *cell_layout,
  * gtk_cell_layout_clear:
  * @cell_layout: a `GtkCellLayout`
  *
- * Unsets all the mappings on all renderers on @cell_layout and
- * removes all renderers from @cell_layout.
+ * Unsets all the mappings on all renderers on `cell_layout` and
+ * removes all renderers from `cell_layout`.
  *
  * Deprecated: 4.10
  */
@@ -447,10 +447,10 @@ gtk_cell_layout_set_attributesv (GtkCellLayout   *cell_layout,
  * gtk_cell_layout_set_attributes:
  * @cell_layout: a `GtkCellLayout`
  * @cell: a `GtkCellRenderer`
- * @...: a `NULL`-terminated list of attributes
+ * `...`: a `NULL`-terminated list of attributes
  *
  * Sets the attributes in the parameter list as the attributes
- * of @cell_layout.
+ * of `cell_layout`.
  *
  * See [method@Gtk.CellLayout.add_attribute] for more details.
  *
@@ -482,10 +482,10 @@ gtk_cell_layout_set_attributes (GtkCellLayout   *cell_layout,
  * @attribute: a property on the renderer
  * @column: the column position on the model to get the attribute from
  *
- * Adds an attribute mapping to the list in @cell_layout.
+ * Adds an attribute mapping to the list in `cell_layout`.
  *
- * The @column is the column of the model to get a value from, and the
- * @attribute is the property on @cell to be set from that value. So for
+ * The `column` is the column of the model to get a value from, and the
+ * `attribute` is the property on `cell` to be set from that value. So for
  * example if column 2 of the model contains strings, you could have the
  * “text” attribute of a `GtkCellRendererText` get its values from column 2.
  * In this context "attribute" and "property" are used interchangeably.
@@ -511,16 +511,16 @@ gtk_cell_layout_add_attribute (GtkCellLayout   *cell_layout,
  * @cell_layout: a `GtkCellLayout`
  * @cell: a `GtkCellRenderer`
  * @func: (nullable): the `GtkCellLayout`DataFunc to use
- * @func_data: (closure): user data for @func
- * @destroy: destroy notify for @func_data
+ * @func_data: (closure): user data for `func`
+ * @destroy: destroy notify for `func_data`
  *
- * Sets the `GtkCellLayout`DataFunc to use for @cell_layout.
+ * Sets the `GtkCellLayout`DataFunc to use for `cell_layout`.
  *
  * This function is used instead of the standard attributes mapping
- * for setting the column value, and should set the value of @cell_layout’s
+ * for setting the column value, and should set the value of `cell_layout`’s
  * cell renderer(s) as appropriate.
  *
- * @func may be `NULL` to remove a previously set function.
+ * `func` may be `NULL` to remove a previously set function.
  *
  * Deprecated: 4.10
  */
@@ -562,11 +562,11 @@ gtk_cell_layout_clear_attributes (GtkCellLayout   *cell_layout,
  * gtk_cell_layout_reorder:
  * @cell_layout: a `GtkCellLayout`
  * @cell: a `GtkCellRenderer` to reorder
- * @position: new position to insert @cell at
+ * @position: new position to insert `cell` at
  *
- * Re-inserts @cell at @position.
+ * Re-inserts `cell` at `position`.
  *
- * Note that @cell has already to be packed into @cell_layout
+ * Note that `cell` has already to be packed into `cell_layout`
  * for this to function properly.
  *
  * Deprecated: 4.10
@@ -586,7 +586,7 @@ gtk_cell_layout_reorder (GtkCellLayout   *cell_layout,
  * gtk_cell_layout_get_cells:
  * @cell_layout: a `GtkCellLayout`
  *
- * Returns the cell renderers which have been added to @cell_layout.
+ * Returns the cell renderers which have been added to `cell_layout`.
  *
  * Returns: (element-type GtkCellRenderer) (transfer container):
  *   a list of cell renderers. The list, but not the renderers has
@@ -607,11 +607,11 @@ gtk_cell_layout_get_cells (GtkCellLayout *cell_layout)
  * gtk_cell_layout_get_area:
  * @cell_layout: a `GtkCellLayout`
  *
- * Returns the underlying `GtkCellArea` which might be @cell_layout
+ * Returns the underlying `GtkCellArea` which might be `cell_layout`
  * if called on a `GtkCellArea` or might be `NULL` if no `GtkCellArea`
- * is used by @cell_layout.
+ * is used by `cell_layout`.
  *
- * Returns: (transfer none) (nullable): the cell area used by @cell_layout
+ * Returns: (transfer none) (nullable): the cell area used by `cell_layout`
  *
  * Deprecated: 4.10
  */

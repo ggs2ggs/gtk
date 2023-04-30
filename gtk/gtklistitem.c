@@ -272,9 +272,9 @@ gtk_list_item_do_notify (GtkListItem *list_item,
  * gtk_list_item_get_item: (attributes org.gtk.Method.get_property=item)
  * @self: a `GtkListItem`
  *
- * Gets the model item that associated with @self.
+ * Gets the model item that associated with `self`.
  *
- * If @self is unbound, this function returns `NULL`.
+ * If `self` is unbound, this function returns `NULL`.
  *
  * Returns: (nullable) (transfer none) (type GObject): The item displayed
  **/
@@ -362,9 +362,9 @@ gtk_list_item_set_child (GtkListItem *self,
  * gtk_list_item_get_position: (attributes org.gtk.Method.get_property=position)
  * @self: a `GtkListItem`
  *
- * Gets the position in the model that @self currently displays.
+ * Gets the position in the model that `self` currently displays.
  *
- * If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
+ * If `self` is unbound, %GTK_INVALID_LIST_POSITION is returned.
  *
  * Returns: The position of this item
  */
@@ -429,7 +429,7 @@ gtk_list_item_get_selectable (GtkListItem *self)
  * @self: a `GtkListItem`
  * @selectable: if the item should be selectable
  *
- * Sets @self to be selectable.
+ * Sets `self` to be selectable.
  *
  * If an item is selectable, clicking on the item or using the keyboard
  * will try to select or unselect the item. If this succeeds is up to
@@ -481,7 +481,7 @@ gtk_list_item_get_activatable (GtkListItem *self)
  * @self: a `GtkListItem`
  * @activatable: if the item should be activatable
  *
- * Sets @self to be activatable.
+ * Sets `self` to be activatable.
  *
  * If an item is activatable, double-clicking on the item, using
  * the Return key or calling gtk_widget_activate() will activate
@@ -532,7 +532,7 @@ gtk_list_item_get_focusable (GtkListItem *self)
  * @self: a `GtkListItem`
  * @focusable: if the item should be focusable
  *
- * Sets @self to be focusable.
+ * Sets `self` to be focusable.
  *
  * If an item is focusable, it can be focused using the keyboard.
  * This works similar to [method@Gtk.Widget.set_focusable].

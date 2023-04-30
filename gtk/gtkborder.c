@@ -46,7 +46,7 @@ gtk_border_new (void)
  *
  * Copies a `GtkBorder`.
  *
- * Returns: (transfer full): a copy of @border_.
+ * Returns: (transfer full): a copy of `border_`.
  */
 GtkBorder *
 gtk_border_copy (const GtkBorder *border_)

@@ -295,7 +295,7 @@ gdk_content_deserializer_get_user_data (GdkContentDeserializer *deserializer)
  * gdk_content_deserializer_set_task_data:
  * @deserializer: a `GdkContentDeserializer`
  * @data: data to associate with this operation
- * @notify: destroy notify for @data
+ * @notify: destroy notify for `data`
  *
  * Associate data with the current deserialization operation.
  */
@@ -321,7 +321,7 @@ gdk_content_deserializer_set_task_data (GdkContentDeserializer *deserializer,
  *
  * See [method@Gdk.ContentDeserializer.set_task_data].
  *
- * Returns: (transfer none): the task data for @deserializer
+ * Returns: (transfer none): the task data for `deserializer`
  */
 gpointer
 gdk_content_deserializer_get_task_data (GdkContentDeserializer *deserializer)
@@ -373,7 +373,7 @@ gdk_content_deserializer_return_success (GdkContentDeserializer *deserializer)
  *
  * Indicate that the deserialization has ended with an error.
  *
- * This function consumes @error.
+ * This function consumes `error`.
  */
 void
 gdk_content_deserializer_return_error (GdkContentDeserializer *deserializer,
@@ -393,8 +393,8 @@ gdk_content_deserializer_return_error (GdkContentDeserializer *deserializer,
  * @mime_type: the mime type which the function can deserialize from
  * @type: the type of objects that the function creates
  * @deserialize: the callback
- * @data: data that @deserialize can access
- * @notify: destroy notify for @data
+ * @data: data that `deserialize` can access
+ * @notify: destroy notify for `data`
  *
  * Registers a function to deserialize object of a given type.
  */
@@ -449,7 +449,7 @@ lookup_deserializer (const char *mime_type,
  * gdk_content_formats_union_deserialize_gtypes:
  * @formats: (transfer full): a `GdkContentFormats`
  *
- * Add GTypes for mime types in @formats for which deserializers are
+ * Add GTypes for mime types in `formats` for which deserializers are
  * registered.
  *
  * Return: a new `GdkContentFormats`
@@ -484,7 +484,7 @@ gdk_content_formats_union_deserialize_gtypes (GdkContentFormats *formats)
  * gdk_content_formats_union_deserialize_mime_types:
  * @formats: (transfer full): a `GdkContentFormats`
  *
- * Add mime types for GTypes in @formats for which deserializers are
+ * Add mime types for GTypes in `formats` for which deserializers are
  * registered.
  *
  * Return: a new `GdkContentFormats`
@@ -541,7 +541,7 @@ deserialize_not_found (GdkContentDeserializer *deserializer)
  * The default I/O priority is %G_PRIORITY_DEFAULT (i.e. 0), and lower numbers
  * indicate a higher priority.
  *
- * When the operation is finished, @callback will be called. You must then
+ * When the operation is finished, `callback` will be called. You must then
  * call [func@Gdk.content_deserialize_finish] to get the result of the operation.
  */
 void
@@ -583,8 +583,8 @@ gdk_content_deserialize_async (GInputStream        *stream,
  * Finishes a content deserialization operation.
  *
  * Returns: true if the operation was successful. In this case,
- *   @value is set. false if an error occurred. In this case,
- *   @error is set
+ *   `value` is set. false if an error occurred. In this case,
+ *   `error` is set
  */
 gboolean
 gdk_content_deserialize_finish (GAsyncResult  *result,

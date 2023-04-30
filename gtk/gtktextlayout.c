@@ -578,7 +578,7 @@ gtk_text_layout_get_cursor_visible (GtkTextLayout *layout)
  * gtk_text_layout_set_preedit_string:
  * @layout: a `PangoLayout`
  * @preedit_string: a string to display at the insertion point
- * @preedit_attrs: a `PangoAttrList` of attributes that apply to @preedit_string
+ * @preedit_attrs: a `PangoAttrList` of attributes that apply to `preedit_string`
  * @cursor_pos: position of cursor within preedit string in chars
  *
  * Set the preedit string and attributes. The preedit string is a
@@ -887,10 +887,10 @@ update_layout_size (GtkTextLayout *layout)
  * @layout: a `GtkTextLayout`
  * @anchor: iter pointing into a line that will be used as the
  *   coordinate origin
- * @y0_: offset from the top of the line pointed to by @anchor at
+ * @y0_: offset from the top of the line pointed to by `anchor` at
  *   which to begin validation. (The offset here is in pixels
  *   after validation.)
- * @y1_: offset from the top of the line pointed to by @anchor at
+ * @y1_: offset from the top of the line pointed to by `anchor` at
  *   which to end validation. (The offset here is in pixels
  *   after validation.)
  *
@@ -1407,7 +1407,7 @@ gtk_text_attr_appearance_compare (const PangoAttribute *attr1,
 
 /*
  * gtk_text_attr_appearance_new:
- * @desc:
+ * `desc`:
  *
  * Create a new font description attribute. (This attribute
  * allows setting family, style, weight, variant, stretch,
@@ -1815,14 +1815,14 @@ add_child_attrs (GtkTextLayout      *layout,
  * @layout: a `GtkTextLayout`
  * @display: a `GtkTextLineDisplay`
  * @insert_iter: iter pointing to the cursor location
- * @insert_index: cursor offset in the @display’s layout, it may
- * be different from @insert_iter’s offset in case when preedit
+ * @insert_index: cursor offset in the `display`’s layout, it may
+ * be different from `insert_iter`’s offset in case when preedit
  * string is present.
  * @pos: location to store cursor position
  * @cursor_at_line_end: whether cursor is at the end of line
  *
  * Checks whether layout should display block cursor at given position.
- * For this layout must be in overwrite mode and text at @insert_iter
+ * For this layout must be in overwrite mode and text at `insert_iter`
  * must be editable.
  */
 static gboolean
@@ -3194,7 +3194,7 @@ find_display_line_above (GtkTextLayout *layout,
  * @top:    the top of the range
  * @bottom: the bottom the range
  *
- * If the iterator is not fully in the range @top <= y < @bottom,
+ * If the iterator is not fully in the range `top` <= y < `bottom`,
  * then, if possible, move it the minimum distance so that the
  * iterator in this range.
  *
@@ -3615,10 +3615,10 @@ gtk_text_layout_move_iter_to_x (GtkTextLayout *layout,
  * @count: number of characters to move (negative moves left, positive moves right)
  *
  * Move the iterator a given number of characters visually, treating
- * it as the strong cursor position. If @count is positive, then the
- * new strong cursor position will be @count positions to the right of
- * the old cursor position. If @count is negative then the new strong
- * cursor position will be @count positions to the left of the old
+ * it as the strong cursor position. If `count` is positive, then the
+ * new strong cursor position will be `count` positions to the right of
+ * the old cursor position. If `count` is negative then the new strong
+ * cursor position will be `count` positions to the left of the old
  * cursor position.
  *
  * In the presence of bidirection text, the correspondence

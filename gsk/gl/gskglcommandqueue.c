@@ -697,7 +697,7 @@ gsk_gl_command_queue_end_draw (GskGLCommandQueue *self)
 
 /**
  * gsk_gl_command_queue_split_draw:
- * @self a `GskGLCommandQueue`
+ * `self` a `GskGLCommandQueue`
  *
  * This function is like calling gsk_gl_command_queue_end_draw() followed by
  * a gsk_gl_command_queue_begin_draw() with the same parameters as a
@@ -1002,7 +1002,7 @@ gsk_gl_command_queue_sort_batches (GskGLCommandQueue *self)
  * Executes all of the batches in the command queue.
  *
  * Typically, the scissor rect is only applied when rendering to the default
- * framebuffer (zero in most cases). However, if @default_framebuffer is not
+ * framebuffer (zero in most cases). However, if `default_framebuffer` is not
  * zero, it will be checked to see if the rendering target matches so that
  * the scissor rect is applied. This should be used in cases where rendering
  * to the backbuffer for display is not the default GL framebuffer of zero.

@@ -431,12 +431,12 @@ G_GNUC_END_IGNORE_DEPRECATIONS
  * @initial_color: (nullable): the color to select initially
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function initiates a color choice operation by
  * presenting a color chooser dialog to the user.
  *
- * The @callback will be called when the dialog is dismissed.
+ * The `callback` will be called when the dialog is dismissed.
  * It should call [method@Gtk.ColorDialog.choose_rgba_finish]
  * to obtain the result.
  *
@@ -479,7 +479,7 @@ gtk_color_dialog_choose_rgba (GtkColorDialog       *self,
  * returns the resulting color.
  *
  * Returns: (nullable) (transfer full): the selected color, or
- *   `NULL` and @error is set
+ *   `NULL` and `error` is set
  *
  * Since: 4.10
  */

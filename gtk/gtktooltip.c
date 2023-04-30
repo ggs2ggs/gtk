@@ -205,10 +205,10 @@ gtk_tooltip_dispose (GObject *object)
  * @tooltip: a `GtkTooltip`
  * @markup: (nullable): a string with Pango markup or %NLL
  *
- * Sets the text of the tooltip to be @markup.
+ * Sets the text of the tooltip to be `markup`.
  *
  * The string must be marked up with Pango markup.
- * If @markup is `NULL`, the label will be hidden.
+ * If `markup` is `NULL`, the label will be hidden.
  */
 void
 gtk_tooltip_set_markup (GtkTooltip  *tooltip,
@@ -224,9 +224,9 @@ gtk_tooltip_set_markup (GtkTooltip  *tooltip,
  * @tooltip: a `GtkTooltip`
  * @text: (nullable): a text string
  *
- * Sets the text of the tooltip to be @text.
+ * Sets the text of the tooltip to be `text`.
  *
- * If @text is `NULL`, the label will be hidden.
+ * If `text` is `NULL`, the label will be hidden.
  * See also [method@Gtk.Tooltip.set_markup].
  */
 void
@@ -244,7 +244,7 @@ gtk_tooltip_set_text (GtkTooltip  *tooltip,
  * @paintable: (nullable): a `GdkPaintable`
  *
  * Sets the icon of the tooltip (which is in front of the text) to be
- * @paintable.  If @paintable is `NULL`, the image will be hidden.
+ * `paintable`.  If `paintable` is `NULL`, the image will be hidden.
  */
 void
 gtk_tooltip_set_icon (GtkTooltip   *tooltip,
@@ -262,8 +262,8 @@ gtk_tooltip_set_icon (GtkTooltip   *tooltip,
  * @icon_name: (nullable): an icon name
  *
  * Sets the icon of the tooltip (which is in front of the text) to be
- * the icon indicated by @icon_name with the size indicated
- * by @size.  If @icon_name is `NULL`, the image will be hidden.
+ * the icon indicated by `icon_name` with the size indicated
+ * by `size`.  If `icon_name` is `NULL`, the image will be hidden.
  */
 void
 gtk_tooltip_set_icon_from_icon_name (GtkTooltip  *tooltip,
@@ -281,8 +281,8 @@ gtk_tooltip_set_icon_from_icon_name (GtkTooltip  *tooltip,
  * @gicon: (nullable): a `GIcon` representing the icon
  *
  * Sets the icon of the tooltip (which is in front of the text)
- * to be the icon indicated by @gicon with the size indicated
- * by @size. If @gicon is `NULL`, the image will be hidden.
+ * to be the icon indicated by `gicon` with the size indicated
+ * by `size`. If `gicon` is `NULL`, the image will be hidden.
  */
 void
 gtk_tooltip_set_icon_from_gicon (GtkTooltip  *tooltip,
@@ -300,7 +300,7 @@ gtk_tooltip_set_icon_from_gicon (GtkTooltip  *tooltip,
  * @custom_widget: (nullable): a `GtkWidget`, or `NULL` to unset the old custom widget.
  *
  * Replaces the widget packed into the tooltip with
- * @custom_widget. @custom_widget does not get destroyed when the tooltip goes
+ * `custom_widget`. `custom_widget` does not get destroyed when the tooltip goes
  * away.
  * By default a box with a `GtkImage` and `GtkLabel` is embedded in 
  * the tooltip, which can be configured using gtk_tooltip_set_markup() 
@@ -327,7 +327,7 @@ gtk_tooltip_set_custom (GtkTooltip *tooltip,
  * @rect: a `GdkRectangle`
  *
  * Sets the area of the widget, where the contents of this tooltip apply,
- * to be @rect (in widget coordinates).  This is especially useful for
+ * to be `rect` (in widget coordinates).  This is especially useful for
  * properly setting tooltips on `GtkTreeView` rows and cells, `GtkIconViews`,
  * etc.
  *
@@ -354,7 +354,7 @@ gtk_tooltip_set_tip_area (GtkTooltip         *tooltip,
  * gtk_tooltip_trigger_tooltip_query:
  * @display: a `GdkDisplay`
  *
- * Triggers a new tooltip query on @display, in order to update the current
+ * Triggers a new tooltip query on `display`, in order to update the current
  * visible tooltip, or to show/hide the current tooltip.  This function is
  * useful to call when, for example, the state of the widget changed by a
  * key press.
@@ -952,7 +952,7 @@ _gtk_tooltip_handle_event (GtkWidget *target,
   gtk_tooltip_handle_event_internal (event_type, surface, target, x, y);
 }
 
-/* dx/dy must be in @target_widget's coordinates */
+/* dx/dy must be in `target_widget`'s coordinates */
 static void
 gtk_tooltip_handle_event_internal (GdkEventType   event_type,
                                    GdkSurface    *surface,

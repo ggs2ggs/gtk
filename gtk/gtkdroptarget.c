@@ -738,7 +738,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * handler.
    *
    * The default handler for this signal decides whether to accept the drop
-   * based on the formats provided by the @drop.
+   * based on the formats provided by the `drop`.
    *
    * If the decision whether the drop will be accepted or rejected depends
    * on the data, this function should return true, the
@@ -746,7 +746,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * should be inspected via the ::notify:value signal, calling
    * [method@Gtk.DropTarget.reject] if required.
    *
-   * Returns: true if @drop is accepted
+   * Returns: true if `drop` is accepted
    */
   signals[ACCEPT] =
       g_signal_new (I_("accept"),
@@ -769,7 +769,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * It can be used to set up custom highlighting.
    *
    * Returns: Preferred action for this drag operation or 0 if
-   *   dropping is not supported at the current @x,@y location.
+   *   dropping is not supported at the current `x`,`y` location.
    */
   signals[ENTER] =
       g_signal_new (I_("enter"),
@@ -790,7 +790,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * Emitted while the pointer is moving over the drop target.
    *
    * Returns: Preferred action for this drag operation or 0 if
-   *   dropping is not supported at the current @x,@y location.
+   *   dropping is not supported at the current `x`,`y` location.
    */
   signals[MOTION] =
       g_signal_new (I_("motion"),
@@ -834,7 +834,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * and no further processing is necessary.
    *
    * Otherwise, the handler returns true. In this case, this handler will
-   * accept the drop. The handler is responsible for using the given @value
+   * accept the drop. The handler is responsible for using the given `value`
    * and performing the drop operation.
    *
    * Returns: whether the drop was accepted at the given pointer position
@@ -863,7 +863,7 @@ gtk_drop_target_init (GtkDropTarget *self)
  * Creates a new `GtkDropTarget` object.
  *
  * If the drop target should support more than 1 type, pass
- * %G_TYPE_INVALID for @type and then call
+ * %G_TYPE_INVALID for `type` and then call
  * [method@Gtk.DropTarget.set_gtypes].
  *
  * Returns: the new `GtkDropTarget`
@@ -913,7 +913,7 @@ gtk_drop_target_get_formats (GtkDropTarget *self)
  * @self: a `GtkDropTarget`
  * @types: (nullable) (transfer none) (array length=n_types): all supported `GType`s
  *   that can be dropped on the target
- * @n_types: number of @types
+ * @n_types: number of `types`
  *
  * Sets the supported `GTypes` for this drop target.
  */

@@ -448,10 +448,10 @@ gtk_multi_sorter_new (void)
  * @self: a `GtkMultiSorter`
  * @sorter: (transfer full): a sorter to add
  *
- * Add @sorter to @self to use for sorting at the end.
+ * Add `sorter` to `self` to use for sorting at the end.
  *
- * @self will consult all existing sorters before it will
- * sort with the given @sorter.
+ * `self` will consult all existing sorters before it will
+ * sort with the given `sorter`.
  */
 void
 gtk_multi_sorter_append (GtkMultiSorter *self,
@@ -475,10 +475,10 @@ gtk_multi_sorter_append (GtkMultiSorter *self,
  * @self: a `GtkMultiSorter`
  * @position: position of sorter to remove
  *
- * Removes the sorter at the given @position from the list of sorter
- * used by @self.
+ * Removes the sorter at the given `position` from the list of sorter
+ * used by `self`.
  *
- * If @position is larger than the number of sorters, nothing happens.
+ * If `position` is larger than the number of sorters, nothing happens.
  */
 void
 gtk_multi_sorter_remove (GtkMultiSorter *self,

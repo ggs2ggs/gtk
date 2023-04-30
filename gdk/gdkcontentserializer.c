@@ -301,7 +301,7 @@ gdk_content_serializer_get_user_data (GdkContentSerializer *serializer)
  * gdk_content_serializer_set_task_data:
  * @serializer: a `GdkContentSerializer`
  * @data: data to associate with this operation
- * @notify: destroy notify for @data
+ * @notify: destroy notify for `data`
  *
  * Associate data with the current serialization operation.
  */
@@ -327,7 +327,7 @@ gdk_content_serializer_set_task_data (GdkContentSerializer   *serializer,
  *
  * See [method@Gdk.ContentSerializer.set_task_data].
  *
- * Returns: (transfer none): the task data for @serializer
+ * Returns: (transfer none): the task data for `serializer`
  */
 gpointer
 gdk_content_serializer_get_task_data (GdkContentSerializer *serializer)
@@ -379,7 +379,7 @@ gdk_content_serializer_return_success (GdkContentSerializer *serializer)
  *
  * Indicate that the serialization has ended with an error.
  *
- * This function consumes @error.
+ * This function consumes `error`.
  */
 void
 gdk_content_serializer_return_error (GdkContentSerializer *serializer,
@@ -399,8 +399,8 @@ gdk_content_serializer_return_error (GdkContentSerializer *serializer,
  * @type: the type of objects that the function can serialize
  * @mime_type: the mime type to serialize to
  * @serialize: the callback
- * @data: data that @serialize can access
- * @notify: destroy notify for @data
+ * @data: data that `serialize` can access
+ * @notify: destroy notify for `data`
  *
  * Registers a function to serialize objects of a given type.
  */
@@ -455,7 +455,7 @@ lookup_serializer (const char *mime_type,
  * gdk_content_formats_union_serialize_gtypes:
  * @formats: (transfer full): a `GdkContentFormats`
  *
- * Add GTypes for the mime types in @formats for which serializers are
+ * Add GTypes for the mime types in `formats` for which serializers are
  * registered.
  *
  * Return: a new `GdkContentFormats`
@@ -490,7 +490,7 @@ gdk_content_formats_union_serialize_gtypes (GdkContentFormats *formats)
  * gdk_content_formats_union_serialize_mime_types:
  * @formats: (transfer full):  a `GdkContentFormats`
  *
- * Add mime types for GTypes in @formats for which serializers are
+ * Add mime types for GTypes in `formats` for which serializers are
  * registered.
  *
  * Return: a new `GdkContentFormats`
@@ -547,7 +547,7 @@ serialize_not_found (GdkContentSerializer *serializer)
  * The default I/O priority is %G_PRIORITY_DEFAULT (i.e. 0), and lower numbers
  * indicate a higher priority.
  *
- * When the operation is finished, @callback will be called. You must then
+ * When the operation is finished, `callback` will be called. You must then
  * call [func@Gdk.content_serialize_finish] to get the result of the operation.
  */
 void
@@ -586,7 +586,7 @@ gdk_content_serialize_async (GOutputStream       *stream,
  * Finishes a content serialization operation.
  *
  * Returns: true if the operation was successful, false if an
- *   error occurred. In this case, @error is set
+ *   error occurred. In this case, `error` is set
  */
 gboolean
 gdk_content_serialize_finish (GAsyncResult  *result,

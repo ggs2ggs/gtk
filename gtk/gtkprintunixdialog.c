@@ -85,7 +85,7 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
  * # GtkPrintUnixDialog as GtkBuildable
  *
  * The `GtkPrintUnixDialog` implementation of the `GtkBuildable` interface
- * exposes its @notebook internal children with the name “notebook”.
+ * exposes its `notebook` internal children with the name “notebook”.
  *
  * An example of a `GtkPrintUnixDialog` UI definition fragment:
  *
@@ -3116,7 +3116,7 @@ gtk_print_unix_dialog_set_page_setup (GtkPrintUnixDialog *dialog,
  *
  * Gets the page setup that is used by the `GtkPrintUnixDialog`.
  *
- * Returns: (transfer none): the page setup of @dialog.
+ * Returns: (transfer none): the page setup of `dialog`.
  */
 GtkPageSetup *
 gtk_print_unix_dialog_get_page_setup (GtkPrintUnixDialog *dialog)
@@ -3149,7 +3149,7 @@ gtk_print_unix_dialog_get_page_setup_set (GtkPrintUnixDialog *dialog)
  *
  * Sets the current page number.
  *
- * If @current_page is not -1, this enables the current page choice
+ * If `current_page` is not -1, this enables the current page choice
  * for the range of pages to print.
  */
 void
@@ -3175,7 +3175,7 @@ gtk_print_unix_dialog_set_current_page (GtkPrintUnixDialog *dialog,
  *
  * Gets the current page of the `GtkPrintUnixDialog`.
  *
- * Returns: the current page of @dialog
+ * Returns: the current page of `dialog`
  */
 int
 gtk_print_unix_dialog_get_current_page (GtkPrintUnixDialog *dialog)
@@ -3288,7 +3288,7 @@ gtk_print_unix_dialog_set_settings (GtkPrintUnixDialog *dialog,
  * Note that this creates a new object, and you need to unref
  * it if don’t want to keep it.
  *
- * Returns: (transfer full): a new `GtkPrintSettings` object with the values from @dialog
+ * Returns: (transfer full): a new `GtkPrintSettings` object with the values from `dialog`
  */
 GtkPrintSettings *
 gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog)

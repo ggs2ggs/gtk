@@ -133,7 +133,7 @@ gdk_memory_sanitize (GBytes          *bytes,
  *
  * Creates a new texture for a blob of image data.
  *
- * The `GBytes` must contain @stride × @height pixels
+ * The `GBytes` must contain `stride` × `height` pixels
  * in the given format.
  *
  * Returns: (type GdkMemoryTexture): A newly-created `GdkTexture`

@@ -48,7 +48,7 @@
  * # GtkAssistant as GtkBuildable
  *
  * The `GtkAssistant` implementation of the `GtkBuildable` interface
- * exposes the @action_area as internal children with the name
+ * exposes the `action_area` as internal children with the name
  * “action_area”.
  *
  * To add pages to an assistant in `GtkBuilder`, simply add it as a
@@ -551,7 +551,7 @@ gtk_assistant_class_init (GtkAssistantClass *class)
    * before making the new page visible.
    *
    * A handler for this signal can do any preparations which are
-   * necessary before showing @page.
+   * necessary before showing `page`.
    *
    * Deprecated: 4.10: This widget will be removed in GTK 5
    */
@@ -1479,7 +1479,7 @@ gtk_assistant_new (void)
  * Returns the page number of the current page.
  *
  * Returns: The index (starting from 0) of the current
- *   page in the @assistant, or -1 if the @assistant has no pages,
+ *   page in the `assistant`, or -1 if the `assistant` has no pages,
  *   or no current page
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
@@ -1500,13 +1500,13 @@ gtk_assistant_get_current_page (GtkAssistant *assistant)
  * @assistant: a `GtkAssistant`
  * @page_num: index of the page to switch to, starting from 0.
  *   If negative, the last page will be used. If greater
- *   than the number of pages in the @assistant, nothing
+ *   than the number of pages in the `assistant`, nothing
  *   will be done.
  *
- * Switches the page to @page_num.
+ * Switches the page to `page_num`.
  *
  * Note that this will only be necessary in custom buttons,
- * as the @assistant flow can be set with
+ * as the `assistant` flow can be set with
  * gtk_assistant_set_forward_page_func().
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
@@ -1612,9 +1612,9 @@ gtk_assistant_previous_page (GtkAssistant *assistant)
  * gtk_assistant_get_n_pages:
  * @assistant: a `GtkAssistant`
  *
- * Returns the number of pages in the @assistant
+ * Returns the number of pages in the `assistant`
  *
- * Returns: the number of pages in the @assistant
+ * Returns: the number of pages in the `assistant`
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -1629,13 +1629,13 @@ gtk_assistant_get_n_pages (GtkAssistant *assistant)
 /**
  * gtk_assistant_get_nth_page:
  * @assistant: a `GtkAssistant`
- * @page_num: the index of a page in the @assistant,
+ * @page_num: the index of a page in the `assistant`,
  *   or -1 to get the last page
  *
- * Returns the child widget contained in page number @page_num.
+ * Returns the child widget contained in page number `page_num`.
  *
  * Returns: (nullable) (transfer none): the child widget, or `NULL`
- *   if @page_num is out of bounds
+ *   if `page_num` is out of bounds
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -1667,7 +1667,7 @@ gtk_assistant_get_nth_page (GtkAssistant *assistant,
  * @assistant: a `GtkAssistant`
  * @page: a `GtkWidget`
  *
- * Prepends a page to the @assistant.
+ * Prepends a page to the `assistant`.
  *
  * Returns: the index (starting at 0) of the inserted page
  *
@@ -1688,7 +1688,7 @@ gtk_assistant_prepend_page (GtkAssistant *assistant,
  * @assistant: a `GtkAssistant`
  * @page: a `GtkWidget`
  *
- * Appends a page to the @assistant.
+ * Appends a page to the `assistant`.
  *
  * Returns: the index (starting at 0) of the inserted page
  *
@@ -1709,9 +1709,9 @@ gtk_assistant_append_page (GtkAssistant *assistant,
  * @assistant: a `GtkAssistant`
  * @page: a `GtkWidget`
  * @position: the index (starting at 0) at which to insert the page,
- *   or -1 to append the page to the @assistant
+ *   or -1 to append the page to the `assistant`
  *
- * Inserts a page in the @assistant at a given position.
+ * Inserts a page in the `assistant` at a given position.
  *
  * Returns: the index (starting from 0) of the inserted page
  *
@@ -1810,10 +1810,10 @@ gtk_assistant_add_page (GtkAssistant *assistant,
 /**
  * gtk_assistant_remove_page:
  * @assistant: a `GtkAssistant`
- * @page_num: the index of a page in the @assistant,
+ * @page_num: the index of a page in the `assistant`,
  *   or -1 to remove the last page
  *
- * Removes the @page_num’s page from @assistant.
+ * Removes the `page_num`’s page from `assistant`.
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -1841,14 +1841,14 @@ gtk_assistant_remove_page (GtkAssistant *assistant,
  * @assistant: a `GtkAssistant`
  * @page_func: (nullable): the `GtkAssistantPageFunc`, or `NULL`
  *   to use the default one
- * @data: user data for @page_func
- * @destroy: destroy notifier for @data
+ * @data: user data for `page_func`
+ * @destroy: destroy notifier for `data`
  *
- * Sets the page forwarding function to be @page_func.
+ * Sets the page forwarding function to be `page_func`.
  *
  * This function will be used to determine what will be
  * the next page when the user presses the forward button.
- * Setting @page_func to `NULL` will make the assistant to
+ * Setting `page_func` to `NULL` will make the assistant to
  * use the default forward function, which just goes to the
  * next visible page.
  *
@@ -1955,13 +1955,13 @@ gtk_assistant_remove_action_widget (GtkAssistant *assistant,
 /**
  * gtk_assistant_set_page_title:
  * @assistant: a `GtkAssistant`
- * @page: a page of @assistant
- * @title: the new title for @page
+ * @page: a page of `assistant`
+ * @title: the new title for `page`
  *
- * Sets a title for @page.
+ * Sets a title for `page`.
  *
  * The title is displayed in the header area of the assistant
- * when @page is the current page.
+ * when `page` is the current page.
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -1988,11 +1988,11 @@ gtk_assistant_set_page_title (GtkAssistant *assistant,
 /**
  * gtk_assistant_get_page_title:
  * @assistant: a `GtkAssistant`
- * @page: a page of @assistant
+ * @page: a page of `assistant`
  *
- * Gets the title for @page.
+ * Gets the title for `page`.
  *
- * Returns: the title for @page
+ * Returns: the title for `page`
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -2018,12 +2018,12 @@ gtk_assistant_get_page_title (GtkAssistant *assistant,
 /**
  * gtk_assistant_set_page_type:
  * @assistant: a `GtkAssistant`
- * @page: a page of @assistant
- * @type: the new type for @page
+ * @page: a page of `assistant`
+ * @type: the new type for `page`
  *
- * Sets the page type for @page.
+ * Sets the page type for `page`.
  *
- * The page type determines the page behavior in the @assistant.
+ * The page type determines the page behavior in the `assistant`.
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -2050,11 +2050,11 @@ gtk_assistant_set_page_type (GtkAssistant         *assistant,
 /**
  * gtk_assistant_get_page_type:
  * @assistant: a `GtkAssistant`
- * @page: a page of @assistant
+ * @page: a page of `assistant`
  *
- * Gets the page type of @page.
+ * Gets the page type of `page`.
  *
- * Returns: the page type of @page
+ * Returns: the page type of `page`
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -2080,12 +2080,12 @@ gtk_assistant_get_page_type (GtkAssistant *assistant,
 /**
  * gtk_assistant_set_page_complete:
  * @assistant: a `GtkAssistant`
- * @page: a page of @assistant
+ * @page: a page of `assistant`
  * @complete: the completeness status of the page
  *
- * Sets whether @page contents are complete.
+ * Sets whether `page` contents are complete.
  *
- * This will make @assistant update the buttons state
+ * This will make `assistant` update the buttons state
  * to be able to continue the task.
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
@@ -2113,11 +2113,11 @@ gtk_assistant_set_page_complete (GtkAssistant *assistant,
 /**
  * gtk_assistant_get_page_complete:
  * @assistant: a `GtkAssistant`
- * @page: a page of @assistant
+ * @page: a page of `assistant`
  *
- * Gets whether @page is complete.
+ * Gets whether `page` is complete.
  *
- * Returns: true if @page is complete.
+ * Returns: true if `page` is complete.
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -2144,7 +2144,7 @@ gtk_assistant_get_page_complete (GtkAssistant *assistant,
  * gtk_assistant_update_buttons_state:
  * @assistant: a `GtkAssistant`
  *
- * Forces @assistant to recompute the buttons state.
+ * Forces `assistant` to recompute the buttons state.
  *
  * GTK automatically takes care of this in most situations,
  * e.g. when the user goes to a different page, or when the
@@ -2252,11 +2252,11 @@ gtk_assistant_buildable_custom_finished (GtkBuildable *buildable,
 /**
  * gtk_assistant_get_page:
  * @assistant: a `GtkAssistant`
- * @child: a child of @assistant
+ * @child: a child of `assistant`
  *
- * Returns the `GtkAssistantPage` object for @child.
+ * Returns the `GtkAssistantPage` object for `child`.
  *
- * Returns: (transfer none): the `GtkAssistantPage` for @child
+ * Returns: (transfer none): the `GtkAssistantPage` for `child`
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -2272,9 +2272,9 @@ gtk_assistant_get_page (GtkAssistant *assistant,
  * gtk_assistant_page_get_child:
  * @page: a `GtkAssistantPage`
  *
- * Returns the child to which @page belongs.
+ * Returns the child to which `page` belongs.
  *
- * Returns: (transfer none): the child to which @page belongs
+ * Returns: (transfer none): the child to which `page` belongs
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */

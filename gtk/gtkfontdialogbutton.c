@@ -745,7 +745,7 @@ gtk_font_dialog_button_set_dialog (GtkFontDialogButton *self,
  * gtk_font_dialog_button_get_dialog:
  * @self: a `GtkFontDialogButton`
  *
- * Returns the `GtkFontDialog` of @self.
+ * Returns the `GtkFontDialog` of `self`.
  *
  * Returns: (nullable) (transfer none): the `GtkFontDialog`
  *
@@ -964,7 +964,7 @@ gtk_font_dialog_button_get_language (GtkFontDialogButton *self)
  * @use_font: If `TRUE`, font name will be written using
  *   the chosen font
  *
- * If @use_font is `TRUE`, the font name will be written
+ * If `use_font` is `TRUE`, the font name will be written
  * using the selected font.
  *
  * Since: 4.10
@@ -1009,7 +1009,7 @@ gtk_font_dialog_button_get_use_font (GtkFontDialogButton *self)
  * @use_size: If `TRUE`, font name will be written using
  *   the chosen font size
  *
- * If @use_size is `TRUE`, the font name will be written
+ * If `use_size` is `TRUE`, the font name will be written
  * using the selected font size.
  *
  * Since: 4.10

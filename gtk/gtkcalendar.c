@@ -1346,7 +1346,7 @@ gtk_calendar_new (void)
  * @self: a `GtkCalendar`.
  * @date: (transfer none): a `GDateTime` representing the day to select
  *
- * Switches to @date's year and month and select its day.
+ * Switches to `date`'s year and month and select its day.
  */
 void
 gtk_calendar_select_day (GtkCalendar *calendar,
@@ -1589,7 +1589,7 @@ gtk_calendar_mark_day (GtkCalendar *calendar,
  * @calendar: a `GtkCalendar`
  * @day: the day number between 1 and 31.
  *
- * Returns if the @day of the @calendar is already marked.
+ * Returns if the `day` of the `calendar` is already marked.
  *
  * Returns: whether the day is marked.
  */
@@ -1676,7 +1676,7 @@ gtk_calendar_set_show_week_numbers (GtkCalendar *self,
  * gtk_calendar_get_show_week_numbers: (attributes org.gtk.Method.get_property=show-week-numbers)
  * @self: a `GtkCalendar`
  *
- * Returns whether @self is showing week numbers right
+ * Returns whether `self` is showing week numbers right
  * now.
  *
  * This is the value of the [property@Gtk.Calendar:show-week-numbers]
@@ -1722,7 +1722,7 @@ gtk_calendar_set_show_heading (GtkCalendar *self,
  * gtk_calendar_get_show_heading: (attributes org.gtk.Method.get_property=show-heading)
  * @self: a `GtkCalendar`
  *
- * Returns whether @self is currently showing the heading.
+ * Returns whether `self` is currently showing the heading.
  *
  * This is the value of the [property@Gtk.Calendar:show-heading]
  * property.
@@ -1767,7 +1767,7 @@ gtk_calendar_set_show_day_names (GtkCalendar *self,
  * gtk_calendar_get_show_day_names: (attributes org.gtk.Method.get_property=show-day-names)
  * @self: a `GtkCalendar`
  *
- * Returns whether @self is currently showing the names
+ * Returns whether `self` is currently showing the names
  * of the week days.
  *
  * This is the value of the [property@Gtk.Calendar:show-day-names]

@@ -46,7 +46,7 @@
  * listen for changes in the item. For more details, see the documentation
  * for GtkMenuTrackerItem along with https://wiki.gnome.org/Projects/GLib/GApplication/GMenuModel.
  *
- * The idea of @with_separators is for special cases where menu models may
+ * The idea of `with_separators` is for special cases where menu models may
  * be tracked in places where separators are not available, like in toplevel
  * "File", “Edit” menu bars. Ignoring separator items is wrong, as GtkMenuTracker
  * expects the position to change, so we must tell GtkMenuTracker to ignore
@@ -504,9 +504,9 @@ gtk_menu_tracker_section_new (GtkMenuTracker *tracker,
  * @action_namespace: the passed-in action namespace
  * @insert_func: insert callback
  * @remove_func: remove callback
- * @user_data user data for callbacks
+ * `user_data` user data for callbacks
  *
- * Creates a GtkMenuTracker for @model, holding a ref on @model for as
+ * Creates a GtkMenuTracker for `model`, holding a ref on `model` for as
  * long as the tracker is alive.
  *
  * This flattens out the model, merging sections and inserting
@@ -514,36 +514,36 @@ gtk_menu_tracker_section_new (GtkMenuTracker *tracker,
  * updates on the fly.  It also handles action_namespace for subsections
  * (but you will need to handle it yourself for submenus).
  *
- * When the tracker is first created, @insert_func will be called many
- * times to populate the menu with the initial contents of @model
+ * When the tracker is first created, `insert_func` will be called many
+ * times to populate the menu with the initial contents of `model`
  * (unless it is empty), before gtk_menu_tracker_new() returns.  For
  * this reason, the menu that is using the tracker ought to be empty
  * when it creates the tracker.
  *
- * Future changes to @model will result in more calls to @insert_func
- * and @remove_func.
+ * Future changes to `model` will result in more calls to `insert_func`
+ * and `remove_func`.
  *
  * The position argument to both functions is the linear 0-based
  * position in the menu at which the item in question should be inserted
  * or removed.
  *
- * For @insert_func, @model and @item_index are used to get the
- * information about the menu item to insert.  @action_namespace is the
+ * For `insert_func`, `model` and `item_index` are used to get the
+ * information about the menu item to insert.  `action_namespace` is the
  * action namespace that actions referred to from that item should place
  * themselves in.  Note that if the item is a submenu and the
  * “action-namespace” attribute is defined on the item, it will _not_ be
- * applied to the @action_namespace argument as it is meant for the
+ * applied to the `action_namespace` argument as it is meant for the
  * items inside of the submenu, not the submenu item itself.
  *
- * @is_separator is set to true in case the item being added is a
- * separator.  @model and @item_index will still be meaningfully set in
+ * `is_separator` is set to true in case the item being added is a
+ * separator.  `model` and `item_index` will still be meaningfully set in
  * this case -- to the section menu item corresponding to the separator.
  * This is useful if the section specifies a label, for example.  If
  * there is an “action-namespace” attribute on this menu item then it
  * should be ignored by the consumer because GtkMenuTracker has already
  * handled it.
  *
- * When using GtkMenuTracker there is no need to hold onto @model or
+ * When using GtkMenuTracker there is no need to hold onto `model` or
  * monitor it for changes.  The model will be unreffed when
  * gtk_menu_tracker_free() is called.
  */

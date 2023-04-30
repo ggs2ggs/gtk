@@ -133,12 +133,12 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
  * # GtkDialog as GtkBuildable
  *
  * The `GtkDialog` implementation of the `GtkBuildable` interface exposes the
- * @content_area as an internal child with the name “content_area”.
+ * `content_area` as an internal child with the name “content_area”.
  *
  * `GtkDialog` supports a custom `<action-widgets>` element, which can contain
  * multiple `<action-widget>` elements. The “response” attribute specifies a
  * numeric response, and the content of the element is the id of widget
- * (which should be a child of the dialogs @action_area). To mark a response
+ * (which should be a child of the dialogs `action_area`). To mark a response
  * as default, set the “default” attribute of the `<action-widget>` element
  * to true.
  *
@@ -694,7 +694,7 @@ gtk_dialog_close (GtkDialog *dialog)
  * Creates a new dialog box.
  *
  * Widgets should not be packed into the `GtkWindow`
- * directly, but into the @content_area and @action_area,
+ * directly, but into the `content_area` and `action_area`,
  * as described above.
  *
  * Returns: the new dialog as a `GtkWidget`
@@ -739,11 +739,11 @@ gtk_dialog_new_empty (const char      *title,
  * @parent: (nullable): Transient parent of the dialog
  * @flags: from `GtkDialogFlags`
  * @first_button_text: (nullable): text to go in first button
- * @...: response ID for first button, then additional buttons, ending with `NULL`
+ * `...`: response ID for first button, then additional buttons, ending with `NULL`
  *
  * Creates a new `GtkDialog` with the given title and transient parent.
  *
- * The @flags argument can be used to make the dialog modal, have it
+ * The `flags` argument can be used to make the dialog modal, have it
  * destroyed along with its transient parent, or make it use a headerbar.
  *
  * Button text/response ID pairs should be listed in pairs, with a `NULL`
@@ -858,7 +858,7 @@ get_response_data (GtkDialog *dialog,
  * gtk_dialog_add_action_widget:
  * @dialog: a `GtkDialog`
  * @child: an activatable widget
- * @response_id: response ID for @child
+ * @response_id: response ID for `child`
  *
  * Adds an activatable widget to the action area of a `GtkDialog`.
  *
@@ -868,7 +868,7 @@ get_response_data (GtkDialog *dialog,
  * area.
  *
  * If you want to add a non-activatable widget, simply pack it into
- * the @action_area field of the `GtkDialog` struct.
+ * the `action_area` field of the `GtkDialog` struct.
  *
  * Deprecated: 4.10: Use [class@Gtk.Window] instead
  */
@@ -907,7 +907,7 @@ gtk_dialog_add_action_widget (GtkDialog *dialog,
  * Adds a button with the given text.
  *
  * GTK arranges things so that clicking the button will emit the
- * [signal@Gtk.Dialog::response] signal with the given @response_id.
+ * [signal@Gtk.Dialog::response] signal with the given `response_id`.
  * The button is appended to the end of the dialog’s action area.
  * The button widget is returned, but usually you don’t need it.
  *
@@ -964,7 +964,7 @@ gtk_dialog_add_buttons_valist (GtkDialog      *dialog,
  * gtk_dialog_add_buttons:
  * @dialog: a `GtkDialog`
  * @first_button_text: button text
- * @...: response ID for first button, then more text-response_id pairs
+ * `...`: response ID for first button, then more text-response_id pairs
  *
  * Adds multiple buttons.
  *
@@ -999,8 +999,8 @@ gtk_dialog_add_buttons (GtkDialog   *dialog,
  *
  * A convenient way to sensitize/desensitize dialog buttons.
  *
- * Calls `gtk_widget_set_sensitive (widget, @setting)`
- * for each widget in the dialog’s action area with the given @response_id.
+ * Calls `gtk_widget_set_sensitive (widget, `setting`)`
+ * for each widget in the dialog’s action area with the given `response_id`.
  *
  * Deprecated: 4.10: Use [class@Gtk.Window] instead
  */
@@ -1077,13 +1077,13 @@ gtk_dialog_response (GtkDialog *dialog,
 /**
  * gtk_dialog_get_widget_for_response:
  * @dialog: a `GtkDialog`
- * @response_id: the response ID used by the @dialog widget
+ * @response_id: the response ID used by the `dialog` widget
  *
  * Gets the widget button that uses the given response ID in the action area
  * of a dialog.
  *
- * Returns: (nullable) (transfer none): the @widget button that uses the given
- *   @response_id
+ * Returns: (nullable) (transfer none): the `widget` button that uses the given
+ *   `response_id`
  *
  * Deprecated: 4.10: Use [class@Gtk.Window] instead
  */
@@ -1108,13 +1108,13 @@ gtk_dialog_get_widget_for_response (GtkDialog *dialog,
 /**
  * gtk_dialog_get_response_for_widget:
  * @dialog: a `GtkDialog`
- * @widget: a widget in the action area of @dialog
+ * @widget: a widget in the action area of `dialog`
  *
  * Gets the response id of a widget in the action area
  * of a dialog.
  *
- * Returns: the response id of @widget, or %GTK_RESPONSE_NONE
- *  if @widget doesn’t have a response id set.
+ * Returns: the response id of `widget`, or %GTK_RESPONSE_NONE
+ *  if `widget` doesn’t have a response id set.
  *
  * Deprecated: 4.10: Use [class@Gtk.Window] instead
  */
@@ -1420,7 +1420,7 @@ gtk_dialog_get_action_area (GtkDialog *dialog)
  * gtk_dialog_get_header_bar:
  * @dialog: a `GtkDialog`
  *
- * Returns the header bar of @dialog.
+ * Returns the header bar of `dialog`.
  *
  * Note that the headerbar is only used by the dialog if the
  * [property@Gtk.Dialog:use-header-bar] property is true.
@@ -1443,7 +1443,7 @@ gtk_dialog_get_header_bar (GtkDialog *dialog)
  * gtk_dialog_get_content_area:
  * @dialog: a `GtkDialog`
  *
- * Returns the content area of @dialog.
+ * Returns the content area of `dialog`.
  *
  * Returns: (type Gtk.Box) (transfer none): the content area `GtkBox`.
  *

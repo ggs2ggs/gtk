@@ -53,7 +53,7 @@ struct _GtkListBoxRow
 /**
  * GtkListBoxRowClass:
  * @parent_class: The parent class.
- * @activate:
+ * `activate`:
  */
 struct _GtkListBoxRowClass
 {
@@ -89,7 +89,7 @@ typedef gboolean (*GtkListBoxFilterFunc) (GtkListBoxRow *row,
  *
  * Compare two rows to determine which should be first.
  *
- * Returns: < 0 if @row1 should be before @row2, 0 if they are
+ * Returns: < 0 if `row1` should be before `row2`, 0 if they are
  *   equal and > 0 otherwise
  */
 typedef int (*GtkListBoxSortFunc) (GtkListBoxRow *row1,
@@ -99,11 +99,11 @@ typedef int (*GtkListBoxSortFunc) (GtkListBoxRow *row1,
 /**
  * GtkListBoxUpdateHeaderFunc:
  * @row: the row to update
- * @before: (nullable): the row before @row, or `NULL` if it is first
+ * @before: (nullable): the row before `row`, or `NULL` if it is first
  * @user_data: (closure): user data
  *
- * Whenever @row changes or which row is before @row changes this
- * is called, which lets you update the header on @row.
+ * Whenever `row` changes or which row is before `row` changes this
+ * is called, which lets you update the header on `row`.
  *
  * You may remove or set a new one via [method@Gtk.ListBoxRow.set_header]
  * or just change the state of the current header widget.
@@ -123,7 +123,7 @@ typedef void (*GtkListBoxUpdateHeaderFunc) (GtkListBoxRow *row,
  * If the widget returned is not a `GtkListBoxRow` widget, then the widget
  * will be inserted as the child of an intermediate `GtkListBoxRow`.
  *
- * Returns: (transfer full): a `GtkWidget` that represents @item
+ * Returns: (transfer full): a `GtkWidget` that represents `item`
  */
 typedef GtkWidget * (*GtkListBoxCreateWidgetFunc) (gpointer item,
                                                    gpointer user_data);

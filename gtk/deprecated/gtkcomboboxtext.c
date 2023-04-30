@@ -387,7 +387,7 @@ gtk_combo_box_text_new_with_entry (void)
  * @combo_box: A `GtkComboBoxText`
  * @text: A string
  *
- * Appends @text to the list of strings stored in @combo_box.
+ * Appends `text` to the list of strings stored in `combo_box`.
  *
  * This is the same as calling [method@Gtk.ComboBoxText.insert_text]
  * with a position of -1.
@@ -406,7 +406,7 @@ gtk_combo_box_text_append_text (GtkComboBoxText *combo_box,
  * @combo_box: A `GtkComboBox`
  * @text: A string
  *
- * Prepends @text to the list of strings stored in @combo_box.
+ * Prepends `text` to the list of strings stored in `combo_box`.
  *
  * This is the same as calling [method@Gtk.ComboBoxText.insert_text]
  * with a position of 0.
@@ -423,12 +423,12 @@ gtk_combo_box_text_prepend_text (GtkComboBoxText *combo_box,
 /**
  * gtk_combo_box_text_insert_text:
  * @combo_box: A `GtkComboBoxText`
- * @position: An index to insert @text
+ * @position: An index to insert `text`
  * @text: A string
  *
- * Inserts @text at @position in the list of strings stored in @combo_box.
+ * Inserts `text` at `position` in the list of strings stored in `combo_box`.
  *
- * If @position is negative then @text is appended.
+ * If `position` is negative then `text` is appended.
  *
  * This is the same as calling [method@Gtk.ComboBoxText.insert]
  * with a `NULL` ID string.
@@ -449,9 +449,9 @@ gtk_combo_box_text_insert_text (GtkComboBoxText *combo_box,
  * @id: (nullable): a string ID for this value
  * @text: A string
  *
- * Appends @text to the list of strings stored in @combo_box.
+ * Appends `text` to the list of strings stored in `combo_box`.
  *
- * If @id is non-`NULL` then it is used as the ID of the row.
+ * If `id` is non-`NULL` then it is used as the ID of the row.
  *
  * This is the same as calling [method@Gtk.ComboBoxText.insert]
  * with a position of -1.
@@ -472,9 +472,9 @@ gtk_combo_box_text_append (GtkComboBoxText *combo_box,
  * @id: (nullable): a string ID for this value
  * @text: a string
  *
- * Prepends @text to the list of strings stored in @combo_box.
+ * Prepends `text` to the list of strings stored in `combo_box`.
  *
- * If @id is non-`NULL` then it is used as the ID of the row.
+ * If `id` is non-`NULL` then it is used as the ID of the row.
  *
  * This is the same as calling [method@Gtk.ComboBoxText.insert]
  * with a position of 0.
@@ -493,16 +493,16 @@ gtk_combo_box_text_prepend (GtkComboBoxText *combo_box,
 /**
  * gtk_combo_box_text_insert:
  * @combo_box: A `GtkComboBoxText`
- * @position: An index to insert @text
+ * @position: An index to insert `text`
  * @id: (nullable): a string ID for this value
  * @text: A string to display
  *
- * Inserts @text at @position in the list of strings stored in @combo_box.
+ * Inserts `text` at `position` in the list of strings stored in `combo_box`.
  *
- * If @id is non-`NULL` then it is used as the ID of the row.
+ * If `id` is non-`NULL` then it is used as the ID of the row.
  * See [property@Gtk.ComboBox:id-column].
  *
- * If @position is negative then @text is appended.
+ * If `position` is negative then `text` is appended.
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
  */
@@ -555,7 +555,7 @@ gtk_combo_box_text_insert (GtkComboBoxText *combo_box,
  * @combo_box: A `GtkComboBox`
  * @position: Index of the item to remove
  *
- * Removes the string at @position from @combo_box.
+ * Removes the string at `position` from `combo_box`.
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
  */
@@ -601,10 +601,10 @@ gtk_combo_box_text_remove_all (GtkComboBoxText *combo_box)
  * gtk_combo_box_text_get_active_text:
  * @combo_box: A `GtkComboBoxText`
  *
- * Returns the currently active string in @combo_box.
+ * Returns the currently active string in `combo_box`.
  *
  * If no row is currently selected, `NULL` is returned.
- * If @combo_box contains an entry, this function will
+ * If `combo_box` contains an entry, this function will
  * return its contents (which will not necessarily
  * be an item from the list).
  *

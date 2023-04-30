@@ -69,7 +69,7 @@ gtk_actionable_default_init (GtkActionableInterface *iface)
  * gtk_actionable_get_action_name: (attributes org.gtk.Property.get=action-name)
  * @actionable: a `GtkActionable` widget
  *
- * Gets the action name for @actionable.
+ * Gets the action name for `actionable`.
  *
  * Returns: (nullable): the action name
  */
@@ -90,7 +90,7 @@ gtk_actionable_get_action_name (GtkActionable *actionable)
  * Specifies the name of the action with which this widget should be
  * associated.
  *
- * If @action_name is `NULL` then the widget will be unassociated from
+ * If `action_name` is `NULL` then the widget will be unassociated from
  * any previous action.
  *
  * Usually this function is used when the widget is located (or will be
@@ -115,7 +115,7 @@ gtk_actionable_set_action_name (GtkActionable *actionable,
  * gtk_actionable_get_action_target_value: (attributes org.gtk.Method.get_property=action-target)
  * @actionable: a `GtkActionable` widget
  *
- * Gets the current target value of @actionable.
+ * Gets the current target value of `actionable`.
  *
  * Returns: (nullable) (transfer none): the current target value
  */
@@ -135,7 +135,7 @@ gtk_actionable_get_action_target_value (GtkActionable *actionable)
  *
  * Sets the target value of an actionable widget.
  *
- * If @target_value is `NULL` then the target value is unset.
+ * If `target_value` is `NULL` then the target value is unset.
  *
  * The target value has two purposes. First, it is used as the parameter
  * to activation of the action associated with the `GtkActionable` widget.
@@ -166,12 +166,12 @@ gtk_actionable_set_action_target_value (GtkActionable *actionable,
  * gtk_actionable_set_action_target:
  * @actionable: a `GtkActionable` widget
  * @format_string: a [struct@GLib.Variant] format string
- * @...: arguments appropriate for @format_string
+ * `...`: arguments appropriate for `format_string`
  *
  * Sets the target of an actionable widget.
  *
  * This is a convenience function that calls [ctor@GLib.Variant.new] for
- * @format_string and uses the result to call
+ * `format_string` and uses the result to call
  * [method@Gtk.Actionable.set_action_target_value].
  *
  * If you are setting a string-valued target and want to set
@@ -198,7 +198,7 @@ gtk_actionable_set_action_target (GtkActionable *actionable,
  * Sets the action-name and associated string target value of an
  * actionable widget.
  *
- * @detailed_action_name is a string in the format accepted by
+ * `detailed_action_name` is a string in the format accepted by
  * [func@Gio.Action.parse_detailed_name].
  */
 void

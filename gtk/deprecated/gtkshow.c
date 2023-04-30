@@ -88,12 +88,12 @@ window_handle_exported (GtkWindow  *window,
  * @timestamp: timestamp from the event that triggered this call, or %GDK_CURRENT_TIME
  * @cancellable: (nullable): a `GCancellable` to cancel the launch
  * @callback: (scope async): a callback to call when the action is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function launches the default application for showing
  * a given uri.
  *
- * The @callback will be called when the launch is completed.
+ * The `callback` will be called when the launch is completed.
  * It should call gtk_show_uri_full_finish() to obtain the result.
  *
  * This is the recommended call to be used as it passes information
@@ -139,14 +139,14 @@ gtk_show_uri_full (GtkWindow           *parent,
 /**
  * gtk_show_uri_full_finish:
  * @parent: the `GtkWindow` passed to gtk_show_uri()
- * @result: `GAsyncResult` that was passed to @callback
+ * @result: `GAsyncResult` that was passed to `callback`
  * @error: return location for an error
  *
  * Finishes the gtk_show_uri() call and returns the result
  * of the operation.
  *
  * Returns: true if the URI was shown successfully.
- *   Otherwise, false is returned and @error is set
+ *   Otherwise, false is returned and `error` is set
  *
  * Deprecated: 4.10: Use [method@Gtk.FileLauncher.launch_finish] or
  *   [method@Gtk.UriLauncher.launch_finish] instead

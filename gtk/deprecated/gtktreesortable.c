@@ -82,8 +82,8 @@ gtk_tree_sortable_base_init (gpointer g_class)
        * @sortable: the object on which the signal is emitted
        *
        * The ::sort-column-changed signal is emitted when the sort column
-       * or sort order of @sortable is changed. The signal is emitted before
-       * the contents of @sortable are resorted.
+       * or sort order of `sortable` is changed. The signal is emitted before
+       * the contents of `sortable` are resorted.
        */
       g_signal_new (I_("sort-column-changed"),
                     GTK_TYPE_TREE_SORTABLE,
@@ -100,7 +100,7 @@ gtk_tree_sortable_base_init (gpointer g_class)
  * gtk_tree_sortable_sort_column_changed:
  * @sortable: A `GtkTreeSortable`
  *
- * Emits a `GtkTreeSortable::sort-column-changed` signal on @sortable.
+ * Emits a `GtkTreeSortable::sort-column-changed` signal on `sortable`.
  *
  * Deprecated: 4.10
  */
@@ -118,8 +118,8 @@ gtk_tree_sortable_sort_column_changed (GtkTreeSortable *sortable)
  * @sort_column_id: (out): The sort column id to be filled in
  * @order: (out): The `GtkSortType` to be filled in
  *
- * Fills in @sort_column_id and @order with the current sort column and the
- * order. It returns true unless the @sort_column_id is
+ * Fills in `sort_column_id` and `order` with the current sort column and the
+ * order. It returns true unless the `sort_column_id` is
  * %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
  * %GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
  *
@@ -151,9 +151,9 @@ gtk_tree_sortable_get_sort_column_id (GtkTreeSortable  *sortable,
  * @sort_column_id: the sort column id to set
  * @order: The sort order of the column
  *
- * Sets the current sort column to be @sort_column_id. The @sortable will
+ * Sets the current sort column to be `sort_column_id`. The `sortable` will
  * resort itself to reflect this change, after emitting a
- * `GtkTreeSortable::sort-column-changed` signal. @sort_column_id may either be
+ * `GtkTreeSortable::sort-column-changed` signal. `sort_column_id` may either be
  * a regular column id, or one of the following special values:
  *
  * - %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID: the default sort function
@@ -185,11 +185,11 @@ gtk_tree_sortable_set_sort_column_id (GtkTreeSortable  *sortable,
  * @sortable: A `GtkTreeSortable`
  * @sort_column_id: the sort column id to set the function for
  * @sort_func: The comparison function
- * @user_data: (closure): User data to pass to @sort_func
- * @destroy: (nullable): Destroy notifier of @user_data
+ * @user_data: (closure): User data to pass to `sort_func`
+ * @destroy: (nullable): Destroy notifier of `user_data`
  *
- * Sets the comparison function used when sorting to be @sort_func. If the
- * current sort column id of @sortable is the same as @sort_column_id, then
+ * Sets the comparison function used when sorting to be `sort_func`. If the
+ * current sort column id of `sortable` is the same as `sort_column_id`, then
  * the model will sort using this function.
  *
  * Deprecated: 4.10
@@ -219,17 +219,17 @@ gtk_tree_sortable_set_sort_func (GtkTreeSortable        *sortable,
  * gtk_tree_sortable_set_default_sort_func:
  * @sortable: A `GtkTreeSortable`
  * @sort_func: The comparison function
- * @user_data: (closure): User data to pass to @sort_func
- * @destroy: (nullable): Destroy notifier of @user_data
+ * @user_data: (closure): User data to pass to `sort_func`
+ * @destroy: (nullable): Destroy notifier of `user_data`
  *
- * Sets the default comparison function used when sorting to be @sort_func.
- * If the current sort column id of @sortable is
+ * Sets the default comparison function used when sorting to be `sort_func`.
+ * If the current sort column id of `sortable` is
  * %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, then the model will sort using
  * this function.
  *
- * If @sort_func is `NULL`, then there will be no default comparison function.
+ * If `sort_func` is `NULL`, then there will be no default comparison function.
  * This means that once the model  has been sorted, it can’t go back to the
- * default state. In this case, when the current sort column id of @sortable
+ * default state. In this case, when the current sort column id of `sortable`
  * is %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, the model will be unsorted.
  *
  * Deprecated: 4.10

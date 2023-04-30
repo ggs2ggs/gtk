@@ -88,7 +88,7 @@ find_first_manifest (HMODULE  module_handle,
  * Grabs the first manifest it finds in libgtk3 (which is expected to be the
  * common-controls-6.0.0.0 manifest we embedded to enable visual styles),
  * uses it to create a process-default activation context, activates that
- * context, loads up the library passed in @dllname, then deactivates and
+ * context, loads up the library passed in `dllname`, then deactivates and
  * releases the context.
  *
  * In practice this is used to force system DLLs (like comdlg32) to be

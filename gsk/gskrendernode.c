@@ -235,8 +235,8 @@ gsk_render_node_get_type (void)
  * @node_name: the name of the node
  * @node_info: type information of the node
  *
- * Registers a new `GskRenderNode` type for the given @node_name using
- * the type information in @node_info.
+ * Registers a new `GskRenderNode` type for the given `node_name` using
+ * the type information in `node_info`.
  *
  * Returns: the newly registered GType
  */
@@ -264,7 +264,7 @@ gsk_render_node_type_register_static (const char     *node_name,
  * gsk_render_node_alloc:
  * @node_type: the `GskRenderNode`Type to instantiate
  *
- * Instantiates a new `GskRenderNode` for the given @node_type.
+ * Instantiates a new `GskRenderNode` for the given `node_type`.
  *
  * Returns: (transfer full) (type GskRenderNode): the newly created `GskRenderNode`
  */
@@ -302,7 +302,7 @@ gsk_render_node_ref (GskRenderNode *node)
  *
  * Releases a reference on the given `GskRenderNode`.
  *
- * If the reference was the last, the resources associated to the @node are
+ * If the reference was the last, the resources associated to the `node` are
  * freed.
  */
 void
@@ -319,7 +319,7 @@ gsk_render_node_unref (GskRenderNode *node)
  * gsk_render_node_get_node_type:
  * @node: a `GskRenderNode`
  *
- * Returns the type of the @node.
+ * Returns the type of the `node`.
  *
  * Returns: the type of the `GskRenderNode`
  */
@@ -343,7 +343,7 @@ _gsk_render_node_get_node_type (const GskRenderNode *node)
  * @node: a `GskRenderNode`
  * @bounds: (out caller-allocates): return location for the boundaries
  *
- * Retrieves the boundaries of the @node.
+ * Retrieves the boundaries of the `node`.
  *
  * The node will not draw outside of its boundaries.
  */
@@ -362,7 +362,7 @@ gsk_render_node_get_bounds (GskRenderNode   *node,
  * @node: a `GskRenderNode`
  * @cr: cairo context to draw to
  *
- * Draw the contents of @node to the given cairo context.
+ * Draw the contents of `node` to the given cairo context.
  *
  * Typically, you'll use this function to implement fallback rendering
  * of `GskRenderNode`s on an intermediate Cairo context, instead of using
@@ -422,7 +422,7 @@ gsk_render_node_draw (GskRenderNode *node,
  *
  * Nodes of different type always return false here.
  *
- * Returns: true if @node1 and @node2 can be expected to be compared
+ * Returns: true if `node1` and `node2` can be expected to be compared
  **/
 gboolean
 gsk_render_node_can_diff (const GskRenderNode *node1,
@@ -470,16 +470,16 @@ gsk_render_node_diff_impossible (GskRenderNode  *node1,
  * @node2: the `GskRenderNode` to compare with
  * @region: a `cairo_region_t` to add the differences to
  *
- * Compares @node1 and @node2 trying to compute the minimal region of changes.
+ * Compares `node1` and `node2` trying to compute the minimal region of changes.
  *
- * In the worst case, this is the union of the bounds of @node1 and @node2.
+ * In the worst case, this is the union of the bounds of `node1` and `node2`.
  *
  * This function is used to compute the area that needs to be redrawn when
- * the previous contents were drawn by @node1 and the new contents should
- * correspond to @node2. As such, it is important that this comparison is
+ * the previous contents were drawn by `node1` and the new contents should
+ * correspond to `node2`. As such, it is important that this comparison is
  * faster than the time it takes to actually do the redraw.
  *
- * Note that the passed in @region may already contain previous results from
+ * Note that the passed in `region` may already contain previous results from
  * previous node comparisons, so this function call will only add to it.
  **/
 void
@@ -543,7 +543,7 @@ gsk_render_node_write_to_file (GskRenderNode *node,
  * gsk_render_node_deserialize:
  * @bytes: the bytes containing the data
  * @error_func: (nullable) (scope call): Callback on parsing errors
- * @user_data: (closure error_func): user_data for @error_func
+ * @user_data: (closure error_func): user_data for `error_func`
  *
  * Loads data previously created via [method@Gsk.RenderNode.serialize].
  *

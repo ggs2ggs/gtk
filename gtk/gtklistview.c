@@ -923,7 +923,7 @@ gtk_list_view_class_init (GtkListViewClass *klass)
    * GtkListView|list.activate-item:
    * @position: position of item to activate
    *
-   * Activates the item given in @position by emitting the
+   * Activates the item given in `position` by emitting the
    * [signal@Gtk.ListView::activate] signal.
    */
   gtk_widget_class_install_action (widget_class,
@@ -952,7 +952,7 @@ gtk_list_view_init (GtkListView *self)
  * @model: (nullable) (transfer full): the model to use
  * @factory: (nullable) (transfer full): The factory to populate items with
  *
- * Creates a new `GtkListView` that uses the given @factory for
+ * Creates a new `GtkListView` that uses the given `factory` for
  * mapping items to widgets.
  *
  * The function takes ownership of the
@@ -962,7 +962,7 @@ gtk_list_view_init (GtkListView *self)
  *   gtk_builder_list_item_factory_new_from_resource ("/resource.ui"));
  * ```
  *
- * Returns: a new `GtkListView` using the given @model and @factory
+ * Returns: a new `GtkListView` using the given `model` and `factory`
  */
 GtkWidget *
 gtk_list_view_new (GtkSelectionModel  *model,

@@ -2261,7 +2261,7 @@ gdk_wayland_toplevel_set_dbus_properties (GdkToplevel *toplevel,
 /**
  * gdk_wayland_toplevel_set_application_id:
  * @toplevel: (type GdkWaylandToplevel): a `GdkToplevel`
- * @application_id: the application id for the @toplevel
+ * @application_id: the application id for the `toplevel`
  *
  * Sets the application id on a `GdkToplevel`.
  */
@@ -2393,7 +2393,7 @@ gdk_wayland_toplevel_uninhibit_idle (GdkToplevel *toplevel)
  *
  * This callback is used in [method@GdkWayland.WaylandToplevel.export_handle].
  *
- * The @handle can be passed to other processes, for the purpose of
+ * The `handle` can be passed to other processes, for the purpose of
  * marking surfaces as transient for out-of-process surfaces.
  */
 
@@ -2432,13 +2432,13 @@ export_handle_done (GObject      *source,
  * gdk_wayland_toplevel_export_handle:
  * @toplevel: (type GdkWaylandToplevel): the `GdkToplevel` to obtain a handle for
  * @callback: callback to call with the handle
- * @user_data: (closure): user data for @callback
- * @destroy_func: destroy notify for @user_data
+ * @user_data: (closure): user data for `callback`
+ * @destroy_func: destroy notify for `user_data`
  *
  * Asynchronously obtains a handle for a surface that can be passed
  * to other processes.
  *
- * When the handle has been obtained, @callback will be called.
+ * When the handle has been obtained, `callback` will be called.
  *
  * It is an error to call this function on a surface that is already
  * exported.
@@ -2531,8 +2531,8 @@ static const struct zxdg_imported_v2_listener xdg_imported_listener_v2 = {
  * @toplevel: (type GdkWaylandToplevel): the `GdkToplevel` to make as transient
  * @parent_handle_str: an exported handle for a surface
  *
- * Marks @toplevel as transient for the surface to which the given
- * @parent_handle_str refers.
+ * Marks `toplevel` as transient for the surface to which the given
+ * `parent_handle_str` refers.
  *
  * Typically, the handle will originate from a
  * [method@GdkWayland.WaylandToplevel.export_handle] call in another process.

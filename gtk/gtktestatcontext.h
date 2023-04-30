@@ -33,7 +33,7 @@ G_BEGIN_DECLS
  * @accessible: a `GtkAccessible`
  * @role: a `GtkAccessibleRole`
  *
- * Checks whether a `GtkAccessible` implementation has the given @role,
+ * Checks whether a `GtkAccessible` implementation has the given `role`,
  * and raises an assertion if the condition is failed.
  */
 #define gtk_test_accessible_assert_role(accessible,role) \
@@ -52,7 +52,7 @@ G_STMT_START { \
  * gtk_test_accessible_assert_property:
  * @accessible: a `GtkAccessible`
  * @property: a `GtkAccessibleProperty`
- * @...: the value of @property
+ * `...`: the value of `property`
  *
  * Checks whether a `GtkAccessible` implementation has its accessible
  * property set to the expected value, and raises an assertion if the
@@ -74,7 +74,7 @@ G_STMT_START { \
  * gtk_test_accessible_assert_relation:
  * @accessible: a `GtkAccessible`
  * @relation: a `GtkAccessibleRelation`
- * @...: the expected value of @relation
+ * `...`: the expected value of `relation`
  *
  * Checks whether a `GtkAccessible` implementation has its accessible
  * relation set to the expected value, and raises an assertion if the
@@ -96,7 +96,7 @@ G_STMT_START { \
  * gtk_test_accessible_assert_state:
  * @accessible: a `GtkAccessible`
  * @state: a `GtkAccessibleRelation`
- * @...: the expected value of @state
+ * `...`: the expected value of `state`
  *
  * Checks whether a `GtkAccessible` implementation has its accessible
  * state set to the expected value, and raises an assertion if the

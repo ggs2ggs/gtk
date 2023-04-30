@@ -2121,15 +2121,15 @@ gtk_cell_area_box_new (void)
  * gtk_cell_area_box_pack_start:
  * @box: a `GtkCellAreaBox`
  * @renderer: the `GtkCellRenderer` to add
- * @expand: whether @renderer should receive extra space when the area receives
+ * @expand: whether `renderer` should receive extra space when the area receives
  * more than its natural size
- * @align: whether @renderer should be aligned in adjacent rows
- * @fixed: whether @renderer should have the same size in all rows
+ * @align: whether `renderer` should be aligned in adjacent rows
+ * @fixed: whether `renderer` should have the same size in all rows
  *
- * Adds @renderer to @box, packed with reference to the start of @box.
+ * Adds `renderer` to `box`, packed with reference to the start of `box`.
  *
- * The @renderer is packed after any other `GtkCellRenderer` packed
- * with reference to the start of @box.
+ * The `renderer` is packed after any other `GtkCellRenderer` packed
+ * with reference to the start of `box`.
  *
  * Deprecated: 4.10
  */
@@ -2164,15 +2164,15 @@ gtk_cell_area_box_pack_start  (GtkCellAreaBox  *box,
  * gtk_cell_area_box_pack_end:
  * @box: a `GtkCellAreaBox`
  * @renderer: the `GtkCellRenderer` to add
- * @expand: whether @renderer should receive extra space when the area receives
+ * @expand: whether `renderer` should receive extra space when the area receives
  * more than its natural size
- * @align: whether @renderer should be aligned in adjacent rows
- * @fixed: whether @renderer should have the same size in all rows
+ * @align: whether `renderer` should be aligned in adjacent rows
+ * @fixed: whether `renderer` should have the same size in all rows
  *
- * Adds @renderer to @box, packed with reference to the end of @box.
+ * Adds `renderer` to `box`, packed with reference to the end of `box`.
  *
- * The @renderer is packed after (away from end of) any other
- * `GtkCellRenderer` packed with reference to the end of @box.
+ * The `renderer` is packed after (away from end of) any other
+ * `GtkCellRenderer` packed with reference to the end of `box`.
  *
  * Deprecated: 4.10
  */
@@ -2209,7 +2209,7 @@ gtk_cell_area_box_pack_end (GtkCellAreaBox  *box,
  *
  * Gets the spacing added between cell renderers.
  *
- * Returns: the space added between cell renderers in @box.
+ * Returns: the space added between cell renderers in `box`.
  *
  * Deprecated: 4.10
  */
@@ -2228,7 +2228,7 @@ gtk_cell_area_box_get_spacing (GtkCellAreaBox  *box)
  * @box: a `GtkCellAreaBox`
  * @spacing: the space to add between `GtkCellRenderer`s
  *
- * Sets the spacing to add between cell renderers in @box.
+ * Sets the spacing to add between cell renderers in `box`.
  *
  * Deprecated: 4.10
  */

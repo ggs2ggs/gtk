@@ -269,10 +269,10 @@ grid_attach (GtkGrid   *grid,
 }
 
 /* Find the position 'touching' existing
- * children. @orientation and @max determine
+ * children. `orientation` and `max` determine
  * from which direction to approach (horizontal
  * + max = right, vertical + !max = top, etc).
- * @op_pos, @op_span determine the rows/columns
+ * `op_pos`, `op_span` determine the rows/columns
  * in which the touching has to happen.
  */
 static int
@@ -537,16 +537,16 @@ gtk_grid_new (void)
  * gtk_grid_attach:
  * @grid: a `GtkGrid`
  * @child: the widget to add
- * @column: the column number to attach the left side of @child to
- * @row: the row number to attach the top side of @child to
- * @width: the number of columns that @child will span
- * @height: the number of rows that @child will span
+ * @column: the column number to attach the left side of `child` to
+ * @row: the row number to attach the top side of `child` to
+ * @width: the number of columns that `child` will span
+ * @height: the number of rows that `child` will span
  *
  * Adds a widget to the grid.
  *
- * The position of @child is determined by @column and @row.
- * The number of “cells” that @child will occupy is determined
- * by @width and @height.
+ * The position of `child` is determined by `column` and `row`.
+ * The number of “cells” that `child` will occupy is determined
+ * by `width` and `height`.
  */
 void
 gtk_grid_attach (GtkGrid   *grid,
@@ -569,21 +569,21 @@ gtk_grid_attach (GtkGrid   *grid,
  * gtk_grid_attach_next_to:
  * @grid: a `GtkGrid`
  * @child: the widget to add
- * @sibling: (nullable): the child of @grid that @child will be placed
- *   next to, or `NULL` to place @child at the beginning or end
- * @side: the side of @sibling that @child is positioned next to
- * @width: the number of columns that @child will span
- * @height: the number of rows that @child will span
+ * @sibling: (nullable): the child of `grid` that `child` will be placed
+ *   next to, or `NULL` to place `child` at the beginning or end
+ * @side: the side of `sibling` that `child` is positioned next to
+ * @width: the number of columns that `child` will span
+ * @height: the number of rows that `child` will span
  *
  * Adds a widget to the grid.
  *
- * The widget is placed next to @sibling, on the side determined by
- * @side. When @sibling is `NULL`, the widget is placed in row (for
+ * The widget is placed next to `sibling`, on the side determined by
+ * `side`. When `sibling` is `NULL`, the widget is placed in row (for
  * left or right placement) or column 0 (for top or bottom placement),
- * at the end indicated by @side.
+ * at the end indicated by `side`.
  *
- * Attaching widgets labeled `[1]`, `[2]`, `[3]` with `@sibling == `NULL`` and
- * `@side == %GTK_POS_LEFT` yields a layout of `[3][2][1]`.
+ * Attaching widgets labeled `[1]`, `[2]`, `[3]` with ``sibling` == `NULL`` and
+ * ``side` == %GTK_POS_LEFT` yields a layout of `[3][2][1]`.
  */
 void
 gtk_grid_attach_next_to (GtkGrid         *grid,
@@ -668,8 +668,8 @@ gtk_grid_attach_next_to (GtkGrid         *grid,
  * @column: the left edge of the cell
  * @row: the top edge of the cell
  *
- * Gets the child of @grid whose area covers the grid
- * cell at @column, @row.
+ * Gets the child of `grid` whose area covers the grid
+ * cell at `column`, `row`.
  *
  * Returns: (transfer none) (nullable): the child at the given position
  */
@@ -709,7 +709,7 @@ gtk_grid_get_child_at (GtkGrid *grid,
  * @grid: a `GtkGrid`
  * @child: the child widget to remove
  *
- * Removes a child from @grid.
+ * Removes a child from `grid`.
  *
  * The child must have been added with
  * [method@Gtk.Grid.attach] or [method@Gtk.Grid.attach_next_to].
@@ -907,15 +907,15 @@ gtk_grid_remove_column (GtkGrid *grid,
 /**
  * gtk_grid_insert_next_to:
  * @grid: a `GtkGrid`
- * @sibling: the child of @grid that the new row or column will be
+ * @sibling: the child of `grid` that the new row or column will be
  *   placed next to
- * @side: the side of @sibling that @child is positioned next to
+ * @side: the side of `sibling` that `child` is positioned next to
  *
  * Inserts a row or column at the specified position.
  *
- * The new row or column is placed next to @sibling, on the side
- * determined by @side. If @side is %GTK_POS_TOP or %GTK_POS_BOTTOM,
- * a row is inserted. If @side is %GTK_POS_LEFT of %GTK_POS_RIGHT,
+ * The new row or column is placed next to `sibling`, on the side
+ * determined by `side`. If `side` is %GTK_POS_TOP or %GTK_POS_BOTTOM,
+ * a row is inserted. If `side` is %GTK_POS_LEFT of %GTK_POS_RIGHT,
  * a column is inserted.
  */
 void
@@ -964,7 +964,7 @@ gtk_grid_insert_next_to (GtkGrid         *grid,
  * @grid: a `GtkGrid`
  * @homogeneous: true to make rows homogeneous
  *
- * Sets whether all rows of @grid will have the same height.
+ * Sets whether all rows of `grid` will have the same height.
  */
 void
 gtk_grid_set_row_homogeneous (GtkGrid  *grid,
@@ -987,9 +987,9 @@ gtk_grid_set_row_homogeneous (GtkGrid  *grid,
  * gtk_grid_get_row_homogeneous: (attributes org.gtk.Method.get_property=row-homogeneous)
  * @grid: a `GtkGrid`
  *
- * Returns whether all rows of @grid have the same height.
+ * Returns whether all rows of `grid` have the same height.
  *
- * Returns: whether all rows of @grid have the same height.
+ * Returns: whether all rows of `grid` have the same height.
  */
 gboolean
 gtk_grid_get_row_homogeneous (GtkGrid *grid)
@@ -1006,7 +1006,7 @@ gtk_grid_get_row_homogeneous (GtkGrid *grid)
  * @grid: a `GtkGrid`
  * @homogeneous: true to make columns homogeneous
  *
- * Sets whether all columns of @grid will have the same width.
+ * Sets whether all columns of `grid` will have the same width.
  */
 void
 gtk_grid_set_column_homogeneous (GtkGrid  *grid,
@@ -1029,9 +1029,9 @@ gtk_grid_set_column_homogeneous (GtkGrid  *grid,
  * gtk_grid_get_column_homogeneous: (attributes org.gtk.Method.get_property=column-homogeneous)
  * @grid: a `GtkGrid`
  *
- * Returns whether all columns of @grid have the same width.
+ * Returns whether all columns of `grid` have the same width.
  *
- * Returns: whether all columns of @grid have the same width.
+ * Returns: whether all columns of `grid` have the same width.
  */
 gboolean
 gtk_grid_get_column_homogeneous (GtkGrid *grid)
@@ -1048,7 +1048,7 @@ gtk_grid_get_column_homogeneous (GtkGrid *grid)
  * @grid: a `GtkGrid`
  * @spacing: the amount of space to insert between rows
  *
- * Sets the amount of space between rows of @grid.
+ * Sets the amount of space between rows of `grid`.
  */
 void
 gtk_grid_set_row_spacing (GtkGrid *grid,
@@ -1072,9 +1072,9 @@ gtk_grid_set_row_spacing (GtkGrid *grid,
  * gtk_grid_get_row_spacing: (attributes org.gtk.Method.get_property=row-spacing)
  * @grid: a `GtkGrid`
  *
- * Returns the amount of space between the rows of @grid.
+ * Returns the amount of space between the rows of `grid`.
  *
- * Returns: the row spacing of @grid
+ * Returns: the row spacing of `grid`
  */
 guint
 gtk_grid_get_row_spacing (GtkGrid *grid)
@@ -1091,7 +1091,7 @@ gtk_grid_get_row_spacing (GtkGrid *grid)
  * @grid: a `GtkGrid`
  * @spacing: the amount of space to insert between columns
  *
- * Sets the amount of space between columns of @grid.
+ * Sets the amount of space between columns of `grid`.
  */
 void
 gtk_grid_set_column_spacing (GtkGrid *grid,
@@ -1115,9 +1115,9 @@ gtk_grid_set_column_spacing (GtkGrid *grid,
  * gtk_grid_get_column_spacing: (attributes org.gtk.Method.get_property=column-spacing)
  * @grid: a `GtkGrid`
  *
- * Returns the amount of space between the columns of @grid.
+ * Returns the amount of space between the columns of `grid`.
  *
- * Returns: the column spacing of @grid
+ * Returns: the column spacing of `grid`
  */
 guint
 gtk_grid_get_column_spacing (GtkGrid *grid)
@@ -1135,7 +1135,7 @@ gtk_grid_get_column_spacing (GtkGrid *grid)
  * @row: a row index
  * @pos: a `GtkBaselinePosition`
  *
- * Sets how the baseline should be positioned on @row of the
+ * Sets how the baseline should be positioned on `row` of the
  * grid, in case that row is assigned more space than is requested.
  *
  * The default baseline position is %GTK_BASELINE_POSITION_CENTER.
@@ -1159,11 +1159,11 @@ gtk_grid_set_row_baseline_position (GtkGrid            *grid,
  * @grid: a `GtkGrid`
  * @row: a row index
  *
- * Returns the baseline position of @row.
+ * Returns the baseline position of `row`.
  *
  * See [method@Gtk.Grid.set_row_baseline_position].
  *
- * Returns: the baseline position of @row
+ * Returns: the baseline position of `row`
  */
 GtkBaselinePosition
 gtk_grid_get_row_baseline_position (GtkGrid      *grid,
@@ -1185,7 +1185,7 @@ gtk_grid_get_row_baseline_position (GtkGrid      *grid,
  *
  * Each row in the grid can have its own local baseline, but only
  * one of those is global, meaning it will be the baseline in the
- * parent of the @grid.
+ * parent of the `grid`.
  */
 void
 gtk_grid_set_baseline_row (GtkGrid *grid,
@@ -1208,7 +1208,7 @@ gtk_grid_set_baseline_row (GtkGrid *grid,
  * gtk_grid_get_baseline_row: (attributes org.gtk.Method.get_property=baseline-row)
  * @grid: a `GtkGrid`
  *
- * Returns which row defines the global baseline of @grid.
+ * Returns which row defines the global baseline of `grid`.
  *
  * Returns: the row index defining the global baseline
  */
@@ -1225,13 +1225,13 @@ gtk_grid_get_baseline_row (GtkGrid *grid)
 /**
  * gtk_grid_query_child:
  * @grid: a `GtkGrid`
- * @child: a `GtkWidget` child of @grid
- * @column: (out) (optional): the column used to attach the left side of @child
- * @row: (out) (optional): the row used to attach the top side of @child
- * @width: (out) (optional): the number of columns @child spans
- * @height: (out) (optional): the number of rows @child spans
+ * @child: a `GtkWidget` child of `grid`
+ * @column: (out) (optional): the column used to attach the left side of `child`
+ * @row: (out) (optional): the row used to attach the top side of `child`
+ * @width: (out) (optional): the number of columns `child` spans
+ * @height: (out) (optional): the number of rows `child` spans
  *
- * Queries the attach points and spans of @child inside the given `GtkGrid`.
+ * Queries the attach points and spans of `child` inside the given `GtkGrid`.
  */
 void
 gtk_grid_query_child (GtkGrid   *grid,

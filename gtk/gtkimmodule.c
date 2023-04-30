@@ -76,9 +76,9 @@
  * @context_id: the context ID for the context type to create
  *
  * Create an IM context of a type specified by the string
- * ID @context_id.
+ * ID `context_id`.
  *
- * Returns: a newly created input context of or @context_id, or
+ * Returns: a newly created input context of or `context_id`, or
  *   if that could not be created, a newly created `GtkIMContextSimple`
  */
 GtkIMContext *

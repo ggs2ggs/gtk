@@ -1781,13 +1781,13 @@ gtk_grab_notify (GtkWindowGroup *group,
  * gtk_grab_add: (method)
  * @widget: The widget that grabs keyboard and pointer events
  *
- * Makes @widget the current grabbed widget.
+ * Makes `widget` the current grabbed widget.
  *
  * This means that interaction with other widgets in the same
  * application is blocked and mouse as well as keyboard events
  * are delivered to this widget.
  *
- * If @widget is not sensitive, it is not set as the current
+ * If `widget` is not sensitive, it is not set as the current
  * grabbed widget and this function does nothing.
  */
 void
@@ -1821,7 +1821,7 @@ gtk_grab_add (GtkWidget *widget)
  *
  * You have to pair calls to gtk_grab_add() and gtk_grab_remove().
  *
- * If @widget does not have the grab, this function does nothing.
+ * If `widget` does not have the grab, this function does nothing.
  */
 void
 gtk_grab_remove (GtkWidget *widget)
@@ -1858,12 +1858,12 @@ gtk_get_current_event_time (void)
  * gtk_get_event_widget:
  * @event: a `GdkEvent`
  *
- * If @event is `NULL` or the event was not associated with any widget,
+ * If `event` is `NULL` or the event was not associated with any widget,
  * returns `NULL`, otherwise returns the widget that received the event
  * originally.
  *
  * Returns: (transfer none) (nullable): the widget that originally
- *   received @event
+ *   received `event`
  */
 GtkWidget *
 gtk_get_event_widget (GdkEvent *event)
@@ -1971,7 +1971,7 @@ gtk_propagate_event_internal (GtkWidget *widget,
  *
  * Sends an event to a widget, propagating the event to parent widgets
  * if the event remains unhandled. This function will emit the event
- * through all the hierarchy of @widget through all propagation phases.
+ * through all the hierarchy of `widget` through all propagation phases.
  *
  * Events received by GTK from GDK normally begin at a `GtkRoot` widget.
  * Depending on the type of event, existence of modal dialogs, grabs, etc.,

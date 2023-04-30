@@ -6389,10 +6389,10 @@ gtk_file_chooser_widget_class_init (GtkFileChooserWidgetClass *class)
    * the user can use to manually type the name of the file he wishes to select.
    *
    * The default bindings for this signal are <kbd>Control</kbd>-<kbd>L</kbd>
-   * with a @path string of "" (the empty string). It is also bound to
-   * <kbd>/</kbd> with a @path string of "`/`" (a slash):  this lets you
+   * with a `path` string of "" (the empty string). It is also bound to
+   * <kbd>/</kbd> with a `path` string of "`/`" (a slash):  this lets you
    * type `/` and immediately type a path name. On Unix systems, this is
-   * bound to <kbd>~</kbd> (tilde) with a @path string of "~" itself for
+   * bound to <kbd>~</kbd> (tilde) with a `path` string of "~" itself for
    * access to home directories.
    */
   signals[LOCATION_POPUP] =
@@ -6551,7 +6551,7 @@ gtk_file_chooser_widget_class_init (GtkFileChooserWidgetClass *class)
    * This is a [keybinding signal](class.SignalAction.html).
    *
    * This is used to make the file chooser switch to the bookmark
-   * specified in the @bookmark_index parameter. For example, if
+   * specified in the `bookmark_index` parameter. For example, if
    * you have three bookmarks, you can pass 0, 1, 2 to this signal
    * to switch to each of them, respectively.
    *

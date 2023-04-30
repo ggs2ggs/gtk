@@ -244,9 +244,9 @@ gtk_fixed_put (GtkFixed  *fixed,
 /**
  * gtk_fixed_get_child_position:
  * @fixed: a `GtkFixed`
- * @widget: a child of @fixed
- * @x: (out): the horizontal position of the @widget
- * @y: (out): the vertical position of the @widget
+ * @widget: a child of `fixed`
+ * @x: (out): the horizontal position of the `widget`
+ * @y: (out): the vertical position of the `widget`
  *
  * Retrieves the translation transformation of the
  * given child `GtkWidget` in the `GtkFixed`.
@@ -279,15 +279,15 @@ gtk_fixed_get_child_position (GtkFixed  *fixed,
 /**
  * gtk_fixed_set_child_transform:
  * @fixed: a `GtkFixed`
- * @widget: a `GtkWidget`, child of @fixed
- * @transform: (nullable): the transformation assigned to @widget
- *   to reset @widget's transform
+ * @widget: a `GtkWidget`, child of `fixed`
+ * @transform: (nullable): the transformation assigned to `widget`
+ *   to reset `widget`'s transform
  *
- * Sets the transformation for @widget.
+ * Sets the transformation for `widget`.
  *
  * This is a convenience function that retrieves the
  * [class@Gtk.FixedLayoutChild] instance associated to
- * @widget and calls [method@Gtk.FixedLayoutChild.set_transform].
+ * `widget` and calls [method@Gtk.FixedLayoutChild.set_transform].
  */
 void
 gtk_fixed_set_child_transform (GtkFixed     *fixed,
@@ -308,9 +308,9 @@ gtk_fixed_set_child_transform (GtkFixed     *fixed,
 /**
  * gtk_fixed_get_child_transform:
  * @fixed: a `GtkFixed`
- * @widget: a `GtkWidget`, child of @fixed
+ * @widget: a `GtkWidget`, child of `fixed`
  *
- * Retrieves the transformation for @widget set using
+ * Retrieves the transformation for `widget` set using
  * gtk_fixed_set_child_transform().
  *
  * Returns: (transfer none) (nullable): a `GskTransform`
@@ -337,8 +337,8 @@ gtk_fixed_get_child_transform (GtkFixed  *fixed,
  * @x: the horizontal position to move the widget to
  * @y: the vertical position to move the widget to
  *
- * Sets a translation transformation to the given @x and @y
- * coordinates to the child @widget of the `GtkFixed`.
+ * Sets a translation transformation to the given `x` and `y`
+ * coordinates to the child `widget` of the `GtkFixed`.
  */
 void
 gtk_fixed_move (GtkFixed  *fixed,
@@ -366,7 +366,7 @@ gtk_fixed_move (GtkFixed  *fixed,
  * @fixed: a `GtkFixed`
  * @widget: the child widget to remove
  *
- * Removes a child from @fixed.
+ * Removes a child from `fixed`.
  */
 void
 gtk_fixed_remove (GtkFixed  *fixed,

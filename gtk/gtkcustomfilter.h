@@ -32,7 +32,7 @@ G_BEGIN_DECLS
  * @item: (type GObject): The item to be matched
  * @user_data: user data
  *
- * User function that is called to determine if the @item should be matched.
+ * User function that is called to determine if the `item` should be matched.
  *
  * If the filter matches the item, this function must return true. If the
  * item should be filtered out, false must be returned.

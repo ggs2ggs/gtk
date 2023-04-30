@@ -908,7 +908,7 @@ gdk_x11_display_get_glx_version (GdkDisplay *display,
  * @out_depth: set to the depth to be used with the returned config
  * @error: Return location for error
  *
- * Initializes the cached GLX state for the given @screen.
+ * Initializes the cached GLX state for the given `screen`.
  *
  * This function must be called exactly once during initialization.
  *

@@ -179,9 +179,9 @@ gsk_shader_paintable_init (GskShaderPaintable *self)
  * @shader: (transfer full) (nullable): the shader to use
  * @data: (transfer full) (nullable): uniform data
  *
- * Creates a paintable that uses the @shader to create
+ * Creates a paintable that uses the `shader` to create
  * pixels. The shader must not require input textures.
- * If @data is `NULL`, all uniform values are set to zero.
+ * If `data` is `NULL`, all uniform values are set to zero.
  *
  * Returns: (transfer full): a new `GskShaderPaintable`
  */
@@ -258,10 +258,10 @@ gsk_shader_paintable_get_shader (GskShaderPaintable *self)
  * @data: Data block with uniform data for the shader
  *
  * Sets the uniform data that will be passed to the
- * shader when rendering. The @data will typically
+ * shader when rendering. The `data` will typically
  * be produced by a `GskUniformDataBuilder`.
  *
- * Note that the @data should be considered immutable
+ * Note that the `data` should be considered immutable
  * after it has been passed to this function.
  */
 void
@@ -305,7 +305,7 @@ gsk_shader_paintable_get_args (GskShaderPaintable *self)
  * This function is a convenience wrapper for
  * gsk_shader_paintable_set_args() that leaves all
  * uniform values unchanged, except for the uniform with
- * index @time_idx, which will be set to the elapsed time
+ * index `time_idx`, which will be set to the elapsed time
  * in seconds, since the first call to this function.
  *
  * This function is usually called from a `GtkTickCallback`.

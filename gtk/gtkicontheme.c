@@ -862,7 +862,7 @@ gtk_icon_theme_load_in_thread (GtkIconTheme *self)
  * gtk_icon_theme_get_for_display:
  * @display: a `GdkDisplay`
  *
- * Gets the icon theme object associated with @display.
+ * Gets the icon theme object associated with `display`.
  *
  * If this function has not previously been called for the given
  * display, a new icon theme object will be created and associated
@@ -1050,7 +1050,7 @@ gtk_icon_theme_class_init (GtkIconThemeClass *klass)
    *
    * The resources are considered as part of the hicolor icon theme
    * and must be located in subdirectories that are defined in the
-   * hicolor icon theme, such as `@path/16x16/actions/run.png`.
+   * hicolor icon theme, such as ``path`/16x16/actions/run.png`.
    * Icons that are directly placed in the resource path instead
    * of a subdirectory are also considered as ultimate fallback.
    */
@@ -1456,7 +1456,7 @@ gtk_icon_theme_finalize (GObject *object)
  * Sets the search path for the icon theme object.
  *
  * When looking for an icon theme, GTK will search for a subdirectory
- * of one or more of the directories in @path with the same name
+ * of one or more of the directories in `path` with the same name
  * as the icon theme containing an index.theme file. (Themes from
  * multiple of the path elements are combined to allow themes to be
  * extended by adding icons in the user’s home directory.)
@@ -1464,7 +1464,7 @@ gtk_icon_theme_finalize (GObject *object)
  * In addition if an icon found isn’t found either in the current
  * icon theme or the default icon theme, and an image file with
  * the right name is found directly in one of the elements of
- * @path, then that image will be used for the icon name.
+ * `path`, then that image will be used for the icon name.
  * (This is legacy feature, and new icons should be put
  * into the fallback icon theme, which is called hicolor,
  * rather than directly on the icon path.)
@@ -1559,8 +1559,8 @@ gtk_icon_theme_add_search_path (GtkIconTheme *self,
  *
  * The resources are considered as part of the hicolor icon theme
  * and must be located in subdirectories that are defined in the
- * hicolor icon theme, such as `@path/16x16/actions/run.png`
- * or `@path/scalable/actions/run.svg`.
+ * hicolor icon theme, such as ``path`/16x16/actions/run.png`
+ * or ``path`/scalable/actions/run.svg`.
  *
  * Icons that are directly placed in the resource path instead
  * of a subdirectory are also considered as ultimate fallback,
@@ -2452,7 +2452,7 @@ load_icon_thread (GTask        *task,
  * The icon can then be rendered by using it as a `GdkPaintable`,
  * or you can get information such as the filename and size.
  *
- * If the available @icon_name is not available and @fallbacks are
+ * If the available `icon_name` is not available and `fallbacks` are
  * provided, they will be tried in order.
  *
  * If no matching icon is found, then a paintable that renders the
@@ -2576,8 +2576,8 @@ gtk_icon_theme_lookup_symbolic_colors (GtkCssStyle *style,
  * Checks whether an icon theme includes an icon
  * for a particular name.
  *
- * Returns: true if @self includes an
- *  icon for @icon_name.
+ * Returns: true if `self` includes an
+ *  icon for `icon_name`.
  */
 gboolean
 gtk_icon_theme_has_icon (GtkIconTheme *self,
@@ -2613,7 +2613,7 @@ gtk_icon_theme_has_icon (GtkIconTheme *self,
  * Checks whether an icon theme includes an icon
  * for a particular `GIcon`.
  *
- * Returns: true if @self includes an icon for @gicon
+ * Returns: true if `self` includes an icon for `gicon`
  *
  * Since: 4.2
  */
@@ -4135,7 +4135,7 @@ gtk_icon_theme_lookup_by_gicon (GtkIconTheme       *self,
  * Returns the display that the `GtkIconTheme` object was
  * created for.
  *
- * Returns: (nullable) (transfer none): the display of @icon_theme
+ * Returns: (nullable) (transfer none): the display of `icon_theme`
  */
 GdkDisplay *
 gtk_icon_theme_get_display (GtkIconTheme *self)

@@ -916,7 +916,7 @@ gtk_text_class_init (GtkTextClass *class)
    *
    * This is mainly useful to change the size or weight of the text.
    *
-   * The `PangoAttribute`'s @start_index and @end_index must refer to the
+   * The `PangoAttribute`'s `start_index` and `end_index` must refer to the
    * `GtkEntryBuffer` text, i.e. without the preedit string.
    */
   text_props[PROP_ATTRIBUTES] =
@@ -1003,12 +1003,12 @@ gtk_text_class_init (GtkTextClass *class)
    * GtkText::move-cursor:
    * @self: the object which received the signal
    * @step: the granularity of the move, as a `GtkMovementStep`
-   * @count: the number of @step units to move
+   * @count: the number of `step` units to move
    * @extend: true if the move should extend the selection
    *
    * Emitted when the user initiates a cursor movement.
    *
-   * If the cursor is not visible in @self, this signal causes
+   * If the cursor is not visible in `self`, this signal causes
    * the viewport to be moved instead.
    *
    * This is a [keybinding signal](class.SignalAction.html).
@@ -1065,13 +1065,13 @@ gtk_text_class_init (GtkTextClass *class)
    * GtkText::delete-from-cursor:
    * @self: the object which received the signal
    * @type: the granularity of the deletion, as a `GtkDeleteType`
-   * @count: the number of @type units to delete
+   * @count: the number of `type` units to delete
    *
    * Emitted when the user initiates a text deletion.
    *
    * This is a [keybinding signal](class.SignalAction.html).
    *
-   * If the @type is %GTK_DELETE_CHARS, GTK deletes the selection
+   * If the `type` is %GTK_DELETE_CHARS, GTK deletes the selection
    * if there is one, otherwise it deletes the requested number
    * of characters.
    *
@@ -3330,15 +3330,15 @@ gtk_text_grab_focus (GtkWidget *widget)
  * gtk_text_grab_focus_without_selecting:
  * @self: a `GtkText`
  *
- * Causes @self to have keyboard focus.
+ * Causes `self` to have keyboard focus.
  *
  * It behaves like [method@Gtk.Widget.grab_focus],
- * except that it doesn't select the contents of @self.
+ * except that it doesn't select the contents of `self`.
  * You only want to call this on some special entries
  * which the user usually doesn't want to replace all text in,
  * such as search-as-you-type entries.
  *
- * Returns: true if focus is now inside @self
+ * Returns: true if focus is now inside `self`
  */
 gboolean
 gtk_text_grab_focus_without_selecting (GtkText *self)
@@ -5645,7 +5645,7 @@ gtk_text_set_visibility (GtkText  *self,
  * gtk_text_get_visibility: (attributes org.gtk.Method.get_property=visibility)
  * @self: a `GtkText`
  *
- * Retrieves whether the text in @self is visible.
+ * Retrieves whether the text in `self` is visible.
  *
  * Returns: true if the text is currently visible
  */
@@ -5703,7 +5703,7 @@ gtk_text_set_invisible_char (GtkText  *self,
  * so the value returned by this function is not very useful unless
  * it has been explicitly set with [method@Gtk.Text.set_invisible_char].
  *
- * Returns: the current invisible char, or 0, if @text does not
+ * Returns: the current invisible char, or 0, if `text` does not
  *   show invisible text at all.
  */
 gunichar
@@ -5806,7 +5806,7 @@ gtk_text_get_overwrite_mode (GtkText *self)
  * If the current contents are longer than the given length, then
  * they will be truncated to fit.
  *
- * This is equivalent to getting @self's `GtkEntryBuffer` and
+ * This is equivalent to getting `self`'s `GtkEntryBuffer` and
  * calling [method@Gtk.EntryBuffer.set_max_length] on it.
  */
 void
@@ -5821,11 +5821,11 @@ gtk_text_set_max_length (GtkText *self,
  * gtk_text_get_max_length: (attributes org.gtk.Method.get_property=max-length)
  * @self: a `GtkText`
  *
- * Retrieves the maximum allowed length of the text in @self.
+ * Retrieves the maximum allowed length of the text in `self`.
  *
  * See [method@Gtk.Text.set_max_length].
  *
- * This is equivalent to getting @self's `GtkEntryBuffer` and
+ * This is equivalent to getting `self`'s `GtkEntryBuffer` and
  * calling [method@Gtk.EntryBuffer.get_max_length] on it.
  *
  * Returns: the maximum allowed number of characters
@@ -5843,9 +5843,9 @@ gtk_text_get_max_length (GtkText *self)
  * gtk_text_get_text_length:
  * @self: a `GtkText`
  *
- * Retrieves the current length of the text in @self.
+ * Retrieves the current length of the text in `self`.
  *
- * This is equivalent to getting @self's `GtkEntryBuffer`
+ * This is equivalent to getting `self`'s `GtkEntryBuffer`
  * and calling [method@Gtk.EntryBuffer.get_length] on it.
  *
  * Returns: the current number of characters
@@ -5864,8 +5864,8 @@ gtk_text_get_text_length (GtkText *self)
  * @self: a `GtkText`
  * @activates: true to activate window’s default widget on Enter keypress
  *
- * If @activates is true, pressing Enter will activate
- * the default widget for the window containing @self.
+ * If `activates` is true, pressing Enter will activate
+ * the default widget for the window containing `self`.
  *
  * This usually means that the dialog containing the `GtkText`
  * will be closed, since the default widget is usually one of
@@ -5893,7 +5893,7 @@ gtk_text_set_activates_default (GtkText  *self,
  * @self: a `GtkText`
  *
  * Returns whether pressing Enter will activate
- * the default widget for the window containing @self.
+ * the default widget for the window containing `self`.
  *
  * See [method@Gtk.Text.set_activates_default].
  *
@@ -6696,10 +6696,10 @@ gtk_text_reset_blink_time (GtkText *self)
 /**
  * gtk_text_set_placeholder_text: (attributes org.gtk.Method.set_property=placeholder-text)
  * @self: a `GtkText`
- * @text: (nullable): a string to be displayed when @self
+ * @text: (nullable): a string to be displayed when `self`
  *   is empty and unfocused
  *
- * Sets text to be displayed in @self when it is empty.
+ * Sets text to be displayed in `self` when it is empty.
  *
  * This can be used to give a visual hint of the expected
  * contents of the `GtkText`.
@@ -6738,7 +6738,7 @@ gtk_text_set_placeholder_text (GtkText    *self,
  * @self: a `GtkText`
  *
  * Retrieves the text that will be displayed when
- * @self is empty and unfocused
+ * `self` is empty and unfocused
  *
  * If no placeholder text has been set, `NULL` will be returned.
  *
@@ -7016,7 +7016,7 @@ gtk_text_get_key_controller (GtkText *self)
  * @model: (nullable): a `GMenuModel`
  *
  * Sets a menu model to add when constructing
- * the context menu for @self.
+ * the context menu for `self`.
  */
 void
 gtk_text_set_extra_menu (GtkText    *self,
@@ -7137,7 +7137,7 @@ gtk_text_set_propagate_text_width (GtkText  *self,
  * Returns whether the `GtkText` will grow and shrink
  * with the content.
  *
- * Returns: true if @self will propagate the text width
+ * Returns: true if `self` will propagate the text width
  */
 gboolean
 gtk_text_get_propagate_text_width (GtkText *self)
@@ -7180,7 +7180,7 @@ gtk_text_set_truncate_multiline (GtkText  *self,
  * Returns whether the `GtkText` will truncate multi-line text
  * that is pasted into the widget
  *
- * Returns: true if @self will truncate multi-line text
+ * Returns: true if `self` will truncate multi-line text
  */
 gboolean
 gtk_text_get_truncate_multiline (GtkText *self)
@@ -7200,7 +7200,7 @@ gtk_text_get_truncate_multiline (GtkText *self)
  * @weak: (out) (optional): location to store the weak cursor position
  *
  * Determine the positions of the strong and weak cursors if the
- * insertion point in the layout is at @position.
+ * insertion point in the layout is at `position`.
  *
  * The position of each cursor is stored as a zero-width rectangle.
  * The strong cursor location is the location where characters of

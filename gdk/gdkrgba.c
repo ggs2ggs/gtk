@@ -62,7 +62,7 @@ G_DEFINE_BOXED_TYPE (GdkRGBA, gdk_rgba,
  *
  * The result must be freed through [method@Gdk.RGBA.free].
  *
- * Returns: A newly allocated `GdkRGBA`, with the same contents as @rgba
+ * Returns: A newly allocated `GdkRGBA`, with the same contents as `rgba`
  */
 GdkRGBA *
 gdk_rgba_copy (const GdkRGBA *rgba)
@@ -91,11 +91,11 @@ gdk_rgba_free (GdkRGBA *rgba)
  * gdk_rgba_is_clear:
  * @rgba: a `GdkRGBA`
  *
- * Checks if an @rgba value is transparent.
+ * Checks if an `rgba` value is transparent.
  *
  * That is, drawing with the value would not produce any change.
  *
- * Returns: true if the @rgba is clear
+ * Returns: true if the `rgba` is clear
  */
 gboolean
 gdk_rgba_is_clear (const GdkRGBA *rgba)
@@ -107,12 +107,12 @@ gdk_rgba_is_clear (const GdkRGBA *rgba)
  * gdk_rgba_is_opaque:
  * @rgba: a `GdkRGBA`
  *
- * Checks if an @rgba value is opaque.
+ * Checks if an `rgba` value is opaque.
  *
  * That is, drawing with the value will not retain any results
  * from previous contents.
  *
- * Returns: true if the @rgba is opaque
+ * Returns: true if the `rgba` is opaque
  */
 gboolean
 gdk_rgba_is_opaque (const GdkRGBA *rgba)
@@ -343,7 +343,7 @@ gdk_rgba_parse (GdkRGBA    *rgba,
  * A hash function suitable for using for a hash
  * table that stores `GdkRGBA`s.
  *
- * Returns: The hash value for @p
+ * Returns: The hash value for `p`
  */
 guint
 gdk_rgba_hash (gconstpointer p)
@@ -387,7 +387,7 @@ gdk_rgba_equal (gconstpointer p1,
  * gdk_rgba_to_string:
  * @rgba: a `GdkRGBA`
  *
- * Returns a textual specification of @rgba in the form
+ * Returns a textual specification of `rgba` in the form
  * `rgb(r,g,b)` or `rgba(r,g,b,a)`, where “r”, “g”, “b” and
  * “a” represent the red, green, blue and alpha values
  * respectively. “r”, “g”, and “b” are represented as integers

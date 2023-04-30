@@ -197,7 +197,7 @@ gtk_shortcut_init (GtkShortcut *self)
  *    triggering
  *
  * Creates a new `GtkShortcut` that is triggered by
- * @trigger and then activates @action.
+ * `trigger` and then activates `action`.
  *
  * Returns: a new `GtkShortcut`
  */
@@ -227,10 +227,10 @@ gtk_shortcut_new (GtkShortcutTrigger *trigger,
  *   triggering
  * @format_string: (nullable): GVariant format string for arguments or `NULL` for
  *   no arguments
- * @...: arguments, as given by format string.
+ * `...`: arguments, as given by format string.
  *
- * Creates a new `GtkShortcut` that is triggered by @trigger and then activates
- * @action with arguments given by @format_string.
+ * Creates a new `GtkShortcut` that is triggered by `trigger` and then activates
+ * `action` with arguments given by `format_string`.
  *
  * Returns: a new `GtkShortcut`
  */
@@ -289,9 +289,9 @@ gtk_shortcut_get_action (GtkShortcut *self)
  * gtk_shortcut_set_action: (attributes org.gtk.Method.set_property=action)
  * @self: a `GtkShortcut`
  * @action: (transfer full) (nullable): The new action.
- *   If the @action is `NULL`, the nothing action will be used.
+ *   If the `action` is `NULL`, the nothing action will be used.
  *
- * Sets the new action for @self to be @action.
+ * Sets the new action for `self` to be `action`.
  */
 void
 gtk_shortcut_set_action (GtkShortcut *self,
@@ -313,7 +313,7 @@ gtk_shortcut_set_action (GtkShortcut *self,
  * gtk_shortcut_get_trigger: (attributes org.gtk.Method.get_property=trigger)
  * @self: a `GtkShortcut`
  *
- * Gets the trigger used to trigger @self.
+ * Gets the trigger used to trigger `self`.
  *
  * Returns: (transfer none) (nullable): the trigger used
  */
@@ -329,9 +329,9 @@ gtk_shortcut_get_trigger (GtkShortcut *self)
  * gtk_shortcut_set_trigger: (attributes org.gtk.Method.set_property=trigger)
  * @self: a `GtkShortcut`
  * @trigger: (transfer full) (nullable): The new trigger.
- *   If the @trigger is `NULL`, the never trigger will be used.
+ *   If the `trigger` is `NULL`, the never trigger will be used.
  *
- * Sets the new trigger for @self to be @trigger.
+ * Sets the new trigger for `self` to be `trigger`.
  */
 void
 gtk_shortcut_set_trigger (GtkShortcut *self,
@@ -368,7 +368,7 @@ gtk_shortcut_get_arguments (GtkShortcut *self)
 /**
  * gtk_shortcut_set_arguments: (attributes org.gtk.Method.set_property=arguments)
  * @self: a `GtkShortcut`
- * @args: (nullable): arguments to pass when activating @self
+ * @args: (nullable): arguments to pass when activating `self`
  *
  * Sets the arguments to pass when activating the shortcut.
  */

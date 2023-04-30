@@ -144,7 +144,7 @@ gtk_page_setup_new (void)
  *
  * Copies a `GtkPageSetup`.
  *
- * Returns: (transfer full): a copy of @other
+ * Returns: (transfer full): a copy of `other`
  */
 GtkPageSetup *
 gtk_page_setup_copy (GtkPageSetup *other)
@@ -258,7 +258,7 @@ gtk_page_setup_set_paper_size_and_default_margins (GtkPageSetup *setup,
  * @setup: a `GtkPageSetup`
  * @unit: the unit for the return value
  *
- * Gets the top margin in units of @unit.
+ * Gets the top margin in units of `unit`.
  *
  * Returns: the top margin
  */
@@ -272,8 +272,8 @@ gtk_page_setup_get_top_margin (GtkPageSetup *setup,
 /**
  * gtk_page_setup_set_top_margin:
  * @setup: a `GtkPageSetup`
- * @margin: the new top margin in units of @unit
- * @unit: the units for @margin
+ * @margin: the new top margin in units of `unit`
+ * @unit: the units for `margin`
  *
  * Sets the top margin of the `GtkPageSetup`.
  */
@@ -290,7 +290,7 @@ gtk_page_setup_set_top_margin (GtkPageSetup *setup,
  * @setup: a `GtkPageSetup`
  * @unit: the unit for the return value
  *
- * Gets the bottom margin in units of @unit.
+ * Gets the bottom margin in units of `unit`.
  *
  * Returns: the bottom margin
  */
@@ -304,8 +304,8 @@ gtk_page_setup_get_bottom_margin (GtkPageSetup *setup,
 /**
  * gtk_page_setup_set_bottom_margin:
  * @setup: a `GtkPageSetup`
- * @margin: the new bottom margin in units of @unit
- * @unit: the units for @margin
+ * @margin: the new bottom margin in units of `unit`
+ * @unit: the units for `margin`
  *
  * Sets the bottom margin of the `GtkPageSetup`.
  */
@@ -322,7 +322,7 @@ gtk_page_setup_set_bottom_margin (GtkPageSetup *setup,
  * @setup: a `GtkPageSetup`
  * @unit: the unit for the return value
  *
- * Gets the left margin in units of @unit.
+ * Gets the left margin in units of `unit`.
  *
  * Returns: the left margin
  */
@@ -336,8 +336,8 @@ gtk_page_setup_get_left_margin (GtkPageSetup *setup,
 /**
  * gtk_page_setup_set_left_margin:
  * @setup: a `GtkPageSetup`
- * @margin: the new left margin in units of @unit
- * @unit: the units for @margin
+ * @margin: the new left margin in units of `unit`
+ * @unit: the units for `margin`
  *
  * Sets the left margin of the `GtkPageSetup`.
  */
@@ -354,7 +354,7 @@ gtk_page_setup_set_left_margin (GtkPageSetup *setup,
  * @setup: a `GtkPageSetup`
  * @unit: the unit for the return value
  *
- * Gets the right margin in units of @unit.
+ * Gets the right margin in units of `unit`.
  *
  * Returns: the right margin
  */
@@ -368,8 +368,8 @@ gtk_page_setup_get_right_margin (GtkPageSetup *setup,
 /**
  * gtk_page_setup_set_right_margin:
  * @setup: a `GtkPageSetup`
- * @margin: the new right margin in units of @unit
- * @unit: the units for @margin
+ * @margin: the new right margin in units of `unit`
+ * @unit: the units for `margin`
  *
  * Sets the right margin of the `GtkPageSetup`.
  */
@@ -386,7 +386,7 @@ gtk_page_setup_set_right_margin (GtkPageSetup *setup,
  * @setup: a `GtkPageSetup`
  * @unit: the unit for the return value
  *
- * Returns the paper width in units of @unit.
+ * Returns the paper width in units of `unit`.
  *
  * Note that this function takes orientation,
  * but not margins into consideration.
@@ -410,7 +410,7 @@ gtk_page_setup_get_paper_width (GtkPageSetup *setup,
  * @setup: a `GtkPageSetup`
  * @unit: the unit for the return value
  *
- * Returns the paper height in units of @unit.
+ * Returns the paper height in units of `unit`.
  *
  * Note that this function takes orientation,
  * but not margins into consideration.
@@ -434,7 +434,7 @@ gtk_page_setup_get_paper_height (GtkPageSetup *setup,
  * @setup: a `GtkPageSetup`
  * @unit: the unit for the return value
  *
- * Returns the page width in units of @unit.
+ * Returns the page width in units of `unit`.
  *
  * Note that this function takes orientation
  * and margins into consideration.
@@ -463,7 +463,7 @@ gtk_page_setup_get_page_width (GtkPageSetup *setup,
  * @setup: a `GtkPageSetup`
  * @unit: the unit for the return value
  *
- * Returns the page height in units of @unit.
+ * Returns the page height in units of `unit`.
  *
  * Note that this function takes orientation
  * and margins into consideration.
@@ -493,7 +493,7 @@ gtk_page_setup_get_page_height (GtkPageSetup *setup,
  * @file_name: (type filename): the filename to read the page setup from
  * @error: (nullable): return location for an error
  *
- * Reads the page setup from the file @file_name.
+ * Reads the page setup from the file `file_name`.
  *
  * See [method@Gtk.PageSetup.to_file].
  *
@@ -526,7 +526,7 @@ gtk_page_setup_load_file (GtkPageSetup *setup,
  * @file_name: (type filename): the filename to read the page setup from
  * @error: (nullable): return location for an error
  *
- * Reads the page setup from the file @file_name.
+ * Reads the page setup from the file `file_name`.
  *
  * Returns a new `GtkPageSetup` object with the restored
  * page setup, or `NULL` if an error occurred.
@@ -578,8 +578,8 @@ string_to_enum (GType type,
  *   to use the default name “Page Setup”
  * @error: (nullable): return location for an error
  *
- * Reads the page setup from the group @group_name in the key file
- * @key_file.
+ * Reads the page setup from the group `group_name` in the key file
+ * `key_file`.
  *
  * Returns: true on success
  */
@@ -664,8 +664,8 @@ out:
  *    to use the default name “Page Setup”
  * @error: (nullable): return location for an error
  *
- * Reads the page setup from the group @group_name in the key file
- * @key_file.
+ * Reads the page setup from the group `group_name` in the key file
+ * `key_file`.
  *
  * Returns a new `GtkPageSetup` object with the restored
  * page setup, or `NULL` if an error occurred.
@@ -694,7 +694,7 @@ gtk_page_setup_new_from_key_file (GKeyFile     *key_file,
  * @file_name: (type filename): the file to save to
  * @error: (nullable): return location for errors
  *
- * This function saves the information from @setup to @file_name.
+ * This function saves the information from `setup` to `file_name`.
  *
  * Returns: true on success
  */
@@ -751,10 +751,10 @@ enum_to_string (GType type,
  * gtk_page_setup_to_key_file:
  * @setup: a `GtkPageSetup`
  * @key_file: the `GKeyFile` to save the page setup to
- * @group_name: (nullable): the group to add the settings to in @key_file,
+ * @group_name: (nullable): the group to add the settings to in `key_file`,
  *   or `NULL` to use the default name “Page Setup”
  *
- * This function adds the page setup from @setup to @key_file.
+ * This function adds the page setup from `setup` to `key_file`.
  */
 void
 gtk_page_setup_to_key_file (GtkPageSetup *setup,

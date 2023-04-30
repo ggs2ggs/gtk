@@ -217,8 +217,8 @@ gtk_text_line_display_cache_take_display (GtkTextLineDisplayCache *cache,
  * @display: a GtkTextLineDisplay
  * @cursors_only: if only the cursor positions should be invalidated
  *
- * If @cursors_only is TRUE, then only the cursors are invalidated. Otherwise,
- * @display is removed from the cache.
+ * If `cursors_only` is TRUE, then only the cursors are invalidated. Otherwise,
+ * `display` is removed from the cache.
  *
  * Use this function when you already have access to a display as it reduces
  * some overhead.
@@ -263,7 +263,7 @@ gtk_text_line_display_cache_invalidate_display (GtkTextLineDisplayCache *cache,
  * @line: a `GtkTextLine`
  * @size_only: if only line sizing is needed
  *
- * Gets a GtkTextLineDisplay for @line.
+ * Gets a GtkTextLineDisplay for `line`.
  *
  * If no cached display exists, a new display will be created.
  *
@@ -382,7 +382,7 @@ gtk_text_line_display_cache_invalidate_cursors (GtkTextLineDisplayCache *cache,
  * @self: a GtkTextLineDisplayCache
  * @line: a GtkTextLine
  *
- * Removes a cached display for @line.
+ * Removes a cached display for `line`.
  *
  * Compare to gtk_text_line_display_cache_invalidate_cursors() which
  * only invalidates the cursors for this row.
@@ -484,7 +484,7 @@ find_iter_at_text_iter (GtkTextLineDisplayCache *cache,
  * @end: the ending text iter
  *
  * Removes all GtkTextLineDisplay that fall between or including
- * @begin and @end.
+ * `begin` and `end`.
  */
 void
 gtk_text_line_display_cache_invalidate_range (GtkTextLineDisplayCache *cache,

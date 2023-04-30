@@ -278,9 +278,9 @@ typedef enum
  *
  * If you get %GDK_SCROLL_UNIT_SURFACE, are managing a scrollable view and get a
  * value of 123, you have to scroll 123 surface logical pixels right if it's
- * @delta_x or down if it's @delta_y. This is the same logic for negative values
- * but you have to scroll left instead of right if it's @delta_x and up instead
- * of down if it's @delta_y.
+ * `delta_x` or down if it's `delta_y`. This is the same logic for negative values
+ * but you have to scroll left instead of right if it's `delta_x` and up instead
+ * of down if it's `delta_y`.
  *
  * 1 surface logical pixel is equal to 1 real screen pixel multiplied by the
  * final scale factor of your graphical interface (the product of the desktop

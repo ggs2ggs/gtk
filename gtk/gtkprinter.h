@@ -146,7 +146,7 @@ gboolean                 gtk_printer_get_hard_margins_for_paper_size (GtkPrinter
  *
  * The type of function passed to gtk_enumerate_printers().
  *
- * Note that you need to ref @printer, if you want to keep
+ * Note that you need to ref `printer`, if you want to keep
  * a reference to it after the function has returned.
  *
  * Returns: true to stop the enumeration, false to continue

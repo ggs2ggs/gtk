@@ -88,7 +88,7 @@ remove_texture_key_for_id (GskGLDriver *self,
   g_assert (GSK_IS_GL_DRIVER (self));
   g_assert (texture_id > 0);
 
-  /* g_hash_table_remove() will cause @key to be freed */
+  /* g_hash_table_remove() will cause `key` to be freed */
   if (g_hash_table_steal_extended (self->texture_id_to_key,
                                    GUINT_TO_POINTER (texture_id),
                                    NULL,
@@ -426,7 +426,7 @@ failure:
  * @self: a `GskGLDriver`
  * @framebuffer_id: the id of the OpenGL framebuffer
  *
- * Marks @framebuffer_id to be deleted when the current frame has cmopleted.
+ * Marks `framebuffer_id` to be deleted when the current frame has cmopleted.
  */
 static void
 gsk_gl_driver_autorelease_framebuffer (GskGLDriver *self,
@@ -484,7 +484,7 @@ gsk_gl_driver_new (GskGLCommandQueue  *command_queue,
  * contexts for a display so that fewer programs are necessary for driving output.
  *
  * Returns: (transfer full): a `GskGLDriver` if successful; otherwise `NULL` and
- *   @error is set.
+ *   `error` is set.
  */
 GskGLDriver *
 gsk_gl_driver_for_display (GdkDisplay  *display,
@@ -662,9 +662,9 @@ gsk_gl_driver_get_context (GskGLDriver *self)
  * @key: the key for the texture
  * @texture_id: the id of the texture to be cached
  *
- * Inserts @texture_id into the texture cache using @key.
+ * Inserts `texture_id` into the texture cache using `key`.
  *
- * Textures can be looked up by @key after calling this function using
+ * Textures can be looked up by `key` after calling this function using
  * gsk_gl_driver_lookup_texture().
  *
  * Textures that have not been used within a number of frames will be
@@ -695,7 +695,7 @@ gsk_gl_driver_cache_texture (GskGLDriver         *self,
  * @ensure_mipmap: Mipmaps for this texture must exist for downscaling
  *
  * Loads a `GdkTexture` by uploading the contents to the GPU when
- * necessary. If @texture is a `GdkGLTexture`, it can be used without
+ * necessary. If `texture` is a `GdkGLTexture`, it can be used without
  * uploading contents to the GPU.
  *
  * If the texture has already been uploaded and not yet released
@@ -806,7 +806,7 @@ gsk_gl_driver_load_texture (GskGLDriver *self,
  * to upload data, map to a framebuffer, or other uses which may
  * modify the texture immediately.
  *
- * Typical examples for @format are GL_RGBA8, GL_RGBA16F or GL_RGBA32F.
+ * Typical examples for `format` are GL_RGBA8, GL_RGBA16F or GL_RGBA32F.
  *
  * Use gsk_gl_driver_release_texture() to release this texture back into
  * the pool so it may be reused later in the pipeline.
@@ -843,7 +843,7 @@ gsk_gl_driver_create_texture (GskGLDriver *self,
  * @self: a `GskGLDriver`
  * @texture: a `GskGLTexture`
  *
- * Releases @texture back into the pool so that it can be used later
+ * Releases `texture` back into the pool so that it can be used later
  * in the command stream by future batches. This helps reduce VRAM
  * usage on the GPU.
  *
@@ -879,17 +879,17 @@ gsk_gl_driver_release_texture (GskGLDriver  *self,
  * @out_render_target: (out): a location for the render target
  *
  * Creates a new render target which contains a framebuffer and a texture
- * bound to that framebuffer of the size @width x @height and using the
+ * bound to that framebuffer of the size `width` x `height` and using the
  * appropriate filters.
  *
- * Typical examples for @format are GK_RGBA8, GL_RGBA16F or GL_RGBA32F.
+ * Typical examples for `format` are GK_RGBA8, GL_RGBA16F or GL_RGBA32F.
  *
  * Use gsk_gl_driver_release_render_target() when you are finished with
  * the render target to release it. You may steal the texture from the
  * render target when releasing it.
  *
- * Returns: true if successful; otherwise false and @out_fbo_id and
- *   @out_texture_id are undefined.
+ * Returns: true if successful; otherwise false and `out_fbo_id` and
+ *   `out_texture_id` are undefined.
  */
 gboolean
 gsk_gl_driver_create_render_target (GskGLDriver        *self,
@@ -957,14 +957,14 @@ gsk_gl_driver_create_render_target (GskGLDriver        *self,
  * be made to cache the render target so that future creations of render
  * targets are performed faster.
  *
- * If @release_texture is false, the backing texture id is returned and
+ * If `release_texture` is false, the backing texture id is returned and
  * the framebuffer is released. Otherwise, both the texture and framebuffer
  * are released or cached until the end of the frame.
  *
  * This may be called when building the render job as the texture or
  * framebuffer will not be removed immediately.
  *
- * Returns: a texture id if @release_texture is false, otherwise zero.
+ * Returns: a texture id if `release_texture` is false, otherwise zero.
  */
 guint
 gsk_gl_driver_release_render_target (GskGLDriver       *self,
@@ -1009,7 +1009,7 @@ gsk_gl_driver_release_render_target (GskGLDriver       *self,
  * @shader: the shader to lookup or load
  * @error: a location for a `GError`
  *
- * Attepts to load @shader from the shader cache.
+ * Attepts to load `shader` from the shader cache.
  *
  * If it has not been loaded, then it will compile the shader on demand.
  *

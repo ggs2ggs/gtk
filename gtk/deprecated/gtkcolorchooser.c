@@ -207,13 +207,13 @@ gtk_color_chooser_set_use_alpha (GtkColorChooser *chooser,
  * @orientation: %GTK_ORIENTATION_HORIZONTAL if the palette should
  *   be displayed in rows, %GTK_ORIENTATION_VERTICAL for columns
  * @colors_per_line: the number of colors to show in each row/column
- * @n_colors: the total number of elements in @colors
+ * @n_colors: the total number of elements in `colors`
  * @colors: (nullable) (array length=n_colors): the colors of the palette
  *
  * Adds a palette to the color chooser.
  *
- * If @orientation is horizontal, the colors are grouped in rows,
- * with @colors_per_line colors in each row. If @horizontal is false,
+ * If `orientation` is horizontal, the colors are grouped in rows,
+ * with `colors_per_line` colors in each row. If `horizontal` is false,
  * the colors are grouped in columns instead.
  *
  * The default color palette of [class@Gtk.ColorChooserWidget] has
@@ -226,7 +226,7 @@ gtk_color_chooser_set_use_alpha (GtkColorChooser *chooser,
  * Calling this function for the first time has the side effect
  * of removing the default color palette from the color chooser.
  *
- * If @colors is `NULL`, removes all previously added palettes.
+ * If `colors` is `NULL`, removes all previously added palettes.
  *
  * Deprecated: 4.10: Use [class@Gtk.ColorDialog] instead
  */

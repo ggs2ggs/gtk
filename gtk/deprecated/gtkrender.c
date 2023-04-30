@@ -147,7 +147,7 @@ gtk_render_option (GtkStyleContext *context,
  * @y: Y origin of the render area
  * @size: square side for render area
  *
- * Renders an arrow pointing to @angle.
+ * Renders an arrow pointing to `angle`.
  *
  * Typical arrow rendering at 0, 1⁄2 π;, π; and 3⁄2 π:
  *
@@ -229,7 +229,7 @@ gtk_render_background (GtkStyleContext *context,
  * @width: rectangle width
  * @height: rectangle height
  *
- * Renders a frame around the rectangle defined by @x, @y, @width, @height.
+ * Renders a frame around the rectangle defined by `x`, `y`, `width`, `height`.
  *
  * Examples of frame rendering, showing the effect of `border-image`,
  * `border-color`, `border-width`, `border-radius` and junctions:
@@ -278,7 +278,7 @@ gtk_render_frame (GtkStyleContext *context,
  * @height: rectangle height
  *
  * Renders an expander (as used in `GtkTreeView` and `GtkExpander`) in the area
- * defined by @x, @y, @width, @height. The state %GTK_STATE_FLAG_CHECKED
+ * defined by `x`, `y`, `width`, `height`. The state %GTK_STATE_FLAG_CHECKED
  * determines whether the expander is collapsed or expanded.
  *
  * Typical expander rendering:
@@ -313,7 +313,7 @@ gtk_render_expander (GtkStyleContext *context,
  * @width: rectangle width
  * @height: rectangle height
  *
- * Renders a focus indicator on the rectangle determined by @x, @y, @width, @height.
+ * Renders a focus indicator on the rectangle determined by `x`, `y`, `width`, `height`.
  *
  * Typical focus rendering:
  *
@@ -359,7 +359,7 @@ gtk_render_focus (GtkStyleContext *context,
  * @y: Y origin
  * @layout: the `PangoLayout` to render
  *
- * Renders @layout on the coordinates @x, @y
+ * Renders `layout` on the coordinates `x`, `y`
  *
  * Deprecated: 4.10
  **/
@@ -442,7 +442,7 @@ gtk_render_line (GtkStyleContext *context,
  * @height: rectangle height
  *
  * Renders a handle (as in `GtkPaned` and `GtkWindow`’s resize grip),
- * in the rectangle determined by @x, @y, @width, @height.
+ * in the rectangle determined by `x`, `y`, `width`, `height`.
  *
  * Handles rendered for the paned and grip classes:
  *
@@ -507,12 +507,12 @@ gtk_render_activity (GtkStyleContext *context,
  * @context: a `GtkStyleContext`
  * @cr: a `cairo_t`
  * @texture: a `GdkTexture` containing the icon to draw
- * @x: X position for the @texture
- * @y: Y position for the @texture
+ * @x: X position for the `texture`
+ * @y: Y position for the `texture`
  *
- * Renders the icon in @texture at the specified @x and @y coordinates.
+ * Renders the icon in `texture` at the specified `x` and `y` coordinates.
  *
- * This function will render the icon in @texture at exactly its size,
+ * This function will render the icon in `texture` at exactly its size,
  * regardless of scaling factors, which may not be appropriate when
  * drawing on displays with high pixel densities.
  *
@@ -554,8 +554,8 @@ gtk_render_icon (GtkStyleContext *context,
  * @width: rectangle width
  * @height: rectangle height
  *
- * Creates a render node for the CSS background according to @context,
- * and appends it to the current node of @snapshot, without changing
+ * Creates a render node for the CSS background according to `context`,
+ * and appends it to the current node of `snapshot`, without changing
  * the current node.
  *
  * Deprecated: 4.10
@@ -588,8 +588,8 @@ gtk_snapshot_render_background (GtkSnapshot     *snapshot,
  * @width: rectangle width
  * @height: rectangle height
  *
- * Creates a render node for the CSS border according to @context,
- * and appends it to the current node of @snapshot, without changing
+ * Creates a render node for the CSS border according to `context`,
+ * and appends it to the current node of `snapshot`, without changing
  * the current node.
  *
  * Deprecated: 4.10
@@ -622,8 +622,8 @@ gtk_snapshot_render_frame (GtkSnapshot     *snapshot,
  * @width: rectangle width
  * @height: rectangle height
  *
- * Creates a render node for the focus outline according to @context,
- * and appends it to the current node of @snapshot, without changing
+ * Creates a render node for the focus outline according to `context`,
+ * and appends it to the current node of `snapshot`, without changing
  * the current node.
  *
  * Deprecated: 4.10
@@ -655,8 +655,8 @@ gtk_snapshot_render_focus (GtkSnapshot     *snapshot,
  * @y: Y origin of the rectangle
  * @layout: the `PangoLayout` to render
  *
- * Creates a render node for rendering @layout according to the style
- * information in @context, and appends it to the current node of @snapshot,
+ * Creates a render node for rendering `layout` according to the style
+ * information in `context`, and appends it to the current node of `snapshot`,
  * without changing the current node.
  *
  * Deprecated: 4.10
@@ -690,7 +690,7 @@ gtk_snapshot_render_layout (GtkSnapshot     *snapshot,
  * @index: the index in the `PangoLayout`
  * @direction: the `PangoDirection` of the text
  *
- * Draws a text caret using @snapshot at the specified index of @layout.
+ * Draws a text caret using `snapshot` at the specified index of `layout`.
  *
  * Deprecated: 4.10
  */

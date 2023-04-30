@@ -285,7 +285,7 @@ gtk_gesture_pan_new (GtkOrientation orientation)
  * gtk_gesture_pan_get_orientation: (attributes org.gtk.Method.get_property=orientation)
  * @gesture: A `GtkGesturePan`
  *
- * Returns the orientation of the pan gestures that this @gesture expects.
+ * Returns the orientation of the pan gestures that this `gesture` expects.
  *
  * Returns: the expected orientation for pan gestures
  */

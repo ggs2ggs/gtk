@@ -1370,7 +1370,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
 /**
  * GtkWidget:cursor: (attributes org.gtk.Property.get=gtk_widget_get_cursor org.gtk.Property.set=gtk_widget_set_cursor)
  *
- * The cursor used by @widget.
+ * The cursor used by `widget`.
  */
   widget_props[PROP_CURSOR] =
       g_param_spec_object("cursor", NULL, NULL,
@@ -1380,9 +1380,9 @@ gtk_widget_class_init (GtkWidgetClass *klass)
 /**
  * GtkWidget:has-tooltip: (attributes org.gtk.Property.get=gtk_widget_get_has_tooltip org.gtk.Property.set=gtk_widget_set_has_tooltip)
  *
- * Enables or disables the emission of the ::query-tooltip signal on @widget.
+ * Enables or disables the emission of the ::query-tooltip signal on `widget`.
  *
- * A value of true indicates that @widget can have a tooltip, in this case
+ * A value of true indicates that `widget` can have a tooltip, in this case
  * the widget will be queried using [signal@Gtk.Widget::query-tooltip] to
  * determine whether it will provide a tooltip or not.
  */
@@ -1663,7 +1663,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * GtkWidget::show:
    * @widget: the object which received the signal.
    *
-   * Emitted when @widget is shown.
+   * Emitted when `widget` is shown.
    */
   widget_signals[SHOW] =
     g_signal_new (I_("show"),
@@ -1678,7 +1678,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * GtkWidget::hide:
    * @widget: the object which received the signal.
    *
-   * Emitted when @widget is hidden.
+   * Emitted when `widget` is hidden.
    */
   widget_signals[HIDE] =
     g_signal_new (I_("hide"),
@@ -1693,7 +1693,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * GtkWidget::map:
    * @widget: the object which received the signal.
    *
-   * Emitted when @widget is going to be mapped.
+   * Emitted when `widget` is going to be mapped.
    *
    * A widget is mapped when the widget is visible (which is controlled with
    * [property@Gtk.Widget:visible]) and all its parents up to the toplevel widget
@@ -1716,7 +1716,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * GtkWidget::unmap:
    * @widget: the object which received the signal.
    *
-   * Emitted when @widget is going to be unmapped.
+   * Emitted when `widget` is going to be unmapped.
    *
    * A widget is unmapped when either it or any of its parents up to the
    * toplevel widget have been set as hidden.
@@ -1737,7 +1737,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * GtkWidget::realize:
    * @widget: the object which received the signal.
    *
-   * Emitted when @widget is associated with a `GdkSurface`.
+   * Emitted when `widget` is associated with a `GdkSurface`.
    *
    * This means that [method@Gtk.Widget.realize] has been called
    * or the widget has been mapped (that is, it is going to be drawn).
@@ -1755,7 +1755,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * GtkWidget::unrealize:
    * @widget: the object which received the signal.
    *
-   * Emitted when the `GdkSurface` associated with @widget is destroyed.
+   * Emitted when the `GdkSurface` associated with `widget` is destroyed.
    *
    * This means that [method@Gtk.Widget.unrealize] has been called
    * or the widget has been unmapped (that is, it is going to be hidden).
@@ -1791,7 +1791,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
   /**
    * GtkWidget::direction-changed:
    * @widget: the object on which the signal is emitted
-   * @previous_direction: the previous text direction of @widget
+   * @previous_direction: the previous text direction of `widget`
    *
    * Emitted when the text direction of a widget changes.
    */
@@ -1812,8 +1812,8 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    *
    * Emitted when a widget is activated via a mnemonic.
    *
-   * The default handler for this signal activates @widget if @group_cycling
-   * is false, or just makes @widget grab focus if @group_cycling is true.
+   * The default handler for this signal activates `widget` if `group_cycling`
+   * is false, or just makes `widget` grab focus if `group_cycling` is true.
    *
    * Returns: true to stop other handlers from being invoked for the event.
    * false to propagate the event further.
@@ -1884,9 +1884,9 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    * GtkWidget::query-tooltip:
    * @widget: the object which received the signal
    * @x: the x coordinate of the cursor position where the request has
-   *   been emitted, relative to @widget's left side
+   *   been emitted, relative to `widget`'s left side
    * @y: the y coordinate of the cursor position where the request has
-   *   been emitted, relative to @widget's top
+   *   been emitted, relative to `widget`'s top
    * @keyboard_mode: true if the tooltip was triggered using the keyboard
    * @tooltip: a `GtkTooltip`
    *
@@ -1894,18 +1894,18 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    *
    * This happens when the [property@Gtk.Widget:has-tooltip] property
    * is true and the hover timeout has expired with the cursor hovering
-   * "above" @widget; or emitted when @widget got focus in keyboard mode.
+   * "above" `widget`; or emitted when `widget` got focus in keyboard mode.
    *
    * Using the given coordinates, the signal handler should determine
-   * whether a tooltip should be shown for @widget. If this is the case
+   * whether a tooltip should be shown for `widget`. If this is the case
    * true should be returned, false otherwise.  Note that if
-   * @keyboard_mode is true, the values of @x and @y are undefined and
+   * `keyboard_mode` is true, the values of `x` and `y` are undefined and
    * should not be used.
    *
-   * The signal handler is free to manipulate @tooltip with the therefore
+   * The signal handler is free to manipulate `tooltip` with the therefore
    * destined function calls.
    *
-   * Returns: true if @tooltip should be shown right now, false otherwise.
+   * Returns: true if `tooltip` should be shown right now, false otherwise.
    */
   widget_signals[QUERY_TOOLTIP] =
     g_signal_new (I_("query-tooltip"),
@@ -2520,7 +2520,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
  * gtk_widget_unparent:
  * @widget: a `GtkWidget`
  *
- * Dissociate @widget from its parent.
+ * Dissociate `widget` from its parent.
  *
  * This function is only for use in widget implementations,
  * typically in dispose.
@@ -2996,8 +2996,8 @@ static guint tick_callback_id;
  * gtk_widget_add_tick_callback:
  * @widget: a `GtkWidget`
  * @callback: function to call for updating animations
- * @user_data: (closure): data to pass to @callback
- * @notify: function to call to free @user_data when the callback is removed.
+ * @user_data: (closure): data to pass to `callback`
+ * @notify: function to call to free `user_data` when the callback is removed.
  *
  * Queues an animation frame update and adds a callback to be called
  * before each frame.
@@ -3279,8 +3279,8 @@ ensure_surface_transform_data (GtkWidget *widget)
  * gtk_widget_add_surface_transform_changed_callback:
  * @widget: a `GtkWidget`
  * @callback: a function to call when the surface transform changes
- * @user_data: (closure): data to pass to @callback
- * @notify: function to call to free @user_data when the callback is removed
+ * @user_data: (closure): data to pass to `callback`
+ * @notify: function to call to free `user_data` when the callback is removed
  *
  * Invokes the callback whenever the surface relative transform of
  * the widget changes.
@@ -3395,7 +3395,7 @@ gtk_widget_get_surface (GtkWidget *widget)
  *
  * Realizing a widget requires all the widget’s parent widgets to be
  * realized; calling this function realizes the widget’s parents
- * in addition to @widget itself. If a widget is not yet inside a
+ * in addition to `widget` itself. If a widget is not yet inside a
  * toplevel window when you realize it, bad things will happen.
  *
  * This function is primarily used in widget implementations, and
@@ -3481,7 +3481,7 @@ gtk_widget_unrealize (GtkWidget *widget)
  * Schedules this widget to be redrawn in the paint phase
  * of the current or the next frame.
  *
- * This means @widget's [vfunc@Gtk.Widget.snapshot]
+ * This means `widget`'s [vfunc@Gtk.Widget.snapshot]
  * implementation will be called.
  */
 void
@@ -3518,7 +3518,7 @@ gtk_widget_set_alloc_needed (GtkWidget *widget);
  * function.
  *
  * Use this function instead of [method@Gtk.Widget.queue_resize]
- * when the @widget's size request didn't change but it wants to
+ * when the `widget`'s size request didn't change but it wants to
  * reposition its contents.
  *
  * An example user of this function is [method@Gtk.Widget.set_halign].
@@ -3709,11 +3709,11 @@ get_box_padding (GtkCssStyle *style,
 /**
  * gtk_widget_size_allocate:
  * @widget: a `GtkWidget`
- * @allocation: position and size to be allocated to @widget
+ * @allocation: position and size to be allocated to `widget`
  * @baseline: The baseline of the child, or -1
  *
  * Allocates widget with a transformation that translates
- * the origin to the position in @allocation.
+ * the origin to the position in `allocation`.
  *
  * This is a simple form of [method@Gtk.Widget.allocate].
  */
@@ -3898,10 +3898,10 @@ gtk_widget_ensure_allocate_on_children (GtkWidget *widget)
 /**
  * gtk_widget_allocate:
  * @widget: A `GtkWidget`
- * @width: New width of @widget
- * @height: New height of @widget
- * @baseline: New baseline of @widget, or -1
- * @transform: (transfer full) (nullable): Transformation to be applied to @widget
+ * @width: New width of `widget`
+ * @height: New height of `widget`
+ * @baseline: New baseline of `widget`, or -1
+ * @transform: (transfer full) (nullable): Transformation to be applied to `widget`
  *
  * This function is only used by `GtkWidget` subclasses, to
  * assign a size, position and (optionally) baseline to their
@@ -4121,11 +4121,11 @@ out:
  * @widget_a: a `GtkWidget`
  * @widget_b: a `GtkWidget`
  *
- * Find the common ancestor of @widget_a and @widget_b that
+ * Find the common ancestor of `widget_a` and `widget_b` that
  * is closest to the two widgets.
  *
- * Returns: (nullable): the closest common ancestor of @widget_a and
- *   @widget_b or `NULL` if @widget_a and @widget_b do not
+ * Returns: (nullable): the closest common ancestor of `widget_a` and
+ *   `widget_b` or `NULL` if `widget_a` and `widget_b` do not
  *   share a common ancestor.
  */
 GtkWidget *
@@ -4179,19 +4179,19 @@ gtk_widget_common_ancestor (GtkWidget *widget_a,
  * gtk_widget_translate_coordinates:
  * @src_widget:  a `GtkWidget`
  * @dest_widget: a `GtkWidget`
- * @src_x: X position relative to @src_widget
- * @src_y: Y position relative to @src_widget
- * @dest_x: (out) (optional): location to store X position relative to @dest_widget
- * @dest_y: (out) (optional): location to store Y position relative to @dest_widget
+ * @src_x: X position relative to `src_widget`
+ * @src_y: Y position relative to `src_widget`
+ * @dest_x: (out) (optional): location to store X position relative to `dest_widget`
+ * @dest_y: (out) (optional): location to store Y position relative to `dest_widget`
  *
- * Translate coordinates relative to @src_widget’s allocation
- * to coordinates relative to @dest_widget’s allocations.
+ * Translate coordinates relative to `src_widget`’s allocation
+ * to coordinates relative to `dest_widget`’s allocations.
  *
  * In order to perform this operation, both widget must share
  * a common ancestor.
  *
- * Returns: false if @src_widget and @dest_widget have no common
- *   ancestor. In this case, 0 is stored in *@dest_x and *@dest_y.
+ * Returns: false if `src_widget` and `dest_widget` have no common
+ *   ancestor. In this case, 0 is stored in *`dest_x` and *`dest_y`.
  *   Otherwise true.
  *
  * Deprecated: 4.12: Use gtk_widget_compute_point() instead
@@ -4224,18 +4224,18 @@ gtk_widget_translate_coordinates (GtkWidget  *src_widget,
  * gtk_widget_compute_point:
  * @widget: the `GtkWidget` to query
  * @target: the `GtkWidget` to transform into
- * @point: a point in @widget's coordinate system
+ * @point: a point in `widget`'s coordinate system
  * @out_point: (out caller-allocates): Set to the corresponding coordinates in
- *   @target's coordinate system
+ *   `target`'s coordinate system
  *
- * Translates the given @point in @widget's coordinates to coordinates
- * relative to @target’s coordinate system.
+ * Translates the given `point` in `widget`'s coordinates to coordinates
+ * relative to `target`’s coordinate system.
  *
  * In order to perform this operation, both widgets must share a
  * common ancestor.
  *
  * Returns: true if the point could be determined, false on failure.
- *   In this case, 0 is stored in @out_point.
+ *   In this case, 0 is stored in `out_point`.
  */
 gboolean
 gtk_widget_compute_point (GtkWidget              *widget,
@@ -4267,10 +4267,10 @@ gtk_widget_compute_point (GtkWidget              *widget,
  * @callback: the callback to call upon activation
  * @format_string: (nullable): GVariant format string for arguments
  *   or `NULL` for no arguments
- * @...: arguments, as given by format string
+ * `...`: arguments, as given by format string
  *
- * Creates a new shortcut for @widget_class that calls the given @callback
- * with arguments read according to @format_string.
+ * Creates a new shortcut for `widget_class` that calls the given `callback`
+ * with arguments read according to `format_string`.
  *
  * The arguments and format string must be provided in the same way as
  * with g_variant_new().
@@ -4317,10 +4317,10 @@ gtk_widget_class_add_binding (GtkWidgetClass  *widget_class,
  * @signal: the signal to execute
  * @format_string: (nullable): GVariant format string for arguments
  *   or `NULL` for no arguments
- * @...: arguments, as given by format string
+ * `...`: arguments, as given by format string
  *
- * Creates a new shortcut for @widget_class that emits the given action
- * @signal with arguments read according to @format_string.
+ * Creates a new shortcut for `widget_class` that emits the given action
+ * `signal` with arguments read according to `format_string`.
  *
  * The arguments and format string must be provided in the same way as
  * with g_variant_new().
@@ -4367,10 +4367,10 @@ gtk_widget_class_add_binding_signal (GtkWidgetClass  *widget_class,
  * @action_name: the action to activate
  * @format_string: (nullable): GVariant format string for arguments
  *   or `NULL` for no arguments
- * @...: arguments, as given by format string
+ * `...`: arguments, as given by format string
  *
- * Creates a new shortcut for @widget_class that activates the given
- * @action_name with arguments read according to @format_string.
+ * Creates a new shortcut for `widget_class` that activates the given
+ * `action_name` with arguments read according to `format_string`.
  *
  * The arguments and format string must be provided in the same way as
  * with g_variant_new().
@@ -4413,9 +4413,9 @@ gtk_widget_class_add_binding_action (GtkWidgetClass  *widget_class,
  * @widget_class: the class to add the shortcut to
  * @shortcut: (transfer none): the `GtkShortcut` to add
  *
- * Installs a shortcut in @widget_class.
+ * Installs a shortcut in `widget_class`.
  *
- * Every instance created for @widget_class or its subclasses will
+ * Every instance created for `widget_class` or its subclasses will
  * inherit this shortcut and trigger it.
  *
  * Shortcuts added this way will be triggered in the %GTK_PHASE_BUBBLE
@@ -4790,11 +4790,11 @@ gtk_widget_class_get_activate_signal (GtkWidgetClass *widget_class)
  * @signal_id: the id for the activate signal
  *
  * Sets the `GtkWidgetClass.activate_signal` field with the
- * given @signal_id.
+ * given `signal_id`.
  *
  * The signal will be emitted when calling [method@Gtk.Widget.activate].
  *
- * The @signal_id must have been registered with `g_signal_new()`
+ * The `signal_id` must have been registered with `g_signal_new()`
  * or g_signal_newv() before calling this function.
  */
 void
@@ -4810,14 +4810,14 @@ gtk_widget_class_set_activate_signal (GtkWidgetClass *widget_class,
 /**
  * gtk_widget_class_set_activate_signal_from_name:
  * @widget_class: a `GtkWidgetClass`
- * @signal_name: the name of the activate signal of @widget_type
+ * @signal_name: the name of the activate signal of `widget_type`
  *
  * Sets the `GtkWidgetClass.activate_signal` field with the signal id for
- * the given @signal_name.
+ * the given `signal_name`.
  *
  * The signal will be emitted when calling [method@Gtk.Widget.activate].
  *
- * The @signal_name of @widget_type must have been registered with
+ * The `signal_name` of `widget_type` must have been registered with
  * g_signal_new() or g_signal_newv() before calling this function.
  */
 void
@@ -4858,7 +4858,7 @@ gtk_widget_class_set_activate_signal_from_name (GtkWidgetClass *widget_class,
  * recommended to use [method@Gtk.WidgetClass.add_shortcut] with an action
  * created with [ctor@Gtk.SignalAction.new].
  *
- * If @widget isn't activatable, the function returns false.
+ * If `widget` isn't activatable, the function returns false.
  *
  * Returns: true if the widget was activatable
  */
@@ -4883,16 +4883,16 @@ gtk_widget_activate (GtkWidget *widget)
  * gtk_widget_grab_focus:
  * @widget: a `GtkWidget`
  *
- * Causes @widget to have the keyboard focus for the `GtkWindow` it's inside.
+ * Causes `widget` to have the keyboard focus for the `GtkWindow` it's inside.
  *
- * If @widget is not focusable, or its [vfunc@Gtk.Widget.grab_focus]
- * implementation cannot transfer the focus to a descendant of @widget
+ * If `widget` is not focusable, or its [vfunc@Gtk.Widget.grab_focus]
+ * implementation cannot transfer the focus to a descendant of `widget`
  * that is focusable, it will not take focus and false will be returned.
  *
  * Calling [method@Gtk.Widget.grab_focus] on an already focused widget
  * is allowed, should not have an effect, and return true.
  *
- * Returns: true if focus is now inside @widget.
+ * Returns: true if focus is now inside `widget`.
  */
 gboolean
 gtk_widget_grab_focus (GtkWidget *widget)
@@ -5152,10 +5152,10 @@ gtk_widget_real_keynav_failed (GtkWidget        *widget,
  * Specifies whether the input focus can enter the widget
  * or any of its children.
  *
- * Applications should set @can_focus to false to mark a
+ * Applications should set `can_focus` to false to mark a
  * widget as for pointer/touch use only.
  *
- * Note that having @can_focus be true is only one of the
+ * Note that having `can_focus` be true is only one of the
  * necessary conditions for being focusable. A widget must
  * also be sensitive and focusable and not have an ancestor
  * that is marked as not can-focus in order to receive input
@@ -5185,12 +5185,12 @@ gtk_widget_set_can_focus (GtkWidget *widget,
  * gtk_widget_get_can_focus: (attributes org.gtk.Method.get_property=can-focus)
  * @widget: a `GtkWidget`
  *
- * Determines whether the input focus can enter @widget or any
+ * Determines whether the input focus can enter `widget` or any
  * of its children.
  *
  * See [method@Gtk.Widget.set_focusable].
  *
- * Returns: true if the input focus can enter @widget, false otherwise
+ * Returns: true if the input focus can enter `widget`, false otherwise
  */
 gboolean
 gtk_widget_get_can_focus (GtkWidget *widget)
@@ -5205,14 +5205,14 @@ gtk_widget_get_can_focus (GtkWidget *widget)
 /**
  * gtk_widget_set_focusable: (attributes org.gtk.Method.set_property=focusable)
  * @widget: a `GtkWidget`
- * @focusable: whether or not @widget can own the input focus
+ * @focusable: whether or not `widget` can own the input focus
  *
- * Specifies whether @widget can own the input focus.
+ * Specifies whether `widget` can own the input focus.
  *
- * Widget implementations should set @focusable to true in
+ * Widget implementations should set `focusable` to true in
  * their init() function if they want to receive keyboard input.
  *
- * Note that having @focusable be true is only one of the
+ * Note that having `focusable` be true is only one of the
  * necessary conditions for being focusable. A widget must
  * also be sensitive and can-focus and not have an ancestor
  * that is marked as not can-focus in order to receive input
@@ -5245,11 +5245,11 @@ gtk_widget_set_focusable (GtkWidget *widget,
  * gtk_widget_get_focusable: (attributes org.gtk.Method.get_property=focusable)
  * @widget: a `GtkWidget`
  *
- * Determines whether @widget can own the input focus.
+ * Determines whether `widget` can own the input focus.
  *
  * See [method@Gtk.Widget.set_focusable].
  *
- * Returns: true if @widget can own the input focus, false otherwise
+ * Returns: true if `widget` can own the input focus, false otherwise
  */
 gboolean
 gtk_widget_get_focusable (GtkWidget *widget)
@@ -5292,7 +5292,7 @@ gtk_widget_has_focus (GtkWidget *widget)
  *
  * This is a convenience function that takes into account whether
  * focus indication should currently be shown in the toplevel window
- * of @widget. See [method@Gtk.Window.get_focus_visible] for more
+ * of `widget`. See [method@Gtk.Window.get_focus_visible] for more
  * information about focus indication.
  *
  * To find out if the widget has the global input focus, use
@@ -5407,10 +5407,10 @@ gtk_widget_get_focus_on_click (GtkWidget *widget)
  * gtk_widget_has_default: (attributes org.gtk.Method.get_property=has-default)
  * @widget: a `GtkWidget`
  *
- * Determines whether @widget is the current default widget
+ * Determines whether `widget` is the current default widget
  * within its toplevel.
  *
- * Returns: true if @widget is the current default widget
+ * Returns: true if `widget` is the current default widget
  *   within its toplevel, false otherwise
  */
 gboolean
@@ -5440,9 +5440,9 @@ _gtk_widget_set_has_default (GtkWidget *widget,
 /**
  * gtk_widget_set_receives_default: (attributes org.gtk.Method.set_property=receives-default)
  * @widget: a `GtkWidget`
- * @receives_default: whether or not @widget can be a default widget.
+ * @receives_default: whether or not `widget` can be a default widget.
  *
- * Specifies whether @widget will be treated as the default
+ * Specifies whether `widget` will be treated as the default
  * widget within its toplevel when it has the focus, even if
  * another widget is the default.
  */
@@ -5466,13 +5466,13 @@ gtk_widget_set_receives_default (GtkWidget *widget,
  * gtk_widget_get_receives_default: (attributes org.gtk.Method.get_property=receives-default)
  * @widget: a `GtkWidget`
  *
- * Determines whether @widget is always treated as the default widget
+ * Determines whether `widget` is always treated as the default widget
  * within its toplevel when it has the focus, even if another widget
  * is the default.
  *
  * See [method@Gtk.Widget.set_receives_default].
  *
- * Returns: true if @widget acts as the default widget when focused,
+ * Returns: true if `widget` acts as the default widget when focused,
  *   false otherwise
  */
 gboolean
@@ -5605,7 +5605,7 @@ gtk_widget_update_state_flags (GtkWidget     *widget,
  * gtk_widget_set_state_flags:
  * @widget: a `GtkWidget`
  * @flags: State flags to turn on
- * @clear: Whether to clear state before turning on @flags
+ * @clear: Whether to clear state before turning on `flags`
  *
  * Turns on flag values in the current widget state.
  *
@@ -5673,7 +5673,7 @@ gtk_widget_unset_state_flags (GtkWidget     *widget,
  *
  * It is worth mentioning that the effective %GTK_STATE_FLAG_INSENSITIVE
  * state will be returned, that is, also based on parent insensitivity,
- * even if @widget itself is sensitive.
+ * even if `widget` itself is sensitive.
  *
  * Also note that if you are looking for a way to obtain the
  * [flags@Gtk.StateFlags] to pass to a [class@Gtk.StyleContext]
@@ -5696,7 +5696,7 @@ gtk_widget_get_state_flags (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @visible: whether the widget should be shown or not
  *
- * Sets the visibility state of @widget.
+ * Sets the visibility state of `widget`.
  *
  * Note that setting this to true doesn’t mean the widget is
  * actually viewable, see [method@Gtk.Widget.get_visible].
@@ -5799,11 +5799,11 @@ gtk_widget_is_visible (GtkWidget *widget)
  * gtk_widget_is_drawable:
  * @widget: a `GtkWidget`
  *
- * Determines whether @widget can be drawn to.
+ * Determines whether `widget` can be drawn to.
  *
  * A widget can be drawn if it is mapped and visible.
  *
- * Returns: true if @widget is drawable, false otherwise
+ * Returns: true if `widget` is drawable, false otherwise
  */
 gboolean
 gtk_widget_is_drawable (GtkWidget *widget)
@@ -5818,9 +5818,9 @@ gtk_widget_is_drawable (GtkWidget *widget)
  * gtk_widget_get_realized:
  * @widget: a `GtkWidget`
  *
- * Determines whether @widget is realized.
+ * Determines whether `widget` is realized.
  *
- * Returns: true if @widget is realized, false otherwise
+ * Returns: true if `widget` is realized, false otherwise
  */
 gboolean
 gtk_widget_get_realized (GtkWidget *widget)
@@ -5960,8 +5960,8 @@ gtk_widget_is_sensitive (GtkWidget *widget)
 }
 
 
-/* Insert @widget into the children list of @parent,
- * after @previous_sibling */
+/* Insert `widget` into the children list of `parent`,
+ * after `previous_sibling` */
 static void
 gtk_widget_reposition_after (GtkWidget *widget,
                              GtkWidget *parent,
@@ -6120,7 +6120,7 @@ gtk_widget_reposition_after (GtkWidget *widget,
  * @widget: a `GtkWidget`
  * @parent: parent widget
  *
- * Sets @parent as the parent widget of @widget.
+ * Sets `parent` as the parent widget of `widget`.
  *
  * This takes care of details such as updating the state and style
  * of the child to reflect its new location and resizing the parent.
@@ -6146,9 +6146,9 @@ gtk_widget_set_parent (GtkWidget *widget,
  * gtk_widget_get_parent: (attributes org.gtk.Method.get_property=parent)
  * @widget: a `GtkWidget`
  *
- * Returns the parent widget of @widget.
+ * Returns the parent widget of `widget`.
  *
- * Returns: (transfer none) (nullable): the parent widget of @widget
+ * Returns: (transfer none) (nullable): the parent widget of `widget`
  */
 GtkWidget *
 gtk_widget_get_parent (GtkWidget *widget)
@@ -6164,14 +6164,14 @@ gtk_widget_get_parent (GtkWidget *widget)
  * gtk_widget_get_root: (attributes org.gtk.Method.get_property=root)
  * @widget: a `GtkWidget`
  *
- * Returns the `GtkRoot` widget of @widget.
+ * Returns the `GtkRoot` widget of `widget`.
  *
  * This function will return `NULL` if the widget is not contained
  * inside a widget tree with a root widget.
  *
  * `GtkRoot` widgets will return themselves here.
  *
- * Returns: (transfer none) (nullable): the root widget of @widget
+ * Returns: (transfer none) (nullable): the root widget of `widget`
  */
 GtkRoot *
 gtk_widget_get_root (GtkWidget *widget)
@@ -6185,14 +6185,14 @@ gtk_widget_get_root (GtkWidget *widget)
  * gtk_widget_get_native:
  * @widget: a `GtkWidget`
  *
- * Returns the nearest `GtkNative` ancestor of @widget.
+ * Returns the nearest `GtkNative` ancestor of `widget`.
  *
  * This function will return `NULL` if the widget is not
  * contained inside a widget tree with a native ancestor.
  *
  * `GtkNative` widgets will return themselves here.
  *
- * Returns: (transfer none) (nullable): the `GtkNative` ancestor of @widget
+ * Returns: (transfer none) (nullable): the `GtkNative` ancestor of `widget`
  */
 GtkNative *
 gtk_widget_get_native (GtkWidget *widget)
@@ -6611,7 +6611,7 @@ gtk_widget_set_font_map (GtkWidget    *widget,
  * gtk_widget_get_font_map:
  * @widget: a `GtkWidget`
  *
- * Gets the font map of @widget.
+ * Gets the font map of `widget`.
  *
  * See [method@Gtk.Widget.set_font_map].
  *
@@ -6688,10 +6688,10 @@ gtk_widget_create_pango_layout (GtkWidget  *widget,
 /**
  * gtk_widget_set_child_visible:
  * @widget: a `GtkWidget`
- * @child_visible: if true, @widget should be mapped along
+ * @child_visible: if true, `widget` should be mapped along
  *   with its parent.
  *
- * Sets whether @widget should be mapped along with its parent.
+ * Sets whether `widget` should be mapped along with its parent.
  *
  * The child visibility can be set for widget before it is added
  * to a container with [method@Gtk.Widget.set_parent], to avoid
@@ -6805,7 +6805,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
  *
  * See [method@Gdk.Surface.get_scale_factor].
  *
- * Returns: the scale factor for @widget
+ * Returns: the scale factor for `widget`
  */
 int
 gtk_widget_get_scale_factor (GtkWidget *widget)
@@ -6879,7 +6879,7 @@ gtk_widget_get_display (GtkWidget *widget)
  * Called by widgets as the user moves around the window using
  * keyboard shortcuts.
  *
- * The @direction argument indicates what kind of motion is taking place (up,
+ * The `direction` argument indicates what kind of motion is taking place (up,
  * down, left, right, tab forward, tab backward).
  *
  * This function calls the [vfunc@Gtk.Widget.focus] virtual function; widgets
@@ -6887,8 +6887,8 @@ gtk_widget_get_display (GtkWidget *widget)
  * behavior.
  *
  * The default `focus()` virtual function for a widget should return `TRUE` if
- * moving in @direction left the focus on a focusable location inside that
- * widget, and `FALSE` if moving in @direction moved the focus outside the
+ * moving in `direction` left the focus on a focusable location inside that
+ * widget, and `FALSE` if moving in `direction` moved the focus outside the
  * widget. When returning `TRUE`, widgets normally call [method@Gtk.Widget.grab_focus]
  * to place the focus accordingly; when returning `FALSE`, they don’t modify
  * the current focus location.
@@ -6897,7 +6897,7 @@ gtk_widget_get_display (GtkWidget *widget)
  * writing an app, you’d use [method@Gtk.Widget.grab_focus] to move
  * the focus to a particular widget.
  *
- * Returns: true if focus ended up inside @widget
+ * Returns: true if focus ended up inside `widget`
  */
 gboolean
 gtk_widget_child_focus (GtkWidget       *widget,
@@ -7039,13 +7039,13 @@ gtk_widget_set_usize_internal (GtkWidget *widget,
 /**
  * gtk_widget_set_size_request:
  * @widget: a `GtkWidget`
- * @width: width @widget should request, or -1 to unset
- * @height: height @widget should request, or -1 to unset
+ * @width: width `widget` should request, or -1 to unset
+ * @height: height `widget` should request, or -1 to unset
  *
  * Sets the minimum size of a widget.
  *
- * That is, the widget’s size request will be at least @width
- * by @height. You can use this function to force a widget to
+ * That is, the widget’s size request will be at least `width`
+ * by `height`. You can use this function to force a widget to
  * be larger than it normally would be.
  *
  * In most cases, [method@Gtk.Window.set_default_size] is a better
@@ -7100,7 +7100,7 @@ gtk_widget_set_size_request (GtkWidget *widget,
  * Gets the size request that was explicitly set for the widget using
  * gtk_widget_set_size_request().
  *
- * A value of -1 stored in @width or @height indicates that that
+ * A value of -1 stored in `width` or `height` indicates that that
  * dimension has not been set explicitly and the natural requisition
  * of the widget will be used instead. See
  * [method@Gtk.Widget.set_size_request]. To get the size a widget will
@@ -7143,15 +7143,15 @@ gtk_widget_has_size_request (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @widget_type: ancestor type
  *
- * Gets the first ancestor of @widget with type @widget_type.
+ * Gets the first ancestor of `widget` with type `widget_type`.
  *
  * For example, `gtk_widget_get_ancestor (widget, GTK_TYPE_BOX)`
- * gets the first `GtkBox` that’s an ancestor of @widget. No
+ * gets the first `GtkBox` that’s an ancestor of `widget`. No
  * reference will be added to the returned widget; it should
  * not be unreferenced.
  *
  * Note that unlike [method@Gtk.Widget.is_ancestor], this function
- * considers @widget to be an ancestor of itself.
+ * considers `widget` to be an ancestor of itself.
  *
  * Returns: (transfer none) (nullable): the ancestor widget
  */
@@ -7197,10 +7197,10 @@ gtk_widget_get_settings (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @ancestor: another `GtkWidget`
  *
- * Determines whether @widget is somewhere inside @ancestor,
+ * Determines whether `widget` is somewhere inside `ancestor`,
  * possibly with intermediate containers.
  *
- * Returns: true if @ancestor contains @widget as a child,
+ * Returns: true if `ancestor` contains `widget` as a child,
  *   grandchild, great grandchild, etc.
  */
 gboolean
@@ -7824,7 +7824,7 @@ gtk_widget_adjust_baseline_request (GtkWidget *widget,
  * @widget: a `GtkWidget`
  *
  * Returns the list of pointer `GdkDevice`s that are currently
- * on top of @widget. Free the list
+ * on top of `widget`. Free the list
  * with g_free(), the elements are owned by GTK and must
  * not be freed.
  */
@@ -8023,7 +8023,7 @@ gtk_requisition_new (void)
  *
  * Copies a `GtkRequisition`.
  *
- * Returns: a copy of @requisition
+ * Returns: a copy of `requisition`
  */
 GtkRequisition *
 gtk_requisition_copy (const GtkRequisition *requisition)
@@ -8097,7 +8097,7 @@ gtk_widget_update_computed_expand (GtkWidget *widget)
  * gtk_widget_queue_compute_expand:
  * @widget: a `GtkWidget`
  *
- * Mark @widget as needing to recompute its expand flags.
+ * Mark `widget` as needing to recompute its expand flags.
  *
  * Call this function when setting legacy expand child
  * properties on the child of a container.
@@ -9428,14 +9428,14 @@ gtk_widget_buildable_custom_finished (GtkBuildable *buildable,
  * gtk_widget_get_halign: (attributes org.gtk.Method.get_property=halign)
  * @widget: a `GtkWidget`
  *
- * Gets the horizontal alignment of @widget.
+ * Gets the horizontal alignment of `widget`.
  *
  * For backwards compatibility reasons this method will never return
  * %GTK_ALIGN_BASELINE, but instead it will convert it to
  * %GTK_ALIGN_FILL. Baselines are not supported for horizontal
  * alignment.
  *
- * Returns: the horizontal alignment of @widget
+ * Returns: the horizontal alignment of `widget`
  */
 GtkAlign
 gtk_widget_get_halign (GtkWidget *widget)
@@ -9454,7 +9454,7 @@ gtk_widget_get_halign (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @align: the horizontal alignment
  *
- * Sets the horizontal alignment of @widget.
+ * Sets the horizontal alignment of `widget`.
  */
 void
 gtk_widget_set_halign (GtkWidget *widget,
@@ -9476,9 +9476,9 @@ gtk_widget_set_halign (GtkWidget *widget,
  * gtk_widget_get_valign: (attributes org.gtk.Method.get_property=valign)
  * @widget: a `GtkWidget`
  *
- * Gets the vertical alignment of @widget.
+ * Gets the vertical alignment of `widget`.
  *
- * Returns: the vertical alignment of @widget
+ * Returns: the vertical alignment of `widget`
  */
 GtkAlign
 gtk_widget_get_valign (GtkWidget *widget)
@@ -9495,7 +9495,7 @@ gtk_widget_get_valign (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @align: the vertical alignment
  *
- * Sets the vertical alignment of @widget.
+ * Sets the vertical alignment of `widget`.
  */
 void
 gtk_widget_set_valign (GtkWidget *widget,
@@ -9517,9 +9517,9 @@ gtk_widget_set_valign (GtkWidget *widget,
  * gtk_widget_get_margin_start: (attributes org.gtk.Method.get_property=margin-start)
  * @widget: a `GtkWidget`
  *
- * Gets the start margin of @widget.
+ * Gets the start margin of `widget`.
  *
- * Returns: The start margin of @widget
+ * Returns: The start margin of `widget`
  */
 int
 gtk_widget_get_margin_start (GtkWidget *widget)
@@ -9536,7 +9536,7 @@ gtk_widget_get_margin_start (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @margin: the start margin
  *
- * Sets the start margin of @widget.
+ * Sets the start margin of `widget`.
  */
 void
 gtk_widget_set_margin_start (GtkWidget *widget,
@@ -9561,9 +9561,9 @@ gtk_widget_set_margin_start (GtkWidget *widget,
  * gtk_widget_get_margin_end: (attributes org.gtk.Method.get_property=margin-end)
  * @widget: a `GtkWidget`
  *
- * Gets the end margin of @widget.
+ * Gets the end margin of `widget`.
  *
- * Returns: The end margin of @widget
+ * Returns: The end margin of `widget`
  */
 int
 gtk_widget_get_margin_end (GtkWidget *widget)
@@ -9580,7 +9580,7 @@ gtk_widget_get_margin_end (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @margin: the end margin
  *
- * Sets the end margin of @widget.
+ * Sets the end margin of `widget`.
  */
 void
 gtk_widget_set_margin_end (GtkWidget *widget,
@@ -9605,9 +9605,9 @@ gtk_widget_set_margin_end (GtkWidget *widget,
  * gtk_widget_get_margin_top: (attributes org.gtk.Method.get_property=margin-top)
  * @widget: a `GtkWidget`
  *
- * Gets the top margin of @widget.
+ * Gets the top margin of `widget`.
  *
- * Returns: The top margin of @widget
+ * Returns: The top margin of `widget`
  */
 int
 gtk_widget_get_margin_top (GtkWidget *widget)
@@ -9624,7 +9624,7 @@ gtk_widget_get_margin_top (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @margin: the top margin
  *
- * Sets the top margin of @widget.
+ * Sets the top margin of `widget`.
  */
 void
 gtk_widget_set_margin_top (GtkWidget *widget,
@@ -9647,9 +9647,9 @@ gtk_widget_set_margin_top (GtkWidget *widget,
  * gtk_widget_get_margin_bottom: (attributes org.gtk.Method.get_property=margin-bottom)
  * @widget: a `GtkWidget`
  *
- * Gets the bottom margin of @widget.
+ * Gets the bottom margin of `widget`.
  *
- * Returns: The bottom margin of @widget
+ * Returns: The bottom margin of `widget`
  */
 int
 gtk_widget_get_margin_bottom (GtkWidget *widget)
@@ -9666,7 +9666,7 @@ gtk_widget_get_margin_bottom (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @margin: the bottom margin
  *
- * Sets the bottom margin of @widget.
+ * Sets the bottom margin of `widget`.
  */
 void
 gtk_widget_set_margin_bottom (GtkWidget *widget,
@@ -9689,12 +9689,12 @@ gtk_widget_set_margin_bottom (GtkWidget *widget,
  * gtk_widget_get_clipboard:
  * @widget: a `GtkWidget`
  *
- * Gets the clipboard object for @widget.
+ * Gets the clipboard object for `widget`.
  *
  * This is a utility function to get the clipboard object for the
- * `GdkDisplay` that @widget is using.
+ * `GdkDisplay` that `widget` is using.
  *
- * Note that this function always works, even when @widget is not
+ * Note that this function always works, even when `widget` is not
  * realized yet.
  *
  * Returns: (transfer none): the appropriate clipboard object
@@ -9711,12 +9711,12 @@ gtk_widget_get_clipboard (GtkWidget *widget)
  * gtk_widget_get_primary_clipboard:
  * @widget: a `GtkWidget`
  *
- * Gets the primary clipboard of @widget.
+ * Gets the primary clipboard of `widget`.
  *
  * This is a utility function to get the primary clipboard object
- * for the `GdkDisplay` that @widget is using.
+ * for the `GdkDisplay` that `widget` is using.
  *
- * Note that this function always works, even when @widget is not
+ * Note that this function always works, even when `widget` is not
  * realized yet.
  *
  * Returns: (transfer none): the appropriate clipboard object
@@ -9766,7 +9766,7 @@ gtk_widget_list_mnemonic_labels (GtkWidget *widget)
 /**
  * gtk_widget_add_mnemonic_label:
  * @widget: a `GtkWidget`
- * @label: a `GtkWidget` that acts as a mnemonic label for @widget
+ * @label: a `GtkWidget` that acts as a mnemonic label for `widget`
  *
  * Adds a widget to the list of mnemonic labels for this widget.
  *
@@ -9805,7 +9805,7 @@ gtk_widget_add_mnemonic_label (GtkWidget *widget,
  * gtk_widget_remove_mnemonic_label:
  * @widget: a `GtkWidget`
  * @label: a `GtkWidget` that was previously set as a mnemonic
- *   label for @widget with [method@Gtk.Widget.add_mnemonic_label]
+ *   label for `widget` with [method@Gtk.Widget.add_mnemonic_label]
  *
  * Removes a widget from the list of mnemonic labels for this widget.
  *
@@ -9854,7 +9854,7 @@ gtk_widget_remove_mnemonic_label (GtkWidget *widget,
  * @widget: a `GtkWidget`
  *
  * Triggers a tooltip query on the display where the toplevel
- * of @widget is located.
+ * of `widget` is located.
  */
 void
 gtk_widget_trigger_tooltip_query (GtkWidget *widget)
@@ -9865,11 +9865,11 @@ gtk_widget_trigger_tooltip_query (GtkWidget *widget)
 /**
  * gtk_widget_set_tooltip_text: (attributes org.gtk.Method.set_property=tooltip-text)
  * @widget: a `GtkWidget`
- * @text: (nullable): the contents of the tooltip for @widget
+ * @text: (nullable): the contents of the tooltip for `widget`
  *
- * Sets @text as the contents of the tooltip.
+ * Sets `text` as the contents of the tooltip.
  *
- * If @text contains any markup, it will be escaped.
+ * If `text` contains any markup, it will be escaped.
  *
  * This function will take care of setting
  * [property@Gtk.Widget:has-tooltip] as a side effect,
@@ -9929,9 +9929,9 @@ gtk_widget_set_tooltip_text (GtkWidget  *widget,
  * gtk_widget_get_tooltip_text: (attributes org.gtk.Method.get_property=tooltip-text)
  * @widget: a `GtkWidget`
  *
- * Gets the contents of the tooltip for @widget.
+ * Gets the contents of the tooltip for `widget`.
  *
- * If the @widget's tooltip was set using
+ * If the `widget`'s tooltip was set using
  * [method@Gtk.Widget.set_tooltip_markup],
  * this function will return the escaped text.
  *
@@ -9950,9 +9950,9 @@ gtk_widget_get_tooltip_text (GtkWidget *widget)
 /**
  * gtk_widget_set_tooltip_markup: (attributes org.gtk.Method.set_property=tooltip-markup)
  * @widget: a `GtkWidget`
- * @markup: (nullable): the contents of the tooltip for @widget
+ * @markup: (nullable): the contents of the tooltip for `widget`
  *
- * Sets @markup as the contents of the tooltip, which is marked
+ * Sets `markup` as the contents of the tooltip, which is marked
  * up with Pango markup.
  *
  * This function will take care of setting the
@@ -10016,7 +10016,7 @@ gtk_widget_set_tooltip_markup (GtkWidget  *widget,
  * gtk_widget_get_tooltip_markup: (attributes org.gtk.Method.get_property=tooltip-markup)
  * @widget: a `GtkWidget`
  *
- * Gets the contents of the tooltip for @widget.
+ * Gets the contents of the tooltip for `widget`.
  *
  * If the tooltip has not been set using
  * [method@Gtk.Widget.set_tooltip_markup], this
@@ -10037,9 +10037,9 @@ gtk_widget_get_tooltip_markup (GtkWidget *widget)
 /**
  * gtk_widget_set_has_tooltip: (attributes org.gtk.Method.set_property=has-tooltip)
  * @widget: a `GtkWidget`
- * @has_tooltip: whether or not @widget has a tooltip.
+ * @has_tooltip: whether or not `widget` has a tooltip.
  *
- * Sets the `has-tooltip` property on @widget to @has_tooltip.
+ * Sets the `has-tooltip` property on `widget` to `has_tooltip`.
  */
 void
 gtk_widget_set_has_tooltip (GtkWidget *widget,
@@ -10065,7 +10065,7 @@ gtk_widget_set_has_tooltip (GtkWidget *widget,
  *
  * Returns the current value of the `has-tooltip` property.
  *
- * Returns: current value of `has-tooltip` on @widget.
+ * Returns: current value of `has-tooltip` on `widget`.
  */
 gboolean
 gtk_widget_get_has_tooltip (GtkWidget *widget)
@@ -10129,15 +10129,15 @@ gtk_widget_get_allocation (GtkWidget     *widget,
 /**
  * gtk_widget_contains:
  * @widget: the widget to query
- * @x: X coordinate to test, relative to @widget's origin
- * @y: Y coordinate to test, relative to @widget's origin
+ * @x: X coordinate to test, relative to `widget`'s origin
+ * @y: Y coordinate to test, relative to `widget`'s origin
  *
- * Tests if the point at (@x, @y) is contained in @widget.
+ * Tests if the point at (`x`, `y`) is contained in `widget`.
  *
- * The coordinates for (@x, @y) must be in widget coordinates, so
- * (0, 0) is assumed to be the top left of @widget's content area.
+ * The coordinates for (`x`, `y`) must be in widget coordinates, so
+ * (0, 0) is assumed to be the top left of `widget`'s content area.
  *
- * Returns: true if @widget contains (@x, @y).
+ * Returns: true if `widget` contains (`x`, `y`).
  */
 gboolean
 gtk_widget_contains (GtkWidget  *widget,
@@ -10258,17 +10258,17 @@ gtk_widget_do_pick (GtkWidget    *widget,
 /**
  * gtk_widget_pick:
  * @widget: the widget to query
- * @x: X coordinate to test, relative to @widget's origin
- * @y: Y coordinate to test, relative to @widget's origin
+ * @x: X coordinate to test, relative to `widget`'s origin
+ * @y: Y coordinate to test, relative to `widget`'s origin
  * @flags: Flags to influence what is picked
  *
- * Finds the descendant of @widget closest to the point (@x, @y).
+ * Finds the descendant of `widget` closest to the point (`x`, `y`).
  *
  * The point must be given in widget coordinates, so (0, 0) is assumed
- * to be the top left of @widget's content area.
+ * to be the top left of `widget`'s content area.
  *
  * Usually widgets will return `NULL` if the given coordinate is not
- * contained in @widget checked via [method@Gtk.Widget.contains].
+ * contained in `widget` checked via [method@Gtk.Widget.contains].
  * Otherwise they will recursively try to find a child that does
  * not return `NULL`. Widgets are however free to customize their
  * picking algorithm.
@@ -10302,11 +10302,11 @@ gtk_widget_pick (GtkWidget    *widget,
  *   store the final transformation
  *
  * Computes a matrix suitable to describe a transformation from
- * @widget's coordinate system into @target's coordinate system.
+ * `widget`'s coordinate system into `target`'s coordinate system.
  *
  * The transform can not be computed in certain cases, for example
- * when @widget and @target do not share a common ancestor. In that
- * case @out_transform gets set to the identity matrix.
+ * when `widget` and `target` do not share a common ancestor. In that
+ * case `out_transform` gets set to the identity matrix.
  *
  * To learn more about widget coordinate systems, see the coordinate
  * system [overview](coordinates.html).
@@ -10383,18 +10383,18 @@ gtk_widget_compute_transform (GtkWidget         *widget,
  * @target: the `GtkWidget`
  * @out_bounds: (out caller-allocates): the rectangle taking the bounds
  *
- * Computes the bounds for @widget in the coordinate space of @target.
+ * Computes the bounds for `widget` in the coordinate space of `target`.
  *
  * The bounds of widget are (the bounding box of) the region that it is
  * expected to draw in. See the [coordinate system](coordinates.html)
  * overview to learn more.
  *
- * If the operation is successful, true is returned. If @widget has no
- * bounds or the bounds cannot be expressed in @target's coordinate space
+ * If the operation is successful, true is returned. If `widget` has no
+ * bounds or the bounds cannot be expressed in `target`'s coordinate space
  * (for example if both widgets are in different windows), false is
- * returned and @bounds is set to the zero rectangle.
+ * returned and `bounds` is set to the zero rectangle.
  *
- * It is valid for @widget and @target to be the same widget.
+ * It is valid for `widget` and `target` to be the same widget.
  *
  * Returns: true if the bounds could be computed
  */
@@ -10428,12 +10428,12 @@ gtk_widget_compute_bounds (GtkWidget       *widget,
  * gtk_widget_get_allocated_width:
  * @widget: the widget to query
  *
- * Returns the width that has currently been allocated to @widget.
+ * Returns the width that has currently been allocated to `widget`.
  *
  * To learn more about widget sizes, see the coordinate
  * system [overview](coordinates.html).
  *
- * Returns: the width of the @widget
+ * Returns: the width of the `widget`
  *
  * Deprecated: 4.12: Use [method@Gtk.Widget.get_width] instead
  */
@@ -10453,12 +10453,12 @@ gtk_widget_get_allocated_width (GtkWidget *widget)
  * gtk_widget_get_allocated_height:
  * @widget: the widget to query
  *
- * Returns the height that has currently been allocated to @widget.
+ * Returns the height that has currently been allocated to `widget`.
  *
  * To learn more about widget sizes, see the coordinate
  * system [overview](coordinates.html).
  *
- * Returns: the height of the @widget
+ * Returns: the height of the `widget`
  *
  * Deprecated: 4.12: Use [method@Gtk.Widget.get_height] instead
  */
@@ -10478,13 +10478,13 @@ gtk_widget_get_allocated_height (GtkWidget *widget)
  * gtk_widget_get_allocated_baseline:
  * @widget: the widget to query
  *
- * Returns the baseline that has currently been allocated to @widget.
+ * Returns the baseline that has currently been allocated to `widget`.
  *
  * This function is intended to be used when implementing handlers
  * for the `GtkWidget`Class.snapshot() function, and when allocating
  * child widgets in `GtkWidget`Class.size_allocate().
  *
- * Returns: the baseline of the @widget, or -1 if none
+ * Returns: the baseline of the `widget`, or -1 if none
  *
  * Deprecated: 4.12: Use [method@Gtk.Widget.get_baseline] instead
  */
@@ -10498,13 +10498,13 @@ gtk_widget_get_allocated_baseline (GtkWidget *widget)
  * gtk_widget_get_baseline:
  * @widget: the widget to query
  *
- * Returns the baseline that has currently been allocated to @widget.
+ * Returns the baseline that has currently been allocated to `widget`.
  *
  * This function is intended to be used when implementing handlers
  * for the `GtkWidget`Class.snapshot() function, and when allocating
  * child widgets in `GtkWidget`Class.size_allocate().
  *
- * Returns: the baseline of the @widget, or -1 if none
+ * Returns: the baseline of the `widget`, or -1 if none
  *
  * Since: 4.12
  */
@@ -10533,7 +10533,7 @@ gtk_widget_get_baseline (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @opacity: desired opacity, between 0 and 1
  *
- * Request the @widget to be rendered partially transparent.
+ * Request the `widget` to be rendered partially transparent.
  *
  * An opacity of 0 is fully transparent and an opacity of 1
  * is fully opaque.
@@ -10604,7 +10604,7 @@ gtk_widget_get_opacity (GtkWidget *widget)
  * @widget: a `GtkWidget`
  * @overflow: desired overflow
  *
- * Sets how @widget treats content that is drawn outside the
+ * Sets how `widget` treats content that is drawn outside the
  * widget's content area.
  *
  * See the definition of [enum@Gtk.Overflow] for details.
@@ -10675,7 +10675,7 @@ gtk_widget_set_has_focus (GtkWidget *widget,
  * This information can sometimes be used to avoid doing
  * unnecessary work.
  *
- * Returns: true if @widget is being destroyed
+ * Returns: true if `widget` is being destroyed
  */
 gboolean
 gtk_widget_in_destruction (GtkWidget *widget)
@@ -10919,10 +10919,10 @@ _gtk_widget_peek_style_context (GtkWidget *widget)
  * gtk_widget_get_style_context:
  * @widget: a `GtkWidget`
  *
- * Returns the style context associated to @widget.
+ * Returns the style context associated to `widget`.
  *
  * The returned object is guaranteed to be the same
- * for the lifetime of @widget.
+ * for the lifetime of `widget`.
  *
  * Returns: (transfer none): the widgets `GtkStyleContext`
  *
@@ -11011,23 +11011,23 @@ _gtk_widget_get_action_muxer (GtkWidget *widget,
 /**
  * gtk_widget_insert_action_group:
  * @widget: a `GtkWidget`
- * @name: the prefix for actions in @group
+ * @name: the prefix for actions in `group`
  * @group: (nullable): a `GActionGroup`, or `NULL` to remove
- *   the previously inserted group for @name
+ *   the previously inserted group for `name`
  *
- * Inserts @group into @widget.
+ * Inserts `group` into `widget`.
  *
- * Children of @widget that implement [iface@Gtk.Actionable] can
- * then be associated with actions in @group by setting their
- * “action-name” to @prefix.`action-name`.
+ * Children of `widget` that implement [iface@Gtk.Actionable] can
+ * then be associated with actions in `group` by setting their
+ * “action-name” to `prefix`.`action-name`.
  *
  * Note that inheritance is defined for individual actions. I.e.
- * even if you insert a group with prefix @prefix, actions with
+ * even if you insert a group with prefix `prefix`, actions with
  * the same prefix will still be inherited from the parent, unless
  * the group contains an action with the same name.
  *
- * If @group is `NULL`, a previously inserted group for @name is
- * removed from @widget.
+ * If `group` is `NULL`, a previously inserted group for `name` is
+ * removed from `widget`.
  */
 void
 gtk_widget_insert_action_group (GtkWidget    *widget,
@@ -11384,11 +11384,11 @@ gtk_widget_class_set_template_from_resource (GtkWidgetClass    *widget_class,
  * @callback_name: The name of the callback as expected in the template XML
  * @callback_symbol: (scope async): The callback symbol
  *
- * Declares a @callback_symbol to handle @callback_name from
- * the template XML defined for @widget_type.
+ * Declares a `callback_symbol` to handle `callback_name` from
+ * the template XML defined for `widget_type`.
  *
  * This function is not supported after [method@Gtk.WidgetClass.set_template_scope]
- * has been used on @widget_class. See [method@Gtk.BuilderCScope.add_callback_symbol].
+ * has been used on `widget_class`. See [method@Gtk.BuilderCScope.add_callback_symbol].
  *
  * Note that this must be called from a composite widget classes
  * class initializer after calling [method@Gtk.WidgetClass.set_template].
@@ -11461,18 +11461,18 @@ gtk_widget_class_set_template_scope (GtkWidgetClass  *widget_class,
  * alternatively accessible via [method@Gtk.Widget.get_template_child].
  *
  * The struct can point either into the public instance, then you should
- * use `G_STRUCT_OFFSET(WidgetType, member)` for @struct_offset, or in the
+ * use `G_STRUCT_OFFSET(WidgetType, member)` for `struct_offset`, or in the
  * private struct, then you should use `G_PRIVATE_OFFSET(WidgetType, member)`.
  *
  * An explicit strong reference will be held automatically for the duration
  * of your instance’s life cycle, it will be released automatically when
- * `GObjectClass.dispose()` runs on your instance and if a @struct_offset
+ * `GObjectClass.dispose()` runs on your instance and if a `struct_offset`
  * that is `!= 0` is specified, then the automatic location in your instance
  * public or private data will be set to `NULL`. You can however access an
  * automated child pointer the first time your classes `GObjectClass.dispose()`
  * runs, or alternatively in [signal@Gtk.Widget::destroy].
  *
- * If @internal_child is specified, [vfunc@Gtk.Buildable.get_internal_child]
+ * If `internal_child` is specified, [vfunc@Gtk.Buildable.get_internal_child]
  * will be automatically implemented by the `GtkWidget` class so there is no
  * need to implement it manually.
  *
@@ -11510,19 +11510,19 @@ gtk_widget_class_bind_template_child_full (GtkWidgetClass *widget_class,
  * @widget_type: The `GType` to get a template child for
  * @name: The “id” of the child defined in the template XML
  *
- * Fetch an object build from the template XML for @widget_type in
- * this @widget instance.
+ * Fetch an object build from the template XML for `widget_type` in
+ * this `widget` instance.
  *
  * This will only report children which were previously declared
  * with [method@Gtk.WidgetClass.bind_template_child_full] or one of its
  * variants.
  *
  * This function is only meant to be called for code which is private
- * to the @widget_type which declared the child and is meant for language
+ * to the `widget_type` which declared the child and is meant for language
  * bindings which cannot easily make use of the GObject structure offsets.
  *
  * Returns: (transfer none): The object built in the template XML with
- *   the id @name
+ *   the id `name`
  */
 GObject *
 gtk_widget_get_template_child (GtkWidget   *widget,
@@ -11551,10 +11551,10 @@ gtk_widget_get_template_child (GtkWidget   *widget,
  * @args: (nullable): parameters to use
  *
  * Looks up the action in the action groups associated with
- * @widget and its ancestors, and activates it.
+ * `widget` and its ancestors, and activates it.
  *
  * If the action is in an action group added with
- * [method@Gtk.Widget.insert_action_group], the @name is expected
+ * [method@Gtk.Widget.insert_action_group], the `name` is expected
  * to be prefixed with the prefix that was used when the group was
  * inserted.
  *
@@ -11588,13 +11588,13 @@ gtk_widget_activate_action_variant (GtkWidget  *widget,
  * @widget: a `GtkWidget`
  * @name: the name of the action to activate
  * @format_string: (nullable): GVariant format string for arguments
- * @...: arguments, as given by format string
+ * `...`: arguments, as given by format string
  *
  * Looks up the action in the action groups associated
- * with @widget and its ancestors, and activates it.
+ * with `widget` and its ancestors, and activates it.
  *
  * This is a wrapper around [method@Gtk.Widget.activate_action_variant]
- * that constructs the @args variant according to @format_string.
+ * that constructs the `args` variant according to `format_string`.
  *
  * Returns: true if the action was activated, false if the action
  *   does not exist
@@ -11630,7 +11630,7 @@ gtk_widget_activate_action (GtkWidget  *widget,
  * gtk_widget_activate_default:
  * @widget: a `GtkWidget`
  *
- * Activates the `default.activate` action from @widget.
+ * Activates the `default.activate` action from `widget`.
  */
 void
 gtk_widget_activate_default (GtkWidget *widget)
@@ -11682,7 +11682,7 @@ gtk_widget_cancel_event_sequence (GtkWidget             *widget,
  * @controller: (transfer full): a `GtkEventController` that hasn't been
  *   added to a widget yet
  *
- * Adds @controller to @widget so that it will receive events.
+ * Adds `controller` to `widget` so that it will receive events.
  *
  * You will usually want to call this function right after
  * creating any kind of [class@Gtk.EventController].
@@ -11710,7 +11710,7 @@ gtk_widget_add_controller (GtkWidget          *widget,
  * @widget: a `GtkWidget`
  * @controller: (transfer none): a `GtkEventController`
  *
- * Removes @controller from @widget, so that it doesn't process
+ * Removes `controller` from `widget`, so that it doesn't process
  * events anymore.
  *
  * It should not be used again.
@@ -11952,7 +11952,7 @@ gtk_widget_child_observer_destroyed (gpointer widget)
  * gtk_widget_observe_children:
  * @widget: a `GtkWidget`
  *
- * Returns a `GListModel` to track the children of @widget.
+ * Returns a `GListModel` to track the children of `widget`.
  *
  * Calling this function will enable extra internal bookkeeping
  * to track children and emit signals on the returned listmodel.
@@ -11962,7 +11962,7 @@ gtk_widget_child_observer_destroyed (gpointer widget)
  * because of the slowdowns.
  *
  * Returns: (transfer full) (attributes element-type=GtkWidget):
- *   a `GListModel` tracking @widget's children
+ *   a `GListModel` tracking `widget`'s children
  */
 GListModel *
 gtk_widget_observe_children (GtkWidget *widget)
@@ -12025,7 +12025,7 @@ gtk_widget_controller_list_get_item (gpointer item,
  * @widget: a `GtkWidget`
  *
  * Returns a `GListModel` to track the [class@Gtk.EventController]s
- * of @widget.
+ * of `widget`.
  *
  * Calling this function will enable extra internal bookkeeping
  * to track controllers and emit signals on the returned listmodel.
@@ -12035,7 +12035,7 @@ gtk_widget_controller_list_get_item (gpointer item,
  * because of the slowdowns.
  *
  * Returns: (transfer full) (attributes element-type=GtkEventController):
- *   a `GListModel` tracking @widget's controllers
+ *   a `GListModel` tracking `widget`'s controllers
  */
 GListModel *
 gtk_widget_observe_controllers (GtkWidget *widget)
@@ -12141,20 +12141,20 @@ gtk_widget_get_prev_sibling (GtkWidget *widget)
 /**
  * gtk_widget_insert_after:
  * @widget: a `GtkWidget`
- * @parent: the parent `GtkWidget` to insert @widget into
- * @previous_sibling: (nullable): the new previous sibling of @widget
+ * @parent: the parent `GtkWidget` to insert `widget` into
+ * @previous_sibling: (nullable): the new previous sibling of `widget`
  *
- * Inserts @widget into the child widget list of @parent.
+ * Inserts `widget` into the child widget list of `parent`.
  *
- * It will be placed after @previous_sibling, or at the beginning if
- * @previous_sibling is `NULL`.
+ * It will be placed after `previous_sibling`, or at the beginning if
+ * `previous_sibling` is `NULL`.
  *
  * After calling this function, `gtk_widget_get_prev_sibling(widget)`
- * will return @previous_sibling.
+ * will return `previous_sibling`.
  *
- * If @parent is already set as the parent widget of @widget, this
- * function can also be used to reorder @widget in the child widget
- * list of @parent.
+ * If `parent` is already set as the parent widget of `widget`, this
+ * function can also be used to reorder `widget` in the child widget
+ * list of `parent`.
  *
  * This API is primarily meant for widget implementations; if you are
  * just using a widget, you *must* use its own API for adding children.
@@ -12184,19 +12184,19 @@ gtk_widget_insert_after (GtkWidget *widget,
 /**
  * gtk_widget_insert_before:
  * @widget: a `GtkWidget`
- * @parent: the parent `GtkWidget` to insert @widget into
- * @next_sibling: (nullable): the new next sibling of @widget
+ * @parent: the parent `GtkWidget` to insert `widget` into
+ * @next_sibling: (nullable): the new next sibling of `widget`
  *
- * Inserts @widget into the child widget list of @parent.
+ * Inserts `widget` into the child widget list of `parent`.
  *
- * It will be placed before @next_sibling, or at the end if
- * @next_sibling is `NULL`.
+ * It will be placed before `next_sibling`, or at the end if
+ * `next_sibling` is `NULL`.
  *
  * After calling this function, `gtk_widget_get_next_sibling(widget)`
- * will return @next_sibling.
+ * will return `next_sibling`.
  *
- * If @parent is already set as the parent widget of @widget, this function
- * can also be used to reorder @widget in the child widget list of @parent.
+ * If `parent` is already set as the parent widget of `widget`, this function
+ * can also be used to reorder `widget` in the child widget list of `parent`.
  *
  * This API is primarily meant for widget implementations; if you are
  * just using a widget, you *must* use its own API for adding children.
@@ -12245,12 +12245,12 @@ gtk_widget_forall (GtkWidget   *widget,
 /**
  * gtk_widget_snapshot_child:
  * @widget: a `GtkWidget`
- * @child: a child of @widget
+ * @child: a child of `widget`
  * @snapshot: `GtkSnapshot` as passed to the widget. In particular, no
  *   calls to gtk_snapshot_translate() or other transform calls should
  *   have been made.
  *
- * Snapshot the a child of @widget.
+ * Snapshot the a child of `widget`.
  *
  * When a widget receives a call to the snapshot function,
  * it must send synthetic [vfunc@Gtk.Widget.snapshot] calls
@@ -12258,10 +12258,10 @@ gtk_widget_forall (GtkWidget   *widget,
  * of doing this. A widget, when it receives a call to its
  * [vfunc@Gtk.Widget.snapshot] function, calls
  * gtk_widget_snapshot_child() once for each child, passing in
- * the @snapshot the widget received.
+ * the `snapshot` the widget received.
  *
  * gtk_widget_snapshot_child() takes care of translating the origin of
- * @snapshot, and deciding whether the child needs to be snapshot.
+ * `snapshot`, and deciding whether the child needs to be snapshot.
  *
  * This function does nothing for children that implement `GtkNative`.
  */
@@ -12303,10 +12303,10 @@ gtk_widget_snapshot_child (GtkWidget   *widget,
 /**
  * gtk_widget_set_focus_child:
  * @widget: a `GtkWidget`
- * @child: (nullable): a direct child widget of @widget or `NULL`
- *   to unset the focus child of @widget
+ * @child: (nullable): a direct child widget of `widget` or `NULL`
+ *   to unset the focus child of `widget`
  *
- * Set @child as the current focus child of @widget.
+ * Set `child` as the current focus child of `widget`.
  *
  * This function is only suitable for widget implementations.
  * If you want a certain widget to get the input focus, call
@@ -12340,10 +12340,10 @@ gtk_widget_real_set_focus_child (GtkWidget *widget,
  * gtk_widget_get_focus_child:
  * @widget: a `GtkWidget`
  *
- * Returns the current focus child of @widget.
+ * Returns the current focus child of `widget`.
  *
  * Returns: (nullable) (transfer none): The current focus
- *   child of @widget
+ *   child of `widget`
  */
 GtkWidget *
 gtk_widget_get_focus_child (GtkWidget *widget)
@@ -12361,9 +12361,9 @@ gtk_widget_get_focus_child (GtkWidget *widget)
  * @cursor: (nullable): the new cursor
  *
  * Sets the cursor to be shown when pointer devices point
- * towards @widget.
+ * towards `widget`.
  *
- * If the @cursor is NULL, @widget will use the cursor
+ * If the `cursor` is NULL, `widget` will use the cursor
  * inherited from the parent widget.
  */
 void
@@ -12392,14 +12392,14 @@ gtk_widget_set_cursor (GtkWidget *widget,
  * @name: (nullable): The name of the cursor
  *
  * Sets a named cursor to be shown when pointer devices point
- * towards @widget.
+ * towards `widget`.
  *
  * This is a utility function that creates a cursor via
- * [ctor@Gdk.Cursor.new_from_name] and then sets it on @widget
+ * [ctor@Gdk.Cursor.new_from_name] and then sets it on `widget`
  * with [method@Gtk.Widget.set_cursor]. See those functions for
  * details.
  *
- * On top of that, this function allows @name to be `NULL`, which
+ * On top of that, this function allows `name` to be `NULL`, which
  * will do the same as calling [method@Gtk.Widget.set_cursor]
  * with a `NULL` cursor.
  */
@@ -12427,7 +12427,7 @@ gtk_widget_set_cursor_from_name (GtkWidget  *widget,
  * gtk_widget_get_cursor: (attributes org.gtk.Method.get_property=cursor)
  * @widget: a `GtkWidget`
  *
- * Queries the cursor set on @widget.
+ * Queries the cursor set on `widget`.
  *
  * See [method@Gtk.Widget.set_cursor] for details.
  *
@@ -12450,7 +12450,7 @@ gtk_widget_get_cursor (GtkWidget *widget)
  * @can_target: whether this widget should be able to
  *   receive pointer events
  *
- * Sets whether @widget can be the target of pointer events.
+ * Sets whether `widget` can be the target of pointer events.
  */
 void
 gtk_widget_set_can_target (GtkWidget *widget,
@@ -12472,9 +12472,9 @@ gtk_widget_set_can_target (GtkWidget *widget,
  * gtk_widget_get_can_target: (attributes org.gtk.Method.get_property=can-target)
  * @widget: a `GtkWidget`
  *
- * Queries whether @widget can be the target of pointer events.
+ * Queries whether `widget` can be the target of pointer events.
  *
- * Returns: true if @widget can receive pointer events
+ * Returns: true if `widget` can receive pointer events
  */
 gboolean
 gtk_widget_get_can_target (GtkWidget *widget)
@@ -12499,7 +12499,7 @@ gtk_widget_get_can_target (GtkWidget *widget)
  * To learn more about widget sizes, see the coordinate
  * system [overview](coordinates.html).
  *
- * Returns: The width of @widget
+ * Returns: The width of `widget`
  */
 int
 gtk_widget_get_width (GtkWidget *widget)
@@ -12526,7 +12526,7 @@ gtk_widget_get_width (GtkWidget *widget)
  * To learn more about widget sizes, see the coordinate
  * system [overview](coordinates.html).
  *
- * Returns: The height of @widget
+ * Returns: The height of `widget`
  */
 int
 gtk_widget_get_height (GtkWidget *widget)
@@ -12545,7 +12545,7 @@ gtk_widget_get_height (GtkWidget *widget)
  *
  * Returns the content width or height of the widget.
  *
- * Which dimension is returned depends on @orientation.
+ * Which dimension is returned depends on `orientation`.
  *
  * This is equivalent to calling [method@Gtk.Widget.get_width]
  * for %GTK_ORIENTATION_HORIZONTAL or [method@Gtk.Widget.get_height]
@@ -12556,7 +12556,7 @@ gtk_widget_get_height (GtkWidget *widget)
  * To learn more about widget sizes, see the coordinate
  * system [overview](coordinates.html).
  *
- * Returns: The size of @widget in @orientation.
+ * Returns: The size of `widget` in `orientation`.
  */
 int
 gtk_widget_get_size (GtkWidget      *widget,
@@ -12576,12 +12576,12 @@ gtk_widget_get_size (GtkWidget      *widget,
  * gtk_widget_class_set_layout_manager_type:
  * @widget_class: a `GtkWidgetClass`
  * @type: The object type that implements the `GtkLayoutManager`
- *   for @widget_class
+ *   for `widget_class`
  *
  * Sets the type to be used for creating layout managers for
- * widgets of @widget_class.
+ * widgets of `widget_class`.
  *
- * The given @type must be a subtype of [class@Gtk.LayoutManager].
+ * The given `type` must be a subtype of [class@Gtk.LayoutManager].
  *
  * This function should only be called from class init functions
  * of widgets.
@@ -12605,7 +12605,7 @@ gtk_widget_class_set_layout_manager_type (GtkWidgetClass *widget_class,
  * @widget_class: a `GtkWidgetClass`
  *
  * Retrieves the type of the [class@Gtk.LayoutManager]
- * used by widgets of class @widget_class.
+ * used by widgets of class `widget_class`.
  *
  * See also: [method@Gtk.WidgetClass.set_layout_manager_type].
  *
@@ -12629,7 +12629,7 @@ gtk_widget_class_get_layout_manager_type (GtkWidgetClass *widget_class)
  * @layout_manager: (nullable) (transfer full): a `GtkLayoutManager`
  *
  * Sets the layout manager delegate instance that provides an
- * implementation for measuring and allocating the children of @widget.
+ * implementation for measuring and allocating the children of `widget`.
  */
 void
 gtk_widget_set_layout_manager (GtkWidget        *widget,
@@ -12663,7 +12663,7 @@ gtk_widget_set_layout_manager (GtkWidget        *widget,
  * gtk_widget_get_layout_manager: (attributes org.gtk.Method.get_property=layout-manager)
  * @widget: a `GtkWidget`
  *
- * Retrieves the layout manager used by @widget.
+ * Retrieves the layout manager used by `widget`.
  *
  * See [method@Gtk.Widget.set_layout_manager].
  *
@@ -12683,7 +12683,7 @@ gtk_widget_get_layout_manager (GtkWidget *widget)
  * gtk_widget_should_layout:
  * @widget: a widget
  *
- * Returns whether @widget should contribute to
+ * Returns whether `widget` should contribute to
  * the measuring and allocation of its parent.
  *
  * This is false for invisible children, but also
@@ -12787,14 +12787,14 @@ determine_type (GParamSpec *pspec)
  * gtk_widget_class_install_property_action:
  * @widget_class: a `GtkWidgetClass`
  * @action_name: name of the action
- * @property_name: name of the property in instances of @widget_class
+ * @property_name: name of the property in instances of `widget_class`
  *   or any parent class.
  *
- * Installs an action called @action_name on @widget_class and
- * binds its state to the value of the @property_name property.
+ * Installs an action called `action_name` on `widget_class` and
+ * binds its state to the value of the `property_name` property.
  *
  * This function will perform a few sanity checks on the property selected
- * via @property_name. Namely, the property must exist, must be readable,
+ * via `property_name`. Namely, the property must exist, must be readable,
  * writable and must not be construct-only. There are also restrictions
  * on the type of the given property, it must be boolean, int, unsigned int,
  * double or string. If any of these conditions are not met, a critical
@@ -12883,17 +12883,17 @@ gtk_widget_action_set_enabled (GtkWidget  *widget,
  * @parameter_type: (out) (transfer none) (nullable): return location for the parameter type
  * @property_name: (out) (transfer none) (nullable): return location for the property name
  *
- * Returns details about the @index_-th action that has been
- * installed for @widget_class during class initialization.
+ * Returns details about the `index_`-th action that has been
+ * installed for `widget_class` during class initialization.
  *
  * See [method@Gtk.WidgetClass.install_action] for details on
  * how to install actions.
  *
  * Note that this function will also return actions defined
  * by parent classes. You can identify those by looking
- * at @owner.
+ * at `owner`.
  *
- * Returns: true if the action was found, false if @index_
+ * Returns: true if the action was found, false if `index_`
  *   is out of range
  */
 gboolean
@@ -12930,7 +12930,7 @@ gtk_widget_class_query_action (GtkWidgetClass      *widget_class,
  * gtk_widget_get_css_name: (attributes org.gtk.Method.get_property=css-name)
  * @self: a `GtkWidget`
  *
- * Returns the CSS name that is used for @self.
+ * Returns the CSS name that is used for `self`.
  *
  * Returns: (transfer none): the CSS name
  */
@@ -12947,13 +12947,13 @@ gtk_widget_get_css_name (GtkWidget *self)
 /**
  * gtk_widget_add_css_class:
  * @widget: a `GtkWidget`
- * @css_class: The style class to add to @widget, without
+ * @css_class: The style class to add to `widget`, without
  *   the leading '.' used for notation of style classes
  *
- * Adds a style class to @widget.
+ * Adds a style class to `widget`.
  *
  * After calling this function, the widgets style will match
- * for @css_class, according to CSS matching rules.
+ * for `css_class`, according to CSS matching rules.
  *
  * Use [method@Gtk.Widget.remove_css_class] to remove the
  * style again.
@@ -12976,12 +12976,12 @@ gtk_widget_add_css_class (GtkWidget  *widget,
 /**
  * gtk_widget_remove_css_class:
  * @widget: a `GtkWidget`
- * @css_class: The style class to remove from @widget, without
+ * @css_class: The style class to remove from `widget`, without
  *   the leading '.' used for notation of style classes
  *
- * Removes a style from @widget.
+ * Removes a style from `widget`.
  *
- * After this, the style of @widget will stop matching for @css_class.
+ * After this, the style of `widget` will stop matching for `css_class`.
  */
 void
 gtk_widget_remove_css_class (GtkWidget  *widget,
@@ -13009,9 +13009,9 @@ gtk_widget_remove_css_class (GtkWidget  *widget,
  * @css_class: A style class, without the leading '.'
  *   used for notation of style classes
  *
- * Returns whether @css_class is currently applied to @widget.
+ * Returns whether `css_class` is currently applied to `widget`.
  *
- * Returns: true if @css_class is currently applied to @widget,
+ * Returns: true if `css_class` is currently applied to `widget`,
  *   false otherwise.
  */
 gboolean
@@ -13037,10 +13037,10 @@ gtk_widget_has_css_class (GtkWidget  *widget,
  * gtk_widget_get_css_classes: (attributes org.gtk.Method.get_property=css-classes)
  * @widget: a `GtkWidget`
  *
- * Returns the list of style classes applied to @widget.
+ * Returns the list of style classes applied to `widget`.
  *
  * Returns: (transfer full): a `NULL`-terminated list of
- *   css classes currently applied to @widget. The returned
+ *   css classes currently applied to `widget`. The returned
  *   list must freed using g_strfreev().
  */
 char **
@@ -13069,10 +13069,10 @@ gtk_widget_get_css_classes (GtkWidget *widget)
  * gtk_widget_set_css_classes: (attributes org.gtk.Method.set_property=css-classes)
  * @widget: a `GtkWidget`
  * @classes: (transfer none) (array zero-terminated=1):
- *   `NULL`-terminated list of style classes to apply to @widget.
+ *   `NULL`-terminated list of style classes to apply to `widget`.
  *
- * Clear all style classes applied to @widget
- * and replace them with @classes.
+ * Clear all style classes applied to `widget`
+ * and replace them with `classes`.
  */
 void
 gtk_widget_set_css_classes (GtkWidget   *widget,
@@ -13119,7 +13119,7 @@ gtk_widget_get_color (GtkWidget *widget,
  * @orientation: the orientation
  *
  * Update the internal state associated to the given
- * @orientation of a `GtkWidget`.
+ * `orientation` of a `GtkWidget`.
  */
 void
 gtk_widget_update_orientation (GtkWidget      *widget,
@@ -13146,7 +13146,7 @@ gtk_widget_update_orientation (GtkWidget      *widget,
 /**
  * gtk_widget_class_set_accessible_role:
  * @widget_class: a `GtkWidgetClass`
- * @accessible_role: the `GtkAccessibleRole` used by the @widget_class
+ * @accessible_role: the `GtkAccessibleRole` used by the `widget_class`
  *
  * Sets the accessible role used by the given `GtkWidget` class.
  *

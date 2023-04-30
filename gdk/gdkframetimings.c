@@ -69,9 +69,9 @@ _gdk_frame_timings_steal (GdkFrameTimings *timings,
  * gdk_frame_timings_ref:
  * @timings: a `GdkFrameTimings`
  *
- * Increases the reference count of @timings.
+ * Increases the reference count of `timings`.
  *
- * Returns: @timings
+ * Returns: `timings`
  */
 GdkFrameTimings *
 gdk_frame_timings_ref (GdkFrameTimings *timings)
@@ -87,9 +87,9 @@ gdk_frame_timings_ref (GdkFrameTimings *timings)
  * gdk_frame_timings_unref:
  * @timings: a `GdkFrameTimings`
  *
- * Decreases the reference count of @timings.
+ * Decreases the reference count of `timings`.
  *
- * If @timings is no longer referenced, it will be freed.
+ * If `timings` is no longer referenced, it will be freed.
  */
 void
 gdk_frame_timings_unref (GdkFrameTimings *timings)
@@ -121,7 +121,7 @@ gdk_frame_timings_get_frame_counter (GdkFrameTimings *timings)
  * gdk_frame_timings_get_complete:
  * @timings: a `GdkFrameTimings`
  *
- * Returns whether @timings are complete.
+ * Returns whether `timings` are complete.
  *
  * The timing information in a `GdkFrameTimings` is filled in
  * incrementally as the frame as drawn and passed off to the

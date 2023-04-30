@@ -289,7 +289,7 @@ gtk_gesture_swipe_new (void)
  * Gets the current velocity.
  *
  * If the gesture is recognized, this function returns true and fills
- * in @velocity_x and @velocity_y with the recorded velocity, as per the
+ * in `velocity_x` and `velocity_y` with the recorded velocity, as per the
  * last events processed.
  *
  * Returns: whether velocity could be calculated

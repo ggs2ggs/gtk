@@ -75,7 +75,7 @@ struct _GtkFlowBoxChildClass
  *
  * This function is called for each item that gets added to the model.
  *
- * Returns: (transfer full): a `GtkWidget` that represents @item
+ * Returns: (transfer full): a `GtkWidget` that represents `item`
  */
 typedef GtkWidget * (*GtkFlowBoxCreateWidgetFunc) (gpointer item,
                                                    gpointer  user_data);

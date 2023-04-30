@@ -274,8 +274,8 @@ gtk_gesture_rotate_new (void)
  *
  * Gets the angle delta in radians.
  *
- * If @gesture is active, this function returns the angle difference
- * in radians since the gesture was first recognized. If @gesture is
+ * If `gesture` is active, this function returns the angle difference
+ * in radians since the gesture was first recognized. If `gesture` is
  * not active, 0 is returned.
  *
  * Returns: the angle delta in radians

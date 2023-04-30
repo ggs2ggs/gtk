@@ -729,7 +729,7 @@ gtk_icon_view_class_init (GtkIconViewClass *klass)
    * GtkIconView::move-cursor:
    * @iconview: the object which received the signal
    * @step: the granularity of the move, as a `GtkMovementStep`
-   * @count: the number of @step units to move
+   * @count: the number of `step` units to move
    * @extend: whether to extend the selection
    * @modify: whether to modify the selection
    *
@@ -1928,13 +1928,13 @@ gtk_icon_view_remove_editable (GtkCellArea            *area,
  * gtk_icon_view_set_cursor:
  * @icon_view: A `GtkIconView`
  * @path: A `GtkTreePath`
- * @cell: (nullable): One of the cell renderers of @icon_view
+ * @cell: (nullable): One of the cell renderers of `icon_view`
  * @start_editing: true if the specified cell should start being edited.
  *
- * Sets the current keyboard focus to be at @path, and selects it.  This is
+ * Sets the current keyboard focus to be at `path`, and selects it.  This is
  * useful when you want to focus the user’s attention on a particular item.
- * If @cell is not `NULL`, then focus is given to the cell specified by
- * it. Additionally, if @start_editing is true, then editing should be
+ * If `cell` is not `NULL`, then focus is given to the cell specified by
+ * it. Additionally, if `start_editing` is true, then editing should be
  * started in the specified cell.
  *
  * This function is often followed by `gtk_widget_grab_focus
@@ -1989,9 +1989,9 @@ gtk_icon_view_set_cursor (GtkIconView     *icon_view,
  * @cell: (out) (optional) (transfer none): Return location the current
  *   focus cell
  *
- * Fills in @path and @cell with the current cursor path and cell.
- * If the cursor isn’t currently set, then *@path will be `NULL`.
- * If no cell currently has focus, then *@cell will be `NULL`.
+ * Fills in `path` and `cell` with the current cursor path and cell.
+ * If the cursor isn’t currently set, then *`path` will be `NULL`.
+ * If no cell currently has focus, then *`cell` will be `NULL`.
  *
  * The returned `GtkTreePath` must be freed with gtk_tree_path_free().
  *
@@ -3806,22 +3806,22 @@ gtk_icon_view_move_cursor_start_end (GtkIconView *icon_view,
  * @icon_view: A `GtkIconView`
  * @path: The path of the item to move to.
  * @use_align: whether to use alignment arguments, or false.
- * @row_align: The vertical alignment of the item specified by @path.
- * @col_align: The horizontal alignment of the item specified by @path.
+ * @row_align: The vertical alignment of the item specified by `path`.
+ * @col_align: The horizontal alignment of the item specified by `path`.
  *
- * Moves the alignments of @icon_view to the position specified by @path.
- * @row_align determines where the row is placed, and @col_align determines
- * where @column is placed.  Both are expected to be between 0.0 and 1.0.
+ * Moves the alignments of `icon_view` to the position specified by `path`.
+ * `row_align` determines where the row is placed, and `col_align` determines
+ * where `column` is placed.  Both are expected to be between 0.0 and 1.0.
  * 0.0 means left/top alignment, 1.0 means right/bottom alignment, 0.5 means
  * center.
  *
- * If @use_align is false, then the alignment arguments are ignored, and the
+ * If `use_align` is false, then the alignment arguments are ignored, and the
  * tree does the minimum amount of work to scroll the item onto the screen.
  * This means that the item will be scrolled to the edge closest to its current
  * position.  If the item is currently visible on the screen, nothing is done.
  *
- * This function only works if the model is set, and @path is a valid row on
- * the model. If the model changes before the @icon_view is realized, the
+ * This function only works if the model is set, and `path` is a valid row on
+ * the model. If the model changes before the `icon_view` is realized, the
  * centered path will be modified to reflect this change.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
@@ -4031,7 +4031,7 @@ gtk_icon_view_new (void)
  * @area: the `GtkCellArea` to use to layout cells
  *
  * Creates a new `GtkIconView` widget using the
- * specified @area to layout cells inside the icons.
+ * specified `area` to layout cells inside the icons.
  *
  * Returns: A newly created `GtkIconView` widget
  *
@@ -4047,7 +4047,7 @@ gtk_icon_view_new_with_area (GtkCellArea *area)
  * gtk_icon_view_new_with_model:
  * @model: The model.
  *
- * Creates a new `GtkIconView` widget with the model @model.
+ * Creates a new `GtkIconView` widget with the model `model`.
  *
  * Returns: A newly created `GtkIconView` widget.
  *
@@ -4099,7 +4099,7 @@ gtk_icon_view_get_path_at_pos (GtkIconView *icon_view,
  * @y: The y position to be identified
  * @path: (out) (optional): Return location for the path
  * @cell: (out) (optional) (transfer none): Return location for the renderer
- *   responsible for the cell at (@x, @y)
+ *   responsible for the cell at (`x`, `y`)
  *
  * Gets the path and cell for the icon at the given position.
  *
@@ -4143,9 +4143,9 @@ gtk_icon_view_get_item_at_pos (GtkIconView      *icon_view,
  * @rect: (out): rectangle to fill with cell rect
  *
  * Fills the bounding rectangle in widget coordinates for the cell specified by
- * @path and @cell. If @cell is `NULL` the main cell area is used.
+ * `path` and `cell`. If `cell` is `NULL` the main cell area is used.
  *
- * This function is only valid if @icon_view is realized.
+ * This function is only valid if `icon_view` is realized.
  *
  * Returns: false if there is no such item, true otherwise
  *
@@ -4196,7 +4196,7 @@ gtk_icon_view_get_cell_rect (GtkIconView     *icon_view,
  * @tooltip: a `GtkTooltip`
  * @path: a `GtkTreePath`
  *
- * Sets the tip area of @tooltip to be the area covered by the item at @path.
+ * Sets the tip area of `tooltip` to be the area covered by the item at `path`.
  * See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
  * See also gtk_tooltip_set_tip_area().
  *
@@ -4220,8 +4220,8 @@ gtk_icon_view_set_tooltip_item (GtkIconView     *icon_view,
  * @path: a `GtkTreePath`
  * @cell: (nullable): a `GtkCellRenderer`
  *
- * Sets the tip area of @tooltip to the area which @cell occupies in
- * the item pointed to by @path. See also gtk_tooltip_set_tip_area().
+ * Sets the tip area of `tooltip` to the area which `cell` occupies in
+ * the item pointed to by `path`. See also gtk_tooltip_set_tip_area().
  *
  * See also gtk_icon_view_set_tooltip_column() for a simpler alternative.
  *
@@ -4257,14 +4257,14 @@ gtk_icon_view_set_tooltip_cell (GtkIconView     *icon_view,
  * @iter: (out) (optional): a pointer to receive a `GtkTreeIter`
  *
  * This function is supposed to be used in a `GtkWidget::query-tooltip`
- * signal handler for `GtkIconView`. The @x, @y and @keyboard_tip values
+ * signal handler for `GtkIconView`. The `x`, `y` and `keyboard_tip` values
  * which are received in the signal handler, should be passed to this
  * function without modification.
  *
  * The return value indicates whether there is an icon view item at the given
  * coordinates (true) or not (false) for mouse tooltips. For keyboard
  * tooltips the item returned will be the cursor item. When true, then any of
- * @model, @path and @iter which have been provided will be set to point to
+ * `model`, `path` and `iter` which have been provided will be set to point to
  * that row and the corresponding model.
  *
  * Returns: whether or not the given tooltip context points to an item
@@ -4353,15 +4353,15 @@ gtk_icon_view_set_tooltip_query_cb (GtkWidget  *widget,
 /**
  * gtk_icon_view_set_tooltip_column:
  * @icon_view: a `GtkIconView`
- * @column: an integer, which is a valid column number for @icon_view’s model
+ * @column: an integer, which is a valid column number for `icon_view`’s model
  *
  * If you only plan to have simple (text-only) tooltips on full items, you
  * can use this function to have `GtkIconView` handle these automatically
- * for you. @column should be set to the column in @icon_view’s model
+ * for you. `column` should be set to the column in `icon_view`’s model
  * containing the tooltip texts, or -1 to disable this feature.
  *
  * When enabled, `GtkWidget:has-tooltip` will be set to true and
- * @icon_view will connect a `GtkWidget::query-tooltip` signal handler.
+ * `icon_view` will connect a `GtkWidget::query-tooltip` signal handler.
  *
  * Note that the signal handler sets the text with gtk_tooltip_set_markup(),
  * so &, <, etc have to be escaped in the text.
@@ -4402,8 +4402,8 @@ gtk_icon_view_set_tooltip_column (GtkIconView *icon_view,
  * gtk_icon_view_get_tooltip_column:
  * @icon_view: a `GtkIconView`
  *
- * Returns the column of @icon_view’s model which is being used for
- * displaying tooltips on @icon_view’s rows.
+ * Returns the column of `icon_view`’s model which is being used for
+ * displaying tooltips on `icon_view`’s rows.
  *
  * Returns: the index of the tooltip column that is currently being
  * used, or -1 if this is disabled.
@@ -4424,12 +4424,12 @@ gtk_icon_view_get_tooltip_column (GtkIconView *icon_view)
  * @start_path: (out) (optional): Return location for start of region
  * @end_path: (out) (optional): Return location for end of region
  *
- * Sets @start_path and @end_path to be the first and last visible path.
+ * Sets `start_path` and `end_path` to be the first and last visible path.
  * Note that there may be invisible paths in between.
  *
  * Both paths should be freed with gtk_tree_path_free() after use.
  *
- * Returns: true, if valid paths were placed in @start_path and @end_path
+ * Returns: true, if valid paths were placed in `start_path` and `end_path`
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  */
@@ -4514,7 +4514,7 @@ gtk_icon_view_selected_foreach (GtkIconView           *icon_view,
  * @icon_view: A `GtkIconView`.
  * @mode: The selection mode
  *
- * Sets the selection mode of the @icon_view.
+ * Sets the selection mode of the `icon_view`.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -4540,7 +4540,7 @@ gtk_icon_view_set_selection_mode (GtkIconView      *icon_view,
  * gtk_icon_view_get_selection_mode:
  * @icon_view: A `GtkIconView`.
  *
- * Gets the selection mode of the @icon_view.
+ * Gets the selection mode of the `icon_view`.
  *
  * Returns: the current selection mode
  *
@@ -4560,8 +4560,8 @@ gtk_icon_view_get_selection_mode (GtkIconView *icon_view)
  * @model: (nullable): The model.
  *
  * Sets the model for a `GtkIconView`.
- * If the @icon_view already has a model set, it will remove
- * it before setting the new model.  If @model is `NULL`, then
+ * If the `icon_view` already has a model set, it will remove
+ * it before setting the new model.  If `model` is `NULL`, then
  * it will unset the old model.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
@@ -4789,7 +4789,7 @@ update_pixbuf_cell (GtkIconView *icon_view)
  * @icon_view: A `GtkIconView`.
  * @column: A column in the currently used model, or -1 to display no text
  *
- * Sets the column with text for @icon_view to be @column. The text
+ * Sets the column with text for `icon_view` to be `column`. The text
  * column must be of type `G_TYPE_STRING`.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
@@ -4827,7 +4827,7 @@ gtk_icon_view_set_text_column (GtkIconView *icon_view,
  * gtk_icon_view_get_text_column:
  * @icon_view: A `GtkIconView`.
  *
- * Returns the column with text for @icon_view.
+ * Returns the column with text for `icon_view`.
  *
  * Returns: the text column, or -1 if it’s unset.
  *
@@ -4846,8 +4846,8 @@ gtk_icon_view_get_text_column (GtkIconView  *icon_view)
  * @icon_view: A `GtkIconView`.
  * @column: A column in the currently used model, or -1 to display no text
  *
- * Sets the column with markup information for @icon_view to be
- * @column. The markup column must be of type `G_TYPE_STRING`.
+ * Sets the column with markup information for `icon_view` to be
+ * `column`. The markup column must be of type `G_TYPE_STRING`.
  * If the markup column is set to something, it overrides
  * the text column set by gtk_icon_view_set_text_column().
  *
@@ -4886,7 +4886,7 @@ gtk_icon_view_set_markup_column (GtkIconView *icon_view,
  * gtk_icon_view_get_markup_column:
  * @icon_view: A `GtkIconView`.
  *
- * Returns the column with markup text for @icon_view.
+ * Returns the column with markup text for `icon_view`.
  *
  * Returns: the markup column, or -1 if it’s unset.
  *
@@ -4905,7 +4905,7 @@ gtk_icon_view_get_markup_column (GtkIconView  *icon_view)
  * @icon_view: A `GtkIconView`.
  * @column: A column in the currently used model, or -1 to disable
  *
- * Sets the column with pixbufs for @icon_view to be @column. The pixbuf
+ * Sets the column with pixbufs for `icon_view` to be `column`. The pixbuf
  * column must be of type `GDK_TYPE_PIXBUF`
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
@@ -4944,7 +4944,7 @@ gtk_icon_view_set_pixbuf_column (GtkIconView *icon_view,
  * gtk_icon_view_get_pixbuf_column:
  * @icon_view: A `GtkIconView`.
  *
- * Returns the column with pixbufs for @icon_view.
+ * Returns the column with pixbufs for `icon_view`.
  *
  * Returns: the pixbuf column, or -1 if it’s unset.
  *
@@ -4963,7 +4963,7 @@ gtk_icon_view_get_pixbuf_column (GtkIconView  *icon_view)
  * @icon_view: A `GtkIconView`.
  * @path: The `GtkTreePath` to be selected.
  *
- * Selects the row at @path.
+ * Selects the row at `path`.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -4990,7 +4990,7 @@ gtk_icon_view_select_path (GtkIconView *icon_view,
  * @icon_view: A `GtkIconView`.
  * @path: The `GtkTreePath` to be unselected.
  *
- * Unselects the row at @path.
+ * Unselects the row at `path`.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -5065,7 +5065,7 @@ gtk_icon_view_get_selected_items (GtkIconView *icon_view)
  * gtk_icon_view_select_all:
  * @icon_view: A `GtkIconView`.
  *
- * Selects all the icons. @icon_view must has its selection mode set
+ * Selects all the icons. `icon_view` must has its selection mode set
  * to %GTK_SELECTION_MULTIPLE.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
@@ -5126,10 +5126,10 @@ gtk_icon_view_unselect_all (GtkIconView *icon_view)
  * @icon_view: A `GtkIconView`.
  * @path: A `GtkTreePath` to check selection on.
  *
- * Returns true if the icon pointed to by @path is currently
- * selected. If @path does not point to a valid location, false is returned.
+ * Returns true if the icon pointed to by `path` is currently
+ * selected. If `path` does not point to a valid location, false is returned.
  *
- * Returns: true if @path is selected.
+ * Returns: true if `path` is selected.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -5157,7 +5157,7 @@ gtk_icon_view_path_is_selected (GtkIconView *icon_view,
  * @icon_view: a `GtkIconView`
  * @path: the `GtkTreePath` of the item
  *
- * Gets the row in which the item @path is currently
+ * Gets the row in which the item `path` is currently
  * displayed. Row numbers start at 0.
  *
  * Returns: The row in which the item is displayed
@@ -5188,7 +5188,7 @@ gtk_icon_view_get_item_row (GtkIconView *icon_view,
  * @icon_view: a `GtkIconView`
  * @path: the `GtkTreePath` of the item
  *
- * Gets the column in which the item @path is currently
+ * Gets the column in which the item `path` is currently
  * displayed. Column numbers start at 0.
  *
  * Returns: The column in which the item is displayed
@@ -5219,7 +5219,7 @@ gtk_icon_view_get_item_column (GtkIconView *icon_view,
  * @icon_view: A `GtkIconView`
  * @path: The `GtkTreePath` to be activated
  *
- * Activates the item determined by @path.
+ * Activates the item determined by `path`.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -5297,7 +5297,7 @@ gtk_icon_view_get_item_orientation (GtkIconView *icon_view)
  * @columns: the number of columns
  *
  * Sets the ::columns property which determines in how
- * many columns the icons are arranged. If @columns is
+ * many columns the icons are arranged. If `columns` is
  * -1, the number of columns will be chosen automatically
  * to fill the available area.
  *
@@ -6342,7 +6342,7 @@ gtk_icon_view_drag_data_received (GObject *source,
  * @actions: the bitmask of possible actions for a drag from this
  *    widget
  *
- * Turns @icon_view into a drag source for automatic DND. Calling this
+ * Turns `icon_view` into a drag source for automatic DND. Calling this
  * method sets `GtkIconView`:reorderable to false.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
@@ -6370,7 +6370,7 @@ gtk_icon_view_enable_model_drag_source (GtkIconView              *icon_view,
  * @actions: the bitmask of possible actions for a drag to this
  *    widget
  *
- * Turns @icon_view into a drop destination for automatic DND. Calling this
+ * Turns `icon_view` into a drop destination for automatic DND. Calling this
  * method sets `GtkIconView`:reorderable to false.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
@@ -6611,9 +6611,9 @@ gtk_icon_view_get_dest_item_at_pos (GtkIconView              *icon_view,
 /**
  * gtk_icon_view_create_drag_icon:
  * @icon_view: a `GtkIconView`
- * @path: a `GtkTreePath` in @icon_view
+ * @path: a `GtkTreePath` in `icon_view`
  *
- * Creates a `GdkPaintable` representation of the item at @path.
+ * Creates a `GdkPaintable` representation of the item at `path`.
  * This image is used for a drag icon.
  *
  * Returns: (transfer full) (nullable): a newly-allocated `GdkPaintable` of the drag icon.
@@ -6686,7 +6686,7 @@ gtk_icon_view_get_reorderable (GtkIconView *icon_view)
  *
  * This function is a convenience function to allow you to reorder models that
  * support the `GtkTreeDragSourceIface` and the `GtkTreeDragDestIface`. Both
- * `GtkTreeStore` and `GtkListStore` support these. If @reorderable is true, then
+ * `GtkTreeStore` and `GtkListStore` support these. If `reorderable` is true, then
  * the user can reorder the model by dragging and dropping rows.  The
  * developer can listen to these changes by connecting to the model's
  * row_inserted and row_deleted signals. The reordering is implemented by setting up

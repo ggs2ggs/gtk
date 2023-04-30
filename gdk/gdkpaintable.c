@@ -165,7 +165,7 @@ gdk_paintable_default_init (GdkPaintableInterface *iface)
    * GdkPaintable::invalidate-contents
    * @paintable: a `GdkPaintable`
    *
-   * Emitted when the contents of the @paintable change.
+   * Emitted when the contents of the `paintable` change.
    *
    * Examples for such an event would be videos changing to the next frame or
    * the icon theme for an icon changing.
@@ -183,7 +183,7 @@ gdk_paintable_default_init (GdkPaintableInterface *iface)
    * GdkPaintable::invalidate-size
    * @paintable: a `GdkPaintable`
    *
-   * Emitted when the intrinsic size of the @paintable changes.
+   * Emitted when the intrinsic size of the `paintable` changes.
    *
    * This means the values reported by at least one of
    * [method@Gdk.Paintable.get_intrinsic_width],
@@ -211,10 +211,10 @@ gdk_paintable_default_init (GdkPaintableInterface *iface)
  * @width: width to snapshot in
  * @height: height to snapshot in
  *
- * Snapshots the given paintable with the given @width and @height.
+ * Snapshots the given paintable with the given `width` and `height`.
  *
- * The paintable is drawn at the current (0,0) offset of the @snapshot.
- * If @width and @height are not larger than zero, this function will
+ * The paintable is drawn at the current (0,0) offset of the `snapshot`.
+ * If `width` and `height` are not larger than zero, this function will
  * do nothing.
  */
 void
@@ -250,15 +250,15 @@ gdk_paintable_is_immutable (GdkPaintable *paintable)
  * gdk_paintable_get_current_image:
  * @paintable: a `GdkPaintable`
  *
- * Gets an immutable paintable for the current contents displayed by @paintable.
+ * Gets an immutable paintable for the current contents displayed by `paintable`.
  *
  * This is useful when you want to retain the current state of an animation,
  * for example to take a screenshot of a running animation.
  *
- * If the @paintable is already immutable, it will return itself.
+ * If the `paintable` is already immutable, it will return itself.
  *
  * Returns: (transfer full): An immutable paintable for the current
- *   contents of @paintable
+ *   contents of `paintable`
  */
 GdkPaintable *
 gdk_paintable_get_current_image (GdkPaintable *paintable)
@@ -301,7 +301,7 @@ gdk_paintable_get_flags (GdkPaintable *paintable)
  * gdk_paintable_get_intrinsic_width:
  * @paintable: a `GdkPaintable`
  *
- * Gets the preferred width the @paintable would like to be displayed at.
+ * Gets the preferred width the `paintable` would like to be displayed at.
  *
  * Consumers of this interface can use this to reserve enough space to draw
  * the paintable.
@@ -309,10 +309,10 @@ gdk_paintable_get_flags (GdkPaintable *paintable)
  * This is a purely informational value and does not in any way limit the
  * values that may be passed to [method@Gdk.Paintable.snapshot].
  *
- * If the @paintable does not have a preferred width, it returns 0.
+ * If the `paintable` does not have a preferred width, it returns 0.
  * Negative values are never returned.
  *
- * Returns: the intrinsic width of @paintable or 0 if none.
+ * Returns: the intrinsic width of `paintable` or 0 if none.
  */
 int
 gdk_paintable_get_intrinsic_width (GdkPaintable *paintable)
@@ -329,7 +329,7 @@ gdk_paintable_get_intrinsic_width (GdkPaintable *paintable)
  * gdk_paintable_get_intrinsic_height:
  * @paintable: a `GdkPaintable`
  *
- * Gets the preferred height the @paintable would like to be displayed at.
+ * Gets the preferred height the `paintable` would like to be displayed at.
  *
  * Consumers of this interface can use this to reserve enough space to draw
  * the paintable.
@@ -337,10 +337,10 @@ gdk_paintable_get_intrinsic_width (GdkPaintable *paintable)
  * This is a purely informational value and does not in any way limit the
  * values that may be passed to [method@Gdk.Paintable.snapshot].
  *
- * If the @paintable does not have a preferred height, it returns 0.
+ * If the `paintable` does not have a preferred height, it returns 0.
  * Negative values are never returned.
  *
- * Returns: the intrinsic height of @paintable or 0 if none.
+ * Returns: the intrinsic height of `paintable` or 0 if none.
  */
 int
 gdk_paintable_get_intrinsic_height (GdkPaintable *paintable)
@@ -357,25 +357,25 @@ gdk_paintable_get_intrinsic_height (GdkPaintable *paintable)
  * gdk_paintable_get_intrinsic_aspect_ratio:
  * @paintable: a `GdkPaintable`
  *
- * Gets the preferred aspect ratio the @paintable would like to be displayed at.
+ * Gets the preferred aspect ratio the `paintable` would like to be displayed at.
  *
  * The aspect ratio is the width divided by the height, so a value of 0.5
- * means that the @paintable prefers to be displayed twice as high as it
+ * means that the `paintable` prefers to be displayed twice as high as it
  * is wide. Consumers of this interface can use this to preserve aspect
  * ratio when displaying the paintable.
  *
  * This is a purely informational value and does not in any way limit the
  * values that may be passed to [method@Gdk.Paintable.snapshot].
  *
- * Usually when a @paintable returns nonzero values from
+ * Usually when a `paintable` returns nonzero values from
  * [method@Gdk.Paintable.get_intrinsic_width] and
  * [method@Gdk.Paintable.get_intrinsic_height] the aspect ratio
  * should conform to those values, though that is not required.
  *
- * If the @paintable does not have a preferred aspect ratio,
+ * If the `paintable` does not have a preferred aspect ratio,
  * it returns 0. Negative values are never returned.
  *
- * Returns: the intrinsic aspect ratio of @paintable or 0 if none.
+ * Returns: the intrinsic aspect ratio of `paintable` or 0 if none.
  */
 double
 gdk_paintable_get_intrinsic_aspect_ratio (GdkPaintable *paintable)
@@ -400,7 +400,7 @@ gdk_paintable_get_intrinsic_aspect_ratio (GdkPaintable *paintable)
  * This function will emit the [signal@Gdk.Paintable::invalidate-contents]
  * signal.
  *
- * If a @paintable reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
+ * If a `paintable` reports the %GDK_PAINTABLE_STATIC_CONTENTS flag,
  * it must not call this function.
  */
 void
@@ -418,13 +418,13 @@ gdk_paintable_invalidate_contents (GdkPaintable *paintable)
  *
  * Called by implementations of `GdkPaintable` to invalidate their size.
  *
- * As long as the size is not invalidated, @paintable must return the same
+ * As long as the size is not invalidated, `paintable` must return the same
  * values for its intrinsic width, height and aspect ratio.
  *
  * This function will emit the [signal@Gdk.Paintable::invalidate-size]
  * signal.
  *
- * If a @paintable reports the %GDK_PAINTABLE_STATIC_SIZE flag,
+ * If a `paintable` reports the %GDK_PAINTABLE_STATIC_SIZE flag,
  * it must not call this function.
  */
 void
@@ -439,13 +439,13 @@ gdk_paintable_invalidate_size (GdkPaintable *paintable)
 /**
  * gdk_paintable_compute_concrete_size:
  * @paintable: a `GdkPaintable`
- * @specified_width: the width @paintable could be drawn into or
+ * @specified_width: the width `paintable` could be drawn into or
  *   0.0 if unknown
- * @specified_height: the height @paintable could be drawn into or
+ * @specified_height: the height `paintable` could be drawn into or
  *   0.0 if unknown
- * @default_width: the width @paintable would be drawn into if
+ * @default_width: the width `paintable` would be drawn into if
  *   no other constraints were given
- * @default_height: the height @paintable would be drawn into if
+ * @default_height: the height `paintable` would be drawn into if
  *   no other constraints were given
  * @concrete_width: (out): will be set to the concrete width computed
  * @concrete_height: (out): will be set to the concrete height computed
@@ -454,10 +454,10 @@ gdk_paintable_invalidate_size (GdkPaintable *paintable)
  *
  * Applies the sizing algorithm outlined in the
  * [CSS Image spec](https://drafts.csswg.org/css-images-3/#default-sizing)
- * to the given @paintable. See that link for more details.
+ * to the given `paintable`. See that link for more details.
  *
- * It is not necessary to call this function when both @specified_width
- * and @specified_height are known, but it is useful to call this
+ * It is not necessary to call this function when both `specified_width`
+ * and `specified_height` are known, but it is useful to call this
  * function in GtkWidget:measure implementations to compute the
  * other dimension when only one dimension is given.
  */

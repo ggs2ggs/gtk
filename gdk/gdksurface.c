@@ -609,7 +609,7 @@ gdk_surface_class_init (GdkSurfaceClass *klass)
    * @width: the current width
    * @height: the current height
    *
-   * Emitted when the size of @surface is changed, or when relayout should
+   * Emitted when the size of `surface` is changed, or when relayout should
    * be performed.
    *
    * Surface size is reported in ”application pixels”, not
@@ -660,7 +660,7 @@ gdk_surface_class_init (GdkSurfaceClass *klass)
    * @surface: the `GdkSurface`
    * @event: (type Gdk.Event): an input event
    *
-   * Emitted when GDK receives an input event for @surface.
+   * Emitted when GDK receives an input event for `surface`.
    *
    * Returns: true to indicate that the event has been handled
    */
@@ -684,7 +684,7 @@ gdk_surface_class_init (GdkSurfaceClass *klass)
    * @surface: the `GdkSurface`
    * @monitor: the monitor
    *
-   * Emitted when @surface starts being present on the monitor.
+   * Emitted when `surface` starts being present on the monitor.
    */
   signals[ENTER_MONITOR] =
     g_signal_new (g_intern_static_string ("enter-monitor"),
@@ -703,7 +703,7 @@ gdk_surface_class_init (GdkSurfaceClass *klass)
    * @surface: the `GdkSurface`
    * @monitor: the monitor
    *
-   * Emitted when @surface stops being present on the monitor.
+   * Emitted when `surface` stops being present on the monitor.
    */
   signals[LEAVE_MONITOR] =
     g_signal_new (g_intern_static_string ("leave-monitor"),
@@ -878,7 +878,7 @@ gdk_surface_new_toplevel (GdkDisplay *display)
  *
  * Create a new popup surface.
  *
- * The surface will be attached to @parent and can be positioned
+ * The surface will be attached to `parent` and can be positioned
  * relative to it using [method@Gdk.Popup.present].
  *
  * Returns: (transfer full): a new `GdkSurface`
@@ -934,7 +934,7 @@ surface_remove_from_pointer_info (GdkSurface  *surface,
  * @recursing_native: If true, then this is being called because a native
  *   parent was destroyed. This generally means that the call to the windowing
  *   system to destroy the surface can be omitted, since it will be destroyed
- *   as a result of the parent being destroyed. Unless @foreign_destroy.
+ *   as a result of the parent being destroyed. Unless `foreign_destroy`.
  * @foreign_destroy: If true, the surface or a parent was destroyed by some
  *   external agency. The surface has already been destroyed and no windowing
  *   system calls should be made. (This may never happen for some windowing
@@ -1011,10 +1011,10 @@ _gdk_surface_destroy (GdkSurface *surface,
  * gdk_surface_destroy:
  * @surface: a `GdkSurface`
  *
- * Destroys the window system resources associated with @surface and
- * decrements @surface's reference count.
+ * Destroys the window system resources associated with `surface` and
+ * decrements `surface`'s reference count.
  *
- * The window system resources for all children of @surface are also
+ * The window system resources for all children of `surface` are also
  * destroyed, but the children’s reference counts are not decremented.
  *
  * Note that a surface will not be destroyed automatically when its
@@ -1051,7 +1051,7 @@ gdk_surface_get_widget (GdkSurface *self)
  *
  * Gets the `GdkDisplay` associated with a `GdkSurface`.
  *
- * Returns: (transfer none): the `GdkDisplay` associated with @surface
+ * Returns: (transfer none): the `GdkDisplay` associated with `surface`
  */
 GdkDisplay *
 gdk_surface_get_display (GdkSurface *surface)
@@ -1184,7 +1184,7 @@ gdk_surface_get_paint_gl_context (GdkSurface  *surface,
  * Creates a new `GdkGLContext` for the `GdkSurface`.
  *
  * The context is disconnected from any particular surface or surface.
- * If the creation of the `GdkGLContext` failed, @error will be set.
+ * If the creation of the `GdkGLContext` failed, `error` will be set.
  * Before using the returned `GdkGLContext`, you will need to
  * call [method@Gdk.GLContext.make_current] or [method@Gdk.GLContext.realize].
  *
@@ -1207,7 +1207,7 @@ gdk_surface_create_gl_context (GdkSurface   *surface,
  * gdk_surface_create_cairo_context:
  * @surface: a `GdkSurface`
  *
- * Creates a new `GdkCairoContext` for rendering on @surface.
+ * Creates a new `GdkCairoContext` for rendering on `surface`.
  *
  * Returns: (transfer full): the newly created `GdkCairoContext`
  */
@@ -1230,9 +1230,9 @@ gdk_surface_create_cairo_context (GdkSurface *surface)
  * @surface: a `GdkSurface`
  * @error: return location for an error
  *
- * Creates a new `GdkVulkanContext` for rendering on @surface.
+ * Creates a new `GdkVulkanContext` for rendering on `surface`.
  *
- * If the creation of the `GdkVulkanContext` failed, @error will be set.
+ * If the creation of the `GdkVulkanContext` failed, `error` will be set.
  *
  * Returns: (transfer full): the newly created `GdkVulkanContext`, or
  *   `NULL` on error
@@ -1388,7 +1388,7 @@ gdk_surface_paint_on_clock (GdkFrameClock *clock,
  * @rect: (nullable): rectangle to invalidate or `NULL` to
  *   invalidate the whole surface
  *
- * Invalidate a rectangular region of @surface.
+ * Invalidate a rectangular region of `surface`.
  *
  * This is a convenience wrapper around
  * [method@Gdk.Surface.invalidate_region].
@@ -1436,7 +1436,7 @@ impl_surface_add_update_area (GdkSurface     *impl_surface,
  * gdk_surface_queue_render:
  * @surface: a `GdkSurface`
  *
- * Forces a [signal@Gdk.Surface::render] signal emission for @surface
+ * Forces a [signal@Gdk.Surface::render] signal emission for `surface`
  * to be scheduled.
  *
  * This function is useful for implementations that track invalid
@@ -1459,7 +1459,7 @@ gdk_surface_queue_render (GdkSurface *surface)
  * @surface: a `GdkSurface`
  * @region: a `cairo_region_t`
  *
- * Adds @region to the update area for @surface.
+ * Adds `region` to the update area for `surface`.
  *
  * The update area is the region that needs to be redrawn,
  * or “dirty region.”
@@ -1585,7 +1585,7 @@ gdk_surface_thaw_updates (GdkSurface *surface)
 /*
  * gdk_surface_constrain_size:
  * @geometry: a `GdkGeometry` structure
- * @flags: a mask indicating what portions of @geometry are set
+ * @flags: a mask indicating what portions of `geometry` are set
  * @width: desired width of surface
  * @height: desired height of the surface
  * @new_width: (out): location to store resulting width
@@ -1640,14 +1640,14 @@ gdk_surface_constrain_size (GdkGeometry    *geometry,
  * gdk_surface_get_device_position:
  * @surface: a `GdkSurface`
  * @device: pointer `GdkDevice` to query to
- * @x: (out) (optional): return location for the X coordinate of @device
- * @y: (out) (optional): return location for the Y coordinate of @device
+ * @x: (out) (optional): return location for the X coordinate of `device`
+ * @y: (out) (optional): return location for the Y coordinate of `device`
  * @mask: (out) (optional): return location for the modifier mask
  *
  * Obtains the current device position and modifier state.
  *
  * The position is given in coordinates relative to the upper
- * left corner of @surface.
+ * left corner of `surface`.
  *
  * Return: true if the device is over the surface
  */
@@ -1802,9 +1802,9 @@ gdk_surface_get_cursor (GdkSurface *surface)
  *
  * Sets the default mouse pointer for a `GdkSurface`.
  *
- * Passing `NULL` for the @cursor argument means that @surface will use
+ * Passing `NULL` for the `cursor` argument means that `surface` will use
  * the cursor of its parent surface. Most surfaces should use this default.
- * Note that @cursor must be for the same display as @surface.
+ * Note that `cursor` must be for the same display as `surface`.
  *
  * Use [ctor@Gdk.Cursor.new_from_name] or [ctor@Gdk.Cursor.new_from_texture]
  * to create the cursor. To make the cursor invisible, use %GDK_BLANK_CURSOR.
@@ -1857,7 +1857,7 @@ gdk_surface_set_cursor (GdkSurface *surface,
  * @surface: a `GdkSurface`
  * @device: a pointer `GdkDevice`
  *
- * Retrieves a `GdkCursor` pointer for the @device currently set on the
+ * Retrieves a `GdkCursor` pointer for the `device` currently set on the
  * specified `GdkSurface`.
  *
  * If the return value is `NULL` then there is no custom cursor set on the
@@ -1884,9 +1884,9 @@ gdk_surface_get_device_cursor (GdkSurface *surface,
  * @device: a pointer `GdkDevice`
  * @cursor: a `GdkCursor`
  *
- * Sets a specific `GdkCursor` for a given device when it gets inside @surface.
+ * Sets a specific `GdkCursor` for a given device when it gets inside `surface`.
  *
- * Passing `NULL` for the @cursor argument means that @surface will use the
+ * Passing `NULL` for the `cursor` argument means that `surface` will use the
  * cursor of its parent surface. Most surfaces should use this default.
  *
  * Use [ctor@Gdk.Cursor.new_from_name] or [ctor@Gdk.Cursor.new_from_texture]
@@ -1920,20 +1920,20 @@ gdk_surface_set_device_cursor (GdkSurface *surface,
  * Get the geometry of the surface.
  *
  * The X and Y coordinates returned are relative to the parent surface
- * of @surface, which for toplevels usually means relative to the
+ * of `surface`, which for toplevels usually means relative to the
  * surface decorations (titlebar, etc.) rather than relative to the
  * root window (screen-size background window).
  *
  * On the X11 platform, the geometry is obtained from the X server, so
- * reflects the latest position of @surface; this may be out-of-sync with
- * the position of @surface delivered in the most-recently-processed
+ * reflects the latest position of `surface`; this may be out-of-sync with
+ * the position of `surface` delivered in the most-recently-processed
  * `GdkEventConfigure`. [method@Gdk.Surface.get_position] in contrast gets
  * the position from the most recent configure event.
  *
  * Any of the return location arguments to this function may be `NULL`,
  * if you aren’t interested in getting the value of that field.
  *
- * Note: If @surface is not a toplevel, it is much better to call
+ * Note: If `surface` is not a toplevel, it is much better to call
  * [method@Gdk.Surface.get_position], [method@Gdk.Surface.get_width] and
  * [method@Gdk.Surface.get_height] instead, because it avoids the roundtrip
  * to the X server and because these functions support the full 32-bit
@@ -1959,12 +1959,12 @@ gdk_surface_get_geometry (GdkSurface *surface,
  * gdk_surface_get_width: (attributes org.gtk.Method.get_property=width)
  * @surface: a `GdkSurface`
  *
- * Returns the width of the given @surface.
+ * Returns the width of the given `surface`.
  *
  * Surface size is reported in ”application pixels”, not
  * ”device pixels” (see [method@Gdk.Surface.get_scale_factor]).
  *
- * Returns: The width of @surface
+ * Returns: The width of `surface`
  */
 int
 gdk_surface_get_width (GdkSurface *surface)
@@ -1978,12 +1978,12 @@ gdk_surface_get_width (GdkSurface *surface)
  * gdk_surface_get_height: (attributes org.gtk.Method.get_property=height)
  * @surface: a `GdkSurface`
  *
- * Returns the height of the given @surface.
+ * Returns the height of the given `surface`.
  *
  * Surface size is reported in ”application pixels”, not
  * ”device pixels” (see [method@Gdk.Surface.get_scale_factor]).
  *
- * Returns: The height of @surface
+ * Returns: The height of `surface`
  */
 int
 gdk_surface_get_height (GdkSurface *surface)
@@ -2057,7 +2057,7 @@ gdk_surface_get_root_coords (GdkSurface *surface,
  *
  * Mouse events which happen while the pointer position corresponds
  * to an unset bit in the mask will be passed on the surface below
- * @surface.
+ * `surface`.
  *
  * An input region is typically used with RGBA surfaces. The alpha
  * channel of the surface defines which pixels are invisible and
@@ -2132,9 +2132,9 @@ update_cursor (GdkDisplay *display,
  * gdk_surface_beep:
  * @surface: a toplevel `GdkSurface`
  *
- * Emits a short beep associated to @surface.
+ * Emits a short beep associated to `surface`.
  *
- * If the display of @surface does not support per-surface beeps,
+ * If the display of `surface` does not support per-surface beeps,
  * emits a short beep on the display just as [method@Gdk.Display.beep].
  */
 void
@@ -2293,11 +2293,11 @@ _gdk_windowing_got_event (GdkDisplay *display,
  * @height: height of the new surface
  *
  * Create a new Cairo surface that is as compatible as possible with the
- * given @surface.
+ * given `surface`.
  *
  * For example the new surface will have the same fallback resolution
- * and font options as @surface. Generally, the new surface will also
- * use the same backend as @surface, unless that is not possible for
+ * and font options as `surface`. Generally, the new surface will also
+ * use the same backend as `surface`, unless that is not possible for
  * some reason. The type of the returned surface may be examined with
  * cairo_surface_get_type().
  *
@@ -2305,7 +2305,7 @@ _gdk_windowing_got_event (GdkDisplay *display,
  * have transparency, black otherwise.)
  *
  * This function always returns a valid pointer, but it will return a
- * pointer to a “nil” surface if @other is already in an error state
+ * pointer to a “nil” surface if `other` is already in an error state
  * or any other error occurs.
  *
  * Returns: a pointer to the newly allocated surface. The caller
@@ -2349,8 +2349,8 @@ gdk_surface_destroy_notify (GdkSurface *surface)
  * @device: the device that controls this drag
  * @content: (transfer none): the offered content
  * @actions: the actions supported by this drag
- * @dx: the x offset to @device's position where the drag nominally started
- * @dy: the y offset to @device's position where the drag nominally started
+ * @dx: the x offset to `device`'s position where the drag nominally started
+ * @dy: the y offset to `device`'s position where the drag nominally started
  *
  * Starts a drag and creates a new drag context for it.
  *
@@ -2362,7 +2362,7 @@ gdk_surface_destroy_notify (GdkSurface *surface)
  * but GTK keeps its own reference as well, as long as the DND operation
  * is going on.
  *
- * Note: if @actions include %GDK_ACTION_MOVE, you need to listen for
+ * Note: if `actions` include %GDK_ACTION_MOVE, you need to listen for
  * the [signal@Gdk.Drag::dnd-finished] signal and delete the data at
  * the source if [method@Gdk.Drag.get_selected_action] returns
  * %GDK_ACTION_MOVE.
@@ -2611,7 +2611,7 @@ gdk_surface_get_scale (GdkSurface *surface)
  *
  * This function only works for toplevel surfaces.
  *
- * GTK will update this property automatically if the @surface background
+ * GTK will update this property automatically if the `surface` background
  * is opaque, as we know where the opaque regions are. If your surface
  * background is not opaque, please update this property in your
  * [vfunc@Gtk.Widget.css_changed] handler.
@@ -2943,7 +2943,7 @@ gdk_surface_handle_event (GdkEvent *event)
  * @surface: a `GdkSurface`
  *
  * Request that the next frame cycle should deliver a motion
- * event for @surface.
+ * event for `surface`.
  *
  * The motion event will be delivered if the pointer is over the
  * surface, regardless whether the pointer has moved or not. This
@@ -2964,7 +2964,7 @@ gdk_surface_request_motion (GdkSurface *surface)
  *
  * Translates coordinates between two surfaces.
  *
- * Note that this only works if @to and @from are popups or
+ * Note that this only works if `to` and `from` are popups or
  * transient-for to the same toplevel (directly or indirectly).
  *
  * Returns: true if the coordinates were successfully translated

@@ -642,7 +642,7 @@ gtk_constraint_solver_remove_row (GtkConstraintSolver *self,
  * @old_variable: a `GtkConstraintVariable`
  * @expression: a `GtkConstraintExpression`
  *
- * Replaces @old_variable in every row of the tableau with @expression.
+ * Replaces `old_variable` in every row of the tableau with `expression`.
  */
 static void
 gtk_constraint_solver_substitute_out (GtkConstraintSolver *self,
@@ -685,8 +685,8 @@ gtk_constraint_solver_substitute_out (GtkConstraintSolver *self,
  *
  * Pivots the `GtkConstraintSolver`.
  *
- * This function will move @entry_var into the basis of the tableau,
- * making it a basic variable; and move @exit_var out of the basis of
+ * This function will move `entry_var` into the basis of the tableau,
+ * making it a basic variable; and move `exit_var` out of the basis of
  * the tableau, making it a parametric variable.
  */
 static void
@@ -826,13 +826,13 @@ gtk_constraint_solver_optimize (GtkConstraintSolver *self,
  * @constraint: a `GtkConstraintRef`
  * @eplus_p: (out) (optional): the positive error variable
  * @eminus_p: (out) (optional): the negative error variable
- * @prev_constant_p: the constant part of the @constraint's expression
+ * @prev_constant_p: the constant part of the `constraint`'s expression
  *
- * Creates a new expression for the @constraint, replacing
+ * Creates a new expression for the `constraint`, replacing
  * any basic variable with their expressions, and normalizing
  * the terms to avoid a negative constant.
  *
- * If the @constraint is not required, this function will add
+ * If the `constraint` is not required, this function will add
  * error variables with the appropriate weight to the tableau.
  *
  * Returns: (transfer full): the new expression for the constraint
@@ -1421,7 +1421,7 @@ gtk_constraint_solver_thaw (GtkConstraintSolver *solver)
  * @variable: a `GtkConstraintVariable`
  * @subject: a `GtkConstraintVariable`
  *
- * Adds a new @variable into the tableau of a `GtkConstraintSolver`.
+ * Adds a new `variable` into the tableau of a `GtkConstraintSolver`.
  *
  * This function is typically called by `GtkConstraintExpression`, and
  * should never be directly called.
@@ -1441,7 +1441,7 @@ gtk_constraint_solver_note_added_variable (GtkConstraintSolver *self,
  * @variable: a `GtkConstraintVariable`
  * @subject: a `GtkConstraintVariable`
  *
- * Removes a @variable from the tableau of a `GtkConstraintSolver`.
+ * Removes a `variable` from the tableau of a `GtkConstraintSolver`.
  *
  * This function is typically called by `GtkConstraintExpression`, and
  * should never be directly called.
@@ -1465,7 +1465,7 @@ gtk_constraint_solver_note_removed_variable (GtkConstraintSolver *self,
  * @name: (nullable): the name of the variable
  * @value: the initial value of the variable
  *
- * Creates a new variable inside the @solver.
+ * Creates a new variable inside the `solver`.
  *
  * Returns: (transfer full): the newly created variable
  */
@@ -1489,7 +1489,7 @@ gtk_constraint_solver_create_variable (GtkConstraintSolver *self,
  * gtk_constraint_solver_resolve:
  * @solver: a `GtkConstraintSolver`
  *
- * Resolves the constraints currently stored in @solver.
+ * Resolves the constraints currently stored in `solver`.
  */
 void
 gtk_constraint_solver_resolve (GtkConstraintSolver *solver)
@@ -1597,7 +1597,7 @@ gtk_constraint_solver_add_constraint (GtkConstraintSolver *self,
  * @variable: a stay `GtkConstraintVariable`
  * @strength: the strength of the constraint
  *
- * Adds a constraint on a stay @variable with the given @strength.
+ * Adds a constraint on a stay `variable` with the given `strength`.
  *
  * A stay variable is an "anchor" in the system: a variable that is
  * supposed to stay at the same value.
@@ -1645,7 +1645,7 @@ gtk_constraint_solver_add_stay_variable (GtkConstraintSolver *self,
  * @self: a `GtkConstraintSolver`
  * @variable: a stay variable
  *
- * Removes the stay constraint associated to @variable.
+ * Removes the stay constraint associated to `variable`.
  *
  * This is a convenience function for gtk_constraint_solver_remove_constraint().
  */
@@ -1675,7 +1675,7 @@ gtk_constraint_solver_remove_stay_variable (GtkConstraintSolver *self,
  * @variable: an edit variable
  * @strength: the strength of the constraint
  *
- * Adds an editable constraint to the @solver.
+ * Adds an editable constraint to the `solver`.
  *
  * Editable constraints can be used to suggest values to a
  * `GtkConstraintSolver` inside an edit phase, for instance: if
@@ -1716,7 +1716,7 @@ gtk_constraint_solver_add_edit_variable (GtkConstraintSolver *self,
  * @self: a `GtkConstraintSolver`
  * @variable: an edit variable
  *
- * Removes the edit constraint associated to @variable.
+ * Removes the edit constraint associated to `variable`.
  *
  * This is a convenience function around gtk_constraint_solver_remove_constraint().
  */
@@ -1745,7 +1745,7 @@ gtk_constraint_solver_remove_edit_variable (GtkConstraintSolver *self,
  * @self: a `GtkConstraintSolver`
  * @constraint: a constraint reference
  *
- * Removes a @constraint from the @solver.
+ * Removes a `constraint` from the `solver`.
  */
 void
 gtk_constraint_solver_remove_constraint (GtkConstraintSolver *self,
@@ -1954,11 +1954,11 @@ no_columns:
  * gtk_constraint_solver_suggest_value:
  * @self: a `GtkConstraintSolver`
  * @variable: a `GtkConstraintVariable`
- * @value: the suggested value for @variable
+ * @value: the suggested value for `variable`
  *
- * Suggests a new @value for an edit @variable.
+ * Suggests a new `value` for an edit `variable`.
  *
- * The @variable must be an edit variable, and the solver must be
+ * The `variable` must be an edit variable, and the solver must be
  * in an edit phase.
  */
 void
@@ -1994,7 +1994,7 @@ gtk_constraint_solver_suggest_value (GtkConstraintSolver *self,
  * @solver: a `GtkConstraintSolver`
  * @variable: a `GtkConstraintVariable`
  *
- * Checks whether @variable is a stay variable.
+ * Checks whether `variable` is a stay variable.
  *
  * Returns: true if the variable is a stay variable
  */
@@ -2013,7 +2013,7 @@ gtk_constraint_solver_has_stay_variable (GtkConstraintSolver   *solver,
  * @solver: a `GtkConstraintSolver`
  * @variable: a `GtkConstraintVariable`
  *
- * Checks whether @variable is an edit variable.
+ * Checks whether `variable` is an edit variable.
  *
  * Returns: true if the variable is an edit variable
  */

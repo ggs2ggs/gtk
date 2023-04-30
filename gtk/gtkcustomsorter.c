@@ -99,13 +99,13 @@ gtk_custom_sorter_init (GtkCustomSorter *self)
 /**
  * gtk_custom_sorter_new:
  * @sort_func: (nullable): the `GCompareDataFunc` to use for sorting
- * @user_data: (nullable): user data to pass to @sort_func
- * @user_destroy: (nullable): destroy notify for @user_data
+ * @user_data: (nullable): user data to pass to `sort_func`
+ * @user_destroy: (nullable): destroy notify for `user_data`
  *
  * Creates a new `GtkSorter` that works by calling
- * @sort_func to compare items.
+ * `sort_func` to compare items.
  *
- * If @sort_func is `NULL`, all items are considered equal.
+ * If `sort_func` is `NULL`, all items are considered equal.
  *
  * Returns: a new `GtkCustomSorter`
  */
@@ -127,17 +127,17 @@ gtk_custom_sorter_new (GCompareDataFunc sort_func,
  * gtk_custom_sorter_set_sort_func:
  * @self: a `GtkCustomSorter`
  * @sort_func: (nullable): function to sort items
- * @user_data: (nullable): user data to pass to @match_func
- * @user_destroy: destroy notify for @user_data
+ * @user_data: (nullable): user data to pass to `match_func`
+ * @user_destroy: destroy notify for `user_data`
  *
  * Sets (or unsets) the function used for sorting items.
  *
- * If @sort_func is `NULL`, all items are considered equal.
+ * If `sort_func` is `NULL`, all items are considered equal.
  *
  * If the sort func changes its sorting behavior,
  * gtk_sorter_changed() needs to be called.
  *
- * If a previous function was set, its @user_destroy will be
+ * If a previous function was set, its `user_destroy` will be
  * called now.
  */
 void

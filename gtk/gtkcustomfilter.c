@@ -93,13 +93,13 @@ gtk_custom_filter_init (GtkCustomFilter *self)
 /**
  * gtk_custom_filter_new:
  * @match_func: (nullable): function to filter items
- * @user_data: (nullable): user data to pass to @match_func
- * @user_destroy: destroy notify for @user_data
+ * @user_data: (nullable): user data to pass to `match_func`
+ * @user_destroy: destroy notify for `user_data`
  *
- * Creates a new filter using the given @match_func to filter
+ * Creates a new filter using the given `match_func` to filter
  * items.
  *
- * If @match_func is `NULL`, the filter matches all items.
+ * If `match_func` is `NULL`, the filter matches all items.
  *
  * If the filter func changes its filtering behavior,
  * gtk_filter_changed() needs to be called.
@@ -124,17 +124,17 @@ gtk_custom_filter_new (GtkCustomFilterFunc match_func,
  * gtk_custom_filter_set_filter_func:
  * @self: a `GtkCustomFilter`
  * @match_func: (nullable): function to filter items
- * @user_data: (nullable): user data to pass to @match_func
- * @user_destroy: destroy notify for @user_data
+ * @user_data: (nullable): user data to pass to `match_func`
+ * @user_destroy: destroy notify for `user_data`
  *
  * Sets the function used for filtering items.
  *
- * If @match_func is `NULL`, the filter matches all items.
+ * If `match_func` is `NULL`, the filter matches all items.
  *
  * If the filter func changes its filtering behavior,
  * gtk_filter_changed() needs to be called.
  *
- * If a previous function was set, its @user_destroy will be
+ * If a previous function was set, its `user_destroy` will be
  * called now.
  */
 void

@@ -61,7 +61,7 @@
  * @argvp: (inout) (array length=argcp): Address of the `argv`
  *   parameter of main(). Any parameters understood by g_test_init()
  *   or gtk_init() are stripped before return.
- * @...: currently unused
+ * `...`: currently unused
  *
  * This function is used to initialize a GTK test program.
  *
@@ -71,7 +71,7 @@
  * program environments as deterministic as possible.
  *
  * Like gtk_init() and g_test_init(), any known arguments will be
- * processed and stripped from @argc and @argv.
+ * processed and stripped from `argc` and `argv`.
  */
 void
 gtk_test_init (int    *argcp,
@@ -106,13 +106,13 @@ quit_main_loop_callback (GtkWidget     *widget,
  * gtk_test_widget_wait_for_draw:
  * @widget: the widget to wait for
  *
- * Enters the main loop and waits for @widget to be “drawn”.
+ * Enters the main loop and waits for `widget` to be “drawn”.
  *
  * In this context that means it waits for the frame clock of
- * @widget to have run a full styling, layout and drawing cycle.
+ * `widget` to have run a full styling, layout and drawing cycle.
  *
  * This function is intended to be used for syncing with actions that
- * depend on @widget relayouting or on interaction with the display
+ * depend on `widget` relayouting or on interaction with the display
  * server.
  */
 void

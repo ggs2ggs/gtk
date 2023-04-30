@@ -94,7 +94,7 @@ gdk_x11_display_text_property_to_text_list (GdkDisplay   *display,
 
 /**
  * gdk_x11_free_text_list:
- * @list: the value stored in the @list parameter by
+ * @list: the value stored in the `list` parameter by
  *   a call to gdk_x11_display_text_property_to_text_list().
  *
  * Frees the array of strings created by
@@ -278,7 +278,7 @@ _gdk_x11_display_text_property_to_utf8_list (GdkDisplay    *display,
  * @format: (out): location to store the format of the property
  * @ctext: (out) (array length=length): location to store newly
  *   allocated data for the property
- * @length: the length of @ctext, in bytes
+ * @length: the length of `ctext`, in bytes
  *
  * Convert a string from the encoding of the current
  * locale into a form suitable for storing in a window property.
@@ -331,7 +331,7 @@ gdk_x11_display_string_to_compound_text (GdkDisplay  *display,
  * @encoding: (out) (transfer none): location to store resulting encoding
  * @format: (out): location to store format of the result
  * @ctext: (out) (array length=length): location to store the data of the result
- * @length: location to store the length of the data stored in @ctext
+ * @length: location to store the length of the data stored in `ctext`
  *
  * Converts from UTF-8 to compound text.
  *
@@ -401,7 +401,7 @@ gdk_x11_display_utf8_to_compound_text (GdkDisplay  *display,
 
 /**
  * gdk_x11_free_compound_text:
- * @ctext: The pointer stored in @ctext from a call to
+ * @ctext: The pointer stored in `ctext` from a call to
  *   gdk_x11_display_string_to_compound_text().
  *
  * Frees the data returned from gdk_x11_display_string_to_compound_text().

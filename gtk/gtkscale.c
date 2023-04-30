@@ -941,16 +941,16 @@ gtk_scale_new (GtkOrientation  orientation,
  * @max: maximum value
  * @step: step increment (tick size) used with keyboard shortcuts
  *
- * Creates a new scale widget with a range from @min to @max.
+ * Creates a new scale widget with a range from `min` to `max`.
  *
  * The returns scale will have the given orientation and will let the
- * user input a number between @min and @max (including @min and @max)
- * with the increment @step. @step must be nonzero; it’s the distance
+ * user input a number between `min` and `max` (including `min` and `max`)
+ * with the increment `step`. `step` must be nonzero; it’s the distance
  * the slider moves when using the arrow keys to adjust the scale
  * value.
  *
  * Note that the way in which the precision is derived works best if
- * @step is a power of ten. If the resulting precision is not suitable
+ * `step` is a power of ten. If the resulting precision is not suitable
  * for your needs, use [method@Gtk.Scale.set_digits] to correct it.
  *
  * Returns: a new `GtkScale`
@@ -1665,13 +1665,13 @@ gtk_scale_clear_marks (GtkScale *scale)
  *   the left of the scale, anything else to the right.
  * @markup: (nullable): Text to be shown at the mark, using Pango markup
  *
- * Adds a mark at @value.
+ * Adds a mark at `value`.
  *
  * A mark is indicated visually by drawing a tick mark next to the scale,
  * and GTK makes it easy for the user to position the scale exactly at the
  * marks value.
  *
- * If @markup is not `NULL`, text is shown next to the tick mark.
+ * If `markup` is not `NULL`, text is shown next to the tick mark.
  *
  * To remove marks from a scale, use [method@Gtk.Scale.clear_marks].
  */
@@ -2031,15 +2031,15 @@ gtk_scale_buildable_custom_finished (GtkBuildable *buildable,
  * gtk_scale_set_format_value_func:
  * @scale: a `GtkScale`
  * @func: (nullable): function that formats the value
- * @user_data: (closure): user data to pass to @func
- * @destroy_notify: (nullable): destroy function for @user_data
+ * @user_data: (closure): user data to pass to `func`
+ * @destroy_notify: (nullable): destroy function for `user_data`
  *
- * @func allows you to change how the scale value is displayed.
+ * `func` allows you to change how the scale value is displayed.
  *
  * The given function will return an allocated string representing
- * @value. That string will then be used to display the scale's value.
+ * `value`. That string will then be used to display the scale's value.
  *
- * If `NULL` is passed as @func, the value will be displayed on
+ * If `NULL` is passed as `func`, the value will be displayed on
  * its own, rounded according to the value of the
  * [property@Gtk.Scale:digits] property.
  */

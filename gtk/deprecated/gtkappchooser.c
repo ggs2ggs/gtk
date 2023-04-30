@@ -87,7 +87,7 @@ gtk_app_chooser_default_init (GtkAppChooserIface *iface)
  * Returns the content type for which the `GtkAppChooser`
  * shows applications.
  *
- * Returns: the content type of @self. Free with g_free()
+ * Returns: the content type of `self`. Free with g_free()
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */

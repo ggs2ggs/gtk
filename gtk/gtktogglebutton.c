@@ -367,7 +367,7 @@ gtk_toggle_button_new_with_label (const char *label)
  * Creates a new `GtkToggleButton` containing a label.
  *
  * The label will be created using [ctor@Gtk.Label.new_with_mnemonic],
- * so underscores in @label indicate the mnemonic for the button.
+ * so underscores in `label` indicate the mnemonic for the button.
  *
  * Returns: a new `GtkToggleButton`
  */
@@ -480,7 +480,7 @@ gtk_toggle_button_toggled (GtkToggleButton *toggle_button)
  * @group: (nullable) (transfer none): another `GtkToggleButton` to
  *   form a group with
  *
- * Adds @self to the group of @group.
+ * Adds `self` to the group of `group`.
  *
  * In a group of multiple toggle buttons, only one button can be active
  * at a time.

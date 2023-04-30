@@ -121,7 +121,7 @@ gsk_rounded_rect_init (GskRoundedRect        *self,
  * @self: a `GskRoundedRect`
  * @src: a `GskRoundedRect`
  *
- * Initializes @self using the given @src rectangle.
+ * Initializes `self` using the given `src` rectangle.
  *
  * This function will not normalize the `GskRoundedRect`,
  * so make sure the source is normalized.
@@ -143,8 +143,8 @@ gsk_rounded_rect_init_copy (GskRoundedRect       *self,
  * @bounds: a `graphene_rect_t`
  * @radius: the border radius
  *
- * Initializes @self to the given @bounds and sets the radius
- * of all four corners to @radius.
+ * Initializes `self` to the given `bounds` and sets the radius
+ * of all four corners to `radius`.
  *
  * Returns: (transfer none): the initialized rectangle
  **/
@@ -184,7 +184,7 @@ gsk_rounded_rect_normalize (GskRoundedRect *self)
  * @dx: the horizontal offset
  * @dy: the vertical offset
  *
- * Offsets the bound's origin by @dx and @dy.
+ * Offsets the bound's origin by `dx` and `dy`.
  *
  * The size and corners of the rectangle are unchanged.
  *
@@ -241,7 +241,7 @@ border_radius_shrink (graphene_size_t       *corner,
  * the center of the corner circle intact. This emulates CSS behavior.
  *
  * This function also works for growing rectangles if you pass
- * negative values for the @top, @right, @bottom or @left.
+ * negative values for the `top`, `right`, `bottom` or `left`.
  *
  * Returns: (transfer none): the resized `GskRoundedRect`
  **/
@@ -314,7 +314,7 @@ gsk_rounded_rect_scale_affine (GskRoundedRect       *dest,
  * gsk_rounded_rect_is_circular:
  * @self: the `GskRoundedRect` to check
  *
- * Checks if all corners of @self are quarter-circles (as
+ * Checks if all corners of `self` are quarter-circles (as
  * opposed to quarter-ellipses).
  *
  * Note that different corners can still have different radii.
@@ -337,7 +337,7 @@ gsk_rounded_rect_is_circular (const GskRoundedRect *self)
  * gsk_rounded_rect_is_rectilinear:
  * @self: the `GskRoundedRect` to check
  *
- * Checks if all corners of @self are right angles and the
+ * Checks if all corners of `self` are right angles and the
  * rectangle covers all of its bounds.
  *
  * This information can be used to decide if [ctor@Gsk.ClipNode.new]
@@ -426,9 +426,9 @@ gsk_rounded_rect_locate_point (const GskRoundedRect   *self,
  * @self: a `GskRoundedRect`
  * @point: the point to check
  *
- * Checks if the given @point is inside the rounded rectangle.
+ * Checks if the given `point` is inside the rounded rectangle.
  *
- * Returns: true if the @point is inside the rounded rectangle
+ * Returns: true if the `point` is inside the rounded rectangle
  **/
 gboolean
 gsk_rounded_rect_contains_point (const GskRoundedRect   *self,
@@ -442,9 +442,9 @@ gsk_rounded_rect_contains_point (const GskRoundedRect   *self,
  * @self: a `GskRoundedRect`
  * @rect: the rectangle to check
  *
- * Checks if the given @rect is contained inside the rounded rectangle.
+ * Checks if the given `rect` is contained inside the rounded rectangle.
  *
- * Returns: true if the @rect is fully contained inside the rounded rectangle
+ * Returns: true if the `rect` is fully contained inside the rounded rectangle
  **/
 gboolean
 gsk_rounded_rect_contains_rect (const GskRoundedRect  *self,
@@ -499,9 +499,9 @@ gsk_rounded_rect_contains_rect (const GskRoundedRect  *self,
  * @self: a `GskRoundedRect`
  * @rect: the rectangle to check
  *
- * Checks if part of the given @rect is contained inside the rounded rectangle.
+ * Checks if part of the given `rect` is contained inside the rounded rectangle.
  *
- * Returns: true if the @rect intersects with the rounded rectangle
+ * Returns: true if the `rect` intersects with the rounded rectangle
  */
 gboolean
 gsk_rounded_rect_intersects_rect (const GskRoundedRect  *self,

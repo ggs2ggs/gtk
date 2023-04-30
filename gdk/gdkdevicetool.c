@@ -198,7 +198,7 @@ gdk_device_tool_get_serial (GdkDeviceTool *tool)
  * Gets the hardware ID of this tool, or 0 if it's not known.
  *
  * When non-zero, the identifier is unique for the given tool model,
- * meaning that two identical tools will share the same @hardware_id,
+ * meaning that two identical tools will share the same `hardware_id`,
  * but will have different serial numbers (see
  * [method@Gdk.DeviceTool.get_serial]).
  *
@@ -241,7 +241,7 @@ gdk_device_tool_get_tool_type (GdkDeviceTool *tool)
  *
  * Gets the axes of the tool.
  *
- * Returns: the axes of @tool
+ * Returns: the axes of `tool`
  */
 GdkAxisFlags
 gdk_device_tool_get_axes (GdkDeviceTool *tool)

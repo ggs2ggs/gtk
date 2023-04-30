@@ -290,9 +290,9 @@ gtk_event_controller_focus_new (void)
  * gtk_event_controller_focus_contains_focus: (attributes org.gtk.Method.get_property=contains-focus)
  * @self: a `GtkEventControllerFocus`
  *
- * Returns true if focus is within @self or one of its children.
+ * Returns true if focus is within `self` or one of its children.
  *
- * Returns: true if focus is within @self or one of its children
+ * Returns: true if focus is within `self` or one of its children
  */
 gboolean
 gtk_event_controller_focus_contains_focus (GtkEventControllerFocus *self)
@@ -306,9 +306,9 @@ gtk_event_controller_focus_contains_focus (GtkEventControllerFocus *self)
  * gtk_event_controller_focus_is_focus: (attributes org.gtk.Method.get_property=is-focus)
  * @self: a `GtkEventControllerFocus`
  *
- * Returns true if focus is within @self, but not one of its children.
+ * Returns true if focus is within `self`, but not one of its children.
  *
- * Returns: true if focus is within @self, but not one of its children
+ * Returns: true if focus is within `self`, but not one of its children
  */
 gboolean
 gtk_event_controller_focus_is_focus (GtkEventControllerFocus *self)

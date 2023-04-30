@@ -638,7 +638,7 @@ gtk_drag_source_new (void)
  *
  * Gets the current content provider of a `GtkDragSource`.
  *
- * Returns: (nullable) (transfer none): the `GdkContentProvider` of @source
+ * Returns: (nullable) (transfer none): the `GdkContentProvider` of `source`
  */
 GdkContentProvider *
 gtk_drag_source_get_content (GtkDragSource *source)
@@ -682,7 +682,7 @@ gtk_drag_source_set_content (GtkDragSource      *source,
  *
  * Gets the actions that are currently set on the `GtkDragSource`.
  *
- * Returns: the actions set on @source
+ * Returns: the actions set on `source`
  */
 GdkDragAction
 gtk_drag_source_get_actions (GtkDragSource *source)
@@ -700,9 +700,9 @@ gtk_drag_source_get_actions (GtkDragSource *source)
  * Sets the actions on the `GtkDragSource`.
  *
  * During a DND operation, the actions are offered to potential
- * drop targets. If @actions include %GDK_ACTION_MOVE, you need
+ * drop targets. If `actions` include %GDK_ACTION_MOVE, you need
  * to listen to the [signal@Gtk.DragSource::drag-end] signal and
- * handle @delete_data being true.
+ * handle `delete_data` being true.
  *
  * This function can be called before a drag is started,
  * or in a handler for the [signal@Gtk.DragSource::prepare] signal.
@@ -733,7 +733,7 @@ gtk_drag_source_set_actions (GtkDragSource *source,
  * The hotspot coordinates determine the point on the icon
  * that gets aligned with the hotspot of the cursor.
  *
- * If @paintable is `NULL`, a default icon is used.
+ * If `paintable` is `NULL`, a default icon is used.
  *
  * This function can be called before a drag is started, or in
  * a [signal@Gtk.DragSource::prepare] or

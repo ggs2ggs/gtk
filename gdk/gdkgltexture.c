@@ -483,16 +483,16 @@ gdk_gl_texture_determine_format (GdkGLTexture *self)
 /**
  * gdk_gl_texture_new:
  * @context: a `GdkGLContext`
- * @id: the ID of a texture that was created with @context
+ * @id: the ID of a texture that was created with `context`
  * @width: the nominal width of the texture
  * @height: the nominal height of the texture
  * @destroy: a destroy notify that will be called when the GL resources
  *   are released
- * @data: data that gets passed to @destroy
+ * @data: data that gets passed to `destroy`
  *
  * Creates a new texture for an existing GL texture.
  *
- * Note that the GL texture must not be modified until @destroy is called,
+ * Note that the GL texture must not be modified until `destroy` is called,
  * which will happen when the GdkTexture object is finalized, or due to
  * an explicit call of [method@Gdk.GLTexture.release].
  *

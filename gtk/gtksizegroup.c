@@ -428,7 +428,7 @@ gtk_size_group_remove_widget (GtkSizeGroup *size_group,
  * gtk_size_group_get_widgets:
  * @size_group: a `GtkSizeGroup`
  *
- * Returns the list of widgets associated with @size_group.
+ * Returns the list of widgets associated with `size_group`.
  *
  * Returns:  (element-type GtkWidget) (transfer none): a `GSList` of
  *   widgets. The list is owned by GTK and should not be modified.

@@ -1369,15 +1369,15 @@ gtk_level_bar_remove_offset_value (GtkLevelBar *self,
  * @name: the name of the new offset
  * @value: the value for the new offset
  *
- * Adds a new offset marker on @self at the position specified by @value.
+ * Adds a new offset marker on `self` at the position specified by `value`.
  *
- * When the bar value is in the interval topped by @value (or between @value
+ * When the bar value is in the interval topped by `value` (or between `value`
  * and [property@Gtk.LevelBar:max-value] in case the offset is the last one
- * on the bar) a style class named `level-`@name will be applied
+ * on the bar) a style class named `level-``name` will be applied
  * when rendering the level bar fill.
  *
- * If another offset marker named @name exists, its value will be
- * replaced by @value.
+ * If another offset marker named `name` exists, its value will be
+ * replaced by `value`.
  */
 void
 gtk_level_bar_add_offset_value (GtkLevelBar *self,
@@ -1403,7 +1403,7 @@ gtk_level_bar_add_offset_value (GtkLevelBar *self,
  * @name: (nullable): the name of an offset in the bar
  * @value: (out): location where to store the value
  *
- * Fetches the value specified for the offset marker @name in @self.
+ * Fetches the value specified for the offset marker `name` in `self`.
  *
  * Returns: true if the specified offset is found
  */

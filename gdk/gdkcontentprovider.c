@@ -276,10 +276,10 @@ gdk_content_provider_content_changed (GdkContentProvider *provider)
  * @callback: (scope async): callback to call when the request is satisfied
  * @user_data: (closure): the data to pass to callback function
  *
- * Asynchronously writes the contents of @provider to @stream in the given
- * @mime_type.
+ * Asynchronously writes the contents of `provider` to `stream` in the given
+ * `mime_type`.
  *
- * When the operation is finished @callback will be called. You must then call
+ * When the operation is finished `callback` will be called. You must then call
  * [method@Gdk.ContentProvider.write_mime_type_finish] to get the result
  * of the operation.
  *
@@ -287,7 +287,7 @@ gdk_content_provider_content_changed (GdkContentProvider *provider)
  * [method@Gdk.ContentProvider.ref_formats]. However, if the given `GType` is
  * not supported, `G_IO_ERROR_NOT_SUPPORTED` will be reported.
  *
- * The given @stream will not be closed.
+ * The given `stream` will not be closed.
  */
 void
 gdk_content_provider_write_mime_type_async (GdkContentProvider  *provider,
@@ -323,7 +323,7 @@ gdk_content_provider_write_mime_type_async (GdkContentProvider  *provider,
  * See [method@Gdk.ContentProvider.write_mime_type_async].
  *
  * Returns: true if the operation was completed successfully. Otherwise
- *   @error will be set to describe the failure.
+ *   `error` will be set to describe the failure.
  */
 gboolean
 gdk_content_provider_write_mime_type_finish (GdkContentProvider  *provider,
@@ -342,16 +342,16 @@ gdk_content_provider_write_mime_type_finish (GdkContentProvider  *provider,
  * @value: (out caller-allocates): the `GValue` to fill
  * @error: a `GError` location to store the error occurring
  *
- * Gets the contents of @provider stored in @value.
+ * Gets the contents of `provider` stored in `value`.
  *
- * The @value will have been initialized to the `GType` the value should be
+ * The `value` will have been initialized to the `GType` the value should be
  * provided in. This given `GType` does not need to be listed in the formats
  * returned by [method@Gdk.ContentProvider.ref_formats]. However, if the
  * given `GType` is not supported, this operation can fail and
  * `G_IO_ERROR_NOT_SUPPORTED` will be reported.
  *
  * Returns: true if the value was set successfully. Otherwise
- *   @error will be set to describe the failure.
+ *   `error` will be set to describe the failure.
  */
 gboolean
 gdk_content_provider_get_value (GdkContentProvider  *provider,

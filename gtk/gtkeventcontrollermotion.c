@@ -303,9 +303,9 @@ gtk_event_controller_motion_new (void)
  * gtk_event_controller_motion_contains_pointer: (attributes org.gtk.Method.get_property=contains-pointer)
  * @self: a `GtkEventControllerMotion`
  *
- * Returns if a pointer is within @self or one of its children.
+ * Returns if a pointer is within `self` or one of its children.
  *
- * Returns: true if a pointer is within @self or one of its children
+ * Returns: true if a pointer is within `self` or one of its children
  */
 gboolean
 gtk_event_controller_motion_contains_pointer (GtkEventControllerMotion *self)
@@ -319,9 +319,9 @@ gtk_event_controller_motion_contains_pointer (GtkEventControllerMotion *self)
  * gtk_event_controller_motion_is_pointer: (attributes org.gtk.Method.get_property=is-pointer)
  * @self: a `GtkEventControllerMotion`
  *
- * Returns if a pointer is within @self, but not one of its children.
+ * Returns if a pointer is within `self`, but not one of its children.
  *
- * Returns: true if a pointer is within @self but not one of its children
+ * Returns: true if a pointer is within `self` but not one of its children
  */
 gboolean
 gtk_event_controller_motion_is_pointer (GtkEventControllerMotion *self)

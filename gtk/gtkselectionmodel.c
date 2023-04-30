@@ -247,7 +247,7 @@ gtk_selection_model_default_init (GtkSelectionModelInterface *iface)
    * @position: The first item that may have changed
    * @n_items: number of items with changes
    *
-   * Emitted when the selection state of some of the items in @model changes.
+   * Emitted when the selection state of some of the items in `model` changes.
    *
    * Note that this signal does not specify the new selection state of the
    * items, they need to be queried manually. It is also not necessary for
@@ -299,7 +299,7 @@ gtk_selection_model_is_selected (GtkSelectionModel *model,
  * interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
  *
  * Returns: (transfer full): a `GtkBitset` containing all the values currently
- *   selected in @model. If no items are selected, the bitset is empty.
+ *   selected in `model`. If no items are selected, the bitset is empty.
  *   The bitset must not be modified.
  */
 GtkBitset *
@@ -493,8 +493,8 @@ gtk_selection_model_unselect_all (GtkSelectionModel *model)
  * you should try the simpler versions, as implementations are more
  * likely to implement support for those.
  *
- * Requests that the selection state of all positions set in @mask
- * be updated to the respective value in the @selected bitmask.
+ * Requests that the selection state of all positions set in `mask`
+ * be updated to the respective value in the `selected` bitmask.
  *
  * In pseudocode, it would look something like this:
  *
@@ -516,7 +516,7 @@ gtk_selection_model_unselect_all (GtkSelectionModel *model)
  *                                        n_changed_items);
  * ```
  *
- * @mask and @selected must not be modified. They may refer to the
+ * `mask` and `selected` must not be modified. They may refer to the
  * same bitset, which would mean that every item in the set should
  * be selected.
  *

@@ -385,8 +385,8 @@ gtk_directory_list_init (GtkDirectoryList *self)
  *
  * Creates a new `GtkDirectoryList`.
  *
- * The `GtkDirectoryList` is querying the given @file
- * with the given @attributes.
+ * The `GtkDirectoryList` is querying the given `file`
+ * with the given `attributes`.
  *
  * Returns: a new `GtkDirectoryList`
  **/
@@ -814,9 +814,9 @@ gtk_directory_list_update_monitoring (GtkDirectoryList *self)
  * @self: a `GtkDirectoryList`
  * @file: (nullable): the `GFile` to be enumerated
  *
- * Sets the @file to be enumerated and starts the enumeration.
+ * Sets the `file` to be enumerated and starts the enumeration.
  *
- * If @file is `NULL`, the result will be an empty list.
+ * If `file` is `NULL`, the result will be an empty list.
  */
 void
 gtk_directory_list_set_file (GtkDirectoryList *self,
@@ -862,9 +862,9 @@ gtk_directory_list_get_file (GtkDirectoryList *self)
  * @self: a `GtkDirectoryList`
  * @attributes: (nullable): the attributes to enumerate
  *
- * Sets the @attributes to be enumerated and starts the enumeration.
+ * Sets the `attributes` to be enumerated and starts the enumeration.
  *
- * If @attributes is `NULL`, the list of file infos will still be created, it will just
+ * If `attributes` is `NULL`, the list of file infos will still be created, it will just
  * not contain any extra attributes.
  */
 void
@@ -911,7 +911,7 @@ gtk_directory_list_get_attributes (GtkDirectoryList *self)
  *
  * Sets the IO priority to use while loading directories.
  *
- * Setting the priority while @self is loading will reprioritize the
+ * Setting the priority while `self` is loading will reprioritize the
  * ongoing load as soon as possible.
  *
  * The default IO priority is %G_PRIORITY_DEFAULT, which is higher than
@@ -956,11 +956,11 @@ gtk_directory_list_get_io_priority (GtkDirectoryList *self)
  * Returns true if the children enumeration is currently in
  * progress.
  *
- * Files will be added to @self from time to time while loading is
+ * Files will be added to `self` from time to time while loading is
  * going on. The order in which are added is undefined and may change
  * in between runs.
  *
- * Returns: true if @self is loading
+ * Returns: true if `self` is loading
  */
 gboolean
 gtk_directory_list_is_loading (GtkDirectoryList *self)

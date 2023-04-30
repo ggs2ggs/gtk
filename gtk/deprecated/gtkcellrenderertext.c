@@ -528,10 +528,10 @@ gtk_cell_renderer_text_class_init (GtkCellRendererTextClass *class)
    * @path: the path identifying the edited cell
    * @new_text: the new text
    *
-   * This signal is emitted after @renderer has been edited.
+   * This signal is emitted after `renderer` has been edited.
    *
    * It is the responsibility of the application to update the model
-   * and store @new_text at the position indicated by @path.
+   * and store `new_text` at the position indicated by `path`.
    */
   text_cell_renderer_signals [EDITED] =
     g_signal_new (I_("edited"),
@@ -1763,7 +1763,7 @@ gtk_cell_renderer_text_start_editing (GtkCellRenderer      *cell,
  * affect the height, so they must be accompanied by a subsequent call to this
  * function.  Using this function is inflexible, and should really only be used
  * if calculating the size of a cell is too slow (ie, a massive number of cells
- * displayed).  If @number_of_rows is -1, then the fixed height is unset, and
+ * displayed).  If `number_of_rows` is -1, then the fixed height is unset, and
  * the height is determined by the properties again.
  *
  * Deprecated: 4.10

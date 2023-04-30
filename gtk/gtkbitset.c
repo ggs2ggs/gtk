@@ -78,7 +78,7 @@ gtk_bitset_ref (GtkBitset *self)
  *
  * Releases a reference on the given `GtkBitset`.
  *
- * If the reference was the last, the resources associated to the @self are
+ * If the reference was the last, the resources associated to the `self` are
  * freed.
  */
 void
@@ -100,9 +100,9 @@ gtk_bitset_unref (GtkBitset *self)
  * @self: a `GtkBitset`
  * @value: the value to check
  *
- * Checks if the given @value has been added to @self
+ * Checks if the given `value` has been added to `self`
  *
- * Returns: true if @self contains @value
+ * Returns: true if `self` contains `value`
  **/
 gboolean
 gtk_bitset_contains (const GtkBitset *self,
@@ -119,7 +119,7 @@ gtk_bitset_contains (const GtkBitset *self,
  *
  * Check if no value is contained in bitset.
  *
- * Returns: true if @self is empty
+ * Returns: true if `self` is empty
  **/
 gboolean
 gtk_bitset_is_empty (const GtkBitset *self)
@@ -134,9 +134,9 @@ gtk_bitset_is_empty (const GtkBitset *self)
  * @self: a `GtkBitset`
  * @other: another `GtkBitset`
  *
- * Returns true if @self and @other contain the same values.
+ * Returns true if `self` and `other` contain the same values.
  *
- * Returns: true if @self and @other contain the same values
+ * Returns: true if `self` and `other` contain the same values
  **/
 gboolean
 gtk_bitset_equals (const GtkBitset *self,
@@ -155,11 +155,11 @@ gtk_bitset_equals (const GtkBitset *self,
  * gtk_bitset_get_minimum:
  * @self: a `GtkBitset`
  *
- * Returns the smallest value in @self.
+ * Returns the smallest value in `self`.
  *
- * If @self is empty, `G_MAXUINT` is returned.
+ * If `self` is empty, `G_MAXUINT` is returned.
  *
- * Returns: The smallest value in @self
+ * Returns: The smallest value in `self`
  **/
 guint
 gtk_bitset_get_minimum (const GtkBitset *self)
@@ -173,11 +173,11 @@ gtk_bitset_get_minimum (const GtkBitset *self)
  * gtk_bitset_get_maximum:
  * @self: a `GtkBitset`
  *
- * Returns the largest value in @self.
+ * Returns the largest value in `self`.
  *
- * If @self is empty, 0 is returned.
+ * If `self` is empty, 0 is returned.
  *
- * Returns: The largest value in @self
+ * Returns: The largest value in `self`
  **/
 guint
 gtk_bitset_get_maximum (const GtkBitset *self)
@@ -216,14 +216,14 @@ gtk_bitset_get_size (const GtkBitset *self)
  * @first: the first element to include
  * @last: the last element to include
  *
- * Gets the number of values that are part of the set from @first to @last
+ * Gets the number of values that are part of the set from `first` to `last`
  * (inclusive).
  *
  * Note that this function returns a `guint64`, because when all values are
  * set, the return value is `G_MAXUINT + 1`. Unless you are sure this cannot
  * happen (it can't with `GListModel`), be sure to use a 64bit type.
  *
- * Returns: The number of values in the set from @first to @last.
+ * Returns: The number of values in the set from `first` to `last`.
  */
 guint64
 gtk_bitset_get_size_in_range (const GtkBitset *self,
@@ -241,11 +241,11 @@ gtk_bitset_get_size_in_range (const GtkBitset *self,
  * @self: a `GtkBitset`
  * @nth: index of the item to get
  *
- * Returns the value of the @nth item in self.
+ * Returns the value of the `nth` item in self.
  *
- * If @nth is >= the size of @self, 0 is returned.
+ * If `nth` is >= the size of `self`, 0 is returned.
  *
- * Returns: the value of the @nth item in @self
+ * Returns: the value of the `nth` item in `self`
  */
 guint
 gtk_bitset_get_nth (const GtkBitset *self,
@@ -306,10 +306,10 @@ gtk_bitset_new_range (guint start,
  * gtk_bitset_copy:
  * @self: a `GtkBitset`
  *
- * Creates a copy of @self.
+ * Creates a copy of `self`.
  *
  * Returns: (transfer full): A new bitset that contains the same
- *   values as @self
+ *   values as `self`
  */
 GtkBitset *
 gtk_bitset_copy (const GtkBitset *self)
@@ -343,9 +343,9 @@ gtk_bitset_remove_all (GtkBitset *self)
  * @self: a `GtkBitset`
  * @value: value to add
  *
- * Adds @value to @self if it wasn't part of it before.
+ * Adds `value` to `self` if it wasn't part of it before.
  *
- * Returns: true if @value was not part of @self and @self
+ * Returns: true if `value` was not part of `self` and `self`
  *   was changed
  */
 gboolean
@@ -362,9 +362,9 @@ gtk_bitset_add (GtkBitset *self,
  * @self: a `GtkBitset`
  * @value: value to remove
  *
- * Removes @value from @self if it was part of it before.
+ * Removes `value` from `self` if it was part of it before.
  *
- * Returns: true if @value was part of @self and @self
+ * Returns: true if `value` was part of `self` and `self`
  *   was changed
  */
 gboolean
@@ -382,8 +382,8 @@ gtk_bitset_remove (GtkBitset *self,
  * @start: first value to add
  * @n_items: number of consecutive values to add
  *
- * Adds all values from @start (inclusive) to @start + @n_items
- * (exclusive) in @self.
+ * Adds all values from `start` (inclusive) to `start` + `n_items`
+ * (exclusive) in `self`.
  */
 void
 gtk_bitset_add_range (GtkBitset *self,
@@ -407,8 +407,8 @@ gtk_bitset_add_range (GtkBitset *self,
  * @start: first value to remove
  * @n_items: number of consecutive values to remove
  *
- * Removes all values from @start (inclusive) to @start + @n_items (exclusive)
- * in @self.
+ * Removes all values from `start` (inclusive) to `start` + `n_items` (exclusive)
+ * in `self`.
  */
 void
 gtk_bitset_remove_range (GtkBitset *self,
@@ -432,8 +432,8 @@ gtk_bitset_remove_range (GtkBitset *self,
  * @first: first value to add
  * @last: last value to add
  *
- * Adds the closed range [@first, @last], so @first, @last and all
- * values in between. @first must be smaller than @last.
+ * Adds the closed range [`first`, `last`], so `first`, `last` and all
+ * values in between. `first` must be smaller than `last`.
  */
 void
 gtk_bitset_add_range_closed (GtkBitset *self,
@@ -452,8 +452,8 @@ gtk_bitset_add_range_closed (GtkBitset *self,
  * @first: first value to remove
  * @last: last value to remove
  *
- * Removes the closed range [@first, @last], so @first, @last and all
- * values in between. @first must be smaller than @last.
+ * Removes the closed range [`first`, `last`], so `first`, `last` and all
+ * values in between. `first` must be smaller than `last`.
  */
 void
 gtk_bitset_remove_range_closed (GtkBitset *self,
@@ -474,8 +474,8 @@ gtk_bitset_remove_range_closed (GtkBitset *self,
  * @height: height of the rectangle
  * @stride: row stride of the grid
  *
- * Interprets the values as a 2-dimensional boolean grid with the given @stride
- * and inside that grid, adds a rectangle with the given @width and @height.
+ * Interprets the values as a 2-dimensional boolean grid with the given `stride`
+ * and inside that grid, adds a rectangle with the given `width` and `height`.
  */
 void
 gtk_bitset_add_rectangle (GtkBitset *self,
@@ -505,8 +505,8 @@ gtk_bitset_add_rectangle (GtkBitset *self,
  * @height: height of the rectangle
  * @stride: row stride of the grid
  *
- * Interprets the values as a 2-dimensional boolean grid with the given @stride
- * and inside that grid, removes a rectangle with the given @width and @height.
+ * Interprets the values as a 2-dimensional boolean grid with the given `stride`
+ * and inside that grid, removes a rectangle with the given `width` and `height`.
  */
 void
 gtk_bitset_remove_rectangle (GtkBitset *self,
@@ -533,11 +533,11 @@ gtk_bitset_remove_rectangle (GtkBitset *self,
  * @self: a `GtkBitset`
  * @other: the `GtkBitset` to union with
  *
- * Sets @self to be the union of @self and @other.
+ * Sets `self` to be the union of `self` and `other`.
  *
- * That is, add all values from @other into @self that weren't part of it.
+ * That is, add all values from `other` into `self` that weren't part of it.
  *
- * It is allowed for @self and @other to be the same bitset. Nothing will
+ * It is allowed for `self` and `other` to be the same bitset. Nothing will
  * happen in that case.
  */
 void
@@ -558,11 +558,11 @@ gtk_bitset_union (GtkBitset       *self,
  * @self: a `GtkBitset`
  * @other: the `GtkBitset` to intersect with
  *
- * Sets @self to be the intersection of @self and @other.
+ * Sets `self` to be the intersection of `self` and `other`.
  *
- * In other words, remove all values from @self that are not part of @other.
+ * In other words, remove all values from `self` that are not part of `other`.
  *
- * It is allowed for @self and @other to be the same bitset. Nothing will
+ * It is allowed for `self` and `other` to be the same bitset. Nothing will
  * happen in that case.
  */
 void
@@ -583,11 +583,11 @@ gtk_bitset_intersect (GtkBitset       *self,
  * @self: a `GtkBitset`
  * @other: the `GtkBitset` to subtract
  *
- * Sets @self to be the subtraction of @other from @self.
+ * Sets `self` to be the subtraction of `other` from `self`.
  *
- * In other words, remove all values from @self that are part of @other.
+ * In other words, remove all values from `self` that are part of `other`.
  *
- * It is allowed for @self and @other to be the same bitset. The bitset
+ * It is allowed for `self` and `other` to be the same bitset. The bitset
  * will be emptied in that case.
  */
 void
@@ -611,13 +611,13 @@ gtk_bitset_subtract (GtkBitset       *self,
  * @self: a `GtkBitset`
  * @other: the `GtkBitset` to compute the difference from
  *
- * Sets @self to be the symmetric difference of @self and @other.
+ * Sets `self` to be the symmetric difference of `self` and `other`.
  *
- * The symmetric difference is set @self to contain all values that
- * were either contained in @self or in @other, but not in both.
+ * The symmetric difference is set `self` to contain all values that
+ * were either contained in `self` or in `other`, but not in both.
  * This operation is also called an XOR.
  *
- * It is allowed for @self and @other to be the same bitset. The bitset
+ * It is allowed for `self` and `other` to be the same bitset. The bitset
  * will be emptied in that case.
  */
 void
@@ -641,9 +641,9 @@ gtk_bitset_difference (GtkBitset       *self,
  * @self: a `GtkBitset`
  * @amount: amount to shift all values to the left
  *
- * Shifts all values in @self to the left by @amount.
+ * Shifts all values in `self` to the left by `amount`.
  *
- * Values smaller than @amount are discarded.
+ * Values smaller than `amount` are discarded.
  */
 void
 gtk_bitset_shift_left (GtkBitset *self,
@@ -677,7 +677,7 @@ gtk_bitset_shift_left (GtkBitset *self,
  * @self: a `GtkBitset`
  * @amount: amount to shift all values to the right
  *
- * Shifts all values in @self to the right by @amount.
+ * Shifts all values in `self` to the right by `amount`.
  *
  * Values that end up too large to be held in a `guint` are discarded.
  */
@@ -718,12 +718,12 @@ gtk_bitset_shift_right (GtkBitset *self,
  * This is a support function for `GListModel` handling, by mirroring
  * the `GlistModel::items-changed` signal.
  *
- * First, it "cuts" the values from @position to @removed from
+ * First, it "cuts" the values from `position` to `removed` from
  * the bitset. That is, it removes all those values and shifts
- * all larger values to the left by @removed places.
+ * all larger values to the left by `removed` places.
  *
  * Then, it "pastes" new room into the bitset by shifting all values
- * larger than @position by @added spaces to the right. This frees
+ * larger than `position` by `added` spaces to the right. This frees
  * up space that can then be filled.
  */
 void
@@ -778,14 +778,14 @@ G_DEFINE_BOXED_TYPE (GtkBitsetIter, gtk_bitset_iter, gtk_bitset_iter_copy, gtk_b
  * gtk_bitset_iter_init_first:
  * @iter: (out): a pointer to an uninitialized `GtkBitsetIter`
  * @set: a `GtkBitset`
- * @value: (out) (optional): Set to the first value in @set
+ * @value: (out) (optional): Set to the first value in `set`
  *
- * Initializes an iterator for @set and points it to the first
- * value in @set.
+ * Initializes an iterator for `set` and points it to the first
+ * value in `set`.
  *
- * If @set is empty, false is returned and @value is set to %G_MAXUINT.
+ * If `set` is empty, false is returned and `value` is set to %G_MAXUINT.
  *
- * Returns: true if @set isn't empty.
+ * Returns: true if `set` isn't empty.
  */
 gboolean
 gtk_bitset_iter_init_first (GtkBitsetIter   *iter,
@@ -809,14 +809,14 @@ gtk_bitset_iter_init_first (GtkBitsetIter   *iter,
  * gtk_bitset_iter_init_last:
  * @iter: (out): a pointer to an uninitialized `GtkBitsetIter`
  * @set: a `GtkBitset`
- * @value: (out) (optional): Set to the last value in @set
+ * @value: (out) (optional): Set to the last value in `set`
  *
- * Initializes an iterator for @set and points it to the last
- * value in @set.
+ * Initializes an iterator for `set` and points it to the last
+ * value in `set`.
  *
- * If @set is empty, false is returned.
+ * If `set` is empty, false is returned.
  *
- * Returns: true if @set isn't empty.
+ * Returns: true if `set` isn't empty.
  **/
 gboolean
 gtk_bitset_iter_init_last (GtkBitsetIter    *iter,
@@ -841,12 +841,12 @@ gtk_bitset_iter_init_last (GtkBitsetIter    *iter,
  * @iter: (out): a pointer to an uninitialized `GtkBitsetIter`
  * @set: a `GtkBitset`
  * @target: target value to start iterating at
- * @value: (out) (optional): Set to the found value in @set
+ * @value: (out) (optional): Set to the found value in `set`
  *
- * Initializes @iter to point to @target.
+ * Initializes `iter` to point to `target`.
  *
- * If @target is not found, finds the next value after it.
- * If no value >= @target exists in @set, this function returns false.
+ * If `target` is not found, finds the next value after it.
+ * If no value >= `target` exists in `set`, this function returns false.
  *
  * Returns: true if a value was found.
  */
@@ -880,10 +880,10 @@ gtk_bitset_iter_init_at (GtkBitsetIter   *iter,
  * @iter: a pointer to a valid `GtkBitsetIter`
  * @value: (out) (optional): Set to the next value
  *
- * Moves @iter to the next value in the set.
+ * Moves `iter` to the next value in the set.
  *
  * If it was already pointing to the last value in the set,
- * false is returned and @iter is invalidated.
+ * false is returned and `iter` is invalidated.
  *
  * Returns: true if a next value existed
  */
@@ -913,10 +913,10 @@ gtk_bitset_iter_next (GtkBitsetIter *iter,
  * @iter: a pointer to a valid `GtkBitsetIter`
  * @value: (out) (optional): Set to the previous value
  *
- * Moves @iter to the previous value in the set.
+ * Moves `iter` to the previous value in the set.
  *
  * If it was already pointing to the first value in the set,
- * false is returned and @iter is invalidated.
+ * false is returned and `iter` is invalidated.
  *
  * Returns: true if a previous value existed
  */
@@ -945,12 +945,12 @@ gtk_bitset_iter_previous (GtkBitsetIter *iter,
  * gtk_bitset_iter_get_value:
  * @iter: a `GtkBitsetIter`
  *
- * Gets the current value that @iter points to.
+ * Gets the current value that `iter` points to.
  *
- * If @iter is not valid and [method@Gtk.BitsetIter.is_valid]
+ * If `iter` is not valid and [method@Gtk.BitsetIter.is_valid]
  * returns false, this function returns 0.
  *
- * Returns: The current value pointer to by @iter
+ * Returns: The current value pointer to by `iter`
  */
 guint
 gtk_bitset_iter_get_value (const GtkBitsetIter *iter)
@@ -969,9 +969,9 @@ gtk_bitset_iter_get_value (const GtkBitsetIter *iter)
  * gtk_bitset_iter_is_valid:
  * @iter: a `GtkBitsetIter`
  *
- * Checks if @iter points to a valid value.
+ * Checks if `iter` points to a valid value.
  *
- * Returns: true if @iter points to a valid value
+ * Returns: true if `iter` points to a valid value
  */
 gboolean
 gtk_bitset_iter_is_valid (const GtkBitsetIter *iter)

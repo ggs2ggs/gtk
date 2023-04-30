@@ -375,7 +375,7 @@ gtk_string_sorter_init (GtkStringSorter *self)
  * @expression: (transfer full) (nullable): The expression to evaluate
  *
  * Creates a new string sorter that compares items using the given
- * @expression.
+ * `expression`.
  *
  * Unless an expression is set on it, this sorter will always
  * compare items as invalid.
@@ -448,7 +448,7 @@ gtk_string_sorter_set_expression (GtkStringSorter *self,
  *
  * Gets whether the sorter ignores case differences.
  *
- * Returns: true if @self is ignoring case differences
+ * Returns: true if `self` is ignoring case differences
  */
 gboolean
 gtk_string_sorter_get_ignore_case (GtkStringSorter *self)

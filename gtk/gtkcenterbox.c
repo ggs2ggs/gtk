@@ -499,7 +499,7 @@ gtk_center_box_get_end_widget (GtkCenterBox *self)
  * This affects only horizontal boxes with at least one baseline
  * aligned child. If there is more vertical space available than
  * requested, and the baseline is not allocated by the parent then
- * @position is used to allocate the baseline wrt. the extra space
+ * `position` is used to allocate the baseline wrt. the extra space
  * available.
  */
 void
@@ -582,7 +582,7 @@ gtk_center_box_set_shrink_center_last (GtkCenterBox *self,
  * gtk_center_box_get_shrink_center_last: (attributes org.gtk.Method.get_property=shrink-center-last)
  * @self: a `GtkCenterBox`
  *
- * Gets whether @self shrinks the center widget after other children.
+ * Gets whether `self` shrinks the center widget after other children.
  *
  * Returns: whether to shrink the center widget after others
  *

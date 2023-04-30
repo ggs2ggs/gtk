@@ -3754,8 +3754,8 @@ gtk_tree_model_filter_set_root (GtkTreeModelFilter *filter,
  * @child_model: A `GtkTreeModel`.
  * @root: (nullable): A `GtkTreePath`
  *
- * Creates a new `GtkTreeModel`, with @child_model as the child_model
- * and @root as the virtual root.
+ * Creates a new `GtkTreeModel`, with `child_model` as the child_model
+ * and `root` as the virtual root.
  *
  * Returns: (transfer full): A new `GtkTreeModel`.
  *
@@ -3777,7 +3777,7 @@ gtk_tree_model_filter_new (GtkTreeModel *child_model,
  * gtk_tree_model_filter_get_model:
  * @filter: A `GtkTreeModelFilter`
  *
- * Returns a pointer to the child model of @filter.
+ * Returns a pointer to the child model of `filter`.
  *
  * Returns: (transfer none): A pointer to a `GtkTreeModel`
  *
@@ -3796,9 +3796,9 @@ gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter)
  * @filter: A `GtkTreeModelFilter`
  * @func: A `GtkTreeModelFilterVisibleFunc`, the visible function
  * @data: (nullable): User data to pass to the visible function
- * @destroy: (nullable): Destroy notifier of @data
+ * @destroy: (nullable): Destroy notifier of `data`
  *
- * Sets the visible function used when filtering the @filter to be @func.
+ * Sets the visible function used when filtering the `filter` to be `func`.
  * The function should return true if the given row should be visible and
  * false otherwise.
  *
@@ -3807,7 +3807,7 @@ gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter)
  * gtk_tree_model_filter_refilter() to keep the visibility information
  * of the model up-to-date.
  *
- * Note that @func is called whenever a row is inserted, when it may still
+ * Note that `func` is called whenever a row is inserted, when it may still
  * be empty. The visible function should therefore take special care of empty
  * rows, like in the example below.
  *
@@ -3860,11 +3860,11 @@ gtk_tree_model_filter_set_visible_func (GtkTreeModelFilter            *filter,
  * @types: (array length=n_columns): The `GType`s of the columns.
  * @func: A `GtkTreeModelFilterModifyFunc`
  * @data: (nullable): User data to pass to the modify function
- * @destroy: (nullable): Destroy notifier of @data
+ * @destroy: (nullable): Destroy notifier of `data`
  *
- * With the @n_columns and @types parameters, you give an array of column
+ * With the `n_columns` and `types` parameters, you give an array of column
  * types for this model (which will be exposed to the parent model/view).
- * The @func, @data and @destroy parameters are for specifying the modify
+ * The `func`, `data` and `destroy` parameters are for specifying the modify
  * function. The modify function will get called for each
  * data access, the goal of the modify function is to return the data which
  * should be displayed at the location specified using the parameters of the
@@ -3902,8 +3902,8 @@ gtk_tree_model_filter_set_modify_func (GtkTreeModelFilter           *filter,
  * @filter: A `GtkTreeModelFilter`
  * @column: A `int` which is the column containing the visible information
  *
- * Sets @column of the child_model to be the column where @filter should
- * look for visibility information. @columns should be a column of type
+ * Sets `column` of the child_model to be the column where `filter` should
+ * look for visibility information. `columns` should be a column of type
  * %G_TYPE_BOOLEAN, where true means that a row is visible, and false
  * if not.
  *
@@ -3934,11 +3934,11 @@ gtk_tree_model_filter_set_visible_column (GtkTreeModelFilter *filter,
  * @filter_iter: (out): An uninitialized `GtkTreeIter`
  * @child_iter: A valid `GtkTreeIter` pointing to a row on the child model.
  *
- * Sets @filter_iter to point to the row in @filter that corresponds to the
- * row pointed at by @child_iter.  If @filter_iter was not set, false is
+ * Sets `filter_iter` to point to the row in `filter` that corresponds to the
+ * row pointed at by `child_iter`.  If `filter_iter` was not set, false is
  * returned.
  *
- * Returns: true, if @filter_iter was set, i.e. if @child_iter is a
+ * Returns: true, if `filter_iter` was set, i.e. if `child_iter` is a
  * valid iterator pointing to a visible row in child model.
  *
  * Deprecated: 4.10
@@ -3979,9 +3979,9 @@ gtk_tree_model_filter_convert_child_iter_to_iter (GtkTreeModelFilter *filter,
  * gtk_tree_model_filter_convert_iter_to_child_iter:
  * @filter: A `GtkTreeModelFilter`
  * @child_iter: (out): An uninitialized `GtkTreeIter`
- * @filter_iter: A valid `GtkTreeIter` pointing to a row on @filter.
+ * @filter_iter: A valid `GtkTreeIter` pointing to a row on `filter`.
  *
- * Sets @child_iter to point to the row pointed to by @filter_iter.
+ * Sets `child_iter` to point to the row pointed to by `filter_iter`.
  *
  * Deprecated: 4.10
  */
@@ -4114,10 +4114,10 @@ gtk_real_tree_model_filter_convert_child_path_to_path (GtkTreeModelFilter *filte
  * @filter: A `GtkTreeModelFilter`
  * @child_path: A `GtkTreePath` to convert.
  *
- * Converts @child_path to a path relative to @filter. That is, @child_path
+ * Converts `child_path` to a path relative to `filter`. That is, `child_path`
  * points to a path in the child model. The rerturned path will point to the
- * same row in the filtered model. If @child_path isn’t a valid path on the
- * child model or points to a row which is not visible in @filter, then `NULL`
+ * same row in the filtered model. If `child_path` isn’t a valid path on the
+ * child model or points to a row which is not visible in `filter`, then `NULL`
  * is returned.
  *
  * Returns: (nullable) (transfer full): A newly allocated `GtkTreePath`
@@ -4158,9 +4158,9 @@ gtk_tree_model_filter_convert_child_path_to_path (GtkTreeModelFilter *filter,
  * @filter: A `GtkTreeModelFilter`
  * @filter_path: A `GtkTreePath` to convert.
  *
- * Converts @filter_path to a path on the child model of @filter. That is,
- * @filter_path points to a location in @filter. The returned path will
- * point to the same location in the model not being filtered. If @filter_path
+ * Converts `filter_path` to a path on the child model of `filter`. That is,
+ * `filter_path` points to a location in `filter`. The returned path will
+ * point to the same location in the model not being filtered. If `filter_path`
  * does not point to a location in the child model, `NULL` is returned.
  *
  * Returns: (nullable) (transfer full): A newly allocated `GtkTreePath`
@@ -4266,7 +4266,7 @@ gtk_tree_model_filter_refilter (GtkTreeModelFilter *filter)
  * gtk_tree_model_filter_clear_cache:
  * @filter: A `GtkTreeModelFilter`
  *
- * This function should almost never be called. It clears the @filter
+ * This function should almost never be called. It clears the `filter`
  * of any cached iterators that haven’t been reffed with
  * gtk_tree_model_ref_node(). This might be useful if the child model
  * being filtered is static (and doesn’t change often) and there has been

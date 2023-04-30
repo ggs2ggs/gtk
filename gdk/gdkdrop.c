@@ -409,7 +409,7 @@ gdk_drop_init (GdkDrop *self)
  * gdk_drop_get_display: (attributes org.gtk.Method.get_property=display)
  * @self: a `GdkDrop`
  *
- * Gets the `GdkDisplay` that @self was created for.
+ * Gets the `GdkDisplay` that `self` was created for.
  *
  * Returns: (transfer none): a `GdkDisplay`
  */
@@ -553,7 +553,7 @@ gdk_drop_get_drag (GdkDrop *self)
  * @self: a `GdkDrop`
  * @actions: Supported actions of the destination, or 0 to indicate
  *    that a drop will not be accepted
- * @preferred: A unique action that's a member of @actions indicating the
+ * @preferred: A unique action that's a member of `actions` indicating the
  *    preferred action
  *
  * Selects all actions that are potentially supported by the destination.
@@ -562,7 +562,7 @@ gdk_drop_get_drag (GdkDrop *self)
  * the ones provided by [method@Gdk.Drop.get_actions]. Those actions may
  * change in the future, even depending on the actions you provide here.
  *
- * The @preferred action is a hint to the drag-and-drop mechanism about which
+ * The `preferred` action is a hint to the drag-and-drop mechanism about which
  * action to use when multiple actions are possible.
  *
  * This function should be called by drag destinations in response to
@@ -594,7 +594,7 @@ gdk_drop_status (GdkDrop       *self,
  *
  * Ends the drag operation after a drop.
  *
- * The @action must be a single action selected from the actions
+ * The `action` must be a single action selected from the actions
  * available via [method@Gdk.Drop.get_actions].
  */
 void
@@ -653,7 +653,7 @@ gdk_drop_read_internal (GdkDrop             *self,
  * @cancellable: (nullable): optional `GCancellable` object
  * @callback: (scope async): a `GAsyncReadyCallback` to call when
  *   the request is satisfied
- * @user_data: (closure): the data to pass to @callback
+ * @user_data: (closure): the data to pass to `callback`
  *
  * Asynchronously read the dropped data from a `GdkDrop`
  * in a format that complies with one of the mime types.
@@ -847,9 +847,9 @@ gdk_drop_read_value_internal (GdkDrop             *self,
  * @user_data: (closure): the data to pass to callback function
  *
  * Asynchronously request the drag operation's contents converted
- * to the given @type.
+ * to the given `type`.
  *
- * When the operation is finished @callback will be called. You must
+ * When the operation is finished `callback` will be called. You must
  * then call [method@Gdk.Drop.read_value_finish] to get the resulting
  * `GValue`.
  *

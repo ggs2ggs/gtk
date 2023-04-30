@@ -34,8 +34,8 @@
 /*
  * Reverse the specified range of the specified array.
  *
- * @param a the array in which a range is to be reversed
- * @param hi the index after the last element in the range to be reversed
+ * `param` a the array in which a range is to be reversed
+ * `param` hi the index after the last element in the range to be reversed
  */
 static void gtk_tim_sort(reverse_range) (GtkTimSort *self,
                                          gpointer    a,
@@ -74,11 +74,11 @@ static void gtk_tim_sort(reverse_range) (GtkTimSort *self,
  * definition of "descending" is needed so that the call can safely
  * reverse a descending sequence without violating stability.
  *
- * @param a the array in which a run is to be counted and possibly reversed
- * @param hi index after the last element that may be contained in the run.
- *        It is required that {@code 0 < hi}.
- * @param compare the comparator to used for the sort
- * @return  the length of the run beginning at the specified position in
+ * `param` a the array in which a run is to be counted and possibly reversed
+ * `param` hi index after the last element that may be contained in the run.
+ *        It is required that {`code` 0 < hi}.
+ * `param` compare the comparator to used for the sort
+ * `return`  the length of the run beginning at the specified position in
  *          the specified array
  */
 static gsize
@@ -133,13 +133,13 @@ gtk_tim_sort(prepare_run) (GtkTimSort    *self,
  *
  * If the initial part of the specified range is already sorted,
  * this method can take advantage of it: the method assumes that the
- * elements from index {@code lo}, inclusive, to {@code start},
+ * elements from index {`code` lo}, inclusive, to {`code` start},
  * exclusive are already sorted.
  *
- * @param a the array in which a range is to be sorted
- * @param hi the index after the last element in the range to be sorted
- * @param start the index of the first element in the range that is
- *        not already known to be sorted ({@code lo <= start <= hi})
+ * `param` a the array in which a range is to be sorted
+ * `param` hi the index after the last element in the range to be sorted
+ * `param` start the index of the first element in the range that is
+ *        not already known to be sorted ({`code` lo <= start <= hi})
  */
 static void gtk_tim_sort(binary_sort) (GtkTimSort    *self,
                                        gpointer       a,
@@ -249,13 +249,13 @@ gtk_tim_sort(merge_append) (GtkTimSort    *self,
  * specified sorted range; if the range contains an element equal to key,
  * returns the index of the leftmost equal element.
  *
- * @param key the key whose insertion point to search for
- * @param base the array in which to search
- * @param len the length of the range; must be > 0
- * @param hint the index at which to begin the search, 0 <= hint < n.
+ * `param` key the key whose insertion point to search for
+ * `param` base the array in which to search
+ * `param` len the length of the range; must be > 0
+ * `param` hint the index at which to begin the search, 0 <= hint < n.
  *     The closer hint is to the result, the faster this method will run.
- * @param c the comparator used to order the range, and to search
- * @return the int k,  0 <= k <= n such that a[b + k - 1] < key <= a[b + k],
+ * `param` c the comparator used to order the range, and to search
+ * `return` the int k,  0 <= k <= n such that a[b + k - 1] < key <= a[b + k],
  *    pretending that a[b - 1] is minus infinity and a[b + n] is infinity.
  *    In other words, key belongs at index b + k; or in other words,
  *    the first k elements of a should precede key, and the last n - k
@@ -336,13 +336,13 @@ gtk_tim_sort(gallop_left) (GtkTimSort *self,
  * Like gallop_left, except that if the range contains an element equal to
  * key, gallop_right returns the index after the rightmost equal element.
  *
- * @param key the key whose insertion point to search for
- * @param base the array in which to search
- * @param len the length of the range; must be > 0
- * @param hint the index at which to begin the search, 0 <= hint < n.
+ * `param` key the key whose insertion point to search for
+ * `param` base the array in which to search
+ * `param` len the length of the range; must be > 0
+ * `param` hint the index at which to begin the search, 0 <= hint < n.
  *     The closer hint is to the result, the faster this method will run.
- * @param c the comparator used to order the range, and to search
- * @return the int k,  0 <= k <= n such that a[b + k - 1] <= key < a[b + k]
+ * `param` c the comparator used to order the range, and to search
+ * `return` the int k,  0 <= k <= n such that a[b + k - 1] <= key < a[b + k]
  */
 static gsize
 gtk_tim_sort(gallop_right) (GtkTimSort *self,
@@ -424,11 +424,11 @@ gtk_tim_sort(gallop_right) (GtkTimSort *self,
  * its twin, merge_hi should be called if len1 >= len2.  (Either method
  * may be called if len1 == len2.)
  *
- * @param base1 first element in first run to be merged
- * @param len1  length of first run to be merged (must be > 0)
- * @param base2 first element in second run to be merged
+ * `param` base1 first element in first run to be merged
+ * `param` len1  length of first run to be merged (must be > 0)
+ * `param` base2 first element in second run to be merged
  *        (must be aBase + aLen)
- * @param len2  length of second run to be merged (must be > 0)
+ * `param` len2  length of second run to be merged (must be > 0)
  */
 static void
 gtk_tim_sort(merge_lo) (GtkTimSort *self,
@@ -587,11 +587,11 @@ outer:
  * len1 >= len2; merge_lo should be called if len1 <= len2.  (Either method
  * may be called if len1 == len2.)
  *
- * @param base1 first element in first run to be merged
- * @param len1  length of first run to be merged (must be > 0)
- * @param base2 first element in second run to be merged
+ * `param` base1 first element in first run to be merged
+ * `param` len1  length of first run to be merged (must be > 0)
+ * `param` base2 first element in second run to be merged
  *        (must be aBase + aLen)
- * @param len2  length of second run to be merged (must be > 0)
+ * `param` len2  length of second run to be merged (must be > 0)
  */
 static void
 gtk_tim_sort(merge_hi) (GtkTimSort *self,
@@ -749,7 +749,7 @@ outer:
  * the penultimate or antepenultimate run on the stack.  In other words,
  * i must be equal to pending_runs-2 or pending_runs-3.
  *
- * @param i stack index of the first of the two runs to merge
+ * `param` i stack index of the first of the two runs to merge
  */
 static void
 gtk_tim_sort(merge_at) (GtkTimSort    *self,

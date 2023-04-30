@@ -181,7 +181,7 @@ gtk_accessible_set_accessible_parent (GtkAccessible *self,
  * @self: a `GtkAccessible`
  * @new_sibling: (nullable): the new next accessible sibling to set
  *
- * Updates the next accessible sibling of @self.
+ * Updates the next accessible sibling of `self`.
  *
  * That might be useful when a new child of a custom `GtkAccessible`
  * is created, and it needs to be linked to a previous child.
@@ -302,7 +302,7 @@ gtk_accessible_get_accessible_role (GtkAccessible *self)
  * gtk_accessible_update_state:
  * @self: a `GtkAccessible`
  * @first_state: the first `GtkAccessibleState`
- * @...: a list of state and value pairs, terminated by -1
+ * `...`: a list of state and value pairs, terminated by -1
  *
  * Updates a list of accessible states. See the [enum@Gtk.AccessibleState]
  * documentation for the value types of accessible states.
@@ -428,7 +428,7 @@ gtk_accessible_update_state_value (GtkAccessible      *self,
  * @self: a `GtkAccessible`
  * @state: a `GtkAccessibleState`
  *
- * Resets the accessible @state to its default value.
+ * Resets the accessible `state` to its default value.
  */
 void
 gtk_accessible_reset_state (GtkAccessible      *self,
@@ -451,7 +451,7 @@ gtk_accessible_reset_state (GtkAccessible      *self,
  * gtk_accessible_update_property:
  * @self: a `GtkAccessible`
  * @first_property: the first `GtkAccessibleProperty`
- * @...: a list of property and value pairs, terminated by -1
+ * `...`: a list of property and value pairs, terminated by -1
  *
  * Updates a list of accessible properties.
  *
@@ -579,7 +579,7 @@ gtk_accessible_update_property_value (GtkAccessible         *self,
  * @self: a `GtkAccessible`
  * @property: a `GtkAccessibleProperty`
  *
- * Resets the accessible @property to its default value.
+ * Resets the accessible `property` to its default value.
  */
 void
 gtk_accessible_reset_property (GtkAccessible         *self,
@@ -602,7 +602,7 @@ gtk_accessible_reset_property (GtkAccessible         *self,
  * gtk_accessible_update_relation:
  * @self: a `GtkAccessible`
  * @first_relation: the first `GtkAccessibleRelation`
- * @...: a list of relation and value pairs, terminated by -1
+ * `...`: a list of relation and value pairs, terminated by -1
  *
  * Updates a list of accessible relations.
  *
@@ -732,7 +732,7 @@ gtk_accessible_update_relation_value (GtkAccessible         *self,
  * @self: a `GtkAccessible`
  * @relation: a `GtkAccessibleRelation`
  *
- * Resets the accessible @relation to its default value.
+ * Resets the accessible `relation` to its default value.
  */
 void
 gtk_accessible_reset_relation (GtkAccessible         *self,
@@ -840,7 +840,7 @@ static const char *role_names[] = {
  *
  * Converts a `GtkAccessibleRole` value to the equivalent role name.
  *
- * If @domain is not `NULL`, the returned string will be localized.
+ * If `domain` is not `NULL`, the returned string will be localized.
  *
  * Returns: (transfer none): the name of the role
  */
@@ -858,10 +858,10 @@ gtk_accessible_role_to_name (GtkAccessibleRole  role,
  * gtk_accessible_role_is_range_subclass:
  * @role: a `GtkAccessibleRole`
  *
- * Checks if @role is considered to be a subclass of %GTK_ACCESSIBLE_ROLE_RANGE
+ * Checks if `role` is considered to be a subclass of %GTK_ACCESSIBLE_ROLE_RANGE
  * according to the WAI-ARIA specification.
  *
- * Returns: whether the @role is range-like
+ * Returns: whether the `role` is range-like
  */
 gboolean
 gtk_accessible_role_is_range_subclass (GtkAccessibleRole role)
@@ -941,7 +941,7 @@ gtk_accessible_platform_changed (GtkAccessible               *self,
  * implementations, e.g. to get platform state from an ignored
  * child widget, as is the case for `GtkText` wrappers.
  *
- * Returns: the value of @state for the accessible
+ * Returns: the value of `state` for the accessible
  *
  * Since: 4.10
  */

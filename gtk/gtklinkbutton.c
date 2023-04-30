@@ -635,7 +635,7 @@ gtk_link_button_query_tooltip_cb (GtkWidget    *widget,
  * @link_button: a `GtkLinkButton`
  * @uri: a valid URI
  *
- * Sets @uri as the URI where the `GtkLinkButton` points.
+ * Sets `uri` as the URI where the `GtkLinkButton` points.
  *
  * As a side-effect this unsets the “visited” state of the button.
  */

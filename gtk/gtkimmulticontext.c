@@ -584,7 +584,7 @@ gtk_im_multicontext_delete_surrounding_cb (GtkIMContext      *delegate,
  * gtk_im_multicontext_get_context_id:
  * @context: a `GtkIMMulticontext`
  *
- * Gets the id of the currently active delegate of the @context.
+ * Gets the id of the currently active delegate of the `context`.
  *
  * Returns: the id of the currently active delegate
  */
@@ -606,9 +606,9 @@ gtk_im_multicontext_get_context_id (GtkIMMulticontext *context)
  * @context: a `GtkIMMulticontext`
  * @context_id: (nullable): the id to use
  *
- * Sets the context id for @context.
+ * Sets the context id for `context`.
  *
- * This causes the currently active delegate of @context to be
+ * This causes the currently active delegate of `context` to be
  * replaced by the delegate corresponding to the new context id.
  *
  * Setting this to a non-`NULL` value overrides the system-wide

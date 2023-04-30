@@ -181,7 +181,7 @@ gdk_drag_get_selected_action (GdkDrag *drag)
  *
  * Returns the `GdkDevice` associated to the `GdkDrag` object.
  *
- * Returns: (transfer none): The `GdkDevice` associated to @drag.
+ * Returns: (transfer none): The `GdkDevice` associated to `drag`.
  */
 GdkDevice *
 gdk_drag_get_device (GdkDrag *drag)
@@ -199,7 +199,7 @@ gdk_drag_get_device (GdkDrag *drag)
  *
  * Returns the `GdkContentProvider` associated to the `GdkDrag` object.
  *
- * Returns: (transfer none): The `GdkContentProvider` associated to @drag.
+ * Returns: (transfer none): The `GdkContentProvider` associated to `drag`.
  */
 GdkContentProvider *
 gdk_drag_get_content (GdkDrag *drag)
@@ -675,7 +675,7 @@ gdk_drag_set_selected_action (GdkDrag       *drag,
  *
  * Note that the surface may not be available until the drag operation
  * has begun. GDK will move the surface in accordance with the ongoing
- * drag operation. The surface is owned by @drag and will be destroyed
+ * drag operation. The surface is owned by `drag` and will be destroyed
  * when the drag operation is over.
  *
  * Returns: (nullable) (transfer none): the drag surface
@@ -720,11 +720,11 @@ gdk_drag_set_hotspot (GdkDrag *drag,
  *
  * Informs GDK that the drop ended.
  *
- * Passing false for @success may trigger a drag cancellation
+ * Passing false for `success` may trigger a drag cancellation
  * animation.
  *
  * This function is called by the drag source, and should be the
- * last call before dropping the reference to the @drag.
+ * last call before dropping the reference to the `drag`.
  *
  * The `GdkDrag` will only take the first [method@Gdk.Drag.drop_done]
  * call as effective, if this function is called multiple times,
@@ -806,10 +806,10 @@ gdk_drag_get_cursor (GdkDrag       *drag,
  * gdk_drag_action_is_unique:
  * @action: a `GdkDragAction`
  *
- * Checks if @action represents a single action or includes
+ * Checks if `action` represents a single action or includes
  * multiple actions.
  *
- * When @action is 0 - ie no action was given, true
+ * When `action` is 0 - ie no action was given, true
  * is returned.
  *
  * Returns: true if exactly one action was given

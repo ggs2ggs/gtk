@@ -237,15 +237,15 @@ gtk_cell_renderer_class_init (GtkCellRendererClass *class)
    *
    * This signal gets emitted when a cell starts to be edited.
    * The intended use of this signal is to do special setup
-   * on @editable, e.g. adding a `GtkEntryCompletion` or setting
+   * on `editable`, e.g. adding a `GtkEntryCompletion` or setting
    * up additional columns in a `GtkComboBox`.
    *
    * See gtk_cell_editable_start_editing() for information on the lifecycle of
-   * the @editable and a way to do setup that doesn’t depend on the @renderer.
+   * the `editable` and a way to do setup that doesn’t depend on the `renderer`.
    *
    * Note that GTK doesn't guarantee that cell renderers will
    * continue to use the same kind of widget for editing in future
-   * releases, therefore you should check the type of @editable
+   * releases, therefore you should check the type of `editable`
    * before doing any specific setup, as in the following example:
    * |[<!-- language="C" -->
    * static void
@@ -630,19 +630,19 @@ set_cell_bg_color (GtkCellRenderer *cell,
  * gtk_cell_renderer_snapshot:
  * @cell: a `GtkCellRenderer`
  * @snapshot: a `GtkSnapshot` to draw to
- * @widget: the widget owning @window
+ * @widget: the widget owning `window`
  * @background_area: entire cell area (including tree expanders and maybe
  *    padding on the sides)
  * @cell_area: area normally rendered by a cell renderer
  * @flags: flags that affect rendering
  *
  * Invokes the virtual render function of the `GtkCellRenderer`. The three
- * passed-in rectangles are areas in @cr. Most renderers will draw within
- * @cell_area; the xalign, yalign, xpad, and ypad fields of the `GtkCellRenderer`
- * should be honored with respect to @cell_area. @background_area includes the
+ * passed-in rectangles are areas in `cr`. Most renderers will draw within
+ * `cell_area`; the xalign, yalign, xpad, and ypad fields of the `GtkCellRenderer`
+ * should be honored with respect to `cell_area`. `background_area` includes the
  * blank space around the cell, and also the area containing the tree expander;
- * so the @background_area rectangles for all cells tile to cover the entire
- * @window.
+ * so the `background_area` rectangles for all cells tile to cover the entire
+ * `window`.
  *
  * Deprecated: 4.10
  **/
@@ -762,11 +762,11 @@ gtk_cell_renderer_activate (GtkCellRenderer      *cell,
  * @cell_area: cell area as passed to gtk_cell_renderer_render()
  * @flags: render flags
  *
- * Starts editing the contents of this @cell, through a new `GtkCellEditable`
+ * Starts editing the contents of this `cell`, through a new `GtkCellEditable`
  * widget created by the `GtkCellRenderer`Class.start_editing virtual function.
  *
  * Returns: (nullable) (transfer none): A new `GtkCellEditable` for editing this
- *   @cell, or `NULL` if editing is not possible
+ *   `cell`, or `NULL` if editing is not possible
  *
  * Deprecated: 4.10
  **/
@@ -862,7 +862,7 @@ gtk_cell_renderer_set_fixed_size (GtkCellRenderer *cell,
  * @width: (out) (optional): location to fill in with the fixed width of the cell
  * @height: (out) (optional): location to fill in with the fixed height of the cell
  *
- * Fills in @width and @height with the appropriate size of @cell.
+ * Fills in `width` and `height` with the appropriate size of `cell`.
  *
  * Deprecated: 4.10
  */
@@ -932,7 +932,7 @@ gtk_cell_renderer_set_alignment (GtkCellRenderer *cell,
  * @xalign: (out) (optional): location to fill in with the x alignment of the cell
  * @yalign: (out) (optional): location to fill in with the y alignment of the cell
  *
- * Fills in @xalign and @yalign with the appropriate values of @cell.
+ * Fills in `xalign` and `yalign` with the appropriate values of `cell`.
  *
  * Deprecated: 4.10
  */
@@ -1001,7 +1001,7 @@ gtk_cell_renderer_set_padding (GtkCellRenderer *cell,
  * @xpad: (out) (optional): location to fill in with the x padding of the cell
  * @ypad: (out) (optional): location to fill in with the y padding of the cell
  *
- * Fills in @xpad and @ypad with the appropriate values of @cell.
+ * Fills in `xpad` and `ypad` with the appropriate values of `cell`.
  *
  * Deprecated: 4.10
  */
@@ -1142,7 +1142,7 @@ gtk_cell_renderer_is_activatable (GtkCellRenderer *cell)
  * @canceled: true if the editing has been canceled
  *
  * Informs the cell renderer that the editing is stopped.
- * If @canceled is true, the cell renderer will emit the
+ * If `canceled` is true, the cell renderer will emit the
  * `GtkCellRenderer`::editing-canceled signal.
  *
  * This function should be called by cell renderer implementations
@@ -1372,7 +1372,7 @@ gtk_cell_renderer_get_request_mode (GtkCellRenderer *cell)
  * @minimum_size: (out) (optional): location to store the minimum size
  * @natural_size: (out) (optional): location to store the natural size
  *
- * Retrieves a renderer’s natural size when rendered to @widget.
+ * Retrieves a renderer’s natural size when rendered to `widget`.
  *
  * Deprecated: 4.10
  */
@@ -1420,7 +1420,7 @@ gtk_cell_renderer_get_preferred_width (GtkCellRenderer *cell,
  * @minimum_size: (out) (optional): location to store the minimum size
  * @natural_size: (out) (optional): location to store the natural size
  *
- * Retrieves a renderer’s natural size when rendered to @widget.
+ * Retrieves a renderer’s natural size when rendered to `widget`.
  *
  * Deprecated: 4.10
  */
@@ -1470,7 +1470,7 @@ gtk_cell_renderer_get_preferred_height (GtkCellRenderer *cell,
  * @natural_width: (out) (optional): location for storing the preferred size
  *
  * Retrieves a cell renderers’s minimum and natural width if it were rendered to
- * @widget with the specified @height.
+ * `widget` with the specified `height`.
  *
  * Deprecated: 4.10
  */
@@ -1520,7 +1520,7 @@ gtk_cell_renderer_get_preferred_width_for_height (GtkCellRenderer *cell,
  * @natural_height: (out) (optional): location for storing the preferred size
  *
  * Retrieves a cell renderers’s minimum and natural height if it were rendered to
- * @widget with the specified @width.
+ * `widget` with the specified `width`.
  *
  * Deprecated: 4.10
  */
@@ -1628,10 +1628,10 @@ gtk_cell_renderer_get_preferred_size (GtkCellRenderer *cell,
  * @widget: the `GtkWidget` this cell will be rendering to
  * @flags: render flags
  * @cell_area: cell area which would be passed to gtk_cell_renderer_render()
- * @aligned_area: (out): the return location for the space inside @cell_area
+ * @aligned_area: (out): the return location for the space inside `cell_area`
  *                that would actually be used to render.
  *
- * Gets the aligned area used by @cell inside @cell_area. Used for finding
+ * Gets the aligned area used by `cell` inside `cell_area`. Used for finding
  * the appropriate edit and focus rectangle.
  *
  * Deprecated: 4.10
@@ -1669,7 +1669,7 @@ gtk_cell_renderer_get_aligned_area (GtkCellRenderer      *cell,
  * based on the cell renderer and widget sensitivity, and
  * the given `GtkCellRenderer`State.
  *
- * Returns: the widget state flags applying to @cell
+ * Returns: the widget state flags applying to `cell`
  *
  * Deprecated: 4.10
  **/
@@ -1713,7 +1713,7 @@ gtk_cell_renderer_get_state (GtkCellRenderer      *cell,
 /**
  * gtk_cell_renderer_set_is_expander:
  * @cell: a `GtkCellRenderer`
- * @is_expander: whether @cell is an expander
+ * @is_expander: whether `cell` is an expander
  *
  * Sets whether the given `GtkCellRenderer` is an expander.
  *
@@ -1743,7 +1743,7 @@ gtk_cell_renderer_set_is_expander (GtkCellRenderer *cell,
  *
  * Checks whether the given `GtkCellRenderer` is an expander.
  *
- * Returns: true if @cell is an expander, and false otherwise
+ * Returns: true if `cell` is an expander, and false otherwise
  *
  * Deprecated: 4.10
  */
@@ -1760,7 +1760,7 @@ gtk_cell_renderer_get_is_expander (GtkCellRenderer *cell)
 /**
  * gtk_cell_renderer_set_is_expanded:
  * @cell: a `GtkCellRenderer`
- * @is_expanded: whether @cell should be expanded
+ * @is_expanded: whether `cell` should be expanded
  *
  * Sets whether the given `GtkCellRenderer` is expanded.
  *

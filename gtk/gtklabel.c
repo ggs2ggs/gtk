@@ -974,7 +974,7 @@ nope:
  * Gets a layout that can be used for measuring sizes.
  *
  * The returned layout will be identical to the label’s layout except for
- * the layout’s width, which will be set to @width. Do not modify the
+ * the layout’s width, which will be set to `width`. Do not modify the
  * returned layout.
  *
  * Returns: a new reference to a pango layout
@@ -2220,13 +2220,13 @@ gtk_label_class_init (GtkLabelClass *class)
    * GtkLabel::move-cursor:
    * @entry: the object which received the signal
    * @step: the granularity of the move, as a `GtkMovementStep`
-   * @count: the number of @step units to move
+   * @count: the number of `step` units to move
    * @extend_selection: true if the move should extend the selection
    *
    * Gets emitted when the user initiates a cursor movement.
    *
    * The ::move-cursor signal is a [keybinding signal](class.SignalAction.html).
-   * If the cursor is not visible in @entry, this signal causes the viewport to
+   * If the cursor is not visible in `entry`, this signal causes the viewport to
    * be moved instead.
    *
    * Applications should not connect to it, but may emit it with
@@ -2811,9 +2811,9 @@ gtk_label_new (const char *str)
  * @str: (nullable): The text of the label, with an underscore in front of the
  *   mnemonic character
  *
- * Creates a new `GtkLabel`, containing the text in @str.
+ * Creates a new `GtkLabel`, containing the text in `str`.
  *
- * If characters in @str are preceded by an underscore, they are
+ * If characters in `str` are preceded by an underscore, they are
  * underlined. If you need a literal underscore character in a label, use
  * '__' (two underscores). The first underlined character represents a
  * keyboard accelerator called a mnemonic. The mnemonic key can be used
@@ -3734,7 +3734,7 @@ error_set:
  * The string must be marked up with Pango markup
  * (see [func@Pango.parse_markup]).
  *
- * If the @str is external data, you may need to escape it
+ * If the `str` is external data, you may need to escape it
  * with g_markup_escape_text() or g_markup_printf_escaped():
  *
  * ```c
@@ -3784,9 +3784,9 @@ gtk_label_set_markup (GtkLabel    *self,
  *
  * Sets the labels text, attributes and mnemonic from markup.
  *
- * Parses @str which is marked up with Pango markup (see [func@Pango.parse_markup]),
+ * Parses `str` which is marked up with Pango markup (see [func@Pango.parse_markup]),
  * setting the label’s text and attribute list based on the parse results.
- * If characters in @str are preceded by an underscore, they are underlined
+ * If characters in `str` are preceded by an underscore, they are underlined
  * indicating that they represent a keyboard accelerator called a mnemonic.
  *
  * The mnemonic key can be used to activate another widget, chosen
@@ -3936,7 +3936,7 @@ gtk_label_get_ellipsize (GtkLabel *self)
  * @self: a `GtkLabel`
  * @n_chars: the new desired width, in characters.
  *
- * Sets the desired width in characters of @label to @n_chars.
+ * Sets the desired width in characters of `label` to `n_chars`.
  */
 void
 gtk_label_set_width_chars (GtkLabel *self,
@@ -3956,7 +3956,7 @@ gtk_label_set_width_chars (GtkLabel *self,
  * gtk_label_get_width_chars: (attributes org.gtk.Method.get_property=width-chars)
  * @self: a `GtkLabel`
  *
- * Retrieves the desired width of @label, in characters.
+ * Retrieves the desired width of `label`, in characters.
  *
  * See [method@Gtk.Label.set_width_chars].
  *
@@ -3975,7 +3975,7 @@ gtk_label_get_width_chars (GtkLabel *self)
  * @self: a `GtkLabel`
  * @n_chars: the new desired maximum width, in characters.
  *
- * Sets the desired maximum width in characters of @label to @n_chars.
+ * Sets the desired maximum width in characters of `label` to `n_chars`.
  */
 void
 gtk_label_set_max_width_chars (GtkLabel *self,
@@ -3996,7 +3996,7 @@ gtk_label_set_max_width_chars (GtkLabel *self,
  * gtk_label_get_max_width_chars: (attributes org.gtk.Method.get_property=max-width-chars)
  * @self: a `GtkLabel`
  *
- * Retrieves the desired maximum width of @label, in characters.
+ * Retrieves the desired maximum width of `label`, in characters.
  *
  * See [method@Gtk.Label.set_width_chars].
  *
@@ -4214,9 +4214,9 @@ gtk_label_ensure_layout (GtkLabel *self)
  * @self: a `GtkLabel`
  * @str: a string
  *
- * Sets the label’s text from the string @str.
+ * Sets the label’s text from the string `str`.
  *
- * If characters in @str are preceded by an underscore, they are underlined
+ * If characters in `str` are preceded by an underscore, they are underlined
  * indicating that they represent a keyboard accelerator called a mnemonic.
  * The mnemonic key can be used to activate another widget, chosen
  * automatically, or explicitly using [method@Gtk.Label.set_mnemonic_widget].
@@ -5100,8 +5100,8 @@ gtk_label_select_region_index (GtkLabel *self,
  * Selects a range of characters in the label, if the label is selectable.
  *
  * See [method@Gtk.Label.set_selectable]. If the label is not selectable,
- * this function has no effect. If @start_offset or
- * @end_offset are -1, then the end of the label will be substituted.
+ * this function has no effect. If `start_offset` or
+ * `end_offset` are -1, then the end of the label will be substituted.
  */
 void
 gtk_label_select_region  (GtkLabel *self,
@@ -5199,8 +5199,8 @@ gtk_label_get_selection_bounds (GtkLabel  *self,
  *
  * The layout is useful to e.g. convert text positions to pixel
  * positions, in combination with [method@Gtk.Label.get_layout_offsets].
- * The returned layout is owned by the @label so need not be
- * freed by the caller. The @label is free to recreate its layout
+ * The returned layout is owned by the `label` so need not be
+ * freed by the caller. The `label` is free to recreate its layout
  * at any time, so it should be considered read-only.
  *
  * Returns: (transfer none): the [class@Pango.Layout] for this label
@@ -5943,7 +5943,7 @@ gtk_label_get_yalign (GtkLabel *self)
  * @model: (nullable): a `GMenuModel`
  *
  * Sets a menu model to add when constructing
- * the context menu for @label.
+ * the context menu for `label`.
  */
 void
 gtk_label_set_extra_menu (GtkLabel   *self,
@@ -5962,7 +5962,7 @@ gtk_label_set_extra_menu (GtkLabel   *self,
  * gtk_label_get_extra_menu: (attributes org.gtk.Method.get_property=extra-menu)
  * @self: a `GtkLabel`
  *
- * Gets the extra menu model of @label.
+ * Gets the extra menu model of `label`.
  *
  * See [method@Gtk.Label.set_extra_menu].
  *
@@ -5981,7 +5981,7 @@ gtk_label_get_extra_menu (GtkLabel *self)
  * @self: a `GtkLabel`
  * @tabs: (nullable): tabs as a `PangoTabArray`
  *
- * Sets the default tab stops for paragraphs in @self.
+ * Sets the default tab stops for paragraphs in `self`.
  *
  * Since: 4.8
  */
@@ -6007,7 +6007,7 @@ gtk_label_set_tabs (GtkLabel      *self,
  * gtk_label_get_tabs: (attributes org.gtk.Method.get_property=tabs)
  * @self: a `GtkLabel`
  *
- * Gets the tabs for @self.
+ * Gets the tabs for `self`.
  *
  * The returned array will be `NULL` if “standard” (8-space) tabs are used.
  * Free the return value with [method@Pango.TabArray.free].

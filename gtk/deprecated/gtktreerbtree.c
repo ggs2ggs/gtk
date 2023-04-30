@@ -901,12 +901,12 @@ gtk_tree_rbtree_reorder (GtkTreeRBTree *tree,
 /**
  * gtk_tree_rbtree_contains:
  * @tree: a tree
- * @potential_child: a potential child of @tree
+ * @potential_child: a potential child of `tree`
  *
- * Checks if @potential_child is a child (direct or via intermediate
- * trees) of @tree.
+ * Checks if `potential_child` is a child (direct or via intermediate
+ * trees) of `tree`.
  *
- * Returns: true if @potential_child is a child of @tree.
+ * Returns: true if `potential_child` is a child of `tree`.
  **/
 gboolean
 gtk_tree_rbtree_contains (GtkTreeRBTree *tree,

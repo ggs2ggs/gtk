@@ -713,7 +713,7 @@ capture_widget_key_handled (GtkEventControllerKey *controller,
  * @entry: a `GtkSearchEntry`
  * @widget: (nullable) (transfer none): a `GtkWidget`
  *
- * Sets @widget as the widget that @entry will capture key
+ * Sets `widget` as the widget that `entry` will capture key
  * events from.
  *
  * Key events are consumed by the search entry to start or
@@ -726,7 +726,7 @@ capture_widget_key_handled (GtkEventControllerKey *controller,
  *
  * Note that despite the name of this function, the events
  * are only 'captured' in the bubble phase, which means that
- * editable child widgets of @widget will receive text input
+ * editable child widgets of `widget` will receive text input
  * before it gets captured. If that is not desired, you can
  * capture and forward the events yourself with
  * [method@Gtk.EventControllerKey.forward].
@@ -768,7 +768,7 @@ gtk_search_entry_set_key_capture_widget (GtkSearchEntry *entry,
  * gtk_search_entry_get_key_capture_widget:
  * @entry: a `GtkSearchEntry`
  *
- * Gets the widget that @entry is capturing key events from.
+ * Gets the widget that `entry` is capturing key events from.
  *
  * Returns: (nullable) (transfer none): The key capture widget.
  */
@@ -836,7 +836,7 @@ gtk_search_entry_get_key_controller (GtkSearchEntry *entry)
  * gtk_search_entry_get_placeholder_text:
  * @entry: a `GtkSearchEntry`
  *
- * Gets the placeholder text associated with @entry.
+ * Gets the placeholder text associated with `entry`.
  *
  * Returns: (nullable): The placeholder text.
  *
@@ -855,7 +855,7 @@ gtk_search_entry_get_placeholder_text (GtkSearchEntry *entry)
  * @entry: a `GtkSearchEntry`
  * @text: (nullable): the text to set as a placeholder
  *
- * Sets the placeholder text associated with @entry.
+ * Sets the placeholder text associated with `entry`.
  *
  * Since: 4.10
  */

@@ -45,7 +45,7 @@ typedef struct _GtkPlacesSidebarClass GtkPlacesSidebarClass;
  *  that the application can open folders selected from the sidebar in new tabs.  This value
  *  will be passed to the GtkPlacesSidebar::open-location signal when the user selects
  *  that a location be opened in a new tab instead of in the standard fashion.
- * @GTK_PLACES_OPEN_NEW_WINDOW: Similar to @GTK_PLACES_OPEN_NEW_TAB, but indicates that the application
+ * @GTK_PLACES_OPEN_NEW_WINDOW: Similar to `GTK_PLACES_OPEN_NEW_TAB`, but indicates that the application
  *  can open folders in new windows.
  *
  * These flags serve two purposes.  First, the application can call gtk_places_sidebar_set_open_flags()

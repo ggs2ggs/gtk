@@ -175,7 +175,7 @@ gtk_string_object_new (const char *string)
  *
  * Returns the string contained in a `GtkStringObject`.
  *
- * Returns: the string of @self
+ * Returns: the string of `self`
  */
 const char *
 gtk_string_object_get_string (GtkStringObject *self)
@@ -478,7 +478,7 @@ gtk_string_list_init (GtkStringList *self)
  * gtk_string_list_new:
  * @strings: (array zero-terminated=1) (nullable): The strings to put in the model
  *
- * Creates a new `GtkStringList` with the given @strings.
+ * Creates a new `GtkStringList` with the given `strings`.
  *
  * Returns: a new `GtkStringList`
  */
@@ -497,17 +497,17 @@ gtk_string_list_new (const char * const *strings)
  * @n_removals: the number of strings to remove
  * @additions: (array zero-terminated=1) (nullable): The strings to add
  *
- * Changes @self by removing @n_removals strings and adding @additions
+ * Changes `self` by removing `n_removals` strings and adding `additions`
  * to it.
  *
  * This function is more efficient than [method@Gtk.StringList.append]
  * and [method@Gtk.StringList.remove], because it only emits the
  * ::items-changed signal once for the change.
  *
- * This function copies the strings in @additions.
+ * This function copies the strings in `additions`.
  *
- * The parameters @position and @n_removals must be correct (ie:
- * @position + @n_removals must be less than or equal to the length
+ * The parameters `position` and `n_removals` must be correct (ie:
+ * `position` + `n_removals` must be less than or equal to the length
  * of the list at the time this function is called).
  */
 void
@@ -543,9 +543,9 @@ gtk_string_list_splice (GtkStringList      *self,
  * @self: a `GtkStringList`
  * @string: the string to insert
  *
- * Appends @string to @self.
+ * Appends `string` to `self`.
  *
- * The @string will be copied. See
+ * The `string` will be copied. See
  * [method@Gtk.StringList.take] for a way to avoid that.
  */
 void
@@ -564,7 +564,7 @@ gtk_string_list_append (GtkStringList *self,
  * @self: a `GtkStringList`
  * @string: (transfer full): the string to insert
  *
- * Adds @string to self at the end, and takes
+ * Adds `string` to self at the end, and takes
  * ownership of it.
  *
  * This variant of [method@Gtk.StringList.append]
@@ -590,9 +590,9 @@ gtk_string_list_take (GtkStringList *self,
  * @self: a `GtkStringList`
  * @position: the position of the string that is to be removed
  *
- * Removes the string at @position from @self.
+ * Removes the string at `position` from `self`.
  *
- * @position must be smaller than the current
+ * `position` must be smaller than the current
  * length of the list.
  */
 void
@@ -609,9 +609,9 @@ gtk_string_list_remove (GtkStringList *self,
  * @self: a `GtkStringList`
  * @position: the position to get the string for
  *
- * Gets the string that is at @position in @self.
+ * Gets the string that is at `position` in `self`.
  *
- * If @self does not contain @position items, `NULL` is returned.
+ * If `self` does not contain `position` items, `NULL` is returned.
  *
  * This function returns the const char *. To get the
  * object wrapping it, use g_list_model_get_item().

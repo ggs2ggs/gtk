@@ -659,8 +659,8 @@ gtk_filter_list_model_init (GtkFilterListModel *self)
  * @model: (nullable) (transfer full): the model to sort
  * @filter: (nullable) (transfer full): filter
  *
- * Creates a new `GtkFilterListModel` that will filter @model using the given
- * @filter.
+ * Creates a new `GtkFilterListModel` that will filter `model` using the given
+ * `filter`.
  *
  * Returns: a new `GtkFilterListModel`
  **/
@@ -722,7 +722,7 @@ gtk_filter_list_model_set_filter (GtkFilterListModel *self,
  * gtk_filter_list_model_get_filter: (attributes org.gtk.Method.get_property=filter)
  * @self: a `GtkFilterListModel`
  *
- * Gets the `GtkFilter` currently set on @self.
+ * Gets the `GtkFilter` currently set on `self`.
  *
  * Returns: (nullable) (transfer none): The filter currently in use
  */
@@ -741,8 +741,8 @@ gtk_filter_list_model_get_filter (GtkFilterListModel *self)
  *
  * Sets the model to be filtered.
  *
- * Note that GTK makes no effort to ensure that @model conforms to
- * the item type of @self. It assumes that the caller knows what they
+ * Note that GTK makes no effort to ensure that `model` conforms to
+ * the item type of `self`. It assumes that the caller knows what they
  * are doing and have set up an appropriate filter to ensure that item
  * types match.
  */
@@ -886,7 +886,7 @@ gtk_filter_list_model_get_incremental (GtkFilterListModel *self)
  *
  * Returns the number of items that have not been filtered yet.
  *
- * You can use this value to check if @self is busy filtering by
+ * You can use this value to check if `self` is busy filtering by
  * comparing the return value to 0 or you can compute the percentage
  * of the filter remaining by dividing the return value by the total
  * number of items in the underlying model:

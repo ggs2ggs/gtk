@@ -699,7 +699,7 @@ gtk_popover_menu_bar_new_from_model (GMenuModel *model)
  * @bar: a `GtkPopoverMenuBar`
  * @model: (nullable): a `GMenuModel`
  *
- * Sets a menu model from which @bar should take
+ * Sets a menu model from which `bar` should take
  * its contents.
  */
 void
@@ -741,7 +741,7 @@ gtk_popover_menu_bar_set_menu_model (GtkPopoverMenuBar *bar,
  * gtk_popover_menu_bar_get_menu_model: (attributes org.gtk.Method.get_property=menu-model)
  * @bar: a `GtkPopoverMenuBar`
  *
- * Returns the model from which the contents of @bar are taken.
+ * Returns the model from which the contents of `bar` are taken.
  *
  * Returns: (transfer none) (nullable): a `GMenuModel`
  */
@@ -766,14 +766,14 @@ gtk_popover_menu_bar_select_first (GtkPopoverMenuBar *bar)
  * gtk_popover_menu_bar_add_child:
  * @bar: a `GtkPopoverMenuBar`
  * @child: the `GtkWidget` to add
- * @id: the ID to insert @child at
+ * @id: the ID to insert `child` at
  *
  * Adds a custom widget to a generated menubar.
  *
- * For this to work, the menu model of @bar must have an
- * item with a `custom` attribute that matches @id.
+ * For this to work, the menu model of `bar` must have an
+ * item with a `custom` attribute that matches `id`.
  *
- * Returns: true if @id was found and the widget added
+ * Returns: true if `id` was found and the widget added
  */
 gboolean
 gtk_popover_menu_bar_add_child (GtkPopoverMenuBar *bar,

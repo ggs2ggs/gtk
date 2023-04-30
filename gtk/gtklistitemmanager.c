@@ -193,13 +193,13 @@ gtk_list_item_manager_get_root (GtkListItemManager *self)
  * @position: position of the item
  * @offset: (out): offset into the returned tile
  *
- * Looks up the GtkListTile that represents @position.
+ * Looks up the GtkListTile that represents `position`.
  *
- * If a the returned tile represents multiple rows, the @offset into
- * the returned tile for @position will be set. If the returned tile
- * represents a row with an existing widget, @offset will always be 0.
+ * If a the returned tile represents multiple rows, the `offset` into
+ * the returned tile for `position` will be set. If the returned tile
+ * represents a row with an existing widget, `offset` will always be 0.
  *
- * Returns: (type GtkListTile): the tile for @position or
+ * Returns: (type GtkListTile): the tile for `position` or
  *   `NULL` if position is out of range
  **/
 gpointer
@@ -649,7 +649,7 @@ gtk_list_item_manager_merge_list_items (GtkListItemManager *self,
  * @n_items: nuber of items to keep in tile
  *
  * Splits the given tile into two tiles. The original
- * tile will remain with @n_items items, the remaining
+ * tile will remain with `n_items` items, the remaining
  * items will be given to the new tile, which will be
  * nserted after the tile.
  *
@@ -1124,16 +1124,16 @@ gtk_list_item_manager_get_model (GtkListItemManager *self)
  * @prev_sibling: the widget this widget should be inserted before or `NULL`
  *   if it should be the first widget
  *
- * Creates a list item widget to use for @position. No widget may
- * yet exist that is used for @position.
+ * Creates a list item widget to use for `position`. No widget may
+ * yet exist that is used for `position`.
  *
  * When the returned item is no longer needed, the caller is responsible
  * for calling gtk_list_item_manager_release_list_item().
- * A particular case is when the row at @position is removed. In that case,
+ * A particular case is when the row at `position` is removed. In that case,
  * all list items in the removed range must be released before
  * gtk_list_item_manager_model_changed() is called.
  *
- * Returns: a properly setup widget to use in @position
+ * Returns: a properly setup widget to use in `position`
  **/
 static GtkWidget *
 gtk_list_item_manager_acquire_list_item (GtkListItemManager *self,
@@ -1166,11 +1166,11 @@ gtk_list_item_manager_acquire_list_item (GtkListItemManager *self,
  *   if it should be the first widget
  *
  * Like gtk_list_item_manager_acquire_list_item(), but only tries to acquire list
- * items from those previously released as part of @change.
+ * items from those previously released as part of `change`.
  * If no matching list item is found, `NULL` is returned and the caller should use
  * gtk_list_item_manager_acquire_list_item().
  *
- * Returns: (nullable): a properly setup widget to use in @position or `NULL` if
+ * Returns: (nullable): a properly setup widget to use in `position` or `NULL` if
  *   no item for reuse existed
  **/
 static GtkWidget *
@@ -1245,7 +1245,7 @@ gtk_list_item_manager_move_list_item (GtkListItemManager     *self,
  * @item: a `GtkListItem` that has been acquired
  * @position: the new position of that list item
  *
- * Updates the position of the given @item. This function must be called whenever
+ * Updates the position of the given `item`. This function must be called whenever
  * the position of an item changes, like when new items are added before it.
  **/
 static void

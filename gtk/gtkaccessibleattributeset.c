@@ -102,11 +102,11 @@ gtk_accessible_attribute_set_unref (GtkAccessibleAttributeSet *self)
  * @attribute: the attribute to set
  * @value: (nullable): a `GtkAccessibleValue`
  *
- * Adds @attribute to the attributes set, and sets its value.
+ * Adds `attribute` to the attributes set, and sets its value.
  *
- * If @value is `NULL`, the @attribute is reset to its default value.
+ * If `value` is `NULL`, the `attribute` is reset to its default value.
  *
- * If you want to remove @attribute from the set, use gtk_accessible_attribute_set_remove()
+ * If you want to remove `attribute` from the set, use gtk_accessible_attribute_set_remove()
  * instead.
  *
  * Returns: true if the set was modified, and false otherwise
@@ -146,7 +146,7 @@ gtk_accessible_attribute_set_add (GtkAccessibleAttributeSet *self,
  * @self: a `GtkAccessibleAttributeSet`
  * @attribute: the attribute to be removed
  *
- * Resets the @attribute in the given `GtkAccessibleAttributeSet`
+ * Resets the `attribute` in the given `GtkAccessibleAttributeSet`
  * to its default value.
  *
  * Returns: true if the set was modified, and false otherwise
@@ -182,7 +182,7 @@ gtk_accessible_attribute_set_contains (GtkAccessibleAttributeSet *self,
  * @self: a `GtkAccessibleAttributeSet`
  * @attribute: the attribute to retrieve
  *
- * Retrieves the value of the given @attribute in the set.
+ * Retrieves the value of the given `attribute` in the set.
  *
  * Returns: (transfer none): the value for the attribute
  */
@@ -221,7 +221,7 @@ gtk_accessible_attribute_set_get_changed (GtkAccessibleAttributeSet *self)
  * @only_set: true if only the set attributes should be printed
  * @buffer: a `GString`
  *
- * Prints the contents of the `GtkAccessibleAttributeSet` into @buffer.
+ * Prints the contents of the `GtkAccessibleAttributeSet` into `buffer`.
  */
 void
 gtk_accessible_attribute_set_print (GtkAccessibleAttributeSet *self,

@@ -479,7 +479,7 @@ gtk_single_selection_init (GtkSingleSelection *self)
  * gtk_single_selection_new:
  * @model: (nullable) (transfer full): the `GListModel` to manage
  *
- * Creates a new selection to handle @model.
+ * Creates a new selection to handle `model`.
  *
  * Returns: (transfer full) (type GtkSingleSelection): a new `GtkSingleSelection`
  */
@@ -504,7 +504,7 @@ gtk_single_selection_new (GListModel *model)
  * gtk_single_selection_get_model: (attributes org.gtk.Method.get_property=model)
  * @self: a `GtkSingleSelection`
  *
- * Gets the model that @self is wrapping.
+ * Gets the model that `self` is wrapping.
  *
  * Returns: (transfer none) (nullable): The model being wrapped
  */
@@ -521,9 +521,9 @@ gtk_single_selection_get_model (GtkSingleSelection *self)
  * @self: a `GtkSingleSelection`
  * @model: (nullable): A `GListModel` to wrap
  *
- * Sets the model that @self should wrap.
+ * Sets the model that `self` should wrap.
  *
- * If @model is `NULL`, @self will be empty.
+ * If `model` is `NULL`, `self` will be empty.
  */
 void
 gtk_single_selection_set_model (GtkSingleSelection *self,
@@ -600,7 +600,7 @@ gtk_single_selection_get_selected (GtkSingleSelection *self)
  *
  * Selects the item at the given position.
  *
- * If the list does not have an item at @position or
+ * If the list does not have an item at `position` or
  * %GTK_INVALID_LIST_POSITION is given, the behavior depends on the
  * value of the [property@Gtk.SingleSelection:autoselect] property:
  * If it is set, no change will occur and the old item will stay
@@ -688,7 +688,7 @@ gtk_single_selection_get_autoselect (GtkSingleSelection *self)
  *
  * Enables or disables autoselect.
  *
- * If @autoselect is true, @self will enforce that an item is always
+ * If `autoselect` is true, `self` will enforce that an item is always
  * selected. It will select a new item when the currently selected
  * item is deleted and it will disallow unselecting the current item.
  */

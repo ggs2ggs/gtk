@@ -26,7 +26,7 @@
  * @cr: a cairo context
  * @rgba: a `GdkRGBA`
  *
- * Sets the specified `GdkRGBA` as the source color of @cr.
+ * Sets the specified `GdkRGBA` as the source color of `cr`.
  */
 void
 gdk_cairo_set_source_rgba (cairo_t       *cr,
@@ -47,7 +47,7 @@ gdk_cairo_set_source_rgba (cairo_t       *cr,
  * @cr: a cairo context
  * @rectangle: a `GdkRectangle`
  *
- * Adds the given rectangle to the current path of @cr.
+ * Adds the given rectangle to the current path of `cr`.
  */
 void
 gdk_cairo_rectangle (cairo_t            *cr,
@@ -66,7 +66,7 @@ gdk_cairo_rectangle (cairo_t            *cr,
  * @cr: a cairo context
  * @region: a `cairo_region_t`
  *
- * Adds the given region to the current path of @cr.
+ * Adds the given region to the current path of `cr`.
  */
 void
 gdk_cairo_region (cairo_t              *cr,
@@ -120,13 +120,13 @@ gdk_cairo_surface_paint_pixbuf (cairo_surface_t *surface,
  * gdk_cairo_set_source_pixbuf:
  * @cr: a cairo context
  * @pixbuf: a `GdkPixbuf`
- * @pixbuf_x: X coordinate of location to place upper left corner of @pixbuf
- * @pixbuf_y: Y coordinate of location to place upper left corner of @pixbuf
+ * @pixbuf_x: X coordinate of location to place upper left corner of `pixbuf`
+ * @pixbuf_y: Y coordinate of location to place upper left corner of `pixbuf`
  *
- * Sets the given pixbuf as the source pattern for @cr.
+ * Sets the given pixbuf as the source pattern for `cr`.
  *
  * The pattern has an extend mode of %CAIRO_EXTEND_NONE and is aligned
- * so that the origin of @pixbuf is @pixbuf_x, @pixbuf_y.
+ * so that the origin of `pixbuf` is `pixbuf_x`, `pixbuf_y`.
  */
 void
 gdk_cairo_set_source_pixbuf (cairo_t         *cr,
@@ -158,10 +158,10 @@ gdk_cairo_set_source_pixbuf (cairo_t         *cr,
  * @surface: surface to measure
  * @extents: (out): rectangle to put the extents
  *
- * Measures the area covered by @surface and puts it into @extents.
+ * Measures the area covered by `surface` and puts it into `extents`.
  *
- * Note that this function respects device offsets set on @surface.
- * If @surface is unbounded, the resulting extents will be empty and
+ * Note that this function respects device offsets set on `surface`.
+ * If `surface` is unbounded, the resulting extents will be empty and
  * not be a maximal sized rectangle. This is to avoid careless coding.
  * You must explicitly check the return value of you want to handle
  * that case.
@@ -216,7 +216,7 @@ _gdk_cairo_surface_extents (cairo_surface_t *surface,
  * @surface: a cairo surface
  *
  * Creates region that covers the area where the given
- * @surface is more than 50% opaque.
+ * `surface` is more than 50% opaque.
  *
  * This function takes into account device offsets that might be
  * set with cairo_surface_set_device_offset().

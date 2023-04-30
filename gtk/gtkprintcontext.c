@@ -185,8 +185,8 @@ _gtk_print_context_get_fontmap (GtkPrintContext *context)
  * gtk_print_context_set_cairo_context:
  * @context: a `GtkPrintContext`
  * @cr: the cairo context
- * @dpi_x: the horizontal resolution to use with @cr
- * @dpi_y: the vertical resolution to use with @cr
+ * @dpi_x: the horizontal resolution to use with `cr`
+ * @dpi_y: the vertical resolution to use with `cr`
  *
  * Sets a new cairo context on a print context.
  *
@@ -370,7 +370,7 @@ _gtk_print_context_set_page_setup (GtkPrintContext *context,
  * Obtains the cairo context that is associated with the
  * `GtkPrintContext`.
  *
- * Returns: (transfer none): the cairo context of @context
+ * Returns: (transfer none): the cairo context of `context`
  */
 cairo_t *
 gtk_print_context_get_cairo_context (GtkPrintContext *context)
@@ -387,7 +387,7 @@ gtk_print_context_get_cairo_context (GtkPrintContext *context)
  * Obtains the `GtkPageSetup` that determines the page
  * dimensions of the `GtkPrintContext`.
  *
- * Returns: (transfer none): the page setup of @context
+ * Returns: (transfer none): the page setup of `context`
  */
 GtkPageSetup *
 gtk_print_context_get_page_setup (GtkPrintContext *context)
@@ -403,7 +403,7 @@ gtk_print_context_get_page_setup (GtkPrintContext *context)
  *
  * Obtains the width of the `GtkPrintContext`, in pixels.
  *
- * Returns: the width of @context
+ * Returns: the width of `context`
  */
 double
 gtk_print_context_get_width (GtkPrintContext *context)
@@ -430,7 +430,7 @@ gtk_print_context_get_width (GtkPrintContext *context)
  *
  * Obtains the height of the `GtkPrintContext`, in pixels.
  *
- * Returns: the height of @context
+ * Returns: the height of `context`
  */
 double
 gtk_print_context_get_height (GtkPrintContext *context)
@@ -458,7 +458,7 @@ gtk_print_context_get_height (GtkPrintContext *context)
  * Obtains the horizontal resolution of the `GtkPrintContext`,
  * in dots per inch.
  *
- * Returns: the horizontal resolution of @context
+ * Returns: the horizontal resolution of `context`
  */
 double
 gtk_print_context_get_dpi_x (GtkPrintContext *context)
@@ -475,7 +475,7 @@ gtk_print_context_get_dpi_x (GtkPrintContext *context)
  * Obtains the vertical resolution of the `GtkPrintContext`,
  * in dots per inch.
  *
- * Returns: the vertical resolution of @context
+ * Returns: the vertical resolution of `context`
  */
 double
 gtk_print_context_get_dpi_y (GtkPrintContext *context)
@@ -547,7 +547,7 @@ _gtk_print_context_set_hard_margins (GtkPrintContext *context,
  * Returns a `PangoFontMap` that is suitable for use
  * with the `GtkPrintContext`.
  *
- * Returns: (transfer none): the font map of @context
+ * Returns: (transfer none): the font map of `context`
  */
 PangoFontMap *
 gtk_print_context_get_pango_fontmap (GtkPrintContext *context)
@@ -564,7 +564,7 @@ gtk_print_context_get_pango_fontmap (GtkPrintContext *context)
  * Creates a new `PangoContext` that can be used with the
  * `GtkPrintContext`.
  *
- * Returns: (transfer full): a new Pango context for @context
+ * Returns: (transfer full): a new Pango context for `context`
  */
 PangoContext *
 gtk_print_context_create_pango_context (GtkPrintContext *context)
@@ -596,7 +596,7 @@ gtk_print_context_create_pango_context (GtkPrintContext *context)
  * Creates a new `PangoLayout` that is suitable for use
  * with the `GtkPrintContext`.
  *
- * Returns: (transfer full): a new Pango layout for @context
+ * Returns: (transfer full): a new Pango layout for `context`
  */
 PangoLayout *
 gtk_print_context_create_pango_layout (GtkPrintContext *context)

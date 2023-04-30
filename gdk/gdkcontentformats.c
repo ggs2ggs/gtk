@@ -81,7 +81,7 @@ G_DEFINE_BOXED_TYPE (GdkContentFormats, gdk_content_formats,
  *
  * Canonicalizes the given mime type and interns the result.
  *
- * If @string is not a valid mime type, `NULL` is returned instead.
+ * If `string` is not a valid mime type, `NULL` is returned instead.
  * See RFC 2048 for the syntax if mime types.
  *
  * Returns: (nullable): An interned string for the canonicalized
@@ -127,7 +127,7 @@ gdk_content_formats_new_take (GType *      gtypes,
  * gdk_content_formats_new:
  * @mime_types: (array length=n_mime_types) (nullable): Pointer to an
  *   array of mime types
- * @n_mime_types: number of entries in @mime_types.
+ * @n_mime_types: number of entries in `mime_types`.
  *
  * Creates a new `GdkContentFormats` from an array of mime types.
  *
@@ -183,16 +183,16 @@ gdk_content_formats_new_for_gtype (GType type)
  * gdk_content_formats_parse:
  * @string: the string to parse
  *
- * Parses the given @string into `GdkContentFormats` and
+ * Parses the given `string` into `GdkContentFormats` and
  * returns the formats.
  *
  * Strings printed via [method@Gdk.ContentFormats.to_string]
  * can be read in again successfully using this function.
  *
- * If @string does not describe valid content formats, `NULL`
+ * If `string` does not describe valid content formats, `NULL`
  * is returned.
  *
- * Returns: (nullable): the content formats if @string is valid
+ * Returns: (nullable): the content formats if `string` is valid
  *
  * Since: 4.4
  */
@@ -295,7 +295,7 @@ gdk_content_formats_unref (GdkContentFormats *formats)
  * @formats: a `GdkContentFormats`
  * @string: a `GString` to print into
  *
- * Prints the given @formats into a string for human consumption.
+ * Prints the given `formats` into a string for human consumption.
  *
  * The result of this function can later be parsed with
  * [func@Gdk.ContentFormats.parse].
@@ -327,7 +327,7 @@ gdk_content_formats_print (GdkContentFormats *formats,
  * gdk_content_formats_to_string:
  * @formats: a `GdkContentFormats`
  *
- * Prints the given @formats into a human-readable string.
+ * Prints the given `formats` into a human-readable string.
  *
  * The resulting string can be parsed with [func@Gdk.ContentFormats.parse].
  *
@@ -354,8 +354,8 @@ gdk_content_formats_to_string (GdkContentFormats *formats)
  * @first: (transfer full): the `GdkContentFormats` to merge into
  * @second: (transfer none): the `GdkContentFormats` to merge from
  *
- * Append all missing types from @second to @first, in the order
- * they had in @second.
+ * Append all missing types from `second` to `first`, in the order
+ * they had in `second`.
  *
  * Returns: a new `GdkContentFormats`
  */
@@ -397,7 +397,7 @@ gdk_content_formats_contain_interned_mime_type (const GdkContentFormats *formats
  * @first: the primary `GdkContentFormats` to intersect
  * @second: the `GdkContentFormats` to intersect with
  *
- * Checks if @first and @second have any matching formats.
+ * Checks if `first` and `second` have any matching formats.
  *
  * Returns: true if a matching format was found.
  */
@@ -417,8 +417,8 @@ gdk_content_formats_match (const GdkContentFormats *first,
  * @first: the primary `GdkContentFormats` to intersect
  * @second: the `GdkContentFormats` to intersect with
  *
- * Finds the first `GType` from @first that is also contained
- * in @second.
+ * Finds the first `GType` from `first` that is also contained
+ * in `second`.
  *
  * If no matching `GType` is found, %G_TYPE_INVALID is returned.
  *
@@ -447,8 +447,8 @@ gdk_content_formats_match_gtype (const GdkContentFormats *first,
  * @first: the primary `GdkContentFormats` to intersect
  * @second: the `GdkContentFormats` to intersect with
  *
- * Finds the first mime type from @first that is also contained
- * in @second.
+ * Finds the first mime type from `first` that is also contained
+ * in `second`.
  *
  * If no matching mime type is found, `NULL` is returned.
  *
@@ -477,7 +477,7 @@ gdk_content_formats_match_mime_type (const GdkContentFormats *first,
  * @formats: a `GdkContentFormats`
  * @type: the `GType` to search for
  *
- * Checks if a given `GType` is part of the given @formats.
+ * Checks if a given `GType` is part of the given `formats`.
  *
  * Returns: true if the `GType` was found
  */
@@ -503,7 +503,7 @@ gdk_content_formats_contain_gtype (const GdkContentFormats *formats,
  * @formats: a `GdkContentFormats`
  * @mime_type: the mime type to search for
  *
- * Checks if a given mime type is part of the given @formats.
+ * Checks if a given mime type is part of the given `formats`.
  *
  * Returns: true if the mime_type was found
  */
@@ -524,13 +524,13 @@ gdk_content_formats_contain_mime_type (const GdkContentFormats *formats,
  * @n_gtypes: (out) (optional): optional pointer to take the
  *   number of `GType`s contained in the return value
  *
- * Gets the `GType`s included in @formats.
+ * Gets the `GType`s included in `formats`.
  *
- * Note that @formats may not contain any `GType`s, in particular when
+ * Note that `formats` may not contain any `GType`s, in particular when
  * they are empty. In that case `NULL` will be returned.
  *
  * Returns: (transfer none) (nullable) (array length=n_gtypes zero-terminated=1):
- *   %G_TYPE_INVALID-terminated array of types included in @formats
+ *   %G_TYPE_INVALID-terminated array of types included in `formats`
  */
 const GType *
 gdk_content_formats_get_gtypes (const GdkContentFormats *formats,
@@ -550,14 +550,14 @@ gdk_content_formats_get_gtypes (const GdkContentFormats *formats,
  * @n_mime_types: (out) (optional): optional pointer to take the
  *   number of mime types contained in the return value
  *
- * Gets the mime types included in @formats.
+ * Gets the mime types included in `formats`.
  *
- * Note that @formats may not contain any mime types, in particular
+ * Note that `formats` may not contain any mime types, in particular
  * when they are empty. In that case `NULL` will be returned.
  *
  * Returns: (transfer none) (nullable) (array length=n_mime_types zero-terminated=1):
  *   `NULL`-terminated array of interned strings of mime types included
- *   in @formats
+ *   in `formats`
  */
 const char * const *
 gdk_content_formats_get_mime_types (const GdkContentFormats *formats,
@@ -621,7 +621,7 @@ gdk_content_formats_builder_new (void)
  * gdk_content_formats_builder_ref:
  * @builder: a `GdkContentFormatsBuilder`
  *
- * Acquires a reference on the given @builder.
+ * Acquires a reference on the given `builder`.
  *
  * This function is intended primarily for bindings.
  * `GdkContentFormatsBuilder` objects should not be kept around.
@@ -651,7 +651,7 @@ gdk_content_formats_builder_clear (GdkContentFormatsBuilder *builder)
  * gdk_content_formats_builder_unref:
  * @builder: a `GdkContentFormatsBuilder`
  *
- * Releases a reference on the given @builder.
+ * Releases a reference on the given `builder`.
  */
 void
 gdk_content_formats_builder_unref (GdkContentFormatsBuilder *builder)
@@ -673,10 +673,10 @@ gdk_content_formats_builder_unref (GdkContentFormatsBuilder *builder)
  * @builder: a `GdkContentFormatsBuilder`
  *
  * Creates a new `GdkContentFormats` from the current state of the
- * given @builder, and frees the @builder instance.
+ * given `builder`, and frees the `builder` instance.
  *
  * Returns: (transfer full): the newly created `GdkContentFormats`
- *   with all the formats added to @builder
+ *   with all the formats added to `builder`
  */
 GdkContentFormats *
 gdk_content_formats_builder_free_to_formats (GdkContentFormatsBuilder *builder)
@@ -696,16 +696,16 @@ gdk_content_formats_builder_free_to_formats (GdkContentFormatsBuilder *builder)
  * gdk_content_formats_builder_to_formats:
  * @builder: a `GdkContentFormats`Builder
  *
- * Creates a new `GdkContentFormats` from the given @builder.
+ * Creates a new `GdkContentFormats` from the given `builder`.
  *
  * The given `GdkContentFormatsBuilder` is reset once this function returns;
- * you cannot call this function multiple times on the same @builder instance.
+ * you cannot call this function multiple times on the same `builder` instance.
  *
  * This function is intended primarily for bindings. C code should use
  * [method@Gdk.ContentFormatsBuilder.free_to_formats].
  *
  * Returns: (transfer full): the newly created `GdkContentFormats`
- *   with all the formats added to @builder
+ *   with all the formats added to `builder`
  */
 GdkContentFormats *
 gdk_content_formats_builder_to_formats (GdkContentFormatsBuilder *builder)
@@ -759,7 +759,7 @@ gdk_content_formats_builder_to_formats (GdkContentFormatsBuilder *builder)
  * @builder: a `GdkContentFormatsBuilder`
  * @formats: the formats to add
  *
- * Appends all formats from @formats to @builder, skipping those that
+ * Appends all formats from `formats` to `builder`, skipping those that
  * already exist.
  */
 void
@@ -783,7 +783,7 @@ gdk_content_formats_builder_add_formats (GdkContentFormatsBuilder *builder,
  * @builder: a `GdkContentFormats`Builder
  * @type: a `GType`
  *
- * Appends @type to @builder if it has not already been added.
+ * Appends `type` to `builder` if it has not already been added.
  **/
 void
 gdk_content_formats_builder_add_gtype (GdkContentFormatsBuilder *builder,
@@ -804,7 +804,7 @@ gdk_content_formats_builder_add_gtype (GdkContentFormatsBuilder *builder,
  * @builder: a `GdkContentFormatsBuilder`
  * @mime_type: a mime type
  *
- * Appends @mime_type to @builder if it has not already been added.
+ * Appends `mime_type` to `builder` if it has not already been added.
  */
 void
 gdk_content_formats_builder_add_mime_type (GdkContentFormatsBuilder *builder,

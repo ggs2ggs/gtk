@@ -335,7 +335,7 @@ gtk_font_chooser_get_font_desc (GtkFontChooser *fontchooser)
  * @fontchooser: a `GtkFontChooser`
  * @font_desc: a `PangoFontDescription`
  *
- * Sets the currently-selected font from @font_desc.
+ * Sets the currently-selected font from `font_desc`.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton]
  * instead
@@ -380,7 +380,7 @@ gtk_font_chooser_get_preview_text (GtkFontChooser *fontchooser)
  *
  * Sets the text displayed in the preview area.
  *
- * The @text is used to show how the selected font looks.
+ * The `text` is used to show how the selected font looks.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton]
  * instead
@@ -442,8 +442,8 @@ gtk_font_chooser_set_show_preview_entry (GtkFontChooser *fontchooser,
  * gtk_font_chooser_set_filter_func:
  * @fontchooser: a `GtkFontChooser`
  * @filter: (nullable): a `GtkFontFilterFunc`
- * @user_data: (closure): data to pass to @filter
- * @destroy: function to call to free @data when it is no longer needed
+ * @user_data: (closure): data to pass to `filter`
+ * @destroy: function to call to free `data` when it is no longer needed
  *
  * Adds a filter function that decides which fonts to display
  * in the font chooser.

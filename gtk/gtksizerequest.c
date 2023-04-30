@@ -455,8 +455,8 @@ gtk_widget_query_size_for_orientation (GtkWidget        *widget,
  * gtk_widget_measure:
  * @widget: A `GtkWidget` instance
  * @orientation: the orientation to measure
- * @for_size: Size for the opposite of @orientation, i.e.
- *   if @orientation is %GTK_ORIENTATION_HORIZONTAL, this is
+ * @for_size: Size for the opposite of `orientation`, i.e.
+ *   if `orientation` is %GTK_ORIENTATION_HORIZONTAL, this is
  *   the height the widget should be measured with. The %GTK_ORIENTATION_VERTICAL
  *   case is analogous. This way, both height-for-width and width-for-height
  *   requests can be implemented. If no size is known, -1 can be passed.
@@ -467,10 +467,10 @@ gtk_widget_query_size_for_orientation (GtkWidget        *widget,
  * @natural_baseline: (out) (optional): location to store the baseline
  *   position for the natural size, or -1 to report no baseline
  *
- * Measures @widget in the orientation @orientation and for the given @for_size.
+ * Measures `widget` in the orientation `orientation` and for the given `for_size`.
  *
- * As an example, if @orientation is %GTK_ORIENTATION_HORIZONTAL and @for_size
- * is 300, this functions will compute the minimum and natural width of @widget
+ * As an example, if `orientation` is %GTK_ORIENTATION_HORIZONTAL and `for_size`
+ * is 300, this functions will compute the minimum and natural width of `widget`
  * if it is allocated at a height of 300 pixels.
  *
  * See [GtkWidget’s geometry management section](class.Widget.html#height-for-width-geometry-management) for
@@ -571,7 +571,7 @@ gtk_widget_measure (GtkWidget        *widget,
  * either in context of their children or in context of their
  * allocation capabilities.
  *
- * Returns: The `GtkSizeRequestMode` preferred by @widget.
+ * Returns: The `GtkSizeRequestMode` preferred by `widget`.
  */
 GtkSizeRequestMode
 gtk_widget_get_request_mode (GtkWidget *widget)
@@ -694,15 +694,15 @@ compare_gap (gconstpointer p1,
  * @sizes: (array length=n_requested_sizes): An array of structs with a client pointer and a minimum/natural size
  *  in the orientation of the allocation.
  *
- * Distributes @extra_space to child @sizes by bringing smaller
+ * Distributes `extra_space` to child `sizes` by bringing smaller
  * children up to natural size first.
  *
- * The remaining space will be added to the @minimum_size member of the
+ * The remaining space will be added to the `minimum_size` member of the
  * `GtkRequestedSize` struct. If all sizes reach their natural size then
  * the remaining space is returned.
  *
- * Returns: The remainder of @extra_space after redistributing space
- * to @sizes.
+ * Returns: The remainder of `extra_space` after redistributing space
+ * to `sizes`.
  */
 int
 gtk_distribute_natural_allocation (int               extra_space,

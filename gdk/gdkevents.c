@@ -353,7 +353,7 @@ static GType gdk_event_types[GDK_EVENT_LAST];
  * @type_info: the address of the `GdkEvent`TypeInfo for the event type
  * @_C_: custom code to call after registering the event type
  *
- * Registers a new `GdkEvent` subclass with the given @TypeName and @type_info.
+ * Registers a new `GdkEvent` subclass with the given `TypeName` and `type_info`.
  *
  * Similarly to %G_DEFINE_TYPE_WITH_CODE, this macro will generate a `get_type()`
  * function that registers the event type.
@@ -386,7 +386,7 @@ type_name ## _get_type (void) \
  * @device: (nullable): the `GdkDevice` of the event
  * @time_: the event serial
  *
- * Allocates a `GdkEvent` for the given @event_type, and sets its
+ * Allocates a `GdkEvent` for the given `event_type`, and sets its
  * common fields with the given parameters.
  *
  * Returns: (transfer full): the newly allocated `GdkEvent` instance
@@ -863,9 +863,9 @@ _gdk_event_queue_flush (GdkDisplay *display)
  * gdk_event_ref:
  * @event: a `GdkEvent`
  *
- * Increase the ref count of @event.
+ * Increase the ref count of `event`.
  *
- * Returns: (transfer full): @event
+ * Returns: (transfer full): `event`
  */
 GdkEvent *
 gdk_event_ref (GdkEvent *event)
@@ -881,7 +881,7 @@ gdk_event_ref (GdkEvent *event)
  * gdk_event_unref:
  * @event: (transfer full): a `GdkEvent`
  *
- * Decrease the ref count of @event.
+ * Decrease the ref count of `event`.
  *
  * If the last reference is dropped, the structure is freed.
  */
@@ -1063,7 +1063,7 @@ gdk_events_get_distance (GdkEvent *event1,
  * @event2: second `GdkEvent`
  * @angle: (out): return location for the relative angle between both events
  *
- * Returns the relative angle from @event1 to @event2.
+ * Returns the relative angle from `event1` to `event2`.
  *
  * The relative angle is the angle between the X axis and the line
  * through both events' positions. The rotation direction for positive
@@ -1295,12 +1295,12 @@ gdk_event_get_device_tool (GdkEvent *event)
  * gdk_event_get_time:
  * @event: a `GdkEvent`
  *
- * Returns the timestamp of @event.
+ * Returns the timestamp of `event`.
  *
  * Not all events have timestamps. In that case, this function
  * returns %GDK_CURRENT_TIME.
  *
- * Returns: timestamp field from @event
+ * Returns: timestamp field from `event`
  */
 guint32
 gdk_event_get_time (GdkEvent *event)
@@ -1314,7 +1314,7 @@ gdk_event_get_time (GdkEvent *event)
  * gdk_event_get_display:
  * @event: a `GdkEvent`
  *
- * Retrieves the display associated to the @event.
+ * Retrieves the display associated to the `event`.
  *
  * Returns: (transfer none) (nullable): a `GdkDisplay`
  */
@@ -1354,7 +1354,7 @@ gdk_event_get_event_sequence (GdkEvent *event)
  *
  * Returns the modifier state field of an event.
  *
- * Returns: the modifier state of @event
+ * Returns: the modifier state of `event`
  */
 GdkModifierType
 gdk_event_get_modifier_state (GdkEvent *event)
@@ -1498,7 +1498,7 @@ gdk_button_event_new (GdkEventType     type,
  *
  * Extract the button number from a button event.
  *
- * Returns: the button of @event
+ * Returns: the button of `event`
  **/
 guint
 gdk_button_event_get_button (GdkEvent *event)
@@ -1564,8 +1564,8 @@ GDK_DEFINE_EVENT_TYPE (GdkKeyEvent, gdk_key_event,
  * @keycode: the keycode of the event
  * @state: the modifiers state
  * @is_modifier: whether the event is a modifiers only event
- * @translated: the translated key data for the given @state
- * @no_lock: the translated key data without the given @state
+ * @translated: the translated key data for the given `state`
+ * @no_lock: the translated key data without the given `state`
  * @compose_sequence: (transfer none) (nullable):
  *   The compose sequence string, either partial or only the
  *   final composed string, if that can be determined at event
@@ -1655,7 +1655,7 @@ gdk_key_event_get_compose_sequence (GdkEvent *event)
  *
  * Extracts the keyval from a key event.
  *
- * Returns: the keyval of @event
+ * Returns: the keyval of `event`
  */
 guint
 gdk_key_event_get_keyval (GdkEvent *event)
@@ -1675,7 +1675,7 @@ gdk_key_event_get_keyval (GdkEvent *event)
  *
  * Extracts the keycode from a key event.
  *
- * Returns: the keycode of @event
+ * Returns: the keycode of `event`
  */
 guint
 gdk_key_event_get_keycode (GdkEvent *event)
@@ -1695,7 +1695,7 @@ gdk_key_event_get_keycode (GdkEvent *event)
  *
  * Extracts the shift level from a key event.
  *
- * Returns: the shift level of @event
+ * Returns: the shift level of `event`
  */
 guint
 gdk_key_event_get_level (GdkEvent *event)
@@ -1715,7 +1715,7 @@ gdk_key_event_get_level (GdkEvent *event)
  *
  * Extracts the layout from a key event.
  *
- * Returns: the layout of @event
+ * Returns: the layout of `event`
  */
 guint
 gdk_key_event_get_layout (GdkEvent *event)
@@ -1735,7 +1735,7 @@ gdk_key_event_get_layout (GdkEvent *event)
  *
  * Extracts the consumed modifiers from a key event.
  *
- * Returns: the consumed modifiers or @event
+ * Returns: the consumed modifiers or `event`
  */
 GdkModifierType
 gdk_key_event_get_consumed_modifiers (GdkEvent *event)
@@ -1755,7 +1755,7 @@ gdk_key_event_get_consumed_modifiers (GdkEvent *event)
  *
  * Extracts whether the key event is for a modifier key.
  *
- * Returns: true if the @event is for a modifier key
+ * Returns: true if the `event` is for a modifier key
  */
 gboolean
 gdk_key_event_is_modifier (GdkEvent *event)
@@ -1802,7 +1802,7 @@ keyval_in_group (GdkKeymap *keymap,
  *
  * Note that we ignore Caps Lock for matching.
  *
- * Returns: a `GdkKeyMatch` value describing whether @event matches
+ * Returns: a `GdkKeyMatch` value describing whether `event` matches
  */
 GdkKeyMatch
 gdk_key_event_matches (GdkEvent        *event,
@@ -2092,7 +2092,7 @@ gdk_touch_event_new (GdkEventType      type,
  *
  * Extracts whether a touch event is emulating a pointer event.
  *
- * Returns: true if @event is emulating
+ * Returns: true if `event` is emulating
  **/
 gboolean
 gdk_touch_event_get_emulating_pointer (GdkEvent *event)
@@ -2197,7 +2197,7 @@ gdk_crossing_event_new (GdkEventType     type,
  *
  * Extracts the crossing mode from a crossing event.
  *
- * Returns: the mode of @event
+ * Returns: the mode of `event`
  */
 GdkCrossingMode
 gdk_crossing_event_get_mode (GdkEvent *event)
@@ -2215,7 +2215,7 @@ gdk_crossing_event_get_mode (GdkEvent *event)
  * gdk_crossing_event_get_focus:
  * @event: (type GdkCrossingEvent): a crossing event
  *
- * Checks if the @event surface is the focus surface.
+ * Checks if the `event` surface is the focus surface.
  *
  * Returns: true if the surface is the focus surface
  */
@@ -2237,7 +2237,7 @@ gdk_crossing_event_get_focus (GdkEvent *event)
  *
  * Extracts the notify detail from a crossing event.
  *
- * Returns: the notify detail of @event
+ * Returns: the notify detail of `event`
  */
 GdkNotifyType
 gdk_crossing_event_get_detail (GdkEvent *event)
@@ -2502,7 +2502,7 @@ gdk_scroll_event_new_value120 (GdkSurface         *surface,
  *
  * Extracts the direction of a scroll event.
  *
- * Returns: the scroll direction of @event
+ * Returns: the scroll direction of `event`
  */
 GdkScrollDirection
 gdk_scroll_event_get_direction (GdkEvent *event)
@@ -2756,7 +2756,7 @@ gdk_touchpad_event_new_hold (GdkSurface              *surface,
  *
  * Extracts the touchpad gesture phase from a touchpad event.
  *
- * Returns: the gesture phase of @event
+ * Returns: the gesture phase of `event`
  **/
 GdkTouchpadGesturePhase
 gdk_touchpad_event_get_gesture_phase (GdkEvent *event)
@@ -2777,7 +2777,7 @@ gdk_touchpad_event_get_gesture_phase (GdkEvent *event)
  *
  * Extracts the number of fingers from a touchpad event.
  *
- * Returns: the number of fingers for @event
+ * Returns: the number of fingers for `event`
  **/
 guint
 gdk_touchpad_event_get_n_fingers (GdkEvent *event)
@@ -2821,7 +2821,7 @@ gdk_touchpad_event_get_deltas (GdkEvent *event,
  *
  * Extracts the angle delta from a touchpad pinch event.
  *
- * Returns: the angle delta of @event
+ * Returns: the angle delta of `event`
  */
 double
 gdk_touchpad_event_get_pinch_angle_delta (GdkEvent *event)
@@ -2840,7 +2840,7 @@ gdk_touchpad_event_get_pinch_angle_delta (GdkEvent *event)
  *
  * Extracts the scale from a touchpad pinch event.
  *
- * Returns: the scale of @event
+ * Returns: the scale of `event`
  **/
 double
 gdk_touchpad_event_get_pinch_scale (GdkEvent *event)
@@ -2963,7 +2963,7 @@ gdk_pad_event_new_group_mode (GdkSurface *surface,
  * Extracts information about the pressed button from
  * a pad event.
  *
- * Returns: the button of @event
+ * Returns: the button of `event`
  */
 guint
 gdk_pad_event_get_button (GdkEvent *event)
@@ -3136,11 +3136,11 @@ gdk_motion_event_new (GdkSurface      *surface,
  * @event: a motion or scroll event
  * @out_n_coords: (out): Return location for the length of the returned array
  *
- * Retrieves the history of the device that @event is for, as a list of
+ * Retrieves the history of the device that `event` is for, as a list of
  * time and coordinates.
  *
  * The history includes positions that are not delivered as separate events
- * to the application because they occurred in the same frame as @event.
+ * to the application because they occurred in the same frame as `event`.
  *
  * Note that only motion and scroll events record history, and motion
  * events do it only if one of the mouse buttons is down, or the device
@@ -3399,7 +3399,7 @@ gdk_grab_broken_event_new (GdkSurface *surface,
  *
  * Extracts the grab surface from a grab broken event.
  *
- * Returns: (transfer none): the grab surface of @event
+ * Returns: (transfer none): the grab surface of `event`
  **/
 GdkSurface *
 gdk_grab_broken_event_get_grab_surface (GdkEvent *event)

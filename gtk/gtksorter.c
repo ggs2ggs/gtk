@@ -122,7 +122,7 @@ gtk_sorter_class_init (GtkSorterClass *class)
    *
    * [class@Gtk.SortListModel] handles this signal automatically.
    *
-   * Depending on the @change parameter, it may be possible to update
+   * Depending on the `change` parameter, it may be possible to update
    * the sort order without a full resorting. Refer to the
    * [enum@Gtk.SorterChange] documentation for details.
    */
@@ -164,9 +164,9 @@ gtk_sorter_init (GtkSorter *self)
  * The sorter may signal it conforms to additional constraints
  * via the return value of [method@Gtk.Sorter.get_order].
  *
- * Returns: %GTK_ORDERING_EQUAL if @item1 == @item2,
- *   %GTK_ORDERING_SMALLER if @item1 < @item2,
- *   %GTK_ORDERING_LARGER if @item1 > @item2
+ * Returns: %GTK_ORDERING_EQUAL if `item1` == `item2`,
+ *   %GTK_ORDERING_SMALLER if `item1` < `item2`,
+ *   %GTK_ORDERING_LARGER if `item1` > `item2`
  */
 GtkOrdering
 gtk_sorter_compare (GtkSorter *self,
@@ -200,7 +200,7 @@ gtk_sorter_compare (GtkSorter *self,
  * gtk_sorter_get_order:
  * @self: a `GtkSorter`
  *
- * Gets the order that @self conforms to.
+ * Gets the order that `self` conforms to.
  *
  * See [enum@Gtk.SorterOrder] for details
  * of the possible return values.
@@ -282,7 +282,7 @@ static const GtkSortKeysClass GTK_DEFAULT_SORT_KEYS_CLASS =
  * @self: a `GtkSorter`
  *
  * Gets a `GtkSortKeys` that can be used as an alternative to
- * @self for faster sorting.
+ * `self` for faster sorting.
  *
  * The sort keys can change every time [signal@Gtk.Sorter::changed]
  * is emitted. When the keys change, you should redo all comparisons
@@ -321,7 +321,7 @@ gtk_sorter_get_keys (GtkSorter *self)
  * of the sorter should then update the sort order via
  * [method@Gtk.Sorter.compare].
  *
- * Depending on the @change parameter, it may be possible to
+ * Depending on the `change` parameter, it may be possible to
  * update the sort order without a full resorting. Refer to
  * the [enum@Gtk.SorterChange] documentation for details.
  *
@@ -343,7 +343,7 @@ gtk_sorter_changed (GtkSorter       *self,
  * @change: How the sorter changed
  * @keys: (not nullable) (transfer full): New keys to use
  *
- * Updates the sorter's keys to @keys and then calls gtk_sorter_changed().
+ * Updates the sorter's keys to `keys` and then calls gtk_sorter_changed().
  *
  * If you do not want to update the keys, call that function instead.
  *

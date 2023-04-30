@@ -451,8 +451,8 @@ gtk_drawing_area_get_content_height (GtkDrawingArea *self)
  * @self: a `GtkDrawingArea`
  * @draw_func: (nullable): callback that lets you draw
  *   the drawing area's contents
- * @user_data: (closure): user data passed to @draw_func
- * @destroy: destroy notifier for @user_data
+ * @user_data: (closure): user data passed to `draw_func`
+ * @destroy: destroy notifier for `user_data`
  *
  * Setting a draw function is the main thing you want to do when using
  * a drawing area.
@@ -467,7 +467,7 @@ gtk_drawing_area_get_content_height (GtkDrawingArea *self)
  * your contents in the draw function.
  *
  * If what you are drawing does change, call [method@Gtk.Widget.queue_draw]
- * on the drawing area. This will cause a redraw and will call @draw_func again.
+ * on the drawing area. This will cause a redraw and will call `draw_func` again.
  */
 void
 gtk_drawing_area_set_draw_func (GtkDrawingArea         *self,

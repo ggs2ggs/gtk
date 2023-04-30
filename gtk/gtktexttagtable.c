@@ -169,7 +169,7 @@ gtk_text_tag_table_class_init (GtkTextTagTableClass *klass)
    *
    * Emitted every time a tag is removed from the `GtkTextTagTable`.
    *
-   * The @tag is still valid by the time the signal is emitted, but
+   * The `tag` is still valid by the time the signal is emitted, but
    * it is not associated with a tag table any more.
    */
   signals[TAG_REMOVED] =
@@ -286,7 +286,7 @@ gtk_text_tag_table_buildable_add_child (GtkBuildable        *buildable,
  *
  * The tag is assigned the highest priority in the table.
  *
- * @tag must not be in a tag table already, and may not have
+ * `tag` must not be in a tag table already, and may not have
  * the same name as an already-added tag.
  *
  * Returns: true on success.
@@ -366,7 +366,7 @@ gtk_text_tag_table_lookup (GtkTextTagTable *table,
  *
  * Remove a tag from the table.
  *
- * If a `GtkTextBuffer` has @table as its tag table, the tag is
+ * If a `GtkTextBuffer` has `table` as its tag table, the tag is
  * removed from the buffer. The table’s reference to the tag is
  * removed, so the tag will end up destroyed if you don’t have
  * a reference to it.
@@ -443,7 +443,7 @@ list_foreach (gpointer data, gpointer user_data)
  * @func: (scope call): a function to call on each tag
  * @data: user data
  *
- * Calls @func on each tag in @table, with user data @data.
+ * Calls `func` on each tag in `table`, with user data `data`.
  *
  * Note that the table may not be modified while iterating
  * over it (you can’t add/remove tags).
@@ -474,7 +474,7 @@ gtk_text_tag_table_foreach (GtkTextTagTable       *table,
  *
  * Returns the size of the table (number of tags)
  *
- * Returns: number of tags in @table
+ * Returns: number of tags in `table`
  */
 int
 gtk_text_tag_table_get_size (GtkTextTagTable *table)

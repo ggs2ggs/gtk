@@ -342,7 +342,7 @@ gdk_x11_display_set_cursor_theme (GdkDisplay  *display,
  * Returns the X cursor belonging to a `GdkCursor`, potentially
  * creating the cursor.
  *
- * Be aware that the returned cursor may not be unique to @cursor.
+ * Be aware that the returned cursor may not be unique to `cursor`.
  * It may for example be shared with its fallback cursor. On old
  * X servers that don't support the XCursor extension, all cursors
  * may even fall back to a few default cursors.

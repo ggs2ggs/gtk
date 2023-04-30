@@ -107,7 +107,7 @@ struct _GdkDeleteEvent
  *   event. See [flags@Gdk.ModifierType]
  * @x: the x coordinate of the pointer relative to the surface.
  * @y: the y coordinate of the pointer relative to the surface.
- * @axes: @x, @y translated to the axes of @device, or `NULL` if @device is
+ * @axes: `x`, `y` translated to the axes of `device`, or `NULL` if `device` is
  *   the mouse.
  * @history: (element-type GdkTimeCoord): a list of time and coordinates
  *   for other motion events that were compressed before delivering the
@@ -138,12 +138,12 @@ struct _GdkMotionEvent
  *   often be simulated by pressing both mouse buttons together.
  * @x: the x coordinate of the pointer relative to the surface.
  * @y: the y coordinate of the pointer relative to the surface.
- * @axes: @x, @y translated to the axes of @device, or `NULL` if @device is
+ * @axes: `x`, `y` translated to the axes of `device`, or `NULL` if `device` is
  *   the mouse.
  * @tool: a `GdkDeviceTool`
  *
  * Used for button press and button release events. The
- * @type field will be one of %GDK_BUTTON_PRESS or %GDK_BUTTON_RELEASE,
+ * `type` field will be one of %GDK_BUTTON_PRESS or %GDK_BUTTON_RELEASE,
  */
 struct _GdkButtonEvent
 {
@@ -164,16 +164,16 @@ struct _GdkButtonEvent
  *   buttons. See [flags@Gdk.ModifierType]
  * @x: the x coordinate of the pointer relative to the surface
  * @y: the y coordinate of the pointer relative to the surface
- * @axes: @x, @y translated to the axes of the event's device, or `NULL`
- *   if @device is the mouse
+ * @axes: `x`, `y` translated to the axes of the event's device, or `NULL`
+ *   if `device` is the mouse
  * @sequence: the event sequence that the event belongs to
  * @emulated: whether the event is the result of a pointer emulation
  *
  * Used for touch events.
- * @type field will be one of %GDK_TOUCH_BEGIN, %GDK_TOUCH_UPDATE,
+ * `type` field will be one of %GDK_TOUCH_BEGIN, %GDK_TOUCH_UPDATE,
  * %GDK_TOUCH_END or %GDK_TOUCH_CANCEL.
  *
- * Touch events are grouped into sequences by means of the @sequence
+ * Touch events are grouped into sequences by means of the `sequence`
  * field, which can also be obtained with gdk_event_get_event_sequence().
  * Each sequence begins with a %GDK_TOUCH_BEGIN event, followed by
  * any number of %GDK_TOUCH_UPDATE events, and ends with a %GDK_TOUCH_END
@@ -256,8 +256,8 @@ typedef struct {
  *   the modifier keys (e.g. Control, Shift and Alt) and the pointer
  *   buttons. See [flags@Gdk.ModifierType]
  * @keycode: the raw code of the key that was pressed or released.
- * @translated: the result of translating @keycode. First with the full
- *   @state, then while ignoring Caps Lock.
+ * @translated: the result of translating `keycode`. First with the full
+ *   `state`, then while ignoring Caps Lock.
  * @compose_sequence: optional string for use by selected IM modules.
  *   Contains either partial compose sequences or the final composed
  *   string of the keystroke sequence.
@@ -290,7 +290,7 @@ struct _GdkKeyEvent
  * @detail: the kind of crossing that happened (%GDK_NOTIFY_INFERIOR,
  *  %GDK_NOTIFY_ANCESTOR, %GDK_NOTIFY_VIRTUAL, %GDK_NOTIFY_NONLINEAR or
  *  %GDK_NOTIFY_NONLINEAR_VIRTUAL).
- * @focus: true if @surface is the focus surface or an inferior.
+ * @focus: true if `surface` is the focus surface or an inferior.
  * @child_surface: the surface that was entered or left.
  *
  * Generated when the pointer enters or leaves a surface.
@@ -346,8 +346,8 @@ struct _GdkProximityEvent
  *   grab was broken
  * @implicit: true if the broken grab was implicit
  * @grab_surface: If this event is caused by another grab in the same
- *   application, @grab_surface contains the new grab surface. Otherwise
- *   @grab_surface is `NULL`.
+ *   application, `grab_surface` contains the new grab surface. Otherwise
+ *   `grab_surface` is `NULL`.
  *
  * Generated when a pointer or keyboard grab is broken. On X11, this happens
  * when the grab surface becomes unviewable (i.e. it or one of its ancestors

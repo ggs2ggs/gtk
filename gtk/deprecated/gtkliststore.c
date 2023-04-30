@@ -406,11 +406,11 @@ iter_is_valid (GtkTreeIter  *iter,
 /**
  * gtk_list_store_new:
  * @n_columns: number of columns in the list store
- * @...: all `GType` types for the columns, from first to last
+ * `...`: all `GType` types for the columns, from first to last
  *
  * Creates a new list store.
  *
- * The list store will have @n_columns columns, with each column using
+ * The list store will have `n_columns` columns, with each column using
  * the given type passed to this function.
  *
  *
@@ -945,8 +945,8 @@ gtk_list_store_real_set_value (GtkListStore *list_store,
  * @column: column number to modify
  * @value: new value for the cell
  *
- * Sets the data in the cell specified by @iter and @column.
- * The type of @value must be convertible to the type of the
+ * Sets the data in the cell specified by `iter` and `column`.
+ * The type of `value` must be convertible to the type of the
  * column.
  *
  * Deprecated: 4.10: Use list models
@@ -1096,7 +1096,7 @@ gtk_list_store_set_valist_internal (GtkListStore *list_store,
  * @iter: A valid `GtkTreeIter` for the row being modified
  * @columns: (array length=n_values): an array of column numbers
  * @values: (array length=n_values): an array of GValues
- * @n_values: the length of the @columns and @values arrays
+ * @n_values: the length of the `columns` and `values` arrays
  *
  * A variant of gtk_list_store_set_valist() which
  * takes the columns and values as two arrays, instead of
@@ -1187,9 +1187,9 @@ gtk_list_store_set_valist (GtkListStore *list_store,
  * gtk_list_store_set:
  * @list_store: a `GtkListStore`
  * @iter: row iterator
- * @...: pairs of column number and value, terminated with -1
+ * `...`: pairs of column number and value, terminated with -1
  *
- * Sets the value of one or more cells in the row referenced by @iter.
+ * Sets the value of one or more cells in the row referenced by `iter`.
  * The variable argument list should contain integer column numbers,
  * each column number followed by the value to be set.
  * The list is terminated by a -1. For example, to set column 0 with type
@@ -1219,10 +1219,10 @@ gtk_list_store_set (GtkListStore *list_store,
  * @iter: A valid `GtkTreeIter`
  *
  * Removes the given row from the list store.  After being removed,
- * @iter is set to be the next valid row, or invalidated if it pointed
- * to the last row in @list_store.
+ * `iter` is set to be the next valid row, or invalidated if it pointed
+ * to the last row in `list_store`.
  *
- * Returns: true if @iter is valid, false if not.
+ * Returns: true if `iter` is valid, false if not.
  *
  * Deprecated: 4.10: Use list models
  **/
@@ -1271,8 +1271,8 @@ gtk_list_store_remove (GtkListStore *list_store,
  * @iter: (out): An unset `GtkTreeIter` to set to the new row
  * @position: position to insert the new row, or -1 for last
  *
- * Creates a new row at @position.  @iter will be changed to point to this new
- * row.  If @position is -1 or is larger than the number of rows on the list,
+ * Creates a new row at `position`.  `iter` will be changed to point to this new
+ * row.  If `position` is -1 or is larger than the number of rows on the list,
  * then the new row will be appended to the list. The row will be empty after
  * this function is called.  To fill in values, you need to call
  * gtk_list_store_set() or gtk_list_store_set_value().
@@ -1325,8 +1325,8 @@ gtk_list_store_insert (GtkListStore *list_store,
  * @iter: (out): An unset `GtkTreeIter` to set to the new row
  * @sibling: (nullable): A valid `GtkTreeIter`
  *
- * Inserts a new row before @sibling. If @sibling is `NULL`, then the row will
- * be appended to the end of the list. @iter will be changed to point to this
+ * Inserts a new row before `sibling`. If `sibling` is `NULL`, then the row will
+ * be appended to the end of the list. `iter` will be changed to point to this
  * new row. The row will be empty after this function is called. To fill in
  * values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
  *
@@ -1362,8 +1362,8 @@ gtk_list_store_insert_before (GtkListStore *list_store,
  * @iter: (out): An unset `GtkTreeIter` to set to the new row
  * @sibling: (nullable): A valid `GtkTreeIter`
  *
- * Inserts a new row after @sibling. If @sibling is `NULL`, then the row will be
- * prepended to the beginning of the list. @iter will be changed to point to
+ * Inserts a new row after `sibling`. If `sibling` is `NULL`, then the row will be
+ * prepended to the beginning of the list. `iter` will be changed to point to
  * this new row. The row will be empty after this function is called. To fill
  * in values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
  *
@@ -1398,7 +1398,7 @@ gtk_list_store_insert_after (GtkListStore *list_store,
  * @list_store: A `GtkListStore`
  * @iter: (out): An unset `GtkTreeIter` to set to the prepend row
  *
- * Prepends a new row to @list_store. @iter will be changed to point to this new
+ * Prepends a new row to `list_store`. `iter` will be changed to point to this new
  * row. The row will be empty after this function is called. To fill in
  * values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
  *
@@ -1419,7 +1419,7 @@ gtk_list_store_prepend (GtkListStore *list_store,
  * @list_store: A `GtkListStore`
  * @iter: (out): An unset `GtkTreeIter` to set to the appended row
  *
- * Appends a new row to @list_store.  @iter will be changed to point to this new
+ * Appends a new row to `list_store`.  `iter` will be changed to point to this new
  * row.  The row will be empty after this function is called.  To fill in
  * values, you need to call gtk_list_store_set() or gtk_list_store_set_value().
  *
@@ -1727,10 +1727,10 @@ gtk_list_store_reorder_func (GSequenceIter *a,
  * @store: A `GtkListStore`.
  * @new_order: (array zero-terminated=1): an array of integers mapping the new
  *   position of each child to its old position before the re-ordering,
- *   i.e. @new_order`[newpos] = oldpos`. It must have
+ *   i.e. `new_order``[newpos] = oldpos`. It must have
  *   exactly as many items as the list store’s length.
  *
- * Reorders @store to follow the order indicated by @new_order. Note that
+ * Reorders `store` to follow the order indicated by `new_order`. Note that
  * this function only works with unsorted stores.
  *
  * Deprecated: 4.10: Use list models
@@ -1824,7 +1824,7 @@ generate_order (GSequence *seq,
  * @a: A `GtkTreeIter`
  * @b: Another `GtkTreeIter`
  *
- * Swaps @a and @b in @store. Note that this function only works with
+ * Swaps `a` and `b` in `store`. Note that this function only works with
  * unsorted stores.
  *
  * Deprecated: 4.10: Use list models
@@ -1892,8 +1892,8 @@ gtk_list_store_move_to (GtkListStore *store,
  * @iter: A `GtkTreeIter`
  * @position: (nullable): A `GtkTreeIter`
  *
- * Moves @iter in @store to the position before @position. Note that this
- * function only works with unsorted stores. If @position is `NULL`, @iter
+ * Moves `iter` in `store` to the position before `position`. Note that this
+ * function only works with unsorted stores. If `position` is `NULL`, `iter`
  * will be moved to the end of the list.
  *
  * Deprecated: 4.10: Use list models
@@ -1925,8 +1925,8 @@ gtk_list_store_move_before (GtkListStore *store,
  * @iter: A `GtkTreeIter`
  * @position: (nullable): A `GtkTreeIter`
  *
- * Moves @iter in @store to the position after @position. Note that this
- * function only works with unsorted stores. If @position is `NULL`, @iter
+ * Moves `iter` in `store` to the position after `position`. Note that this
+ * function only works with unsorted stores. If `position` is `NULL`, `iter`
  * will be moved to the start of the list.
  *
  * Deprecated: 4.10: Use list models
@@ -2205,10 +2205,10 @@ gtk_list_store_has_default_sort_func (GtkTreeSortable *sortable)
  * @iter: (out) (optional): An unset `GtkTreeIter` to set to the new row
  * @position: position to insert the new row, or -1 to append after existing
  *    rows
- * @...: pairs of column number and value, terminated with -1
+ * `...`: pairs of column number and value, terminated with -1
  *
- * Creates a new row at @position. @iter will be changed to point to this new
- * row. If @position is -1, or larger than the number of rows in the list, then
+ * Creates a new row at `position`. `iter` will be changed to point to this new
+ * row. If `position` is -1, or larger than the number of rows in the list, then
  * the new row will be appended to the list. The row will be filled with the
  * values given to this function.
  *
@@ -2309,7 +2309,7 @@ gtk_list_store_insert_with_values (GtkListStore *list_store,
  * @position: position to insert the new row, or -1 for last
  * @columns: (array length=n_values): an array of column numbers
  * @values: (array length=n_values): an array of GValues
- * @n_values: the length of the @columns and @values arrays
+ * @n_values: the length of the `columns` and `values` arrays
  *
  * A variant of gtk_list_store_insert_with_values() which
  * takes the columns and values as two arrays, instead of

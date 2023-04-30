@@ -100,8 +100,8 @@ gtk_print_operation_preview_base_init (gpointer g_iface)
        *
        * Emitted once for each page that gets rendered to the preview.
        *
-       * A handler for this signal should update the @context
-       * according to @page_setup and set up a suitable cairo
+       * A handler for this signal should update the `context`
+       * according to `page_setup` and set up a suitable cairo
        * context, using [method@Gtk.PrintContext.set_cairo_context].
        */
       g_signal_new (I_("got-page-size"),
@@ -127,7 +127,7 @@ gtk_print_operation_preview_base_init (gpointer g_iface)
  *
  * This is using the print context that was passed to the
  * [signal@Gtk.PrintOperation::preview] handler together
- * with @preview.
+ * with `preview`.
  *
  * A custom print preview should use this function to render
  * the currently selected page.

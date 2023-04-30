@@ -1051,7 +1051,7 @@ gtk_window_class_init (GtkWindowClass *klass)
    * @window: the window which received the signal
    *
    * Emitted when the user activates the currently focused
-   * widget of @window.
+   * widget of `window`.
    *
    * This is a [keybinding signal](class.SignalAction.html).
    */
@@ -1070,7 +1070,7 @@ gtk_window_class_init (GtkWindowClass *klass)
    * @window: the window which received the signal
    *
    * Emitted when the user activates the default widget
-   * of @window.
+   * of `window`.
    *
    * This is a [keybinding signal](class.SignalAction.html).
    */
@@ -1089,7 +1089,7 @@ gtk_window_class_init (GtkWindowClass *klass)
    * @window: the window which received the signal
    *
    * emitted when the set of accelerators or mnemonics that
-   * are associated with @window changes.
+   * are associated with `window` changes.
    *
    * Deprecated: 4.10: Use [class@Gtk.Shortcut] and [class@Gtk.EventController]
    * to implement keyboard shortcuts
@@ -1111,7 +1111,7 @@ gtk_window_class_init (GtkWindowClass *klass)
    *
    * Emitted when the user enables or disables interactive debugging.
    *
-   * When @toggle is true, interactive debugging is toggled on or off,
+   * When `toggle` is true, interactive debugging is toggled on or off,
    * when it is false, the debugger will be pointed at the widget
    * under the pointer.
    *
@@ -1222,7 +1222,7 @@ gtk_window_class_init (GtkWindowClass *klass)
  * gtk_window_is_maximized: (attributes org.gtk.Method.get_property=maximized)
  * @window: a `GtkWindow`
  *
- * Retrieves the current maximized state of @window.
+ * Retrieves the current maximized state of `window`.
  *
  * Note that since maximization is ultimately handled by the window
  * manager and happens asynchronously to an application request, you
@@ -1249,7 +1249,7 @@ gtk_window_is_maximized (GtkWindow *window)
  * gtk_window_is_fullscreen: (attributes org.gtk.Property.get=fullscreened)
  * @window: a `GtkWindow`
  *
- * Retrieves the current fullscreen state of @window.
+ * Retrieves the current fullscreen state of `window`.
  *
  * Note that since fullscreening is ultimately handled by the window
  * manager and happens asynchronously to an application request, you
@@ -2337,7 +2337,7 @@ gtk_window_set_default_widget (GtkWindow *window,
  * gtk_window_get_default_widget: (attributes org.gtk.Property.get=default-widget)
  * @window: a `GtkWindow`
  *
- * Returns the default widget for @window.
+ * Returns the default widget for `window`.
  *
  * Returns: (nullable) (transfer none): the default widget
  */
@@ -2649,7 +2649,7 @@ gtk_window_unset_transient_for (GtkWindow *window)
  * convenience functions in GTK will sometimes call
  * gtk_window_set_transient_for() on your behalf.
  *
- * Passing `NULL` for @parent unsets the current transient window.
+ * Passing `NULL` for `parent` unsets the current transient window.
  *
  * On Windows, this function puts the child window on top of the parent,
  * much as the window manager would have done on X.
@@ -2777,7 +2777,7 @@ gtk_window_release_application (GtkWindow *window)
  *
  * Normally, the connection between the application and the window will
  * remain until the window is destroyed, but you can explicitly remove
- * it by setting the @application to `NULL`.
+ * it by setting the `application` to `NULL`.
  *
  * This is equivalent to calling [method@Gtk.Application.remove_window]
  * and/or [method@Gtk.Application.add_window] on the old/new applications
@@ -2824,10 +2824,10 @@ gtk_window_set_application (GtkWindow      *window,
 /**
  * gtk_window_set_destroy_with_parent: (attributes org.gtk.Method.set_property=destroy-with-parent)
  * @window: a `GtkWindow`
- * @setting: whether to destroy @window with its transient parent
+ * @setting: whether to destroy `window` with its transient parent
  *
- * If @setting is true, then destroying the transient parent of @window
- * will also destroy @window itself.
+ * If `setting` is true, then destroying the transient parent of `window`
+ * will also destroy `window` itself.
  *
  * This is useful for dialogs that shouldn’t persist beyond the lifetime
  * of the main window they are associated with, for example.
@@ -2871,7 +2871,7 @@ gtk_window_get_destroy_with_parent (GtkWindow *window)
  * @window: a `GtkWindow`
  * @setting: whether to hide the window when it is closed
  *
- * If @setting is true, then clicking the close button on the window
+ * If `setting` is true, then clicking the close button on the window
  * will not destroy it, but only hide it.
  */
 void
@@ -2989,7 +2989,7 @@ gtk_window_enable_csd (GtkWindow *window)
  * @window: a `GtkWindow`
  * @titlebar: (nullable): the widget to use as titlebar
  *
- * Sets a custom titlebar for @window.
+ * Sets a custom titlebar for `window`.
  *
  * A typical widget used here is [class@Gtk.HeaderBar], as it
  * provides various features expected of a titlebar while allowing
@@ -4508,7 +4508,7 @@ update_window_style_classes (GtkWindow *window)
 /* _gtk_window_set_allocation:
  * @window: a `GtkWindow`
  * @allocation: the original allocation for the window
- * @allocation_out: @allocation taking decorations into
+ * @allocation_out: `allocation` taking decorations into
  * consideration
  *
  * This function is like gtk_widget_set_allocation()
@@ -4519,10 +4519,10 @@ update_window_style_classes (GtkWindow *window)
  * when overriding ::size_allocate in a GtkWindow
  * subclass without chaining up.
  *
- * The @allocation parameter will be adjusted to
+ * The `allocation` parameter will be adjusted to
  * reflect any internal decorations that the window
  * may have. That revised allocation will then be
- * returned in the @allocation_out parameter.
+ * returned in the `allocation_out` parameter.
  */
 void
 _gtk_window_set_allocation (GtkWindow           *window,
@@ -5134,8 +5134,8 @@ synthesize_focus_change_events (GtkWindow       *window,
  *
  * Sets the focus widget.
  *
- * If @focus is not the current focus widget, and is focusable,
- * sets it as the focus widget for the window. If @focus is `NULL`,
+ * If `focus` is not the current focus widget, and is focusable,
+ * sets it as the focus widget for the window. If `focus` is `NULL`,
  * unsets the focus widget for this window. To set the focus to a
  * particular widget in the toplevel, it is usually more convenient
  * to use [method@Gtk.Widget.grab_focus] instead of this function.
@@ -5168,10 +5168,10 @@ gtk_window_css_changed (GtkWidget         *widget,
 /*
  * _gtk_window_unset_focus_and_default:
  * @window: a `GtkWindow`
- * @widget: a widget inside of @window
+ * @widget: a widget inside of `window`
  *
- * Checks whether the focus and default widgets of @window are
- * @widget or a descendent of @widget, and if so, unset them.
+ * Checks whether the focus and default widgets of `window` are
+ * `widget` or a descendent of `widget`, and if so, unset them.
  */
 void
 _gtk_window_unset_focus_and_default (GtkWindow *window,
@@ -5217,7 +5217,7 @@ _gtk_window_unset_focus_and_default (GtkWindow *window,
  * giving it the keyboard focus (possibly dependent on the user’s
  * platform, window manager and preferences).
  *
- * If @window is hidden, this function also makes it visible.
+ * If `window` is hidden, this function also makes it visible.
  */
 void
 gtk_window_present (GtkWindow *window)
@@ -5290,7 +5290,7 @@ gtk_window_present_with_time (GtkWindow *window,
  * gtk_window_minimize:
  * @window: a `GtkWindow`
  *
- * Asks to minimize the specified @window.
+ * Asks to minimize the specified `window`.
  *
  * Note that you shouldn’t assume the window is definitely minimized
  * afterward, because the windowing system might not support this
@@ -5322,7 +5322,7 @@ gtk_window_minimize (GtkWindow *window)
  * gtk_window_unminimize:
  * @window: a `GtkWindow`
  *
- * Asks to unminimize the specified @window.
+ * Asks to unminimize the specified `window`.
  *
  * Note that you shouldn’t assume the window is definitely unminimized
  * afterward, because the windowing system might not support this
@@ -5350,7 +5350,7 @@ gtk_window_unminimize (GtkWindow *window)
  * gtk_window_maximize:
  * @window: a `GtkWindow`
  *
- * Asks to maximize @window, so that it fills the screen.
+ * Asks to maximize `window`, so that it fills the screen.
  *
  * Note that you shouldn’t assume the window is definitely maximized
  * afterward, because other entities (e.g. the user or window manager)
@@ -5392,7 +5392,7 @@ gtk_window_maximize (GtkWindow *window)
  * gtk_window_unmaximize:
  * @window: a `GtkWindow`
  *
- * Asks to unmaximize @window.
+ * Asks to unmaximize `window`.
  *
  * Note that you shouldn’t assume the window is definitely unmaximized
  * afterward, because other entities (e.g. the user or window manager)
@@ -5442,7 +5442,7 @@ unset_fullscreen_monitor (GtkWindow *window)
  * gtk_window_fullscreen:
  * @window: a `GtkWindow`
  *
- * Asks to place @window in the fullscreen state.
+ * Asks to place `window` in the fullscreen state.
  *
  * Note that you shouldn’t assume the window is definitely fullscreen
  * afterward, because other entities (e.g. the user or window manager)
@@ -5482,7 +5482,7 @@ gtk_window_fullscreen (GtkWindow *window)
  * @window: a `GtkWindow`
  * @monitor: which monitor to go fullscreen on
  *
- * Asks to place @window in the fullscreen state on the given @monitor.
+ * Asks to place `window` in the fullscreen state on the given `monitor`.
  *
  * Note that you shouldn't assume the window is definitely fullscreen
  * afterward, or that the windowing system allows fullscreen windows on
@@ -5529,7 +5529,7 @@ gtk_window_fullscreen_on_monitor (GtkWindow  *window,
  * gtk_window_unfullscreen:
  * @window: a `GtkWindow`
  *
- * Asks to remove the fullscreen state for @window, and return to
+ * Asks to remove the fullscreen state for `window`, and return to
  * its previous state.
  *
  * Note that you shouldn’t assume the window is definitely not
@@ -5624,7 +5624,7 @@ gtk_window_get_resizable (GtkWindow *window)
  * @window: a `GtkWindow`
  * @display: a `GdkDisplay`
  *
- * Sets the `GdkDisplay` where the @window is displayed.
+ * Sets the `GdkDisplay` where the `window` is displayed.
  *
  * If the window is already mapped, it will be unmapped,
  * and then remapped on the new display.
@@ -5736,7 +5736,7 @@ gtk_window_is_active (GtkWindow *window)
  * gtk_window_get_group:
  * @window: (nullable): a `GtkWindow`
  *
- * Returns the group for @window.
+ * Returns the group for `window`.
  *
  * If the window has no group, then the default group is returned.
  *
@@ -5765,9 +5765,9 @@ gtk_window_get_group (GtkWindow *window)
  * gtk_window_has_group:
  * @window: a `GtkWindow`
  *
- * Returns whether @window has an explicit window group.
+ * Returns whether `window` has an explicit window group.
  *
- * Returns: true if @window has an explicit window group.
+ * Returns: true if `window` has an explicit window group.
  */
 gboolean
 gtk_window_has_group (GtkWindow *window)
@@ -6622,7 +6622,7 @@ gtk_window_maybe_update_cursor (GtkWindow *window,
  * @window: a `GtkWindow`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @window.
+ * Sets the child widget of `window`.
  */
 void
 gtk_window_set_child (GtkWindow *window,
@@ -6651,9 +6651,9 @@ gtk_window_set_child (GtkWindow *window,
  * gtk_window_get_child: (attributes org.gtk.Method.get_property=child)
  * @window: a `GtkWindow`
  *
- * Gets the child widget of @window.
+ * Gets the child widget of `window`.
  *
- * Returns: (nullable) (transfer none): the child widget of @window
+ * Returns: (nullable) (transfer none): the child widget of `window`
  */
 GtkWidget *
 gtk_window_get_child (GtkWindow *window)
@@ -6837,7 +6837,7 @@ gtk_window_grab_notify (GtkWindow *window,
 /**
  * gtk_window_set_handle_menubar_accel: (attributes org.gtk.Method.set_property=handle-menubar-accel)
  * @window: a `GtkWindow`
- * @handle_menubar_accel: true to make @window handle F10
+ * @handle_menubar_accel: true to make `window` handle F10
  *
  * Sets whether this window should react to F10 key presses
  * by activating a menubar it contains.

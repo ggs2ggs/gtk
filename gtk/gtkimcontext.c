@@ -715,7 +715,7 @@ gtk_im_context_set_cursor_location (GtkIMContext       *context,
  * Sets whether the IM context should use the preedit string
  * to display feedback.
  *
- * If @use_preedit is false (default is true), then the IM context
+ * If `use_preedit` is false (default is true), then the IM context
  * may use some other method to display feedback, such as displaying
  * it in a child of the root window.
  */
@@ -736,9 +736,9 @@ gtk_im_context_set_use_preedit (GtkIMContext *context,
  * gtk_im_context_set_surrounding:
  * @context: a `GtkIMContext`
  * @text: text surrounding the insertion point, as UTF-8.
- *   the preedit string should not be included within @text
- * @len: the length of @text, or -1 if @text is nul-terminated
- * @cursor_index: the byte index of the insertion cursor within @text.
+ *   the preedit string should not be included within `text`
+ * @len: the length of `text`, or -1 if `text` is nul-terminated
+ * @cursor_index: the byte index of the insertion cursor within `text`.
  *
  * Sets surrounding context around the insertion point and preedit
  * string.
@@ -762,10 +762,10 @@ gtk_im_context_set_surrounding (GtkIMContext  *context,
  * gtk_im_context_set_surrounding_with_selection:
  * @context: a `GtkIMContext`
  * @text: text surrounding the insertion point, as UTF-8.
- *   the preedit string should not be included within @text
- * @len: the length of @text, or -1 if @text is nul-terminated
- * @cursor_index: the byte index of the insertion cursor within @text
- * @anchor_index: the byte index of the selection bound within @text
+ *   the preedit string should not be included within `text`
+ * @len: the length of `text`, or -1 if `text` is nul-terminated
+ * @cursor_index: the byte index of the insertion cursor within `text`
+ * @anchor_index: the byte index of the selection bound within `text`
  *
  * Sets surrounding context around the insertion point and preedit
  * string. This function is expected to be called in response to the
@@ -808,7 +808,7 @@ gtk_im_context_set_surrounding_with_selection (GtkIMContext  *context,
  *   If the function returns true, then you must free the result
  *   stored in this location with g_free().
  * @cursor_index: (out): location to store byte index of the insertion
- *   cursor within @text.
+ *   cursor within `text`.
  *
  * Retrieves context around the insertion point.
  *
@@ -850,9 +850,9 @@ gtk_im_context_get_surrounding (GtkIMContext  *context,
  *   If the function returns true, then you must free the result
  *   stored in this location with g_free().
  * @cursor_index: (out): location to store byte index of the insertion
- *   cursor within @text.
+ *   cursor within `text`.
  * @anchor_index: (out): location to store byte index of the selection
- *   bound within @text
+ *   bound within `text`
  *
  * Retrieves context around the insertion point.
  *
@@ -923,7 +923,7 @@ gtk_im_context_get_surrounding_with_selection (GtkIMContext  *context,
  * characters around the cursor position by emitting the
  * `::delete_surrounding` signal.
  *
- * Note that @offset and @n_chars are in characters not in bytes
+ * Note that `offset` and `n_chars` are in characters not in bytes
  * which differs from the usage other places in `GtkIMContext`.
  *
  * In order to use this function, you should first call

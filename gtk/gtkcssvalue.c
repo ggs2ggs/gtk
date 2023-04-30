@@ -200,8 +200,8 @@ gtk_css_value_unref (GtkCssValue *value)
  * @style: Style to compute for
  * @parent_style: parent style to use for inherited values
  *
- * Converts the specified @value into the computed value for the CSS
- * property given by @property_id using the information in @context.
+ * Converts the specified `value` into the computed value for the CSS
+ * property given by `property_id` using the information in `context`.
  * This step is explained in detail in the
  * [CSS Documentation](http://www.w3.org/TR/css3-cascade/#computed).
  *
@@ -299,7 +299,7 @@ _gtk_css_value_to_string (const GtkCssValue *value)
  * @value: the value to print
  * @string: the string to print to
  *
- * Prints @value to the given @string in CSS format. The @value must be a
+ * Prints `value` to the given `string` in CSS format. The `value` must be a
  * valid specified value as parsed using the parse functions or as assigned
  * via _gtk_style_property_assign().
  **/
@@ -342,12 +342,12 @@ gtk_css_value_is_dynamic (const GtkCssValue *value)
  * @value: a `GtkCssValue`
  * @monotonic_time: the timestamp for which to get the dynamic value
  *
- * Gets the dynamic value for a given timestamp. If @monotonic_time is 0,
+ * Gets the dynamic value for a given timestamp. If `monotonic_time` is 0,
  * the default value is returned.
  *
  * See gtk_css_value_is_dynamic() for details about dynamic values.
  *
- * Returns: (transfer full): The dynamic value for @value at the given
+ * Returns: (transfer full): The dynamic value for `value` at the given
  *   timestamp
  */
 GtkCssValue *

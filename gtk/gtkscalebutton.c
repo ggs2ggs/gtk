@@ -248,9 +248,9 @@ gtk_scale_button_class_init (GtkScaleButtonClass *klass)
    * be used for all the other values, spread evenly over the
    * range of values.
    *
-   * If there's only one icon name in the @icons array, it will
+   * If there's only one icon name in the `icons` array, it will
    * be used for all the values. If only two icon names are in
-   * the @icons array, the first one will be used for the bottom
+   * the `icons` array, the first one will be used for the bottom
    * 50% of the scale, and the second one for the top 50%.
    *
    * It is recommended to use at least 3 icons so that the
@@ -583,8 +583,8 @@ gtk_scale_button_dispose (GObject *object)
  *
  * Creates a `GtkScaleButton`.
  *
- * The new scale button has a range between @min and @max,
- * with a stepping of @step.
+ * The new scale button has a range between `min` and `max`,
+ * with a stepping of `step`.
  *
  * Returns: a new `GtkScaleButton`
  */

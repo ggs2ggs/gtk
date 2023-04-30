@@ -337,7 +337,7 @@ gdk_display_get_default (void)
  * @manager: a `GdkDisplayManager`
  * @display: a `GdkDisplay`
  *
- * Sets @display as the default display.
+ * Sets `display` as the default display.
  */
 void
 gdk_display_manager_set_default_display (GdkDisplayManager *manager,

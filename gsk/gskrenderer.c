@@ -242,7 +242,7 @@ gsk_renderer_get_surface (GskRenderer *renderer)
  * gsk_renderer_get_root_node:
  * @renderer: a `GskRenderer`
  *
- * Retrieves the `GskRenderNode` used by @renderer.
+ * Retrieves the `GskRenderNode` used by `renderer`.
  *
  * Returns: (transfer none) (nullable): a `GskRenderNode`
  */
@@ -260,7 +260,7 @@ gsk_renderer_get_root_node (GskRenderer *renderer)
  * gsk_renderer_is_realized: (attributes org.gtk.Method.get_property=realized)
  * @renderer: a `GskRenderer`
  *
- * Checks whether the @renderer is realized or not.
+ * Checks whether the `renderer` is realized or not.
  *
  * Returns: true if the `GskRenderer` was realized, and false otherwise
  */
@@ -280,7 +280,7 @@ gsk_renderer_is_realized (GskRenderer *renderer)
  * @surface: (nullable): the `GdkSurface` renderer will be used on
  * @error: return location for an error
  *
- * Creates the resources needed by the @renderer to render the scene
+ * Creates the resources needed by the `renderer` to render the scene
  * graph.
  *
  * Since GTK 4.6, the surface may be `NULL`, which allows using
@@ -343,18 +343,18 @@ gsk_renderer_unrealize (GskRenderer *renderer)
  * gsk_renderer_render_texture:
  * @renderer: a realized `GskRenderer`
  * @root: a `GskRenderNode`
- * @viewport: (nullable): the section to draw or `NULL` to use @root's bounds
+ * @viewport: (nullable): the section to draw or `NULL` to use `root`'s bounds
  *
  * Renders the scene graph, described by a tree of `GskRenderNode` instances,
  * to a `GdkTexture`.
  *
- * The @renderer will acquire a reference on the `GskRenderNode` tree while
+ * The `renderer` will acquire a reference on the `GskRenderNode` tree while
  * the rendering is in progress.
  *
- * If you want to apply any transformations to @root, you should put it into a
+ * If you want to apply any transformations to `root`, you should put it into a
  * transform node and pass that node instead.
  *
- * Returns: (transfer full): a `GdkTexture` with the rendered contents of @root.
+ * Returns: (transfer full): a `GdkTexture` with the rendered contents of `root`.
  */
 GdkTexture *
 gsk_renderer_render_texture (GskRenderer           *renderer,
@@ -410,16 +410,16 @@ gsk_renderer_render_texture (GskRenderer           *renderer,
  *   for the whole window
  *
  * Renders the scene graph, described by a tree of `GskRenderNode` instances
- * to the renderer's surface,  ensuring that the given @region gets redrawn.
+ * to the renderer's surface,  ensuring that the given `region` gets redrawn.
  *
  * If the renderer has no associated surface, this function does nothing.
  *
- * Renderers must ensure that changes of the contents given by the @root
- * node as well as the area given by @region are redrawn. They are however
- * free to not redraw any pixel outside of @region if they can guarantee that
+ * Renderers must ensure that changes of the contents given by the `root`
+ * node as well as the area given by `region` are redrawn. They are however
+ * free to not redraw any pixel outside of `region` if they can guarantee that
  * it didn't change.
  *
- * The @renderer will acquire a reference on the `GskRenderNode` tree while
+ * The `renderer` will acquire a reference on the `GskRenderNode` tree while
  * the rendering is in progress.
  */
 void
@@ -618,7 +618,7 @@ static struct {
  * gsk_renderer_new_for_surface:
  * @surface: a `GdkSurface`
  *
- * Creates an appropriate `GskRenderer` instance for the given @surface.
+ * Creates an appropriate `GskRenderer` instance for the given `surface`.
  *
  * If the `GSK_RENDERER` environment variable is set, GSK will
  * try that renderer first, before trying the backend-specific

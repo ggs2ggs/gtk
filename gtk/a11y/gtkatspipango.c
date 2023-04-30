@@ -46,7 +46,7 @@ gtk_pango_get_font_attributes (PangoFontDescription *font,
  * @layout: the `PangoLayout` from which to get attributes
  * @builder: a `GVariantBuilder` to add to
  *
- * Adds the default text attributes from @layout to @builder,
+ * Adds the default text attributes from `layout` to `builder`,
  * after translating them from Pango attributes to atspi
  * attributes.
  *
@@ -54,7 +54,7 @@ gtk_pango_get_font_attributes (PangoFontDescription *font,
  * support for the `AtkText` interface in widgets using Pango
  * layouts.
  *
- * Returns: the modified @attributes
+ * Returns: the modified `attributes`
  */
 void
 gtk_pango_get_default_attributes (PangoLayout     *layout,
@@ -112,7 +112,7 @@ gtk_pango_get_default_attributes (PangoLayout     *layout,
  * where the set of applicable attributes remains constant) and
  * returns the starting and ending offsets for it.
  *
- * The attributes for the run are added to @attributes, after
+ * The attributes for the run are added to `attributes`, after
  * translating them from Pango attributes to atspi attributes.
  *
  * This is a convenience function that can be used to implement
@@ -283,11 +283,11 @@ gtk_pango_get_run_attributes (PangoLayout     *layout,
 /*
  * gtk_pango_move_chars:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
- * @count: the number of characters to move from @offset
+ * @offset: a character offset in `layout`
+ * @count: the number of characters to move from `offset`
  *
- * Returns the position that is @count characters from the
- * given @offset. @count may be positive or negative.
+ * Returns the position that is `count` characters from the
+ * given `offset`. `count` may be positive or negative.
  *
  * For the purpose of this function, characters are defined
  * by what Pango considers cursor positions.
@@ -327,13 +327,13 @@ gtk_pango_move_chars (PangoLayout *layout,
 /*
  * gtk_pango_move_words:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
- * @count: the number of words to move from @offset
+ * @offset: a character offset in `layout`
+ * @count: the number of words to move from `offset`
  *
- * Returns the position that is @count words from the
- * given @offset. @count may be positive or negative.
+ * Returns the position that is `count` words from the
+ * given `offset`. `count` may be positive or negative.
  *
- * If @count is positive, the returned position will
+ * If `count` is positive, the returned position will
  * be a word end, otherwise it will be a word start.
  * See the Pango documentation for details on how
  * word starts and ends are defined.
@@ -373,13 +373,13 @@ gtk_pango_move_words (PangoLayout  *layout,
 /*
  * gtk_pango_move_sentences:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
- * @count: the number of sentences to move from @offset
+ * @offset: a character offset in `layout`
+ * @count: the number of sentences to move from `offset`
  *
- * Returns the position that is @count sentences from the
- * given @offset. @count may be positive or negative.
+ * Returns the position that is `count` sentences from the
+ * given `offset`. `count` may be positive or negative.
  *
- * If @count is positive, the returned position will
+ * If `count` is positive, the returned position will
  * be a sentence end, otherwise it will be a sentence start.
  * See the Pango documentation for details on how
  * sentence starts and ends are defined.
@@ -420,13 +420,13 @@ gtk_pango_move_sentences (PangoLayout  *layout,
 /*
  * gtk_pango_move_lines:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
- * @count: the number of lines to move from @offset
+ * @offset: a character offset in `layout`
+ * @count: the number of lines to move from `offset`
  *
- * Returns the position that is @count lines from the
- * given @offset. @count may be positive or negative.
+ * Returns the position that is `count` lines from the
+ * given `offset`. `count` may be positive or negative.
  *
- * If @count is negative, the returned position will
+ * If `count` is negative, the returned position will
  * be the start of a line, else it will be the end of
  * line.
  *
@@ -491,12 +491,12 @@ gtk_pango_move_lines (PangoLayout *layout,
 /*
  * gtk_pango_is_inside_word:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
+ * @offset: a character offset in `layout`
  *
  * Returns whether the given position is inside
  * a word.
  *
- * Returns: true if @offset is inside a word
+ * Returns: true if `offset` is inside a word
  */
 static gboolean
 gtk_pango_is_inside_word (PangoLayout  *layout,
@@ -520,12 +520,12 @@ gtk_pango_is_inside_word (PangoLayout  *layout,
 /*
  * gtk_pango_is_inside_sentence:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
+ * @offset: a character offset in `layout`
  *
  * Returns whether the given position is inside
  * a sentence.
  *
- * Returns: true if @offset is inside a sentence
+ * Returns: true if `offset` is inside a sentence
  */
 static gboolean
 gtk_pango_is_inside_sentence (PangoLayout  *layout,
@@ -765,14 +765,14 @@ pango_layout_get_line_after (PangoLayout           *layout,
 /*
  * gtk_pango_get_text_before:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
+ * @offset: a character offset in `layout`
  * @boundary_type: a `AtspiTextBoundaryType`
  * @start_offset: return location for the start of the returned text
  * @end_offset: return location for the end of the return text
  *
- * Gets a slice of the text from @layout before @offset.
+ * Gets a slice of the text from `layout` before `offset`.
  *
- * The @boundary_type determines the size of the returned slice of
+ * The `boundary_type` determines the size of the returned slice of
  * text. For the exact semantics of this function, see
  * atk_text_get_text_before_offset().
  *
@@ -870,14 +870,14 @@ gtk_pango_get_text_before (PangoLayout           *layout,
 /*
  * gtk_pango_get_text_after:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
+ * @offset: a character offset in `layout`
  * @boundary_type: a `AtspiTextBoundaryType`
  * @start_offset: return location for the start of the returned text
  * @end_offset: return location for the end of the return text
  *
- * Gets a slice of the text from @layout after @offset.
+ * Gets a slice of the text from `layout` after `offset`.
  *
- * The @boundary_type determines the size of the returned slice of
+ * The `boundary_type` determines the size of the returned slice of
  * text. For the exact semantics of this function, see
  * atk_text_get_text_after_offset().
  *
@@ -981,14 +981,14 @@ gtk_pango_get_text_after (PangoLayout           *layout,
 /*
  * gtk_pango_get_text_at:
  * @layout: a `PangoLayout`
- * @offset: a character offset in @layout
+ * @offset: a character offset in `layout`
  * @boundary_type: a `AtspiTextBoundaryType`
  * @start_offset: return location for the start of the returned text
  * @end_offset: return location for the end of the return text
  *
- * Gets a slice of the text from @layout at @offset.
+ * Gets a slice of the text from `layout` at `offset`.
  *
- * The @boundary_type determines the size of the returned slice of
+ * The `boundary_type` determines the size of the returned slice of
  * text. For the exact semantics of this function, see
  * atk_text_get_text_after_offset().
  *

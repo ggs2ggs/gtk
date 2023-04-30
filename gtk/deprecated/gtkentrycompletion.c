@@ -207,7 +207,7 @@ gtk_entry_completion_class_init (GtkEntryCompletionClass *klass)
    * whole prefix and select the newly inserted part.
    *
    * Applications may connect to this signal in order to insert only a
-   * smaller part of the @prefix into the entry - e.g. the entry used in
+   * smaller part of the `prefix` into the entry - e.g. the entry used in
    * the `GtkFileChooser` inserts only the part of the prefix up to the
    * next '/'.
    *
@@ -233,9 +233,9 @@ gtk_entry_completion_class_init (GtkEntryCompletionClass *klass)
    *
    * The default behaviour is to replace the contents of the
    * entry with the contents of the text column in the row
-   * pointed to by @iter.
+   * pointed to by `iter`.
    *
-   * Note that @model is the model that was passed to
+   * Note that `model` is the model that was passed to
    * [method@Gtk.EntryCompletion.set_model].
    *
    * Returns: true if the signal has been handled
@@ -261,9 +261,9 @@ gtk_entry_completion_class_init (GtkEntryCompletionClass *klass)
    *
    * The default behaviour is to replace the contents
    * of the entry with the contents of the text column in the row
-   * pointed to by @iter.
+   * pointed to by `iter`.
    *
-   * Note that @model is the model that was passed to
+   * Note that `model` is the model that was passed to
    * [method@Gtk.EntryCompletion.set_model].
    *
    * Returns: true if the signal has been handled
@@ -829,7 +829,7 @@ gtk_entry_completion_new (void)
  * @area: the `GtkCellArea` used to layout cells
  *
  * Creates a new `GtkEntryCompletion` object using the
- * specified @area.
+ * specified `area`.
  *
  * The `GtkCellArea` is used to layout cells in the underlying
  * `GtkTreeViewColumn` for the drop-down menu.
@@ -852,9 +852,9 @@ gtk_entry_completion_new_with_area (GtkCellArea *area)
  * gtk_entry_completion_get_entry:
  * @completion: a `GtkEntryCompletion`
  *
- * Gets the entry @completion has been attached to.
+ * Gets the entry `completion` has been attached to.
  *
- * Returns: (transfer none): The entry @completion has been attached to
+ * Returns: (transfer none): The entry `completion` has been attached to
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
  */
@@ -873,7 +873,7 @@ gtk_entry_completion_get_entry (GtkEntryCompletion *completion)
  *
  * Sets the model for a `GtkEntryCompletion`.
  *
- * If @completion already has a model set, it will remove it
+ * If `completion` already has a model set, it will remove it
  * before setting the new model. If model is `NULL`, then it
  * will unset the model.
  *
@@ -940,10 +940,10 @@ gtk_entry_completion_get_model (GtkEntryCompletion *completion)
  * gtk_entry_completion_set_match_func:
  * @completion: a `GtkEntryCompletion`
  * @func: the `GtkEntryCompletion`MatchFunc to use
- * @func_data: user data for @func
- * @func_notify: destroy notify for @func_data.
+ * @func_data: user data for `func`
+ * @func_notify: destroy notify for `func_data`.
  *
- * Sets the match function for @completion to be @func.
+ * Sets the match function for `completion` to be `func`.
  *
  * The match function is used to determine if a row should or
  * should not be in the completion list.
@@ -971,8 +971,8 @@ gtk_entry_completion_set_match_func (GtkEntryCompletion          *completion,
  * @completion: a `GtkEntryCompletion`
  * @length: the minimum length of the key in order to start completing
  *
- * Requires the length of the search key for @completion to be at least
- * @length.
+ * Requires the length of the search key for `completion` to be at least
+ * `length`.
  *
  * This is useful for long lists, where completing using a small
  * key takes a lot of time and will come up with meaningless results anyway
@@ -1000,7 +1000,7 @@ gtk_entry_completion_set_minimum_key_length (GtkEntryCompletion *completion,
  * gtk_entry_completion_get_minimum_key_length:
  * @completion: a `GtkEntryCompletion`
  *
- * Returns the minimum key length as set for @completion.
+ * Returns the minimum key length as set for `completion`.
  *
  * Returns: The currently used minimum key length
  *
@@ -1056,14 +1056,14 @@ gtk_entry_completion_complete (GtkEntryCompletion *completion)
 /**
  * gtk_entry_completion_set_text_column: (attributes org.gtk.Method.set_property=text-column)
  * @completion: a `GtkEntryCompletion`
- * @column: the column in the model of @completion to get strings from
+ * @column: the column in the model of `completion` to get strings from
  *
  * Convenience function for setting up the most used case of this code: a
  * completion list with just strings.
  *
- * This function will set up @completion
+ * This function will set up `completion`
  * to have a list displaying all (and just) strings in the completion list,
- * and to get those strings from @column in the model of @completion.
+ * and to get those strings from `column` in the model of `completion`.
  *
  * This functions creates and adds a `GtkCellRendererText` for the selected
  * column. If you need to set the text column, but don't want the cell
@@ -1100,7 +1100,7 @@ gtk_entry_completion_set_text_column (GtkEntryCompletion *completion,
  * gtk_entry_completion_get_text_column: (attributes org.gtk.Method.get_property=text-column)
  * @completion: a `GtkEntryCompletion`
  *
- * Returns the column in the model of @completion to get strings from.
+ * Returns the column in the model of `completion` to get strings from.
  *
  * Returns: the column containing the strings
  *
@@ -1252,15 +1252,15 @@ gtk_entry_completion_cursor_on_match (GtkEntryCompletion *completion,
  * @completion: the entry completion
  * @key: The text to complete for
  *
- * Computes the common prefix that is shared by all rows in @completion
- * that start with @key.
+ * Computes the common prefix that is shared by all rows in `completion`
+ * that start with `key`.
  *
- * If no row matches @key, `NULL` will be returned.
+ * If no row matches `key`, `NULL` will be returned.
  * Note that a text column must have been set for this function to work,
  * see [method@Gtk.EntryCompletion.set_text_column] for details.
  *
  * Returns: (nullable) (transfer full): The common prefix all rows
- *   starting with @key
+ *   starting with `key`
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
  */

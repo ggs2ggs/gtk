@@ -694,9 +694,9 @@ gtk_switch_new (void)
 /**
  * gtk_switch_set_active: (attributes org.gtk.Method.set_property=active)
  * @self: a `GtkSwitch`
- * @is_active: true if @self should be active, and false otherwise
+ * @is_active: true if `self` should be active, and false otherwise
  *
- * Changes the state of @self to the desired one.
+ * Changes the state of `self` to the desired one.
  */
 void
 gtk_switch_set_active (GtkSwitch *self,

@@ -288,7 +288,7 @@ gtk_alert_dialog_class_init (GtkAlertDialogClass *class)
 /**
  * gtk_alert_dialog_new:
  * @format: printf()-style format string
- * @...: arguments for @format
+ * `...`: arguments for `format`
  *
  * Creates a new `GtkAlertDialog` object.
  *
@@ -683,11 +683,11 @@ G_GNUC_END_IGNORE_DEPRECATIONS
  * @parent: (nullable): the parent `GtkWindow`
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (nullable) (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function shows the alert to the user.
  *
- * The @callback will be called when the alert is dismissed.
+ * The `callback` will be called when the alert is dismissed.
  * It should call [method@Gtk.AlertDialog.choose_finish]
  * to obtain the result.
  *

@@ -496,9 +496,9 @@ gtk_picture_new (void)
  * gtk_picture_new_for_paintable:
  * @paintable: (nullable): a `GdkPaintable`
  *
- * Creates a new `GtkPicture` displaying @paintable.
+ * Creates a new `GtkPicture` displaying `paintable`.
  *
- * The `GtkPicture` will track changes to the @paintable and update
+ * The `GtkPicture` will track changes to the `paintable` and update
  * its size and contents in response to it.
  *
  * Returns: a new `GtkPicture`
@@ -517,7 +517,7 @@ gtk_picture_new_for_paintable (GdkPaintable *paintable)
  * gtk_picture_new_for_pixbuf:
  * @pixbuf: (nullable): a `GdkPixbuf`
  *
- * Creates a new `GtkPicture` displaying @pixbuf.
+ * Creates a new `GtkPicture` displaying `pixbuf`.
  *
  * This is a utility function that calls [ctor@Gtk.Picture.new_for_paintable],
  * See that function for details.
@@ -551,7 +551,7 @@ gtk_picture_new_for_pixbuf (GdkPixbuf *pixbuf)
  * gtk_picture_new_for_file:
  * @file: (nullable): a `GFile`
  *
- * Creates a new `GtkPicture` displaying the given @file.
+ * Creates a new `GtkPicture` displaying the given `file`.
  *
  * If the file isn’t found or can’t be loaded, the resulting
  * `GtkPicture` is empty.
@@ -576,7 +576,7 @@ gtk_picture_new_for_file (GFile *file)
  * gtk_picture_new_for_filename:
  * @filename: (type filename) (nullable): a filename
  *
- * Creates a new `GtkPicture` displaying the file @filename.
+ * Creates a new `GtkPicture` displaying the file `filename`.
  *
  * This is a utility function that calls [ctor@Gtk.Picture.new_for_file].
  * See that function for details.
@@ -606,7 +606,7 @@ gtk_picture_new_for_filename (const char *filename)
  * gtk_picture_new_for_resource:
  * @resource_path: (nullable): resource path to play back
  *
- * Creates a new `GtkPicture` displaying the resource at @resource_path.
+ * Creates a new `GtkPicture` displaying the resource at `resource_path`.
  *
  * This is a utility function that calls [ctor@Gtk.Picture.new_for_file].
  * See that function for details.
@@ -649,7 +649,7 @@ gtk_picture_new_for_resource (const char *resource_path)
  * @self: a `GtkPicture`
  * @file: (nullable): a `GFile`
  *
- * Makes @self load and display @file.
+ * Makes `self` load and display `file`.
  *
  * See [ctor@Gtk.Picture.new_for_file] for details.
  */
@@ -685,12 +685,12 @@ gtk_picture_set_file (GtkPicture *self,
  * gtk_picture_get_file: (attributes org.gtk.Method.get_property=file)
  * @self: a `GtkPicture`
  *
- * Gets the `GFile` currently displayed if @self is displaying a file.
+ * Gets the `GFile` currently displayed if `self` is displaying a file.
  *
- * If @self is not displaying a file, for example when
+ * If `self` is not displaying a file, for example when
  * [method@Gtk.Picture.set_paintable] was used, then `NULL` is returned.
  *
- * Returns: (nullable) (transfer none): The `GFile` displayed by @self.
+ * Returns: (nullable) (transfer none): The `GFile` displayed by `self`.
  */
 GFile *
 gtk_picture_get_file (GtkPicture *self)
@@ -705,7 +705,7 @@ gtk_picture_get_file (GtkPicture *self)
  * @self: a `GtkPicture`
  * @filename: (type filename) (nullable): the filename to play
  *
- * Makes @self load and display the given @filename.
+ * Makes `self` load and display the given `filename`.
  *
  * This is a utility function that calls [method@Gtk.Picture.set_file].
  */
@@ -733,8 +733,8 @@ gtk_picture_set_filename (GtkPicture *self,
  * @self: a `GtkPicture`
  * @resource_path: (nullable): the resource to set
  *
- * Makes @self load and display the resource at the given
- * @resource_path.
+ * Makes `self` load and display the resource at the given
+ * `resource_path`.
  *
  * This is a utility function that calls [method@Gtk.Picture.set_file].
  */
@@ -805,9 +805,9 @@ gtk_picture_set_pixbuf (GtkPicture *self,
  * @self: a `GtkPicture`
  * @paintable: (nullable): a `GdkPaintable`
  *
- * Makes @self display the given @paintable.
+ * Makes `self` display the given `paintable`.
  *
- * If @paintable is `NULL`, nothing will be displayed.
+ * If `paintable` is `NULL`, nothing will be displayed.
  *
  * See [ctor@Gtk.Picture.new_for_paintable] for details.
  */
@@ -875,18 +875,18 @@ gtk_picture_get_paintable (GtkPicture *self)
  * @self: a `GtkPicture`
  * @keep_aspect_ratio: whether to keep aspect ratio
  *
- * If set to true, the @self will render its contents according to
+ * If set to true, the `self` will render its contents according to
  * their aspect ratio.
  *
  * That means that empty space may show up at the top/bottom or
- * left/right of @self.
+ * left/right of `self`.
  *
  * If set to false or if the contents provide no aspect ratio,
  * the contents will be stretched over the picture's whole area.
  *
  * Deprecated: 4.8: Use [method@Gtk.Picture.set_content_fit] instead. If still
  *   used, this method will always set the [property@Gtk.Picture:content-fit]
- *   property to `GTK_CONTENT_FIT_CONTAIN` if @keep_aspect_ratio is true,
+ *   property to `GTK_CONTENT_FIT_CONTAIN` if `keep_aspect_ratio` is true,
  *   otherwise it will set it to `GTK_CONTENT_FIT_FILL`.
  */
 void
@@ -922,9 +922,9 @@ gtk_picture_get_keep_aspect_ratio (GtkPicture *self)
 /**
  * gtk_picture_set_can_shrink: (attributes org.gtk.Method.set_property=can-shrink)
  * @self: a `GtkPicture`
- * @can_shrink: if @self can be made smaller than its contents
+ * @can_shrink: if `self` can be made smaller than its contents
  *
- * If set to true, the @self can be made smaller than its contents.
+ * If set to true, the `self` can be made smaller than its contents.
  *
  * The contents will then be scaled down when rendering.
  *
@@ -1062,7 +1062,7 @@ gtk_picture_set_alternative_text (GtkPicture *self,
  *
  * The returned string will be `NULL` if the picture cannot be described textually.
  *
- * Returns: (nullable) (transfer none): the alternative textual description of @self.
+ * Returns: (nullable) (transfer none): the alternative textual description of `self`.
  */
 const char *
 gtk_picture_get_alternative_text (GtkPicture *self)

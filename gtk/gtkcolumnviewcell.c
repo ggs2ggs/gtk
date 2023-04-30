@@ -248,9 +248,9 @@ gtk_column_view_cell_do_notify (GtkColumnViewCell *column_view_cell,
  * gtk_column_view_cell_get_item: (attributes org.gtk.Method.get_property=item)
  * @self: a `GtkColumnViewCell`
  *
- * Gets the model item that associated with @self.
+ * Gets the model item that associated with `self`.
  *
- * If @self is unbound, this function returns `NULL`.
+ * If `self` is unbound, this function returns `NULL`.
  *
  * Returns: (nullable) (transfer none) (type GObject): The item displayed
  *
@@ -327,9 +327,9 @@ gtk_column_view_cell_set_child (GtkColumnViewCell *self,
  * gtk_column_view_cell_get_position: (attributes org.gtk.Method.get_property=position)
  * @self: a `GtkColumnViewCell`
  *
- * Gets the position in the model that @self currently displays.
+ * Gets the position in the model that `self` currently displays.
  *
- * If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
+ * If `self` is unbound, %GTK_INVALID_LIST_POSITION is returned.
  *
  * Returns: The position of this item
  *
@@ -394,7 +394,7 @@ gtk_column_view_cell_get_focusable (GtkColumnViewCell *self)
  * @self: a `GtkColumnViewCell`
  * @focusable: if the item should be focusable
  *
- * Sets @self to be focusable.
+ * Sets `self` to be focusable.
  *
  * If an item is focusable, it can be focused using the keyboard.
  * This works similar to [method@Gtk.Widget.set_focusable].

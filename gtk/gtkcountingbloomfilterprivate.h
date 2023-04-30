@@ -129,16 +129,16 @@ gtk_counting_bloom_filter_remove (GtkCountingBloomFilter *self,
  * @self: a `GtkCountingBloomFilter`
  * @hash: the hash value to check
  *
- * Checks if @hash may be contained in @self.
+ * Checks if `hash` may be contained in `self`.
  *
- * A return value of false means that @hash is definitely not part
- * of @self.
+ * A return value of false means that `hash` is definitely not part
+ * of `self`.
  *
- * A return value of true means that @hash may or may not have been
- * added to @self. In that case a different method must be used to
- * confirm that @hash is indeed part of the set.
+ * A return value of true means that `hash` may or may not have been
+ * added to `self`. In that case a different method must be used to
+ * confirm that `hash` is indeed part of the set.
  *
- * Returns: false if @hash is not part of @self.
+ * Returns: false if `hash` is not part of `self`.
  **/
 static inline gboolean
 gtk_counting_bloom_filter_may_contain (const GtkCountingBloomFilter *self,

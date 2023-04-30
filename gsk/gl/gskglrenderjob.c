@@ -97,8 +97,8 @@ struct _GskGLRenderJob
   /* The region that we are clipping. Normalized to a single rectangle region. */
   cairo_region_t *region;
 
-  /* The framebuffer to draw to in the @context GL context. So 0 would be the
-   * default framebuffer of @context. This is important to note as many other
+  /* The framebuffer to draw to in the `context` GL context. So 0 would be the
+   * default framebuffer of `context`. This is important to note as many other
    * operations could be done using objects shared from the command queues
    * GL context.
    */
@@ -2015,7 +2015,7 @@ gsk_gl_render_job_visit_css_background (GskGLRenderJob      *job,
   gsk_gl_render_job_end_draw (job);
 }
 
-/* Returns TRUE if applying @transform to @bounds
+/* Returns TRUE if applying `transform` to `bounds`
  * yields an axis-aligned rectangle
  */
 static gboolean

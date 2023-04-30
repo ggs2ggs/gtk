@@ -675,7 +675,7 @@ gtk_revealer_start_animation (GtkRevealer *revealer,
  * Tells the `GtkRevealer` to reveal or conceal its child.
  *
  * The transition will be animated with the current
- * transition type of @revealer.
+ * transition type of `revealer`.
  */
 void
 gtk_revealer_set_reveal_child (GtkRevealer *revealer,
@@ -816,9 +816,9 @@ gtk_revealer_set_transition_duration (GtkRevealer *revealer,
  * @revealer: a `GtkRevealer`
  *
  * Gets the type of animation that will be used
- * for transitions in @revealer.
+ * for transitions in `revealer`.
  *
- * Returns: the current transition type of @revealer
+ * Returns: the current transition type of `revealer`
  */
 GtkRevealerTransitionType
 gtk_revealer_get_transition_type (GtkRevealer *revealer)
@@ -834,7 +834,7 @@ gtk_revealer_get_transition_type (GtkRevealer *revealer)
  * @transition: the new transition type
  *
  * Sets the type of animation that will be used for
- * transitions in @revealer.
+ * transitions in `revealer`.
  *
  * Available types include various kinds of fades and slides.
  */
@@ -857,7 +857,7 @@ gtk_revealer_set_transition_type (GtkRevealer               *revealer,
  * @revealer: a `GtkRevealer`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @revealer.
+ * Sets the child widget of `revealer`.
  */
 void
 gtk_revealer_set_child (GtkRevealer *revealer,
@@ -885,9 +885,9 @@ gtk_revealer_set_child (GtkRevealer *revealer,
  * gtk_revealer_get_child: (attributes org.gtk.Method.get_property=child)
  * @revealer: a `GtkRevealer`
  *
- * Gets the child widget of @revealer.
+ * Gets the child widget of `revealer`.
  *
- * Returns: (nullable) (transfer none): the child widget of @revealer
+ * Returns: (nullable) (transfer none): the child widget of `revealer`
  */
 GtkWidget *
 gtk_revealer_get_child (GtkRevealer *revealer)

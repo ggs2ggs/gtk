@@ -4126,7 +4126,7 @@ gtk_places_sidebar_class_init (GtkPlacesSidebarClass *class)
    * GtkPlacesSidebar::open-location:
    * @sidebar: the object which received the signal.
    * @location: (type Gio.File): GFile to which the caller should switch.
-   * @open_flags: a single value from GtkPlacesOpenFlags specifying how the @location should be opened.
+   * @open_flags: a single value from GtkPlacesOpenFlags specifying how the `location` should be opened.
    *
    * The places sidebar emits this signal when the user selects a location
    * in it.  The calling application should display the contents of that
@@ -4196,15 +4196,15 @@ gtk_places_sidebar_class_init (GtkPlacesSidebarClass *class)
    * to ask the application for which drag action to perform, then the
    * sidebar will emit this signal.
    *
-   * The application can evaluate the @context for customary actions, or
-   * it can check the type of the files indicated by @source_file_list against the
-   * possible actions for the destination @dest_file.
+   * The application can evaluate the `context` for customary actions, or
+   * it can check the type of the files indicated by `source_file_list` against the
+   * possible actions for the destination `dest_file`.
    *
    * The drag action to use must be the return value of the signal handler.
    *
    * Returns: The drag action to use, for example, GDK_ACTION_COPY
    * or GDK_ACTION_MOVE, or 0 if no action is allowed here (i.e. drops
-   * are not allowed in the specified @dest_file).
+   * are not allowed in the specified `dest_file`).
    */
   places_sidebar_signals [DRAG_ACTION_REQUESTED] =
           g_signal_new (I_("drag-action-requested"),
@@ -4248,9 +4248,9 @@ gtk_places_sidebar_class_init (GtkPlacesSidebarClass *class)
    *
    * The places sidebar emits this signal when the user completes a
    * drag-and-drop operation and one of the sidebar's items is the
-   * destination.  This item is in the @dest_file, and the
-   * @source_file_list has the list of files that are dropped into it and
-   * which should be copied/moved/etc. based on the specified @action.
+   * destination.  This item is in the `dest_file`, and the
+   * `source_file_list` has the list of files that are dropped into it and
+   * which should be copied/moved/etc. based on the specified `action`.
    */
   places_sidebar_signals [DRAG_PERFORM_DROP] =
           g_signal_new (I_("drag-perform-drop"),
@@ -4412,15 +4412,15 @@ gtk_places_sidebar_new (void)
  * “directly” into their main view, while others may support opening locations
  * in a new notebook tab or a new window.
  *
- * This function is used to tell the places @sidebar about the ways in which the
+ * This function is used to tell the places `sidebar` about the ways in which the
  * application can open new locations, so that the sidebar can display (or not)
  * the “Open in new tab” and “Open in new window” menu items as appropriate.
  *
  * When the GtkPlacesSidebar::open-location signal is emitted, its flags
- * argument will be set to one of the @flags that was passed in
+ * argument will be set to one of the `flags` that was passed in
  * gtk_places_sidebar_set_open_flags().
  *
- * Passing 0 for @flags will cause GTK_PLACES_OPEN_NORMAL to always be sent
+ * Passing 0 for `flags` will cause GTK_PLACES_OPEN_NORMAL to always be sent
  * to callbacks for the “open-location” signal.
  */
 void
@@ -4442,7 +4442,7 @@ gtk_places_sidebar_set_open_flags (GtkPlacesSidebar   *sidebar,
  *
  * Gets the open flags.
  *
- * Returns: the GtkPlacesOpenFlags of @sidebar
+ * Returns: the GtkPlacesOpenFlags of `sidebar`
  */
 GtkPlacesOpenFlags
 gtk_places_sidebar_get_open_flags (GtkPlacesSidebar *sidebar)
@@ -4458,9 +4458,9 @@ gtk_places_sidebar_get_open_flags (GtkPlacesSidebar *sidebar)
  * @location: (nullable): location to select, or `NULL` for no current path
  *
  * Sets the location that is being shown in the widgets surrounding the
- * @sidebar, for example, in a folder view in a file manager.  In turn, the
- * @sidebar will highlight that location if it is being shown in the list of
- * places, or it will unhighlight everything if the @location is not among the
+ * `sidebar`, for example, in a folder view in a file manager.  In turn, the
+ * `sidebar` will highlight that location if it is being shown in the list of
+ * places, or it will unhighlight everything if the `location` is not among the
  * places in the list.
  */
 void
@@ -4515,12 +4515,12 @@ gtk_places_sidebar_set_location (GtkPlacesSidebar *sidebar,
  * gtk_places_sidebar_get_location:
  * @sidebar: a places sidebar
  *
- * Gets the currently selected location in the @sidebar. This can be `NULL` when
+ * Gets the currently selected location in the `sidebar`. This can be `NULL` when
  * nothing is selected, for example, when gtk_places_sidebar_set_location() has
  * been called with a location that is not among the sidebar’s list of places to
  * show.
  *
- * You can use this function to get the selection in the @sidebar.
+ * You can use this function to get the selection in the `sidebar`.
  *
  * Returns: (nullable) (transfer full): a GFile with the selected location, or
  * `NULL` if nothing is visually selected.
@@ -4570,7 +4570,7 @@ gtk_places_sidebar_get_location_title (GtkPlacesSidebar *sidebar)
  * @sidebar: a places sidebar
  * @show_recent: whether to show an item for recent files
  *
- * Sets whether the @sidebar should show an item for recent files.
+ * Sets whether the `sidebar` should show an item for recent files.
  * The default value for this option is determined by the desktop
  * environment, but this function can be used to override it on a
  * per-application basis.
@@ -4613,7 +4613,7 @@ gtk_places_sidebar_get_show_recent (GtkPlacesSidebar *sidebar)
  * @sidebar: a places sidebar
  * @show_desktop: whether to show an item for the Desktop folder
  *
- * Sets whether the @sidebar should show an item for the Desktop folder.
+ * Sets whether the `sidebar` should show an item for the Desktop folder.
  * The default value for this option is determined by the desktop
  * environment and the user’s configuration, but this function can be
  * used to override it on a per-application basis.
@@ -4660,7 +4660,7 @@ gtk_places_sidebar_get_show_desktop (GtkPlacesSidebar *sidebar)
  * @sidebar: a places sidebar
  * @show_enter_location: whether to show an item to enter a location
  *
- * Sets whether the @sidebar should show an item for entering a location;
+ * Sets whether the `sidebar` should show an item for entering a location;
  * this is off by default. An application may want to turn this on if manually
  * entering URLs is an expected user action.
  *
@@ -4703,7 +4703,7 @@ gtk_places_sidebar_get_show_enter_location (GtkPlacesSidebar *sidebar)
  * @sidebar: a places sidebar
  * @show_other_locations: whether to show an item for the Other Locations view
  *
- * Sets whether the @sidebar should show an item for the application to show
+ * Sets whether the `sidebar` should show an item for the application to show
  * an Other Locations view; this is off by default. When set to true, persistent
  * devices such as hard drives are hidden, otherwise they are shown in the sidebar.
  * An application may want to turn this on if it implements a way for the user to
@@ -4748,7 +4748,7 @@ gtk_places_sidebar_get_show_other_locations (GtkPlacesSidebar *sidebar)
  * @sidebar: a places sidebar
  * @show_trash: whether to show an item for the Trash location
  *
- * Sets whether the @sidebar should show an item for the Trash location.
+ * Sets whether the `sidebar` should show an item for the Trash location.
  */
 void
 gtk_places_sidebar_set_show_trash (GtkPlacesSidebar *sidebar,
@@ -4791,7 +4791,7 @@ gtk_places_sidebar_get_show_trash (GtkPlacesSidebar *sidebar)
  * program could add a “/usr/share/clipart” location when the sidebar is
  * being used in an “Insert Clipart” dialog box.
  *
- * This function adds the specified @location to a special place for immutable
+ * This function adds the specified `location` to a special place for immutable
  * shortcuts.  The shortcuts are application-specific; they are not shared
  * across applications, and they are not persistent.  If this function
  * is called multiple times with different locations, then they are added
@@ -4815,7 +4815,7 @@ gtk_places_sidebar_add_shortcut (GtkPlacesSidebar *sidebar,
  * @location: location to remove
  *
  * Removes an application-specific shortcut that has been previously been
- * inserted with gtk_places_sidebar_add_shortcut().  If the @location is not a
+ * inserted with gtk_places_sidebar_add_shortcut().  If the `location` is not a
  * shortcut in the sidebar, then nothing is done.
  */
 void
@@ -4851,7 +4851,7 @@ gtk_places_sidebar_remove_shortcut (GtkPlacesSidebar *sidebar,
  * Gets the list of shortcuts, as a list model containing GFile objects.
  *
  * You should not modify the returned list model. Future changes to
- * @sidebar may or may not affect the returned model.
+ * `sidebar` may or may not affect the returned model.
  *
  * Returns: (transfer full): a list model of GFiles that have been added as
  *   application-specific shortcuts with gtk_places_sidebar_add_shortcut()
@@ -4873,7 +4873,7 @@ gtk_places_sidebar_get_shortcuts (GtkPlacesSidebar *sidebar)
  * and returns one of them.  This function is used by GtkFileChooser to implement
  * the “Alt-1”, “Alt-2”, etc. shortcuts, which activate the corresponding bookmark.
  *
- * Returns: (nullable) (transfer full): The bookmark specified by the index @n, or
+ * Returns: (nullable) (transfer full): The bookmark specified by the index `n`, or
  * `NULL` if no such index exist.  Note that the indices start at 0, even though
  * the file chooser starts them with the keyboard shortcut "Alt-1".
  */

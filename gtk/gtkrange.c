@@ -941,7 +941,7 @@ gtk_range_get_slider_size_fixed (GtkRange *range)
  * @range_rect: (out): return location for the range rectangle
  *
  * This function returns the area that contains the range’s trough,
- * in coordinates relative to @range's origin.
+ * in coordinates relative to `range`'s origin.
  *
  * This function is useful mainly for `GtkRange` subclasses.
  */
@@ -1057,9 +1057,9 @@ gtk_range_set_increments (GtkRange *range,
  *
  * Sets the allowable values in the `GtkRange`.
  *
- * The range value is clamped to be between @min and @max.
+ * The range value is clamped to be between `min` and `max`.
  * (If the range has a non-zero page size, it is clamped
- * between @min and @max - page-size.)
+ * between `min` and `max` - page-size.)
  */
 void
 gtk_range_set_range (GtkRange *range,
@@ -1179,7 +1179,7 @@ gtk_range_set_show_fill_level (GtkRange *range,
  *
  * Gets whether the range displays the fill level graphically.
  *
- * Returns: true if @range shows the fill level.
+ * Returns: true if `range` shows the fill level.
  */
 gboolean
 gtk_range_get_show_fill_level (GtkRange *range)
@@ -1226,7 +1226,7 @@ gtk_range_set_restrict_to_fill_level (GtkRange *range,
  *
  * Gets whether the range is restricted to the fill level.
  *
- * Returns: true if @range is restricted to the fill level.
+ * Returns: true if `range` is restricted to the fill level.
  **/
 gboolean
 gtk_range_get_restrict_to_fill_level (GtkRange *range)

@@ -780,7 +780,7 @@ gtk_shortcut_controller_new_for_model (GListModel *model)
  * @self: the controller
  * @shortcut: (transfer full): a `GtkShortcut`
  *
- * Adds @shortcut to the list of shortcuts handled by @self.
+ * Adds `shortcut` to the list of shortcuts handled by `self`.
  *
  * If this controller uses an external shortcut list, this
  * function does nothing.
@@ -817,9 +817,9 @@ gtk_shortcut_controller_add_shortcut (GtkShortcutController *self,
  * @self: the controller
  * @shortcut: a `GtkShortcut`
  *
- * Removes @shortcut from the list of shortcuts handled by @self.
+ * Removes `shortcut` from the list of shortcuts handled by `self`.
  *
- * If @shortcut had not been added to @controller or this controller
+ * If `shortcut` had not been added to `controller` or this controller
  * uses an external shortcut list, this function does nothing.
  **/
 void
@@ -863,7 +863,7 @@ gtk_shortcut_controller_remove_shortcut (GtkShortcutController  *self,
  * @self: a `GtkShortcutController`
  * @scope: the new scope to use
  *
- * Sets the controller to have the given @scope.
+ * Sets the controller to have the given `scope`.
  *
  * The scope allows shortcuts to be activated outside of the normal
  * event propagation. In particular, it allows installing global

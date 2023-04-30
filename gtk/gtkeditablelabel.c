@@ -418,7 +418,7 @@ gtk_editable_label_class_init (GtkEditableLabelClass *class)
    * GtkEditableLabel|editing.stop:
    * @commit: Whether the make changes permanent
    *
-   * Switch the widget out of editing mode. If @commit
+   * Switch the widget out of editing mode. If `commit`
    * is true, then the results of the editing are taken
    * as the new value of `GtkEditable:text`.
    *
@@ -471,7 +471,7 @@ gtk_editable_label_new (const char *str)
  *
  * Returns whether the label is currently in “editing mode”.
  *
- * Returns: true if @self is currently in editing mode
+ * Returns: true if `self` is currently in editing mode
  */
 gboolean
 gtk_editable_label_get_editing (GtkEditableLabel *self)
@@ -510,7 +510,7 @@ gtk_editable_label_start_editing (GtkEditableLabel *self)
  *
  * Switches the label out of “editing mode”.
  *
- * If @commit is true, the resulting text is kept as the
+ * If `commit` is true, the resulting text is kept as the
  * [property@Gtk.Editable:text] property value, otherwise the
  * resulting text is discarded and the label will keep its
  * previous [property@Gtk.Editable:text] property value.

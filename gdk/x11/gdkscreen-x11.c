@@ -367,7 +367,7 @@ gdk_x11_screen_get_xscreen (GdkX11Screen *screen)
  *
  * Returns the index of a `GdkX11Screen`.
  *
- * Returns: the position of @screen among the screens
+ * Returns: the position of `screen` among the screens
  *   of its display
  */
 int
@@ -1195,7 +1195,7 @@ fetch_net_wm_check_window (GdkX11Screen *x11_screen)
  * You can monitor the window_manager_changed signal on `GdkX11Screen` to detect
  * a window manager change.
  *
- * Returns: true if the window manager supports @property
+ * Returns: true if the window manager supports `property`
  **/
 gboolean
 gdk_x11_screen_supports_net_wm_hint (GdkX11Screen *x11_screen,
@@ -1268,9 +1268,9 @@ gdk_x11_screen_supports_net_wm_hint (GdkX11Screen *x11_screen,
  * gdk_x11_screen_get_window_manager_name:
  * @screen: a `GdkX11Screen`
  *
- * Returns the name of the window manager for @screen.
+ * Returns the name of the window manager for `screen`.
  *
- * Returns: the name of the window manager screen @screen, or
+ * Returns: the name of the window manager screen `screen`, or
  * "unknown" if the window manager is unknown. The string is owned by GDK
  * and should not be freed.
  **/
@@ -1383,7 +1383,7 @@ get_netwm_cardinal_property (GdkX11Screen *x11_screen,
  * gdk_x11_screen_get_number_of_desktops:
  * @screen: a `GdkX11Screen`
  *
- * Returns the number of workspaces for @screen when running under a
+ * Returns the number of workspaces for `screen` when running under a
  * window manager that supports multiple workspaces, as described
  * in the
  * [Extended Window Manager Hints](http://www.freedesktop.org/Standards/wm-spec) specification.
@@ -1400,7 +1400,7 @@ gdk_x11_screen_get_number_of_desktops (GdkX11Screen *screen)
  * gdk_x11_screen_get_current_desktop:
  * @screen: a `GdkX11Screen`
  *
- * Returns the current workspace for @screen when running under a
+ * Returns the current workspace for `screen` when running under a
  * window manager that supports multiple workspaces, as described
  * in the
  * [Extended Window Manager Hints](http://www.freedesktop.org/Standards/wm-spec) specification.

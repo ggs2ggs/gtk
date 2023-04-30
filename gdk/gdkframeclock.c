@@ -601,7 +601,7 @@ _gdk_frame_clock_debug_print_timings (GdkFrameClock   *clock,
  * known presentation time and refresh interval, and assuming that
  * presentation times are separated by the refresh interval,
  * predicts a presentation time that is a multiple of the refresh
- * interval after the last presentation time, and later than @base_time.
+ * interval after the last presentation time, and later than `base_time`.
  */
 void
 gdk_frame_clock_get_refresh_info (GdkFrameClock *frame_clock,
@@ -761,7 +761,7 @@ guess_refresh_interval (GdkFrameClock *frame_clock)
  * @frame_clock: a `GdkFrameClock`
  *
  * Calculates the current frames-per-second, based on the
- * frame timings of @frame_clock.
+ * frame timings of `frame_clock`.
  *
  * Returns: the current fps, as a `double`
  */

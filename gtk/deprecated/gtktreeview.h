@@ -64,20 +64,20 @@ typedef struct _GtkTreeSelection      GtkTreeSelection;
  * GtkTreeViewColumnDropFunc:
  * @tree_view: A `GtkTreeView`
  * @column: The `GtkTreeViewColumn` being dragged
- * @prev_column: A `GtkTreeViewColumn` on one side of @column
- * @next_column: A `GtkTreeViewColumn` on the other side of @column
+ * @prev_column: A `GtkTreeViewColumn` on one side of `column`
+ * @next_column: A `GtkTreeViewColumn` on the other side of `column`
  * @data: (closure): user data
  *
- * Function type for determining whether @column can be dropped in a
- * particular spot (as determined by @prev_column and @next_column).  In
- * left to right locales, @prev_column is on the left of the potential drop
- * spot, and @next_column is on the right.  In right to left mode, this is
+ * Function type for determining whether `column` can be dropped in a
+ * particular spot (as determined by `prev_column` and `next_column`).  In
+ * left to right locales, `prev_column` is on the left of the potential drop
+ * spot, and `next_column` is on the right.  In right to left mode, this is
  * reversed.  This function should return true if the spot is a valid drop
  * spot.  Please note that returning true does not actually indicate that
  * the column drop was made, but is meant only to indicate a possible drop
  * spot to the user.
  *
- * Returns: true, if @column can be dropped in this spot
+ * Returns: true, if `column` can be dropped in this spot
  */
 typedef gboolean (* GtkTreeViewColumnDropFunc) (GtkTreeView             *tree_view,
 						GtkTreeViewColumn       *column,
@@ -102,11 +102,11 @@ typedef void     (* GtkTreeViewMappingFunc)    (GtkTreeView             *tree_vi
  * @model: the `GtkTreeModel` being searched
  * @column: the search column set by gtk_tree_view_set_search_column()
  * @key: the key string to compare with
- * @iter: a `GtkTreeIter` pointing the row of @model that should be compared
- *  with @key.
+ * @iter: a `GtkTreeIter` pointing the row of `model` that should be compared
+ *  with `key`.
  * @search_data: (closure): user data from gtk_tree_view_set_search_equal_func()
  *
- * A function used for checking whether a row in @model matches
+ * A function used for checking whether a row in `model` matches
  * a search key string entered by the user. Note the return value
  * is reversed from what you would normally expect, though it
  * has some similarity to strcmp() returning 0 for equal strings.
@@ -122,10 +122,10 @@ typedef gboolean (*GtkTreeViewSearchEqualFunc) (GtkTreeModel            *model,
 /**
  * GtkTreeViewRowSeparatorFunc:
  * @model: the `GtkTreeModel`
- * @iter: a `GtkTreeIter` pointing at a row in @model
+ * @iter: a `GtkTreeIter` pointing at a row in `model`
  * @data: (closure): user data
  *
- * Function type for determining whether the row pointed to by @iter should
+ * Function type for determining whether the row pointed to by `iter` should
  * be rendered as a separator. A common way to implement this is to have a
  * boolean column in the model, whose values the `GtkTreeViewRowSeparatorFunc`
  * returns.

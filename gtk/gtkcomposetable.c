@@ -1277,12 +1277,12 @@ compare_seq_index (const void *key, const void *value)
  * gtk_compose_table_check:
  * @table: the table to check
  * @compose_buffer: the key vals to match
- * @n_compose: number of non-zero key vals in @compose_buffer
+ * @n_compose: number of non-zero key vals in `compose_buffer`
  * @compose_finish: (out): return location for whether there may be longer matches
  * @compose_match: (out): return location for whether there is a match
  * @output: (out) (caller-allocates): return location for the match values
  *
- * Looks for matches for a key sequence in @table.
+ * Looks for matches for a key sequence in `table`.
  *
  * Returns: true if there were any matches, false otherwise
  */

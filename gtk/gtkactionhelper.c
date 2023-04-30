@@ -374,11 +374,11 @@ gtk_action_helper_observer_iface_init (GtkActionObserverInterface *iface)
  * Creates a helper to track the state of a named action.  This will
  * usually be used by widgets implementing `GtkActionable`.
  *
- * This helper class is usually used by @widget itself.  In order to
+ * This helper class is usually used by `widget` itself.  In order to
  * avoid reference cycles, the helper does not hold a reference on
- * @widget, but will assume that it continues to exist for the duration
+ * `widget`, but will assume that it continues to exist for the duration
  * of the life of the helper.  If you are using the helper from outside
- * of the widget, you should take a ref on @widget for each ref you hold
+ * of the widget, you should take a ref on `widget` for each ref you hold
  * on the helper.
  *
  * Returns: a new `GtkActionHelper`
@@ -486,7 +486,7 @@ gtk_action_helper_set_action_name (GtkActionHelper *helper,
  * @helper: a `GtkActionHelper`
  * @target_value: an action target, as per `GtkActionable`
  *
- * This function consumes @action_target if it is floating.
+ * This function consumes `action_target` if it is floating.
  */
 void
 gtk_action_helper_set_action_target_value (GtkActionHelper *helper,

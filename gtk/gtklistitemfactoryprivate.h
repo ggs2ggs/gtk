@@ -34,7 +34,7 @@ struct _GtkListItemFactoryClass
 {
   GObjectClass parent_class;
 
-  /* setup @list_item so it can be bound */
+  /* setup `list_item` so it can be bound */
   void                  (* setup)                               (GtkListItemFactory     *self,
                                                                  GObject                *item,
                                                                  gboolean                bind,
@@ -47,7 +47,7 @@ struct _GtkListItemFactoryClass
                                                                  GFunc                   func,
                                                                  gpointer                data);
 
-  /* Update properties on @list_item to the given @item, which is in @position and @selected state.
+  /* Update properties on `list_item` to the given `item`, which is in `position` and `selected` state.
    * One or more of those properties might be unchanged. */
   void                  (* update)                              (GtkListItemFactory     *self,
                                                                  GObject                *item,

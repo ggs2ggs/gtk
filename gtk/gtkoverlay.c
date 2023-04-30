@@ -330,11 +330,11 @@ gtk_overlay_class_init (GtkOverlayClass *klass)
    * Emitted to determine the position and size of any overlay
    * child widgets.
    *
-   * A handler for this signal should fill @allocation with
-   * the desired position and size for @widget, relative to
-   * the 'main' child of @overlay.
+   * A handler for this signal should fill `allocation` with
+   * the desired position and size for `widget`, relative to
+   * the 'main' child of `overlay`.
    *
-   * The default handler for this signal uses the @widget's
+   * The default handler for this signal uses the `widget`'s
    * halign and valign properties to determine the position
    * and gives the widget its natural size (except that an
    * alignment of %GTK_ALIGN_FILL will cause the overlay to
@@ -342,7 +342,7 @@ gtk_overlay_class_init (GtkOverlayClass *klass)
    * `GtkScrolledWindow`, the overlays are placed relative
    * to its contents.
    *
-   * Returns: true if the @allocation has been filled
+   * Returns: true if the `allocation` has been filled
    */
   signals[GET_CHILD_POSITION] =
     g_signal_new (I_("get-child-position"),
@@ -417,12 +417,12 @@ gtk_overlay_new (void)
  * @overlay: a `GtkOverlay`
  * @widget: a `GtkWidget` to be added to the container
  *
- * Adds @widget to @overlay.
+ * Adds `widget` to `overlay`.
  *
  * The widget will be stacked on top of the main widget
  * added with [method@Gtk.Overlay.set_child].
  *
- * The position at which @widget is placed is determined
+ * The position at which `widget` is placed is determined
  * from its [property@Gtk.Widget:halign] and
  * [property@Gtk.Widget:valign] properties.
  */
@@ -462,11 +462,11 @@ gtk_overlay_remove_overlay (GtkOverlay *overlay,
  * @widget: an overlay child of `GtkOverlay`
  * @measure: whether the child should be measured
  *
- * Sets whether @widget is included in the measured size of @overlay.
+ * Sets whether `widget` is included in the measured size of `overlay`.
  *
  * The overlay will request the size of the largest child that has
  * this property set to true. Children who are not included may
- * be drawn outside of @overlay's allocation if they are too large.
+ * be drawn outside of `overlay`'s allocation if they are too large.
  */
 void
 gtk_overlay_set_measure_overlay (GtkOverlay *overlay,
@@ -489,8 +489,8 @@ gtk_overlay_set_measure_overlay (GtkOverlay *overlay,
  * @overlay: a `GtkOverlay`
  * @widget: an overlay child of `GtkOverlay`
  *
- * Gets whether @widget's size is included in the measurement of
- * @overlay.
+ * Gets whether `widget`'s size is included in the measurement of
+ * `overlay`.
  *
  * Returns: whether the widget is measured
  */
@@ -515,7 +515,7 @@ gtk_overlay_get_measure_overlay (GtkOverlay *overlay,
  * @widget: an overlay child of `GtkOverlay`
  * @clip_overlay: whether the child should be clipped
  *
- * Sets whether @widget should be clipped within the parent.
+ * Sets whether `widget` should be clipped within the parent.
  */
 void
 gtk_overlay_set_clip_overlay (GtkOverlay *overlay,
@@ -538,7 +538,7 @@ gtk_overlay_set_clip_overlay (GtkOverlay *overlay,
  * @overlay: a `GtkOverlay`
  * @widget: an overlay child of `GtkOverlay`
  *
- * Gets whether @widget should be clipped within the parent.
+ * Gets whether `widget` should be clipped within the parent.
  *
  * Returns: whether the widget is clipped within the parent.
  */
@@ -563,7 +563,7 @@ gtk_overlay_get_clip_overlay (GtkOverlay *overlay,
  * @overlay: a `GtkOverlay`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @overlay.
+ * Sets the child widget of `overlay`.
  */
 void
 gtk_overlay_set_child (GtkOverlay *overlay,
@@ -592,9 +592,9 @@ gtk_overlay_set_child (GtkOverlay *overlay,
  * gtk_overlay_get_child:
  * @overlay: a `GtkOverlay`
  *
- * Gets the child widget of @overlay.
+ * Gets the child widget of `overlay`.
  *
- * Returns: (nullable) (transfer none): the child widget of @overlay
+ * Returns: (nullable) (transfer none): the child widget of `overlay`
  */
 GtkWidget *
 gtk_overlay_get_child (GtkOverlay *overlay)

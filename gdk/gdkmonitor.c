@@ -309,7 +309,7 @@ gdk_monitor_class_init (GdkMonitorClass *class)
    * GdkMonitor::invalidate:
    * @monitor: the object on which this signal was emitted
    *
-   * Emitted when the output represented by @monitor gets disconnected.
+   * Emitted when the output represented by `monitor` gets disconnected.
    */
   signals[INVALIDATE] = g_signal_new (g_intern_static_string ("invalidate"),
                                       G_TYPE_FROM_CLASS (object_class),
@@ -626,10 +626,10 @@ gdk_monitor_invalidate (GdkMonitor *monitor)
  * gdk_monitor_is_valid: (attributes org.gtk.Method.get_property=valid)
  * @monitor: a `GdkMonitor`
  *
- * Returns true if the @monitor object corresponds to a
+ * Returns true if the `monitor` object corresponds to a
  * physical monitor.
  *
- * The @monitor becomes invalid when the physical monitor
+ * The `monitor` becomes invalid when the physical monitor
  * is unplugged or removed.
  *
  * Returns: true if the object corresponds to a physical monitor

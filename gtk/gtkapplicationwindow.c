@@ -709,7 +709,7 @@ gtk_application_window_new (GtkApplication *application)
  * Returns whether the window will display a menubar for the app menu
  * and menubar as needed.
  *
- * Returns: true if @window will display a menubar when needed
+ * Returns: true if `window` will display a menubar when needed
  */
 gboolean
 gtk_application_window_get_show_menubar (GtkApplicationWindow *window)
@@ -753,7 +753,7 @@ gtk_application_window_set_show_menubar (GtkApplicationWindow *window,
  *
  *  If the window has not yet been added to a `GtkApplication`, returns `0`.
  *
- * Returns: the unique ID for @window, or `0` if the window
+ * Returns: the unique ID for `window`, or `0` if the window
  *   has not yet been added to a `GtkApplication`
  */
 guint
@@ -796,7 +796,7 @@ show_help_overlay (GSimpleAction *action,
  * Additionally, sets up an action with the name
  * `win.show-help-overlay` to present it.
  *
- * @window takes responsibility for destroying @help_overlay.
+ * `window` takes responsibility for destroying `help_overlay`.
  */
 void
 gtk_application_window_set_help_overlay (GtkApplicationWindow *window,
@@ -834,12 +834,12 @@ gtk_application_window_set_help_overlay (GtkApplicationWindow *window,
  * gtk_application_window_get_help_overlay:
  * @window: a `GtkApplicationWindow`
  *
- * Gets the `GtkShortcutsWindow` that is associated with @window.
+ * Gets the `GtkShortcutsWindow` that is associated with `window`.
  *
  * See [method@Gtk.ApplicationWindow.set_help_overlay].
  *
  * Returns: (transfer none) (nullable): the help overlay associated
- *   with @window
+ *   with `window`
  */
 GtkShortcutsWindow *
 gtk_application_window_get_help_overlay (GtkApplicationWindow *window)

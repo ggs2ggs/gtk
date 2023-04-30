@@ -110,7 +110,7 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
  * `GtkInfoBar` supports a custom `<action-widgets>` element, which can contain
  * multiple `<action-widget>` elements. The “response” attribute specifies a
  * numeric response, and the content of the element is the id of widget
- * (which should be a child of the dialogs @action_area).
+ * (which should be a child of the dialogs `action_area`).
  *
  * `GtkInfoBar` supports adding action widgets by specifying “action” as
  * the “type” attribute of a `<child>` element. The widget will be added
@@ -394,7 +394,7 @@ gtk_info_bar_class_init (GtkInfoBarClass *klass)
    * Emitted when an action widget is clicked.
    *
    * The signal is also emitted when the application programmer
-   * calls [method@Gtk.InfoBar.response]. The @response_id depends
+   * calls [method@Gtk.InfoBar.response]. The `response_id` depends
    * on which action widget was clicked.
    */
   signals[RESPONSE] = g_signal_new (I_("response"),
@@ -531,7 +531,7 @@ action_widget_activated (GtkWidget  *widget,
  * gtk_info_bar_add_action_widget:
  * @info_bar: a `GtkInfoBar`
  * @child: an activatable widget
- * @response_id: response ID for @child
+ * @response_id: response ID for `child`
  *
  * Add an activatable widget to the action area of a `GtkInfoBar`.
  *
@@ -582,7 +582,7 @@ gtk_info_bar_add_action_widget (GtkInfoBar *info_bar,
  * @info_bar: a `GtkInfoBar`
  * @widget: an action widget to remove
  *
- * Removes a widget from the action area of @info_bar.
+ * Removes a widget from the action area of `info_bar`.
  *
  * The widget must have been put there by a call to
  * [method@Gtk.InfoBar.add_action_widget] or [method@Gtk.InfoBar.add_button].
@@ -672,7 +672,7 @@ add_buttons_valist (GtkInfoBar  *info_bar,
  * gtk_info_bar_add_buttons:
  * @info_bar: a `GtkInfoBar`
  * @first_button_text: button text
- * @...: response ID for first button, then more text-response_id pairs,
+ * `...`: response ID for first button, then more text-response_id pairs,
  *   ending with `NULL`
  *
  * Adds multiple buttons.
@@ -714,7 +714,7 @@ gtk_info_bar_new (void)
 /**
  * gtk_info_bar_new_with_buttons:
  * @first_button_text: (nullable): ext to go in first button
- * @...: response ID for first button, then additional buttons, ending
+ * `...`: response ID for first button, then additional buttons, ending
  *    with `NULL`
  *
  * Creates a new `GtkInfoBar` with buttons.
@@ -766,10 +766,10 @@ update_default_response (GtkInfoBar *info_bar,
  * @response_id: a response ID
  * @setting: TRUE for sensitive
  *
- * Sets the sensitivity of action widgets for @response_id.
+ * Sets the sensitivity of action widgets for `response_id`.
  *
  * Calls `gtk_widget_set_sensitive (widget, setting)` for each
- * widget in the info bars’s action area with the given @response_id.
+ * widget in the info bars’s action area with the given `response_id`.
  * A convenient way to sensitize/desensitize buttons.
  *
  * Deprecated: 4.10
@@ -807,7 +807,7 @@ gtk_info_bar_set_response_sensitive (GtkInfoBar *info_bar,
  *
  * Pressing “Enter” normally activates the default widget.
  *
- * Note that this function currently requires @info_bar to
+ * Note that this function currently requires `info_bar` to
  * be added to a widget hierarchy.
  *
  * Deprecated: 4.10
@@ -846,7 +846,7 @@ gtk_info_bar_set_default_response (GtkInfoBar *info_bar,
  * @info_bar: a `GtkInfoBar`
  * @response_id: a response ID
  *
- * Emits the “response” signal with the given @response_id.
+ * Emits the “response” signal with the given `response_id`.
  *
  * Deprecated: 4.10
  */
@@ -1196,10 +1196,10 @@ gtk_info_bar_get_show_close_button (GtkInfoBar *info_bar)
  *
  * Sets whether the `GtkInfoBar` is revealed.
  *
- * Changing this will make @info_bar reveal or conceal
+ * Changing this will make `info_bar` reveal or conceal
  * itself via a sliding transition.
  *
- * Note: this does not show or hide @info_bar in the
+ * Note: this does not show or hide `info_bar` in the
  * [property@Gtk.Widget:visible] sense, so revealing has no effect
  * if [property@Gtk.Widget:visible] is false.
  *

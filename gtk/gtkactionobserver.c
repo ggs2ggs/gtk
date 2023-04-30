@@ -165,10 +165,10 @@ gtk_action_observer_action_removed (GtkActionObserver   *observer,
  * registered to receive events for has one of its accelerators changed.
  *
  * Accelerator changes are reported for all targets associated with the
- * action. The @action_and_target string should be used to check if the
+ * action. The `action_and_target` string should be used to check if the
  * reported target is the one that the observer is interested in.
  *
- * Either @action_name or @action_and_target may be `NULL`.
+ * Either `action_name` or `action_and_target` may be `NULL`.
  */
 void
 gtk_action_observer_primary_accel_changed (GtkActionObserver   *observer,

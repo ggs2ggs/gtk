@@ -826,15 +826,15 @@ gtk_progress_bar_pulse (GtkProgressBar *pbar)
  * @pbar: a `GtkProgressBar`
  * @text: (nullable): a UTF-8 string
  *
- * Causes the given @text to appear next to the progress bar.
+ * Causes the given `text` to appear next to the progress bar.
  *
- * If @text is `NULL` and [property@Gtk.ProgressBar:show-text] is true,
+ * If `text` is `NULL` and [property@Gtk.ProgressBar:show-text] is true,
  * the current value of [property@Gtk.ProgressBar:fraction] will be displayed
  * as a percentage.
  *
- * If @text is non-`NULL` and [property@Gtk.ProgressBar:show-text] is true,
+ * If `text` is non-`NULL` and [property@Gtk.ProgressBar:show-text] is true,
  * the text will be displayed. In this case, it will not display the progress
- * percentage. If @text is the empty string, the progress bar will still
+ * percentage. If `text` is the empty string, the progress bar will still
  * be styled and sized suitably for containing text, as long as
  * [property@Gtk.ProgressBar:show-text] is true.
  */

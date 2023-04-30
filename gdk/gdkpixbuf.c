@@ -142,8 +142,8 @@ convert_no_alpha (guchar *dest_data,
 /**
  * gdk_pixbuf_get_from_surface:
  * @surface: surface to copy from
- * @src_x: Source X coordinate within @surface
- * @src_y: Source Y coordinate within @surface
+ * @src_x: Source X coordinate within `surface`
+ * @src_y: Source Y coordinate within `surface`
  * @width: Width in pixels of region to get
  * @height: Height in pixels of region to get
  *
@@ -153,7 +153,7 @@ convert_no_alpha (guchar *dest_data,
  * This allows you to efficiently read individual pixels from cairo surfaces.
  *
  * This function will create an RGB pixbuf with 8 bits per channel.
- * The pixbuf will contain an alpha channel if the @surface contains one.
+ * The pixbuf will contain an alpha channel if the `surface` contains one.
  *
  * Returns: (nullable) (transfer full): A newly-created pixbuf with a
  *   reference count of 1
@@ -227,7 +227,7 @@ pixbuf_texture_unref_cb (guchar   *pixels,
  * gdk_pixbuf_get_from_texture:
  * @texture: a `GdkTexture`
  *
- * Creates a new pixbuf from @texture.
+ * Creates a new pixbuf from `texture`.
  *
  * This should generally not be used in newly written code as later
  * stages will almost certainly convert the pixbuf back into a texture

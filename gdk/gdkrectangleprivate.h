@@ -16,7 +16,7 @@ G_BEGIN_DECLS
  * @offset_x: offset of result in X direction.
  * @offset_y: offset of result in Y direction.
  * @dest: (out caller-allocates): destination rectangle, may be
- *   identical to @src
+ *   identical to `src`
  *
  * Does an affine transform of the source rectangle and stores the
  * result in the dest rectangle. If the destination rectangle does

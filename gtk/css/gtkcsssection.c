@@ -118,7 +118,7 @@ gtk_css_section_unref (GtkCssSection *section)
  * case are sections of  type `GTK_CSS_SECTION_DOCUMEN`T. Their parent will
  * either be `NULL` if they are the original CSS document that was loaded by
  * [method@Gtk.CssProvider.load_from_file] or a section of type
- * `GTK_CSS_SECTION_IMPORT` if it was loaded with an `@import` rule from
+ * `GTK_CSS_SECTION_IMPORT` if it was loaded with an ``import`` rule from
  * a different file.
  *
  * Returns: (nullable) (transfer none): the parent section
@@ -135,7 +135,7 @@ gtk_css_section_get_parent (const GtkCssSection *section)
  * gtk_css_section_get_file:
  * @section: the section
  *
- * Gets the file that @section was parsed from.
+ * Gets the file that `section` was parsed from.
  *
  * If no such file exists, for example because the CSS was loaded via
  * [method@Gtk.CssProvider.load_from_data], then `NULL` is returned.

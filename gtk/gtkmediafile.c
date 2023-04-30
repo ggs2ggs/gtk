@@ -272,10 +272,10 @@ gtk_media_file_new (void)
  *
  * Creates a new media file for the given filename.
  *
- * This is a utility function that converts the given @filename
+ * This is a utility function that converts the given `filename`
  * to a `GFile` and calls [ctor@Gtk.MediaFile.new_for_file].
  *
- * Returns: (type Gtk.MediaFile): a new `GtkMediaFile` playing @filename
+ * Returns: (type Gtk.MediaFile): a new `GtkMediaFile` playing `filename`
  */
 GtkMediaStream *
 gtk_media_file_new_for_filename (const char *filename)
@@ -302,10 +302,10 @@ gtk_media_file_new_for_filename (const char *filename)
  *
  * Creates a new new media file for the given resource.
  *
- * This is a utility function that converts the given @resource
+ * This is a utility function that converts the given `resource`
  * to a `GFile` and calls [ctor@Gtk.MediaFile.new_for_file].
  *
- * Returns: (type Gtk.MediaFile): a new `GtkMediaFile` playing @resource_path
+ * Returns: (type Gtk.MediaFile): a new `GtkMediaFile` playing `resource_path`
  */
 GtkMediaStream *
 gtk_media_file_new_for_resource (const char *resource_path)
@@ -342,9 +342,9 @@ gtk_media_file_new_for_resource (const char *resource_path)
  * gtk_media_file_new_for_file:
  * @file: The file to play
  *
- * Creates a new media file to play @file.
+ * Creates a new media file to play `file`.
  *
- * Returns: (type Gtk.MediaFile): a new `GtkMediaFile` playing @file
+ * Returns: (type Gtk.MediaFile): a new `GtkMediaFile` playing `file`
  */
 GtkMediaStream *
 gtk_media_file_new_for_file (GFile *file)
@@ -360,7 +360,7 @@ gtk_media_file_new_for_file (GFile *file)
  * gtk_media_file_new_for_input_stream:
  * @stream: The stream to play
  *
- * Creates a new media file to play @stream.
+ * Creates a new media file to play `stream`.
  *
  * If you want the resulting media to be seekable,
  * the stream should implement the `GSeekable` interface.
@@ -422,7 +422,7 @@ gtk_media_file_clear (GtkMediaFile *self)
  *
  * Sets the `GtkMediaFile to play the given file.
  *
- * This is a utility function that converts the given @filename
+ * This is a utility function that converts the given `filename`
  * to a `GFile` and calls [method@Gtk.MediaFile.set_file].
  **/
 void
@@ -451,7 +451,7 @@ gtk_media_file_set_filename (GtkMediaFile *self,
  *
  * Sets the `GtkMediaFile to play the given resource.
  *
- * This is a utility function that converts the given @resource_path
+ * This is a utility function that converts the given `resource_path`
  * to a `GFile` and calls [method@Gtk.MediaFile.set_file].
  */
 void
@@ -526,9 +526,9 @@ gtk_media_file_set_file (GtkMediaFile *self,
  * gtk_media_file_get_file: (attributes org.gtk.Method.get_property=file)
  * @self: a `GtkMediaFile`
  *
- * Returns the file that @self is currently playing from.
+ * Returns the file that `self` is currently playing from.
  *
- * When @self is not playing or not playing from a file,
+ * When `self` is not playing or not playing from a file,
  * `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The currently playing file
@@ -552,7 +552,7 @@ gtk_media_file_get_file (GtkMediaFile *self)
  *
  * If anything is still playing, stop playing it.
  *
- * Full control about the @stream is assumed for the duration of
+ * Full control about the `stream` is assumed for the duration of
  * playback. The stream will not be closed.
  */
 void
@@ -586,9 +586,9 @@ gtk_media_file_set_input_stream (GtkMediaFile *self,
  * gtk_media_file_get_input_stream: (attributes org.gtk.Method.get_property=input-stream)
  * @self: a `GtkMediaFile`
  *
- * Returns the stream that @self is currently playing from.
+ * Returns the stream that `self` is currently playing from.
  *
- * When @self is not playing or not playing from a stream,
+ * When `self` is not playing or not playing from a stream,
  * `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The currently playing stream

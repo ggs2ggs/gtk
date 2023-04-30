@@ -87,9 +87,9 @@ gdk_toplevel_layout_new (void)
  * gdk_toplevel_layout_ref:
  * @layout: a `GdkToplevelLayout`
  *
- * Increases the reference count of @layout.
+ * Increases the reference count of `layout`.
  *
- * Returns: the same @layout
+ * Returns: the same `layout`
  */
 GdkToplevelLayout *
 gdk_toplevel_layout_ref (GdkToplevelLayout *layout)
@@ -102,7 +102,7 @@ gdk_toplevel_layout_ref (GdkToplevelLayout *layout)
  * gdk_toplevel_layout_unref:
  * @layout: a `GdkToplevelLayout`
  *
- * Decreases the reference count of @layout.
+ * Decreases the reference count of `layout`.
  */
 void
 gdk_toplevel_layout_unref (GdkToplevelLayout *layout)
@@ -118,9 +118,9 @@ gdk_toplevel_layout_unref (GdkToplevelLayout *layout)
  * gdk_toplevel_layout_copy:
  * @layout: a `GdkToplevelLayout`
  *
- * Create a new `GdkToplevelLayout` and copy the contents of @layout into it.
+ * Create a new `GdkToplevelLayout` and copy the contents of `layout` into it.
  *
- * Returns: (transfer full): a copy of @layout.
+ * Returns: (transfer full): a copy of `layout`.
  */
 GdkToplevelLayout *
 gdk_toplevel_layout_copy (GdkToplevelLayout *layout)
@@ -146,9 +146,9 @@ gdk_toplevel_layout_copy (GdkToplevelLayout *layout)
  * @layout: a `GdkToplevelLayout`
  * @other: another `GdkToplevelLayout`
  *
- * Check whether @layout and @other has identical layout properties.
+ * Check whether `layout` and `other` has identical layout properties.
  *
- * Returns: true if @layout and @other have identical layout properties,
+ * Returns: true if `layout` and `other` have identical layout properties,
  *   otherwise false.
  */
 gboolean
@@ -218,10 +218,10 @@ gdk_toplevel_layout_set_maximized (GdkToplevelLayout *layout,
  * @maximized: (out): set to true if the toplevel should be maximized
  *
  * If the layout specifies whether to the toplevel should go maximized,
- * the value pointed to by @maximized is set to true if it should go
+ * the value pointed to by `maximized` is set to true if it should go
  * fullscreen, or false, if it should go unmaximized.
  *
- * Returns: whether the @layout specifies the maximized state for the toplevel
+ * Returns: whether the `layout` specifies the maximized state for the toplevel
  */
 gboolean
 gdk_toplevel_layout_get_maximized (GdkToplevelLayout *layout,
@@ -262,10 +262,10 @@ gdk_toplevel_layout_set_fullscreen (GdkToplevelLayout *layout,
  * @fullscreen: (out): location to store whether the toplevel should be fullscreen
  *
  * If the layout specifies whether to the toplevel should go fullscreen,
- * the value pointed to by @fullscreen is set to true if it should go
+ * the value pointed to by `fullscreen` is set to true if it should go
  * fullscreen, or false, if it should go unfullscreen.
  *
- * Returns: whether the @layout specifies the fullscreen state for the toplevel
+ * Returns: whether the `layout` specifies the fullscreen state for the toplevel
  */
 gboolean
 gdk_toplevel_layout_get_fullscreen (GdkToplevelLayout *layout,
@@ -287,7 +287,7 @@ gdk_toplevel_layout_get_fullscreen (GdkToplevelLayout *layout,
  * Returns the monitor that the layout is fullscreening
  * the surface on.
  *
- * Returns: (nullable) (transfer none): the monitor on which @layout fullscreens
+ * Returns: (nullable) (transfer none): the monitor on which `layout` fullscreens
  */
 GdkMonitor *
 gdk_toplevel_layout_get_fullscreen_monitor (GdkToplevelLayout *layout)

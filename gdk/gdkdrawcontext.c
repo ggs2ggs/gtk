@@ -202,11 +202,11 @@ gdk_draw_context_init (GdkDrawContext *self)
  * gdk_draw_context_is_in_frame:
  * @context: a `GdkDrawContext`
  *
- * Returns true if @context is in the process of drawing to its surface.
+ * Returns true if `context` is in the process of drawing to its surface.
  *
  * This is the case between calls to [method@Gdk.DrawContext.begin_frame]
  * and [method@Gdk.DrawContext.end_frame]. In this situation, drawing commands
- * may be effecting the contents of the @context's surface.
+ * may be effecting the contents of the `context`'s surface.
  *
  * Returns: true if the context is between [method@Gdk.DrawContext.begin_frame]
  *   and [method@Gdk.DrawContext.end_frame] calls.
@@ -225,7 +225,7 @@ gdk_draw_context_is_in_frame (GdkDrawContext *context)
  * gdk_draw_context_surface_resized:
  * @context: a `GdkDrawContext`
  *
- * Called by the surface the @context belongs to when the size of the surface
+ * Called by the surface the `context` belongs to when the size of the surface
  * changes.
  */
 void
@@ -238,7 +238,7 @@ gdk_draw_context_surface_resized (GdkDrawContext *context)
  * gdk_draw_context_get_display: (attributes org.gtk.Method.get_property=display)
  * @context: a `GdkDrawContext`
  *
- * Retrieves the `GdkDisplay` the @context is created for
+ * Retrieves the `GdkDisplay` the `context` is created for
  *
  * Returns: (nullable) (transfer none): the `GdkDisplay`
  */
@@ -256,7 +256,7 @@ gdk_draw_context_get_display (GdkDrawContext *context)
  * gdk_draw_context_get_surface: (attributes org.gtk.Method.get_property=surface)
  * @context: a `GdkDrawContext`
  *
- * Retrieves the surface that @context is bound to.
+ * Retrieves the surface that `context` is bound to.
  *
  * Returns: (nullable) (transfer none): a `GdkSurface`
  */
@@ -276,11 +276,11 @@ gdk_draw_context_get_surface (GdkDrawContext *context)
  *   have a surface.
  * @region: minimum region that should be drawn
  *
- * Indicates that you are beginning the process of redrawing @region
- * on the @context's surface.
+ * Indicates that you are beginning the process of redrawing `region`
+ * on the `context`'s surface.
  *
- * Calling this function begins a drawing operation using @context on the
- * surface that @context was created from. The actual requirements and
+ * Calling this function begins a drawing operation using `context` on the
+ * surface that `context` was created from. The actual requirements and
  * guarantees for the drawing operation vary for different implementations
  * of drawing, so a [class@Gdk.CairoContext] and a [class@Gdk.GLContext]
  * need to be treated differently.
@@ -290,7 +290,7 @@ gdk_draw_context_get_surface (GdkDrawContext *context)
  * complete the drawing operation and ensure the contents become visible
  * on screen.
  *
- * Note that the @region passed to this function is the minimum region that
+ * Note that the `region` passed to this function is the minimum region that
  * needs to be drawn and depending on implementation, windowing system and
  * hardware in use, it might be necessary to draw a larger region. Drawing
  * implementation must use [method@Gdk.DrawContext.get_frame_region] to
@@ -447,9 +447,9 @@ gdk_draw_context_end_frame (GdkDrawContext *context)
  *
  * After a call to [method@Gdk.DrawContext.begin_frame] this function will
  * return a union of the region passed to that function and the area of the
- * surface that the @context determined needs to be repainted.
+ * surface that the `context` determined needs to be repainted.
  *
- * If @context is not in between calls to [method@Gdk.DrawContext.begin_frame]
+ * If `context` is not in between calls to [method@Gdk.DrawContext.begin_frame]
  * and [method@Gdk.DrawContext.end_frame], `NULL` will be returned.
  *
  * Returns: (transfer none) (nullable): a Cairo region

@@ -653,7 +653,7 @@ gtk_center_layout_new (void)
  * @self: a `GtkCenterLayout`
  * @orientation: the new orientation
  *
- * Sets the orientation of @self.
+ * Sets the orientation of `self`.
  */
 void
 gtk_center_layout_set_orientation (GtkCenterLayout *self,
@@ -674,7 +674,7 @@ gtk_center_layout_set_orientation (GtkCenterLayout *self,
  *
  * Gets the current orienration of the layout manager.
  *
- * Returns: The current orientation of @self
+ * Returns: The current orientation of `self`
  */
 GtkOrientation
 gtk_center_layout_get_orientation (GtkCenterLayout *self)
@@ -689,7 +689,7 @@ gtk_center_layout_get_orientation (GtkCenterLayout *self)
  * @self: a `GtkCenterLayout`
  * @baseline_position: the new baseline position
  *
- * Sets the new baseline position of @self
+ * Sets the new baseline position of `self`
  */
 void
 gtk_center_layout_set_baseline_position (GtkCenterLayout     *self,
@@ -710,7 +710,7 @@ gtk_center_layout_set_baseline_position (GtkCenterLayout     *self,
  *
  * Returns the baseline position of the layout.
  *
- * Returns: The current baseline position of @self.
+ * Returns: The current baseline position of `self`.
  */
 GtkBaselinePosition
 gtk_center_layout_get_baseline_position (GtkCenterLayout *self)
@@ -725,7 +725,7 @@ gtk_center_layout_get_baseline_position (GtkCenterLayout *self)
  * @self: a `GtkCenterLayout`
  * @widget: (nullable): the new start widget
  *
- * Sets the new start widget of @self.
+ * Sets the new start widget of `self`.
  *
  * To remove the existing start widget, pass `NULL`.
  */
@@ -746,7 +746,7 @@ gtk_center_layout_set_start_widget (GtkCenterLayout *self,
  *
  * Returns the start widget of the layout.
  *
- * Returns: (nullable) (transfer none): The current start widget of @self
+ * Returns: (nullable) (transfer none): The current start widget of `self`
  */
 GtkWidget *
 gtk_center_layout_get_start_widget (GtkCenterLayout *self)
@@ -761,7 +761,7 @@ gtk_center_layout_get_start_widget (GtkCenterLayout *self)
  * @self: a `GtkCenterLayout`
  * @widget: (nullable): the new center widget
  *
- * Sets the new center widget of @self.
+ * Sets the new center widget of `self`.
  *
  * To remove the existing center widget, pass `NULL`.
  */
@@ -782,7 +782,7 @@ gtk_center_layout_set_center_widget (GtkCenterLayout *self,
  *
  * Returns the center widget of the layout.
  *
- * Returns: (nullable) (transfer none): the current center widget of @self
+ * Returns: (nullable) (transfer none): the current center widget of `self`
  */
 GtkWidget *
 gtk_center_layout_get_center_widget (GtkCenterLayout *self)
@@ -797,7 +797,7 @@ gtk_center_layout_get_center_widget (GtkCenterLayout *self)
  * @self: a `GtkCenterLayout`
  * @widget: (nullable): the new end widget
  *
- * Sets the new end widget of @self.
+ * Sets the new end widget of `self`.
  *
  * To remove the existing center widget, pass `NULL`.
  */
@@ -818,7 +818,7 @@ gtk_center_layout_set_end_widget (GtkCenterLayout *self,
  *
  * Returns the end widget of the layout.
  *
- * Returns: (nullable) (transfer none): the current end widget of @self
+ * Returns: (nullable) (transfer none): the current end widget of `self`
  */
 GtkWidget *
 gtk_center_layout_get_end_widget (GtkCenterLayout *self)
@@ -866,7 +866,7 @@ gtk_center_layout_set_shrink_center_last (GtkCenterLayout *self,
  * gtk_center_layout_get_shrink_center_last: (attributes org.gtk.Method.get_property=shrink-center-last)
  * @self: a `GtkCenterLayout`
  *
- * Gets whether @self shrinks the center widget after other children.
+ * Gets whether `self` shrinks the center widget after other children.
  *
  * Returns: whether to shrink the center widget after others
  *

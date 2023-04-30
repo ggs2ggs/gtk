@@ -462,7 +462,7 @@ gtk_spin_button_class_init (GtkSpinButtonClass *class)
    * Emitted to convert the users input into a double value.
    *
    * The signal handler is expected to use [method@Gtk.Editable.get_text]
-   * to retrieve the text of the spinbutton and set @new_value to the
+   * to retrieve the text of the spinbutton and set `new_value` to the
    * new value.
    *
    * The default conversion uses g_strtod().
@@ -1806,12 +1806,12 @@ gtk_spin_button_new (GtkAdjustment *adjustment,
  * This is a convenience constructor that allows creation
  * of a numeric `GtkSpinButton` without manually creating
  * an adjustment. The value is initially set to the minimum
- * value and a page increment of 10 * @step is the default.
+ * value and a page increment of 10 * `step` is the default.
  * The precision of the spin button is equivalent to the
- * precision of @step.
+ * precision of `step`.
  *
  * Note that the way in which the precision is derived works
- * best if @step is a power of ten. If the resulting precision
+ * best if `step` is a power of ten. If the resulting precision
  * is not suitable for your needs, use
  * [method@Gtk.SpinButton.set_digits] to correct it.
  *
@@ -1853,7 +1853,7 @@ gtk_spin_button_new_with_range (double min,
  * @spin_button: a `GtkSpinButton`
  * @adjustment: a `GtkAdjustment` to replace the existing adjustment
  *
- * Replaces the `GtkAdjustment` associated with @spin_button.
+ * Replaces the `GtkAdjustment` associated with `spin_button`.
  */
 void
 gtk_spin_button_set_adjustment (GtkSpinButton *spin_button,
@@ -1878,7 +1878,7 @@ gtk_spin_button_set_adjustment (GtkSpinButton *spin_button,
  *
  * Get the adjustment associated with a `GtkSpinButton`.
  *
- * Returns: (transfer none): the `GtkAdjustment` of @spin_button
+ * Returns: (transfer none): the `GtkAdjustment` of `spin_button`
  */
 GtkAdjustment *
 gtk_spin_button_get_adjustment (GtkSpinButton *spin_button)
@@ -1894,7 +1894,7 @@ gtk_spin_button_get_adjustment (GtkSpinButton *spin_button)
  * @digits: the number of digits after the decimal point to be
  *   displayed for the spin button’s value
  *
- * Set the precision to be displayed by @spin_button.
+ * Set the precision to be displayed by `spin_button`.
  *
  * Up to 20 digit precision is allowed.
  */
@@ -1919,7 +1919,7 @@ gtk_spin_button_set_digits (GtkSpinButton *spin_button,
  * gtk_spin_button_get_digits: (attributes org.gtk.Method.get_property=digits)
  * @spin_button: a `GtkSpinButton`
  *
- * Fetches the precision of @spin_button.
+ * Fetches the precision of `spin_button`.
  *
  * Returns: the current precision
  **/
@@ -1965,7 +1965,7 @@ gtk_spin_button_set_increments (GtkSpinButton *spin_button,
  * @page: (out) (optional): location to store page increment
  *
  * Gets the current step and page the increments
- * used by @spin_button.
+ * used by `spin_button`.
  *
  * See [method@Gtk.SpinButton.set_increments].
  */
@@ -1988,7 +1988,7 @@ gtk_spin_button_get_increments (GtkSpinButton *spin_button,
  * @min: minimum allowable value
  * @max: maximum allowable value
  *
- * Sets the minimum and maximum allowable values for @spin_button.
+ * Sets the minimum and maximum allowable values for `spin_button`.
  *
  * If the current value is outside this range, it will be adjusted
  * to fit within the range, otherwise it will remain unchanged.
@@ -2019,7 +2019,7 @@ gtk_spin_button_set_range (GtkSpinButton *spin_button,
  * @min: (out) (optional): location to store minimum allowed value
  * @max: (out) (optional): location to store maximum allowed value
  *
- * Gets the range allowed for @spin_button.
+ * Gets the range allowed for `spin_button`.
  *
  * See [method@Gtk.SpinButton.set_range].
  */
@@ -2040,9 +2040,9 @@ gtk_spin_button_get_range (GtkSpinButton *spin_button,
  * gtk_spin_button_get_value: (attributes org.gtk.Method.get_property=value)
  * @spin_button: a `GtkSpinButton`
  *
- * Get the value in the @spin_button.
+ * Get the value in the `spin_button`.
  *
- * Returns: the value of @spin_button
+ * Returns: the value of `spin_button`
  */
 double
 gtk_spin_button_get_value (GtkSpinButton *spin_button)
@@ -2056,9 +2056,9 @@ gtk_spin_button_get_value (GtkSpinButton *spin_button)
  * gtk_spin_button_get_value_as_int:
  * @spin_button: a `GtkSpinButton`
  *
- * Get the value @spin_button represented as an integer.
+ * Get the value `spin_button` represented as an integer.
  *
- * Returns: the value of @spin_button
+ * Returns: the value of `spin_button`
  */
 int
 gtk_spin_button_get_value_as_int (GtkSpinButton *spin_button)
@@ -2079,7 +2079,7 @@ gtk_spin_button_get_value_as_int (GtkSpinButton *spin_button)
  * @spin_button: a `GtkSpinButton`
  * @value: the new value
  *
- * Sets the value of @spin_button.
+ * Sets the value of `spin_button`.
  */
 void
 gtk_spin_button_set_value (GtkSpinButton *spin_button,

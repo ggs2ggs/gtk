@@ -211,7 +211,7 @@ gtk_paper_size_new_from_info (const PaperInfo *info)
  * [PWG 5101.1-2002](ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf)
  * paper name.
  *
- * If @name is `NULL`, the default paper size is returned,
+ * If `name` is `NULL`, the default paper size is returned,
  * see [func@Gtk.PaperSize.get_default].
  *
  * Returns: a new `GtkPaperSize`, use [method@Gtk.PaperSize.free]
@@ -300,8 +300,8 @@ improve_displayname (const char *name)
  * Creates a new `GtkPaperSize` object by using
  * PPD information.
  *
- * If @ppd_name is not a recognized PPD paper name,
- * @ppd_display_name, @width and @height are used to
+ * If `ppd_name` is not a recognized PPD paper name,
+ * `ppd_display_name`, `width` and `height` are used to
  * construct a custom `GtkPaperSize` object.
  *
  * Returns: a new `GtkPaperSize`, use [method@Gtk.PaperSize.free]
@@ -379,8 +379,8 @@ gtk_paper_size_new_from_ppd (const char *ppd_name,
  * Creates a new `GtkPaperSize` object by using
  * IPP information.
  *
- * If @ipp_name is not a recognized paper name,
- * @width and @height are used to
+ * If `ipp_name` is not a recognized paper name,
+ * `width` and `height` are used to
  * construct a custom `GtkPaperSize` object.
  *
  * Returns: a new `GtkPaperSize`, use [method@Gtk.PaperSize.free]
@@ -463,9 +463,9 @@ gtk_paper_size_new_from_ipp (const char *ipp_name,
  * gtk_paper_size_new_custom:
  * @name: the paper name
  * @display_name: the human-readable name
- * @width: the paper width, in units of @unit
- * @height: the paper height, in units of @unit
- * @unit: the unit for @width and @height. not %GTK_UNIT_NONE.
+ * @width: the paper width, in units of `unit`
+ * @height: the paper height, in units of `unit`
+ * @unit: the unit for `width` and `height`. not %GTK_UNIT_NONE.
  *
  * Creates a new `GtkPaperSize` object with the
  * given parameters.
@@ -502,7 +502,7 @@ gtk_paper_size_new_custom (const char *name,
  *
  * Copies an existing `GtkPaperSize`.
  *
- * Returns: a copy of @other
+ * Returns: a copy of `other`
  */
 GtkPaperSize *
 gtk_paper_size_copy (GtkPaperSize *other)
@@ -549,7 +549,7 @@ gtk_paper_size_free (GtkPaperSize *size)
  *
  * Compares two `GtkPaperSize` objects.
  *
- * Returns: true, if @size1 and @size2
+ * Returns: true, if `size1` and `size2`
  * represent the same paper size
  */
 gboolean
@@ -615,7 +615,7 @@ gtk_paper_size_get_paper_sizes (gboolean include_custom)
  *
  * Gets the name of the `GtkPaperSize`.
  *
- * Returns: the name of @size
+ * Returns: the name of `size`
  */
 const char *
 gtk_paper_size_get_name (GtkPaperSize *size)
@@ -632,7 +632,7 @@ gtk_paper_size_get_name (GtkPaperSize *size)
  *
  * Gets the human-readable name of the `GtkPaperSize`.
  *
- * Returns: the human-readable name of @size
+ * Returns: the human-readable name of `size`
  */
 const char *
 gtk_paper_size_get_display_name (GtkPaperSize *size)
@@ -655,7 +655,7 @@ gtk_paper_size_get_display_name (GtkPaperSize *size)
  * Gets the PPD name of the `GtkPaperSize`, which
  * may be `NULL`.
  *
- * Returns: the PPD name of @size
+ * Returns: the PPD name of `size`
  */
 const char *
 gtk_paper_size_get_ppd_name (GtkPaperSize *size)
@@ -673,7 +673,7 @@ gtk_paper_size_get_ppd_name (GtkPaperSize *size)
  * @unit: the unit for the return value, not %GTK_UNIT_NONE
  *
  * Gets the paper width of the `GtkPaperSize`, in
- * units of @unit.
+ * units of `unit`.
  *
  * Returns: the paper width
  */
@@ -690,7 +690,7 @@ gtk_paper_size_get_width (GtkPaperSize *size,
  * @unit: the unit for the return value, not %GTK_UNIT_NONE
  *
  * Gets the paper height of the `GtkPaperSize`, in
- * units of @unit.
+ * units of `unit`.
  *
  * Returns: the paper height
  */
@@ -705,9 +705,9 @@ gtk_paper_size_get_height (GtkPaperSize *size,
  * gtk_paper_size_is_custom:
  * @size: a `GtkPaperSize` object
  *
- * Returns true if @size is not a standard paper size.
+ * Returns true if `size` is not a standard paper size.
  *
- * Returns: whether @size is a custom paper size.
+ * Returns: whether `size` is a custom paper size.
  **/
 gboolean
 gtk_paper_size_is_custom (GtkPaperSize *size)
@@ -719,9 +719,9 @@ gtk_paper_size_is_custom (GtkPaperSize *size)
  * gtk_paper_size_is_ipp:
  * @size: a `GtkPaperSize` object
  *
- * Returns true if @size is an IPP standard paper size.
+ * Returns true if `size` is an IPP standard paper size.
  *
- * Returns: whether @size is not an IPP custom paper size.
+ * Returns: whether `size` is not an IPP custom paper size.
  **/
 gboolean
 gtk_paper_size_is_ipp (GtkPaperSize *size)
@@ -732,11 +732,11 @@ gtk_paper_size_is_ipp (GtkPaperSize *size)
 /**
  * gtk_paper_size_set_size:
  * @size: a custom `GtkPaperSize` object
- * @width: the new width in units of @unit
- * @height: the new height in units of @unit
- * @unit: the unit for @width and @height
+ * @width: the new width in units of `unit`
+ * @height: the new height in units of `unit`
+ * @unit: the unit for `width` and `height`
  *
- * Changes the dimensions of a @size to @width x @height.
+ * Changes the dimensions of a `size` to `width` x `height`.
  */
 void
 gtk_paper_size_set_size (GtkPaperSize *size,
@@ -911,8 +911,8 @@ gtk_paper_size_get_default_right_margin (GtkPaperSize *size,
  *   or `NULL` to read the first group
  * @error: (nullable): return location for an error
  *
- * Reads a paper size from the group @group_name in the key file
- * @key_file.
+ * Reads a paper size from the group `group_name` in the key file
+ * `key_file`.
  *
  * Returns: a new `GtkPaperSize` object with the restored paper size
  */
@@ -997,9 +997,9 @@ out:
  * gtk_paper_size_to_key_file:
  * @size: a `GtkPaperSize`
  * @key_file: the `GKeyFile` to save the paper size to
- * @group_name: the group to add the settings to in @key_file
+ * @group_name: the group to add the settings to in `key_file`
  *
- * This function adds the paper size from @size to @key_file.
+ * This function adds the paper size from `size` to `key_file`.
  */
 void
 gtk_paper_size_to_key_file (GtkPaperSize *size,

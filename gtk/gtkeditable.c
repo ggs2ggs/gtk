@@ -333,7 +333,7 @@ gtk_editable_default_init (GtkEditableInterface *iface)
    * the signal with g_signal_stop_emission(), it is possible to modify the
    * range of deleted text, or prevent it from being deleted entirely.
    *
-   * The @start_pos and @end_pos parameters are interpreted as for
+   * The `start_pos` and `end_pos` parameters are interpreted as for
    * [method@Gtk.Editable.delete_text].
    */
   signals[DELETE_TEXT] =
@@ -467,11 +467,11 @@ gtk_editable_default_init (GtkEditableInterface *iface)
  * @length: the length of the text in bytes, or -1
  * @position: (inout): location of the position text will be inserted at
  *
- * Inserts @length bytes of @text into the contents of the
- * widget, at position @position.
+ * Inserts `length` bytes of `text` into the contents of the
+ * widget, at position `position`.
  *
  * Note that the position is in characters, not in bytes.
- * The function updates @position to point after the newly
+ * The function updates `position` to point after the newly
  * inserted text.
  */
 void
@@ -498,8 +498,8 @@ gtk_editable_insert_text (GtkEditable *editable,
  * Deletes a sequence of characters.
  *
  * The characters that are deleted are those characters at positions
- * from @start_pos up to, but not including @end_pos. If @end_pos is
- * negative, then the characters deleted are those from @start_pos to
+ * from `start_pos` up to, but not including `end_pos`. If `end_pos` is
+ * negative, then the characters deleted are those from `start_pos` to
  * the end of the text.
  *
  * Note that the positions are specified in characters, not bytes.
@@ -523,8 +523,8 @@ gtk_editable_delete_text (GtkEditable *editable,
  * Retrieves a sequence of characters.
  *
  * The characters that are retrieved are those characters at positions
- * from @start_pos up to, but not including @end_pos. If @end_pos is negative,
- * then the characters retrieved are those characters from @start_pos to
+ * from `start_pos` up to, but not including `end_pos`. If `end_pos` is negative,
+ * then the characters retrieved are those characters from `start_pos` to
  * the end of the text.
  *
  * Note that positions are specified in characters, not bytes.
@@ -563,7 +563,7 @@ gtk_editable_get_chars (GtkEditable *editable,
  * gtk_editable_get_text: (attributes org.gtk.Method.get_property=text)
  * @editable: a `GtkEditable`
  *
- * Retrieves the contents of @editable.
+ * Retrieves the contents of `editable`.
  *
  * The returned string is owned by GTK and must not be modified or freed.
  *
@@ -612,7 +612,7 @@ gtk_editable_set_text (GtkEditable *editable,
  * index in the contents of the editable. The value must be less than
  * or equal to the number of characters in the editable. A value of -1
  * indicates that the position should be set after the last character
- * of the editable. Note that @position is in characters, not in bytes.
+ * of the editable. Note that `position` is in characters, not in bytes.
  */
 void
 gtk_editable_set_position (GtkEditable *editable,
@@ -654,8 +654,8 @@ gtk_editable_get_position (GtkEditable *editable)
  *
  * Retrieves the selection bound of the editable.
  *
- * @start_pos will be filled with the start of the selection and
- * @end_pos with end. If no text was selected both will be identical
+ * `start_pos` will be filled with the start of the selection and
+ * `end_pos` with end. If no text was selected both will be identical
  * and false will be returned.
  *
  * Note that positions are specified in characters, not bytes.
@@ -710,9 +710,9 @@ gtk_editable_delete_selection (GtkEditable *editable)
  * Selects a region of text.
  *
  * The characters that are selected are those characters at positions
- * from @start_pos up to, but not including @end_pos. If @end_pos is
+ * from `start_pos` up to, but not including `end_pos`. If `end_pos` is
  * negative, then the characters selected are those characters from
- * @start_pos to  the end of the text.
+ * `start_pos` to  the end of the text.
  *
  * Note that positions are specified in characters, not bytes.
  */
@@ -747,9 +747,9 @@ gtk_editable_set_editable (GtkEditable *editable,
  * gtk_editable_get_editable: (attributes org.gtk.Method.get_property=editable)
  * @editable: a `GtkEditable`
  *
- * Retrieves whether @editable is editable.
+ * Retrieves whether `editable` is editable.
  *
- * Returns: true if @editable is editable.
+ * Returns: true if `editable` is editable.
  */
 gboolean
 gtk_editable_get_editable (GtkEditable *editable)
@@ -831,11 +831,11 @@ gtk_editable_get_width_chars (GtkEditable *editable)
  * @n_chars: width in chars
  *
  * Changes the size request of the editable to be about the
- * right size for @n_chars characters.
+ * right size for `n_chars` characters.
  *
  * Note that it changes the size request, the size can still
  * be affected by how you pack the widget into containers.
- * If @n_chars is -1, the size reverts to the default size.
+ * If `n_chars` is -1, the size reverts to the default size.
  */
 void
 gtk_editable_set_width_chars (GtkEditable *editable,
@@ -850,7 +850,7 @@ gtk_editable_set_width_chars (GtkEditable *editable,
  * gtk_editable_get_max_width_chars: (attributes org.gtk.Method.get_property=max-width-chars)
  * @editable: a `GtkEditable`
  *
- * Retrieves the desired maximum width of @editable, in characters.
+ * Retrieves the desired maximum width of `editable`, in characters.
  *
  * Returns: the maximum width of the entry, in characters
  */
@@ -871,7 +871,7 @@ gtk_editable_get_max_width_chars (GtkEditable *editable)
  * @editable: a `GtkEditable`
  * @n_chars: the new desired maximum width, in characters
  *
- * Sets the desired maximum width in characters of @editable.
+ * Sets the desired maximum width in characters of `editable`.
  */
 void
 gtk_editable_set_max_width_chars (GtkEditable *editable,
@@ -886,7 +886,7 @@ gtk_editable_set_max_width_chars (GtkEditable *editable,
  * gtk_editable_get_enable_undo: (attributes org.gtk.Method.get_property=enable-undo)
  * @editable: a `GtkEditable`
  *
- * Gets if undo/redo actions are enabled for @editable
+ * Gets if undo/redo actions are enabled for `editable`
  *
  * Returns: true if undo is enabled
  */
@@ -907,7 +907,7 @@ gtk_editable_get_enable_undo (GtkEditable *editable)
  * @editable: a `GtkEditable`
  * @enable_undo: if undo/redo should be enabled
  *
- * If enabled, changes to @editable will be saved for undo/redo
+ * If enabled, changes to `editable` will be saved for undo/redo
  * actions.
  *
  * This results in an additional copy of text changes and are not
@@ -928,7 +928,7 @@ gtk_editable_set_enable_undo (GtkEditable *editable,
  * @object_class: a `GObjectClass`
  * @first_prop: property ID to use for the first property
  *
- * Overrides the `GtkEditable` properties for @class.
+ * Overrides the `GtkEditable` properties for `class`.
  *
  * This is a helper function that should be called in class_init,
  * after installing your own properties.
@@ -940,7 +940,7 @@ gtk_editable_set_enable_undo (GtkEditable *editable,
  * To handle the properties in your set_property and get_property
  * functions, you can either use [func@Gtk.Editable.delegate_set_property]
  * and [func@Gtk.Editable.delegate_get_property] (if you are using
- * a delegate), or remember the @first_prop offset and add it to the
+ * a delegate), or remember the `first_prop` offset and add it to the
  * values in the [enum@Gtk.EditableProperties] enumeration to get the
  * property IDs for these properties.
  *
@@ -989,7 +989,7 @@ delegate_notify (GObject    *object,
  * gtk_editable_get_delegate:
  * @editable: a `GtkEditable`
  *
- * Gets the `GtkEditable` that @editable is delegating its
+ * Gets the `GtkEditable` that `editable` is delegating its
  * implementation to.
  *
  * Typically, the delegate is a [class@Gtk.Text] widget.
@@ -1009,7 +1009,7 @@ gtk_editable_get_delegate (GtkEditable *editable)
  * Sets up a delegate for `GtkEditable`.
  *
  * This is assuming that the get_delegate vfunc in the `GtkEditable`
- * interface has been set up for the @editable's type.
+ * interface has been set up for the `editable`'s type.
  *
  * This is a helper function that should be called in instance init,
  * after creating the delegate object.
@@ -1046,7 +1046,7 @@ gtk_editable_finish_delegate (GtkEditable *editable)
  * @value: value to set
  * @pspec: the `GParamSpec` for the property
  *
- * Sets a property on the `GtkEditable` delegate for @object.
+ * Sets a property on the `GtkEditable` delegate for `object`.
  *
  * This is a helper function that should be called in the `set_property`
  * function of your `GtkEditable` implementation, before handling your
@@ -1112,7 +1112,7 @@ gtk_editable_delegate_set_property (GObject      *object,
  * @value: value to set
  * @pspec: the `GParamSpec` for the property
  *
- * Gets a property of the `GtkEditable` delegate for @object.
+ * Gets a property of the `GtkEditable` delegate for `object`.
  *
  * This is helper function that should be called in the `get_property`
  * function of your `GtkEditable` implementation, before handling your

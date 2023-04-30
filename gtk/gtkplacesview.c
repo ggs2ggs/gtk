@@ -2223,7 +2223,7 @@ gtk_places_view_class_init (GtkPlacesViewClass *klass)
    * GtkPlacesView::open-location:
    * @view: the object which received the signal.
    * @location: (type Gio.File): GFile to which the caller should switch.
-   * @open_flags: a single value from GtkPlacesOpenFlags specifying how the @location
+   * @open_flags: a single value from GtkPlacesOpenFlags specifying how the `location`
    * should be opened.
    *
    * The places view emits this signal when the user selects a location
@@ -2417,15 +2417,15 @@ gtk_places_view_new (void)
  * “directly” into their main view, while others may support opening locations
  * in a new notebook tab or a new window.
  *
- * This function is used to tell the places @view about the ways in which the
+ * This function is used to tell the places `view` about the ways in which the
  * application can open new locations, so that the view can display (or not)
  * the “Open in new tab” and “Open in new window” menu items as appropriate.
  *
  * When the GtkPlacesView::open-location signal is emitted, its flags
- * argument will be set to one of the @flags that was passed in
+ * argument will be set to one of the `flags` that was passed in
  * gtk_places_view_set_open_flags().
  *
- * Passing 0 for @flags will cause GTK_PLACES_OPEN_NORMAL to always be sent
+ * Passing 0 for `flags` will cause GTK_PLACES_OPEN_NORMAL to always be sent
  * to callbacks for the “open-location” signal.
  */
 void
@@ -2453,7 +2453,7 @@ gtk_places_view_set_open_flags (GtkPlacesView      *view,
  *
  * Gets the open flags.
  *
- * Returns: the GtkPlacesOpenFlags of @view
+ * Returns: the GtkPlacesOpenFlags of `view`
  */
 GtkPlacesOpenFlags
 gtk_places_view_get_open_flags (GtkPlacesView *view)
@@ -2467,7 +2467,7 @@ gtk_places_view_get_open_flags (GtkPlacesView *view)
  * gtk_places_view_get_search_query:
  * @view: a GtkPlacesView
  *
- * Retrieves the current search query from @view.
+ * Retrieves the current search query from `view`.
  *
  * Returns: (transfer none): the current search query.
  */
@@ -2484,7 +2484,7 @@ gtk_places_view_get_search_query (GtkPlacesView *view)
  * @view: a GtkPlacesView
  * @query_text: the query, or NULL.
  *
- * Sets the search query of @view. The search is immediately performed
+ * Sets the search query of `view`. The search is immediately performed
  * once the query is set.
  */
 void

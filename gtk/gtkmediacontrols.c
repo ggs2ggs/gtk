@@ -307,7 +307,7 @@ gtk_media_controls_init (GtkMediaControls *controls)
  * gtk_media_controls_new:
  * @stream: (nullable) (transfer none): a `GtkMediaStream` to manage
  *
- * Creates a new `GtkMediaControls` managing the @stream passed to it.
+ * Creates a new `GtkMediaControls` managing the `stream` passed to it.
  *
  * Returns: a new `GtkMediaControls`
  */
@@ -323,9 +323,9 @@ gtk_media_controls_new (GtkMediaStream *stream)
  * gtk_media_controls_get_media_stream: (attributes org.gtk.Method.get_property=media-stream)
  * @controls: a `GtkMediaControls`
  *
- * Gets the media stream managed by @controls or `NULL` if none.
+ * Gets the media stream managed by `controls` or `NULL` if none.
  *
- * Returns: (nullable) (transfer none): The media stream managed by @controls
+ * Returns: (nullable) (transfer none): The media stream managed by `controls`
  */
 GtkMediaStream *
 gtk_media_controls_get_media_stream (GtkMediaControls *controls)
@@ -489,7 +489,7 @@ gtk_media_controls_notify_cb (GtkMediaStream   *stream,
  * @controls: a `GtkMediaControls` widget
  * @stream: (nullable):  a `GtkMediaStream`
  *
- * Sets the stream that is controlled by @controls.
+ * Sets the stream that is controlled by `controls`.
  */
 void
 gtk_media_controls_set_media_stream (GtkMediaControls *controls,

@@ -63,7 +63,7 @@ gdk_texture_downloader_finish (GdkTextureDownloader *self)
  * gdk_texture_downloader_new:
  * @texture: texture to download
  *
- * Creates a new texture downloader for @texture.
+ * Creates a new texture downloader for `texture`.
  *
  * Returns: A new texture downloader
  *
@@ -206,7 +206,7 @@ gdk_texture_downloader_get_format (const GdkTextureDownloader *self)
  *   downloaded data of the texture
  * @stride: rowstride in bytes
  *
- * Downloads the @texture into local memory.
+ * Downloads the `texture` into local memory.
  *
  * Since: 4.10
  **/

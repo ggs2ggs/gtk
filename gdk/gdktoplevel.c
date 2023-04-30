@@ -311,10 +311,10 @@ gdk_toplevel_install_properties (GObjectClass *object_class,
  * @toplevel: the `GdkToplevel` to show
  * @layout: the `GdkToplevelLayout` object used to layout
  *
- * Present @toplevel after having processed the `GdkToplevelLayout` rules.
+ * Present `toplevel` after having processed the `GdkToplevelLayout` rules.
  *
  * If the toplevel was previously not showing, it will be showed,
- * otherwise it will change layout according to @layout.
+ * otherwise it will change layout according to `layout`.
  *
  * GDK may emit the [signal@Gdk.Toplevel::compute-size] signal to let
  * the user of this toplevel compute the preferred size of the toplevel
@@ -337,7 +337,7 @@ gdk_toplevel_present (GdkToplevel       *toplevel,
  * gdk_toplevel_minimize:
  * @toplevel: a `GdkToplevel`
  *
- * Asks to minimize the @toplevel.
+ * Asks to minimize the `toplevel`.
  *
  * The windowing system may choose to ignore the request.
  *
@@ -355,7 +355,7 @@ gdk_toplevel_minimize (GdkToplevel *toplevel)
  * gdk_toplevel_lower:
  * @toplevel: a `GdkToplevel`
  *
- * Asks to lower the @toplevel below other windows.
+ * Asks to lower the `toplevel` below other windows.
  *
  * The windowing system may choose to ignore the request.
  *
@@ -374,7 +374,7 @@ gdk_toplevel_lower (GdkToplevel *toplevel)
  * @toplevel: a `GdkToplevel`
  * @timestamp: timestamp of the event triggering the surface focus
  *
- * Sets keyboard focus to @surface.
+ * Sets keyboard focus to `surface`.
  *
  * In most cases, [method@Gtk.Window.present_with_time] should be
  * used on a [class@Gtk.Window], rather than calling this function.
@@ -412,7 +412,7 @@ gdk_toplevel_get_state (GdkToplevel *toplevel)
 /**
  * gdk_toplevel_set_title: (attributes org.gtk.Method.set_property=title)
  * @toplevel: a `GdkToplevel`
- * @title: title of @surface
+ * @title: title of `surface`
  *
  * Sets the title of a toplevel surface.
  *
@@ -455,10 +455,10 @@ gdk_toplevel_set_startup_id (GdkToplevel *toplevel,
  *
  * Sets a transient-for parent.
  *
- * Indicates to the window manager that @surface is a transient
- * dialog associated with the application surface @parent. This
- * allows the window manager to do things like center @surface
- * on @parent and keep @surface above @parent.
+ * Indicates to the window manager that `surface` is a transient
+ * dialog associated with the application surface `parent`. This
+ * allows the window manager to do things like center `surface`
+ * on `parent` and keep `surface` above `parent`.
  *
  * See [method@Gtk.Window.set_transient_for] if you’re using
  * [class@Gtk.Window] or [class@Gtk.Dialog].
@@ -551,7 +551,7 @@ gdk_toplevel_show_window_menu (GdkToplevel *toplevel,
  *
  * Sets the toplevel to be decorated.
  *
- * Setting @decorated to false hints the desktop environment
+ * Setting `decorated` to false hints the desktop environment
  * that the surface has its own, client-side decorations and
  * does not need to have window decorations added.
  */
@@ -571,7 +571,7 @@ gdk_toplevel_set_decorated (GdkToplevel *toplevel,
  *
  * Sets the toplevel to be deletable.
  *
- * Setting @deletable to true hints the desktop environment
+ * Setting `deletable` to true hints the desktop environment
  * that it should offer the user a way to close the surface.
  */
 void
@@ -606,7 +606,7 @@ gdk_toplevel_supports_edge_constraints (GdkToplevel *toplevel)
  * @event: (nullable): the `GdkEvent` that is triggering the inhibit
  *   request, or `NULL` if none is available
  *
- * Requests that the @toplevel inhibit the system shortcuts.
+ * Requests that the `toplevel` inhibit the system shortcuts.
  *
  * This is asking the desktop environment/windowing system to let all
  * keyboard events reach the surface, as long as it is focused, instead
@@ -760,12 +760,12 @@ gdk_toplevel_titlebar_gesture (GdkToplevel        *toplevel,
  * @toplevel: a `GdkToplevel`
  * @cancellable: (nullable): a `GCancellable`
  * @callback: ithe callback to call when the handle has been exported
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * This function asynchronously obtains a handle for a toplevel surface
  * that can be passed to other processes.
  *
- * When a handle has been obtained, @callback will be called, and can
+ * When a handle has been obtained, `callback` will be called, and can
  * receive the handle via [method@Gdk.Toplevel.export_handle_finish].
  *
  * It is an error to call this function on a surface that is already
@@ -795,7 +795,7 @@ gdk_toplevel_export_handle (GdkToplevel         *toplevel,
  * returns the resulting handle.
  *
  * Returns: (nullable) (transfer full): the exported handle,
- *   or `NULL` and @error is set
+ *   or `NULL` and `error` is set
  *
  * Since: 4.10
  */

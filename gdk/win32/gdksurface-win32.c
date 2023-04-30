@@ -1193,7 +1193,7 @@ gdk_win32_surface_raise (GdkSurface *window)
  * @urgent: if true, flashes both the window and the taskbar button
  *          continuously.
  *
- * Flashes the specified @surface.
+ * Flashes the specified `surface`.
  */
 void
 gdk_win32_surface_set_urgency_hint (GdkSurface *surface,
@@ -4126,7 +4126,7 @@ gdk_win32_surface_focus (GdkSurface *window,
  * @display: a %GdkDisplay
  * @anid: a HWND window handle
  *
- * Returns: (nullable): the %GdkSurface associated with the given @anid, or `NULL`.
+ * Returns: (nullable): the %GdkSurface associated with the given `anid`, or `NULL`.
  */
 GdkSurface *
 gdk_win32_surface_lookup_for_display (GdkDisplay *display,
@@ -4141,7 +4141,7 @@ gdk_win32_surface_lookup_for_display (GdkDisplay *display,
  * gdk_win32_surface_is_win32:
  * @surface: a `GdkSurface`
  *
- * Returns: true if the @surface is a win32 implemented surface.
+ * Returns: true if the `surface` is a win32 implemented surface.
  *
  * Deprecated: 4.8: Use `GDK_IS_WIN32_SURFACE` instead.
  */
@@ -4186,7 +4186,7 @@ gdk_win32_surface_show_window_menu (GdkSurface *surface,
  * gdk_win32_surface_get_impl_hwnd:
  * @surface: a `GdkSurface`
  *
- * Returns: the associated @surface HWND handle.
+ * Returns: the associated `surface` HWND handle.
  *
  * Deprecated: 4.8: Use gdk_win32_surface_get_handle() instead.
  */
@@ -4526,7 +4526,7 @@ gdk_win32_surface_class_init (GdkWin32SurfaceClass *klass)
  * gdk_win32_surface_get_handle:
  * @surface: (type GdkWin32Surface): a native `GdkSurface`.
  *
- * Returns the HWND handle belonging to @surface.
+ * Returns the HWND handle belonging to `surface`.
  *
  * Returns: the associated HWND handle.
  */

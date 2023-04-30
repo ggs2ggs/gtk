@@ -523,7 +523,7 @@ gsk_gl_uniform_state_set_matrix (GskGLUniformState       *state,
  * @location: the location of the texture
  * @texture_slot: a texturing slot such as GL_TEXTURE0
  *
- * Sets the uniform expecting a texture to @texture_slot. This API
+ * Sets the uniform expecting a texture to `texture_slot`. This API
  * expects a texture slot such as GL_TEXTURE0 to reduce chances of
  * miss-use by the caller.
  *
@@ -563,7 +563,7 @@ gsk_gl_uniform_state_set_texture (GskGLUniformState   *state,
  * @location: the uniform location
  * @color: a color to set or `NULL` for transparent
  *
- * Sets a uniform to the color described by @color. This is a convenience
+ * Sets a uniform to the color described by `color`. This is a convenience
  * function to allow callers to avoid having to translate colors to floats
  * in other portions of the renderer.
  */

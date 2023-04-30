@@ -239,7 +239,7 @@ gtk_file_chooser_native_get_accept_label (GtkFileChooserNative *self)
  *
  * Sets the custom label text for the accept button.
  *
- * If characters in @label are preceded by an underscore, they are
+ * If characters in `label` are preceded by an underscore, they are
  * underlined. If you need a literal underscore character in a label,
  * use “__” (two underscores). The first underlined character represents
  * a keyboard accelerator called a mnemonic.
@@ -285,7 +285,7 @@ gtk_file_chooser_native_get_cancel_label (GtkFileChooserNative *self)
  *
  * Sets the custom label text for the cancel button.
  *
- * If characters in @label are preceded by an underscore, they are
+ * If characters in `label` are preceded by an underscore, they are
  * underlined. If you need a literal underscore character in a label,
  * use “__” (two underscores). The first underlined character represents
  * a keyboard accelerator called a mnemonic.

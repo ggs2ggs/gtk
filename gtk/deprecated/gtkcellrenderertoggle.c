@@ -228,8 +228,8 @@ gtk_cell_renderer_toggle_class_init (GtkCellRendererToggleClass *class)
    * The ::toggled signal is emitted when the cell is toggled.
    *
    * It is the responsibility of the application to update the model
-   * with the correct value to store at @path.  Often this is simply the
-   * opposite of the value currently stored at @path.
+   * with the correct value to store at `path`.  Often this is simply the
+   * opposite of the value currently stored at `path`.
    **/
   toggle_cell_signals[TOGGLED] =
     g_signal_new (I_("toggled"),
@@ -532,7 +532,7 @@ gtk_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
  * @toggle: a `GtkCellRendererToggle`
  * @radio: true to make the toggle look like a radio button
  *
- * If @radio is true, the cell renderer renders a radio toggle
+ * If `radio` is true, the cell renderer renders a radio toggle
  * (i.e. a toggle in a group of mutually-exclusive toggles).
  * If false, it renders a check toggle (a standalone boolean option).
  * This can be set globally for the cell renderer, or changed just

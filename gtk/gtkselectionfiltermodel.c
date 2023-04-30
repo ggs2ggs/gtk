@@ -298,8 +298,8 @@ gtk_selection_filter_model_new (GtkSelectionModel *model)
  *
  * Sets the model to be filtered.
  *
- * Note that GTK makes no effort to ensure that @model conforms to
- * the item type of @self. It assumes that the caller knows what they
+ * Note that GTK makes no effort to ensure that `model` conforms to
+ * the item type of `self`. It assumes that the caller knows what they
  * are doing and have set up an appropriate filter to ensure that item
  * types match.
  **/

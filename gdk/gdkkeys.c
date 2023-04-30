@@ -157,7 +157,7 @@ gdk_keymap_class_init (GdkKeymapClass *klass)
    * @keymap: the object on which the signal is emitted
    *
    * The ::keys-changed signal is emitted when the mapping represented by
-   * @keymap changes.
+   * `keymap` changes.
    */
   signals[KEYS_CHANGED] =
     g_signal_new (g_intern_static_string ("keys-changed"),
@@ -213,7 +213,7 @@ gdk_keymap_init (GdkKeymap *keymap)
  *
  * Converts a key value to upper case, if applicable.
  *
- * Returns: the upper case form of @keyval, or @keyval itself if it is already
+ * Returns: the upper case form of `keyval`, or `keyval` itself if it is already
  *   in upper case or it is not subject to case conversion.
  */
 guint
@@ -232,7 +232,7 @@ gdk_keyval_to_upper (guint keyval)
  *
  * Converts a key value to lower case, if applicable.
  *
- * Returns: the lower case form of @keyval, or @keyval itself if it is already
+ * Returns: the lower case form of `keyval`, or `keyval` itself if it is already
  *  in lower case or it is not subject to case conversion.
  */
 guint
@@ -251,7 +251,7 @@ gdk_keyval_to_lower (guint keyval)
  *
  * Returns true if the given key value is in upper case.
  *
- * Returns: true if @keyval is in upper case, or if @keyval is not subject to
+ * Returns: true if `keyval` is in upper case, or if `keyval` is not subject to
  *  case conversion.
  */
 gboolean
@@ -273,7 +273,7 @@ gdk_keyval_is_upper (guint keyval)
  *
  * Returns true if the given key value is in lower case.
  *
- * Returns: true if @keyval is in lower case, or if @keyval is not
+ * Returns: true if `keyval` is in lower case, or if `keyval` is not
  *   subject to case conversion.
  */
 gboolean
@@ -403,7 +403,7 @@ gdk_keymap_get_modifier_state (GdkKeymap *keymap)
  * @n_keys: return location for number of elements in returned array
  *
  * Obtains a list of keycode/group/level combinations that will
- * generate @keyval. Groups and levels are two kinds of keyboard mode;
+ * generate `keyval`. Groups and levels are two kinds of keyboard mode;
  * in general, the level determines whether the top or bottom symbol
  * on a key is used, and the group determines whether the left or
  * right symbol is used. On US keyboards, the shift key changes the
@@ -484,11 +484,11 @@ gdk_keymap_get_cached_entries_for_keyval (GdkKeymap     *keymap,
  *   location for array of `GdkKeymapKey`
  * @keyvals: (out) (array length=n_entries) (transfer full) (optional): return
  *   location for array of keyvals
- * @n_entries: length of @keys and @keyvals
+ * @n_entries: length of `keys` and `keyvals`
  *
- * Returns the keyvals bound to @hardware_keycode.
- * The Nth `GdkKeymapKey` in @keys is bound to the Nth
- * keyval in @keyvals. Free the returned arrays with g_free().
+ * Returns the keyvals bound to `hardware_keycode`.
+ * The Nth `GdkKeymapKey` in `keys` is bound to the Nth
+ * keyval in `keyvals`. Free the returned arrays with g_free().
  * When a keycode is pressed by the user, the keyval from
  * this list of entries is selected by considering the effective
  * keyboard group and level. See gdk_keymap_translate_keyboard_state().
@@ -515,12 +515,12 @@ gdk_keymap_get_entries_for_keycode (GdkKeymap     *keymap,
  * @key: a `GdkKeymapKey` with keycode, group, and level initialized
  *
  * Looks up the keyval mapped to a keycode/group/level triplet.
- * If no keyval is bound to @key, returns 0. For normal user input,
+ * If no keyval is bound to `key`, returns 0. For normal user input,
  * you want to use gdk_keymap_translate_keyboard_state() instead of
  * this function, since the effective group/level may not be
  * the same as the current keyboard state.
  *
- * Returns: a keyval, or 0 if none was mapped to the given @key
+ * Returns: a keyval, or 0 if none was mapped to the given `key`
  **/
 guint
 gdk_keymap_lookup_key (GdkKeymap          *keymap,
@@ -547,15 +547,15 @@ gdk_keymap_lookup_key (GdkKeymap          *keymap,
  * Translates the contents of a `GdkEventKey` into a keyval, effective
  * group, and level. Modifiers that affected the translation and
  * are thus unavailable for application use are returned in
- * @consumed_modifiers.
+ * `consumed_modifiers`.
  * See [Groups][key-group-explanation] for an explanation of
- * groups and levels. The @effective_group is the group that was
+ * groups and levels. The `effective_group` is the group that was
  * actually used for the translation; some keys such as Enter are not
- * affected by the active keyboard group. The @level is derived from
- * @state. For convenience, `GdkEventKey` already contains the translated
+ * affected by the active keyboard group. The `level` is derived from
+ * `state`. For convenience, `GdkEventKey` already contains the translated
  * keyval, so this function isn’t as useful as you might think.
  *
- * @consumed_modifiers gives modifiers that should be masked outfrom @state
+ * `consumed_modifiers` gives modifiers that should be masked outfrom `state`
  * when comparing this key press to a hot key. For instance, on a US keyboard,
  * the `plus` symbol is shifted, so when comparing a key press to a
  * `<Control>plus` accelerator `<Shift>` should be masked out.
@@ -574,7 +574,7 @@ gdk_keymap_lookup_key (GdkKeymap          *keymap,
  *   // Control was pressed
  * ]|
  * 
- * An older interpretation @consumed_modifiers was that it contained
+ * An older interpretation `consumed_modifiers` was that it contained
  * all modifiers that might affect the translation of the key;
  * this allowed accelerators to be stored with irrelevant consumed
  * modifiers, by doing:
@@ -590,8 +590,8 @@ gdk_keymap_lookup_key (GdkKeymap          *keymap,
  * masked out even if only `<Control><Alt>` was used in the keymap.
  * To support this usage as well as well as possible, all single
  * modifier combinations that could affect the key for any combination
- * of modifiers will be returned in @consumed_modifiers; multi-modifier
- * combinations are returned only when actually found in @state. When
+ * of modifiers will be returned in `consumed_modifiers`; multi-modifier
+ * combinations are returned only when actually found in `state`. When
  * you store accelerators, you should always store them with consumed
  * modifiers removed. Store `<Control>plus`, not `<Control><Shift>plus`,
  *
@@ -728,10 +728,10 @@ gdk_keyval_from_name (const char *keyval_name)
 /**
  * gdk_keyval_convert_case:
  * @symbol: a keyval
- * @lower: (out): return location for lowercase version of @symbol
- * @upper: (out): return location for uppercase version of @symbol
+ * @lower: (out): return location for lowercase version of `symbol`
+ * @upper: (out): return location for uppercase version of `symbol`
  *
- * Obtains the upper- and lower-case versions of the keyval @symbol.
+ * Obtains the upper- and lower-case versions of the keyval `symbol`.
  *
  * Examples of keyvals are `GDK_KEY_a`, `GDK_KEY_Enter`, `GDK_KEY_F1`, etc.
  */

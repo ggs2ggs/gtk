@@ -81,7 +81,7 @@ struct _GtkCssImageClass
   gboolean     (* is_invalid)                      (GtkCssImage                *image);
   /* does this image change based on timestamp? (optional) */
   gboolean     (* is_dynamic)                      (GtkCssImage                *image);
-  /* get image for given timestamp or @image when not dynamic (optional) */
+  /* get image for given timestamp or `image` when not dynamic (optional) */
   GtkCssImage *(* get_dynamic_image)               (GtkCssImage                *image,
                                                     gint64                      monotonic_time);
   /* parse CSS, return TRUE on success */

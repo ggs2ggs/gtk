@@ -83,20 +83,20 @@ G_DEFINE_BOXED_TYPE (GdkPopupLayout, gdk_popup_layout,
 
 /**
  * gdk_popup_layout_new: (constructor)
- * @anchor_rect:  (not nullable): the anchor `GdkRectangle` to align @surface with
- * @rect_anchor: the point on @anchor_rect to align with @surface's anchor point
- * @surface_anchor: the point on @surface to align with @rect's anchor point
+ * @anchor_rect:  (not nullable): the anchor `GdkRectangle` to align `surface` with
+ * @rect_anchor: the point on `anchor_rect` to align with `surface`'s anchor point
+ * @surface_anchor: the point on `surface` to align with `rect`'s anchor point
  *
  * Create a popup layout description.
  *
  * Used together with [method@Gdk.Popup.present] to describe how a popup
  * surface should be placed and behave on-screen.
  *
- * @anchor_rect is relative to the top-left corner of the surface's parent.
- * @rect_anchor and @surface_anchor determine anchor points on @anchor_rect
+ * `anchor_rect` is relative to the top-left corner of the surface's parent.
+ * `rect_anchor` and `surface_anchor` determine anchor points on `anchor_rect`
  * and surface to pin together.
  *
- * The position of @anchor_rect's anchor point can optionally be offset using
+ * The position of `anchor_rect`'s anchor point can optionally be offset using
  * [method@Gdk.PopupLayout.set_offset], which is equivalent to offsetting the
  * position of surface.
  *
@@ -122,9 +122,9 @@ gdk_popup_layout_new (const GdkRectangle *anchor_rect,
  * gdk_popup_layout_ref:
  * @layout: a `GdkPopupLayout`
  *
- * Increases the reference count of @value.
+ * Increases the reference count of `value`.
  *
- * Returns: the same @layout
+ * Returns: the same `layout`
  */
 GdkPopupLayout *
 gdk_popup_layout_ref (GdkPopupLayout *layout)
@@ -137,7 +137,7 @@ gdk_popup_layout_ref (GdkPopupLayout *layout)
  * gdk_popup_layout_unref:
  * @layout: a `GdkPopupLayout`
  *
- * Decreases the reference count of @value.
+ * Decreases the reference count of `value`.
  */
 void
 gdk_popup_layout_unref (GdkPopupLayout *layout)
@@ -150,9 +150,9 @@ gdk_popup_layout_unref (GdkPopupLayout *layout)
  * gdk_popup_layout_copy:
  * @layout: a `GdkPopupLayout`
  *
- * Makes a copy of @layout.
+ * Makes a copy of `layout`.
  *
- * Returns: (transfer full): a copy of @layout.
+ * Returns: (transfer full): a copy of `layout`.
  */
 GdkPopupLayout *
 gdk_popup_layout_copy (GdkPopupLayout *layout)
@@ -181,9 +181,9 @@ gdk_popup_layout_copy (GdkPopupLayout *layout)
  * @layout: a `GdkPopupLayout`
  * @other: another `GdkPopupLayout`
  *
- * Check whether @layout and @other has identical layout properties.
+ * Check whether `layout` and `other` has identical layout properties.
  *
- * Returns: true if @layout and @other have identical layout properties,
+ * Returns: true if `layout` and `other` have identical layout properties,
  *   otherwise false.
  */
 gboolean
@@ -296,10 +296,10 @@ gdk_popup_layout_get_surface_anchor (GdkPopupLayout *layout)
  *
  * Set new anchor hints.
  *
- * The set @anchor_hints determines how @surface will be moved
+ * The set `anchor_hints` determines how `surface` will be moved
  * if the anchor points cause it to move off-screen. For example,
  * %GDK_ANCHOR_FLIP_X will replace %GDK_GRAVITY_NORTH_WEST with
- * %GDK_GRAVITY_NORTH_EAST and vice versa if @surface extends
+ * %GDK_GRAVITY_NORTH_EAST and vice versa if `surface` extends
  * beyond the left or right edges of the monitor.
  */
 void

@@ -122,8 +122,8 @@ gtk_test_at_context_init (GtkTestATContext *self)
  * @accessible: the `GtkAccessible` instance which owns the AT context
  * @display: a `GdkDisplay`
  *
- * Creates a new `GtkTestATContext` instance for @accessible, using the
- * given @accessible_role.
+ * Creates a new `GtkTestATContext` instance for `accessible`, using the
+ * given `accessible_role`.
  *
  * Returns: (transfer full): the newly created `GtkTestATContext` instance
  */
@@ -145,7 +145,7 @@ gtk_test_at_context_new (GtkAccessibleRole  accessible_role,
  * @role: a `GtkAccessibleRole`
  *
  * Checks whether the `GtkAccessible:accessible-role` of the accessible
- * is @role.
+ * is `role`.
  *
  * Returns: true if the role matches
  */
@@ -163,9 +163,9 @@ gtk_test_accessible_has_role (GtkAccessible     *accessible,
  * @accessible: a `GtkAccessible`
  * @property: a `GtkAccessibleProperty`
  *
- * Checks whether the `GtkAccessible` has @property set.
+ * Checks whether the `GtkAccessible` has `property` set.
  *
- * Returns: true if the @property is set in the @accessible
+ * Returns: true if the `property` is set in the `accessible`
  */
 gboolean
 gtk_test_accessible_has_property (GtkAccessible         *accessible,
@@ -191,9 +191,9 @@ gtk_test_accessible_has_property (GtkAccessible         *accessible,
  * gtk_test_accessible_check_property:
  * @accessible: a `GtkAccessible`
  * @property: a `GtkAccessibleProperty`
- * @...: the expected value of @property
+ * `...`: the expected value of `property`
  *
- * Checks whether the accessible @property of @accessible is set to
+ * Checks whether the accessible `property` of `accessible` is set to
  * a specific value.
  *
  * Returns: (transfer full): the value of the accessible property
@@ -245,9 +245,9 @@ out:
  * @accessible: a `GtkAccessible`
  * @state: a `GtkAccessibleState`
  *
- * Checks whether the `GtkAccessible` has @state set.
+ * Checks whether the `GtkAccessible` has `state` set.
  *
- * Returns: true if the @state is set in the @accessible
+ * Returns: true if the `state` is set in the `accessible`
  */
 gboolean
 gtk_test_accessible_has_state (GtkAccessible      *accessible,
@@ -273,9 +273,9 @@ gtk_test_accessible_has_state (GtkAccessible      *accessible,
  * gtk_test_accessible_check_state:
  * @accessible: a `GtkAccessible`
  * @state: a `GtkAccessibleState`
- * @...: the expected value of @state
+ * `...`: the expected value of `state`
  *
- * Checks whether the accessible @state of @accessible is set to
+ * Checks whether the accessible `state` of `accessible` is set to
  * a specific value.
  *
  * Returns: (transfer full): the value of the accessible state
@@ -327,9 +327,9 @@ out:
  * @accessible: a `GtkAccessible`
  * @relation: a `GtkAccessibleRelation`
  *
- * Checks whether the `GtkAccessible` has @relation set.
+ * Checks whether the `GtkAccessible` has `relation` set.
  *
- * Returns: true if the @relation is set in the @accessible
+ * Returns: true if the `relation` is set in the `accessible`
  */
 gboolean
 gtk_test_accessible_has_relation (GtkAccessible         *accessible,
@@ -355,9 +355,9 @@ gtk_test_accessible_has_relation (GtkAccessible         *accessible,
  * gtk_test_accessible_check_relation:
  * @accessible: a `GtkAccessible`
  * @relation: a `GtkAccessibleRelation`
- * @...: the expected value of @relation
+ * `...`: the expected value of `relation`
  *
- * Checks whether the accessible @relation of @accessible is set to
+ * Checks whether the accessible `relation` of `accessible` is set to
  * a specific value.
  *
  * Returns: (transfer full): the value of the accessible relation
@@ -408,8 +408,8 @@ out:
  * gtk_test_accessible_assertion_message_role:
  * @domain: a domain
  * @file: a file name
- * @line: the line in @file
- * @func: a function name in @file
+ * @line: the line in `file`
+ * @func: a function name in `file`
  * @expr: the expression being tested
  * @accessible: a `GtkAccessible`
  * @expected_role: the expected `GtkAccessibleRole`

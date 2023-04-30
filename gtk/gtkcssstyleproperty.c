@@ -256,7 +256,7 @@ _gtk_css_style_property_lookup_by_id (guint id)
  * _gtk_css_style_property_is_inherit:
  * @property: the property
  *
- * Queries if the given @property is inherited. See the
+ * Queries if the given `property` is inherited. See the
  * [CSS Documentation](http://www.w3.org/TR/css3-cascade/#inheritance)
  * for an explanation of this concept.
  *
@@ -274,7 +274,7 @@ _gtk_css_style_property_is_inherit (GtkCssStyleProperty *property)
  * _gtk_css_style_property_is_animated:
  * @property: the property
  *
- * Queries if the given @property can be is animated. See the
+ * Queries if the given `property` can be is animated. See the
  * [CSS Documentation](http://www.w3.org/TR/css3-transitions/#animatable-css)
  * for animatable properties.
  *
@@ -292,7 +292,7 @@ _gtk_css_style_property_is_animated (GtkCssStyleProperty *property)
  * _gtk_css_style_property_get_affects:
  * @property: the property
  *
- * Returns all the things this property affects. See @GtkCssAffects for what
+ * Returns all the things this property affects. See `GtkCssAffects` for what
  * the flags mean.
  *
  * Returns: The things this property affects.
@@ -326,7 +326,7 @@ _gtk_css_style_property_get_id (GtkCssStyleProperty *property)
  * _gtk_css_style_property_get_initial_value:
  * @property: the property
  *
- * Queries the initial value of the given @property. See the
+ * Queries the initial value of the given `property`. See the
  * [CSS Documentation](http://www.w3.org/TR/css3-cascade/#initial)
  * for an explanation of this concept.
  *

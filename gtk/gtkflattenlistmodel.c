@@ -459,7 +459,7 @@ gtk_flatten_list_model_init (GtkFlattenListModel *self)
  * gtk_flatten_list_model_new:
  * @model: (nullable) (transfer full): the model to be flattened
  *
- * Creates a new `GtkFlattenListModel` that flattens @list.
+ * Creates a new `GtkFlattenListModel` that flattens `list`.
  *
  * Returns: a new `GtkFlattenListModel`
  */
@@ -531,7 +531,7 @@ gtk_flatten_list_model_set_model (GtkFlattenListModel *self,
  *
  * Gets the model set via gtk_flatten_list_model_set_model().
  *
- * Returns: (nullable) (transfer none): The model flattened by @self
+ * Returns: (nullable) (transfer none): The model flattened by `self`
  **/
 GListModel *
 gtk_flatten_list_model_get_model (GtkFlattenListModel *self)
@@ -548,7 +548,7 @@ gtk_flatten_list_model_get_model (GtkFlattenListModel *self)
  *
  * Returns the model containing the item at the given position.
  *
- * Returns: (transfer none) (nullable): the model containing the item at @position
+ * Returns: (transfer none) (nullable): the model containing the item at `position`
  */
 GListModel *
 gtk_flatten_list_model_get_model_for_item (GtkFlattenListModel *self,

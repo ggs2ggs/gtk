@@ -327,11 +327,11 @@ gtk_gesture_single_get_touch_only (GtkGestureSingle *gesture)
 /**
  * gtk_gesture_single_set_touch_only: (attributes org.gtk.Method.set_property=touch-only)
  * @gesture: a `GtkGestureSingle`
- * @touch_only: whether @gesture handles only touch events
+ * @touch_only: whether `gesture` handles only touch events
  *
  * Sets whether to handle only touch events.
  *
- * If @touch_only is true, @gesture will only handle events of type
+ * If `touch_only` is true, `gesture` will only handle events of type
  * %GDK_TOUCH_BEGIN, %GDK_TOUCH_UPDATE or %GDK_TOUCH_END. If false,
  * mouse events will be handled too.
  */
@@ -378,9 +378,9 @@ gtk_gesture_single_get_exclusive (GtkGestureSingle *gesture)
 /**
  * gtk_gesture_single_set_exclusive: (attributes org.gtk.Method.set_property=exclusive)
  * @gesture: a `GtkGestureSingle`
- * @exclusive: true to make @gesture exclusive
+ * @exclusive: true to make `gesture` exclusive
  *
- * Sets whether @gesture is exclusive.
+ * Sets whether `gesture` is exclusive.
  *
  * An exclusive gesture will only handle pointer and "pointer emulated"
  * touch events, so at any given time, there is only one sequence able
@@ -408,7 +408,7 @@ gtk_gesture_single_set_exclusive (GtkGestureSingle *gesture,
  * gtk_gesture_single_get_button: (attributes org.gtk.Method.get_property=button)
  * @gesture: a `GtkGestureSingle`
  *
- * Returns the button number @gesture listens for.
+ * Returns the button number `gesture` listens for.
  *
  * If this is 0, the gesture reacts to any button press.
  *
@@ -431,7 +431,7 @@ gtk_gesture_single_get_button (GtkGestureSingle *gesture)
  * @gesture: a `GtkGestureSingle`
  * @button: button number to listen to, or 0 for any button
  *
- * Sets the button number @gesture listens to.
+ * Sets the button number `gesture` listens to.
  *
  * If non-0, every button press from a different button
  * number will be ignored. Touch events implicitly match
@@ -459,7 +459,7 @@ gtk_gesture_single_set_button (GtkGestureSingle *gesture,
  * @gesture: a `GtkGestureSingle`
  *
  * Returns the button number currently interacting
- * with @gesture, or 0 if there is none.
+ * with `gesture`, or 0 if there is none.
  *
  * Returns: The current button number
  */
@@ -479,7 +479,7 @@ gtk_gesture_single_get_current_button (GtkGestureSingle *gesture)
  * gtk_gesture_single_get_current_sequence:
  * @gesture: a `GtkGestureSingle`
  *
- * Returns the event sequence currently interacting with @gesture.
+ * Returns the event sequence currently interacting with `gesture`.
  *
  * This is only meaningful if [method@Gtk.Gesture.is_active]
  * returns true.

@@ -3625,7 +3625,7 @@ render_node_print (Printer       *p,
  * gsk_render_node_serialize:
  * @node: a `GskRenderNode`
  *
- * Serializes the @node for later deserialization via
+ * Serializes the `node` for later deserialization via
  * gsk_render_node_deserialize(). No guarantees are made about the format
  * used other than that the same version of GTK will be able to deserialize
  * the result of a call to gsk_render_node_serialize() and

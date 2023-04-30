@@ -682,9 +682,9 @@ gtk_popover_menu_new (void)
  * @popover: a `GtkPopoverMenu`
  * @name: the name of the menu to switch to
  *
- * Opens a submenu of the @popover. The @name
+ * Opens a submenu of the `popover`. The `name`
  * must be one of the names given to the submenus
- * of @popover with `GtkPopoverMenu:submenu`, or
+ * of `popover` with `GtkPopoverMenu:submenu`, or
  * "main" to switch back to the main menu.
  *
  * `GtkModelButton` will open submenus automatically
@@ -717,7 +717,7 @@ gtk_popover_menu_add_submenu (GtkPopoverMenu *popover,
  * gtk_popover_menu_new_from_model:
  * @model: (nullable): a `GMenuModel`
  *
- * Creates a `GtkPopoverMenu` and populates it according to @model.
+ * Creates a `GtkPopoverMenu` and populates it according to `model`.
  *
  * The created buttons are connected to actions found in the
  * `GtkApplicationWindow` to which the popover belongs - typically
@@ -745,7 +745,7 @@ gtk_popover_menu_new_from_model (GMenuModel *model)
  * @model: a `GMenuModel`
  * @flags: flags that affect how the menu is created
  *
- * Creates a `GtkPopoverMenu` and populates it according to @model.
+ * Creates a `GtkPopoverMenu` and populates it according to `model`.
  *
  * The created buttons are connected to actions found in the
  * action groups that are accessible from the parent widget.
@@ -779,11 +779,11 @@ gtk_popover_menu_new_from_model_full (GMenuModel          *model,
  * @popover: a `GtkPopoverMenu`
  * @model: (nullable): a `GMenuModel`
  *
- * Sets a new menu model on @popover.
+ * Sets a new menu model on `popover`.
  *
- * The existing contents of @popover are removed, and
- * the @popover is populated with new contents according
- * to @model.
+ * The existing contents of `popover` are removed, and
+ * the `popover` is populated with new contents according
+ * to `model`.
  */
 void
 gtk_popover_menu_set_menu_model (GtkPopoverMenu *popover,
@@ -814,7 +814,7 @@ gtk_popover_menu_set_menu_model (GtkPopoverMenu *popover,
  *
  * Returns the menu model used to populate the popover.
  *
- * Returns: (transfer none) (nullable): the menu model of @popover
+ * Returns: (transfer none) (nullable): the menu model of `popover`
  */
 GMenuModel *
 gtk_popover_menu_get_menu_model (GtkPopoverMenu *popover)
@@ -828,14 +828,14 @@ gtk_popover_menu_get_menu_model (GtkPopoverMenu *popover)
  * gtk_popover_menu_add_child:
  * @popover: a `GtkPopoverMenu`
  * @child: the `GtkWidget` to add
- * @id: the ID to insert @child at
+ * @id: the ID to insert `child` at
  *
  * Adds a custom widget to a generated menu.
  *
- * For this to work, the menu model of @popover must have
- * an item with a `custom` attribute that matches @id.
+ * For this to work, the menu model of `popover` must have
+ * an item with a `custom` attribute that matches `id`.
  *
- * Returns: true if @id was found and the widget added
+ * Returns: true if `id` was found and the widget added
  */
 gboolean
 gtk_popover_menu_add_child (GtkPopoverMenu *popover,

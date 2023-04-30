@@ -575,7 +575,7 @@ gtk_numeric_sorter_init (GtkNumericSorter *self)
  * gtk_numeric_sorter_new:
  * @expression: (transfer full) (nullable): The expression to evaluate
  *
- * Creates a new numeric sorter using the given @expression.
+ * Creates a new numeric sorter using the given `expression`.
  *
  * Smaller numbers will be sorted first. You can call
  * [method@Gtk.NumericSorter.set_sort_order] to change this.
@@ -619,7 +619,7 @@ gtk_numeric_sorter_get_expression (GtkNumericSorter *self)
  *
  * Sets the expression that is evaluated to obtain numbers from items.
  *
- * Unless an expression is set on @self, the sorter will always
+ * Unless an expression is set on `self`, the sorter will always
  * compare items as invalid.
  *
  * The expression must have a return type that can be compared

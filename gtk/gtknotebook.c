@@ -1262,7 +1262,7 @@ gtk_notebook_class_init (GtkNotebookClass *class)
    * GtkNotebook::page-reordered:
    * @notebook: the `GtkNotebook`
    * @child: the child `GtkWidget` affected
-   * @page_num: the new page number for @child
+   * @page_num: the new page number for `child`
    *
    * the ::page-reordered signal is emitted in the notebook
    * right after a page has been reordered.
@@ -1284,7 +1284,7 @@ gtk_notebook_class_init (GtkNotebookClass *class)
    * GtkNotebook::page-removed:
    * @notebook: the `GtkNotebook`
    * @child: the child `GtkWidget` affected
-   * @page_num: the @child page number
+   * @page_num: the `child` page number
    *
    * the ::page-removed signal is emitted in the notebook
    * right after a page is removed from the notebook.
@@ -1306,7 +1306,7 @@ gtk_notebook_class_init (GtkNotebookClass *class)
    * GtkNotebook::page-added:
    * @notebook: the `GtkNotebook`
    * @child: the child `GtkWidget` affected
-   * @page_num: the new page number for @child
+   * @page_num: the new page number for `child`
    *
    * the ::page-added signal is emitted in the notebook
    * right after a page is added to the notebook.
@@ -1328,7 +1328,7 @@ gtk_notebook_class_init (GtkNotebookClass *class)
   /**
    * GtkNotebook::create-window:
    * @notebook: the `GtkNotebook` emitting the signal
-   * @page: the tab of @notebook that is being detached
+   * @page: the tab of `notebook` that is being detached
    *
    * The ::create-window signal is emitted when a detachable
    * tab is dropped on the root window.
@@ -1340,7 +1340,7 @@ gtk_notebook_class_init (GtkNotebookClass *class)
    * `GtkNotebook`:group-name ).
    *
    * Returns: (nullable) (transfer none): a `GtkNotebook` that
-   *   @page should be added to
+   *   `page` should be added to
    */
   notebook_signals[CREATE_WINDOW] =
     g_signal_new (I_("create-window"),
@@ -5641,7 +5641,7 @@ gtk_notebook_menu_label_unparent (GtkWidget *widget)
  * @tab_label: (nullable): the `GtkWidget` to be used as the label
  *   for the page, or `NULL` to use the default label, “page N”
  *
- * Appends a page to @notebook.
+ * Appends a page to `notebook`.
  *
  * Returns: the index (starting from 0) of the appended
  *   page in the notebook, or -1 if function fails
@@ -5665,13 +5665,13 @@ gtk_notebook_append_page (GtkNotebook *notebook,
  * @tab_label: (nullable): the `GtkWidget` to be used as the label
  *   for the page, or `NULL` to use the default label, “page N”
  * @menu_label: (nullable): the widget to use as a label for the
- *   page-switch menu, if that is enabled. If `NULL`, and @tab_label
+ *   page-switch menu, if that is enabled. If `NULL`, and `tab_label`
  *   is a `GtkLabel` or `NULL`, then the menu label will be a newly
- *   created label with the same text as @tab_label; if @tab_label
- *   is not a `GtkLabel`, @menu_label must be specified if the
+ *   created label with the same text as `tab_label`; if `tab_label`
+ *   is not a `GtkLabel`, `menu_label` must be specified if the
  *   page-switch menu is to be used.
  *
- * Appends a page to @notebook, specifying the widget to use as the
+ * Appends a page to `notebook`, specifying the widget to use as the
  * label in the popup menu.
  *
  * Returns: the index (starting from 0) of the appended
@@ -5698,7 +5698,7 @@ gtk_notebook_append_page_menu (GtkNotebook *notebook,
  * @tab_label: (nullable): the `GtkWidget` to be used as the label
  *   for the page, or `NULL` to use the default label, “page N”
  *
- * Prepends a page to @notebook.
+ * Prepends a page to `notebook`.
  *
  * Returns: the index (starting from 0) of the prepended
  *   page in the notebook, or -1 if function fails
@@ -5722,13 +5722,13 @@ gtk_notebook_prepend_page (GtkNotebook *notebook,
  * @tab_label: (nullable): the `GtkWidget` to be used as the label
  *   for the page, or `NULL` to use the default label, “page N”
  * @menu_label: (nullable): the widget to use as a label for the
- *   page-switch menu, if that is enabled. If `NULL`, and @tab_label
+ *   page-switch menu, if that is enabled. If `NULL`, and `tab_label`
  *   is a `GtkLabel` or `NULL`, then the menu label will be a newly
- *   created label with the same text as @tab_label; if @tab_label
- *   is not a `GtkLabel`, @menu_label must be specified if the
+ *   created label with the same text as `tab_label`; if `tab_label`
+ *   is not a `GtkLabel`, `menu_label` must be specified if the
  *   page-switch menu is to be used.
  *
- * Prepends a page to @notebook, specifying the widget to use as the
+ * Prepends a page to `notebook`, specifying the widget to use as the
  * label in the popup menu.
  *
  * Returns: the index (starting from 0) of the prepended
@@ -5757,7 +5757,7 @@ gtk_notebook_prepend_page_menu (GtkNotebook *notebook,
  * @position: the index (starting at 0) at which to insert the page,
  *   or -1 to append the page after all other pages
  *
- * Insert a page into @notebook at the given position.
+ * Insert a page into `notebook` at the given position.
  *
  * Returns: the index (starting from 0) of the inserted
  *   page in the notebook, or -1 if function fails
@@ -5812,15 +5812,15 @@ gtk_notebook_mnemonic_activate_switch_page (GtkWidget *child,
  * @tab_label: (nullable): the `GtkWidget` to be used as the label
  *   for the page, or `NULL` to use the default label, “page N”
  * @menu_label: (nullable): the widget to use as a label for the
- *   page-switch menu, if that is enabled. If `NULL`, and @tab_label
+ *   page-switch menu, if that is enabled. If `NULL`, and `tab_label`
  *   is a `GtkLabel` or `NULL`, then the menu label will be a newly
- *   created label with the same text as @tab_label; if @tab_label
- *   is not a `GtkLabel`, @menu_label must be specified if the
+ *   created label with the same text as `tab_label`; if `tab_label`
+ *   is not a `GtkLabel`, `menu_label` must be specified if the
  *   page-switch menu is to be used.
  * @position: the index (starting at 0) at which to insert the page,
  *   or -1 to append the page after all other pages.
  *
- * Insert a page into @notebook at the given position, specifying
+ * Insert a page into `notebook` at the given position, specifying
  * the widget to use as the label in the popup menu.
  *
  * Returns: the index (starting from 0) of the inserted
@@ -5906,9 +5906,9 @@ gtk_notebook_get_current_page (GtkNotebook *notebook)
  * @page_num: the index of a page in the notebook, or -1
  *   to get the last page
  *
- * Returns the child widget contained in page number @page_num.
+ * Returns the child widget contained in page number `page_num`.
  *
- * Returns: (nullable) (transfer none): the child widget, or `NULL` if @page_num
+ * Returns: (nullable) (transfer none): the child widget, or `NULL` if `page_num`
  * is out of bounds
  */
 GtkWidget*
@@ -5958,8 +5958,8 @@ gtk_notebook_get_n_pages (GtkNotebook *notebook)
  * Finds the index of the page which contains the given child
  * widget.
  *
- * Returns: the index of the page containing @child, or
- *   -1 if @child is not in the notebook
+ * Returns: the index of the page containing `child`, or
+ *   -1 if `child` is not in the notebook
  */
 int
 gtk_notebook_page_num (GtkNotebook      *notebook,
@@ -5994,7 +5994,7 @@ gtk_notebook_page_num (GtkNotebook      *notebook,
  *   than the number of pages in the notebook, nothing
  *   will be done.
  *
- * Switches to the page number @page_num.
+ * Switches to the page number `page_num`.
  *
  * Note that due to historical reasons, GtkNotebook refuses
  * to switch to a page unless the child widget is visible.
@@ -6457,10 +6457,10 @@ gtk_notebook_popup_disable (GtkNotebook *notebook)
  * @notebook: a `GtkNotebook`
  * @child: the page
  *
- * Returns the tab label widget for the page @child.
+ * Returns the tab label widget for the page `child`.
  *
- * `NULL` is returned if @child is not in @notebook or
- * if no tab label has specifically been set for @child.
+ * `NULL` is returned if `child` is not in `notebook` or
+ * if no tab label has specifically been set for `child`.
  *
  * Returns: (transfer none) (nullable): the tab label
  */
@@ -6490,9 +6490,9 @@ gtk_notebook_get_tab_label (GtkNotebook *notebook,
  * @tab_label: (nullable): the tab label widget to use, or `NULL`
  *   for default tab label
  *
- * Changes the tab label for @child.
+ * Changes the tab label for `child`.
  *
- * If `NULL` is specified for @tab_label, then the page will
+ * If `NULL` is specified for `tab_label`, then the page will
  * have the label “page N”.
  */
 void
@@ -6569,7 +6569,7 @@ gtk_notebook_set_tab_label (GtkNotebook *notebook,
  * @tab_text: the label text
  *
  * Creates a new label and sets it as the tab label for the page
- * containing @child.
+ * containing `child`.
  */
 void
 gtk_notebook_set_tab_label_text (GtkNotebook *notebook,
@@ -6588,10 +6588,10 @@ gtk_notebook_set_tab_label_text (GtkNotebook *notebook,
 /**
  * gtk_notebook_get_tab_label_text:
  * @notebook: a `GtkNotebook`
- * @child: a widget contained in a page of @notebook
+ * @child: a widget contained in a page of `notebook`
  *
  * Retrieves the text of the tab label for the page containing
- * @child.
+ * `child`.
  *
  * Returns: (nullable): the text of the tab label, or `NULL` if
  *   the tab label widget is not a `GtkLabel`. The string is owned
@@ -6617,9 +6617,9 @@ gtk_notebook_get_tab_label_text (GtkNotebook *notebook,
 /**
  * gtk_notebook_get_menu_label:
  * @notebook: a `GtkNotebook`
- * @child: a widget contained in a page of @notebook
+ * @child: a widget contained in a page of `notebook`
  *
- * Retrieves the menu label widget of the page containing @child.
+ * Retrieves the menu label widget of the page containing `child`.
  *
  * Returns: (nullable) (transfer none): the menu label, or `NULL`
  *   if the notebook page does not have a menu label other than
@@ -6649,7 +6649,7 @@ gtk_notebook_get_menu_label (GtkNotebook *notebook,
  * @child: the child widget
  * @menu_label: (nullable): the menu label, or `NULL` for default
  *
- * Changes the menu label for the page containing @child.
+ * Changes the menu label for the page containing `child`.
  */
 void
 gtk_notebook_set_menu_label (GtkNotebook *notebook,
@@ -6694,7 +6694,7 @@ gtk_notebook_set_menu_label (GtkNotebook *notebook,
  * @child: the child widget
  * @menu_text: the label text
  *
- * Creates a new label and sets it as the menu label of @child.
+ * Creates a new label and sets it as the menu label of `child`.
  */
 void
 gtk_notebook_set_menu_label_text (GtkNotebook *notebook,
@@ -6720,7 +6720,7 @@ gtk_notebook_set_menu_label_text (GtkNotebook *notebook,
  * @child: the child widget of a page of the notebook.
  *
  * Retrieves the text of the menu label for the page containing
- * @child.
+ * `child`.
  *
  * Returns: (nullable): the text of the tab label, or `NULL` if
  *   the widget does not have a menu label other than the default
@@ -6780,11 +6780,11 @@ gtk_notebook_child_reordered (GtkNotebook     *notebook,
  * @child: the child to move
  * @position: the new position, or -1 to move to the end
  *
- * Reorders the page containing @child, so that it appears in position
- * @position.
+ * Reorders the page containing `child`, so that it appears in position
+ * `position`.
  *
- * If @position is greater than or equal to the number of children in
- * the list or negative, @child will be moved to the end of the list.
+ * If `position` is greater than or equal to the number of children in
+ * the list or negative, `child` will be moved to the end of the list.
  */
 void
 gtk_notebook_reorder_child (GtkNotebook *notebook,
@@ -6846,7 +6846,7 @@ gtk_notebook_reorder_child (GtkNotebook *notebook,
  * @group_name: (nullable): the name of the notebook group,
  *   or `NULL` to unset it
  *
- * Sets a group name for @notebook.
+ * Sets a group name for `notebook`.
  *
  * Notebooks with the same name will be able to exchange tabs
  * via drag and drop. A notebook with a `NULL` group name will
@@ -6874,7 +6874,7 @@ gtk_notebook_set_group_name (GtkNotebook *notebook,
  * gtk_notebook_get_group_name: (attributes org.gtk.Method.get_property=group-name)
  * @notebook: a `GtkNotebook`
  *
- * Gets the current group name for @notebook.
+ * Gets the current group name for `notebook`.
  *
  * Returns: (nullable) (transfer none): the group name,
  *   or `NULL` if none is set
@@ -6954,7 +6954,7 @@ gtk_notebook_set_tab_reorderable (GtkNotebook *notebook,
  * @notebook: a `GtkNotebook`
  * @child: a child `GtkWidget`
  *
- * Returns whether the tab contents can be detached from @notebook.
+ * Returns whether the tab contents can be detached from `notebook`.
  *
  * Returns: true if the tab is detachable.
  */
@@ -6979,7 +6979,7 @@ gtk_notebook_get_tab_detachable (GtkNotebook *notebook,
  * @child: a child `GtkWidget`
  * @detachable: whether the tab is detachable or not
  *
- * Sets whether the tab can be detached from @notebook to another
+ * Sets whether the tab can be detached from `notebook` to another
  * notebook or widget.
  *
  * Note that two notebooks must share a common group identifier
@@ -7058,7 +7058,7 @@ gtk_notebook_set_tab_detachable (GtkNotebook *notebook,
  * See [method@Gtk.Notebook.set_action_widget].
  *
  * Returns: (nullable) (transfer none): The action widget
- *   with the given @pack_type or `NULL` when this action
+ *   with the given `pack_type` or `NULL` when this action
  *   widget has not been set
  */
 GtkWidget*
@@ -7076,7 +7076,7 @@ gtk_notebook_get_action_widget (GtkNotebook *notebook,
  * @widget: a `GtkWidget`
  * @pack_type: pack type of the action widget
  *
- * Sets @widget as one of the action widgets.
+ * Sets `widget` as one of the action widgets.
  *
  * Depending on the pack type the widget will be placed before
  * or after the tabs. You can use a `GtkBox` if you need to pack
@@ -7112,11 +7112,11 @@ gtk_notebook_set_action_widget (GtkNotebook *notebook,
 /**
  * gtk_notebook_get_page:
  * @notebook: a `GtkNotebook`
- * @child: a child of @notebook
+ * @child: a child of `notebook`
  *
- * Returns the `GtkNotebookPage` for @child.
+ * Returns the `GtkNotebookPage` for `child`.
  *
- * Returns: (transfer none): the `GtkNotebookPage` for @child
+ * Returns: (transfer none): the `GtkNotebookPage` for `child`
  */
 GtkNotebookPage *
 gtk_notebook_get_page (GtkNotebook *notebook,
@@ -7139,9 +7139,9 @@ gtk_notebook_get_page (GtkNotebook *notebook,
  * gtk_notebook_page_get_child: (attributes org.gtk.Method.get_property=child)
  * @page: a `GtkNotebookPage`
  *
- * Returns the notebook child to which @page belongs.
+ * Returns the notebook child to which `page` belongs.
  *
- * Returns: (transfer none): the child to which @page belongs
+ * Returns: (transfer none): the child to which `page` belongs
  */
 GtkWidget *
 gtk_notebook_page_get_child (GtkNotebookPage *page)

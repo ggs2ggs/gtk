@@ -90,7 +90,7 @@ gtk_root_default_init (GtkRootInterface *iface)
  *
  * Returns the display that this `GtkRoot` is on.
  *
- * Returns: (transfer none): the display of @root
+ * Returns: (transfer none): the display of `root`
  */
 GdkDisplay *
 gtk_root_get_display (GtkRoot *self)
@@ -120,10 +120,10 @@ gtk_root_get_constraint_solver (GtkRoot *self)
  * @focus: (nullable): widget to be the new focus widget, or `NULL`
  *    to unset the focus widget
  *
- * If @focus is not the current focus widget, and is focusable, sets
+ * If `focus` is not the current focus widget, and is focusable, sets
  * it as the focus widget for the root.
  *
- * If @focus is `NULL`, unsets the focus widget for the root.
+ * If `focus` is `NULL`, unsets the focus widget for the root.
  *
  * To set the focus to a particular widget in the root, it is usually
  * more convenient to use [method@Gtk.Widget.grab_focus] instead of

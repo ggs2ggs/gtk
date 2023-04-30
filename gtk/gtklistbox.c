@@ -545,10 +545,10 @@ gtk_list_box_class_init (GtkListBoxClass *klass)
    * @box: the `GtkListBox`
    * @row: (nullable): the selected row
    *
-   * Emitted when a new row is selected, or (with a `NULL` @row)
+   * Emitted when a new row is selected, or (with a `NULL` `row`)
    * when the selection is cleared.
    *
-   * When the @box is using %GTK_SELECTION_MULTIPLE, this signal will not
+   * When the `box` is using %GTK_SELECTION_MULTIPLE, this signal will not
    * give you the full picture of selection changes, and you should use
    * the [signal@Gtk.ListBox::selected-rows-changed] signal instead.
    */
@@ -770,7 +770,7 @@ gtk_list_box_get_selected_row (GtkListBox *box)
  *
  * Gets the n-th child in the list (not counting headers).
  *
- * If @index_ is negative or larger than the number of items in the
+ * If `index_` is negative or larger than the number of items in the
  * list, `NULL` is returned.
  *
  * Returns: (transfer none) (nullable): the child `GtkWidget`
@@ -812,7 +812,7 @@ row_y_cmp_func (gconstpointer a,
  * @box: a `GtkListBox`
  * @y: position
  *
- * Gets the row at the @y position.
+ * Gets the row at the `y` position.
  *
  * Returns: (transfer none) (nullable): the row
  */
@@ -840,7 +840,7 @@ gtk_list_box_get_row_at_y (GtkListBox *box,
  * @box: a `GtkListBox`
  * @row: (nullable): The row to select
  *
- * Make @row the currently selected row.
+ * Make `row` the currently selected row.
  */
 void
 gtk_list_box_select_row (GtkListBox    *box,
@@ -868,7 +868,7 @@ gtk_list_box_select_row (GtkListBox    *box,
  * @box: a `GtkListBox`
  * @row: the row to unselect
  *
- * Unselects a single row of @box, if the selection mode allows it.
+ * Unselects a single row of `box`, if the selection mode allows it.
  */
 void
 gtk_list_box_unselect_row (GtkListBox    *box,
@@ -884,7 +884,7 @@ gtk_list_box_unselect_row (GtkListBox    *box,
  * gtk_list_box_select_all:
  * @box: a `GtkListBox`
  *
- * Select all children of @box, if the selection mode allows it.
+ * Select all children of `box`, if the selection mode allows it.
  */
 void
 gtk_list_box_select_all (GtkListBox *box)
@@ -905,7 +905,7 @@ gtk_list_box_select_all (GtkListBox *box)
  * gtk_list_box_unselect_all:
  * @box: a `GtkListBox`
  *
- * Unselect all children of @box, if the selection mode allows it.
+ * Unselect all children of `box`, if the selection mode allows it.
  */
 void
 gtk_list_box_unselect_all (GtkListBox *box)
@@ -939,7 +939,7 @@ gtk_list_box_selected_rows_changed (GtkListBox *box)
  *
  * A function used by gtk_list_box_selected_foreach().
  *
- * It will be called on every selected child of the @box.
+ * It will be called on every selected child of the `box`.
  */
 
 /**
@@ -1045,7 +1045,7 @@ gtk_list_box_set_placeholder (GtkListBox *box,
  * For instance, this is used to get the page size for
  * PageUp/Down key handling.
  *
- * In the normal case when the @box is packed inside
+ * In the normal case when the `box` is packed inside
  * a `GtkScrolledWindow` the adjustment from that will
  * be picked up automatically, so there is no need
  * to manually do that.
@@ -1183,16 +1183,16 @@ gtk_list_box_get_selection_mode (GtkListBox *box)
  * gtk_list_box_set_filter_func:
  * @box: a `GtkListBox`
  * @filter_func: (nullable): callback that lets you filter which rows to show
- * @user_data: (closure): user data passed to @filter_func
- * @destroy: destroy notifier for @user_data
+ * @user_data: (closure): user data passed to `filter_func`
+ * @destroy: destroy notifier for `user_data`
  *
- * By setting a filter function on the @box one can decide dynamically which
+ * By setting a filter function on the `box` one can decide dynamically which
  * of the rows to show.
  *
  * For instance, to implement a search function on a list that
  * filters the original list to only show the matching rows.
  *
- * The @filter_func will be called for each row after the call, and
+ * The `filter_func` will be called for each row after the call, and
  * it will continue to be called each time a row changes (via
  * [method@Gtk.ListBoxRow.changed]) or when [method@Gtk.ListBox.invalidate_filter]
  * is called.
@@ -1224,29 +1224,29 @@ gtk_list_box_set_filter_func (GtkListBox           *box,
  * gtk_list_box_set_header_func:
  * @box: a `GtkListBox`
  * @update_header: (nullable): callback that lets you add row headers
- * @user_data: (closure): user data passed to @update_header
- * @destroy: destroy notifier for @user_data
+ * @user_data: (closure): user data passed to `update_header`
+ * @destroy: destroy notifier for `user_data`
  *
  * Sets a header function.
  *
- * By setting a header function on the @box one can dynamically add headers
+ * By setting a header function on the `box` one can dynamically add headers
  * in front of rows, depending on the contents of the row and its position
  * in the list.
  *
  * For instance, one could use it to add headers in front of the first item
  * of a new kind, in a list sorted by the kind.
  *
- * The @update_header can look at the current header widget using
+ * The `update_header` can look at the current header widget using
  * [method@Gtk.ListBoxRow.get_header] and either update the state of the widget
  * as needed, or set a new one using [method@Gtk.ListBoxRow.set_header]. If no
  * header is needed, set the header to `NULL`.
  *
- * Note that you may get many calls @update_header to this for a particular
+ * Note that you may get many calls `update_header` to this for a particular
  * row when e.g. changing things that don’t affect the header. In this case
  * it is important for performance to not blindly replace an existing header
  * with an identical one.
  *
- * The @update_header function will be called for each row after the call,
+ * The `update_header` function will be called for each row after the call,
  * and it will continue to be called each time a row changes (via
  * [method@Gtk.ListBoxRow.changed]) and when the row before changes (either
  * by [method@Gtk.ListBoxRow.changed] on the previous row, or when the previous
@@ -1277,7 +1277,7 @@ gtk_list_box_set_header_func (GtkListBox                 *box,
  * Update the filtering for all rows.
  *
  * Call this when result
- * of the filter function on the @box is changed due
+ * of the filter function on the `box` is changed due
  * to an external factor. For instance, this would be used
  * if the filter function just looked for a specific search
  * string and the entry with the search string has changed.
@@ -1320,7 +1320,7 @@ gtk_list_box_reorder_foreach (gpointer data,
  * Update the sorting for all rows.
  *
  * Call this when result
- * of the sort function on the @box is changed due
+ * of the sort function on the `box` is changed due
  * to an external factor.
  */
 void
@@ -1361,7 +1361,7 @@ gtk_list_box_do_reseparate (GtkListBox *box)
  * Update the separators for all rows.
  *
  * Call this when result
- * of the header function on the @box is changed due
+ * of the header function on the `box` is changed due
  * to an external factor.
  */
 void
@@ -1379,15 +1379,15 @@ gtk_list_box_invalidate_headers (GtkListBox *box)
  * gtk_list_box_set_sort_func:
  * @box: a `GtkListBox`
  * @sort_func: (nullable): the sort function
- * @user_data: (closure): user data passed to @sort_func
- * @destroy: destroy notifier for @user_data
+ * @user_data: (closure): user data passed to `sort_func`
+ * @destroy: destroy notifier for `user_data`
  *
  * Sets a sort function.
  *
- * By setting a sort function on the @box one can dynamically reorder
+ * By setting a sort function on the `box` one can dynamically reorder
  * the rows of the list, based on the contents of the rows.
  *
- * The @sort_func will be called for each row after the call, and will
+ * The `sort_func` will be called for each row after the call, and will
  * continue to be called each time a row changes (via
  * [method@Gtk.ListBoxRow.changed]) and when [method@Gtk.ListBox.invalidate_sort]
  * is called.
@@ -1448,7 +1448,7 @@ gtk_list_box_got_row_changed (GtkListBox    *box,
  * @box: a `GtkListBox`
  * @single: a boolean
  *
- * If @single is true, rows will be activated when you click on them,
+ * If `single` is true, rows will be activated when you click on them,
  * otherwise you need to double-click.
  */
 void
@@ -2271,7 +2271,7 @@ gtk_list_box_update_header (GtkListBox    *box,
           if (old_header != NULL &&
               g_hash_table_lookup (box->header_hash, old_header) == row)
             {
-              /* Only unparent the @old_header if it hasn’t been re-used as the
+              /* Only unparent the `old_header` if it hasn’t been re-used as the
                * header for a different row. */
               gtk_widget_unparent (old_header);
               g_hash_table_remove (box->header_hash, old_header);
@@ -2322,7 +2322,7 @@ gtk_list_box_row_visibility_changed (GtkListBox    *box,
  * @box: a `GtkListBox`
  * @child: the child to remove
  *
- * Removes a child from @box.
+ * Removes a child from `box`.
  */
 void
 gtk_list_box_remove (GtkListBox *box,
@@ -2425,9 +2425,9 @@ gtk_list_box_remove (GtkListBox *box,
  * gtk_list_box_remove_all:
  * @box: a `GtkListBox`
  *
- * Removes all rows from @box.
+ * Removes all rows from `box`.
  *
- * This function does nothing if @box is backed by a model.
+ * This function does nothing if `box` is backed by a model.
  *
  * Since: 4.12
  */
@@ -2691,15 +2691,15 @@ gtk_list_box_append (GtkListBox *box,
  * gtk_list_box_insert:
  * @box: a `GtkListBox`
  * @child: the `GtkWidget` to add
- * @position: the position to insert @child in
+ * @position: the position to insert `child` in
  *
- * Insert the @child into the @box at @position.
+ * Insert the `child` into the `box` at `position`.
  *
  * If a sort function is
  * set, the widget will actually be inserted at the calculated position.
  *
- * If @position is -1, or larger than the total number of items in the
- * @box, then the @child will be appended to the end.
+ * If `position` is -1, or larger than the total number of items in the
+ * `box`, then the `child` will be appended to the end.
  */
 void
 gtk_list_box_insert (GtkListBox *box,
@@ -2782,7 +2782,7 @@ gtk_list_box_drag_unhighlight_row (GtkListBox *box)
  * Add a drag highlight to a row.
  *
  * This is a helper function for implementing DnD onto a `GtkListBox`.
- * The passed in @row will be highlighted by setting the
+ * The passed in `row` will be highlighted by setting the
  * %GTK_STATE_FLAG_DROP_ACTIVE state and any previously highlighted
  * row will be unhighlighted.
  *
@@ -2972,7 +2972,7 @@ gtk_list_box_row_new (void)
  * @row: a `GtkListBoxRow`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @self.
+ * Sets the child widget of `self`.
  */
 void
 gtk_list_box_row_set_child (GtkListBoxRow *row,
@@ -2999,9 +2999,9 @@ gtk_list_box_row_set_child (GtkListBoxRow *row,
  * gtk_list_box_row_get_child: (attributes org.gtk.Method.get_property=child)
  * @row: a `GtkListBoxRow`
  *
- * Gets the child widget of @row.
+ * Gets the child widget of `row`.
  *
- * Returns: (nullable) (transfer none): the child widget of @row
+ * Returns: (nullable) (transfer none): the child widget of `row`
  */
 GtkWidget *
 gtk_list_box_row_get_child (GtkListBoxRow *row)
@@ -3135,7 +3135,7 @@ gtk_list_box_row_root (GtkWidget *widget)
  * gtk_list_box_row_changed:
  * @row: a `GtkListBoxRow`
  *
- * Marks @row as changed, causing any state that depends on this
+ * Marks `row` as changed, causing any state that depends on this
  * to be updated.
  *
  * This affects sorting, filtering and headers.
@@ -3170,7 +3170,7 @@ gtk_list_box_row_changed (GtkListBoxRow *row)
  * gtk_list_box_row_get_header:
  * @row: a `GtkListBoxRow`
  *
- * Returns the current header of the @row.
+ * Returns the current header of the `row`.
  *
  * This can be used
  * in a [callback@Gtk.ListBoxUpdateHeaderFunc] to see if
@@ -3192,7 +3192,7 @@ gtk_list_box_row_get_header (GtkListBoxRow *row)
  * @row: a `GtkListBoxRow`
  * @header: (nullable): the header
  *
- * Sets the current header of the @row.
+ * Sets the current header of the `row`.
  *
  * This is only allowed to be called
  * from a [callback@Gtk.ListBoxUpdateHeaderFunc].
@@ -3221,9 +3221,9 @@ gtk_list_box_row_set_header (GtkListBoxRow *row,
  * gtk_list_box_row_get_index:
  * @row: a `GtkListBoxRow`
  *
- * Gets the current index of the @row in its `GtkListBox` container.
+ * Gets the current index of the `row` in its `GtkListBox` container.
  *
- * Returns: the index of the @row, or -1 if the @row is not in a listbox
+ * Returns: the index of the `row`, or -1 if the `row` is not in a listbox
  */
 int
 gtk_list_box_row_get_index (GtkListBoxRow *row)
@@ -3245,7 +3245,7 @@ gtk_list_box_row_get_index (GtkListBoxRow *row)
  * Returns whether the child is currently selected in its
  * `GtkListBox` container.
  *
- * Returns: true if @row is selected
+ * Returns: true if `row` is selected
  */
 gboolean
 gtk_list_box_row_is_selected (GtkListBoxRow *row)
@@ -3699,23 +3699,23 @@ gtk_list_box_check_model_compat (GtkListBox *box)
 /**
  * gtk_list_box_bind_model:
  * @box: a `GtkListBox`
- * @model: (nullable): the `GListModel` to be bound to @box
+ * @model: (nullable): the `GListModel` to be bound to `box`
  * @create_widget_func: (nullable): a function that creates widgets for items
- *   or `NULL` in case you also passed `NULL` as @model
- * @user_data: (closure): user data passed to @create_widget_func
- * @user_data_free_func: function for freeing @user_data
+ *   or `NULL` in case you also passed `NULL` as `model`
+ * @user_data: (closure): user data passed to `create_widget_func`
+ * @user_data_free_func: function for freeing `user_data`
  *
- * Binds @model to @box.
+ * Binds `model` to `box`.
  *
- * If @box was already bound to a model, that previous binding is
+ * If `box` was already bound to a model, that previous binding is
  * destroyed.
  *
- * The contents of @box are cleared and then filled with widgets that
- * represent items from @model. @box is updated whenever @model changes.
- * If @model is `NULL`, @box is left empty.
+ * The contents of `box` are cleared and then filled with widgets that
+ * represent items from `model`. `box` is updated whenever `model` changes.
+ * If `model` is `NULL`, `box` is left empty.
  *
  * It is undefined to add or remove widgets directly (for example, with
- * [method@Gtk.ListBox.insert]) while @box is bound to a model.
+ * [method@Gtk.ListBox.insert]) while `box` is bound to a model.
  *
  * Note that using a model is incompatible with the filtering and sorting
  * functionality in `GtkListBox`. When using a model, filtering and sorting

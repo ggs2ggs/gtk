@@ -1099,7 +1099,7 @@ gtk_settings_create_for_display (GdkDisplay *display)
  * gtk_settings_get_for_display:
  * @display: a `GdkDisplay`
  *
- * Gets the `GtkSettings` object for @display, creating it if necessary.
+ * Gets the `GtkSettings` object for `display`, creating it if necessary.
  *
  * Returns: (transfer none): a `GtkSettings` object
  */

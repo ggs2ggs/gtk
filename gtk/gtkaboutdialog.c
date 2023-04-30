@@ -2169,7 +2169,7 @@ close_cb (GtkAboutDialog *about,
  * gtk_show_about_dialog:
  * @parent: (nullable): the parent top-level window
  * @first_property_name: the name of the first property
- * @...: value of first property, followed by more pairs of property
+ * `...`: value of first property, followed by more pairs of property
  *   name and value, `NULL`-terminated
  *
  * A convenience function for showing an application’s about dialog.

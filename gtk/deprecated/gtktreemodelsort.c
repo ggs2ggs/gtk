@@ -528,7 +528,7 @@ gtk_tree_model_sort_drag_source_init (GtkTreeDragSourceIface *iface)
  * gtk_tree_model_sort_new_with_model: (constructor)
  * @child_model: A `GtkTreeModel`
  *
- * Creates a new `GtkTreeModelSort`, with @child_model as the child model.
+ * Creates a new `GtkTreeModelSort`, with `child_model` as the child model.
  *
  * Returns: (transfer full) (type Gtk.TreeModelSort): A new `GtkTreeModelSort`.
  */
@@ -2113,7 +2113,7 @@ gtk_tree_model_sort_elt_get_path (SortLevel *level,
  * @tree_model_sort: The `GtkTreeModelSort`.
  * @child_model: (nullable): A `GtkTreeModel`
  *
- * Sets the model of @tree_model_sort to be @model.  If @model is `NULL`,
+ * Sets the model of `tree_model_sort` to be `model`.  If `model` is `NULL`,
  * then the old model is unset.  The sort function is unset as a result
  * of this call. The model will be in an unsorted state until a sort
  * function is set.
@@ -2277,9 +2277,9 @@ gtk_real_tree_model_sort_convert_child_path_to_path (GtkTreeModelSort *tree_mode
  * @tree_model_sort: A `GtkTreeModelSort`
  * @child_path: A `GtkTreePath` to convert
  *
- * Converts @child_path to a path relative to @tree_model_sort.  That is,
- * @child_path points to a path in the child model.  The returned path will
- * point to the same row in the sorted model.  If @child_path isn’t a valid
+ * Converts `child_path` to a path relative to `tree_model_sort`.  That is,
+ * `child_path` points to a path in the child model.  The returned path will
+ * point to the same row in the sorted model.  If `child_path` isn’t a valid
  * path on the child model, then `NULL` is returned.
  *
  * Returns: (nullable) (transfer full): A newly allocated `GtkTreePath`
@@ -2303,11 +2303,11 @@ gtk_tree_model_sort_convert_child_path_to_path (GtkTreeModelSort *tree_model_sor
  * @sort_iter: (out): An uninitialized `GtkTreeIter`
  * @child_iter: A valid `GtkTreeIter` pointing to a row on the child model
  *
- * Sets @sort_iter to point to the row in @tree_model_sort that corresponds to
- * the row pointed at by @child_iter.  If @sort_iter was not set, false
+ * Sets `sort_iter` to point to the row in `tree_model_sort` that corresponds to
+ * the row pointed at by `child_iter`.  If `sort_iter` was not set, false
  * is returned.  Note: a boolean is only returned since 2.14.
  *
- * Returns: true, if @sort_iter was set, i.e. if @sort_iter is a
+ * Returns: true, if `sort_iter` was set, i.e. if `sort_iter` is a
  * valid iterator pointer to a visible row in the child model.
  *
  * Deprecated: 4.10
@@ -2353,10 +2353,10 @@ gtk_tree_model_sort_convert_child_iter_to_iter (GtkTreeModelSort *tree_model_sor
  * @tree_model_sort: A `GtkTreeModelSort`
  * @sorted_path: A `GtkTreePath` to convert
  *
- * Converts @sorted_path to a path on the child model of @tree_model_sort.
- * That is, @sorted_path points to a location in @tree_model_sort.  The
+ * Converts `sorted_path` to a path on the child model of `tree_model_sort`.
+ * That is, `sorted_path` points to a location in `tree_model_sort`.  The
  * returned path will point to the same location in the model not being
- * sorted.  If @sorted_path does not point to a location in the child model,
+ * sorted.  If `sorted_path` does not point to a location in the child model,
  * `NULL` is returned.
  *
  * Returns: (nullable) (transfer full): A newly allocated `GtkTreePath`
@@ -2424,9 +2424,9 @@ gtk_tree_model_sort_convert_path_to_child_path (GtkTreeModelSort *tree_model_sor
  * gtk_tree_model_sort_convert_iter_to_child_iter:
  * @tree_model_sort: A `GtkTreeModelSort`
  * @child_iter: (out): An uninitialized `GtkTreeIter`
- * @sorted_iter: A valid `GtkTreeIter` pointing to a row on @tree_model_sort.
+ * @sorted_iter: A valid `GtkTreeIter` pointing to a row on `tree_model_sort`.
  *
- * Sets @child_iter to point to the row pointed to by @sorted_iter.
+ * Sets `child_iter` to point to the row pointed to by `sorted_iter`.
  *
  * Deprecated: 4.10
  **/
@@ -2727,7 +2727,7 @@ gtk_tree_model_sort_reset_default_sort_func (GtkTreeModelSort *tree_model_sort)
  * gtk_tree_model_sort_clear_cache:
  * @tree_model_sort: A `GtkTreeModelSort`
  *
- * This function should almost never be called.  It clears the @tree_model_sort
+ * This function should almost never be called.  It clears the `tree_model_sort`
  * of any cached iterators that haven’t been reffed with
  * gtk_tree_model_ref_node().  This might be useful if the child model being
  * sorted is static (and doesn’t change often) and there has been a lot of

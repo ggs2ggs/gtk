@@ -342,7 +342,7 @@ gdk_texture_init (GdkTexture *self)
  *
  * Creates a new texture object representing the surface.
  *
- * @surface must be an image surface with format `CAIRO_FORMAT_ARGB32`.
+ * `surface` must be an image surface with format `CAIRO_FORMAT_ARGB32`.
  *
  * Returns: a new `GdkTexture`
  */
@@ -420,7 +420,7 @@ gdk_texture_new_for_pixbuf (GdkPixbuf *pixbuf)
  * The file format is detected automatically. The supported formats
  * are PNG and JPEG, though more formats might be available.
  *
- * It is a fatal error if @resource_path does not specify a valid
+ * It is a fatal error if `resource_path` does not specify a valid
  * image resource and the program will abort if that happens.
  * If you are unsure about the validity of a resource, use
  * [ctor@Gdk.Texture.new_from_file] to load it.
@@ -465,7 +465,7 @@ gdk_texture_new_from_resource (const char *resource_path)
  * The file format is detected automatically. The supported formats
  * are PNG, JPEG and TIFF, though more formats might be available.
  *
- * If `NULL` is returned, then @error will be set.
+ * If `NULL` is returned, then `error` will be set.
  *
  * This function is threadsafe, so that you can e.g. use GTask
  * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
@@ -558,7 +558,7 @@ gdk_texture_new_from_bytes_pixbuf (GBytes  *bytes,
  * The file format is detected automatically. The supported formats
  * are PNG, JPEG and TIFF, though more formats might be available.
  *
- * If `NULL` is returned, then @error will be set.
+ * If `NULL` is returned, then `error` will be set.
  *
  * This function is threadsafe, so that you can e.g. use GTask
  * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
@@ -604,7 +604,7 @@ gdk_texture_new_from_bytes (GBytes  *bytes,
  * The file format is detected automatically. The supported formats
  * are PNG, JPEG and TIFF, though more formats might be available.
  *
- * If `NULL` is returned, then @error will be set.
+ * If `NULL` is returned, then `error` will be set.
  *
  * This function is threadsafe, so that you can e.g. use GTask
  * and [method@Gio.Task.run_in_thread] to avoid blocking the main thread
@@ -637,7 +637,7 @@ gdk_texture_new_from_filename (const char  *path,
  * gdk_texture_get_width: (attributes org.gtk.Method.get_property=width)
  * @texture: a `GdkTexture`
  *
- * Returns the width of @texture, in pixels.
+ * Returns the width of `texture`, in pixels.
  *
  * Returns: the width of the `GdkTexture`
  */
@@ -653,7 +653,7 @@ gdk_texture_get_width (GdkTexture *texture)
  * gdk_texture_get_height: (attributes org.gtk.Method.get_property=height)
  * @texture: a `GdkTexture`
  *
- * Returns the height of the @texture, in pixels.
+ * Returns the height of the `texture`, in pixels.
  *
  * Returns: the height of the `GdkTexture`
  */
@@ -700,10 +700,10 @@ gdk_texture_download_surface (GdkTexture *texture)
  * gdk_texture_download:
  * @texture: a `GdkTexture`
  * @data: (array): pointer to enough memory to be filled with the
- *   downloaded data of @texture
+ *   downloaded data of `texture`
  * @stride: rowstride in bytes
  *
- * Downloads the @texture into local memory.
+ * Downloads the `texture` into local memory.
  *
  * This may be an expensive operation, as the actual texture data
  * may reside on a GPU or on a remote display server.
@@ -811,7 +811,7 @@ gdk_texture_get_render_data (GdkTexture  *self,
  * @texture: a `GdkTexture`
  * @filename: (type filename): the filename to store to
  *
- * Store the given @texture to the @filename as a PNG file.
+ * Store the given `texture` to the `filename` as a PNG file.
  *
  * This is a utility function intended for debugging and testing.
  * If you want more control over formats, proper error handling or
@@ -845,7 +845,7 @@ gdk_texture_save_to_png (GdkTexture *texture,
  * gdk_texture_save_to_png_bytes:
  * @texture: a `GdkTexture`
  *
- * Store the given @texture in memory as a PNG file.
+ * Store the given `texture` in memory as a PNG file.
  *
  * Use [ctor@Gdk.Texture.new_from_bytes] to read it back.
  *
@@ -877,7 +877,7 @@ gdk_texture_save_to_png_bytes (GdkTexture *texture)
  * @texture: a `GdkTexture`
  * @filename: (type filename): the filename to store to
  *
- * Store the given @texture to the @filename as a TIFF file.
+ * Store the given `texture` to the `filename` as a TIFF file.
  *
  * GTK will attempt to store data without loss.
  * Returns: true if saving succeeded, false on failure.
@@ -908,7 +908,7 @@ gdk_texture_save_to_tiff (GdkTexture  *texture,
  * gdk_texture_save_to_tiff_bytes:
  * @texture: a `GdkTexture`
  *
- * Store the given @texture in memory as a TIFF file.
+ * Store the given `texture` in memory as a TIFF file.
  *
  * Use [ctor@Gdk.Texture.new_from_bytes] to read it back.
  *

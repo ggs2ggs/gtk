@@ -727,9 +727,9 @@ gtk_media_stream_get_error (GtkMediaStream *self)
  * @self: a `GtkMediaStream`
  * @timestamp: timestamp to seek to.
  *
- * Start a seek operation on @self to @timestamp.
+ * Start a seek operation on `self` to `timestamp`.
  *
- * If @timestamp is out of range, it will be clamped.
+ * If `timestamp` is out of range, it will be clamped.
  *
  * Seek operations may not finish instantly. While a
  * seek operation is in process, the [property@Gtk.MediaStream:seeking]
@@ -898,7 +898,7 @@ gtk_media_stream_get_volume (GtkMediaStream *self)
  *
  * This function call will work even if the stream is muted.
  *
- * The given @volume should range from 0.0 for silence to 1.0
+ * The given `volume` should range from 0.0 for silence to 1.0
  * for as loud as possible. Values outside of this range will
  * be clamped to the nearest value.
  *
@@ -933,16 +933,16 @@ gtk_media_stream_set_volume (GtkMediaStream *self,
  *
  * Called by users to attach the media stream to a `GdkSurface` they manage.
  *
- * The stream can then access the resources of @surface for its
+ * The stream can then access the resources of `surface` for its
  * rendering purposes. In particular, media streams might want to
  * create a `GdkGLContext` or sync to the `GdkFrameClock`.
  *
  * Whoever calls this function is responsible for calling
  * [method@Gtk.MediaStream.unrealize] before either the stream
- * or @surface get destroyed.
+ * or `surface` get destroyed.
  *
  * Multiple calls to this function may happen from different
- * users of the video, even with the same @surface. Each of these
+ * users of the video, even with the same `surface`. Each of these
  * calls must be followed by its own call to
  * [method@Gtk.MediaStream.unrealize].
  *
@@ -969,7 +969,7 @@ gtk_media_stream_realize (GtkMediaStream *self,
  * Undoes a previous call to gtk_media_stream_realize().
  *
  * This causes the stream to release all resources it had
- * allocated from @surface.
+ * allocated from `surface`.
  */
 void
 gtk_media_stream_unrealize (GtkMediaStream *self,
@@ -1153,7 +1153,7 @@ gtk_media_stream_unprepared (GtkMediaStream *self)
  * @self: a `GtkMediaStream`
  * @error: (transfer full): the `GError` to set
  *
- * Sets @self into an error state.
+ * Sets `self` into an error state.
  *
  * This will pause the stream (you can check for an error
  * via [method@Gtk.MediaStream.get_error] in your
@@ -1207,9 +1207,9 @@ gtk_media_stream_gerror (GtkMediaStream *self,
  * @domain: error domain
  * @code: error code
  * @format: printf()-style format for error message
- * @...: parameters for message format
+ * `...`: parameters for message format
  *
- * Sets @self into an error state using a printf()-style format string.
+ * Sets `self` into an error state using a printf()-style format string.
  *
  * This is a utility function that calls [method@Gtk.MediaStream.gerror].
  * See that function for details.
@@ -1243,7 +1243,7 @@ gtk_media_stream_error (GtkMediaStream *self,
  * @format: printf()-style format for error message
  * @args: `va_list` of parameters for the message format
  *
- * Sets @self into an error state using a printf()-style format string.
+ * Sets `self` into an error state using a printf()-style format string.
  *
  * This is a utility function that calls [method@Gtk.MediaStream.gerror].
  * See that function for details.

@@ -142,12 +142,12 @@ gtk_shortcut_action_print (GtkShortcutAction *self,
  * @widget: Target of the activation
  * @args: (nullable): arguments to pass
  *
- * Activates the action on the @widget with the given @args.
+ * Activates the action on the `widget` with the given `args`.
  *
- * Note that some actions ignore the passed in @flags, @widget or @args.
+ * Note that some actions ignore the passed in `flags`, `widget` or `args`.
  *
  * Activation of an action can fail for various reasons. If the action
- * is not supported by the @widget, if the @args don't match the action
+ * is not supported by the `widget`, if the `args` don't match the action
  * or if the activation otherwise had no effect, false will be returned.
  *
  * Returns: true if this action was activated successfully
@@ -409,11 +409,11 @@ gtk_callback_action_init (GtkCallbackAction *self)
 /**
  * gtk_callback_action_new:
  * @callback: (scope notified): the callback to call
- * @data: (closure callback): the data to be passed to @callback
+ * @data: (closure callback): the data to be passed to `callback`
  * @destroy: (destroy data): the function to be called when the
  *   callback action is finalized
  *
- * Create a custom action that calls the given @callback when
+ * Create a custom action that calls the given `callback` when
  * activated.
  *
  * Returns: (transfer full) (type GtkCallbackAction): A new shortcut action

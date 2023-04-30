@@ -740,7 +740,7 @@ gtk_app_chooser_dialog_new_for_content_type (GtkWindow      *parent,
  *
  * Returns the `GtkAppChooserWidget` of this dialog.
  *
- * Returns: (transfer none): the `GtkAppChooserWidget` of @self
+ * Returns: (transfer none): the `GtkAppChooserWidget` of `self`
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */

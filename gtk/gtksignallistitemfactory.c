@@ -243,7 +243,7 @@ gtk_signal_list_item_factory_class_init (GtkSignalListItemFactoryClass *klass)
    *
    * Emitted when an object is about to be destroyed.
    *
-   * It is the last signal ever emitted for this @object.
+   * It is the last signal ever emitted for this `object`.
    *
    * This signal is the opposite of the [signal@Gtk.SignalListItemFactory::setup]
    * signal and should be used to undo everything done in that signal.

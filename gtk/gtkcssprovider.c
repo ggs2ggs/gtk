@@ -213,7 +213,7 @@ gtk_css_provider_class_init (GtkCssProviderClass *klass)
    *
    * Signals that a parsing error occurred.
    *
-   * The @path, @line and @position describe the actual location of
+   * The `path`, `line` and `position` describe the actual location of
    * the error as accurately as possible.
    *
    * Parsing errors are never fatal, so the parsing will resume after
@@ -1087,9 +1087,9 @@ gtk_css_provider_load_internal (GtkCssProvider *self,
  * gtk_css_provider_load_from_data:
  * @css_provider: a `GtkCssProvider`
  * @data: CSS data to be parsed
- * @length: the length of @data in bytes, or -1 for NUL terminated strings
+ * @length: the length of `data` in bytes, or -1 for NUL terminated strings
  *
- * Loads @data into @css_provider.
+ * Loads `data` into `css_provider`.
  *
  * This clears any previously loaded information.
  */
@@ -1122,7 +1122,7 @@ gtk_css_provider_load_from_data (GtkCssProvider  *css_provider,
  * @css_provider: a `GtkCssProvider`
  * @file: `GFile` pointing to a file to load
  *
- * Loads the data contained in @file into @css_provider.
+ * Loads the data contained in `file` into `css_provider`.
  *
  * This clears any previously loaded information.
  */
@@ -1145,7 +1145,7 @@ gtk_css_provider_load_from_file (GtkCssProvider  *css_provider,
  * @css_provider: a `GtkCssProvider`
  * @path: (type filename): the path of a filename to load, in the GLib filename encoding
  *
- * Loads the data contained in @path into @css_provider.
+ * Loads the data contained in `path` into `css_provider`.
  *
  * This clears any previously loaded information.
  */
@@ -1170,8 +1170,8 @@ gtk_css_provider_load_from_path (GtkCssProvider  *css_provider,
  * @css_provider: a `GtkCssProvider`
  * @resource_path: a `GResource` resource path
  *
- * Loads the data contained in the resource at @resource_path into
- * the @css_provider.
+ * Loads the data contained in the resource at `resource_path` into
+ * the `css_provider`.
  *
  * This clears any previously loaded information.
  */
@@ -1511,15 +1511,15 @@ gtk_css_provider_print_keyframes (GHashTable *keyframes,
  * gtk_css_provider_to_string:
  * @provider: the provider to write to a string
  *
- * Converts the @provider into a string representation in CSS
+ * Converts the `provider` into a string representation in CSS
  * format.
  *
  * Using [method@Gtk.CssProvider.load_from_data] with the return
  * value from this function on a new provider created with
  * [ctor@Gtk.CssProvider.new] will basically create a duplicate
- * of this @provider.
+ * of this `provider`.
  *
- * Returns: a new string representing the @provider.
+ * Returns: a new string representing the `provider`.
  */
 char *
 gtk_css_provider_to_string (GtkCssProvider *provider)

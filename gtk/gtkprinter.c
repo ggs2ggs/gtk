@@ -245,7 +245,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
    * Emitted in response to a request for detailed information
    * about a printer from the print backend.
    *
-   * The @success parameter indicates if the information was
+   * The `success` parameter indicates if the information was
    * actually obtained.
    */
   signals[DETAILS_ACQUIRED] =
@@ -429,7 +429,7 @@ gtk_printer_new (const char      *name,
  *
  * Returns the backend of the printer.
  *
- * Returns: (transfer none): the backend of @printer
+ * Returns: (transfer none): the backend of `printer`
  */
 GtkPrintBackend *
 gtk_printer_get_backend (GtkPrinter *printer)
@@ -447,7 +447,7 @@ gtk_printer_get_backend (GtkPrinter *printer)
  *
  * Returns the name of the printer.
  *
- * Returns: the name of @printer
+ * Returns: the name of `printer`
  */
 const char *
 gtk_printer_get_name (GtkPrinter *printer)
@@ -465,7 +465,7 @@ gtk_printer_get_name (GtkPrinter *printer)
  *
  * Gets the description of the printer.
  *
- * Returns: the description of @printer
+ * Returns: the description of `printer`
  */
 const char *
 gtk_printer_get_description (GtkPrinter *printer)
@@ -501,7 +501,7 @@ gtk_printer_set_description (GtkPrinter  *printer,
  * Returns the state message describing the current state
  * of the printer.
  *
- * Returns: the state message of @printer
+ * Returns: the state message of `printer`
  */
 const char *
 gtk_printer_get_state_message (GtkPrinter *printer)
@@ -537,7 +537,7 @@ gtk_printer_set_state_message (GtkPrinter  *printer,
  *
  * Returns a description of the location of the printer.
  *
- * Returns: the location of @printer
+ * Returns: the location of `printer`
  */
 const char *
 gtk_printer_get_location (GtkPrinter *printer)
@@ -573,7 +573,7 @@ gtk_printer_set_location (GtkPrinter  *printer,
  *
  * Gets the name of the icon to use for the printer.
  *
- * Returns: the icon name for @printer
+ * Returns: the icon name for `printer`
  */
 const char *
 gtk_printer_get_icon_name (GtkPrinter *printer)
@@ -604,7 +604,7 @@ gtk_printer_set_icon_name (GtkPrinter  *printer,
  *
  * Gets the number of jobs currently queued on the printer.
  *
- * Returns: the number of jobs on @printer
+ * Returns: the number of jobs on `printer`
  */
 int
 gtk_printer_get_job_count (GtkPrinter *printer)
@@ -640,7 +640,7 @@ gtk_printer_set_job_count (GtkPrinter *printer,
  *
  * Returns whether the printer details are available.
  *
- * Returns: true if @printer details are available
+ * Returns: true if `printer` details are available
  */
 gboolean
 gtk_printer_has_details (GtkPrinter *printer)
@@ -668,7 +668,7 @@ gtk_printer_set_has_details (GtkPrinter *printer,
  * Returns whether the printer is currently active (i.e.
  * accepts new jobs).
  *
- * Returns: true if @printer is active
+ * Returns: true if `printer` is active
  */
 gboolean
 gtk_printer_is_active (GtkPrinter *printer)
@@ -700,7 +700,7 @@ gtk_printer_set_is_active (GtkPrinter *printer,
  * A paused printer still accepts jobs, but it is not
  * printing them.
  *
- * Returns: true if @printer is paused
+ * Returns: true if `printer` is paused
  */
 gboolean
 gtk_printer_is_paused (GtkPrinter *printer)
@@ -734,7 +734,7 @@ gtk_printer_set_is_paused (GtkPrinter *printer,
  *
  * Returns whether the printer is accepting jobs
  *
- * Returns: true if @printer is accepting jobs
+ * Returns: true if `printer` is accepting jobs
  */
 gboolean
 gtk_printer_is_accepting_jobs (GtkPrinter *printer)
@@ -770,7 +770,7 @@ gtk_printer_set_is_accepting_jobs (GtkPrinter *printer,
  * represent actual printer hardware, but something like
  * a CUPS class).
  *
- * Returns: true if @printer is virtual
+ * Returns: true if `printer` is virtual
  */
 gboolean
 gtk_printer_is_virtual (GtkPrinter *printer)
@@ -789,7 +789,7 @@ gtk_printer_is_virtual (GtkPrinter *printer)
  * Returns whether the printer accepts input in
  * PDF format.
  *
- * Returns: true if @printer accepts PDF
+ * Returns: true if `printer` accepts PDF
  */
 gboolean
 gtk_printer_accepts_pdf (GtkPrinter *printer)
@@ -819,7 +819,7 @@ gtk_printer_set_accepts_pdf (GtkPrinter *printer,
  * Returns whether the printer accepts input in
  * PostScript format.
  *
- * Returns: true if @printer accepts PostScript
+ * Returns: true if `printer` accepts PostScript
  */
 gboolean
 gtk_printer_accepts_ps (GtkPrinter *printer)
@@ -870,7 +870,7 @@ gtk_printer_set_is_new (GtkPrinter *printer,
  *
  * Returns whether the printer is the default printer.
  *
- * Returns: true if @printer is the default
+ * Returns: true if `printer` is the default
  */
 gboolean
 gtk_printer_is_default (GtkPrinter *printer)
@@ -901,7 +901,7 @@ gtk_printer_set_is_default (GtkPrinter *printer,
  *
  * When the details are available, the
  * [signal@Gtk.Printer::details-acquired] signal
- * will be emitted on @printer.
+ * will be emitted on `printer`.
  */
 void
 gtk_printer_request_details (GtkPrinter *printer)
@@ -978,7 +978,7 @@ _gtk_printer_create_cairo_surface (GtkPrinter       *printer,
  * gtk_printer_list_papers:
  * @printer: a `GtkPrinter`
  *
- * Lists all the paper sizes @printer supports.
+ * Lists all the paper sizes `printer` supports.
  *
  * This will return and empty list unless the printer’s details
  * are available, see [method@Gtk.Printer.has_details] and
@@ -1003,7 +1003,7 @@ gtk_printer_list_papers (GtkPrinter *printer)
  * gtk_printer_get_default_page_size:
  * @printer: a `GtkPrinter`
  *
- * Returns default page size of @printer.
+ * Returns default page size of `printer`.
  *
  * Returns: (transfer full): a newly allocated `GtkPageSetup` with default page size
  *   of the printer.
@@ -1029,7 +1029,7 @@ gtk_printer_get_default_page_size (GtkPrinter *printer)
  * @left: (out): a location to store the left margin in
  * @right: (out): a location to store the right margin in
  *
- * Retrieve the hard margins of @printer.
+ * Retrieve the hard margins of `printer`.
  *
  * These are the margins that define the area at the borders
  * of the paper that the printer cannot print to.
@@ -1062,7 +1062,7 @@ gtk_printer_get_hard_margins (GtkPrinter *printer,
  * @left: (out): a location to store the left margin in
  * @right: (out): a location to store the right margin in
  *
- * Retrieve the hard margins of @printer for @paper_size.
+ * Retrieve the hard margins of `printer` for `paper_size`.
  *
  * These are the margins that define the area at the borders
  * of the paper that the printer cannot print to.
@@ -1122,8 +1122,8 @@ gtk_printer_get_capabilities (GtkPrinter *printer)
  *
  * Compares two printers.
  *
- * Returns: 0 if the printer match, a negative value if @a < @b,
- *   or a positive value if @a > @b
+ * Returns: 0 if the printer match, a negative value if `a` < `b`,
+ *   or a positive value if `a` > `b`
  */
 int
 gtk_printer_compare (GtkPrinter *a, 
@@ -1291,14 +1291,14 @@ list_printers_init (PrinterList     *printer_list,
 /**
  * gtk_enumerate_printers:
  * @func: a function to call for each printer
- * @data: user data to pass to @func
- * @destroy: function to call if @data is no longer needed
+ * @data: user data to pass to `func`
+ * @destroy: function to call if `data` is no longer needed
  * @wait: if true, wait in a recursive mainloop until
  *    all printers are enumerated; otherwise return early
  *
  * Calls a function for all `GtkPrinter`s.
  *
- * If @func returns true, the enumeration is stopped.
+ * If `func` returns true, the enumeration is stopped.
  */
 void
 gtk_enumerate_printers (GtkPrinterFunc func,

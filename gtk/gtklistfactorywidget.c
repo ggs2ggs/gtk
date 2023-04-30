@@ -350,7 +350,7 @@ gtk_list_factory_widget_class_init (GtkListFactoryWidgetClass *klass)
    * If the item is not selectable, nothing happens.
    *
    * This function will emit the list.select-item action and the resulting
-   * behavior, in particular the interpretation of @modify and @extend
+   * behavior, in particular the interpretation of `modify` and `extend`
    * depends on the view containing this listitem. See for example
    * GtkListView|list.select-item or GtkGridView|list.select-item.
    */

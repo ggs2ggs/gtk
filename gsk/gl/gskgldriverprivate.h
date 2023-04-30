@@ -192,7 +192,7 @@ gsk_gl_driver_get_texture_by_id (GskGLDriver *self,
  * @self: a `GskGLDriver`
  * @key: the key for the texture
  *
- * Looks up a texture in the texture cache by @key.
+ * Looks up a texture in the texture cache by `key`.
  *
  * If the texture could not be found, then zero is returned.
  *

@@ -415,14 +415,14 @@ gtk_drop_target_async_class_init (GtkDropTargetAsyncClass *class)
    * handler.
    *
    * The default handler for this signal decides whether to accept the drop
-   * based on the formats provided by the @drop.
+   * based on the formats provided by the `drop`.
    *
    * If the decision whether the drop will be accepted or rejected needs
    * further processing, such as inspecting the data, this function should
-   * return true and proceed as is @drop was accepted and if it decides to
+   * return true and proceed as is `drop` was accepted and if it decides to
    * reject the drop later, it should call [method@Gtk.DropTargetAsync.reject_drop].
    *
-   * Returns: true if @drop is accepted
+   * Returns: true if `drop` is accepted
    */
   signals[ACCEPT] =
       g_signal_new (I_("accept"),
@@ -650,7 +650,7 @@ gtk_drop_target_async_get_actions (GtkDropTargetAsync *self)
  * @self: a `GtkDropTargetAsync`
  * @drop: the `GdkDrop` of an ongoing drag operation
  *
- * Sets the @drop as not accepted on this drag site.
+ * Sets the `drop` as not accepted on this drag site.
  *
  * This function should be used when delaying the decision
  * on whether to accept a drag or not until after reading

@@ -671,7 +671,7 @@ gtk_window_controls_get_decoration_layout (GtkWindowControls *self)
  * For example, “icon:minimize,maximize,close” specifies a icon
  * on the left, and minimize, maximize and close buttons on the right.
  *
- * If [property@Gtk.WindowControls:side] value is @GTK_PACK_START, @self
+ * If [property@Gtk.WindowControls:side] value is `GTK_PACK_START`, `self`
  * will display the part before the colon, otherwise after that.
  */
 void

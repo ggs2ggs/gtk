@@ -210,9 +210,9 @@ gtk_grid_layout_child_init (GtkGridLayoutChild *self)
 /**
  * gtk_grid_layout_child_set_row: (attributes org.gtk.Method.set_property=row)
  * @child: a `GtkGridLayoutChild`
- * @row: the row for @child
+ * @row: the row for `child`
  *
- * Sets the row to place @child in.
+ * Sets the row to place `child` in.
  */
 void
 gtk_grid_layout_child_set_row (GtkGridLayoutChild *child,
@@ -234,7 +234,7 @@ gtk_grid_layout_child_set_row (GtkGridLayoutChild *child,
  * gtk_grid_layout_child_get_row: (attributes org.gtk.Method.get_property=row)
  * @child: a `GtkGridLayoutChild`
  *
- * Retrieves the row number to which @child attaches its top side.
+ * Retrieves the row number to which `child` attaches its top side.
  *
  * Returns: the row number
  */
@@ -249,9 +249,9 @@ gtk_grid_layout_child_get_row (GtkGridLayoutChild *child)
 /**
  * gtk_grid_layout_child_set_column: (attributes org.gtk.Method.set_property=column)
  * @child: a `GtkGridLayoutChild`
- * @column: the attach point for @child
+ * @column: the attach point for `child`
  *
- * Sets the column number to attach the left side of @child.
+ * Sets the column number to attach the left side of `child`.
  */
 void
 gtk_grid_layout_child_set_column (GtkGridLayoutChild *child,
@@ -273,7 +273,7 @@ gtk_grid_layout_child_set_column (GtkGridLayoutChild *child,
  * gtk_grid_layout_child_get_column: (attributes org.gtk.Method.get_property=column)
  * @child: a `GtkGridLayoutChild`
  *
- * Retrieves the column number to which @child attaches its left side.
+ * Retrieves the column number to which `child` attaches its left side.
  *
  * Returns: the column number
  */
@@ -288,9 +288,9 @@ gtk_grid_layout_child_get_column (GtkGridLayoutChild *child)
 /**
  * gtk_grid_layout_child_set_column_span: (attributes org.gtk.Method.set_property=column-span)
  * @child: a `GtkGridLayoutChild`
- * @span: the span of @child
+ * @span: the span of `child`
  *
- * Sets the number of columns @child spans to.
+ * Sets the number of columns `child` spans to.
  */
 void
 gtk_grid_layout_child_set_column_span (GtkGridLayoutChild *child,
@@ -312,7 +312,7 @@ gtk_grid_layout_child_set_column_span (GtkGridLayoutChild *child,
  * gtk_grid_layout_child_get_column_span: (attributes org.gtk.Method.get_property=column-span)
  * @child: a `GtkGridLayoutChild`
  *
- * Retrieves the number of columns that @child spans to.
+ * Retrieves the number of columns that `child` spans to.
  *
  * Returns: the number of columns
  */
@@ -327,9 +327,9 @@ gtk_grid_layout_child_get_column_span (GtkGridLayoutChild *child)
 /**
  * gtk_grid_layout_child_set_row_span: (attributes org.gtk.Method.set_property=row-span)
  * @child: a `GtkGridLayoutChild`
- * @span: the span of @child
+ * @span: the span of `child`
  *
- * Sets the number of rows @child spans to.
+ * Sets the number of rows `child` spans to.
  */
 void
 gtk_grid_layout_child_set_row_span (GtkGridLayoutChild *child,
@@ -351,7 +351,7 @@ gtk_grid_layout_child_set_row_span (GtkGridLayoutChild *child,
  * gtk_grid_layout_child_get_row_span: (attributes org.gtk.Method.get_property=row-span)
  * @child: a `GtkGridLayoutChild`
  *
- * Retrieves the number of rows that @child spans to.
+ * Retrieves the number of rows that `child` spans to.
  *
  * Returns: the number of row
  */
@@ -1728,7 +1728,7 @@ gtk_grid_layout_new (void)
  * @grid: a `GtkGridLayout`
  * @homogeneous: true to make rows homogeneous
  *
- * Sets whether all rows of @grid should have the same height.
+ * Sets whether all rows of `grid` should have the same height.
  */
 void
 gtk_grid_layout_set_row_homogeneous (GtkGridLayout *grid,
@@ -1750,7 +1750,7 @@ gtk_grid_layout_set_row_homogeneous (GtkGridLayout *grid,
  * gtk_grid_layout_get_row_homogeneous: (attributes org.gtk.Method.get_property=row-homogeneous)
  * @grid: a `GtkGridLayout`
  *
- * Checks whether all rows of @grid should have the same height.
+ * Checks whether all rows of `grid` should have the same height.
  *
  * Returns: true if the rows are homogeneous, and false otherwise
  */
@@ -1806,7 +1806,7 @@ gtk_grid_layout_get_row_spacing (GtkGridLayout *grid)
  * @grid: a `GtkGridLayout`
  * @homogeneous: true to make columns homogeneous
  *
- * Sets whether all columns of @grid should have the same width.
+ * Sets whether all columns of `grid` should have the same width.
  */
 void
 gtk_grid_layout_set_column_homogeneous (GtkGridLayout *grid,
@@ -1828,7 +1828,7 @@ gtk_grid_layout_set_column_homogeneous (GtkGridLayout *grid,
  * gtk_grid_layout_get_column_homogeneous: (attributes org.gtk.Method.get_property=column-homogeneous)
  * @grid: a `GtkGridLayout`
  *
- * Checks whether all columns of @grid should have the same width.
+ * Checks whether all columns of `grid` should have the same width.
  *
  * Returns: true if the columns are homogeneous, and false otherwise
  */
@@ -1942,7 +1942,7 @@ get_row_properties_or_default (GtkGridLayout *self,
  * @row: a row index
  * @pos: a `GtkBaselinePosition`
  *
- * Sets how the baseline should be positioned on @row of the
+ * Sets how the baseline should be positioned on `row` of the
  * grid, in case that row is assigned more space than is requested.
  */
 void
@@ -1968,14 +1968,14 @@ gtk_grid_layout_set_row_baseline_position (GtkGridLayout       *grid,
  * @grid: a `GtkGridLayout`
  * @row: a row index
  *
- * Returns the baseline position of @row.
+ * Returns the baseline position of `row`.
  *
  * If no value has been set with
  * [method@Gtk.GridLayout.set_row_baseline_position],
  * the default value of %GTK_BASELINE_POSITION_CENTER
  * is returned.
  *
- * Returns: the baseline position of @row
+ * Returns: the baseline position of `row`
  */
 GtkBaselinePosition
 gtk_grid_layout_get_row_baseline_position (GtkGridLayout *grid,
@@ -1999,7 +1999,7 @@ gtk_grid_layout_get_row_baseline_position (GtkGridLayout *grid,
  *
  * Each row in the grid can have its own local baseline, but only
  * one of those is global, meaning it will be the baseline in the
- * parent of the @grid.
+ * parent of the `grid`.
  */
 void
 gtk_grid_layout_set_baseline_row (GtkGridLayout *grid,

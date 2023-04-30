@@ -359,7 +359,7 @@ gtk_box_new (GtkOrientation orientation,
  * @homogeneous: a boolean value, true to create equal allotments,
  *   false for variable allotments
  *
- * Sets whether or not all children of @box are given equal space
+ * Sets whether or not all children of `box` are given equal space
  * in the box.
  */
 void
@@ -406,7 +406,7 @@ gtk_box_get_homogeneous (GtkBox *box)
  * @box: a `GtkBox`
  * @spacing: the number of pixels to put between children
  *
- * Sets the number of pixels to place between children of @box.
+ * Sets the number of pixels to place between children of `box`.
  */
 void
 gtk_box_set_spacing (GtkBox *box,
@@ -505,7 +505,7 @@ gtk_box_get_baseline_child (GtkBox *box)
  * This affects only horizontal boxes with at least one baseline
  * aligned child. If there is more vertical space available than
  * requested, and the baseline is not allocated by the parent then
- * @position is used to allocate the baseline with respect to the
+ * `position` is used to allocate the baseline with respect to the
  * extra space available.
  */
 void
@@ -548,12 +548,12 @@ gtk_box_get_baseline_position (GtkBox *box)
  * gtk_box_insert_child_after:
  * @box: a `GtkBox`
  * @child: the `GtkWidget` to insert
- * @sibling: (nullable): the sibling after which to insert @child
+ * @sibling: (nullable): the sibling after which to insert `child`
  *
- * Inserts @child in the position after @sibling in the list
- * of @box children.
+ * Inserts `child` in the position after `sibling` in the list
+ * of `box` children.
  *
- * If @sibling is `NULL`, insert @child at the first position.
+ * If `sibling` is `NULL`, insert `child` at the first position.
  */
 void
 gtk_box_insert_child_after (GtkBox    *box,
@@ -583,13 +583,13 @@ gtk_box_insert_child_after (GtkBox    *box,
 /**
  * gtk_box_reorder_child_after:
  * @box: a `GtkBox`
- * @child: the `GtkWidget` to move, must be a child of @box
- * @sibling: (nullable): the sibling to move @child after
+ * @child: the `GtkWidget` to move, must be a child of `box`
+ * @sibling: (nullable): the sibling to move `child` after
  *
- * Moves @child to the position after @sibling in the list
- * of @box children.
+ * Moves `child` to the position after `sibling` in the list
+ * of `box` children.
  *
- * If @sibling is `NULL`, move @child to the first position.
+ * If `sibling` is `NULL`, move `child` to the first position.
  */
 void
 gtk_box_reorder_child_after (GtkBox    *box,
@@ -621,7 +621,7 @@ gtk_box_reorder_child_after (GtkBox    *box,
  * @box: a `GtkBox`
  * @child: the `GtkWidget` to append
  *
- * Adds @child as the last child to @box.
+ * Adds `child` as the last child to `box`.
  */
 void
 gtk_box_append (GtkBox    *box,
@@ -639,7 +639,7 @@ gtk_box_append (GtkBox    *box,
  * @box: a `GtkBox`
  * @child: the `GtkWidget` to prepend
  *
- * Adds @child as the first child to @box.
+ * Adds `child` as the first child to `box`.
  */
 void
 gtk_box_prepend (GtkBox    *box,
@@ -657,7 +657,7 @@ gtk_box_prepend (GtkBox    *box,
  * @box: a `GtkBox`
  * @child: the child to remove
  *
- * Removes a child widget from @box.
+ * Removes a child widget from `box`.
  *
  * The child must have been added before with
  * [method@Gtk.Box.append], [method@Gtk.Box.prepend], or

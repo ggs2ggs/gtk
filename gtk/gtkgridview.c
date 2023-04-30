@@ -1195,7 +1195,7 @@ gtk_grid_view_class_init (GtkGridViewClass *klass)
    * GtkGridView|list.activate-item:
    * @position: position of item to activate
    *
-   * Activates the item given in @position by emitting the
+   * Activates the item given in `position` by emitting the
    * [signal@Gtk.GridView::activate] signal.
    */
   gtk_widget_class_install_action (widget_class,
@@ -1228,7 +1228,7 @@ gtk_grid_view_init (GtkGridView *self)
  * @model: (nullable) (transfer full): the model to use
  * @factory: (nullable) (transfer full): The factory to populate items with
  *
- * Creates a new `GtkGridView` that uses the given @factory for
+ * Creates a new `GtkGridView` that uses the given `factory` for
  * mapping items to widgets.
  *
  * The function takes ownership of the
@@ -1238,7 +1238,7 @@ gtk_grid_view_init (GtkGridView *self)
  *   gtk_builder_list_item_factory_new_from_resource ("/resource.ui"));
  * ```
  *
- * Returns: a new `GtkGridView` using the given @model and @factory
+ * Returns: a new `GtkGridView` using the given `model` and `factory`
  */
 GtkWidget *
 gtk_grid_view_new (GtkSelectionModel  *model,
@@ -1371,7 +1371,7 @@ gtk_grid_view_get_max_columns (GtkGridView *self)
  *
  * This number must be at least 1.
  *
- * If @max_columns is smaller than the minimum set via
+ * If `max_columns` is smaller than the minimum set via
  * [method@Gtk.GridView.set_min_columns], that value is used instead.
  */
 void
@@ -1420,7 +1420,7 @@ gtk_grid_view_get_min_columns (GtkGridView *self)
  *
  * This number must be at least 1.
  *
- * If @min_columns is smaller than the minimum set via
+ * If `min_columns` is smaller than the minimum set via
  * [method@Gtk.GridView.set_max_columns], that value is ignored.
  */
 void

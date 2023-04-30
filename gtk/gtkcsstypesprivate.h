@@ -129,7 +129,7 @@ typedef guint64 GtkCssChange;
  * GtkCssAffects:
  * @GTK_CSS_AFFECTS_CONTENT: The content rendering is affected.
  *   This does not include things that affect the font. For those,
- *   see @GTK_CSS_AFFECTS_TEXT.
+ *   see `GTK_CSS_AFFECTS_TEXT`.
  * @GTK_CSS_AFFECTS_BACKGROUND: The background rendering is affected.
  * @GTK_CSS_AFFECTS_BORDER: The border styling is affected.
  * @GTK_CSS_AFFECTS_TEXT_ATTRS: Text attributes are affected.
