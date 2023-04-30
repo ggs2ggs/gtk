@@ -1290,8 +1290,8 @@ gtk_im_context_simple_get_preedit_string (GtkIMContext   *context,
  *
  * Adds an additional table to search to the input context.
  * Each row of the table consists of @max_seq_len key symbols
- * followed by two #guint16 interpreted as the high and low
- * words of a #gunicode value. Tables are searched starting
+ * followed by two `guint16` interpreted as the high and low
+ * words of a `gunicode` value. Tables are searched starting
  * from the last added.
  *
  * The table must be sorted in dictionary order on the

@@ -476,7 +476,7 @@ gsk_gl_driver_new (GskGLCommandQueue  *command_queue,
 
 /**
  * gsk_gl_driver_for_display:
- * @display: A #GdkDisplay that is known to support GL
+ * @display: A `GdkDisplay` that is known to support GL
  * @debug_shaders: if debug information for shaders should be displayed
  * @error: location for error information
  *

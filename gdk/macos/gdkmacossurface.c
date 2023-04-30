@@ -694,14 +694,14 @@ _gdk_macos_surface_set_native (GdkMacosSurface *self,
 
 /**
  * gdk_macos_surface_get_native_window: (attributes org.gtk.Method.get_property=native)
- * @self: a #GdkMacosSurface
+ * @self: a `GdkMacosSurface`
  *
  * Gets the underlying NSWindow used by the surface.
  *
  * The NSWindow's contentView is an implementation detail and may change
  * between releases of GTK.
  *
- * Returns: (nullable): a #NSWindow or `NULL`
+ * Returns: (nullable): a `NSWindow` or `NULL`
  *
  * Since: 4.8
  */

@@ -2039,7 +2039,7 @@ gtk_scale_buildable_custom_finished (GtkBuildable *buildable,
  * The given function will return an allocated string representing
  * @value. That string will then be used to display the scale's value.
  *
- * If #NULL is passed as @func, the value will be displayed on
+ * If `NULL` is passed as @func, the value will be displayed on
  * its own, rounded according to the value of the
  * [property@Gtk.Scale:digits] property.
  */

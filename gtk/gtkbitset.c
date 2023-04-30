@@ -679,7 +679,7 @@ gtk_bitset_shift_left (GtkBitset *self,
  *
  * Shifts all values in @self to the right by @amount.
  *
- * Values that end up too large to be held in a #guint are discarded.
+ * Values that end up too large to be held in a `guint` are discarded.
  */
 void
 gtk_bitset_shift_right (GtkBitset *self,

@@ -10947,7 +10947,7 @@ gtk_tree_view_get_n_columns (GtkTreeView *tree_view)
  * @tree_view: A `GtkTreeView`.
  * @n: The position of the column, counting from 0.
  *
- * Gets the `GtkTreeViewColumn` at the given position in the #tree_view.
+ * Gets the `GtkTreeViewColumn` at the given position in the `tree_view`.
  *
  * Returns: (nullable) (transfer none): The `GtkTreeViewColumn`, or `NULL` if the
  * position is outside the range of columns.
@@ -11800,7 +11800,7 @@ gtk_tree_view_map_expanded_rows (GtkTreeView            *tree_view,
  *
  * Returns true if the node pointed to by @path is expanded in @tree_view.
  *
- * Returns: true if #path is expanded.
+ * Returns: true if `path` is expanded.
  *
  * Deprecated: 4.10: Use [class@Gtk.ListView] or [class@Gtk.ColumnView] instead
  **/

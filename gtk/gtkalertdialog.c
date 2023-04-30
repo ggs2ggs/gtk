@@ -763,7 +763,7 @@ gtk_alert_dialog_choose_finish (GtkAlertDialog  *self,
  * This function is a simple version of [method@Gtk.AlertDialog.choose]
  * intended for dialogs with a single button.
  * If you want to cancel the dialog or if the alert has more than one button,
- * you should use that function instead and provide it with a #GCancellable or
+ * you should use that function instead and provide it with a `GCancellable` or
  * callback respectively.
  *
  * Since: 4.10

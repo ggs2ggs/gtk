@@ -36,7 +36,7 @@ G_BEGIN_DECLS
  * @GTK_INSCRIPTION_OVERFLOW_ELLIPSIZE_MIDDLE: Omit characters at the middle of the text
  * @GTK_INSCRIPTION_OVERFLOW_ELLIPSIZE_END: Omit characters at the end of the text
  *
- * The different methods to handle text in #GtkInscription when it doesn't
+ * The different methods to handle text in `GtkInscription` when it doesn't
  * fit the available space.
  *
  * Since: 4.8

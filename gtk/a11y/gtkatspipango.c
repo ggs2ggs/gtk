@@ -116,7 +116,7 @@ gtk_pango_get_default_attributes (PangoLayout     *layout,
  * translating them from Pango attributes to atspi attributes.
  *
  * This is a convenience function that can be used to implement
- * support for the #AtkText interface in widgets using Pango
+ * support for the `AtkText` interface in widgets using Pango
  * layouts.
  */
 void
@@ -766,7 +766,7 @@ pango_layout_get_line_after (PangoLayout           *layout,
  * gtk_pango_get_text_before:
  * @layout: a `PangoLayout`
  * @offset: a character offset in @layout
- * @boundary_type: a #AtspiTextBoundaryType
+ * @boundary_type: a `AtspiTextBoundaryType`
  * @start_offset: return location for the start of the returned text
  * @end_offset: return location for the end of the return text
  *
@@ -871,7 +871,7 @@ gtk_pango_get_text_before (PangoLayout           *layout,
  * gtk_pango_get_text_after:
  * @layout: a `PangoLayout`
  * @offset: a character offset in @layout
- * @boundary_type: a #AtspiTextBoundaryType
+ * @boundary_type: a `AtspiTextBoundaryType`
  * @start_offset: return location for the start of the returned text
  * @end_offset: return location for the end of the return text
  *

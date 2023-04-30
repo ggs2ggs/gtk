@@ -1292,7 +1292,7 @@ gtk_snapshot_collect_mask_mask (GtkSnapshot      *snapshot,
 
 /**
  * gtk_snapshot_push_mask:
- * @snapshot: a #GtkSnapshot
+ * @snapshot: a `GtkSnapshot`
  * @mask_mode: mask mode to use
  *
  * Until the first call to [method@Gtk.Snapshot.pop], the

@@ -2856,7 +2856,7 @@ gtk_tree_view_column_cell_get_size (GtkTreeViewColumn  *tree_column,
  * @cell_area: area normally rendered by a cell renderer
  * @flags: flags that affect rendering
  *
- * Renders the cell contained by #tree_column. This is used primarily by the
+ * Renders the cell contained by `tree_column`. This is used primarily by the
  * `GtkTreeView`.
  *
  * Deprecated: 4.10: Use GtkColumnView instead

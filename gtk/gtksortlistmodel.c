@@ -991,7 +991,7 @@ gtk_sort_list_model_set_sorter (GtkSortListModel *self,
  *
  * Gets the sorter that is used to sort @self.
  *
- * Returns: (nullable) (transfer none): the sorter of #self
+ * Returns: (nullable) (transfer none): the sorter of `self`
  */
 GtkSorter *
 gtk_sort_list_model_get_sorter (GtkSortListModel *self)

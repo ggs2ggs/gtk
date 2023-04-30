@@ -92,7 +92,7 @@ limit_layout_lines (PangoLayout *layout)
 /**
  * gtk_text_util_create_drag_icon:
  * @widget: `GtkWidget` to extract the pango context
- * @text: a #char to render the icon
+ * @text: a `char` to render the icon
  * @len: length of @text, or -1 for NUL-terminated text
  *
  * Creates a drag and drop icon from @text.
