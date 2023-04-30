@@ -3799,8 +3799,8 @@ gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter)
  * @destroy: (nullable): Destroy notifier of @data
  *
  * Sets the visible function used when filtering the @filter to be @func.
- * The function should return %TRUE if the given row should be visible and
- * %FALSE otherwise.
+ * The function should return true if the given row should be visible and
+ * false otherwise.
  *
  * If the condition calculated by the function changes over time (e.g.
  * because it depends on some global parameters), you must call
@@ -3904,7 +3904,7 @@ gtk_tree_model_filter_set_modify_func (GtkTreeModelFilter           *filter,
  *
  * Sets @column of the child_model to be the column where @filter should
  * look for visibility information. @columns should be a column of type
- * %G_TYPE_BOOLEAN, where %TRUE means that a row is visible, and %FALSE
+ * %G_TYPE_BOOLEAN, where true means that a row is visible, and false
  * if not.
  *
  * Note that gtk_tree_model_filter_set_visible_func() or
@@ -3935,10 +3935,10 @@ gtk_tree_model_filter_set_visible_column (GtkTreeModelFilter *filter,
  * @child_iter: A valid `GtkTreeIter` pointing to a row on the child model.
  *
  * Sets @filter_iter to point to the row in @filter that corresponds to the
- * row pointed at by @child_iter.  If @filter_iter was not set, %FALSE is
+ * row pointed at by @child_iter.  If @filter_iter was not set, false is
  * returned.
  *
- * Returns: %TRUE, if @filter_iter was set, i.e. if @child_iter is a
+ * Returns: true, if @filter_iter was set, i.e. if @child_iter is a
  * valid iterator pointing to a visible row in child model.
  *
  * Deprecated: 4.10

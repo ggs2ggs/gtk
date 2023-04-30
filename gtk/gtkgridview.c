@@ -1443,7 +1443,7 @@ gtk_grid_view_set_min_columns (GtkGridView *self,
 /**
  * gtk_grid_view_set_single_click_activate: (attributes org.gtk.Method.set_property=single-click-activate)
  * @self: a `GtkGridView`
- * @single_click_activate: %TRUE to activate items on single click
+ * @single_click_activate: true to activate items on single click
  *
  * Sets whether items should be activated on single click and
  * selected on hover.
@@ -1480,7 +1480,7 @@ gtk_grid_view_set_single_click_activate (GtkGridView *self,
  * Returns whether items will be activated on single click and
  * selected on hover.
  *
- * Returns: %TRUE if items are activated on single click
+ * Returns: true if items are activated on single click
  */
 gboolean
 gtk_grid_view_get_single_click_activate (GtkGridView *self)
@@ -1493,7 +1493,7 @@ gtk_grid_view_get_single_click_activate (GtkGridView *self)
 /**
  * gtk_grid_view_set_enable_rubberband: (attributes org.gtk.Method.set_property=enable-rubberband)
  * @self: a `GtkGridView`
- * @enable_rubberband: %TRUE to enable rubberband selection
+ * @enable_rubberband: true to enable rubberband selection
  *
  * Sets whether selections can be changed by dragging with the mouse.
  */
@@ -1517,7 +1517,7 @@ gtk_grid_view_set_enable_rubberband (GtkGridView *self,
  *
  * Returns whether rows can be selected by dragging with the mouse.
  *
- * Returns: %TRUE if rubberband selection is enabled
+ * Returns: true if rubberband selection is enabled
  */
 gboolean
 gtk_grid_view_get_enable_rubberband (GtkGridView *self)

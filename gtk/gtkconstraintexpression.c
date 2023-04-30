@@ -315,7 +315,7 @@ gtk_constraint_variable_to_string (const GtkConstraintVariable *variable)
  *
  * Checks whether the @variable was introduced from outside the solver.
  *
- * Returns: %TRUE if the variable is external
+ * Returns: true if the variable is external
  */
 gboolean
 gtk_constraint_variable_is_external (const GtkConstraintVariable *variable)
@@ -329,7 +329,7 @@ gtk_constraint_variable_is_external (const GtkConstraintVariable *variable)
  *
  * Checks whether the @variable can be used as a pivot.
  *
- * Returns: %TRUE if the variable is pivotable
+ * Returns: true if the variable is pivotable
  */
 gboolean
 gtk_constraint_variable_is_pivotable (const GtkConstraintVariable *variable)
@@ -343,7 +343,7 @@ gtk_constraint_variable_is_pivotable (const GtkConstraintVariable *variable)
  *
  * Checks whether the @variable's use is restricted.
  *
- * Returns: %TRUE if the variable is restricted
+ * Returns: true if the variable is restricted
  */
 gboolean
 gtk_constraint_variable_is_restricted (const GtkConstraintVariable *variable)
@@ -357,7 +357,7 @@ gtk_constraint_variable_is_restricted (const GtkConstraintVariable *variable)
  *
  * Checks whether the @variable is a dummy symbol.
  *
- * Returns: %TRUE if the variable is a dummy symbol
+ * Returns: true if the variable is a dummy symbol
  */
 gboolean
 gtk_constraint_variable_is_dummy (const GtkConstraintVariable *variable)
@@ -438,7 +438,7 @@ sort_by_variable_id (gconstpointer a,
  * it after calling gtk_constraint_variable_set_remove(), or when the @set
  * is freed.
  *
- * Returns: %TRUE if the variable was added to the set, and %FALSE otherwise
+ * Returns: true if the variable was added to the set, and false otherwise
  */
 gboolean
 gtk_constraint_variable_set_add (GtkConstraintVariableSet *set,
@@ -470,7 +470,7 @@ gtk_constraint_variable_set_add (GtkConstraintVariableSet *set,
  *
  * This function will release the reference on @variable held by the @set.
  *
- * Returns: %TRUE if the variable was removed from the set, and %FALSE
+ * Returns: true if the variable was removed from the set, and false
  *   otherwise
  */
 gboolean
@@ -559,7 +559,7 @@ gtk_constraint_variable_set_iter_init (GtkConstraintVariableSetIter *iter,
  *
  * Advances the @iter to the next variable in the `GtkConstraintVariable`Set.
  *
- * Returns: %TRUE if the iterator was advanced, and %FALSE otherwise
+ * Returns: true if the iterator was advanced, and false otherwise
  */
 gboolean
 gtk_constraint_variable_set_iter_next (GtkConstraintVariableSetIter *iter,
@@ -874,7 +874,7 @@ gtk_constraint_expression_unref (GtkConstraintExpression *expression)
  *
  * Checks whether @expression is a constant value, with no variable terms.
  *
- * Returns: %TRUE if the @expression is a constant
+ * Returns: true if the @expression is a constant
  */
 gboolean
 gtk_constraint_expression_is_constant (const GtkConstraintExpression *expression)
@@ -1538,7 +1538,7 @@ gtk_constraint_expression_iter_init (GtkConstraintExpressionIter *iter,
  * Moves the given `GtkConstraintExpression`Iter forwards to the next
  * term in the expression, starting from the first term.
  *
- * Returns: %TRUE if the iterator was moved, and %FALSE if the iterator
+ * Returns: true if the iterator was moved, and false if the iterator
  *   has reached the end of the terms of the expression
  */
 gboolean
@@ -1573,7 +1573,7 @@ gtk_constraint_expression_iter_next (GtkConstraintExpressionIter *iter,
  * Moves the given `GtkConstraintExpression`Iter backwards to the previous
  * term in the expression, starting from the last term.
  *
- * Returns: %TRUE if the iterator was moved, and %FALSE if the iterator
+ * Returns: true if the iterator was moved, and false if the iterator
  *   has reached the beginning of the terms of the expression
  */
 gboolean

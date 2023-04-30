@@ -646,7 +646,7 @@ gtk_map_list_model_get_model (GtkMapListModel *self)
  *
  * Checks if a map function is currently set on @self.
  *
- * Returns: %TRUE if a map function is set
+ * Returns: true if a map function is set
  */
 gboolean
 gtk_map_list_model_has_map (GtkMapListModel *self)

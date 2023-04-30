@@ -440,7 +440,7 @@ gtk_media_stream_init (GtkMediaStream *self)
  *
  * At this point the existence of audio and video is known.
  *
- * Returns: %TRUE if the stream is prepared
+ * Returns: true if the stream is prepared
  */
 gboolean
 gtk_media_stream_is_prepared (GtkMediaStream *self)
@@ -458,7 +458,7 @@ gtk_media_stream_is_prepared (GtkMediaStream *self)
  *
  * Returns whether the stream has audio.
  *
- * Returns: %TRUE if the stream has audio
+ * Returns: true if the stream has audio
  */
 gboolean
 gtk_media_stream_has_audio (GtkMediaStream *self)
@@ -476,7 +476,7 @@ gtk_media_stream_has_audio (GtkMediaStream *self)
  *
  * Returns whether the stream has video.
  *
- * Returns: %TRUE if the stream has video
+ * Returns: true if the stream has video
  */
 gboolean
 gtk_media_stream_has_video (GtkMediaStream *self)
@@ -559,7 +559,7 @@ gtk_media_stream_pause (GtkMediaStream *self)
  *
  * Return whether the stream is currently playing.
  *
- * Returns: %TRUE if the stream is playing
+ * Returns: true if the stream is playing
  */
 gboolean
 gtk_media_stream_get_playing (GtkMediaStream *self)
@@ -596,7 +596,7 @@ gtk_media_stream_set_playing (GtkMediaStream *self,
  *
  * Returns whether the streams playback is finished.
  *
- * Returns: %TRUE if playback is finished
+ * Returns: true if playback is finished
  */
 gboolean
 gtk_media_stream_get_ended (GtkMediaStream *self)
@@ -653,14 +653,14 @@ gtk_media_stream_get_duration (GtkMediaStream *self)
  * Checks if a stream may be seekable.
  *
  * This is meant to be a hint. Streams may not allow seeking even if
- * this function returns %TRUE. However, if this function returns
- * %FALSE, streams are guaranteed to not be seekable and user interfaces
+ * this function returns true. However, if this function returns
+ * false, streams are guaranteed to not be seekable and user interfaces
  * may hide controls that allow seeking.
  *
  * It is allowed to call [method@Gtk.MediaStream.seek] on a non-seekable
  * stream, though it will not do anything.
  *
- * Returns: %TRUE if the stream may support seeking
+ * Returns: true if the stream may support seeking
  */
 gboolean
 gtk_media_stream_is_seekable (GtkMediaStream *self)
@@ -678,7 +678,7 @@ gtk_media_stream_is_seekable (GtkMediaStream *self)
  *
  * Checks if there is currently a seek operation going on.
  *
- * Returns: %TRUE if a seek operation is ongoing.
+ * Returns: true if a seek operation is ongoing.
  */
 gboolean
 gtk_media_stream_is_seeking (GtkMediaStream *self)
@@ -776,7 +776,7 @@ gtk_media_stream_seek (GtkMediaStream *self,
  *
  * See [method@Gtk.MediaStream.set_loop] for details.
  *
- * Returns: %TRUE if the stream should loop
+ * Returns: true if the stream should loop
  */
 gboolean
 gtk_media_stream_get_loop (GtkMediaStream *self)
@@ -791,7 +791,7 @@ gtk_media_stream_get_loop (GtkMediaStream *self)
 /**
  * gtk_media_stream_set_loop: (attributes org.gtk.Method.set_property=loop)
  * @self: a `GtkMediaStream`
- * @loop: %TRUE if the stream should loop
+ * @loop: true if the stream should loop
  *
  * Sets whether the stream should loop.
  *
@@ -825,7 +825,7 @@ gtk_media_stream_set_loop (GtkMediaStream *self,
  *
  * See [method@Gtk.MediaStream.set_muted] for details.
  *
- * Returns: %TRUE if the stream is muted
+ * Returns: true if the stream is muted
  */
 gboolean
 gtk_media_stream_get_muted (GtkMediaStream *self)
@@ -840,7 +840,7 @@ gtk_media_stream_get_muted (GtkMediaStream *self)
 /**
  * gtk_media_stream_set_muted: (attributes org.gtk.Method.set_property=muted)
  * @self: a `GtkMediaStream`
- * @muted: %TRUE if the stream should be muted
+ * @muted: true if the stream should be muted
  *
  * Sets whether the audio stream should be muted.
  *
@@ -987,9 +987,9 @@ gtk_media_stream_unrealize (GtkMediaStream *self,
 /**
  * gtk_media_stream_stream_prepared:
  * @self: a `GtkMediaStream`
- * @has_audio: %TRUE if the stream should advertise audio support
- * @has_video: %TRUE if the stream should advertise video support
- * @seekable: %TRUE if the stream should advertise seekability
+ * @has_audio: true if the stream should advertise audio support
+ * @has_video: true if the stream should advertise video support
+ * @seekable: true if the stream should advertise seekability
  * @duration: The duration of the stream or 0 if unknown
  *
  * Called by `GtkMediaStream` implementations to advertise the stream
@@ -997,7 +997,7 @@ gtk_media_stream_unrealize (GtkMediaStream *self,
  *
  * Note that the arguments are hints. If the stream implementation
  * cannot determine the correct values, it is better to err on the
- * side of caution and return %TRUE. User interfaces will use those
+ * side of caution and return true. User interfaces will use those
  * values to determine what controls to show.
  *
  * This function may not be called again until the stream has been
@@ -1115,9 +1115,9 @@ gtk_media_stream_stream_unprepared (GtkMediaStream *self)
 /**
  * gtk_media_stream_prepared: (skip)
  * @self: a `GtkMediaStream`
- * @has_audio: %TRUE if the stream should advertise audio support
- * @has_video: %TRUE if the stream should advertise video support
- * @seekable: %TRUE if the stream should advertise seekability
+ * @has_audio: true if the stream should advertise audio support
+ * @has_video: true if the stream should advertise video support
+ * @seekable: true if the stream should advertise seekability
  * @duration: The duration of the stream or 0 if unknown
  *
  * Same as gtk_media_stream_stream_prepared().

@@ -337,14 +337,14 @@ gtk_tim_sort_get_progress (GtkTimSort *self)
  *     will be set to %NULL and 0.
  *
  * Performs another step in the sorting process. If a
- * step was performed, %TRUE is returned and @out_change is
+ * step was performed, true is returned and @out_change is
  * set to the smallest area that contains all changes while
  * sorting.
  *
- * If the data is completely sorted, %FALSE will be
+ * If the data is completely sorted, false will be
  * returned.
  *
- * Returns: %TRUE if an action was performed
+ * Returns: true if an action was performed
  **/
 gboolean
 gtk_tim_sort_step (GtkTimSort    *self,

@@ -250,7 +250,7 @@ gtk_text_mark_get_property (GObject    *object,
  * retrieved by name using [method@Gtk.TextBuffer.get_mark]. If a mark
  * has left gravity, and text is inserted at the mark’s current location,
  * the mark will be moved to the left of the newly-inserted text. If the
- * mark has right gravity (@left_gravity = %FALSE), the mark will end up
+ * mark has right gravity (@left_gravity = false), the mark will end up
  * on the right of newly-inserted text. The standard left-to-right cursor
  * is a mark with right gravity (when you type, the cursor stays on the
  * right side of the text you’re typing).
@@ -271,11 +271,11 @@ gtk_text_mark_new (const char *name,
  * gtk_text_mark_get_visible:
  * @mark: a `GtkTextMark`
  *
- * Returns %TRUE if the mark is visible.
+ * Returns true if the mark is visible.
  *
  * A cursor is displayed for visible marks.
  *
- * Returns: %TRUE if visible
+ * Returns: true if visible
  */
 gboolean
 gtk_text_mark_get_visible (GtkTextMark *mark)
@@ -311,7 +311,7 @@ gtk_text_mark_get_name (GtkTextMark *mark)
  * gtk_text_mark_get_deleted:
  * @mark: a `GtkTextMark`
  *
- * Returns %TRUE if the mark has been removed from its buffer.
+ * Returns true if the mark has been removed from its buffer.
  *
  * See [method@Gtk.TextBuffer.add_mark] for a way to add it
  * to a buffer again.
@@ -364,7 +364,7 @@ gtk_text_mark_get_buffer (GtkTextMark *mark)
  *
  * Determines whether the mark has left gravity.
  *
- * Returns: %TRUE if the mark has left gravity, %FALSE otherwise
+ * Returns: true if the mark has left gravity, false otherwise
  */
 gboolean
 gtk_text_mark_get_left_gravity (GtkTextMark *mark)

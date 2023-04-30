@@ -888,7 +888,7 @@ gsk_gl_driver_release_texture (GskGLDriver  *self,
  * the render target to release it. You may steal the texture from the
  * render target when releasing it.
  *
- * Returns: %TRUE if successful; otherwise %FALSE and @out_fbo_id and
+ * Returns: true if successful; otherwise false and @out_fbo_id and
  *   @out_texture_id are undefined.
  */
 gboolean
@@ -957,14 +957,14 @@ gsk_gl_driver_create_render_target (GskGLDriver        *self,
  * be made to cache the render target so that future creations of render
  * targets are performed faster.
  *
- * If @release_texture is %FALSE, the backing texture id is returned and
+ * If @release_texture is false, the backing texture id is returned and
  * the framebuffer is released. Otherwise, both the texture and framebuffer
  * are released or cached until the end of the frame.
  *
  * This may be called when building the render job as the texture or
  * framebuffer will not be removed immediately.
  *
- * Returns: a texture id if @release_texture is %FALSE, otherwise zero.
+ * Returns: a texture id if @release_texture is false, otherwise zero.
  */
 guint
 gsk_gl_driver_release_render_target (GskGLDriver       *self,

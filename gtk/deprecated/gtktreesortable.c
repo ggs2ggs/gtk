@@ -119,11 +119,11 @@ gtk_tree_sortable_sort_column_changed (GtkTreeSortable *sortable)
  * @order: (out): The `GtkSortType` to be filled in
  *
  * Fills in @sort_column_id and @order with the current sort column and the
- * order. It returns %TRUE unless the @sort_column_id is
+ * order. It returns true unless the @sort_column_id is
  * %GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
  * %GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
  *
- * Returns: %TRUE if the sort column is not one of the special sort
+ * Returns: true if the sort column is not one of the special sort
  *   column ids.
  *
  * Deprecated: 4.10
@@ -256,11 +256,11 @@ gtk_tree_sortable_set_default_sort_func (GtkTreeSortable        *sortable,
  * gtk_tree_sortable_has_default_sort_func:
  * @sortable: A `GtkTreeSortable`
  *
- * Returns %TRUE if the model has a default sort function. This is used
+ * Returns true if the model has a default sort function. This is used
  * primarily by GtkTreeViewColumns in order to determine if a model can
  * go back to the default state, or not.
  *
- * Returns: %TRUE, if the model has a default sort function
+ * Returns: true, if the model has a default sort function
  *
  * Deprecated: 4.10
  */

@@ -496,7 +496,7 @@ gtk_pango_move_lines (PangoLayout *layout,
  * Returns whether the given position is inside
  * a word.
  *
- * Returns: %TRUE if @offset is inside a word
+ * Returns: true if @offset is inside a word
  */
 static gboolean
 gtk_pango_is_inside_word (PangoLayout  *layout,
@@ -525,7 +525,7 @@ gtk_pango_is_inside_word (PangoLayout  *layout,
  * Returns whether the given position is inside
  * a sentence.
  *
- * Returns: %TRUE if @offset is inside a sentence
+ * Returns: true if @offset is inside a sentence
  */
 static gboolean
 gtk_pango_is_inside_sentence (PangoLayout  *layout,

@@ -189,7 +189,7 @@ gtk_event_controller_focus_class_init (GtkEventControllerFocusClass *klass)
   /**
    * GtkEventControllerFocus:is-focus: (attributes org.gtk.Property.get=gtk_event_controller_focus_is_focus)
    *
-   * %TRUE if focus is in the controllers widget itself,
+   * true if focus is in the controllers widget itself,
    * as opposed to in a descendent widget.
    *
    * See also [property@Gtk.EventControllerFocus:contains-focus].
@@ -206,7 +206,7 @@ gtk_event_controller_focus_class_init (GtkEventControllerFocusClass *klass)
   /**
    * GtkEventControllerFocus:contains-focus: (attributes org.gtk.Property.get=gtk_event_controller_focus_contains_focus)
    *
-   * %TRUE if focus is contained in the controllers widget.
+   * true if focus is contained in the controllers widget.
    *
    * See [property@Gtk.EventControllerFocus:is-focus] for whether
    * the focus is in the widget itself or inside a descendent.
@@ -290,9 +290,9 @@ gtk_event_controller_focus_new (void)
  * gtk_event_controller_focus_contains_focus: (attributes org.gtk.Method.get_property=contains-focus)
  * @self: a `GtkEventControllerFocus`
  *
- * Returns %TRUE if focus is within @self or one of its children.
+ * Returns true if focus is within @self or one of its children.
  *
- * Returns: %TRUE if focus is within @self or one of its children
+ * Returns: true if focus is within @self or one of its children
  */
 gboolean
 gtk_event_controller_focus_contains_focus (GtkEventControllerFocus *self)
@@ -306,9 +306,9 @@ gtk_event_controller_focus_contains_focus (GtkEventControllerFocus *self)
  * gtk_event_controller_focus_is_focus: (attributes org.gtk.Method.get_property=is-focus)
  * @self: a `GtkEventControllerFocus`
  *
- * Returns %TRUE if focus is within @self, but not one of its children.
+ * Returns true if focus is within @self, but not one of its children.
  *
- * Returns: %TRUE if focus is within @self, but not one of its children
+ * Returns: true if focus is within @self, but not one of its children
  */
 gboolean
 gtk_event_controller_focus_is_focus (GtkEventControllerFocus *self)

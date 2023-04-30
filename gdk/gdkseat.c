@@ -222,8 +222,8 @@ gdk_seat_get_capabilities (GdkSeat *seat)
  * @seat: a `GdkSeat`
  * @surface: the `GdkSurface` which will own the grab
  * @capabilities: capabilities that will be grabbed
- * @owner_events: if %FALSE then all device events are reported with respect to
- *   @surface and are only reported if selected by @event_mask. If %TRUE then
+ * @owner_events: if false then all device events are reported with respect to
+ *   @surface and are only reported if selected by @event_mask. If true then
  *   pointer events for this application are reported as normal, but pointer
  *   events outside this application are reported with respect to @surface and
  *   only if selected by @event_mask. In either mode, unreported events are
@@ -257,7 +257,7 @@ gdk_seat_get_capabilities (GdkSeat *seat)
  * Note that if the event mask of a `GdkSurface` has selected both button press
  * and button release events, or touch begin and touch end, then a press event
  * will cause an automatic grab until the button is released, equivalent to a
- * grab on the surface with @owner_events set to %TRUE. This is done because
+ * grab on the surface with @owner_events set to true. This is done because
  * most applications expect to receive paired press and release events.
  *
  * If you set up anything at the time you take the grab that needs to be

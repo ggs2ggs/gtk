@@ -158,7 +158,7 @@ gtk_aspect_frame_class_init (GtkAspectFrameClass *class)
    * The aspect ratio to be used by the `GtkAspectFrame`.
    *
    * This property is only used if
-   * [property@Gtk.AspectFrame:obey-child] is set to %FALSE.
+   * [property@Gtk.AspectFrame:obey-child] is set to false.
    */
   g_object_class_install_property (gobject_class,
                                    PROP_RATIO,
@@ -301,7 +301,7 @@ gtk_aspect_frame_buildable_init (GtkBuildableIface *iface)
  * @yalign: Vertical alignment of the child within the parent.
  *   Ranges from 0.0 (top aligned) to 1.0 (bottom aligned)
  * @ratio: The desired aspect ratio.
- * @obey_child: If %TRUE, @ratio is ignored, and the aspect
+ * @obey_child: If true, @ratio is ignored, and the aspect
  *   ratio is taken from the requistion of the child.
  *
  * Create a new `GtkAspectFrame`.
@@ -453,7 +453,7 @@ gtk_aspect_frame_get_ratio (GtkAspectFrame *self)
 /**
  * gtk_aspect_frame_set_obey_child: (attributes org.gtk.Method.set_propery=obey-child)
  * @self: a `GtkAspectFrame`
- * @obey_child: If %TRUE, @ratio is ignored, and the aspect
+ * @obey_child: If true, @ratio is ignored, and the aspect
  *    ratio is taken from the requisition of the child.
  *
  * Sets whether the aspect ratio of the child's size

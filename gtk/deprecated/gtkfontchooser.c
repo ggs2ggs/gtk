@@ -401,7 +401,7 @@ gtk_font_chooser_set_preview_text (GtkFontChooser *fontchooser,
  *
  * Returns whether the preview entry is shown or not.
  *
- * Returns: %TRUE if the preview entry is shown or %FALSE if it is hidden.
+ * Returns: true if the preview entry is shown or false if it is hidden.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton]
  * instead

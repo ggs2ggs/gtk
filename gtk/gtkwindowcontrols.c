@@ -79,7 +79,7 @@
  * exist and where they are placed exactly depends on the desktop environment
  * and [property@Gtk.WindowControls:decoration-layout] value.
  *
- * When [property@Gtk.WindowControls:empty] is %TRUE, it gets the .empty
+ * When [property@Gtk.WindowControls:empty] is true, it gets the .empty
  * style class.
  *
  * # Accessibility
@@ -694,7 +694,7 @@ gtk_window_controls_set_decoration_layout (GtkWindowControls *self,
  *
  * Gets whether the widget has any window buttons.
  *
- * Returns: %TRUE if the widget has window buttons, otherwise %FALSE
+ * Returns: true if the widget has window buttons, otherwise false
  */
 gboolean
 gtk_window_controls_get_empty (GtkWindowControls *self)

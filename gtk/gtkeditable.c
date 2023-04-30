@@ -656,11 +656,11 @@ gtk_editable_get_position (GtkEditable *editable)
  *
  * @start_pos will be filled with the start of the selection and
  * @end_pos with end. If no text was selected both will be identical
- * and %FALSE will be returned.
+ * and false will be returned.
  *
  * Note that positions are specified in characters, not bytes.
  *
- * Returns: %TRUE if there is a non-empty selection, %FALSE otherwise
+ * Returns: true if there is a non-empty selection, false otherwise
  */
 gboolean
 gtk_editable_get_selection_bounds (GtkEditable *editable,
@@ -729,7 +729,7 @@ gtk_editable_select_region (GtkEditable *editable,
 /**
  * gtk_editable_set_editable: (attributes org.gtk.Method.set_property=editable)
  * @editable: a `GtkEditable`
- * @is_editable: %TRUE if the user is allowed to edit the text
+ * @is_editable: true if the user is allowed to edit the text
  *   in the widget
  *
  * Determines if the user can edit the text in the editable widget.
@@ -749,7 +749,7 @@ gtk_editable_set_editable (GtkEditable *editable,
  *
  * Retrieves whether @editable is editable.
  *
- * Returns: %TRUE if @editable is editable.
+ * Returns: true if @editable is editable.
  */
 gboolean
 gtk_editable_get_editable (GtkEditable *editable)
@@ -888,7 +888,7 @@ gtk_editable_set_max_width_chars (GtkEditable *editable,
  *
  * Gets if undo/redo actions are enabled for @editable
  *
- * Returns: %TRUE if undo is enabled
+ * Returns: true if undo is enabled
  */
 gboolean
 gtk_editable_get_enable_undo (GtkEditable *editable)
@@ -912,7 +912,7 @@ gtk_editable_get_enable_undo (GtkEditable *editable)
  *
  * This results in an additional copy of text changes and are not
  * stored in secure memory. As such, undo is forcefully disabled
- * when [property@Gtk.Text:visibility] is set to %FALSE.
+ * when [property@Gtk.Text:visibility] is set to false.
  */
 void
 gtk_editable_set_enable_undo (GtkEditable *editable,
@@ -1052,7 +1052,7 @@ gtk_editable_finish_delegate (GtkEditable *editable)
  * function of your `GtkEditable` implementation, before handling your
  * own properties.
  *
- * Returns: %TRUE if the property was found
+ * Returns: true if the property was found
  */
 gboolean
 gtk_editable_delegate_set_property (GObject      *object,
@@ -1118,7 +1118,7 @@ gtk_editable_delegate_set_property (GObject      *object,
  * function of your `GtkEditable` implementation, before handling your
  * own properties.
  *
- * Returns: %TRUE if the property was found
+ * Returns: true if the property was found
  */
 gboolean
 gtk_editable_delegate_get_property (GObject    *object,

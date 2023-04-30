@@ -123,7 +123,7 @@ gdk_popup_default_init (GdkPopupInterface *iface)
  * and is immediately hidden upon being presented. If presenting failed,
  * the [signal@Gdk.Surface::layout] signal will not me emitted.
  *
- * Returns: %FALSE if it failed to be presented, otherwise %TRUE.
+ * Returns: false if it failed to be presented, otherwise true.
  */
 gboolean
 gdk_popup_present (GdkPopup       *popup,
@@ -238,7 +238,7 @@ gdk_popup_get_position_y (GdkPopup *popup)
  *
  * Returns whether this popup is set to hide on outside clicks.
  *
- * Returns: %TRUE if @popup will autohide
+ * Returns: true if @popup will autohide
  */
 gboolean
 gdk_popup_get_autohide (GdkPopup *popup)

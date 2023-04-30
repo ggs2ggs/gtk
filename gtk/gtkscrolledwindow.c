@@ -109,7 +109,7 @@
  *
  * `GtkScrolledWindow` has a main CSS node with name scrolledwindow.
  * It gets a .frame style class added when [property@Gtk.ScrolledWindow:has-frame]
- * is %TRUE.
+ * is true.
  *
  * It uses subnodes with names overshoot and undershoot to draw the overflow
  * and underflow indications. These nodes get the .left, .right, .top or .bottom
@@ -2507,7 +2507,7 @@ gtk_scrolled_window_set_has_frame (GtkScrolledWindow *scrolled_window,
  *
  * Gets whether the scrolled window draws a frame.
  *
- * Returns: %TRUE if the @scrolled_window has a frame
+ * Returns: true if the @scrolled_window has a frame
  */
 gboolean
 gtk_scrolled_window_get_has_frame (GtkScrolledWindow *scrolled_window)
@@ -2522,7 +2522,7 @@ gtk_scrolled_window_get_has_frame (GtkScrolledWindow *scrolled_window)
 /**
  * gtk_scrolled_window_set_kinetic_scrolling: (attributes org.gtk.Method.set_property=kinetic-scrolling)
  * @scrolled_window: a `GtkScrolledWindow`
- * @kinetic_scrolling: %TRUE to enable kinetic scrolling
+ * @kinetic_scrolling: true to enable kinetic scrolling
  *
  * Turns kinetic scrolling on or off.
  *
@@ -3973,7 +3973,7 @@ gtk_scrolled_window_set_overlay_scrolling (GtkScrolledWindow *scrolled_window,
  *
  * Returns whether overlay scrolling is enabled for this scrolled window.
  *
- * Returns: %TRUE if overlay scrolling is enabled
+ * Returns: true if overlay scrolling is enabled
  */
 gboolean
 gtk_scrolled_window_get_overlay_scrolling (GtkScrolledWindow *scrolled_window)

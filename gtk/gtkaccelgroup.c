@@ -45,7 +45,7 @@
  * and matches the “Ctrl+a” accelerator. But, you can't, for instance, use
  * the %GDK_KEY_Control_L keyval as an accelerator.
  *
- * Returns: %TRUE if the accelerator is valid
+ * Returns: true if the accelerator is valid
  */
 gboolean
 gtk_accelerator_valid (guint           keyval,
@@ -250,7 +250,7 @@ is_keycode (const char *string)
  * If the parse fails, @accelerator_key, @accelerator_mods and
  * @accelerator_codes will be set to 0 (zero).
  *
- * Returns: %TRUE if parsing succeeded
+ * Returns: true if parsing succeeded
  */
 gboolean
 gtk_accelerator_parse_with_keycode (const char      *accelerator,

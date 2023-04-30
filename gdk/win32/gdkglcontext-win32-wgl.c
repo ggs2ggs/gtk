@@ -716,7 +716,7 @@ gdk_win32_gl_context_wgl_init (GdkWin32GLContextWGL *wgl_context)
  *
  * Retrieves the version of the WGL implementation.
  *
- * Returns: %TRUE if WGL is available
+ * Returns: true if WGL is available
  */
 gboolean
 gdk_win32_display_get_wgl_version (GdkDisplay *display,

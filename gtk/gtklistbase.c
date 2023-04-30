@@ -132,7 +132,7 @@ static GParamSpec *properties[N_PROPS] = { NULL, };
  * last item will be returned for the whole width, even if there are empty
  * cells.
  *
- * Returns: %TRUE on success or %FALSE if no position occupies the given offset.
+ * Returns: true on success or false if no position occupies the given offset.
  **/
 static guint
 gtk_list_base_get_position_from_allocation (GtkListBase           *self,
@@ -344,7 +344,7 @@ gtk_list_base_move_focus (GtkListBase    *self,
  *
  * Computes the allocation of the item in the given position
  *
- * Returns: %TRUE if the item exists and has an allocation, %FALSE otherwise
+ * Returns: true if the item exists and has an allocation, false otherwise
  **/
 static gboolean
 gtk_list_base_get_allocation (GtkListBase  *self,
@@ -358,10 +358,10 @@ gtk_list_base_get_allocation (GtkListBase  *self,
  * gtk_list_base_select_item:
  * @self: a `GtkListBase`
  * @pos: item to select
- * @modify: %TRUE if the selection should be modified, %FALSE
+ * @modify: true if the selection should be modified, false
  *   if a new selection should be done. This is usually set
- *   to %TRUE if the user keeps the `<Shift>` key pressed.
- * @extend_pos: %TRUE if the selection should be extended.
+ *   to true if the user keeps the `<Shift>` key pressed.
+ * @extend_pos: true if the selection should be extended.
  *   Selections are usually extended from the last selected
  *   position if the user presses the `<Ctrl>` key.
  *
@@ -451,17 +451,17 @@ gtk_list_base_select_item (GtkListBase *self,
  * gtk_list_base_grab_focus_on_item:
  * @self: a `GtkListBase`
  * @pos: position of the item to focus
- * @select: %TRUE to select the item
- * @modify: if selecting, %TRUE to modify the selected
- *   state, %FALSE to always select
- * @extend: if selecting, %TRUE to extend the selection,
- *   %FALSE to only operate on this item
+ * @select: true to select the item
+ * @modify: if selecting, true to modify the selected
+ *   state, false to always select
+ * @extend: if selecting, true to extend the selection,
+ *   false to only operate on this item
  *
  * Tries to grab focus on the given item. If there is no item
- * at this position or grabbing focus failed, %FALSE will be
+ * at this position or grabbing focus failed, false will be
  * returned.
  *
- * Returns: %TRUE if focusing the item succeeded
+ * Returns: true if focusing the item succeeded
  **/
 static gboolean
 gtk_list_base_grab_focus_on_item (GtkListBase *self,
@@ -1256,19 +1256,19 @@ gtk_list_base_class_init (GtkListBaseClass *klass)
   /**
    * GtkListBase|list.select-item:
    * @position: position of item to select
-   * @modify: %TRUE to toggle the existing selection, %FALSE to select
-   * @extend: %TRUE to extend the selection
+   * @modify: true to toggle the existing selection, false to select
+   * @extend: true to extend the selection
    *
    * Changes selection.
    *
-   * If @extend is %TRUE and the model supports selecting ranges, the
+   * If @extend is true and the model supports selecting ranges, the
    * affected items are all items from the last selected item to the item
    * in @position.
-   * If @extend is %FALSE or selecting ranges is not supported, only the
+   * If @extend is false or selecting ranges is not supported, only the
    * item in @position is affected.
    *
-   * If @modify is %TRUE, the affected items will be set to the same state.
-   * If @modify is %FALSE, the affected items will be selected and
+   * If @modify is true, the affected items will be set to the same state.
+   * If @modify is false, the affected items will be selected and
    * all other items will be deselected.
    */
   gtk_widget_class_install_action (widget_class,

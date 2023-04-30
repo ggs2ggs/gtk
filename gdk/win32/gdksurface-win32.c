@@ -1190,7 +1190,7 @@ gdk_win32_surface_raise (GdkSurface *window)
 /**
  * gdk_win32_surface_set_urgency_hint:
  * @surface: (type GdkWin32Surface): a native `GdkSurface`.
- * @urgent: if %TRUE, flashes both the window and the taskbar button
+ * @urgent: if true, flashes both the window and the taskbar button
  *          continuously.
  *
  * Flashes the specified @surface.
@@ -4141,7 +4141,7 @@ gdk_win32_surface_lookup_for_display (GdkDisplay *display,
  * gdk_win32_surface_is_win32:
  * @surface: a `GdkSurface`
  *
- * Returns: %TRUE if the @surface is a win32 implemented surface.
+ * Returns: true if the @surface is a win32 implemented surface.
  *
  * Deprecated: 4.8: Use `GDK_IS_WIN32_SURFACE` instead.
  */

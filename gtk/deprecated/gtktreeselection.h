@@ -35,17 +35,17 @@ G_BEGIN_DECLS
  * @selection: A `GtkTreeSelection`
  * @model: A `GtkTreeModel` being viewed
  * @path: The `GtkTreePath` of the row in question
- * @path_currently_selected: %TRUE, if the path is currently selected
+ * @path_currently_selected: true, if the path is currently selected
  * @data: (closure): user data
  *
  * A function used by gtk_tree_selection_set_select_function() to filter
  * whether or not a row may be selected. It is called whenever a row's
  * state might change.
  *
- * A return value of %TRUE indicates to @selection that it is okay to
+ * A return value of true indicates to @selection that it is okay to
  * change the selection.
  *
- * Returns: %TRUE, if the selection state of the row can be toggled
+ * Returns: true, if the selection state of the row can be toggled
  */
 typedef gboolean (* GtkTreeSelectionFunc)    (GtkTreeSelection  *selection,
 					      GtkTreeModel      *model,

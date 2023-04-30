@@ -183,8 +183,8 @@ gdk_popup_layout_copy (GdkPopupLayout *layout)
  *
  * Check whether @layout and @other has identical layout properties.
  *
- * Returns: %TRUE if @layout and @other have identical layout properties,
- *   otherwise %FALSE.
+ * Returns: true if @layout and @other have identical layout properties,
+ *   otherwise false.
  */
 gboolean
 gdk_popup_layout_equal (GdkPopupLayout *layout,

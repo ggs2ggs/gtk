@@ -989,7 +989,7 @@ since these windows no longer exist:
 
 ### Widgets are now visible by default
 
-The default value of [property@Gtk.Widget:visible] in GTK 4 is %TRUE, so you no
+The default value of [property@Gtk.Widget:visible] in GTK 4 is true, so you no
 longer need to explicitly show all your widgets. On the flip side, you
 need to hide widgets that are not meant to be visible from the start.
 The only widgets that still need to be explicitly shown are toplevel
@@ -1134,7 +1134,7 @@ The way search entries are connected to global events has changed;
 
 ### Adapt to GtkScale changes
 
-The default value of `GtkScale:draw-value` has been changed to %FALSE.
+The default value of `GtkScale:draw-value` has been changed to false.
 If you want your scales to draw values, you will have to set this
 property explicitly now.
 

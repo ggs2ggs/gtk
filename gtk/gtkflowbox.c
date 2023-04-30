@@ -658,7 +658,7 @@ gtk_flow_box_child_get_index (GtkFlowBoxChild *child)
  * Returns whether the @child is currently selected in its
  * `GtkFlowBox` container.
  *
- * Returns: %TRUE if @child is selected
+ * Returns: true if @child is selected
  */
 gboolean
 gtk_flow_box_child_is_selected (GtkFlowBoxChild *child)
@@ -3835,8 +3835,8 @@ gtk_flow_box_class_init (GtkFlowBoxClass *class)
    * - <kbd>Home</kbd>, <kbd>End</kbd> move to the ends of the box
    * - <kbd>PgUp</kbd>, <kbd>PgDn</kbd> move vertically by pages
 
-   * Returns: %TRUE to stop other handlers from being invoked for the event.
-   * %FALSE to propagate the event further.
+   * Returns: true to stop other handlers from being invoked for the event.
+   * false to propagate the event further.
    */
   signals[MOVE_CURSOR] = g_signal_new (I_("move-cursor"),
                                        GTK_TYPE_FLOW_BOX,
@@ -4411,7 +4411,7 @@ gtk_flow_box_bind_model (GtkFlowBox                 *box,
  *
  * Returns whether the box is homogeneous.
  *
- * Returns: %TRUE if the box is homogeneous.
+ * Returns: true if the box is homogeneous.
  */
 gboolean
 gtk_flow_box_get_homogeneous (GtkFlowBox *box)
@@ -4424,8 +4424,8 @@ gtk_flow_box_get_homogeneous (GtkFlowBox *box)
 /**
  * gtk_flow_box_set_homogeneous: (attributes org.gtk.Method.set_property=homogeneous)
  * @box: a `GtkFlowBox`
- * @homogeneous: %TRUE to create equal allotments,
- *   %FALSE for variable allotments
+ * @homogeneous: true to create equal allotments,
+ *   false for variable allotments
  *
  * Sets whether or not all children of @box are given
  * equal space in the box.
@@ -4609,9 +4609,9 @@ gtk_flow_box_get_max_children_per_line (GtkFlowBox *box)
 /**
  * gtk_flow_box_set_activate_on_single_click: (attributes org.gtk.Method.set_property=activate-on-single-click)
  * @box: a `GtkFlowBox`
- * @single: %TRUE to emit child-activated on a single click
+ * @single: true to emit child-activated on a single click
  *
- * If @single is %TRUE, children will be activated when you click
+ * If @single is true, children will be activated when you click
  * on them, otherwise you need to double-click.
  */
 void
@@ -4635,8 +4635,8 @@ gtk_flow_box_set_activate_on_single_click (GtkFlowBox *box,
  *
  * Returns whether children activate on single clicks.
  *
- * Returns: %TRUE if children are activated on single click,
- *   %FALSE otherwise
+ * Returns: true if children are activated on single click,
+ *   false otherwise
  */
 gboolean
 gtk_flow_box_get_activate_on_single_click (GtkFlowBox *box)
@@ -4878,7 +4878,7 @@ gtk_flow_box_get_selection_mode (GtkFlowBox *box)
  *
  * It lets you control if the child should be visible or not.
  *
- * Returns: %TRUE if the row should be visible, %FALSE otherwise
+ * Returns: true if the row should be visible, false otherwise
  */
 
 /**

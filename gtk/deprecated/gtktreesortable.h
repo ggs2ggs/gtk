@@ -96,7 +96,7 @@ typedef int (* GtkTreeIterCompareFunc) (GtkTreeModel *model,
  *    be sort_func.
  * @set_default_sort_func: Sets the default comparison function used
  *    when sorting to be sort_func.
- * @has_default_sort_func: %TRUE if the model has a default sort
+ * @has_default_sort_func: true if the model has a default sort
  * function.
  */
 struct _GtkTreeSortableIface

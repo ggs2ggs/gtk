@@ -346,7 +346,7 @@ gtk_drop_controller_motion_new (void)
  * Returns if a Drag-and-Drop operation is within the widget
  * @self or one of its children.
  *
- * Returns: %TRUE if a dragging pointer is within @self or one of its children.
+ * Returns: true if a dragging pointer is within @self or one of its children.
  */
 gboolean
 gtk_drop_controller_motion_contains_pointer (GtkDropControllerMotion *self)
@@ -381,7 +381,7 @@ gtk_drop_controller_motion_get_drop (GtkDropControllerMotion *self)
  * Returns if a Drag-and-Drop operation is within the widget
  * @self, not one of its children.
  *
- * Returns: %TRUE if a dragging pointer is within @self but
+ * Returns: true if a dragging pointer is within @self but
  *   not one of its children
  */
 gboolean

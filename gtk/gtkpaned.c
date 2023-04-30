@@ -2535,7 +2535,7 @@ gtk_paned_set_wide_handle (GtkPaned *paned,
  *
  * Gets whether the separator should be wide.
  *
- * Returns: %TRUE if the paned should have a wide handle
+ * Returns: true if the paned should have a wide handle
  */
 gboolean
 gtk_paned_get_wide_handle (GtkPaned *paned)

@@ -529,7 +529,7 @@ gtk_entry_class_init (GtkEntryClass *class)
   /**
    * GtkEntry:truncate-multiline:
    *
-   * When %TRUE, pasted multi-line text is truncated to the first line.
+   * When true, pasted multi-line text is truncated to the first line.
    */
   entry_props[PROP_TRUNCATE_MULTILINE] =
       g_param_spec_boolean ("truncate-multiline", NULL, NULL,
@@ -1812,7 +1812,7 @@ gtk_entry_snapshot (GtkWidget   *widget,
  * special entries which the user usually doesn't want to replace all text
  * in, such as search-as-you-type entries.
  *
- * Returns: %TRUE if focus is now inside @self
+ * Returns: true if focus is now inside @self
  */
 gboolean
 gtk_entry_grab_focus_without_selecting (GtkEntry *entry)
@@ -2052,11 +2052,11 @@ gtk_entry_set_buffer (GtkEntry       *entry,
 /**
  * gtk_entry_set_visibility: (attributes org.gtk.Method.set_property=visibility)
  * @entry: a `GtkEntry`
- * @visible: %TRUE if the contents of the entry are displayed as plaintext
+ * @visible: true if the contents of the entry are displayed as plaintext
  *
  * Sets whether the contents of the entry are visible or not.
  *
- * When visibility is set to %FALSE, characters are displayed
+ * When visibility is set to false, characters are displayed
  * as the invisible char, and will also appear that way when
  * the text in the entry widget is copied elsewhere.
  *
@@ -2067,7 +2067,7 @@ gtk_entry_set_buffer (GtkEntry       *entry,
  * Note that you probably want to set [property@Gtk.Entry:input-purpose]
  * to %GTK_INPUT_PURPOSE_PASSWORD or %GTK_INPUT_PURPOSE_PIN to
  * inform input methods about the purpose of this entry,
- * in addition to setting visibility to %FALSE.
+ * in addition to setting visibility to false.
  */
 void
 gtk_entry_set_visibility (GtkEntry *entry,
@@ -2088,7 +2088,7 @@ gtk_entry_set_visibility (GtkEntry *entry,
  *
  * See [method@Gtk.Entry.set_visibility].
  *
- * Returns: %TRUE if the text is currently visible
+ * Returns: true if the text is currently visible
  */
 gboolean
 gtk_entry_get_visibility (GtkEntry *entry)
@@ -2273,7 +2273,7 @@ gtk_entry_get_text_length (GtkEntry *entry)
 /**
  * gtk_entry_set_activates_default: (attributes org.gtk.Method.set_property=activates-default)
  * @entry: a `GtkEntry`
- * @setting: %TRUE to activate window’s default widget on Enter keypress
+ * @setting: true to activate window’s default widget on Enter keypress
  *
  * Sets whether pressing Enter in the @entry will activate the default
  * widget for the window containing the entry.
@@ -2298,7 +2298,7 @@ gtk_entry_set_activates_default (GtkEntry *entry,
  *
  * Retrieves the value set by gtk_entry_set_activates_default().
  *
- * Returns: %TRUE if the entry will activate the default widget
+ * Returns: true if the entry will activate the default widget
  */
 gboolean
 gtk_entry_get_activates_default (GtkEntry *entry)
@@ -2566,7 +2566,7 @@ gtk_entry_set_icon_from_gicon (GtkEntry             *entry,
  * gtk_entry_set_icon_activatable:
  * @entry: A `GtkEntry`
  * @icon_pos: Icon position
- * @activatable: %TRUE if the icon should be activatable
+ * @activatable: true if the icon should be activatable
  *
  * Sets whether the icon is activatable.
  */
@@ -2604,7 +2604,7 @@ gtk_entry_set_icon_activatable (GtkEntry             *entry,
  *
  * Returns whether the icon is activatable.
  *
- * Returns: %TRUE if the icon is activatable.
+ * Returns: true if the icon is activatable.
  */
 gboolean
 gtk_entry_get_icon_activatable (GtkEntry             *entry,
@@ -2753,7 +2753,7 @@ gtk_entry_set_icon_sensitive (GtkEntry             *entry,
  *
  * Returns whether the icon appears sensitive or insensitive.
  *
- * Returns: %TRUE if the icon is sensitive.
+ * Returns: true if the icon is sensitive.
  */
 gboolean
 gtk_entry_get_icon_sensitive (GtkEntry             *entry,
@@ -3035,10 +3035,10 @@ gtk_entry_get_icon_tooltip_text (GtkEntry             *entry,
  * If you unset the widget tooltip via
  * [method@Gtk.Widget.set_tooltip_text] or
  * [method@Gtk.Widget.set_tooltip_markup], this sets
- * [property@Gtk.Widget:has-tooltip] to %FALSE, which suppresses
+ * [property@Gtk.Widget:has-tooltip] to false, which suppresses
  * icon tooltips too. You can resolve this by then calling
  * [method@Gtk.Widget.set_has_tooltip] to set
- * [property@Gtk.Widget:has-tooltip] back to %TRUE, or
+ * [property@Gtk.Widget:has-tooltip] back to true, or
  * setting at least one non-empty tooltip on any icon
  * achieves the same result.
  */
@@ -3753,7 +3753,7 @@ gtk_entry_get_extra_menu (GtkEntry *entry)
  * on the @entry icon at the given @pos, if the icon is
  * set and activatable.
  *
- * Returns: %TRUE if the signal was emitted
+ * Returns: true if the signal was emitted
  */
 gboolean
 gtk_entry_activate_icon (GtkEntry             *entry,

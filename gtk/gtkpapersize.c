@@ -549,7 +549,7 @@ gtk_paper_size_free (GtkPaperSize *size)
  *
  * Compares two `GtkPaperSize` objects.
  *
- * Returns: %TRUE, if @size1 and @size2
+ * Returns: true, if @size1 and @size2
  * represent the same paper size
  */
 gboolean
@@ -705,7 +705,7 @@ gtk_paper_size_get_height (GtkPaperSize *size,
  * gtk_paper_size_is_custom:
  * @size: a `GtkPaperSize` object
  *
- * Returns %TRUE if @size is not a standard paper size.
+ * Returns true if @size is not a standard paper size.
  *
  * Returns: whether @size is a custom paper size.
  **/
@@ -719,7 +719,7 @@ gtk_paper_size_is_custom (GtkPaperSize *size)
  * gtk_paper_size_is_ipp:
  * @size: a `GtkPaperSize` object
  *
- * Returns %TRUE if @size is an IPP standard paper size.
+ * Returns true if @size is an IPP standard paper size.
  *
  * Returns: whether @size is not an IPP custom paper size.
  **/

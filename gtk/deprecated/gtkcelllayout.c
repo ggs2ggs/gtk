@@ -358,11 +358,11 @@ gtk_cell_layout_default_get_cells (GtkCellLayout *cell_layout)
  * gtk_cell_layout_pack_start:
  * @cell_layout: a `GtkCellLayout`
  * @cell: a `GtkCellRenderer`
- * @expand: %TRUE if @cell is to be given extra space allocated to @cell_layout
+ * @expand: true if @cell is to be given extra space allocated to @cell_layout
  *
- * Packs the @cell into the beginning of @cell_layout. If @expand is %FALSE,
+ * Packs the @cell into the beginning of @cell_layout. If @expand is false,
  * then the @cell is allocated no more space than it needs. Any unused space
- * is divided evenly between cells for which @expand is %TRUE.
+ * is divided evenly between cells for which @expand is true.
  *
  * Note that reusing the same cell renderer is not supported.
  *
@@ -383,11 +383,11 @@ gtk_cell_layout_pack_start (GtkCellLayout   *cell_layout,
  * gtk_cell_layout_pack_end:
  * @cell_layout: a `GtkCellLayout`
  * @cell: a `GtkCellRenderer`
- * @expand: %TRUE if @cell is to be given extra space allocated to @cell_layout
+ * @expand: true if @cell is to be given extra space allocated to @cell_layout
  *
- * Adds the @cell to the end of @cell_layout. If @expand is %FALSE, then the
+ * Adds the @cell to the end of @cell_layout. If @expand is false, then the
  * @cell is allocated no more space than it needs. Any unused space is
- * divided evenly between cells for which @expand is %TRUE.
+ * divided evenly between cells for which @expand is true.
  *
  * Note that reusing the same cell renderer is not supported.
  *

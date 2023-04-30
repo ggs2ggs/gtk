@@ -73,7 +73,7 @@ gtk_style_animation_unref (GtkStyleAnimation *animation)
  * @at_time_us. This happens for example when the animation has reached its
  * final value or when it has been paused.
  *
- * Returns: %TRUE if @animation will not change anymore after @at_time_us
+ * Returns: true if @animation will not change anymore after @at_time_us
  **/
 gboolean
 _gtk_style_animation_is_static (GtkStyleAnimation *animation)

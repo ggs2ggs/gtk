@@ -596,7 +596,7 @@ gtk_password_entry_new (void)
  * Sets whether the entry should have a clickable icon
  * to reveal the contents.
  *
- * Setting this to %FALSE also hides the text again.
+ * Setting this to false also hides the text again.
  */
 void
 gtk_password_entry_set_show_peek_icon (GtkPasswordEntry *entry,
@@ -650,7 +650,7 @@ gtk_password_entry_set_show_peek_icon (GtkPasswordEntry *entry,
  * Returns whether the entry is showing an icon to
  * reveal the contents.
  *
- * Returns: %TRUE if an icon is shown
+ * Returns: true if an icon is shown
  */
 gboolean
 gtk_password_entry_get_show_peek_icon (GtkPasswordEntry *entry)

@@ -226,7 +226,7 @@ gtk_file_chooser_get_action (GtkFileChooser *chooser)
 /**
  * gtk_file_chooser_set_select_multiple: (attributes org.gtk.Method.set_property=select-multiple)
  * @chooser: a `GtkFileChooser`
- * @select_multiple: %TRUE if multiple files can be selected.
+ * @select_multiple: true if multiple files can be selected.
  *
  * Sets whether multiple files can be selected in the file chooser.
  *
@@ -252,7 +252,7 @@ gtk_file_chooser_set_select_multiple (GtkFileChooser *chooser,
  * Gets whether multiple files can be selected in the file
  * chooser.
  *
- * Returns: %TRUE if multiple files can be selected.
+ * Returns: true if multiple files can be selected.
  *
  * Deprecated: 4.10: Use [class@Gtk.FileDialog] instead
  */
@@ -271,7 +271,7 @@ gtk_file_chooser_get_select_multiple (GtkFileChooser *chooser)
 /**
  * gtk_file_chooser_set_create_folders: (attributes org.gtk.Method.set_property=create-folders)
  * @chooser: a `GtkFileChooser`
- * @create_folders: %TRUE if the Create Folder button should be displayed
+ * @create_folders: true if the Create Folder button should be displayed
  *
  * Sets whether file chooser will offer to create new folders.
  *
@@ -295,7 +295,7 @@ gtk_file_chooser_set_create_folders (GtkFileChooser *chooser,
  *
  * Gets whether file chooser will offer to create new folders.
  *
- * Returns: %TRUE if the Create Folder button should be displayed.
+ * Returns: true if the Create Folder button should be displayed.
  *
  * Deprecated: 4.10: Use [class@Gtk.FileDialog] instead
  */
@@ -392,7 +392,7 @@ gtk_file_chooser_unselect_all (GtkFileChooser *chooser)
  *
  * Sets the current folder for @chooser from a `GFile`.
  *
- * Returns: %TRUE if the folder could be changed successfully, %FALSE
+ * Returns: true if the folder could be changed successfully, false
  *   otherwise.
  *
  * Deprecated: 4.10: Use [class@Gtk.FileDialog] instead
@@ -579,8 +579,8 @@ gtk_file_chooser_get_file (GtkFileChooser *chooser)
  * Adds a folder to be displayed with the shortcut folders
  * in a file chooser.
  *
- * Returns: %TRUE if the folder could be added successfully,
- *   %FALSE otherwise.
+ * Returns: true if the folder could be added successfully,
+ *   false otherwise.
  *
  * Deprecated: 4.10: Use [class@Gtk.FileDialog] instead
  */
@@ -603,8 +603,8 @@ gtk_file_chooser_add_shortcut_folder (GtkFileChooser  *chooser,
  *
  * Removes a folder from the shortcut folders in a file chooser.
  *
- * Returns: %TRUE if the folder could be removed successfully,
- *   %FALSE otherwise.
+ * Returns: true if the folder could be removed successfully,
+ *   false otherwise.
  *
  * Deprecated: 4.10: Use [class@Gtk.FileDialog] instead
  */

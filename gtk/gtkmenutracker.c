@@ -535,7 +535,7 @@ gtk_menu_tracker_section_new (GtkMenuTracker *tracker,
  * applied to the @action_namespace argument as it is meant for the
  * items inside of the submenu, not the submenu item itself.
  *
- * @is_separator is set to %TRUE in case the item being added is a
+ * @is_separator is set to true in case the item being added is a
  * separator.  @model and @item_index will still be meaningfully set in
  * this case -- to the section menu item corresponding to the separator.
  * This is useful if the section specifies a label, for example.  If

@@ -182,7 +182,7 @@ gtk_color_dialog_class_init (GtkColorDialogClass *class)
    *
    * Whether colors may have alpha (translucency).
    *
-   * When with-alpha is %FALSE, the color that is selected
+   * When with-alpha is false, the color that is selected
    * will be forced to have alpha == 1.
    *
    * Since: 4.10

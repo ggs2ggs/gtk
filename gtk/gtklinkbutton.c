@@ -39,7 +39,7 @@
  *
  * By default, `GtkLinkButton` calls [method@Gtk.FileLauncher.launch] when the button
  * is clicked. This behaviour can be overridden by connecting to the
- * [signal@Gtk.LinkButton::activate-link] signal and returning %TRUE from
+ * [signal@Gtk.LinkButton::activate-link] signal and returning true from
  * the signal handler.
  *
  * # CSS nodes
@@ -204,9 +204,9 @@ gtk_link_button_class_init (GtkLinkButtonClass *klass)
    *
    * To override the default behavior, you can connect to the
    * ::activate-link signal and stop the propagation of the signal
-   * by returning %TRUE from your handler.
+   * by returning true from your handler.
    *
-   * Returns: %TRUE if the signal has been handled
+   * Returns: true if the signal has been handled
    */
   link_signals[ACTIVATE_LINK] =
     g_signal_new (I_("activate-link"),
@@ -722,7 +722,7 @@ gtk_link_button_set_visited (GtkLinkButton *link_button,
  *
  * The state may also be changed using [method@Gtk.LinkButton.set_visited].
  *
- * Returns: %TRUE if the link has been visited, %FALSE otherwise
+ * Returns: true if the link has been visited, false otherwise
  */
 gboolean
 gtk_link_button_get_visited (GtkLinkButton *link_button)

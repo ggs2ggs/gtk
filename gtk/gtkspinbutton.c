@@ -467,7 +467,7 @@ gtk_spin_button_class_init (GtkSpinButtonClass *class)
    *
    * The default conversion uses g_strtod().
    *
-   * Returns: %TRUE for a successful conversion, %FALSE if the input
+   * Returns: true for a successful conversion, false if the input
    *   was not handled, and %GTK_INPUT_ERROR if the conversion failed.
    */
   spinbutton_signals[INPUT] =
@@ -506,7 +506,7 @@ gtk_spin_button_class_init (GtkSpinButtonClass *class)
    * }
    * ```
    *
-   * Returns: %TRUE if the value has been displayed
+   * Returns: true if the value has been displayed
    */
   spinbutton_signals[OUTPUT] =
     g_signal_new (I_("output"),
@@ -2168,7 +2168,7 @@ gtk_spin_button_set_numeric (GtkSpinButton *spin_button,
  *
  * Returns whether non-numeric text can be typed into the spin button.
  *
- * Returns: %TRUE if only numeric text can be entered
+ * Returns: true if only numeric text can be entered
  */
 gboolean
 gtk_spin_button_get_numeric (GtkSpinButton *spin_button)
@@ -2212,7 +2212,7 @@ gtk_spin_button_set_wrap (GtkSpinButton  *spin_button,
  * opposite limit when the upper or lower limit of the range is
  * exceeded.
  *
- * Returns: %TRUE if the spin button wraps around
+ * Returns: true if the spin button wraps around
  */
 gboolean
 gtk_spin_button_get_wrap (GtkSpinButton *spin_button)
@@ -2257,7 +2257,7 @@ gtk_spin_button_set_snap_to_ticks (GtkSpinButton *spin_button,
  *
  * Returns whether the values are corrected to the nearest step.
  *
- * Returns: %TRUE if values are snapped to the nearest step
+ * Returns: true if values are snapped to the nearest step
  */
 gboolean
 gtk_spin_button_get_snap_to_ticks (GtkSpinButton *spin_button)

@@ -289,7 +289,7 @@ gtk_scrollable_set_vscroll_policy (GtkScrollable       *scrollable,
  * this information to display overlaid graphics, like the
  * overshoot indication, at the right position.
  *
- * Returns: %TRUE if @border has been set
+ * Returns: true if @border has been set
  */
 gboolean
 gtk_scrollable_get_border (GtkScrollable *scrollable,

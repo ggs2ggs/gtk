@@ -4598,7 +4598,7 @@ gtk_places_sidebar_set_show_recent (GtkPlacesSidebar *sidebar,
  *
  * Returns the value previously set with gtk_places_sidebar_set_show_recent()
  *
- * Returns: %TRUE if the sidebar will display a builtin shortcut for recent files
+ * Returns: true if the sidebar will display a builtin shortcut for recent files
  */
 gboolean
 gtk_places_sidebar_get_show_recent (GtkPlacesSidebar *sidebar)
@@ -4645,7 +4645,7 @@ gtk_places_sidebar_set_show_desktop (GtkPlacesSidebar *sidebar,
  *
  * Returns the value previously set with gtk_places_sidebar_set_show_desktop()
  *
- * Returns: %TRUE if the sidebar will display a builtin shortcut to the desktop folder.
+ * Returns: true if the sidebar will display a builtin shortcut to the desktop folder.
  */
 gboolean
 gtk_places_sidebar_get_show_desktop (GtkPlacesSidebar *sidebar)
@@ -4688,7 +4688,7 @@ gtk_places_sidebar_set_show_enter_location (GtkPlacesSidebar *sidebar,
  *
  * Returns the value previously set with gtk_places_sidebar_set_show_enter_location()
  *
- * Returns: %TRUE if the sidebar will display an “Enter Location” item.
+ * Returns: true if the sidebar will display an “Enter Location” item.
  */
 gboolean
 gtk_places_sidebar_get_show_enter_location (GtkPlacesSidebar *sidebar)
@@ -4704,7 +4704,7 @@ gtk_places_sidebar_get_show_enter_location (GtkPlacesSidebar *sidebar)
  * @show_other_locations: whether to show an item for the Other Locations view
  *
  * Sets whether the @sidebar should show an item for the application to show
- * an Other Locations view; this is off by default. When set to %TRUE, persistent
+ * an Other Locations view; this is off by default. When set to true, persistent
  * devices such as hard drives are hidden, otherwise they are shown in the sidebar.
  * An application may want to turn this on if it implements a way for the user to
  * see and interact with drives and network servers directly.
@@ -4733,7 +4733,7 @@ gtk_places_sidebar_set_show_other_locations (GtkPlacesSidebar *sidebar,
  *
  * Returns the value previously set with gtk_places_sidebar_set_show_other_locations()
  *
- * Returns: %TRUE if the sidebar will display an “Other Locations” item.
+ * Returns: true if the sidebar will display an “Other Locations” item.
  */
 gboolean
 gtk_places_sidebar_get_show_other_locations (GtkPlacesSidebar *sidebar)
@@ -4771,7 +4771,7 @@ gtk_places_sidebar_set_show_trash (GtkPlacesSidebar *sidebar,
  *
  * Returns the value previously set with gtk_places_sidebar_set_show_trash()
  *
- * Returns: %TRUE if the sidebar will display a “Trash” item.
+ * Returns: true if the sidebar will display a “Trash” item.
  */
 gboolean
 gtk_places_sidebar_get_show_trash (GtkPlacesSidebar *sidebar)
@@ -4996,7 +4996,7 @@ gtk_places_sidebar_set_show_starred_location (GtkPlacesSidebar *sidebar,
  *
  * Returns the value previously set with gtk_places_sidebar_set_show_starred_location()
  *
- * Returns: %TRUE if the sidebar will display a Starred item.
+ * Returns: true if the sidebar will display a Starred item.
  */
 gboolean
 gtk_places_sidebar_get_show_starred_location (GtkPlacesSidebar *sidebar)

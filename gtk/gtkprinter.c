@@ -136,7 +136,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
   /**
    * GtkPrinter:is-virtual: (attributes org.gtk.Property.get=gtk_printer_is_virtual)
    *
-   * %FALSE if this represents a real hardware device.
+   * false if this represents a real hardware device.
    */
   g_object_class_install_property (G_OBJECT_CLASS (class),
                                    PROP_IS_VIRTUAL,
@@ -147,7 +147,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
   /**
    * GtkPrinter:accepts-pdf: (attributes org.gtk.Property.get=gtk_printer_accepts_pdf)
    *
-   * %TRUE if this printer can accept PDF.
+   * true if this printer can accept PDF.
    */
   g_object_class_install_property (G_OBJECT_CLASS (class),
                                    PROP_ACCEPTS_PDF,
@@ -158,7 +158,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
   /**
    * GtkPrinter:accepts-ps: (attributes org.gtk.Property.get=gtk_printer_accepts_ps)
    *
-   * %TRUE if this printer can accept PostScript.
+   * true if this printer can accept PostScript.
    */
   g_object_class_install_property (G_OBJECT_CLASS (class),
                                    PROP_ACCEPTS_PS,
@@ -215,7 +215,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
   /**
    * GtkPrinter:paused: (attributes org.gtk.Property.get=gtk_printer_is_paused)
    *
-   * %TRUE if this printer is paused.
+   * true if this printer is paused.
    *
    * A paused printer still accepts jobs, but it does
    * not print them.
@@ -229,7 +229,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
   /**
    * GtkPrinter:accepting-jobs: (attributes org.gtk.Property.get=gtk_printer_is_accepting_jobs)
    *
-   * %TRUE if the printer is accepting jobs.
+   * true if the printer is accepting jobs.
    */
   g_object_class_install_property (G_OBJECT_CLASS (class),
                                    PROP_ACCEPTING_JOBS,
@@ -240,7 +240,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
   /**
    * GtkPrinter::details-acquired:
    * @printer: the `GtkPrinter` on which the signal is emitted
-   * @success: %TRUE if the details were successfully acquired
+   * @success: true if the details were successfully acquired
    *
    * Emitted in response to a request for detailed information
    * about a printer from the print backend.
@@ -640,7 +640,7 @@ gtk_printer_set_job_count (GtkPrinter *printer,
  *
  * Returns whether the printer details are available.
  *
- * Returns: %TRUE if @printer details are available
+ * Returns: true if @printer details are available
  */
 gboolean
 gtk_printer_has_details (GtkPrinter *printer)
@@ -668,7 +668,7 @@ gtk_printer_set_has_details (GtkPrinter *printer,
  * Returns whether the printer is currently active (i.e.
  * accepts new jobs).
  *
- * Returns: %TRUE if @printer is active
+ * Returns: true if @printer is active
  */
 gboolean
 gtk_printer_is_active (GtkPrinter *printer)
@@ -700,7 +700,7 @@ gtk_printer_set_is_active (GtkPrinter *printer,
  * A paused printer still accepts jobs, but it is not
  * printing them.
  *
- * Returns: %TRUE if @printer is paused
+ * Returns: true if @printer is paused
  */
 gboolean
 gtk_printer_is_paused (GtkPrinter *printer)
@@ -734,7 +734,7 @@ gtk_printer_set_is_paused (GtkPrinter *printer,
  *
  * Returns whether the printer is accepting jobs
  *
- * Returns: %TRUE if @printer is accepting jobs
+ * Returns: true if @printer is accepting jobs
  */
 gboolean
 gtk_printer_is_accepting_jobs (GtkPrinter *printer)
@@ -770,7 +770,7 @@ gtk_printer_set_is_accepting_jobs (GtkPrinter *printer,
  * represent actual printer hardware, but something like
  * a CUPS class).
  *
- * Returns: %TRUE if @printer is virtual
+ * Returns: true if @printer is virtual
  */
 gboolean
 gtk_printer_is_virtual (GtkPrinter *printer)
@@ -789,7 +789,7 @@ gtk_printer_is_virtual (GtkPrinter *printer)
  * Returns whether the printer accepts input in
  * PDF format.
  *
- * Returns: %TRUE if @printer accepts PDF
+ * Returns: true if @printer accepts PDF
  */
 gboolean
 gtk_printer_accepts_pdf (GtkPrinter *printer)
@@ -819,7 +819,7 @@ gtk_printer_set_accepts_pdf (GtkPrinter *printer,
  * Returns whether the printer accepts input in
  * PostScript format.
  *
- * Returns: %TRUE if @printer accepts PostScript
+ * Returns: true if @printer accepts PostScript
  */
 gboolean
 gtk_printer_accepts_ps (GtkPrinter *printer)
@@ -870,7 +870,7 @@ gtk_printer_set_is_new (GtkPrinter *printer,
  *
  * Returns whether the printer is the default printer.
  *
- * Returns: %TRUE if @printer is the default
+ * Returns: true if @printer is the default
  */
 gboolean
 gtk_printer_is_default (GtkPrinter *printer)
@@ -1038,7 +1038,7 @@ gtk_printer_get_default_page_size (GtkPrinter *printer)
  * available, see [method@Gtk.Printer.has_details] and
  * [method@Gtk.Printer.request_details].
  *
- * Returns: %TRUE iff the hard margins were retrieved
+ * Returns: true iff the hard margins were retrieved
  */
 gboolean
 gtk_printer_get_hard_margins (GtkPrinter *printer,
@@ -1071,7 +1071,7 @@ gtk_printer_get_hard_margins (GtkPrinter *printer,
  * available, see [method@Gtk.Printer.has_details] and
  * [method@Gtk.Printer.request_details].
  *
- * Return value: %TRUE iff the hard margins were retrieved
+ * Return value: true iff the hard margins were retrieved
  */
 gboolean
 gtk_printer_get_hard_margins_for_paper_size (GtkPrinter   *printer,
@@ -1293,12 +1293,12 @@ list_printers_init (PrinterList     *printer_list,
  * @func: a function to call for each printer
  * @data: user data to pass to @func
  * @destroy: function to call if @data is no longer needed
- * @wait: if %TRUE, wait in a recursive mainloop until
+ * @wait: if true, wait in a recursive mainloop until
  *    all printers are enumerated; otherwise return early
  *
  * Calls a function for all `GtkPrinter`s.
  *
- * If @func returns %TRUE, the enumeration is stopped.
+ * If @func returns true, the enumeration is stopped.
  */
 void
 gtk_enumerate_printers (GtkPrinterFunc func,

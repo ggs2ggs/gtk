@@ -1284,7 +1284,7 @@ compare_seq_index (const void *key, const void *value)
  *
  * Looks for matches for a key sequence in @table.
  *
- * Returns: %TRUE if there were any matches, %FALSE otherwise
+ * Returns: true if there were any matches, false otherwise
  */
 gboolean
 gtk_compose_table_check (const GtkComposeTable *table,

@@ -825,7 +825,7 @@ gtk_text_class_init (GtkTextClass *class)
   /**
    * GtkText:truncate-multiline: (attributes org.gtk.Property.get=gtk_text_get_truncate_multiline org.gtk.Property.set=gtk_text_set_truncate_multiline)
    *
-   * When %TRUE, pasted multi-line text is truncated to the first line.
+   * When true, pasted multi-line text is truncated to the first line.
    */
   text_props[PROP_TRUNCATE_MULTILINE] =
       g_param_spec_boolean ("truncate-multiline", NULL, NULL,
@@ -947,7 +947,7 @@ gtk_text_class_init (GtkTextClass *class)
   /**
    * GtkText:visibility: (attributes org.gtk.Property.get=gtk_text_get_visibility org.gtk.Property.set=gtk_text_set_visibility)
    *
-   * If %FALSE, the text is masked with the “invisible char”.
+   * If false, the text is masked with the “invisible char”.
    */
   text_props[PROP_VISIBILITY] =
       g_param_spec_boolean ("visibility", NULL, NULL,
@@ -1004,7 +1004,7 @@ gtk_text_class_init (GtkTextClass *class)
    * @self: the object which received the signal
    * @step: the granularity of the move, as a `GtkMovementStep`
    * @count: the number of @step units to move
-   * @extend: %TRUE if the move should extend the selection
+   * @extend: true if the move should extend the selection
    *
    * Emitted when the user initiates a cursor movement.
    *
@@ -3338,7 +3338,7 @@ gtk_text_grab_focus (GtkWidget *widget)
  * which the user usually doesn't want to replace all text in,
  * such as search-as-you-type entries.
  *
- * Returns: %TRUE if focus is now inside @self
+ * Returns: true if focus is now inside @self
  */
 gboolean
 gtk_text_grab_focus_without_selecting (GtkText *self)
@@ -5598,12 +5598,12 @@ gtk_text_set_text (GtkText     *self,
 /**
  * gtk_text_set_visibility: (attributes org.gtk.Method.set_property=visibility)
  * @self: a `GtkText`
- * @visible: %TRUE if the contents of the `GtkText` are displayed
+ * @visible: true if the contents of the `GtkText` are displayed
  *   as plaintext
  *
  * Sets whether the contents of the `GtkText` are visible or not.
  *
- * When visibility is set to %FALSE, characters are displayed
+ * When visibility is set to false, characters are displayed
  * as the invisible char, and will also appear that way when
  * the text in the widget is copied to the clipboard.
  *
@@ -5614,7 +5614,7 @@ gtk_text_set_text (GtkText     *self,
  * Note that you probably want to set [property@Gtk.Text:input-purpose]
  * to %GTK_INPUT_PURPOSE_PASSWORD or %GTK_INPUT_PURPOSE_PIN to
  * inform input methods about the purpose of this self,
- * in addition to setting visibility to %FALSE.
+ * in addition to setting visibility to false.
  */
 void
 gtk_text_set_visibility (GtkText  *self,
@@ -5647,7 +5647,7 @@ gtk_text_set_visibility (GtkText  *self,
  *
  * Retrieves whether the text in @self is visible.
  *
- * Returns: %TRUE if the text is currently visible
+ * Returns: true if the text is currently visible
  */
 gboolean
 gtk_text_get_visibility (GtkText *self)
@@ -5862,9 +5862,9 @@ gtk_text_get_text_length (GtkText *self)
 /**
  * gtk_text_set_activates_default: (attributes org.gtk.Method.set_property=activates-default)
  * @self: a `GtkText`
- * @activates: %TRUE to activate window’s default widget on Enter keypress
+ * @activates: true to activate window’s default widget on Enter keypress
  *
- * If @activates is %TRUE, pressing Enter will activate
+ * If @activates is true, pressing Enter will activate
  * the default widget for the window containing @self.
  *
  * This usually means that the dialog containing the `GtkText`
@@ -5897,7 +5897,7 @@ gtk_text_set_activates_default (GtkText  *self,
  *
  * See [method@Gtk.Text.set_activates_default].
  *
- * Returns: %TRUE if the `GtkText` will activate the default widget
+ * Returns: true if the `GtkText` will activate the default widget
  */
 gboolean
 gtk_text_get_activates_default (GtkText *self)
@@ -7057,7 +7057,7 @@ gtk_text_get_extra_menu (GtkText *self)
 /**
  * gtk_text_set_enable_emoji_completion: (attributes org.gtk.Method.set_property=enable-emoji-completion)
  * @self: a `GtkText`
- * @enable_emoji_completion: %TRUE to enable Emoji completion
+ * @enable_emoji_completion: true to enable Emoji completion
  *
  * Sets whether Emoji completion is enabled.
  *
@@ -7093,7 +7093,7 @@ gtk_text_set_enable_emoji_completion (GtkText  *self,
  * Returns whether Emoji completion is enabled for this
  * `GtkText` widget.
  *
- * Returns: %TRUE if Emoji completion is enabled
+ * Returns: true if Emoji completion is enabled
  */
 gboolean
 gtk_text_get_enable_emoji_completion (GtkText *self)
@@ -7108,7 +7108,7 @@ gtk_text_get_enable_emoji_completion (GtkText *self)
 /**
  * gtk_text_set_propagate_text_width: (attributes org.gtk.Method.set_property=propagate-text-width)
  * @self: a `GtkText`
- * @propagate_text_width: %TRUE to propagate the text width
+ * @propagate_text_width: true to propagate the text width
  *
  * Sets whether the `GtkText` should grow and shrink with the content.
  */
@@ -7137,7 +7137,7 @@ gtk_text_set_propagate_text_width (GtkText  *self,
  * Returns whether the `GtkText` will grow and shrink
  * with the content.
  *
- * Returns: %TRUE if @self will propagate the text width
+ * Returns: true if @self will propagate the text width
  */
 gboolean
 gtk_text_get_propagate_text_width (GtkText *self)
@@ -7152,7 +7152,7 @@ gtk_text_get_propagate_text_width (GtkText *self)
 /**
  * gtk_text_set_truncate_multiline: (attributes org.gtk.Method.set_property=truncate-multiline)
  * @self: a `GtkText`
- * @truncate_multiline: %TRUE to truncate multi-line text
+ * @truncate_multiline: true to truncate multi-line text
  *
  * Sets whether the `GtkText` should truncate multi-line text
  * that is pasted into the widget.
@@ -7180,7 +7180,7 @@ gtk_text_set_truncate_multiline (GtkText  *self,
  * Returns whether the `GtkText` will truncate multi-line text
  * that is pasted into the widget
  *
- * Returns: %TRUE if @self will truncate multi-line text
+ * Returns: true if @self will truncate multi-line text
  */
 gboolean
 gtk_text_get_truncate_multiline (GtkText *self)

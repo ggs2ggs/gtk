@@ -76,7 +76,7 @@ struct _GtkListBoxRowClass
  * Will be called whenever the row changes or is added and lets you control
  * if the row should be visible or not.
  *
- * Returns: %TRUE if the row should be visible, %FALSE otherwise
+ * Returns: true if the row should be visible, false otherwise
  */
 typedef gboolean (*GtkListBoxFilterFunc) (GtkListBoxRow *row,
                                           gpointer       user_data);

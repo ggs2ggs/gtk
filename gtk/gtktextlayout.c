@@ -527,7 +527,7 @@ gtk_text_layout_set_screen_width (GtkTextLayout *layout, int width)
 /**
  * gtk_text_layout_set_cursor_visible:
  * @layout: a `GtkTextLayout`
- * @cursor_visible: If %FALSE, then the insertion cursor will not
+ * @cursor_visible: If false, then the insertion cursor will not
  *   be shown, even if the text is editable.
  *
  * Sets whether the insertion cursor should be shown. Generally,
@@ -565,7 +565,7 @@ gtk_text_layout_set_cursor_visible (GtkTextLayout *layout,
  *
  * Returns whether the insertion cursor will be shown.
  *
- * Returns: if %FALSE, the insertion cursor will not be
+ * Returns: if false, the insertion cursor will not be
  *   shown, even if the text is editable.
  */
 gboolean
@@ -863,7 +863,7 @@ gtk_text_layout_free_line_data (GtkTextLayout   *layout,
  *
  * Check if there are any invalid regions in a `GtkTextLayout`’s buffer
  *
- * Returns: %TRUE if any invalid regions were found
+ * Returns: true if any invalid regions were found
  */
 gboolean
 gtk_text_layout_is_valid (GtkTextLayout *layout)
@@ -2916,7 +2916,7 @@ gtk_text_layout_get_cursor_locations (GtkTextLayout  *layout,
  * @pos: a `GdkRectangle` to store block cursor position
  *
  * If layout is to display a block cursor, calculates its position
- * and returns %TRUE. Otherwise it returns %FALSE. In case when
+ * and returns true. Otherwise it returns false. In case when
  * cursor is visible, it simply returns the position stored in
  * the line display, otherwise it has to compute the position
  * (see get_block_cursor()).
@@ -3198,7 +3198,7 @@ find_display_line_above (GtkTextLayout *layout,
  * then, if possible, move it the minimum distance so that the
  * iterator in this range.
  *
- * Returns: %TRUE if the iterator was moved, otherwise %FALSE.
+ * Returns: true if the iterator was moved, otherwise false.
  **/
 gboolean
 gtk_text_layout_clamp_iter_to_vrange (GtkTextLayout *layout,

@@ -1004,7 +1004,7 @@ gtk_sort_list_model_get_sorter (GtkSortListModel *self)
 /**
  * gtk_sort_list_model_set_incremental: (attributes org.gtk.Method.set_property=incremental)
  * @self: a `GtkSortListModel`
- * @incremental: %TRUE to sort incrementally
+ * @incremental: true to sort incrementally
  *
  * Sets the sort model to do an incremental sort.
  *
@@ -1054,7 +1054,7 @@ gtk_sort_list_model_set_incremental (GtkSortListModel *self,
  *
  * See [method@Gtk.SortListModel.set_incremental].
  *
- * Returns: %TRUE if incremental sorting is enabled
+ * Returns: true if incremental sorting is enabled
  */
 gboolean
 gtk_sort_list_model_get_incremental (GtkSortListModel *self)
@@ -1083,7 +1083,7 @@ gtk_sort_list_model_get_incremental (GtkSortListModel *self)
  * ```
  *
  * If no sort operation is ongoing - in particular when
- * [property@Gtk.SortListModel:incremental] is %FALSE - this
+ * [property@Gtk.SortListModel:incremental] is false - this
  * function returns 0.
  *
  * Returns: a progress estimate of remaining items to sort

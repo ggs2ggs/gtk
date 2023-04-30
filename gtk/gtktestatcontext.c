@@ -147,7 +147,7 @@ gtk_test_at_context_new (GtkAccessibleRole  accessible_role,
  * Checks whether the `GtkAccessible:accessible-role` of the accessible
  * is @role.
  *
- * Returns: %TRUE if the role matches
+ * Returns: true if the role matches
  */
 gboolean
 gtk_test_accessible_has_role (GtkAccessible     *accessible,
@@ -165,7 +165,7 @@ gtk_test_accessible_has_role (GtkAccessible     *accessible,
  *
  * Checks whether the `GtkAccessible` has @property set.
  *
- * Returns: %TRUE if the @property is set in the @accessible
+ * Returns: true if the @property is set in the @accessible
  */
 gboolean
 gtk_test_accessible_has_property (GtkAccessible         *accessible,
@@ -247,7 +247,7 @@ out:
  *
  * Checks whether the `GtkAccessible` has @state set.
  *
- * Returns: %TRUE if the @state is set in the @accessible
+ * Returns: true if the @state is set in the @accessible
  */
 gboolean
 gtk_test_accessible_has_state (GtkAccessible      *accessible,
@@ -329,7 +329,7 @@ out:
  *
  * Checks whether the `GtkAccessible` has @relation set.
  *
- * Returns: %TRUE if the @relation is set in the @accessible
+ * Returns: true if the @relation is set in the @accessible
  */
 gboolean
 gtk_test_accessible_has_relation (GtkAccessible         *accessible,

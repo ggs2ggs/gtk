@@ -790,9 +790,9 @@ gtk_video_set_resource (GtkVideo   *self,
  * gtk_video_get_autoplay: (attributes org.gtk.Method.get_property=autoplay)
  * @self: a `GtkVideo`
  *
- * Returns %TRUE if videos have been set to loop.
+ * Returns true if videos have been set to loop.
  *
- * Returns: %TRUE if streams should autoplay
+ * Returns: true if streams should autoplay
  */
 gboolean
 gtk_video_get_autoplay (GtkVideo *self)
@@ -828,9 +828,9 @@ gtk_video_set_autoplay (GtkVideo *self,
  * gtk_video_get_loop: (attributes org.gtk.Method.get_property=loop)
  * @self: a `GtkVideo`
  *
- * Returns %TRUE if videos have been set to loop.
+ * Returns true if videos have been set to loop.
  *
- * Returns: %TRUE if streams should loop
+ * Returns: true if streams should loop
  */
 gboolean
 gtk_video_get_loop (GtkVideo *self)

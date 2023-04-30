@@ -577,8 +577,8 @@ gtk_icon_view_class_init (GtkIconViewClass *klass)
    * The ::item-activated signal is emitted when the method
    * gtk_icon_view_item_activated() is called, when the user double
    * clicks an item with the "activate-on-single-click" property set
-   * to %FALSE, or when the user single clicks an item when the
-   * "activate-on-single-click" property set to %TRUE. It is also
+   * to false, or when the user single clicks an item when the
+   * "activate-on-single-click" property set to true. It is also
    * emitted when a non-editable item is selected and one of the keys:
    * Space, Return or Enter is pressed.
    */
@@ -1929,12 +1929,12 @@ gtk_icon_view_remove_editable (GtkCellArea            *area,
  * @icon_view: A `GtkIconView`
  * @path: A `GtkTreePath`
  * @cell: (nullable): One of the cell renderers of @icon_view
- * @start_editing: %TRUE if the specified cell should start being edited.
+ * @start_editing: true if the specified cell should start being edited.
  *
  * Sets the current keyboard focus to be at @path, and selects it.  This is
  * useful when you want to focus the user’s attention on a particular item.
  * If @cell is not %NULL, then focus is given to the cell specified by
- * it. Additionally, if @start_editing is %TRUE, then editing should be
+ * it. Additionally, if @start_editing is true, then editing should be
  * started in the specified cell.
  *
  * This function is often followed by `gtk_widget_grab_focus
@@ -1995,7 +1995,7 @@ gtk_icon_view_set_cursor (GtkIconView     *icon_view,
  *
  * The returned `GtkTreePath` must be freed with gtk_tree_path_free().
  *
- * Returns: %TRUE if the cursor is set.
+ * Returns: true if the cursor is set.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -3805,7 +3805,7 @@ gtk_icon_view_move_cursor_start_end (GtkIconView *icon_view,
  * gtk_icon_view_scroll_to_path:
  * @icon_view: A `GtkIconView`
  * @path: The path of the item to move to.
- * @use_align: whether to use alignment arguments, or %FALSE.
+ * @use_align: whether to use alignment arguments, or false.
  * @row_align: The vertical alignment of the item specified by @path.
  * @col_align: The horizontal alignment of the item specified by @path.
  *
@@ -3815,7 +3815,7 @@ gtk_icon_view_move_cursor_start_end (GtkIconView *icon_view,
  * 0.0 means left/top alignment, 1.0 means right/bottom alignment, 0.5 means
  * center.
  *
- * If @use_align is %FALSE, then the alignment arguments are ignored, and the
+ * If @use_align is false, then the alignment arguments are ignored, and the
  * tree does the minimum amount of work to scroll the item onto the screen.
  * This means that the item will be scrolled to the edge closest to its current
  * position.  If the item is currently visible on the screen, nothing is done.
@@ -4103,7 +4103,7 @@ gtk_icon_view_get_path_at_pos (GtkIconView *icon_view,
  *
  * Gets the path and cell for the icon at the given position.
  *
- * Returns: %TRUE if an item exists at the specified position
+ * Returns: true if an item exists at the specified position
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -4147,7 +4147,7 @@ gtk_icon_view_get_item_at_pos (GtkIconView      *icon_view,
  *
  * This function is only valid if @icon_view is realized.
  *
- * Returns: %FALSE if there is no such item, %TRUE otherwise
+ * Returns: false if there is no such item, true otherwise
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  */
@@ -4262,8 +4262,8 @@ gtk_icon_view_set_tooltip_cell (GtkIconView     *icon_view,
  * function without modification.
  *
  * The return value indicates whether there is an icon view item at the given
- * coordinates (%TRUE) or not (%FALSE) for mouse tooltips. For keyboard
- * tooltips the item returned will be the cursor item. When %TRUE, then any of
+ * coordinates (true) or not (false) for mouse tooltips. For keyboard
+ * tooltips the item returned will be the cursor item. When true, then any of
  * @model, @path and @iter which have been provided will be set to point to
  * that row and the corresponding model.
  *
@@ -4360,7 +4360,7 @@ gtk_icon_view_set_tooltip_query_cb (GtkWidget  *widget,
  * for you. @column should be set to the column in @icon_view’s model
  * containing the tooltip texts, or -1 to disable this feature.
  *
- * When enabled, `GtkWidget:has-tooltip` will be set to %TRUE and
+ * When enabled, `GtkWidget:has-tooltip` will be set to true and
  * @icon_view will connect a `GtkWidget::query-tooltip` signal handler.
  *
  * Note that the signal handler sets the text with gtk_tooltip_set_markup(),
@@ -4429,7 +4429,7 @@ gtk_icon_view_get_tooltip_column (GtkIconView *icon_view)
  *
  * Both paths should be freed with gtk_tree_path_free() after use.
  *
- * Returns: %TRUE, if valid paths were placed in @start_path and @end_path
+ * Returns: true, if valid paths were placed in @start_path and @end_path
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  */
@@ -5126,10 +5126,10 @@ gtk_icon_view_unselect_all (GtkIconView *icon_view)
  * @icon_view: A `GtkIconView`.
  * @path: A `GtkTreePath` to check selection on.
  *
- * Returns %TRUE if the icon pointed to by @path is currently
- * selected. If @path does not point to a valid location, %FALSE is returned.
+ * Returns true if the icon pointed to by @path is currently
+ * selected. If @path does not point to a valid location, false is returned.
  *
- * Returns: %TRUE if @path is selected.
+ * Returns: true if @path is selected.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -6343,7 +6343,7 @@ gtk_icon_view_drag_data_received (GObject *source,
  *    widget
  *
  * Turns @icon_view into a drag source for automatic DND. Calling this
- * method sets `GtkIconView`:reorderable to %FALSE.
+ * method sets `GtkIconView`:reorderable to false.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -6371,7 +6371,7 @@ gtk_icon_view_enable_model_drag_source (GtkIconView              *icon_view,
  *    widget
  *
  * Turns @icon_view into a drop destination for automatic DND. Calling this
- * method sets `GtkIconView`:reorderable to %FALSE.
+ * method sets `GtkIconView`:reorderable to false.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -6410,7 +6410,7 @@ gtk_icon_view_enable_model_drag_dest (GtkIconView       *icon_view,
  * @icon_view: a `GtkIconView`
  *
  * Undoes the effect of gtk_icon_view_enable_model_drag_source(). Calling this
- * method sets `GtkIconView`:reorderable to %FALSE.
+ * method sets `GtkIconView`:reorderable to false.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -6433,7 +6433,7 @@ gtk_icon_view_unset_model_drag_source (GtkIconView *icon_view)
  * @icon_view: a `GtkIconView`
  *
  * Undoes the effect of gtk_icon_view_enable_model_drag_dest(). Calling this
- * method sets `GtkIconView`:reorderable to %FALSE.
+ * method sets `GtkIconView`:reorderable to false.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -6667,7 +6667,7 @@ gtk_icon_view_create_drag_icon (GtkIconView *icon_view,
  * Retrieves whether the user can reorder the list via drag-and-drop.
  * See gtk_icon_view_set_reorderable().
  *
- * Returns: %TRUE if the list can be reordered.
+ * Returns: true if the list can be reordered.
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/
@@ -6682,11 +6682,11 @@ gtk_icon_view_get_reorderable (GtkIconView *icon_view)
 /**
  * gtk_icon_view_set_reorderable:
  * @icon_view: A `GtkIconView`.
- * @reorderable: %TRUE, if the list of items can be reordered.
+ * @reorderable: true, if the list of items can be reordered.
  *
  * This function is a convenience function to allow you to reorder models that
  * support the `GtkTreeDragSourceIface` and the `GtkTreeDragDestIface`. Both
- * `GtkTreeStore` and `GtkListStore` support these. If @reorderable is %TRUE, then
+ * `GtkTreeStore` and `GtkListStore` support these. If @reorderable is true, then
  * the user can reorder the model by dragging and dropping rows.  The
  * developer can listen to these changes by connecting to the model's
  * row_inserted and row_deleted signals. The reordering is implemented by setting up
@@ -6736,7 +6736,7 @@ gtk_icon_view_set_reorderable (GtkIconView *icon_view,
 /**
  * gtk_icon_view_set_activate_on_single_click:
  * @icon_view: a `GtkIconView`
- * @single: %TRUE to emit item-activated on a single click
+ * @single: true to emit item-activated on a single click
  *
  * Causes the `GtkIconView`::item-activated signal to be emitted on
  * a single click instead of a double click.
@@ -6764,7 +6764,7 @@ gtk_icon_view_set_activate_on_single_click (GtkIconView *icon_view,
  *
  * Gets the setting set by gtk_icon_view_set_activate_on_single_click().
  *
- * Returns: %TRUE if item-activated will be emitted on a single click
+ * Returns: true if item-activated will be emitted on a single click
  *
  * Deprecated: 4.10: Use [class@Gtk.GridView] instead
  **/

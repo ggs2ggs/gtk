@@ -420,9 +420,9 @@ gsk_render_node_draw (GskRenderNode *node,
  * The node diffing algorithm uses this function to match up similar
  * nodes to compare when trying to minimize the resulting region.
  *
- * Nodes of different type always return %FALSE here.
+ * Nodes of different type always return false here.
  *
- * Returns: %TRUE if @node1 and @node2 can be expected to be compared
+ * Returns: true if @node1 and @node2 can be expected to be compared
  **/
 gboolean
 gsk_render_node_can_diff (const GskRenderNode *node1,
@@ -515,7 +515,7 @@ gsk_render_node_diff (GskRenderNode  *node1,
  * It is mostly intended for use inside a debugger to quickly dump a render
  * node to a file for later inspection.
  *
- * Returns: %TRUE if saving was successful
+ * Returns: true if saving was successful
  **/
 gboolean
 gsk_render_node_write_to_file (GskRenderNode *node,

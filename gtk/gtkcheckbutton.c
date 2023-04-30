@@ -576,7 +576,7 @@ gtk_check_button_class_init (GtkCheckButtonClass *class)
    *
    * If the check button is active.
    *
-   * Setting `active` to %TRUE will add the `:checked:` state to both
+   * Setting `active` to true will add the `:checked:` state to both
    * the check button and the indicator CSS node.
    */
   props[PROP_ACTIVE] =
@@ -778,7 +778,7 @@ gtk_check_button_new_with_mnemonic (const char *label)
 /**
  * gtk_check_button_set_inconsistent: (attributes org.gtk.Method.set_property=inconsistent)
  * @check_button: a `GtkCheckButton`
- * @inconsistent: %TRUE if state is inconsistent
+ * @inconsistent: true if state is inconsistent
  *
  * Sets the `GtkCheckButton` to inconsistent state.
  *
@@ -821,7 +821,7 @@ gtk_check_button_set_inconsistent (GtkCheckButton *check_button,
  *
  * Returns whether the check button is in an inconsistent state.
  *
- * Returns: %TRUE if @check_button is currently in an inconsistent state
+ * Returns: true if @check_button is currently in an inconsistent state
  */
 gboolean
 gtk_check_button_get_inconsistent (GtkCheckButton *check_button)
@@ -933,7 +933,7 @@ gtk_check_button_get_label (GtkCheckButton *self)
  *
  * Sets the text of @self.
  *
- * If [property@Gtk.CheckButton:use-underline] is %TRUE, an underscore
+ * If [property@Gtk.CheckButton:use-underline] is true, an underscore
  * in @label is interpreted as mnemonic indicator, see
  * [method@Gtk.CheckButton.set_use_underline] for details on this behavior.
  */
@@ -1086,7 +1086,7 @@ gtk_check_button_get_use_underline (GtkCheckButton *self)
  *
  * Sets whether underlines in the label indicate mnemonics.
  *
- * If @setting is %TRUE, an underscore character in @self's label
+ * If @setting is true, an underscore character in @self's label
  * indicates a mnemonic accelerator key. This behavior is similar
  * to [property@Gtk.Label:use-underline].
  */

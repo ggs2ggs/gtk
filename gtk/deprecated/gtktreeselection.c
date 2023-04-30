@@ -391,7 +391,7 @@ gtk_tree_selection_get_mode (GtkTreeSelection *selection)
  *
  * If set, this function is called before any node is selected or unselected,
  * giving some control over which nodes are selected. The select function
- * should return %TRUE if the state of the node may be toggled, and %FALSE
+ * should return true if the state of the node may be toggled, and false
  * if the state of the node should be left unchanged.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
@@ -1004,10 +1004,10 @@ gtk_tree_selection_unselect_iter (GtkTreeSelection *selection,
  * @selection: A `GtkTreeSelection`.
  * @path: A `GtkTreePath` to check selection on.
  *
- * Returns %TRUE if the row pointed to by @path is currently selected.  If @path
- * does not point to a valid location, %FALSE is returned
+ * Returns true if the row pointed to by @path is currently selected.  If @path
+ * does not point to a valid location, false is returned
  *
- * Returns: %TRUE if @path is selected.
+ * Returns: true if @path is selected.
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
  **/
@@ -1043,9 +1043,9 @@ gtk_tree_selection_path_is_selected (GtkTreeSelection *selection,
  * @selection: A `GtkTreeSelection`
  * @iter: A valid `GtkTreeIter`
  *
- * Returns %TRUE if the row at @iter is currently selected.
+ * Returns true if the row at @iter is currently selected.
  *
- * Returns: %TRUE, if @iter is selected
+ * Returns: true, if @iter is selected
  *
  * Deprecated: 4.10: Use GtkListView or GtkColumnView
  **/

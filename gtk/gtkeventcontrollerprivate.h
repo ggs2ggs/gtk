@@ -107,7 +107,7 @@ struct _GtkEventControllerClass
 
   /*<private>*/
 
-  /* Tells whether the event is filtered out, %TRUE makes
+  /* Tells whether the event is filtered out, true makes
    * the event unseen by the handle_event vfunc.
    */
   gboolean (* filter_event) (GtkEventController *controller,

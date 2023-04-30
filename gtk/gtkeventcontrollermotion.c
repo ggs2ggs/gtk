@@ -305,7 +305,7 @@ gtk_event_controller_motion_new (void)
  *
  * Returns if a pointer is within @self or one of its children.
  *
- * Returns: %TRUE if a pointer is within @self or one of its children
+ * Returns: true if a pointer is within @self or one of its children
  */
 gboolean
 gtk_event_controller_motion_contains_pointer (GtkEventControllerMotion *self)
@@ -321,7 +321,7 @@ gtk_event_controller_motion_contains_pointer (GtkEventControllerMotion *self)
  *
  * Returns if a pointer is within @self, but not one of its children.
  *
- * Returns: %TRUE if a pointer is within @self but not one of its children
+ * Returns: true if a pointer is within @self but not one of its children
  */
 gboolean
 gtk_event_controller_motion_is_pointer (GtkEventControllerMotion *self)

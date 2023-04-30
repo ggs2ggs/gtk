@@ -596,7 +596,7 @@ gtk_shortcuts_shortcut_class_init (GtkShortcutsShortcutClass *klass)
   /**
    * GtkShortcutsShortcut:icon-set:
    *
-   * %TRUE if an icon has been set.
+   * true if an icon has been set.
    */
   properties[PROP_ICON_SET] =
     g_param_spec_boolean ("icon-set", NULL, NULL,
@@ -633,7 +633,7 @@ gtk_shortcuts_shortcut_class_init (GtkShortcutsShortcutClass *klass)
   /**
    * GtkShortcutsShortcut:subtitle-set:
    *
-   * %TRUE if a subtitle has been set.
+   * true if a subtitle has been set.
    */
   properties[PROP_SUBTITLE_SET] =
     g_param_spec_boolean ("subtitle-set", NULL, NULL,

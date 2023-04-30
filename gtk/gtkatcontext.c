@@ -839,7 +839,7 @@ gtk_at_context_set_accessible_state (GtkATContext       *self,
  *
  * Checks whether a `GtkATContext` has the given @state set.
  *
- * Returns: %TRUE, if the accessible state is set
+ * Returns: true, if the accessible state is set
  */
 gboolean
 gtk_at_context_has_accessible_state (GtkATContext       *self,
@@ -906,7 +906,7 @@ gtk_at_context_set_accessible_property (GtkATContext          *self,
  *
  * Checks whether a `GtkATContext` has the given @property set.
  *
- * Returns: %TRUE, if the accessible property is set
+ * Returns: true, if the accessible property is set
  */
 gboolean
 gtk_at_context_has_accessible_property (GtkATContext          *self,
@@ -973,7 +973,7 @@ gtk_at_context_set_accessible_relation (GtkATContext          *self,
  *
  * Checks whether a `GtkATContext` has the given @relation set.
  *
- * Returns: %TRUE, if the accessible relation is set
+ * Returns: true, if the accessible relation is set
  */
 gboolean
 gtk_at_context_has_accessible_relation (GtkATContext          *self,

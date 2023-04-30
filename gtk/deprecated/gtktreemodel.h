@@ -51,7 +51,7 @@ typedef struct _GtkTreeModelIface   GtkTreeModelIface;
  * Type of the callback passed to gtk_tree_model_foreach() to
  * iterate over the rows in a tree model.
  *
- * Returns: %TRUE to stop iterating, %FALSE to continue
+ * Returns: true to stop iterating, false to continue
  *
  */
 typedef gboolean (* GtkTreeModelForeachFunc) (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data);
@@ -118,7 +118,7 @@ struct _GtkTreeIter
  * @iter_previous: Sets iter to point to the previous node at the
  *    current level.
  * @iter_children: Sets iter to point to the first child of parent.
- * @iter_has_child: %TRUE if iter has children, %FALSE otherwise.
+ * @iter_has_child: true if iter has children, false otherwise.
  * @iter_n_children: Gets the number of children that iter has.
  * @iter_nth_child: Sets iter to be the child of parent, using the
  *    given index.

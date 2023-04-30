@@ -549,11 +549,11 @@ gtk_dialog_class_init (GtkDialogClass *class)
   /**
    * GtkDialog:use-header-bar:
    *
-   * %TRUE if the dialog uses a headerbar for action buttons
+   * true if the dialog uses a headerbar for action buttons
    * instead of the action-area.
    *
    * For technical reasons, this property is declared as an integer
-   * property, but you should only set it to %TRUE or %FALSE.
+   * property, but you should only set it to true or false.
    *
    * ## Creating a dialog with headerbar
    *
@@ -995,7 +995,7 @@ gtk_dialog_add_buttons (GtkDialog   *dialog,
  * gtk_dialog_set_response_sensitive:
  * @dialog: a `GtkDialog`
  * @response_id: a response ID
- * @setting: %TRUE for sensitive
+ * @setting: true for sensitive
  *
  * A convenient way to sensitize/desensitize dialog buttons.
  *
@@ -1423,7 +1423,7 @@ gtk_dialog_get_action_area (GtkDialog *dialog)
  * Returns the header bar of @dialog.
  *
  * Note that the headerbar is only used by the dialog if the
- * [property@Gtk.Dialog:use-header-bar] property is %TRUE.
+ * [property@Gtk.Dialog:use-header-bar] property is true.
  *
  * Returns: (type Gtk.HeaderBar) (transfer none): the header bar
  *

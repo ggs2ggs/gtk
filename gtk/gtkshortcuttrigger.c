@@ -85,7 +85,7 @@ gtk_shortcut_trigger_init (GtkShortcutTrigger *self)
  * gtk_shortcut_trigger_trigger:
  * @self: a `GtkShortcutTrigger`
  * @event: the event to check
- * @enable_mnemonics: %TRUE if mnemonics should trigger. Usually the
+ * @enable_mnemonics: true if mnemonics should trigger. Usually the
  *   value of this property is determined by checking that the passed
  *   in @event is a Key event and has the right modifiers set.
  *
@@ -289,7 +289,7 @@ gtk_shortcut_trigger_to_label (GtkShortcutTrigger *self,
  * The form of the representation may change at any time and is
  * not guaranteed to stay identical.
  *
- * Returns: %TRUE if something was printed or %FALSE if the
+ * Returns: true if something was printed or false if the
  *   trigger did not have a textual representation suitable
  *   for end users.
  **/
@@ -341,7 +341,7 @@ gtk_shortcut_trigger_hash (gconstpointer trigger)
  * The types of @one and @two are `gconstpointer` only to allow use of this
  * function with `GHashTable`. They must each be a `GtkShortcutTrigger`.
  *
- * Returns: %TRUE if @trigger1 and @trigger2 are equal
+ * Returns: true if @trigger1 and @trigger2 are equal
  */
 gboolean
 gtk_shortcut_trigger_equal (gconstpointer trigger1,

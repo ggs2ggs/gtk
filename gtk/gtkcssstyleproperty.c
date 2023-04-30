@@ -260,7 +260,7 @@ _gtk_css_style_property_lookup_by_id (guint id)
  * [CSS Documentation](http://www.w3.org/TR/css3-cascade/#inheritance)
  * for an explanation of this concept.
  *
- * Returns: %TRUE if the property is inherited by default.
+ * Returns: true if the property is inherited by default.
  **/
 gboolean
 _gtk_css_style_property_is_inherit (GtkCssStyleProperty *property)
@@ -278,7 +278,7 @@ _gtk_css_style_property_is_inherit (GtkCssStyleProperty *property)
  * [CSS Documentation](http://www.w3.org/TR/css3-transitions/#animatable-css)
  * for animatable properties.
  *
- * Returns: %TRUE if the property can be animated.
+ * Returns: true if the property can be animated.
  **/
 gboolean
 _gtk_css_style_property_is_animated (GtkCssStyleProperty *property)

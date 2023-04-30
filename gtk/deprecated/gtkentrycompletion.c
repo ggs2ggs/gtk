@@ -36,7 +36,7 @@
  * updated. By default, the content of the entry is replaced by the
  * text column of the model, but this can be overridden by connecting
  * to the [signal@Gtk.EntryCompletion::match-selected] signal and updating the
- * entry in the signal handler. Note that you should return %TRUE from
+ * entry in the signal handler. Note that you should return true from
  * the signal handler to suppress the default behaviour.
  *
  * To add completion functionality to an entry, use
@@ -211,7 +211,7 @@ gtk_entry_completion_class_init (GtkEntryCompletionClass *klass)
    * the `GtkFileChooser` inserts only the part of the prefix up to the
    * next '/'.
    *
-   * Returns: %TRUE if the signal has been handled
+   * Returns: true if the signal has been handled
    */
   entry_completion_signals[INSERT_PREFIX] =
     g_signal_new (I_("insert-prefix"),
@@ -238,7 +238,7 @@ gtk_entry_completion_class_init (GtkEntryCompletionClass *klass)
    * Note that @model is the model that was passed to
    * [method@Gtk.EntryCompletion.set_model].
    *
-   * Returns: %TRUE if the signal has been handled
+   * Returns: true if the signal has been handled
    */
   entry_completion_signals[MATCH_SELECTED] =
     g_signal_new (I_("match-selected"),
@@ -266,7 +266,7 @@ gtk_entry_completion_class_init (GtkEntryCompletionClass *klass)
    * Note that @model is the model that was passed to
    * [method@Gtk.EntryCompletion.set_model].
    *
-   * Returns: %TRUE if the signal has been handled
+   * Returns: true if the signal has been handled
    */
   entry_completion_signals[CURSOR_ON_MATCH] =
     g_signal_new (I_("cursor-on-match"),
@@ -361,7 +361,7 @@ gtk_entry_completion_class_init (GtkEntryCompletionClass *klass)
    * Determines whether the completions popup window will shown
    * for a single possible completion.
    *
-   * You probably want to set this to %FALSE if you are using
+   * You probably want to set this to false if you are using
    * [property@Gtk.EntryCompletion:inline-completion].
    */
   entry_completion_props[PROP_POPUP_SINGLE_MATCH] =
@@ -1462,7 +1462,7 @@ gtk_entry_completion_insert_prefix (GtkEntryCompletion *completion)
 /**
  * gtk_entry_completion_set_inline_completion: (attributes org.gtk.Method.set_property=inline-completion)
  * @completion: a `GtkEntryCompletion`
- * @inline_completion: %TRUE to do inline completion
+ * @inline_completion: true to do inline completion
  *
  * Sets whether the common prefix of the possible completions should
  * be automatically inserted in the entry.
@@ -1492,7 +1492,7 @@ gtk_entry_completion_set_inline_completion (GtkEntryCompletion *completion,
  * Returns whether the common prefix of the possible completions should
  * be automatically inserted in the entry.
  *
- * Returns: %TRUE if inline completion is turned on
+ * Returns: true if inline completion is turned on
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
  */
@@ -1507,7 +1507,7 @@ gtk_entry_completion_get_inline_completion (GtkEntryCompletion *completion)
 /**
  * gtk_entry_completion_set_popup_completion: (attributes org.gtk.Method.set_property=popup-completion)
  * @completion: a `GtkEntryCompletion`
- * @popup_completion: %TRUE to do popup completion
+ * @popup_completion: true to do popup completion
  *
  * Sets whether the completions should be presented in a popup window.
  *
@@ -1536,7 +1536,7 @@ gtk_entry_completion_set_popup_completion (GtkEntryCompletion *completion,
  *
  * Returns whether the completions should be presented in a popup window.
  *
- * Returns: %TRUE if popup completion is turned on
+ * Returns: true if popup completion is turned on
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
  */
@@ -1551,7 +1551,7 @@ gtk_entry_completion_get_popup_completion (GtkEntryCompletion *completion)
 /**
  * gtk_entry_completion_set_popup_set_width: (attributes org.gtk.Method.set_property=popup-set-width)
  * @completion: a `GtkEntryCompletion`
- * @popup_set_width: %TRUE to make the width of the popup the same as the entry
+ * @popup_set_width: true to make the width of the popup the same as the entry
  *
  * Sets whether the completion popup window will be resized to be the same
  * width as the entry.
@@ -1581,7 +1581,7 @@ gtk_entry_completion_set_popup_set_width (GtkEntryCompletion *completion,
  * Returns whether the completion popup window will be resized to the
  * width of the entry.
  *
- * Returns: %TRUE if the popup window will be resized to the width of
+ * Returns: true if the popup window will be resized to the width of
  *   the entry
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
@@ -1598,12 +1598,12 @@ gtk_entry_completion_get_popup_set_width (GtkEntryCompletion *completion)
 /**
  * gtk_entry_completion_set_popup_single_match: (attributes org.gtk.Method.set_property=popup-single-match)
  * @completion: a `GtkEntryCompletion`
- * @popup_single_match: %TRUE if the popup should appear even for a single match
+ * @popup_single_match: true if the popup should appear even for a single match
  *
  * Sets whether the completion popup window will appear even if there is
  * only a single match.
  *
- * You may want to set this to %FALSE if you
+ * You may want to set this to false if you
  * are using [property@Gtk.EntryCompletion:inline-completion].
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
@@ -1631,7 +1631,7 @@ gtk_entry_completion_set_popup_single_match (GtkEntryCompletion *completion,
  * Returns whether the completion popup window will appear even if there is
  * only a single match.
  *
- * Returns: %TRUE if the popup window will appear regardless of the
+ * Returns: true if the popup window will appear regardless of the
  *    number of matches
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
@@ -1647,7 +1647,7 @@ gtk_entry_completion_get_popup_single_match (GtkEntryCompletion *completion)
 /**
  * gtk_entry_completion_set_inline_selection: (attributes org.gtk.Method.set_property=inline-selection)
  * @completion: a `GtkEntryCompletion`
- * @inline_selection: %TRUE to do inline selection
+ * @inline_selection: true to do inline selection
  *
  * Sets whether it is possible to cycle through the possible completions
  * inside the entry.
@@ -1674,9 +1674,9 @@ gtk_entry_completion_set_inline_selection (GtkEntryCompletion *completion,
  * gtk_entry_completion_get_inline_selection: (attributes org.gtk.Method.get_property=inline-selection)
  * @completion: a `GtkEntryCompletion`
  *
- * Returns %TRUE if inline-selection mode is turned on.
+ * Returns true if inline-selection mode is turned on.
  *
- * Returns: %TRUE if inline-selection mode is on
+ * Returns: true if inline-selection mode is on
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
  */

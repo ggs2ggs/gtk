@@ -329,7 +329,7 @@ static const struct org_kde_kwin_server_decoration_manager_listener server_decor
  * Checks whether the Wayland compositor prefers to draw the window
  * decorations or if it leaves decorations to the application.
  *
- * Returns: %TRUE if the compositor prefers server-side decorations
+ * Returns: true if the compositor prefers server-side decorations
  */
 gboolean
 gdk_wayland_display_prefers_ssd (GdkDisplay *display)
@@ -2676,10 +2676,10 @@ gdk_wayland_display_get_output_scale (GdkWaylandDisplay *display_wayland,
  * @display: (type GdkWaylandDisplay): a `GdkDisplay`
  * @global: global interface to query in the registry
  *
- * Returns %TRUE if the interface was found in the display
+ * Returns true if the interface was found in the display
  * `wl_registry.global` handler.
  *
- * Returns: %TRUE if the global is offered by the compositor
+ * Returns: true if the global is offered by the compositor
  */
 gboolean
 gdk_wayland_display_query_registry (GdkDisplay *display,

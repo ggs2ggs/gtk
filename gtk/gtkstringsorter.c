@@ -448,7 +448,7 @@ gtk_string_sorter_set_expression (GtkStringSorter *self,
  *
  * Gets whether the sorter ignores case differences.
  *
- * Returns: %TRUE if @self is ignoring case differences
+ * Returns: true if @self is ignoring case differences
  */
 gboolean
 gtk_string_sorter_get_ignore_case (GtkStringSorter *self)
@@ -461,7 +461,7 @@ gtk_string_sorter_get_ignore_case (GtkStringSorter *self)
 /**
  * gtk_string_sorter_set_ignore_case: (attributes org.gtk.Method.set_property=ignore-case)
  * @self: a `GtkStringSorter`
- * @ignore_case: %TRUE to ignore case differences
+ * @ignore_case: true to ignore case differences
  *
  * Sets whether the sorter will ignore case differences.
  */

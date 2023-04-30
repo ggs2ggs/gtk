@@ -383,12 +383,12 @@ gtk_toggle_button_new_with_mnemonic (const char *label)
 /**
  * gtk_toggle_button_set_active: (attributes org.gtk.Method.set_property=active)
  * @toggle_button: a `GtkToggleButton`.
- * @is_active: %TRUE or %FALSE.
+ * @is_active: true or false.
  *
  * Sets the status of the toggle button.
  *
- * Set to %TRUE if you want the `GtkToggleButton` to be “pressed in”,
- * and %FALSE to raise it.
+ * Set to true if you want the `GtkToggleButton` to be “pressed in”,
+ * and false to raise it.
  *
  * If the status of the button changes, this action causes the
  * [signal@Gtk.ToggleButton::toggled] signal to be emitted.
@@ -443,7 +443,7 @@ gtk_toggle_button_set_active (GtkToggleButton *toggle_button,
  *
  * Queries a `GtkToggleButton` and returns its current state.
  *
- * Returns %TRUE if the toggle button is pressed in and %FALSE
+ * Returns true if the toggle button is pressed in and false
  * if it is raised.
  *
  * Returns: whether the button is pressed

@@ -819,7 +819,7 @@ gdk_texture_get_render_data (GdkTexture  *self,
  * use [method@Gdk.Texture.save_to_png_bytes] or look into the
  * gdk-pixbuf library.
  *
- * Returns: %TRUE if saving succeeded, %FALSE on failure.
+ * Returns: true if saving succeeded, false on failure.
  */
 gboolean
 gdk_texture_save_to_png (GdkTexture *texture,
@@ -880,7 +880,7 @@ gdk_texture_save_to_png_bytes (GdkTexture *texture)
  * Store the given @texture to the @filename as a TIFF file.
  *
  * GTK will attempt to store data without loss.
- * Returns: %TRUE if saving succeeded, %FALSE on failure.
+ * Returns: true if saving succeeded, false on failure.
  *
  * Since: 4.6
  */

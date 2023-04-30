@@ -389,7 +389,7 @@ gtk_message_dialog_class_init (GtkMessageDialogClass *class)
   /**
    * GtkMessageDialog:use-markup:
    *
-   * %TRUE if the primary text of the dialog includes Pango markup.
+   * true if the primary text of the dialog includes Pango markup.
    *
    * See [func@Pango.parse_markup].
    */
@@ -411,7 +411,7 @@ gtk_message_dialog_class_init (GtkMessageDialogClass *class)
   /**
    * GtkMessageDialog:secondary-use-markup:
    *
-   * %TRUE if the secondary text of the dialog includes Pango markup.
+   * true if the secondary text of the dialog includes Pango markup.
    *
    * See [func@Pango.parse_markup].
    */

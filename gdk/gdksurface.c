@@ -638,7 +638,7 @@ gdk_surface_class_init (GdkSurfaceClass *klass)
    *
    * Emitted when part of the surface needs to be redrawn.
    *
-   * Returns: %TRUE to indicate that the signal has been handled
+   * Returns: true to indicate that the signal has been handled
    */
   signals[RENDER] =
     g_signal_new (g_intern_static_string ("render"),
@@ -662,7 +662,7 @@ gdk_surface_class_init (GdkSurfaceClass *klass)
    *
    * Emitted when GDK receives an input event for @surface.
    *
-   * Returns: %TRUE to indicate that the event has been handled
+   * Returns: true to indicate that the event has been handled
    */
   signals[EVENT] =
     g_signal_new (g_intern_static_string ("event"),
@@ -931,11 +931,11 @@ surface_remove_from_pointer_info (GdkSurface  *surface,
 /**
  * _gdk_surface_destroy_hierarchy:
  * @surface: a `GdkSurface`
- * @recursing_native: If %TRUE, then this is being called because a native
+ * @recursing_native: If true, then this is being called because a native
  *   parent was destroyed. This generally means that the call to the windowing
  *   system to destroy the surface can be omitted, since it will be destroyed
  *   as a result of the parent being destroyed. Unless @foreign_destroy.
- * @foreign_destroy: If %TRUE, the surface or a parent was destroyed by some
+ * @foreign_destroy: If true, the surface or a parent was destroyed by some
  *   external agency. The surface has already been destroyed and no windowing
  *   system calls should be made. (This may never happen for some windowing
  *   systems.)
@@ -992,7 +992,7 @@ _gdk_surface_destroy_hierarchy (GdkSurface *surface,
 /**
  * _gdk_surface_destroy:
  * @surface: a `GdkSurface`
- * @foreign_destroy: If %TRUE, the surface or a parent was destroyed by some
+ * @foreign_destroy: If true, the surface or a parent was destroyed by some
  *   external agency. The surface has already been destroyed and no windowing
  *   system calls should be made. (This may never happen for some windowing
  *   systems.)
@@ -1066,7 +1066,7 @@ gdk_surface_get_display (GdkSurface *surface)
  *
  * Check to see if a surface is destroyed.
  *
- * Returns: %TRUE if the surface is destroyed
+ * Returns: true if the surface is destroyed
  */
 gboolean
 gdk_surface_is_destroyed (GdkSurface *surface)
@@ -1083,7 +1083,7 @@ gdk_surface_is_destroyed (GdkSurface *surface)
  * A surface is mapped with [method@Gdk.Toplevel.present]
  * or [method@Gdk.Popup.present].
  *
- * Returns: %TRUE if the surface is mapped
+ * Returns: true if the surface is mapped
  */
 gboolean
 gdk_surface_get_mapped (GdkSurface *surface)
@@ -1649,7 +1649,7 @@ gdk_surface_constrain_size (GdkGeometry    *geometry,
  * The position is given in coordinates relative to the upper
  * left corner of @surface.
  *
- * Return: %TRUE if the device is over the surface
+ * Return: true if the device is over the surface
  */
 gboolean
 gdk_surface_get_device_position (GdkSurface       *surface,
@@ -2967,7 +2967,7 @@ gdk_surface_request_motion (GdkSurface *surface)
  * Note that this only works if @to and @from are popups or
  * transient-for to the same toplevel (directly or indirectly).
  *
- * Returns: %TRUE if the coordinates were successfully translated
+ * Returns: true if the coordinates were successfully translated
  */
 gboolean
 gdk_surface_translate_coordinates (GdkSurface *from,

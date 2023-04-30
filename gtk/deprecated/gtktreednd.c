@@ -127,7 +127,7 @@ gtk_tree_drag_dest_get_type (void)
  * the source of a DND operation. If the source doesn’t implement
  * this interface, the row is assumed draggable.
  *
- * Returns: %TRUE if the row can be dragged
+ * Returns: true if the row can be dragged
  *
  * Deprecated: 4.10: Use list models instead
  **/
@@ -155,12 +155,12 @@ gtk_tree_drag_source_row_draggable (GtkTreeDragSource *drag_source,
  * @path: row that was being dragged
  *
  * Asks the `GtkTreeDragSource` to delete the row at @path, because
- * it was moved somewhere else via drag-and-drop. Returns %FALSE
+ * it was moved somewhere else via drag-and-drop. Returns false
  * if the deletion fails because @path no longer exists, or for
  * some model-specific reason. Should robustly handle a @path no
  * longer found in the model!
  *
- * Returns: %TRUE if the row was successfully deleted
+ * Returns: true if the row was successfully deleted
  *
  * Deprecated: 4.10: Use list models instead
  **/
@@ -210,8 +210,8 @@ gtk_tree_drag_source_drag_data_get (GtkTreeDragSource *drag_source,
  *
  * Asks the `GtkTreeDragDest` to insert a row before the path @dest,
  * deriving the contents of the row from @value. If @dest is
- * outside the tree so that inserting before it is impossible, %FALSE
- * will be returned. Also, %FALSE may be returned if the new row is
+ * outside the tree so that inserting before it is impossible, false
+ * will be returned. Also, false may be returned if the new row is
  * not created for some model-specific reason.  Should robustly handle
  * a @dest no longer found in the model!
  *
@@ -243,10 +243,10 @@ gtk_tree_drag_dest_drag_data_received (GtkTreeDragDest  *drag_dest,
  * Determines whether a drop is possible before the given @dest_path,
  * at the same depth as @dest_path. i.e., can we drop the data in
  * @value at that location. @dest_path does not have to
- * exist; the return value will almost certainly be %FALSE if the
+ * exist; the return value will almost certainly be false if the
  * parent of @dest_path doesn’t exist, though.
  *
- * Returns: %TRUE if a drop is possible before @dest_path
+ * Returns: true if a drop is possible before @dest_path
  *
  * Deprecated: 4.10: Use list models instead
  **/
@@ -341,7 +341,7 @@ gtk_tree_create_row_drag_content (GtkTreeModel *tree_model,
  *
  * The returned path must be freed with gtk_tree_path_free().
  *
- * Returns: %TRUE if @selection_data had target type %GTK_TYPE_TREE_ROW_DATA
+ * Returns: true if @selection_data had target type %GTK_TYPE_TREE_ROW_DATA
  *  is otherwise valid
  *
  * Deprecated: 4.10: Use list models instead

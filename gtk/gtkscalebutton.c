@@ -799,7 +799,7 @@ gtk_scale_button_get_popup (GtkScaleButton *button)
  *
  * Queries a `GtkScaleButton` and returns its current state.
  *
- * Returns %TRUE if the scale button is pressed in and %FALSE
+ * Returns true if the scale button is pressed in and false
  * if it is raised.
  *
  * Returns: whether the button is pressed

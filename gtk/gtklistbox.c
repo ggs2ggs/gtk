@@ -1448,7 +1448,7 @@ gtk_list_box_got_row_changed (GtkListBox    *box,
  * @box: a `GtkListBox`
  * @single: a boolean
  *
- * If @single is %TRUE, rows will be activated when you click on them,
+ * If @single is true, rows will be activated when you click on them,
  * otherwise you need to double-click.
  */
 void
@@ -1473,7 +1473,7 @@ gtk_list_box_set_activate_on_single_click (GtkListBox *box,
  *
  * Returns whether rows activate on single clicks.
  *
- * Returns: %TRUE if rows are activated on single click, %FALSE otherwise
+ * Returns: true if rows are activated on single click, false otherwise
  */
 gboolean
 gtk_list_box_get_activate_on_single_click (GtkListBox *box)
@@ -3245,7 +3245,7 @@ gtk_list_box_row_get_index (GtkListBoxRow *row)
  * Returns whether the child is currently selected in its
  * `GtkListBox` container.
  *
- * Returns: %TRUE if @row is selected
+ * Returns: true if @row is selected
  */
 gboolean
 gtk_list_box_row_is_selected (GtkListBoxRow *row)
@@ -3291,7 +3291,7 @@ gtk_list_box_update_row_styles (GtkListBox *box)
 /**
  * gtk_list_box_row_set_activatable: (attributes org.gtk.Method.set_property=activatable)
  * @row: a `GtkListBoxRow`
- * @activatable: %TRUE to mark the row as activatable
+ * @activatable: true to mark the row as activatable
  *
  * Set whether the row is activatable.
  */
@@ -3318,7 +3318,7 @@ gtk_list_box_row_set_activatable (GtkListBoxRow *row,
  *
  * Gets whether the row is activatable.
  *
- * Returns: %TRUE if the row is activatable
+ * Returns: true if the row is activatable
  */
 gboolean
 gtk_list_box_row_get_activatable (GtkListBoxRow *row)
@@ -3331,7 +3331,7 @@ gtk_list_box_row_get_activatable (GtkListBoxRow *row)
 /**
  * gtk_list_box_row_set_selectable: (attributes org.gtk.Method.set_property=selectable)
  * @row: a `GtkListBoxRow`
- * @selectable: %TRUE to mark the row as selectable
+ * @selectable: true to mark the row as selectable
  *
  * Set whether the row can be selected.
  */
@@ -3370,7 +3370,7 @@ gtk_list_box_row_set_selectable (GtkListBoxRow *row,
  *
  * Gets whether the row can be selected.
  *
- * Returns: %TRUE if the row is selectable
+ * Returns: true if the row is selectable
  */
 gboolean
 gtk_list_box_row_get_selectable (GtkListBoxRow *row)
@@ -3769,7 +3769,7 @@ gtk_list_box_bind_model (GtkListBox                 *box,
 /**
  * gtk_list_box_set_show_separators: (attributes org.gtk.Method.set_property=show-separators)
  * @box: a `GtkListBox`
- * @show_separators: %TRUE to show separators
+ * @show_separators: true to show separators
  *
  * Sets whether the list box should show separators
  * between rows.
@@ -3800,7 +3800,7 @@ gtk_list_box_set_show_separators (GtkListBox *box,
  * Returns whether the list box should show separators
  * between rows.
  *
- * Returns: %TRUE if the list box shows separators
+ * Returns: true if the list box shows separators
  */
 gboolean
 gtk_list_box_get_show_separators (GtkListBox *box)

@@ -626,13 +626,13 @@ gdk_monitor_invalidate (GdkMonitor *monitor)
  * gdk_monitor_is_valid: (attributes org.gtk.Method.get_property=valid)
  * @monitor: a `GdkMonitor`
  *
- * Returns %TRUE if the @monitor object corresponds to a
+ * Returns true if the @monitor object corresponds to a
  * physical monitor.
  *
  * The @monitor becomes invalid when the physical monitor
  * is unplugged or removed.
  *
- * Returns: %TRUE if the object corresponds to a physical monitor
+ * Returns: true if the object corresponds to a physical monitor
  */
 gboolean
 gdk_monitor_is_valid (GdkMonitor *monitor)

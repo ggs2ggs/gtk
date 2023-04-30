@@ -380,7 +380,7 @@ check_hash (CacheInfo *info,
  * be deserialized. The amount of validation can
  * be controlled with the @flags field.
  *
- * Returns: %TRUE if the cache is valid
+ * Returns: true if the cache is valid
  */
 gboolean
 gtk_icon_cache_validate (CacheInfo *info)

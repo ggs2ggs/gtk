@@ -773,7 +773,7 @@ gtk_popover_menu_bar_select_first (GtkPopoverMenuBar *bar)
  * For this to work, the menu model of @bar must have an
  * item with a `custom` attribute that matches @id.
  *
- * Returns: %TRUE if @id was found and the widget added
+ * Returns: true if @id was found and the widget added
  */
 gboolean
 gtk_popover_menu_bar_add_child (GtkPopoverMenuBar *bar,
@@ -807,7 +807,7 @@ gtk_popover_menu_bar_add_child (GtkPopoverMenuBar *bar,
  * Removes a widget that has previously been added with
  * gtk_popover_menu_bar_add_child().
  *
- * Returns: %TRUE if the widget was removed
+ * Returns: true if the widget was removed
  */
 gboolean
 gtk_popover_menu_bar_remove_child (GtkPopoverMenuBar *bar,

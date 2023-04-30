@@ -670,12 +670,12 @@ gtk_application_window_class_init (GtkApplicationWindowClass *class)
   /**
    * GtkApplicationWindow:show-menubar: (attributes org.gtk.Property.get=gtk_application_window_get_show_menubar org.gtk.Property.set=gtk_application_window_set_show_menubar)
    *
-   * If this property is %TRUE, the window will display a menubar
+   * If this property is true, the window will display a menubar
    * unless it is shown by the desktop shell.
    *
    * See [method@Gtk.Application.set_menubar].
    *
-   * If %FALSE, the window will not display a menubar, regardless
+   * If false, the window will not display a menubar, regardless
    * of whether the desktop shell is showing it or not.
    */
   gtk_application_window_properties[PROP_SHOW_MENUBAR] =
@@ -709,7 +709,7 @@ gtk_application_window_new (GtkApplication *application)
  * Returns whether the window will display a menubar for the app menu
  * and menubar as needed.
  *
- * Returns: %TRUE if @window will display a menubar when needed
+ * Returns: true if @window will display a menubar when needed
  */
 gboolean
 gtk_application_window_get_show_menubar (GtkApplicationWindow *window)

@@ -1303,7 +1303,7 @@ gtk_level_bar_set_mode (GtkLevelBar     *self,
  *
  * Returns whether the levelbar is inverted.
  *
- * Returns: %TRUE if the level bar is inverted
+ * Returns: true if the level bar is inverted
  */
 gboolean
 gtk_level_bar_get_inverted (GtkLevelBar *self)
@@ -1316,7 +1316,7 @@ gtk_level_bar_get_inverted (GtkLevelBar *self)
 /**
  * gtk_level_bar_set_inverted: (attributes org.gtk.Method.set_property=inverted)
  * @self: a `GtkLevelBar`
- * @inverted: %TRUE to invert the level bar
+ * @inverted: true to invert the level bar
  *
  * Sets whether the `GtkLevelBar` is inverted.
  */
@@ -1405,7 +1405,7 @@ gtk_level_bar_add_offset_value (GtkLevelBar *self,
  *
  * Fetches the value specified for the offset marker @name in @self.
  *
- * Returns: %TRUE if the specified offset is found
+ * Returns: true if the specified offset is found
  */
 gboolean
 gtk_level_bar_get_offset_value (GtkLevelBar *self,

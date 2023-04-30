@@ -109,7 +109,7 @@ gtk_accessible_attribute_set_unref (GtkAccessibleAttributeSet *self)
  * If you want to remove @attribute from the set, use gtk_accessible_attribute_set_remove()
  * instead.
  *
- * Returns: %TRUE if the set was modified, and %FALSE otherwise
+ * Returns: true if the set was modified, and false otherwise
  */
 gboolean
 gtk_accessible_attribute_set_add (GtkAccessibleAttributeSet *self,
@@ -149,7 +149,7 @@ gtk_accessible_attribute_set_add (GtkAccessibleAttributeSet *self,
  * Resets the @attribute in the given `GtkAccessibleAttributeSet`
  * to its default value.
  *
- * Returns: %TRUE if the set was modified, and %FALSE otherwise
+ * Returns: true if the set was modified, and false otherwise
  */
 gboolean
 gtk_accessible_attribute_set_remove (GtkAccessibleAttributeSet *self,
@@ -218,7 +218,7 @@ gtk_accessible_attribute_set_get_changed (GtkAccessibleAttributeSet *self)
 /*< private >
  * gtk_accessible_attribute_set_print:
  * @self: a `GtkAccessibleAttributeSet`
- * @only_set: %TRUE if only the set attributes should be printed
+ * @only_set: true if only the set attributes should be printed
  * @buffer: a `GString`
  *
  * Prints the contents of the `GtkAccessibleAttributeSet` into @buffer.

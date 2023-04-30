@@ -195,7 +195,7 @@ gtk_buildable_construct_child (GtkBuildable *buildable,
  *
  * This is called for each unknown element under `<child>`.
  *
- * Returns: %TRUE if an object has a custom implementation, %FALSE
+ * Returns: true if an object has a custom implementation, false
  *   if it doesn't.
  */
 gboolean

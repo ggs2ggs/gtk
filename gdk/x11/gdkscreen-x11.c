@@ -1191,11 +1191,11 @@ fetch_net_wm_check_window (GdkX11Screen *x11_screen)
  * a way that impacts persistent application state. A common bug
  * is that your application can start up before the window manager
  * does when the user logs in, and before the window manager starts
- * gdk_x11_screen_supports_net_wm_hint() will return %FALSE for every property.
+ * gdk_x11_screen_supports_net_wm_hint() will return false for every property.
  * You can monitor the window_manager_changed signal on `GdkX11Screen` to detect
  * a window manager change.
  *
- * Returns: %TRUE if the window manager supports @property
+ * Returns: true if the window manager supports @property
  **/
 gboolean
 gdk_x11_screen_supports_net_wm_hint (GdkX11Screen *x11_screen,

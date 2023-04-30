@@ -816,8 +816,8 @@ delete_text_callback (GtkFileChooserEntry *chooser_entry,
 
 /**
  * _gtk_file_chooser_entry_new:
- * @eat_tabs: If %FALSE, allow focus navigation with the tab key.
- * @eat_escape: If %TRUE, capture Escape key presses and emit ::hide-entry
+ * @eat_tabs: If false, allow focus navigation with the tab key.
+ * @eat_escape: If true, capture Escape key presses and emit ::hide-entry
  *
  * Creates a new `GtkFileChooserEntry` object. `GtkFileChooserEntry`
  * is an internal implementation widget for the GTK file chooser

@@ -290,7 +290,7 @@ struct _GdkKeyEvent
  * @detail: the kind of crossing that happened (%GDK_NOTIFY_INFERIOR,
  *  %GDK_NOTIFY_ANCESTOR, %GDK_NOTIFY_VIRTUAL, %GDK_NOTIFY_NONLINEAR or
  *  %GDK_NOTIFY_NONLINEAR_VIRTUAL).
- * @focus: %TRUE if @surface is the focus surface or an inferior.
+ * @focus: true if @surface is the focus surface or an inferior.
  * @child_surface: the surface that was entered or left.
  *
  * Generated when the pointer enters or leaves a surface.
@@ -310,7 +310,7 @@ struct _GdkCrossingEvent
 
 /*
  * GdkFocusEvent:
- * @in: %TRUE if the surface has gained the keyboard focus, %FALSE if
+ * @in: true if the surface has gained the keyboard focus, false if
  *   it has lost the focus.
  * @mode: the crossing mode
  * @detail: the kind of crossing that happened
@@ -342,9 +342,9 @@ struct _GdkProximityEvent
 
 /*
  * GdkGrabBrokenEvent:
- * @keyboard: %TRUE if a keyboard grab was broken, %FALSE if a pointer
+ * @keyboard: true if a keyboard grab was broken, false if a pointer
  *   grab was broken
- * @implicit: %TRUE if the broken grab was implicit
+ * @implicit: true if the broken grab was implicit
  * @grab_surface: If this event is caused by another grab in the same
  *   application, @grab_surface contains the new grab surface. Otherwise
  *   @grab_surface is %NULL.

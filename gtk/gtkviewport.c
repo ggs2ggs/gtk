@@ -560,7 +560,7 @@ gtk_viewport_adjustment_value_changed (GtkAdjustment *adjustment,
  * Gets whether the viewport is scrolling to keep the focused
  * child in view.
  *
- * Returns: %TRUE if the viewport keeps the focus child scrolled to view
+ * Returns: true if the viewport keeps the focus child scrolled to view
  */
 gboolean
 gtk_viewport_get_scroll_to_focus (GtkViewport *viewport)

@@ -335,7 +335,7 @@ gdk_x11_display_string_to_compound_text (GdkDisplay  *display,
  *
  * Converts from UTF-8 to compound text.
  *
- * Returns: %TRUE if the conversion succeeded, otherwise %FALSE
+ * Returns: true if the conversion succeeded, otherwise false
  */
 gboolean
 gdk_x11_display_utf8_to_compound_text (GdkDisplay  *display,

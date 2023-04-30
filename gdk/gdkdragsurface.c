@@ -106,7 +106,7 @@ gdk_drag_surface_default_init (GdkDragSurfaceInterface *iface)
  *
  * Present @drag_surface.
  *
- * Returns: %FALSE if it failed to be presented, otherwise %TRUE.
+ * Returns: false if it failed to be presented, otherwise true.
  */
 gboolean
 gdk_drag_surface_present (GdkDragSurface *drag_surface,

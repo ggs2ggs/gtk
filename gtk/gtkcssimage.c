@@ -549,7 +549,7 @@ gtk_css_image_get_parser_type (GtkCssParser *parser)
  * implementing shorthand properties. A successful parse of an image
  * can not be guaranteed.
  *
- * Returns: %TRUE if it looks like an image.
+ * Returns: true if it looks like an image.
  **/
 gboolean
 _gtk_css_image_can_parse (GtkCssParser *parser)

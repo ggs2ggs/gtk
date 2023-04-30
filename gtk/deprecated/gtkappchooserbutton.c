@@ -27,7 +27,7 @@
  *
  * Initially, a `GtkAppChooserButton` selects the first application
  * in its list, which will either be the most-recently used application
- * or, if [property@Gtk.AppChooserButton:show-default-item] is %TRUE, the
+ * or, if [property@Gtk.AppChooserButton:show-default-item] is true, the
  * default application.
  *
  * The list of applications shown in a `GtkAppChooserButton` includes
@@ -1122,7 +1122,7 @@ gtk_app_chooser_button_get_heading (GtkAppChooserButton *self)
 /**
  * gtk_app_chooser_button_set_modal: (attributes org.gtk.Method.set_property=modal)
  * @self: a `GtkAppChooserButton`
- * @modal: %TRUE to make the dialog modal
+ * @modal: true to make the dialog modal
  *
  * Sets whether the dialog should be modal.
  *
@@ -1148,7 +1148,7 @@ gtk_app_chooser_button_set_modal (GtkAppChooserButton *self,
  *
  * Gets whether the dialog is modal.
  *
- * Returns: %TRUE if the dialog is modal
+ * Returns: true if the dialog is modal
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */

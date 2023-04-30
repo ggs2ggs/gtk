@@ -1222,7 +1222,7 @@ gtk_list_store_set (GtkListStore *list_store,
  * @iter is set to be the next valid row, or invalidated if it pointed
  * to the last row in @list_store.
  *
- * Returns: %TRUE if @iter is valid, %FALSE if not.
+ * Returns: true if @iter is valid, false if not.
  *
  * Deprecated: 4.10: Use list models
  **/
@@ -1485,7 +1485,7 @@ gtk_list_store_clear (GtkListStore *list_store)
  * This function is slow. Only use it for debugging and/or testing
  * purposes.
  *
- * Returns: %TRUE if the iter is valid, %FALSE if the iter is invalid.
+ * Returns: true if the iter is valid, false if the iter is invalid.
  *
  * Deprecated: 4.10: Use list models
  **/

@@ -1625,7 +1625,7 @@ typedef enum {
  *
  * Note that the %GTK_ACCESSIBLE_TRISTATE_FALSE and
  * %GTK_ACCESSIBLE_TRISTATE_TRUE have the same values
- * as %FALSE and %TRUE.
+ * as false and true.
  */
 typedef enum {
   GTK_ACCESSIBLE_TRISTATE_FALSE,
@@ -1645,7 +1645,7 @@ typedef enum {
  *
  * Note that the %GTK_ACCESSIBLE_INVALID_FALSE and
  * %GTK_ACCESSIBLE_INVALID_TRUE have the same values
- * as %FALSE and %TRUE.
+ * as false and true.
  */
 typedef enum { /*< prefix=GTK_ACCESSIBLE_INVALID >*/
   GTK_ACCESSIBLE_INVALID_FALSE,

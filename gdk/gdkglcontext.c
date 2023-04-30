@@ -934,7 +934,7 @@ gdk_gl_context_set_debug_enabled (GdkGLContext *context,
  *
  * See [method@Gdk.GLContext.set_debug_enabled].
  *
- * Returns: %TRUE if debugging is enabled
+ * Returns: true if debugging is enabled
  */
 gboolean
 gdk_gl_context_get_debug_enabled (GdkGLContext *context)
@@ -983,7 +983,7 @@ gdk_gl_context_set_forward_compatible (GdkGLContext *context,
  *
  * See [method@Gdk.GLContext.set_forward_compatible].
  *
- * Returns: %TRUE if the context should be forward-compatible
+ * Returns: true if the context should be forward-compatible
  */
 gboolean
 gdk_gl_context_get_forward_compatible (GdkGLContext *context)
@@ -1119,17 +1119,17 @@ gdk_gl_context_get_required_version (GdkGLContext *context,
  * When realizing a GL context, GDK will try to use the OpenGL 3.2 core
  * profile; this profile removes all the OpenGL API that was deprecated
  * prior to the 3.2 version of the specification. If the realization is
- * successful, this function will return %FALSE.
+ * successful, this function will return false.
  *
  * If the underlying OpenGL implementation does not support core profiles,
  * GDK will fall back to a pre-3.2 compatibility profile, and this function
- * will return %TRUE.
+ * will return true.
  *
  * You can use the value returned by this function to decide which kind
  * of OpenGL API to use, or whether to do extension discovery, or what
  * kind of shader programs to load.
  *
- * Returns: %TRUE if the GL context is in legacy mode
+ * Returns: true if the GL context is in legacy mode
  */
 gboolean
 gdk_gl_context_is_legacy (GdkGLContext *context)
@@ -1176,9 +1176,9 @@ gdk_gl_context_set_is_legacy (GdkGLContext *context,
  * For other contexts it depends on the GL backend.
  *
  * Both contexts must be realized for this check to succeed. If either one
- * is not, this function will return %FALSE.
+ * is not, this function will return false.
  *
- * Returns: %TRUE if the two GL contexts are compatible.
+ * Returns: true if the two GL contexts are compatible.
  *
  * Since: 4.4
  */
@@ -1346,8 +1346,8 @@ gdk_gl_context_set_use_es (GdkGLContext *context,
  *
  * Checks whether the @context is using an OpenGL or OpenGL ES profile.
  *
- * Returns: %TRUE if the `GdkGLContext` is using an OpenGL ES profile;
- * %FALSE if other profile is in use of if the @context has not yet
+ * Returns: true if the `GdkGLContext` is using an OpenGL ES profile;
+ * false if other profile is in use of if the @context has not yet
  * been realized.
  */
 gboolean
@@ -1470,7 +1470,7 @@ gl_debug_message_callback (GLenum        source,
  *
  * It is safe to call this function on a realized `GdkGLContext`.
  *
- * Returns: %TRUE if the context is realized
+ * Returns: true if the context is realized
  */
 gboolean
 gdk_gl_context_realize (GdkGLContext  *context,
@@ -1851,7 +1851,7 @@ static const char *gl_backend_names[] = {
  * so this function checks that all displays use compatible GL
  * backends.
  *
- * Returns: %TRUE if the backend can still be used
+ * Returns: true if the backend can still be used
  */
 gboolean
 gdk_gl_backend_can_be_used (GdkGLBackend   backend_type,

@@ -1089,7 +1089,7 @@ gtk_box_layout_new (GtkOrientation orientation)
 /**
  * gtk_box_layout_set_homogeneous: (attributes org.gtk.Method.set_property=homogeneous)
  * @box_layout: a `GtkBoxLayout`
- * @homogeneous: %TRUE to set the box layout as homogeneous
+ * @homogeneous: true to set the box layout as homogeneous
  *
  * Sets whether the box layout will allocate the same
  * size to all children.
@@ -1116,7 +1116,7 @@ gtk_box_layout_set_homogeneous (GtkBoxLayout *box_layout,
  *
  * Returns whether the layout is set to be homogeneous.
  *
- * Return: %TRUE if the layout is homogeneous
+ * Return: true if the layout is homogeneous
  */
 gboolean
 gtk_box_layout_get_homogeneous (GtkBoxLayout *box_layout)

@@ -319,7 +319,7 @@ gsk_rounded_rect_scale_affine (GskRoundedRect       *dest,
  *
  * Note that different corners can still have different radii.
  *
- * Returns: %TRUE if the rectangle is circular.
+ * Returns: true if the rectangle is circular.
  */
 gboolean
 gsk_rounded_rect_is_circular (const GskRoundedRect *self)
@@ -343,7 +343,7 @@ gsk_rounded_rect_is_circular (const GskRoundedRect *self)
  * This information can be used to decide if [ctor@Gsk.ClipNode.new]
  * or [ctor@Gsk.RoundedClipNode.new] should be called.
  *
- * Returns: %TRUE if the rectangle is rectilinear
+ * Returns: true if the rectangle is rectilinear
  **/
 gboolean
 gsk_rounded_rect_is_rectilinear (const GskRoundedRect *self)
@@ -428,7 +428,7 @@ gsk_rounded_rect_locate_point (const GskRoundedRect   *self,
  *
  * Checks if the given @point is inside the rounded rectangle.
  *
- * Returns: %TRUE if the @point is inside the rounded rectangle
+ * Returns: true if the @point is inside the rounded rectangle
  **/
 gboolean
 gsk_rounded_rect_contains_point (const GskRoundedRect   *self,
@@ -444,7 +444,7 @@ gsk_rounded_rect_contains_point (const GskRoundedRect   *self,
  *
  * Checks if the given @rect is contained inside the rounded rectangle.
  *
- * Returns: %TRUE if the @rect is fully contained inside the rounded rectangle
+ * Returns: true if the @rect is fully contained inside the rounded rectangle
  **/
 gboolean
 gsk_rounded_rect_contains_rect (const GskRoundedRect  *self,
@@ -501,7 +501,7 @@ gsk_rounded_rect_contains_rect (const GskRoundedRect  *self,
  *
  * Checks if part of the given @rect is contained inside the rounded rectangle.
  *
- * Returns: %TRUE if the @rect intersects with the rounded rectangle
+ * Returns: true if the @rect intersects with the rounded rectangle
  */
 gboolean
 gsk_rounded_rect_intersects_rect (const GskRoundedRect  *self,

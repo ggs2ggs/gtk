@@ -331,7 +331,7 @@ gtk_event_controller_filter_crossing (GtkEventController    *controller,
  * Feeds an event into @controller, so it can be interpreted
  * and the controller actions triggered.
  *
- * Returns: %TRUE if the event was potentially useful to trigger the
+ * Returns: true if the event was potentially useful to trigger the
  *   controller action
  */
 gboolean

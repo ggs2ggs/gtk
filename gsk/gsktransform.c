@@ -236,7 +236,7 @@ static const GskTransformClass GSK_IDENTITY_TRANSFORM_CLASS =
  * This is different from a transform like `scale(2) scale(0.5)`
  * which just results in an identity transform when simplified.
  *
- * Returns: %TRUE  if this transform is a representation of
+ * Returns: true  if this transform is a representation of
  *   the identity transform
  **/
 static gboolean
@@ -1961,7 +1961,7 @@ gsk_transform_invert (GskTransform *self)
  *
  * Checks two transforms for equality.
  *
- * Returns: %TRUE if the two transforms perform the same operation
+ * Returns: true if the two transforms perform the same operation
  */
 gboolean
 gsk_transform_equal (GskTransform *first,
@@ -2374,10 +2374,10 @@ fail:
  * Strings printed via [method@Gsk.Transform.to_string]
  * can be read in again successfully using this function.
  *
- * If @string does not describe a valid transform, %FALSE is
+ * If @string does not describe a valid transform, false is
  * returned and %NULL is put in @out_transform.
  *
- * Returns: %TRUE if @string described a valid transform.
+ * Returns: true if @string described a valid transform.
  */
 gboolean
 gsk_transform_parse (const char    *string,

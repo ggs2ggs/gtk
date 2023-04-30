@@ -742,7 +742,7 @@ gtk_button_set_has_frame (GtkButton *button,
  *
  * Returns whether the button has a frame.
  *
- * Returns: %TRUE if the button has a frame
+ * Returns: true if the button has a frame
  */
 gboolean
 gtk_button_get_has_frame (GtkButton *button)
@@ -905,7 +905,7 @@ gtk_button_get_label (GtkButton *button)
 /**
  * gtk_button_set_use_underline: (attributes org.gtk.Method.set_property=use-underline)
  * @button: a `GtkButton`
- * @use_underline: %TRUE if underlines in the text indicate mnemonics
+ * @use_underline: true if underlines in the text indicate mnemonics
  *
  * Sets whether to use underlines as mnemonics.
  *
@@ -943,7 +943,7 @@ gtk_button_set_use_underline (GtkButton *button,
  *
  * See [method@Gtk.Button.set_use_underline].
  *
- * Returns: %TRUE if an embedded underline in the button label
+ * Returns: true if an embedded underline in the button label
  *   indicates the mnemonic accelerator keys.
  */
 gboolean

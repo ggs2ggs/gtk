@@ -1021,11 +1021,11 @@ gtk_accessible_get_bounds (GtkAccessible *self,
  * Returns whether this accessible should be represented to ATs.
  *
  * By default, hidden widgets are are among these, but there can
- * be other reasons to return %FALSE, e.g. for widgets that are
+ * be other reasons to return false, e.g. for widgets that are
  * purely presentations, or for widgets whose functionality is
  * represented elsewhere, as is the case for `GtkText` widgets.
  *
- * Returns: %TRUE if the widget should be represented
+ * Returns: true if the widget should be represented
  */
 gboolean
 gtk_accessible_should_present (GtkAccessible *self)

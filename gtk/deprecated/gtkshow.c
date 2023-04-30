@@ -145,8 +145,8 @@ gtk_show_uri_full (GtkWindow           *parent,
  * Finishes the gtk_show_uri() call and returns the result
  * of the operation.
  *
- * Returns: %TRUE if the URI was shown successfully.
- *   Otherwise, %FALSE is returned and @error is set
+ * Returns: true if the URI was shown successfully.
+ *   Otherwise, false is returned and @error is set
  *
  * Deprecated: 4.10: Use [method@Gtk.FileLauncher.launch_finish] or
  *   [method@Gtk.UriLauncher.launch_finish] instead

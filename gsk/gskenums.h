@@ -195,7 +195,7 @@ typedef enum {
  * @GSK_TRANSFORM_CATEGORY_3D: The matrix is a 3D matrix. This means that
  *   the w column (the last column) has the values (0, 0, 0, 1).
  * @GSK_TRANSFORM_CATEGORY_2D: The matrix is a 2D matrix. This is equivalent
- *   to graphene_matrix_is_2d() returning %TRUE. In particular, this
+ *   to graphene_matrix_is_2d() returning true. In particular, this
  *   means that Cairo can deal with the matrix.
  * @GSK_TRANSFORM_CATEGORY_2D_AFFINE: The matrix is a combination of 2D scale
  *   and 2D translation operations. In particular, this means that any

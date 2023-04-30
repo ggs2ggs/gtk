@@ -635,11 +635,11 @@ gtk_assistant_class_init (GtkAssistantClass *class)
   /**
    * GtkAssistant:use-header-bar:
    *
-   * %TRUE if the assistant uses a `GtkHeaderBar` for action buttons
+   * true if the assistant uses a `GtkHeaderBar` for action buttons
    * instead of the action-area.
    *
    * For technical reasons, this property is declared as an integer
-   * property, but you should only set it to %TRUE or %FALSE.
+   * property, but you should only set it to true or false.
    *
    * Deprecated: 4.10: This widget will be removed in GTK 5
    */
@@ -2117,7 +2117,7 @@ gtk_assistant_set_page_complete (GtkAssistant *assistant,
  *
  * Gets whether @page is complete.
  *
- * Returns: %TRUE if @page is complete.
+ * Returns: true if @page is complete.
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */

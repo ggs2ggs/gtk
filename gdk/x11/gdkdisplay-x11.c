@@ -3071,9 +3071,9 @@ G_GNUC_END_IGNORE_DEPRECATIONS
    * The ::xevent signal is a low level signal that is emitted
    * whenever an XEvent has been received.
    *
-   * When handlers to this signal return %TRUE, no other handlers will be
+   * When handlers to this signal return true, no other handlers will be
    * invoked. In particular, the default handler for this function is
-   * GDK's own event handling mechanism, so by returning %TRUE for an event
+   * GDK's own event handling mechanism, so by returning true for an event
    * that GDK expects to translate, you may break GDK and/or GTK+ in
    * interesting ways. You have been warned.
    *
@@ -3084,8 +3084,8 @@ G_GNUC_END_IGNORE_DEPRECATIONS
    * XGetEventData() has been already called on the event, and
    * XFreeEventData() will be called afterwards.
    *
-   * Returns: %TRUE to stop other handlers from being invoked for the event.
-   *   %FALSE to propagate the event further.
+   * Returns: true to stop other handlers from being invoked for the event.
+   *   false to propagate the event further.
    */
   signals[XEVENT] =
     g_signal_new (g_intern_static_string ("xevent"),

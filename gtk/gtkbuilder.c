@@ -106,8 +106,8 @@
  * `GtkBuilder` can parse textual representations for the most common
  * property types: characters, strings, integers, floating-point numbers,
  * booleans (strings like “TRUE”, “t”, “yes”, “y”, “1” are interpreted
- * as %TRUE, strings like “FALSE”, “f”, “no”, “n”, “0” are interpreted
- * as %FALSE), enumerations (can be specified by their name, nick or
+ * as true, strings like “FALSE”, “f”, “no”, “n”, “0” are interpreted
+ * as false), enumerations (can be specified by their name, nick or
  * integer value), flags (can be specified by their name, nick, integer
  * value, optionally combined with “|”, e.g.
  * “GTK_INPUT_HINT_EMOJI|GTK_INPUT_HINT_LOWERCASE”)
@@ -1225,7 +1225,7 @@ gtk_builder_new (void)
  * was leaked leading up to the reported failure. The only reasonable
  * thing to do when an error is detected is to call `g_error()`.
  *
- * Returns: %TRUE on success, %FALSE if an error occurred
+ * Returns: true on success, false if an error occurred
  */
 gboolean
 gtk_builder_add_from_file (GtkBuilder   *builder,
@@ -1289,7 +1289,7 @@ gtk_builder_add_from_file (GtkBuilder   *builder,
  * its child (for instance a `GtkTreeView` that depends on its
  * `GtkTreeModel`), you have to explicitly list all of them in @object_ids.
  *
- * Returns: %TRUE on success, %FALSE if an error occurred
+ * Returns: true on success, false if an error occurred
  */
 gboolean
 gtk_builder_add_objects_from_file (GtkBuilder   *builder,
@@ -1447,7 +1447,7 @@ gtk_builder_extend_with_template (GtkBuilder   *builder,
  * call.  The only reasonable thing to do when an error is detected is
  * to call g_error().
  *
- * Returns: %TRUE on success, %FALSE if an error occurred
+ * Returns: true on success, false if an error occurred
  */
 gboolean
 gtk_builder_add_from_resource (GtkBuilder   *builder,
@@ -1521,7 +1521,7 @@ gtk_builder_add_from_resource (GtkBuilder   *builder,
  * its child (for instance a `GtkTreeView` that depends on its
  * `GtkTreeModel`), you have to explicitly list all of them in @object_ids.
  *
- * Returns: %TRUE on success, %FALSE if an error occurred
+ * Returns: true on success, false if an error occurred
  */
 gboolean
 gtk_builder_add_objects_from_resource (GtkBuilder   *builder,
@@ -1592,7 +1592,7 @@ gtk_builder_add_objects_from_resource (GtkBuilder   *builder,
  * callbacks before loading `GtkBuilder` UI. Otherwise, you probably
  * want [ctor@Gtk.Builder.new_from_string] instead.
  *
- * Upon errors %FALSE will be returned and @error will be assigned a
+ * Upon errors false will be returned and @error will be assigned a
  * `GError` from the %GTK_BUILDER_ERROR, %G_MARKUP_ERROR or
  * %G_VARIANT_PARSE_ERROR domain.
  *
@@ -1600,7 +1600,7 @@ gtk_builder_add_objects_from_resource (GtkBuilder   *builder,
  * call.  The only reasonable thing to do when an error is detected is
  * to call g_error().
  *
- * Returns: %TRUE on success, %FALSE if an error occurred
+ * Returns: true on success, false if an error occurred
  */
 gboolean
 gtk_builder_add_from_string (GtkBuilder   *builder,
@@ -1647,14 +1647,14 @@ gtk_builder_add_from_string (GtkBuilder   *builder,
  * requested objects and merges them with the current contents of
  * @builder.
  *
- * Upon errors %FALSE will be returned and @error will be assigned a
+ * Upon errors false will be returned and @error will be assigned a
  * `GError` from the %GTK_BUILDER_ERROR or %G_MARKUP_ERROR domain.
  *
  * If you are adding an object that depends on an object that is not
  * its child (for instance a `GtkTreeView` that depends on its
  * `GtkTreeModel`), you have to explicitly list all of them in @object_ids.
  *
- * Returns: %TRUE on success, %FALSE if an error occurred
+ * Returns: true on success, false if an error occurred
  */
 gboolean
 gtk_builder_add_objects_from_string (GtkBuilder   *builder,
@@ -2008,10 +2008,10 @@ _gtk_builder_finish (GtkBuilder  *builder,
  * ulong, enum, flags, float, double, string, `GdkRGBA` and
  * `GtkAdjustment` type values.
  *
- * Upon errors %FALSE will be returned and @error will be
+ * Upon errors false will be returned and @error will be
  * assigned a `GError` from the %GTK_BUILDER_ERROR domain.
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_builder_value_from_string (GtkBuilder   *builder,
@@ -2133,10 +2133,10 @@ error:
  * Calls g_value_init() on the @value argument, so it
  * need not be initialised beforehand.
  *
- * Upon errors %FALSE will be returned and @error will be
+ * Upon errors false will be returned and @error will be
  * assigned a `GError` from the %GTK_BUILDER_ERROR domain.
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_builder_value_from_string_type (GtkBuilder   *builder,
@@ -3032,7 +3032,7 @@ _gtk_builder_error_unhandled_tag (GtkBuilder                *builder,
  * This is intended to be called in start_element vfuncs to
  * ensure that element nesting is as intended.
  *
- * Returns: %TRUE if @parent_name is the parent element
+ * Returns: true if @parent_name is the parent element
  */
 gboolean
 _gtk_builder_check_parent (GtkBuilder                *builder,
@@ -3161,7 +3161,7 @@ _gtk_builder_lookup_object (GtkBuilder  *builder,
  *
  * Finds whether any object lookups have failed.
  *
- * Returns: %TRUE if @error has been set
+ * Returns: true if @error has been set
  */
 gboolean
 _gtk_builder_lookup_failed (GtkBuilder  *builder,

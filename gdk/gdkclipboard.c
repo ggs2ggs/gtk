@@ -380,7 +380,7 @@ gdk_clipboard_class_init (GdkClipboardClass *class)
   /**
    * GdkClipboard:local: (attributes org.gtk.Property.get=gdk_clipboard_is_local)
    *
-   * %TRUE if the contents of the clipboard are owned by this process.
+   * true if the contents of the clipboard are owned by this process.
    */
   properties[PROP_LOCAL] =
     g_param_spec_boolean ("local", NULL, NULL,
@@ -476,7 +476,7 @@ gdk_clipboard_get_formats (GdkClipboard *clipboard)
  * Note that [method@Gdk.Clipboard.get_content] may return %NULL
  * even on a local clipboard. In this case the clipboard is empty.
  *
- * Returns: %TRUE if the clipboard is local
+ * Returns: true if the clipboard is local
  */
 gboolean
 gdk_clipboard_is_local (GdkClipboard *clipboard)
@@ -573,7 +573,7 @@ gdk_clipboard_store_async (GdkClipboard        *clipboard,
  *
  * See [method@Gdk.Clipboard.store_async].
  *
- * Returns: %TRUE if storing was successful.
+ * Returns: true if storing was successful.
  */
 gboolean
 gdk_clipboard_store_finish (GdkClipboard  *clipboard,
@@ -1195,7 +1195,7 @@ gdk_clipboard_claim_remote (GdkClipboard      *clipboard,
  * The clipboard will claim the `GdkDisplay`'s resources and advertise
  * these new contents to other applications.
  *
- * In the rare case of a failure, this function will return %FALSE. The
+ * In the rare case of a failure, this function will return false. The
  * clipboard will then continue reporting its old contents and ignore
  * @provider.
  *
@@ -1203,7 +1203,7 @@ gdk_clipboard_claim_remote (GdkClipboard      *clipboard,
  * @clipboard's read functions, @clipboard will select the best format to
  * transfer the contents and then request that format from @provider.
  *
- * Returns: %TRUE if setting the clipboard succeeded
+ * Returns: true if setting the clipboard succeeded
  */
 gboolean
 gdk_clipboard_set_content (GdkClipboard       *clipboard,

@@ -408,10 +408,10 @@ gtk_drop_target_async_class_init (GtkDropTargetAsyncClass *class)
    *
    * Emitted on the drop site when a drop operation is about to begin.
    *
-   * If the drop is not accepted, %FALSE will be returned and the drop target
-   * will ignore the drop. If %TRUE is returned, the drop is accepted for now
+   * If the drop is not accepted, false will be returned and the drop target
+   * will ignore the drop. If true is returned, the drop is accepted for now
    * but may be rejected later via a call to [method@Gtk.DropTargetAsync.reject_drop]
-   * or ultimately by returning %FALSE from a [signal@Gtk.DropTargetAsync::drop]
+   * or ultimately by returning false from a [signal@Gtk.DropTargetAsync::drop]
    * handler.
    *
    * The default handler for this signal decides whether to accept the drop
@@ -419,10 +419,10 @@ gtk_drop_target_async_class_init (GtkDropTargetAsyncClass *class)
    *
    * If the decision whether the drop will be accepted or rejected needs
    * further processing, such as inspecting the data, this function should
-   * return %TRUE and proceed as is @drop was accepted and if it decides to
+   * return true and proceed as is @drop was accepted and if it decides to
    * reject the drop later, it should call [method@Gtk.DropTargetAsync.reject_drop].
    *
-   * Returns: %TRUE if @drop is accepted
+   * Returns: true if @drop is accepted
    */
   signals[ACCEPT] =
       g_signal_new (I_("accept"),
@@ -508,10 +508,10 @@ gtk_drop_target_async_class_init (GtkDropTargetAsyncClass *class)
    * Emitted on the drop site when the user drops the data onto the widget.
    *
    * The signal handler must determine whether the pointer position is in a
-   * drop zone or not. If it is not in a drop zone, it returns %FALSE and no
+   * drop zone or not. If it is not in a drop zone, it returns false and no
    * further processing is necessary.
    *
-   * Otherwise, the handler returns %TRUE. In this case, this handler will
+   * Otherwise, the handler returns true. In this case, this handler will
    * accept the drop. The handler must ensure that [method@Gdk.Drop.finish]
    * is called to let the source know that the drop is done. The call to
    * [method@Gdk.Drop.finish] must only be done when all data has been received.

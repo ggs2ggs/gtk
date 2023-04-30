@@ -289,7 +289,7 @@ gtk_text_tag_table_buildable_add_child (GtkBuildable        *buildable,
  * @tag must not be in a tag table already, and may not have
  * the same name as an already-added tag.
  *
- * Returns: %TRUE on success.
+ * Returns: true on success.
  */
 gboolean
 gtk_text_tag_table_add (GtkTextTagTable *table,

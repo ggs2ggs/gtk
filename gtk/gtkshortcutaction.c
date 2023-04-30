@@ -148,9 +148,9 @@ gtk_shortcut_action_print (GtkShortcutAction *self,
  *
  * Activation of an action can fail for various reasons. If the action
  * is not supported by the @widget, if the @args don't match the action
- * or if the activation otherwise had no effect, %FALSE will be returned.
+ * or if the activation otherwise had no effect, false will be returned.
  *
- * Returns: %TRUE if this action was activated successfully
+ * Returns: true if this action was activated successfully
  */
 gboolean
 gtk_shortcut_action_activate (GtkShortcutAction      *self,

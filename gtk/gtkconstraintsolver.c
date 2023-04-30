@@ -1996,7 +1996,7 @@ gtk_constraint_solver_suggest_value (GtkConstraintSolver *self,
  *
  * Checks whether @variable is a stay variable.
  *
- * Returns: %TRUE if the variable is a stay variable
+ * Returns: true if the variable is a stay variable
  */
 gboolean
 gtk_constraint_solver_has_stay_variable (GtkConstraintSolver   *solver,
@@ -2015,7 +2015,7 @@ gtk_constraint_solver_has_stay_variable (GtkConstraintSolver   *solver,
  *
  * Checks whether @variable is an edit variable.
  *
- * Returns: %TRUE if the variable is an edit variable
+ * Returns: true if the variable is an edit variable
  */
 gboolean
 gtk_constraint_solver_has_edit_variable (GtkConstraintSolver   *solver,

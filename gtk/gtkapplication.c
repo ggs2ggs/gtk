@@ -601,7 +601,7 @@ gtk_application_class_init (GtkApplicationClass *class)
    * currently active.
    *
    * GTK only tracks session state (including this) when
-   * [property@Gtk.Application:register-session] is set to %TRUE.
+   * [property@Gtk.Application:register-session] is set to true.
    *
    * Tracking the screensaver state is currently only supported on
    * Linux.

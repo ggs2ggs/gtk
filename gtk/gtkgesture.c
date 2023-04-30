@@ -1017,7 +1017,7 @@ gtk_gesture_get_sequence_state (GtkGesture       *gesture,
  * be initialized to the group's global state when the second
  * gesture processes the event.
  *
- * Returns: %TRUE if @sequence is handled by @gesture,
+ * Returns: true if @sequence is handled by @gesture,
  *   and the state is changed successfully
  *
  * Deprecated: 4.10. Use [method@Gtk.Gesture.set_state]
@@ -1114,7 +1114,7 @@ gtk_gesture_set_sequence_state (GtkGesture            *gesture,
  * be initialized to the group's global state when the second
  * gesture processes the event.
  *
- * Returns: %TRUE if the state of at least one sequence
+ * Returns: true if the state of at least one sequence
  *   was changed successfully
  */
 gboolean
@@ -1274,12 +1274,12 @@ gtk_gesture_get_last_target (GtkGesture        *gesture,
  * @y: (out) (optional): return location for Y axis of the sequence coordinates
  *
  * If @sequence is currently being interpreted by @gesture,
- * returns %TRUE and fills in @x and @y with the last coordinates
+ * returns true and fills in @x and @y with the last coordinates
  * stored for that event sequence.
  *
  * The coordinates are always relative to the widget allocation.
  *
- * Returns: %TRUE if @sequence is currently interpreted
+ * Returns: true if @sequence is currently interpreted
  */
 gboolean
 gtk_gesture_get_point (GtkGesture       *gesture,
@@ -1334,10 +1334,10 @@ _gtk_gesture_get_last_update_time (GtkGesture       *gesture,
  * @rect: (out): bounding box containing all active touches.
  *
  * If there are touch sequences being currently handled by @gesture,
- * returns %TRUE and fills in @rect with the bounding box containing
+ * returns true and fills in @rect with the bounding box containing
  * all active touches.
  *
- * Otherwise, %FALSE will be returned.
+ * Otherwise, false will be returned.
  *
  * Note: This function will yield unexpected results on touchpad
  * gestures. Since there is no correlation between physical and
@@ -1345,7 +1345,7 @@ _gtk_gesture_get_last_update_time (GtkGesture       *gesture,
  * infinitely small area, @rect width and height will thus be 0
  * regardless of the number of touchpoints.
  *
- * Returns: %TRUE if there are active touches, %FALSE otherwise
+ * Returns: true if there are active touches, false otherwise
  */
 gboolean
 gtk_gesture_get_bounding_box (GtkGesture   *gesture,
@@ -1404,12 +1404,12 @@ gtk_gesture_get_bounding_box (GtkGesture   *gesture,
  * @y: (out): Y coordinate for the bounding box center
  *
  * If there are touch sequences being currently handled by @gesture,
- * returns %TRUE and fills in @x and @y with the center of the bounding
+ * returns true and fills in @x and @y with the center of the bounding
  * box containing all active touches.
  *
- * Otherwise, %FALSE will be returned.
+ * Otherwise, false will be returned.
  *
- * Returns: %FALSE if no active touches are present, %TRUE otherwise
+ * Returns: false if no active touches are present, true otherwise
  */
 gboolean
 gtk_gesture_get_bounding_box_center (GtkGesture *gesture,
@@ -1440,12 +1440,12 @@ gtk_gesture_get_bounding_box_center (GtkGesture *gesture,
  * gtk_gesture_is_active:
  * @gesture: a `GtkGesture`
  *
- * Returns %TRUE if the gesture is currently active.
+ * Returns true if the gesture is currently active.
  *
  * A gesture is active while there are touch sequences
  * interacting with it.
  *
- * Returns: %TRUE if gesture is active
+ * Returns: true if gesture is active
  */
 gboolean
 gtk_gesture_is_active (GtkGesture *gesture)
@@ -1459,12 +1459,12 @@ gtk_gesture_is_active (GtkGesture *gesture)
  * gtk_gesture_is_recognized:
  * @gesture: a `GtkGesture`
  *
- * Returns %TRUE if the gesture is currently recognized.
+ * Returns true if the gesture is currently recognized.
  *
  * A gesture is recognized if there are as many interacting
  * touch sequences as required by @gesture.
  *
- * Returns: %TRUE if gesture is recognized
+ * Returns: true if gesture is recognized
  */
 gboolean
 gtk_gesture_is_recognized (GtkGesture *gesture)
@@ -1495,10 +1495,10 @@ _gtk_gesture_check (GtkGesture *gesture)
  * @gesture: a `GtkGesture`
  * @sequence: (nullable): a `GdkEventSequence`
  *
- * Returns %TRUE if @gesture is currently handling events
+ * Returns true if @gesture is currently handling events
  * corresponding to @sequence.
  *
- * Returns: %TRUE if @gesture is handling @sequence, %FALSE otherwise
+ * Returns: true if @gesture is handling @sequence, false otherwise
  */
 gboolean
 gtk_gesture_handles_sequence (GtkGesture       *gesture,
@@ -1659,7 +1659,7 @@ gtk_gesture_get_group (GtkGesture *gesture)
  * @gesture: a `GtkGesture`
  * @other: another `GtkGesture`
  *
- * Returns %TRUE if both gestures pertain to the same group.
+ * Returns true if both gestures pertain to the same group.
  *
  * Returns: whether the gestures are grouped
  */

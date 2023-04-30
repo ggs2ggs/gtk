@@ -703,7 +703,7 @@ gtk_header_bar_new (void)
  * Returns whether this header bar shows the standard window
  * title buttons.
  *
- * Returns: %TRUE if title buttons are shown
+ * Returns: true if title buttons are shown
  */
 gboolean
 gtk_header_bar_get_show_title_buttons (GtkHeaderBar *bar)
@@ -716,7 +716,7 @@ gtk_header_bar_get_show_title_buttons (GtkHeaderBar *bar)
 /**
  * gtk_header_bar_set_show_title_buttons: (attributes org.gtk.Method.set_property=show-title-buttons)
  * @bar: a `GtkHeaderBar`
- * @setting: %TRUE to show standard title buttons
+ * @setting: true to show standard title buttons
  *
  * Sets whether this header bar shows the standard window
  * title buttons.

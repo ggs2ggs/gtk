@@ -113,7 +113,7 @@ struct _GtkBuildableParser
  *  constructed object is returned and becomes owned by the caller.
  * @custom_tag_start: Implement this if the buildable needs to parse
  *  content below `<child>`. To handle an element, the implementation
- *  must fill in the @parser and @user_data and return %TRUE.
+ *  must fill in the @parser and @user_data and return true.
  *  `GtkWidget` implements this to parse accessible attributes specified
  *  in `<accessibility>` elements.
  *  Note that @user_data must be freed in @custom_tag_end or @custom_finished.
@@ -178,7 +178,7 @@ struct _GtkBuildableIface
    *
    * Called for each unknown element under `<child>`.
    *
-   * Returns: %TRUE if an object has a custom implementation, %FALSE
+   * Returns: true if an object has a custom implementation, false
    *   if it doesn't.
    */
   gboolean      (* custom_tag_start)       (GtkBuildable       *buildable,

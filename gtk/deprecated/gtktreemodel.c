@@ -1021,9 +1021,9 @@ gtk_tree_path_compare (const GtkTreePath *a,
  * @path: a `GtkTreePath`
  * @descendant: another `GtkTreePath`
  *
- * Returns %TRUE if @descendant is a descendant of @path.
+ * Returns true if @descendant is a descendant of @path.
  *
- * Returns: %TRUE if @descendant is contained inside @path
+ * Returns: true if @descendant is contained inside @path
  *
  * Deprecated: 4.10
  */
@@ -1056,9 +1056,9 @@ gtk_tree_path_is_ancestor (GtkTreePath *path,
  * @path: a `GtkTreePath`
  * @ancestor: another `GtkTreePath`
  *
- * Returns %TRUE if @path is a descendant of @ancestor.
+ * Returns true if @path is a descendant of @ancestor.
  *
- * Returns: %TRUE if @ancestor contains @path somewhere below it
+ * Returns: true if @ancestor contains @path somewhere below it
  *
  * Deprecated: 4.10
  */
@@ -1111,7 +1111,7 @@ gtk_tree_path_next (GtkTreePath *path)
  * Moves the @path to point to the previous node at the
  * current depth, if it exists.
  *
- * Returns: %TRUE if @path has a previous node, and
+ * Returns: true if @path has a previous node, and
  *   the move was made
  *
  * Deprecated: 4.10
@@ -1138,7 +1138,7 @@ gtk_tree_path_prev (GtkTreePath *path)
  *
  * Moves the @path to point to its parent node, if it has a parent.
  *
- * Returns: %TRUE if @path has a parent, and the move was made
+ * Returns: true if @path has a parent, and the move was made
  *
  * Deprecated: 4.10
  */
@@ -1306,9 +1306,9 @@ gtk_tree_model_get_column_type (GtkTreeModel *tree_model,
  * Sets @iter to a valid iterator pointing to @path.
  *
  * If @path does not exist, @iter is set to an invalid
- * iterator and %FALSE is returned.
+ * iterator and false is returned.
  *
- * Returns: %TRUE, if @iter was set
+ * Returns: true, if @iter was set
  *
  * Deprecated: 4.10
  */
@@ -1341,9 +1341,9 @@ gtk_tree_model_get_iter (GtkTreeModel *tree_model,
  * Sets @iter to a valid iterator pointing to @path_string, if it
  * exists.
  *
- * Otherwise, @iter is left invalid and %FALSE is returned.
+ * Otherwise, @iter is left invalid and false is returned.
  *
- * Returns: %TRUE, if @iter was set
+ * Returns: true, if @iter was set
  *
  * Deprecated: 4.10
  */
@@ -1412,9 +1412,9 @@ gtk_tree_model_get_string_from_iter (GtkTreeModel *tree_model,
  * Initializes @iter with the first iterator in the tree
  * (the one at the path "0").
  *
- * Returns %FALSE if the tree is empty, %TRUE otherwise.
+ * Returns false if the tree is empty, true otherwise.
  *
- * Returns: %TRUE, if @iter was set
+ * Returns: true, if @iter was set
  *
  * Deprecated: 4.10
  */
@@ -1502,10 +1502,10 @@ gtk_tree_model_get_value (GtkTreeModel *tree_model,
  *
  * Sets @iter to point to the node following it at the current level.
  *
- * If there is no next @iter, %FALSE is returned and @iter is set
+ * If there is no next @iter, false is returned and @iter is set
  * to be invalid.
  *
- * Returns: %TRUE if @iter has been changed to the next node
+ * Returns: true if @iter has been changed to the next node
  *
  * Deprecated: 4.10
  */
@@ -1552,10 +1552,10 @@ gtk_tree_model_iter_previous_default (GtkTreeModel *tree_model,
  *
  * Sets @iter to point to the previous node at the current level.
  *
- * If there is no previous @iter, %FALSE is returned and @iter is
+ * If there is no previous @iter, false is returned and @iter is
  * set to be invalid.
  *
- * Returns: %TRUE if @iter has been changed to the previous node
+ * Returns: true if @iter has been changed to the previous node
  *
  * Deprecated: 4.10
  */
@@ -1587,14 +1587,14 @@ gtk_tree_model_iter_previous (GtkTreeModel *tree_model,
  *
  * Sets @iter to point to the first child of @parent.
  *
- * If @parent has no children, %FALSE is returned and @iter is
+ * If @parent has no children, false is returned and @iter is
  * set to be invalid. @parent will remain a valid node after this
  * function has been called.
  *
  * If @parent is %NULL returns the first node, equivalent to
  * `gtk_tree_model_get_iter_first (tree_model, iter);`
  *
- * Returns: %TRUE, if @iter has been set to the first child
+ * Returns: true, if @iter has been set to the first child
  *
  * Deprecated: 4.10
  */
@@ -1621,9 +1621,9 @@ gtk_tree_model_iter_children (GtkTreeModel *tree_model,
  * @tree_model: a `GtkTreeModel`
  * @iter: the `GtkTreeIter` to test for children
  *
- * Returns %TRUE if @iter has children, %FALSE otherwise.
+ * Returns true if @iter has children, false otherwise.
  *
- * Returns: %TRUE if @iter has children
+ * Returns: true if @iter has children
  *
  * Deprecated: 4.10
  */
@@ -1680,12 +1680,12 @@ gtk_tree_model_iter_n_children (GtkTreeModel *tree_model,
  * Sets @iter to be the child of @parent, using the given index.
  *
  * The first index is 0. If @n is too big, or @parent has no children,
- * @iter is set to an invalid iterator and %FALSE is returned. @parent
+ * @iter is set to an invalid iterator and false is returned. @parent
  * will remain a valid node after this function has been called. As a
  * special case, if @parent is %NULL, then the @n-th root node
  * is set.
  *
- * Returns: %TRUE, if @parent has an @n-th child
+ * Returns: true, if @parent has an @n-th child
  *
  * Deprecated: 4.10
  */
@@ -1718,14 +1718,14 @@ gtk_tree_model_iter_nth_child (GtkTreeModel *tree_model,
  * Sets @iter to be the parent of @child.
  *
  * If @child is at the toplevel, and doesn’t have a parent, then
- * @iter is set to an invalid iterator and %FALSE is returned.
+ * @iter is set to an invalid iterator and false is returned.
  * @child will remain a valid node after this function has been
  * called.
  *
  * @iter will be initialized before the lookup is performed, so @child
  * and @iter cannot point to the same memory location.
  *
- * Returns: %TRUE, if @iter is set to the parent of @child
+ * Returns: true, if @iter is set to the parent of @child
  *
  * Deprecated: 4.10
  */
@@ -2130,7 +2130,7 @@ gtk_tree_model_foreach_helper (GtkTreeModel            *model,
  *
  * Calls @func on each node in model in a depth-first fashion.
  *
- * If @func returns %TRUE, then the tree ceases to be walked,
+ * If @func returns true, then the tree ceases to be walked,
  * and gtk_tree_model_foreach() returns.
  *
  * Deprecated: 4.10
@@ -2567,10 +2567,10 @@ gtk_tree_row_reference_get_model (GtkTreeRowReference *reference)
  * gtk_tree_row_reference_valid:
  * @reference: (nullable): a `GtkTreeRowReference`
  *
- * Returns %TRUE if the @reference is non-%NULL and refers to
+ * Returns true if the @reference is non-%NULL and refers to
  * a current valid path.
  *
- * Returns: %TRUE if @reference points to a valid path
+ * Returns: true if @reference points to a valid path
  *
  * Deprecated: 4.10
  */

@@ -374,7 +374,7 @@ _gtk_native_dialog_emit_response (GtkNativeDialog *self,
  *
  * Determines whether the dialog is visible.
  *
- * Returns: %TRUE if the dialog is visible
+ * Returns: true if the dialog is visible
  */
 gboolean
 gtk_native_dialog_get_visible (GtkNativeDialog *self)
@@ -422,7 +422,7 @@ gtk_native_dialog_set_modal (GtkNativeDialog *self,
  *
  * Returns whether the dialog is modal.
  *
- * Returns: %TRUE if the dialog is set to be modal
+ * Returns: true if the dialog is set to be modal
  */
 gboolean
 gtk_native_dialog_get_modal (GtkNativeDialog *self)

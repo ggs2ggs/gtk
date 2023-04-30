@@ -846,12 +846,12 @@ gtk_gl_area_class_init (GtkGLAreaClass *klass)
   /**
    * GtkGLArea:auto-render: (attributes org.gtk.Property.get=gtk_gl_area_get_auto_render org.gtk.Property.set=gtk_gl_area_set_auto_render)
    *
-   * If set to %TRUE the ::render signal will be emitted every time
+   * If set to true the ::render signal will be emitted every time
    * the widget draws.
    *
    * This is the default and is useful if drawing the widget is faster.
    *
-   * If set to %FALSE the data from previous rendering is kept around and will
+   * If set to false the data from previous rendering is kept around and will
    * be used for drawing the widget the next time, unless the window is resized.
    * In order to force a rendering [method@Gtk.GLArea.queue_render] must be called.
    * This mode is useful when the scene changes seldom, but takes a long time
@@ -867,7 +867,7 @@ gtk_gl_area_class_init (GtkGLAreaClass *klass)
   /**
    * GtkGLArea:has-depth-buffer: (attributes org.gtk.Property.get=gtk_gl_area_get_has_depth_buffer org.gtk.Property.set=gtk_gl_area_set_has_depth_buffer)
    *
-   * If set to %TRUE the widget will allocate and enable a depth buffer for the
+   * If set to true the widget will allocate and enable a depth buffer for the
    * target framebuffer.
    *
    * Setting this property will enable GL's depth testing as a side effect. If
@@ -884,7 +884,7 @@ gtk_gl_area_class_init (GtkGLAreaClass *klass)
   /**
    * GtkGLArea:has-stencil-buffer: (attributes org.gtk.Property.get=gtk_gl_area_get_has_stencil_buffer org.gtk.Property.set=gtk_gl_area_set_has_stencil_buffer)
    *
-   * If set to %TRUE the widget will allocate and enable a stencil buffer for the
+   * If set to true the widget will allocate and enable a stencil buffer for the
    * target framebuffer.
    */
   obj_props[PROP_HAS_STENCIL_BUFFER] =
@@ -897,7 +897,7 @@ gtk_gl_area_class_init (GtkGLAreaClass *klass)
   /**
    * GtkGLArea:use-es: (attributes org.gtk.Property.get=gtk_gl_area_get_use_es org.gtk.Property.set=gtk_gl_area_set_use_es)
    *
-   * If set to %TRUE the widget will try to create a `GdkGLContext` using
+   * If set to true the widget will try to create a `GdkGLContext` using
    * OpenGL ES instead of OpenGL.
    *
    * Deprecated: 4.12: Use [property@Gtk.GLArea:allowed-apis]
@@ -955,8 +955,8 @@ gtk_gl_area_class_init (GtkGLAreaClass *klass)
    * The @context is bound to the @area prior to emitting this function,
    * and the buffers are painted to the window once the emission terminates.
    *
-   * Returns: %TRUE to stop other handlers from being invoked for the event.
-   *   %FALSE to propagate the event further.
+   * Returns: true to stop other handlers from being invoked for the event.
+   *   false to propagate the event further.
    */
   area_signals[RENDER] =
     g_signal_new (I_("render"),
@@ -1136,8 +1136,8 @@ gtk_gl_area_set_use_es (GtkGLArea *area,
  *
  * See [method@Gtk.GLArea.set_use_es].
  *
- * Returns: %TRUE if the `GtkGLArea` should create an OpenGL ES context
- *   and %FALSE otherwise
+ * Returns: true if the `GtkGLArea` should create an OpenGL ES context
+ *   and false otherwise
  *
  * Deprecated: 4.12: Use [method@Gtk.GLArea.get_api]
  */
@@ -1292,7 +1292,7 @@ gtk_gl_area_get_required_version (GtkGLArea *area,
  *
  * Returns whether the area has a depth buffer.
  *
- * Returns: %TRUE if the @area has a depth buffer, %FALSE otherwise
+ * Returns: true if the @area has a depth buffer, false otherwise
  */
 gboolean
 gtk_gl_area_get_has_depth_buffer (GtkGLArea *area)
@@ -1307,11 +1307,11 @@ gtk_gl_area_get_has_depth_buffer (GtkGLArea *area)
 /**
  * gtk_gl_area_set_has_depth_buffer: (attributes org.gtk.Method.set_property=has-depth-buffer)
  * @area: a `GtkGLArea`
- * @has_depth_buffer: %TRUE to add a depth buffer
+ * @has_depth_buffer: true to add a depth buffer
  *
  * Sets whether the `GtkGLArea` should use a depth buffer.
  *
- * If @has_depth_buffer is %TRUE the widget will allocate and
+ * If @has_depth_buffer is true the widget will allocate and
  * enable a depth buffer for the target framebuffer. Otherwise
  * there will be none.
  */
@@ -1341,7 +1341,7 @@ gtk_gl_area_set_has_depth_buffer (GtkGLArea *area,
  *
  * Returns whether the area has a stencil buffer.
  *
- * Returns: %TRUE if the @area has a stencil buffer, %FALSE otherwise
+ * Returns: true if the @area has a stencil buffer, false otherwise
  */
 gboolean
 gtk_gl_area_get_has_stencil_buffer (GtkGLArea *area)
@@ -1356,11 +1356,11 @@ gtk_gl_area_get_has_stencil_buffer (GtkGLArea *area)
 /**
  * gtk_gl_area_set_has_stencil_buffer: (attributes org.gtk.Method.set_property=has-stencil-buffer)
  * @area: a `GtkGLArea`
- * @has_stencil_buffer: %TRUE to add a stencil buffer
+ * @has_stencil_buffer: true to add a stencil buffer
  *
  * Sets whether the `GtkGLArea` should use a stencil buffer.
  *
- * If @has_stencil_buffer is %TRUE the widget will allocate and
+ * If @has_stencil_buffer is true the widget will allocate and
  * enable a stencil buffer for the target framebuffer. Otherwise
  * there will be none.
  */
@@ -1395,7 +1395,7 @@ gtk_gl_area_set_has_stencil_buffer (GtkGLArea *area,
  * is emitted during the draw.
  *
  * This is only needed when [method@Gtk.GLArea.set_auto_render] has
- * been called with a %FALSE value. The default behaviour is to
+ * been called with a false value. The default behaviour is to
  * emit [signal@Gtk.GLArea::render] on each draw.
  */
 void
@@ -1417,7 +1417,7 @@ gtk_gl_area_queue_render (GtkGLArea *area)
  *
  * Returns whether the area is in auto render mode or not.
  *
- * Returns: %TRUE if the @area is auto rendering, %FALSE otherwise
+ * Returns: true if the @area is auto rendering, false otherwise
  */
 gboolean
 gtk_gl_area_get_auto_render (GtkGLArea *area)
@@ -1436,11 +1436,11 @@ gtk_gl_area_get_auto_render (GtkGLArea *area)
  *
  * Sets whether the `GtkGLArea` is in auto render mode.
  *
- * If @auto_render is %TRUE the [signal@Gtk.GLArea::render] signal will
+ * If @auto_render is true the [signal@Gtk.GLArea::render] signal will
  * be emitted every time the widget draws. This is the default and is
  * useful if drawing the widget is faster.
  *
- * If @auto_render is %FALSE the data from previous rendering is kept
+ * If @auto_render is false the data from previous rendering is kept
  * around and will be used for drawing the widget the next time,
  * unless the window is resized. In order to force a rendering
  * [method@Gtk.GLArea.queue_render] must be called. This mode is

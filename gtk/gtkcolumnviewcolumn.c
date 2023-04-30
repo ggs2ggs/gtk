@@ -856,7 +856,7 @@ gtk_column_view_column_set_visible (GtkColumnViewColumn *self,
  *
  * Returns whether this column is visible.
  *
- * Returns: %TRUE if this column is visible
+ * Returns: true if this column is visible
  */
 gboolean
 gtk_column_view_column_get_visible (GtkColumnViewColumn *self)
@@ -910,12 +910,12 @@ gtk_column_view_column_get_header_menu (GtkColumnViewColumn *self)
 /**
  * gtk_column_view_column_set_expand: (attributes org.gtk.Method.set_property=expand)
  * @self: a `GtkColumnViewColumn`
- * @expand: %TRUE if this column should expand to fill available sace
+ * @expand: true if this column should expand to fill available sace
  *
  * Sets the column to take available extra space.
  *
  * The extra space is shared equally amongst all columns that
- * have the expand set to %TRUE.
+ * have the expand set to true.
  */
 void
 gtk_column_view_column_set_expand (GtkColumnViewColumn *self,
@@ -940,7 +940,7 @@ gtk_column_view_column_set_expand (GtkColumnViewColumn *self,
  *
  * Returns whether this column should expand.
  *
- * Returns: %TRUE if this column expands
+ * Returns: true if this column expands
  */
 gboolean
 gtk_column_view_column_get_expand (GtkColumnViewColumn *self)
@@ -977,7 +977,7 @@ gtk_column_view_column_set_resizable (GtkColumnViewColumn *self,
  *
  * Returns whether this column is resizable.
  *
- * Returns: %TRUE if this column is resizable
+ * Returns: true if this column is resizable
  */
 gboolean
 gtk_column_view_column_get_resizable (GtkColumnViewColumn *self)

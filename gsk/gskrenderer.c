@@ -262,7 +262,7 @@ gsk_renderer_get_root_node (GskRenderer *renderer)
  *
  * Checks whether the @renderer is realized or not.
  *
- * Returns: %TRUE if the `GskRenderer` was realized, and %FALSE otherwise
+ * Returns: true if the `GskRenderer` was realized, and false otherwise
  */
 gboolean
 gsk_renderer_is_realized (GskRenderer *renderer)

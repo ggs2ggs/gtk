@@ -821,7 +821,7 @@ gtk_recent_manager_add_item_query_info (GObject      *source_object,
  * See [method@Gtk.RecentManager.add_full] if you want to explicitly
  * define the metadata for the resource pointed by @uri.
  *
- * Returns: %TRUE if the new item was successfully added
+ * Returns: true if the new item was successfully added
  *   to the recently used resources list
  */
 gboolean
@@ -874,8 +874,8 @@ gtk_recent_manager_add_item (GtkRecentManager *manager,
  * be considered private - that is, should be displayed only by the
  * applications that have registered it.
  *
- * Returns: %TRUE if the new item was successfully added to the
- *   recently used resources list, %FALSE otherwise
+ * Returns: true if the new item was successfully added to the
+ *   recently used resources list, false otherwise
  */
 gboolean
 gtk_recent_manager_add_full (GtkRecentManager    *manager,
@@ -996,8 +996,8 @@ gtk_recent_manager_add_full (GtkRecentManager    *manager,
  * Removes a resource pointed by @uri from the recently used resources
  * list handled by a recent manager.
  *
- * Returns: %TRUE if the item pointed by @uri has been successfully
- *   removed by the recently used resources list, and %FALSE otherwise
+ * Returns: true if the item pointed by @uri has been successfully
+ *   removed by the recently used resources list, and false otherwise
  */
 gboolean
 gtk_recent_manager_remove_item (GtkRecentManager  *manager,
@@ -1053,7 +1053,7 @@ gtk_recent_manager_remove_item (GtkRecentManager  *manager,
  * Checks whether there is a recently used resource registered
  * with @uri inside the recent manager.
  *
- * Returns: %TRUE if the resource was found, %FALSE otherwise
+ * Returns: true if the resource was found, false otherwise
  */
 gboolean
 gtk_recent_manager_has_item (GtkRecentManager *manager,
@@ -1210,7 +1210,7 @@ gtk_recent_manager_lookup_item (GtkRecentManager  *manager,
  * Please note that this function will not affect the resource pointed
  * by the URIs, but only the URI used in the recently used resources list.
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_recent_manager_move_item (GtkRecentManager  *recent_manager,
@@ -1702,10 +1702,10 @@ gtk_recent_info_get_visited (GtkRecentInfo *info)
  * Gets the value of the “private” flag.
  *
  * Resources in the recently used list that have this flag
- * set to %TRUE should only be displayed by the applications
+ * set to true should only be displayed by the applications
  * that have registered them.
  *
- * Returns: %TRUE if the private flag was found, %FALSE otherwise
+ * Returns: true if the private flag was found, false otherwise
  */
 gboolean
 gtk_recent_info_get_private_hint (GtkRecentInfo *info)
@@ -1731,8 +1731,8 @@ gtk_recent_info_get_private_hint (GtkRecentInfo *info)
  * If the command line contains any escape characters defined inside the
  * storage specification, they will be expanded.
  *
- * Returns: %TRUE if an application with @app_name has registered this
- *   resource inside the recently used list, or %FALSE otherwise. The
+ * Returns: true if an application with @app_name has registered this
+ *   resource inside the recently used list, or false otherwise. The
  *   @app_exec string is owned by the `GtkRecentInfo` and should not be
  *   modified or freed
  */
@@ -1823,8 +1823,8 @@ gtk_recent_info_get_applications (GtkRecentInfo *info,
  *
  * Checks whether an application registered this resource using @app_name.
  *
- * Returns: %TRUE if an application with name @app_name was found,
- *   %FALSE otherwise
+ * Returns: true if an application with name @app_name was found,
+ *   false otherwise
  */
 gboolean
 gtk_recent_info_has_application (GtkRecentInfo *info,
@@ -1910,7 +1910,7 @@ gtk_recent_info_get_gicon (GtkRecentInfo *info)
  * Checks whether the resource is local or not by looking at the
  * scheme of its URI.
  *
- * Returns: %TRUE if the resource is local
+ * Returns: true if the resource is local
  */
 gboolean
 gtk_recent_info_is_local (GtkRecentInfo *info)
@@ -1928,7 +1928,7 @@ gtk_recent_info_is_local (GtkRecentInfo *info)
  * At the moment this check is done only on resources pointing
  * to local files.
  *
- * Returns: %TRUE if the resource exists
+ * Returns: true if the resource exists
  */
 gboolean
 gtk_recent_info_exists (GtkRecentInfo *info)
@@ -1962,8 +1962,8 @@ gtk_recent_info_exists (GtkRecentInfo *info)
  *
  * Checks whether two `GtkRecentInfo` point to the same resource.
  *
- * Returns: %TRUE if both `GtkRecentInfo` point to the same
- *   resource, %FALSE otherwise
+ * Returns: true if both `GtkRecentInfo` point to the same
+ *   resource, false otherwise
  */
 gboolean
 gtk_recent_info_match (GtkRecentInfo *info_a,
@@ -2243,7 +2243,7 @@ gtk_recent_info_get_groups (GtkRecentInfo *info,
  * Checks whether @group_name appears inside the groups
  * registered for the recently used item @info.
  *
- * Returns: %TRUE if the group was found
+ * Returns: true if the group was found
  */
 gboolean
 gtk_recent_info_has_group (GtkRecentInfo *info,

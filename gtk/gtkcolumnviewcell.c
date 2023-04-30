@@ -355,7 +355,7 @@ gtk_column_view_cell_get_position (GtkColumnViewCell *self)
  * The selected state is maintained by the liste widget and its model
  * and cannot be set otherwise.
  *
- * Returns: %TRUE if the item is selected.
+ * Returns: true if the item is selected.
  *
  * Since: 4.12
  */
@@ -377,7 +377,7 @@ gtk_column_view_cell_get_selected (GtkColumnViewCell *self)
  * Checks if a list item has been set to be focusable via
  * gtk_column_view_cell_set_focusable().
  *
- * Returns: %TRUE if the item is focusable
+ * Returns: true if the item is focusable
  *
  * Since: 4.12
  */

@@ -131,11 +131,11 @@ gdk_frame_timings_get_frame_counter (GdkFrameTimings *timings)
  * the information is not yet available, or because it isn't
  * available at all.
  *
- * Once this function returns %TRUE for a frame, you can be
+ * Once this function returns true for a frame, you can be
  * certain that no further values will become available and be
  * stored in the `GdkFrameTimings`.
  *
- * Returns: %TRUE if all information that will be available
+ * Returns: true if all information that will be available
  *   for the frame has been filled in.
  */
 gboolean

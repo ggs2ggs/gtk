@@ -97,7 +97,7 @@ below to learn more about gestures and sequences.
 
 Every `GtkWindow` maintains a single focus location (in the :focus-widget
 property). The focus widget is the target widget for key events sent to
-the window. Only widgets which have :focusable set to %TRUE can become
+the window. Only widgets which have :focusable set to true can become
 the focus. Typically these are input controls such as entries or text
 fields, but e.g. buttons can take the focus too.
 

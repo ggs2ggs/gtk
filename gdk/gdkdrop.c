@@ -485,7 +485,7 @@ gdk_drop_get_surface (GdkDrop *self)
  * Returns the possible actions for this `GdkDrop`.
  *
  * If this value contains multiple actions - i.e.
- * [func@Gdk.DragAction.is_unique] returns %FALSE for the result -
+ * [func@Gdk.DragAction.is_unique] returns false for the result -
  * [method@Gdk.Drop.finish] must choose the action to use when
  * accepting the drop. This will only happen if you passed
  * %GDK_ACTION_ASK as one of the possible actions in

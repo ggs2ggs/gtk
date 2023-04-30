@@ -2221,7 +2221,7 @@ gtk_label_class_init (GtkLabelClass *class)
    * @entry: the object which received the signal
    * @step: the granularity of the move, as a `GtkMovementStep`
    * @count: the number of @step units to move
-   * @extend_selection: %TRUE if the move should extend the selection
+   * @extend_selection: true if the move should extend the selection
    *
    * Gets emitted when the user initiates a cursor movement.
    *
@@ -2306,7 +2306,7 @@ gtk_label_class_init (GtkLabelClass *class)
      * Applications may connect to it to override the default behaviour,
      * which is to call [method@Gtk.FileLauncher.launch].
      *
-     * Returns: %TRUE if the link has been activated
+     * Returns: true if the link has been activated
      */
     signals[ACTIVATE_LINK] =
       g_signal_new (I_("activate-link"),
@@ -2324,13 +2324,13 @@ gtk_label_class_init (GtkLabelClass *class)
    *
    * If the string contains Pango markup (see [func@Pango.parse_markup]),
    * you will have to set the [property@Gtk.Label:use-markup] property to
-   * %TRUE in order for the label to display the markup attributes. See also
+   * true in order for the label to display the markup attributes. See also
    * [method@Gtk.Label.set_markup] for a convenience function that sets both
    * this property and the [property@Gtk.Label:use-markup] property at the
    * same time.
    *
    * If the string contains underlines acting as mnemonics, you will have to
-   * set the [property@Gtk.Label:use-underline] property to %TRUE in order
+   * set the [property@Gtk.Label:use-underline] property to true in order
    * for the label to display them.
    */
   label_props[PROP_LABEL] =
@@ -2351,7 +2351,7 @@ gtk_label_class_init (GtkLabelClass *class)
   /**
    * GtkLabel:use-markup: (attributes org.gtk.Property.get=gtk_label_get_use_markup org.gtk.Property.set=gtk_label_set_use_markup)
    *
-   * %TRUE if the text of the label includes Pango markup.
+   * true if the text of the label includes Pango markup.
    *
    * See [func@Pango.parse_markup].
    */
@@ -2363,7 +2363,7 @@ gtk_label_class_init (GtkLabelClass *class)
   /**
    * GtkLabel:use-underline: (attributes org.gtk.Property.get=gtk_label_get_use_underline org.gtk.Property.set=gtk_label_set_use_underline)
    *
-   * %TRUE if the text of the label indicates a mnemonic with an _
+   * true if the text of the label indicates a mnemonic with an _
    * before the mnemonic character.
    */
   label_props[PROP_USE_UNDERLINE] =
@@ -2416,7 +2416,7 @@ gtk_label_class_init (GtkLabelClass *class)
   /**
    * GtkLabel:wrap: (attributes org.gtk.Property.get=gtk_label_get_wrap org.gtk.Property.set=gtk_label_set_wrap)
    *
-   * %TRUE if the label text will wrap if it gets too wide.
+   * true if the label text will wrap if it gets too wide.
    */
   label_props[PROP_WRAP] =
       g_param_spec_boolean ("wrap", NULL, NULL,
@@ -2501,7 +2501,7 @@ gtk_label_class_init (GtkLabelClass *class)
    * %PANGO_ELLIPSIZE_NONE has the side-effect that the label requests
    * only enough space to display the ellipsis "...". In particular, this
    * means that ellipsizing labels do not work well in notebook tabs, unless
-   * the [property@Gtk.NotebookPage:tab-expand] child property is set to %TRUE.
+   * the [property@Gtk.NotebookPage:tab-expand] child property is set to true.
    * Other ways to set a label's width are [method@Gtk.Widget.set_size_request]
    * and [method@Gtk.Label.set_width_chars].
    */
@@ -3164,11 +3164,11 @@ gtk_label_recalculate (GtkLabel *self)
  * It overwrites any text that was there before.
  *
  * This function will clear any previously set mnemonic accelerators,
- * and set the [property@Gtk.Label:use-underline] property to %FALSE as
+ * and set the [property@Gtk.Label:use-underline] property to false as
  * a side effect.
  *
  * This function will set the [property@Gtk.Label:use-markup] property
- * to %FALSE as a side effect.
+ * to false as a side effect.
  *
  * See also: [method@Gtk.Label.set_markup]
  */
@@ -3749,7 +3749,7 @@ error_set:
  * ```
  *
  * This function will set the [property@Gtk.Label:use-markup] property
- * to %TRUE as a side effect.
+ * to true as a side effect.
  *
  * If you set the label contents using the [property@Gtk.Label:label]
  * property you should also ensure that you set the
@@ -4017,11 +4017,11 @@ gtk_label_get_max_width_chars (GtkLabel *self)
  *
  * Toggles line wrapping within the `GtkLabel` widget.
  *
- * %TRUE makes it break lines if text exceeds the widget’s size.
- * %FALSE lets the text get cut off by the edge of the widget if
+ * true makes it break lines if text exceeds the widget’s size.
+ * false lets the text get cut off by the edge of the widget if
  * it exceeds the widget size.
  *
- * Note that setting line wrapping to %TRUE does not make the label
+ * Note that setting line wrapping to true does not make the label
  * wrap at its parent container’s width, because GTK widgets
  * conceptually can’t make their requisition depend on the parent
  * container’s size. For a label that wraps at a specific position,
@@ -4053,7 +4053,7 @@ gtk_label_set_wrap (GtkLabel *self,
  *
  * See [method@Gtk.Label.set_wrap].
  *
- * Returns: %TRUE if the lines of the label are automatically wrapped.
+ * Returns: true if the lines of the label are automatically wrapped.
  */
 gboolean
 gtk_label_get_wrap (GtkLabel *self)
@@ -4918,7 +4918,7 @@ gtk_label_clear_select_info (GtkLabel *self)
 /**
  * gtk_label_set_selectable: (attributes org.gtk.Method.set_property=selectable)
  * @self: a `GtkLabel`
- * @setting: %TRUE to allow selecting text in the label
+ * @setting: true to allow selecting text in the label
  *
  * Makes text in the label selectable.
  *
@@ -4968,7 +4968,7 @@ gtk_label_set_selectable (GtkLabel *self,
  *
  * Returns whether the label is selectable.
  *
- * Returns: %TRUE if the user can copy text from the label
+ * Returns: true if the user can copy text from the label
  */
 gboolean
 gtk_label_get_selectable (GtkLabel *self)
@@ -5132,7 +5132,7 @@ gtk_label_select_region  (GtkLabel *self,
  *
  * Gets the selected range of characters in the label.
  *
- * Returns: %TRUE if selection is non-empty
+ * Returns: true if selection is non-empty
  **/
 gboolean
 gtk_label_get_selection_bounds (GtkLabel  *self,
@@ -5250,7 +5250,7 @@ gtk_label_get_layout_offsets (GtkLabel *self,
 /**
  * gtk_label_set_use_markup: (attributes org.gtk.Method.set_property=use-markup)
  * @self: a `GtkLabel`
- * @setting: %TRUE if the label’s text should be parsed for markup.
+ * @setting: true if the label’s text should be parsed for markup.
  *
  * Sets whether the text of the label contains markup.
  *
@@ -5278,7 +5278,7 @@ gtk_label_set_use_markup (GtkLabel *self,
  *
  * See [method@Gtk.Label.set_use_markup].
  *
- * Returns: %TRUE if the label’s text will be parsed for markup.
+ * Returns: true if the label’s text will be parsed for markup.
  */
 gboolean
 gtk_label_get_use_markup (GtkLabel *self)
@@ -5291,7 +5291,7 @@ gtk_label_get_use_markup (GtkLabel *self)
 /**
  * gtk_label_set_use_underline: (attributes org.gtk.Method.set_property=use-underline)
  * @self: a `GtkLabel`
- * @setting: %TRUE if underlines in the text indicate mnemonics
+ * @setting: true if underlines in the text indicate mnemonics
  *
  * Sets whether underlines in the text indicate mnemonics.
  */
@@ -5317,7 +5317,7 @@ gtk_label_set_use_underline (GtkLabel *self,
  *
  * See [method@Gtk.Label.set_use_underline].
  *
- * Returns: %TRUE whether an embedded underline in the label indicates
+ * Returns: true whether an embedded underline in the label indicates
  *   the mnemonic accelerator keys.
  */
 gboolean
@@ -5331,7 +5331,7 @@ gtk_label_get_use_underline (GtkLabel *self)
 /**
  * gtk_label_set_single_line_mode: (attributes org.gtk.Method.set_property=single-line-mode)
  * @self: a `GtkLabel`
- * @single_line_mode: %TRUE if the label should be in single line mode
+ * @single_line_mode: true if the label should be in single line mode
  *
  * Sets whether the label is in single line mode.
  */
@@ -5360,7 +5360,7 @@ gtk_label_set_single_line_mode (GtkLabel *self,
  *
  * Returns whether the label is in single line mode.
  *
- * Returns: %TRUE when the label is in single line mode.
+ * Returns: true when the label is in single line mode.
  **/
 gboolean
 gtk_label_get_single_line_mode  (GtkLabel *self)

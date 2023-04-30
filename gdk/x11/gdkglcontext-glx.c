@@ -876,7 +876,7 @@ gdk_x11_display_create_glx_config (GdkX11Display  *self,
  *
  * Retrieves the version of the GLX implementation.
  *
- * Returns: %TRUE if GLX is available
+ * Returns: true if GLX is available
  */
 gboolean
 gdk_x11_display_get_glx_version (GdkDisplay *display,
@@ -912,7 +912,7 @@ gdk_x11_display_get_glx_version (GdkDisplay *display,
  *
  * This function must be called exactly once during initialization.
  *
- * Returns: %TRUE if GLX was initialized
+ * Returns: true if GLX was initialized
  */
 gboolean
 gdk_x11_display_init_glx (GdkX11Display  *display_x11,

@@ -1382,7 +1382,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
  *
  * Enables or disables the emission of the ::query-tooltip signal on @widget.
  *
- * A value of %TRUE indicates that @widget can have a tooltip, in this case
+ * A value of true indicates that @widget can have a tooltip, in this case
  * the widget will be queried using [signal@Gtk.Widget::query-tooltip] to
  * determine whether it will provide a tooltip or not.
  */
@@ -1400,7 +1400,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    *
    * This is a convenience property which will take care of getting the
    * tooltip shown if the given string is not %NULL:
-   * [property@Gtk.Widget:has-tooltip] will automatically be set to %TRUE
+   * [property@Gtk.Widget:has-tooltip] will automatically be set to true
    * and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
    * the default signal handler.
    *
@@ -1422,7 +1422,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    *
    * This is a convenience property which will take care of getting the
    * tooltip shown if the given string is not %NULL:
-   * [property@Gtk.Widget:has-tooltip] will automatically be set to %TRUE
+   * [property@Gtk.Widget:has-tooltip] will automatically be set to true
    * and there will be taken care of [signal@Gtk.Widget::query-tooltip] in
    * the default signal handler.
    *
@@ -1808,15 +1808,15 @@ gtk_widget_class_init (GtkWidgetClass *klass)
   /**
    * GtkWidget::mnemonic-activate:
    * @widget: the object which received the signal.
-   * @group_cycling: %TRUE if there are other widgets with the same mnemonic
+   * @group_cycling: true if there are other widgets with the same mnemonic
    *
    * Emitted when a widget is activated via a mnemonic.
    *
    * The default handler for this signal activates @widget if @group_cycling
-   * is %FALSE, or just makes @widget grab focus if @group_cycling is %TRUE.
+   * is false, or just makes @widget grab focus if @group_cycling is true.
    *
-   * Returns: %TRUE to stop other handlers from being invoked for the event.
-   * %FALSE to propagate the event further.
+   * Returns: true to stop other handlers from being invoked for the event.
+   * false to propagate the event further.
    */
   widget_signals[MNEMONIC_ACTIVATE] =
     g_signal_new (I_("mnemonic-activate"),
@@ -1863,7 +1863,7 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    *
    * See [method@Gtk.Widget.keynav_failed] for details.
    *
-   * Returns: %TRUE if stopping keyboard navigation is fine, %FALSE
+   * Returns: true if stopping keyboard navigation is fine, false
    *   if the emitting widget should try to handle the keyboard
    *   navigation attempt in its parent widget(s).
    */
@@ -1887,25 +1887,25 @@ gtk_widget_class_init (GtkWidgetClass *klass)
    *   been emitted, relative to @widget's left side
    * @y: the y coordinate of the cursor position where the request has
    *   been emitted, relative to @widget's top
-   * @keyboard_mode: %TRUE if the tooltip was triggered using the keyboard
+   * @keyboard_mode: true if the tooltip was triggered using the keyboard
    * @tooltip: a `GtkTooltip`
    *
    * Emitted when the widgets tooltip is about to be shown.
    *
    * This happens when the [property@Gtk.Widget:has-tooltip] property
-   * is %TRUE and the hover timeout has expired with the cursor hovering
+   * is true and the hover timeout has expired with the cursor hovering
    * "above" @widget; or emitted when @widget got focus in keyboard mode.
    *
    * Using the given coordinates, the signal handler should determine
    * whether a tooltip should be shown for @widget. If this is the case
-   * %TRUE should be returned, %FALSE otherwise.  Note that if
-   * @keyboard_mode is %TRUE, the values of @x and @y are undefined and
+   * true should be returned, false otherwise.  Note that if
+   * @keyboard_mode is true, the values of @x and @y are undefined and
    * should not be used.
    *
    * The signal handler is free to manipulate @tooltip with the therefore
    * destined function calls.
    *
-   * Returns: %TRUE if @tooltip should be shown right now, %FALSE otherwise.
+   * Returns: true if @tooltip should be shown right now, false otherwise.
    */
   widget_signals[QUERY_TOOLTIP] =
     g_signal_new (I_("query-tooltip"),
@@ -4190,9 +4190,9 @@ gtk_widget_common_ancestor (GtkWidget *widget_a,
  * In order to perform this operation, both widget must share
  * a common ancestor.
  *
- * Returns: %FALSE if @src_widget and @dest_widget have no common
+ * Returns: false if @src_widget and @dest_widget have no common
  *   ancestor. In this case, 0 is stored in *@dest_x and *@dest_y.
- *   Otherwise %TRUE.
+ *   Otherwise true.
  *
  * Deprecated: 4.12: Use gtk_widget_compute_point() instead
  */
@@ -4234,7 +4234,7 @@ gtk_widget_translate_coordinates (GtkWidget  *src_widget,
  * In order to perform this operation, both widgets must share a
  * common ancestor.
  *
- * Returns: %TRUE if the point could be determined, %FALSE on failure.
+ * Returns: true if the point could be determined, false on failure.
  *   In this case, 0 is stored in @out_point.
  */
 gboolean
@@ -4441,13 +4441,13 @@ gtk_widget_class_add_shortcut (GtkWidgetClass *widget_class,
 /**
  * gtk_widget_mnemonic_activate:
  * @widget: a `GtkWidget`
- * @group_cycling: %TRUE if there are other widgets with the same mnemonic
+ * @group_cycling: true if there are other widgets with the same mnemonic
  *
  * Emits the ::mnemonic-activate signal.
  *
  * See [signal@Gtk.Widget::mnemonic-activate].
  *
- * Returns: %TRUE if the signal has been handled
+ * Returns: true if the signal has been handled
  */
 gboolean
 gtk_widget_mnemonic_activate (GtkWidget *widget,
@@ -4858,9 +4858,9 @@ gtk_widget_class_set_activate_signal_from_name (GtkWidgetClass *widget_class,
  * recommended to use [method@Gtk.WidgetClass.add_shortcut] with an action
  * created with [ctor@Gtk.SignalAction.new].
  *
- * If @widget isn't activatable, the function returns %FALSE.
+ * If @widget isn't activatable, the function returns false.
  *
- * Returns: %TRUE if the widget was activatable
+ * Returns: true if the widget was activatable
  */
 gboolean
 gtk_widget_activate (GtkWidget *widget)
@@ -4887,12 +4887,12 @@ gtk_widget_activate (GtkWidget *widget)
  *
  * If @widget is not focusable, or its [vfunc@Gtk.Widget.grab_focus]
  * implementation cannot transfer the focus to a descendant of @widget
- * that is focusable, it will not take focus and %FALSE will be returned.
+ * that is focusable, it will not take focus and false will be returned.
  *
  * Calling [method@Gtk.Widget.grab_focus] on an already focused widget
- * is allowed, should not have an effect, and return %TRUE.
+ * is allowed, should not have an effect, and return true.
  *
- * Returns: %TRUE if focus is now inside @widget.
+ * Returns: true if focus is now inside @widget.
  */
 gboolean
 gtk_widget_grab_focus (GtkWidget *widget)
@@ -5152,10 +5152,10 @@ gtk_widget_real_keynav_failed (GtkWidget        *widget,
  * Specifies whether the input focus can enter the widget
  * or any of its children.
  *
- * Applications should set @can_focus to %FALSE to mark a
+ * Applications should set @can_focus to false to mark a
  * widget as for pointer/touch use only.
  *
- * Note that having @can_focus be %TRUE is only one of the
+ * Note that having @can_focus be true is only one of the
  * necessary conditions for being focusable. A widget must
  * also be sensitive and focusable and not have an ancestor
  * that is marked as not can-focus in order to receive input
@@ -5190,7 +5190,7 @@ gtk_widget_set_can_focus (GtkWidget *widget,
  *
  * See [method@Gtk.Widget.set_focusable].
  *
- * Returns: %TRUE if the input focus can enter @widget, %FALSE otherwise
+ * Returns: true if the input focus can enter @widget, false otherwise
  */
 gboolean
 gtk_widget_get_can_focus (GtkWidget *widget)
@@ -5209,10 +5209,10 @@ gtk_widget_get_can_focus (GtkWidget *widget)
  *
  * Specifies whether @widget can own the input focus.
  *
- * Widget implementations should set @focusable to %TRUE in
+ * Widget implementations should set @focusable to true in
  * their init() function if they want to receive keyboard input.
  *
- * Note that having @focusable be %TRUE is only one of the
+ * Note that having @focusable be true is only one of the
  * necessary conditions for being focusable. A widget must
  * also be sensitive and can-focus and not have an ancestor
  * that is marked as not can-focus in order to receive input
@@ -5249,7 +5249,7 @@ gtk_widget_set_focusable (GtkWidget *widget,
  *
  * See [method@Gtk.Widget.set_focusable].
  *
- * Returns: %TRUE if @widget can own the input focus, %FALSE otherwise
+ * Returns: true if @widget can own the input focus, false otherwise
  */
 gboolean
 gtk_widget_get_focusable (GtkWidget *widget)
@@ -5271,7 +5271,7 @@ gtk_widget_get_focusable (GtkWidget *widget)
  * having the global input focus, and only having the focus
  * within a toplevel.
  *
- * Returns: %TRUE if the widget has the global input focus.
+ * Returns: true if the widget has the global input focus.
  */
 gboolean
 gtk_widget_has_focus (GtkWidget *widget)
@@ -5298,7 +5298,7 @@ gtk_widget_has_focus (GtkWidget *widget)
  * To find out if the widget has the global input focus, use
  * [method@Gtk.Widget.has_focus].
  *
- * Returns: %TRUE if the widget should display a “focus rectangle”
+ * Returns: true if the widget should display a “focus rectangle”
  */
 gboolean
 gtk_widget_has_visible_focus (GtkWidget *widget)
@@ -5335,7 +5335,7 @@ gtk_widget_has_visible_focus (GtkWidget *widget)
  * will only be set if the toplevel widget additionally has the
  * global input focus.
  *
- * Returns: %TRUE if the widget is the focus widget.
+ * Returns: true if the widget is the focus widget.
  */
 gboolean
 gtk_widget_is_focus (GtkWidget *widget)
@@ -5390,7 +5390,7 @@ gtk_widget_set_focus_on_click (GtkWidget *widget,
  *
  * See [method@Gtk.Widget.set_focus_on_click].
  *
- * Returns: %TRUE if the widget should grab focus when it is
+ * Returns: true if the widget should grab focus when it is
  *   clicked with the mouse
  */
 gboolean
@@ -5410,8 +5410,8 @@ gtk_widget_get_focus_on_click (GtkWidget *widget)
  * Determines whether @widget is the current default widget
  * within its toplevel.
  *
- * Returns: %TRUE if @widget is the current default widget
- *   within its toplevel, %FALSE otherwise
+ * Returns: true if @widget is the current default widget
+ *   within its toplevel, false otherwise
  */
 gboolean
 gtk_widget_has_default (GtkWidget *widget)
@@ -5472,8 +5472,8 @@ gtk_widget_set_receives_default (GtkWidget *widget,
  *
  * See [method@Gtk.Widget.set_receives_default].
  *
- * Returns: %TRUE if @widget acts as the default widget when focused,
- *   %FALSE otherwise
+ * Returns: true if @widget acts as the default widget when focused,
+ *   false otherwise
  */
 gboolean
 gtk_widget_get_receives_default (GtkWidget *widget)
@@ -5494,7 +5494,7 @@ gtk_widget_get_receives_default (GtkWidget *widget)
  *
  * See also gtk_grab_add().
  *
- * Returns: %TRUE if the widget is in the grab_widgets stack
+ * Returns: true if the widget is in the grab_widgets stack
  */
 gboolean
 gtk_widget_has_grab (GtkWidget *widget)
@@ -5698,7 +5698,7 @@ gtk_widget_get_state_flags (GtkWidget *widget)
  *
  * Sets the visibility state of @widget.
  *
- * Note that setting this to %TRUE doesn’t mean the widget is
+ * Note that setting this to true doesn’t mean the widget is
  * actually viewable, see [method@Gtk.Widget.get_visible].
  */
 void
@@ -5751,7 +5751,7 @@ _gtk_widget_set_visible_flag (GtkWidget *widget,
  *
  * See [method@Gtk.Widget.set_visible].
  *
- * Returns: %TRUE if the widget is visible
+ * Returns: true if the widget is visible
  */
 gboolean
 gtk_widget_get_visible (GtkWidget *widget)
@@ -5775,7 +5775,7 @@ gtk_widget_get_visible (GtkWidget *widget)
  * See also [method@Gtk.Widget.get_visible] and
  * [method@Gtk.Widget.set_visible].
  *
- * Returns: %TRUE if the widget and all its parents are visible
+ * Returns: true if the widget and all its parents are visible
  */
 gboolean
 gtk_widget_is_visible (GtkWidget *widget)
@@ -5803,7 +5803,7 @@ gtk_widget_is_visible (GtkWidget *widget)
  *
  * A widget can be drawn if it is mapped and visible.
  *
- * Returns: %TRUE if @widget is drawable, %FALSE otherwise
+ * Returns: true if @widget is drawable, false otherwise
  */
 gboolean
 gtk_widget_is_drawable (GtkWidget *widget)
@@ -5820,7 +5820,7 @@ gtk_widget_is_drawable (GtkWidget *widget)
  *
  * Determines whether @widget is realized.
  *
- * Returns: %TRUE if @widget is realized, %FALSE otherwise
+ * Returns: true if @widget is realized, false otherwise
  */
 gboolean
 gtk_widget_get_realized (GtkWidget *widget)
@@ -5838,7 +5838,7 @@ gtk_widget_get_realized (GtkWidget *widget)
  *
  * Whether the widget is mapped.
  *
- * Returns: %TRUE if the widget is mapped, %FALSE otherwise.
+ * Returns: true if the widget is mapped, false otherwise.
  */
 gboolean
 gtk_widget_get_mapped (GtkWidget *widget)
@@ -5853,7 +5853,7 @@ gtk_widget_get_mapped (GtkWidget *widget)
 /**
  * gtk_widget_set_sensitive: (attributes org.gtk.Method.set_property=sensitive)
  * @widget: a `GtkWidget`
- * @sensitive: %TRUE to make the widget sensitive
+ * @sensitive: true to make the widget sensitive
  *
  * Sets the sensitivity of a widget.
  *
@@ -5928,7 +5928,7 @@ gtk_widget_set_sensitive (GtkWidget *widget,
  * by both its own and its parent widget’s sensitivity.
  * See [method@Gtk.Widget.is_sensitive].
  *
- * Returns: %TRUE if the widget is sensitive
+ * Returns: true if the widget is sensitive
  */
 gboolean
 gtk_widget_get_sensitive (GtkWidget *widget)
@@ -5949,7 +5949,7 @@ gtk_widget_get_sensitive (GtkWidget *widget)
  * This means it is sensitive itself and also its
  * parent widget is sensitive.
  *
- * Returns: %TRUE if the widget is effectively sensitive
+ * Returns: true if the widget is effectively sensitive
  */
 gboolean
 gtk_widget_is_sensitive (GtkWidget *widget)
@@ -6688,7 +6688,7 @@ gtk_widget_create_pango_layout (GtkWidget  *widget,
 /**
  * gtk_widget_set_child_visible:
  * @widget: a `GtkWidget`
- * @child_visible: if %TRUE, @widget should be mapped along
+ * @child_visible: if true, @widget should be mapped along
  *   with its parent.
  *
  * Sets whether @widget should be mapped along with its parent.
@@ -6696,7 +6696,7 @@ gtk_widget_create_pango_layout (GtkWidget  *widget,
  * The child visibility can be set for widget before it is added
  * to a container with [method@Gtk.Widget.set_parent], to avoid
  * mapping children unnecessary before immediately unmapping them.
- * However it will be reset to its default state of %TRUE when the
+ * However it will be reset to its default state of true when the
  * widget is removed from a container.
  *
  * Note that changing the child visibility of a widget does not
@@ -6764,7 +6764,7 @@ gtk_widget_set_child_visible (GtkWidget *widget,
  * This function is only useful for container implementations
  * and should never be called by an application.
  *
- * Returns: %TRUE if the widget is mapped with the parent.
+ * Returns: true if the widget is mapped with the parent.
  */
 gboolean
 gtk_widget_get_child_visible (GtkWidget *widget)
@@ -6897,7 +6897,7 @@ gtk_widget_get_display (GtkWidget *widget)
  * writing an app, you’d use [method@Gtk.Widget.grab_focus] to move
  * the focus to a particular widget.
  *
- * Returns: %TRUE if focus ended up inside @widget
+ * Returns: true if focus ended up inside @widget
  */
 gboolean
 gtk_widget_child_focus (GtkWidget       *widget,
@@ -6930,18 +6930,18 @@ gtk_widget_child_focus (GtkWidget       *widget,
  *
  * The return value of this function should be interpreted
  * in a way similar to the return value of
- * [method@Gtk.Widget.child_focus]. When %TRUE is returned,
+ * [method@Gtk.Widget.child_focus]. When true is returned,
  * stay in the widget, the failed keyboard  navigation is OK
  * and/or there is nowhere we can/should move the focus to.
- * When %FALSE is returned, the caller should continue with
+ * When false is returned, the caller should continue with
  * keyboard navigation outside the widget, e.g. by calling
  * [method@Gtk.Widget.child_focus] on the widget’s toplevel.
  *
  * The default [signal@Gtk.Widget::keynav-failed] handler returns
- * %FALSE for %GTK_DIR_TAB_FORWARD and %GTK_DIR_TAB_BACKWARD.
- * For the other values of `GtkDirectionType` it returns %TRUE.
+ * false for %GTK_DIR_TAB_FORWARD and %GTK_DIR_TAB_BACKWARD.
+ * For the other values of `GtkDirectionType` it returns true.
  *
- * Whenever the default handler returns %TRUE, it also calls
+ * Whenever the default handler returns true, it also calls
  * [method@Gtk.Widget.error_bell] to notify the user of the
  * failed keyboard navigation.
  *
@@ -6951,7 +6951,7 @@ gtk_widget_child_focus (GtkWidget       *widget,
  * the entire row with the cursor keys, as e.g. known from user
  * interfaces that require entering license keys.
  *
- * Returns: %TRUE if stopping keyboard navigation is fine, %FALSE
+ * Returns: true if stopping keyboard navigation is fine, false
  *   if the emitting widget should try to handle the keyboard
  *   navigation attempt in its parent container(s).
  */
@@ -6975,7 +6975,7 @@ gtk_widget_keynav_failed (GtkWidget        *widget,
  *
  * Notifies the user about an input-related error on this widget.
  *
- * If the [property@Gtk.Settings:gtk-error-bell] setting is %TRUE,
+ * If the [property@Gtk.Settings:gtk-error-bell] setting is true,
  * it calls [method@Gdk.Surface.beep], otherwise it does nothing.
  *
  * Note that the effect of [method@Gdk.Surface.beep] can be configured
@@ -7200,7 +7200,7 @@ gtk_widget_get_settings (GtkWidget *widget)
  * Determines whether @widget is somewhere inside @ancestor,
  * possibly with intermediate containers.
  *
- * Returns: %TRUE if @ancestor contains @widget as a child,
+ * Returns: true if @ancestor contains @widget as a child,
  *   grandchild, great grandchild, etc.
  */
 gboolean
@@ -10137,7 +10137,7 @@ gtk_widget_get_allocation (GtkWidget     *widget,
  * The coordinates for (@x, @y) must be in widget coordinates, so
  * (0, 0) is assumed to be the top left of @widget's content area.
  *
- * Returns: %TRUE if @widget contains (@x, @y).
+ * Returns: true if @widget contains (@x, @y).
  */
 gboolean
 gtk_widget_contains (GtkWidget  *widget,
@@ -10311,7 +10311,7 @@ gtk_widget_pick (GtkWidget    *widget,
  * To learn more about widget coordinate systems, see the coordinate
  * system [overview](coordinates.html).
  *
- * Returns: %TRUE if the transform could be computed, %FALSE otherwise
+ * Returns: true if the transform could be computed, false otherwise
  */
 gboolean
 gtk_widget_compute_transform (GtkWidget         *widget,
@@ -10389,14 +10389,14 @@ gtk_widget_compute_transform (GtkWidget         *widget,
  * expected to draw in. See the [coordinate system](coordinates.html)
  * overview to learn more.
  *
- * If the operation is successful, %TRUE is returned. If @widget has no
+ * If the operation is successful, true is returned. If @widget has no
  * bounds or the bounds cannot be expressed in @target's coordinate space
- * (for example if both widgets are in different windows), %FALSE is
+ * (for example if both widgets are in different windows), false is
  * returned and @bounds is set to the zero rectangle.
  *
  * It is valid for @widget and @target to be the same widget.
  *
- * Returns: %TRUE if the bounds could be computed
+ * Returns: true if the bounds could be computed
  */
 gboolean
 gtk_widget_compute_bounds (GtkWidget       *widget,
@@ -10675,7 +10675,7 @@ gtk_widget_set_has_focus (GtkWidget *widget,
  * This information can sometimes be used to avoid doing
  * unnecessary work.
  *
- * Returns: %TRUE if @widget is being destroyed
+ * Returns: true if @widget is being destroyed
  */
 gboolean
 gtk_widget_in_destruction (GtkWidget *widget)
@@ -11561,7 +11561,7 @@ gtk_widget_get_template_child (GtkWidget   *widget,
  * The arguments must match the actions expected parameter type,
  * as returned by `g_action_get_parameter_type()`.
  *
- * Returns: %TRUE if the action was activated, %FALSE if the
+ * Returns: true if the action was activated, false if the
  *   action does not exist.
  */
 gboolean
@@ -11596,7 +11596,7 @@ gtk_widget_activate_action_variant (GtkWidget  *widget,
  * This is a wrapper around [method@Gtk.Widget.activate_action_variant]
  * that constructs the @args variant according to @format_string.
  *
- * Returns: %TRUE if the action was activated, %FALSE if the action
+ * Returns: true if the action was activated, false if the action
  *   does not exist
  */
 gboolean
@@ -12474,7 +12474,7 @@ gtk_widget_set_can_target (GtkWidget *widget,
  *
  * Queries whether @widget can be the target of pointer events.
  *
- * Returns: %TRUE if @widget can receive pointer events
+ * Returns: true if @widget can receive pointer events
  */
 gboolean
 gtk_widget_get_can_target (GtkWidget *widget)
@@ -12686,10 +12686,10 @@ gtk_widget_get_layout_manager (GtkWidget *widget)
  * Returns whether @widget should contribute to
  * the measuring and allocation of its parent.
  *
- * This is %FALSE for invisible children, but also
+ * This is false for invisible children, but also
  * for children that have their own surface.
  *
- * Returns: %TRUE if child should be included in
+ * Returns: true if child should be included in
  *   measuring and allocating
  */
 gboolean
@@ -12893,7 +12893,7 @@ gtk_widget_action_set_enabled (GtkWidget  *widget,
  * by parent classes. You can identify those by looking
  * at @owner.
  *
- * Returns: %TRUE if the action was found, %FALSE if @index_
+ * Returns: true if the action was found, false if @index_
  *   is out of range
  */
 gboolean
@@ -13011,8 +13011,8 @@ gtk_widget_remove_css_class (GtkWidget  *widget,
  *
  * Returns whether @css_class is currently applied to @widget.
  *
- * Returns: %TRUE if @css_class is currently applied to @widget,
- *   %FALSE otherwise.
+ * Returns: true if @css_class is currently applied to @widget,
+ *   false otherwise.
  */
 gboolean
 gtk_widget_has_css_class (GtkWidget  *widget,

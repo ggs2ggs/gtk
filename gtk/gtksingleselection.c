@@ -671,7 +671,7 @@ gtk_single_selection_get_selected_item (GtkSingleSelection *self)
  * Checks if autoselect has been enabled or disabled via
  * gtk_single_selection_set_autoselect().
  *
- * Returns: %TRUE if autoselect is enabled
+ * Returns: true if autoselect is enabled
  **/
 gboolean
 gtk_single_selection_get_autoselect (GtkSingleSelection *self)
@@ -684,11 +684,11 @@ gtk_single_selection_get_autoselect (GtkSingleSelection *self)
 /**
  * gtk_single_selection_set_autoselect: (attributes org.gtk.Method.set_property=autoselect)
  * @self: a `GtkSingleSelection`
- * @autoselect: %TRUE to always select an item
+ * @autoselect: true to always select an item
  *
  * Enables or disables autoselect.
  *
- * If @autoselect is %TRUE, @self will enforce that an item is always
+ * If @autoselect is true, @self will enforce that an item is always
  * selected. It will select a new item when the currently selected
  * item is deleted and it will disallow unselecting the current item.
  */
@@ -717,10 +717,10 @@ gtk_single_selection_set_autoselect (GtkSingleSelection *self,
  * gtk_single_selection_get_can_unselect: (attributes org.gtk.Method.get_property=can-unselect)
  * @self: a `GtkSingleSelection`
  *
- * If %TRUE, gtk_selection_model_unselect_item() is supported and allows
+ * If true, gtk_selection_model_unselect_item() is supported and allows
  * unselecting the selected item.
  *
- * Returns: %TRUE to support unselecting
+ * Returns: true to support unselecting
  */
 gboolean
 gtk_single_selection_get_can_unselect (GtkSingleSelection *self)
@@ -733,9 +733,9 @@ gtk_single_selection_get_can_unselect (GtkSingleSelection *self)
 /**
  * gtk_single_selection_set_can_unselect: (attributes org.gtk.Method.set_property=can-unselect)
  * @self: a `GtkSingleSelection`
- * @can_unselect: %TRUE to allow unselecting
+ * @can_unselect: true to allow unselecting
  *
- * If %TRUE, unselecting the current item via
+ * If true, unselecting the current item via
  * gtk_selection_model_unselect_item() is supported.
  *
  * Note that setting [property@Gtk.SingleSelection:autoselect] will

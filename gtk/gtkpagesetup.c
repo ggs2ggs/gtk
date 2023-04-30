@@ -497,7 +497,7 @@ gtk_page_setup_get_page_height (GtkPageSetup *setup,
  *
  * See [method@Gtk.PageSetup.to_file].
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_page_setup_load_file (GtkPageSetup *setup,
@@ -581,7 +581,7 @@ string_to_enum (GType type,
  * Reads the page setup from the group @group_name in the key file
  * @key_file.
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_page_setup_load_key_file (GtkPageSetup *setup,
@@ -696,7 +696,7 @@ gtk_page_setup_new_from_key_file (GKeyFile     *key_file,
  *
  * This function saves the information from @setup to @file_name.
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_page_setup_to_file (GtkPageSetup  *setup,

@@ -34,10 +34,10 @@ G_BEGIN_DECLS
  *
  * User function that is called to determine if the @item should be matched.
  *
- * If the filter matches the item, this function must return %TRUE. If the
- * item should be filtered out, %FALSE must be returned.
+ * If the filter matches the item, this function must return true. If the
+ * item should be filtered out, false must be returned.
  *
- * Returns: %TRUE to keep the item around
+ * Returns: true to keep the item around
  */
 typedef gboolean (* GtkCustomFilterFunc) (gpointer item, gpointer user_data);
 

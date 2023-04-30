@@ -172,7 +172,7 @@ _gdk_x11_surface_get_toplevel (GdkSurface *surface)
  * Updates the state of the surface (in particular the drawable's
  * cairo surface) when its size has changed.
  *
- * Returns: %TRUE if the surface was updated, %FALSE if no updates
+ * Returns: true if the surface was updated, false if no updates
  *   where necessary
  */
 static gboolean
@@ -2282,7 +2282,7 @@ gdk_x11_surface_set_modal_hint (GdkSurface *surface,
 /**
  * gdk_x11_surface_set_skip_taskbar_hint:
  * @surface: (type GdkX11Surface): a native `GdkSurface`
- * @skips_taskbar: %TRUE to skip taskbars
+ * @skips_taskbar: true to skip taskbars
  *
  * Sets a hint on @surface that taskbars should not
  * display it. See the EWMH for details.
@@ -2308,7 +2308,7 @@ gdk_x11_surface_set_skip_taskbar_hint (GdkSurface *surface,
 /**
  * gdk_x11_surface_set_skip_pager_hint:
  * @surface: (type GdkX11Surface): a `GdkSurface`
- * @skips_pager: %TRUE to skip pagers
+ * @skips_pager: true to skip pagers
  *
  * Sets a hint on @surface that pagers should not
  * display it. See the EWMH for details.
@@ -2334,7 +2334,7 @@ gdk_x11_surface_set_skip_pager_hint (GdkSurface *surface,
 /**
  * gdk_x11_surface_set_urgency_hint:
  * @surface: (type GdkX11Surface): a native `GdkSurface`
- * @urgent: %TRUE to indicate urgenct attention needed
+ * @urgent: true to indicate urgenct attention needed
  *
  * Sets a hint on @surface that it needs user attention.
  * See the ICCCM for details.

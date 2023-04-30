@@ -5175,7 +5175,7 @@ gsk_text_node_get_font (const GskRenderNode *node)
  *
  * Checks whether the text @node has color glyphs.
  *
- * Returns: %TRUE if the text node has color glyphs
+ * Returns: true if the text node has color glyphs
  *
  * Since: 4.2
  */

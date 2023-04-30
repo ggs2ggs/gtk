@@ -365,7 +365,7 @@ gtk_settings_class_init (GtkSettingsClass *class)
    * The timer is reset after each user interaction.
    *
    * Setting this to zero has the same effect as setting
-   * [property@Gtk.Settings:gtk-cursor-blink] to %FALSE.
+   * [property@Gtk.Settings:gtk-cursor-blink] to false.
    */
   pspecs[PROP_CURSOR_BLINK_TIMEOUT] = g_param_spec_int ("gtk-cursor-blink-timeout", NULL, NULL,
                                                         1, G_MAXINT, 10,
@@ -542,7 +542,7 @@ gtk_settings_class_init (GtkSettingsClass *class)
    * views.
    *
    * By default an arrow pointing down means the column is sorted
-   * in ascending order. When set to %TRUE, this order will be inverted.
+   * in ascending order. When set to true, this order will be inverted.
    */
   pspecs[PROP_ALTERNATIVE_SORT_ARROWS] = g_param_spec_boolean ("gtk-alternative-sort-arrows", NULL, NULL,
                                                                FALSE,
@@ -560,7 +560,7 @@ gtk_settings_class_init (GtkSettingsClass *class)
   /**
    * GtkSettings:gtk-error-bell:
    *
-   * When %TRUE, keyboard navigation and other input-related errors
+   * When true, keyboard navigation and other input-related errors
    * will cause a beep.
    *
    * Since the error bell is implemented using gdk_surface_beep(), the
@@ -700,11 +700,11 @@ gtk_settings_class_init (GtkSettingsClass *class)
   /**
    * GtkSettings:gtk-primary-button-warps-slider:
    *
-   * If the value of this setting is %TRUE, clicking the primary button in a
+   * If the value of this setting is true, clicking the primary button in a
    * `GtkRange` trough will move the slider, and hence set the range’s value, to
    * the point that you clicked.
    *
-   * If it is %FALSE, a primary click will cause the slider/value to move
+   * If it is false, a primary click will cause the slider/value to move
    * by the range’s page-size towards the point clicked.
    *
    * Whichever action you choose for the primary button, the other action will
@@ -773,8 +773,8 @@ gtk_settings_class_init (GtkSettingsClass *class)
   /**
    * GtkSettings:gtk-shell-shows-app-menu:
    *
-   * Set to %TRUE if the desktop environment is displaying
-   * the app menu, %FALSE if the app should display it itself.
+   * Set to true if the desktop environment is displaying
+   * the app menu, false if the app should display it itself.
    */
   pspecs[PROP_SHELL_SHOWS_APP_MENU] = g_param_spec_boolean ("gtk-shell-shows-app-menu", NULL, NULL,
                                                             FALSE,
@@ -783,8 +783,8 @@ gtk_settings_class_init (GtkSettingsClass *class)
   /**
    * GtkSettings:gtk-shell-shows-menubar:
    *
-   * Set to %TRUE if the desktop environment is displaying
-   * the menubar, %FALSE if the app should display it itself.
+   * Set to true if the desktop environment is displaying
+   * the menubar, false if the app should display it itself.
    */
   pspecs[PROP_SHELL_SHOWS_MENUBAR] = g_param_spec_boolean ("gtk-shell-shows-menubar", NULL, NULL,
                                                            FALSE,
@@ -793,8 +793,8 @@ gtk_settings_class_init (GtkSettingsClass *class)
   /**
    * GtkSettings:gtk-shell-shows-desktop:
    *
-   * Set to %TRUE if the desktop environment is displaying
-   * the desktop folder, %FALSE if not.
+   * Set to true if the desktop environment is displaying
+   * the desktop folder, false if not.
    */
   pspecs[PROP_SHELL_SHOWS_DESKTOP] = g_param_spec_boolean ("gtk-shell-shows-desktop", NULL, NULL,
                                                            TRUE,
@@ -897,7 +897,7 @@ gtk_settings_class_init (GtkSettingsClass *class)
    * Whether GTK should keep track of items inside the recently used
    * resources list.
    *
-   * If set to %FALSE, the list will always be empty.
+   * If set to false, the list will always be empty.
    */
   pspecs[PROP_RECENT_FILES_ENABLED] = g_param_spec_boolean ("gtk-recent-files-enabled", NULL, NULL,
                                                             TRUE,
@@ -931,7 +931,7 @@ gtk_settings_class_init (GtkSettingsClass *class)
    *
    * Whether scrolled windows may use overlaid scrolling indicators.
    *
-   * If this is set to %FALSE, scrolled windows will have permanent
+   * If this is set to false, scrolled windows will have permanent
    * scrollbars.
    */
   pspecs[PROP_OVERLAY_SCROLLING] = g_param_spec_boolean ("gtk-overlay-scrolling", NULL, NULL,

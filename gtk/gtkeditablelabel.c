@@ -389,7 +389,7 @@ gtk_editable_label_class_init (GtkEditableLabelClass *class)
   /**
    * GtkEditableLabel:editing: (attributes org.gtk.Property.get=gtk_editable_label_get_editing)
    *
-   * This property is %TRUE while the widget is in edit mode.
+   * This property is true while the widget is in edit mode.
    */
   properties[PROP_EDITING] =
     g_param_spec_boolean ("editing", NULL, NULL,
@@ -410,7 +410,7 @@ gtk_editable_label_class_init (GtkEditableLabelClass *class)
    * on the widget and the Enter key.
    *
    * This action is disabled when `GtkEditableLabel:editing`
-   * is %FALSE.
+   * is false.
    */
   gtk_widget_class_install_action (widget_class, "editing.start", NULL, start_editing);
 
@@ -419,14 +419,14 @@ gtk_editable_label_class_init (GtkEditableLabelClass *class)
    * @commit: Whether the make changes permanent
    *
    * Switch the widget out of editing mode. If @commit
-   * is %TRUE, then the results of the editing are taken
+   * is true, then the results of the editing are taken
    * as the new value of `GtkEditable:text`.
    *
    * The default binding for this action is the Escape
    * key.
    *
    * This action is disabled when `GtkEditableLabel:editing`
-   * is %FALSE.
+   * is false.
    */
   gtk_widget_class_install_action (widget_class, "editing.stop", "b", stop_editing);
 
@@ -471,7 +471,7 @@ gtk_editable_label_new (const char *str)
  *
  * Returns whether the label is currently in “editing mode”.
  *
- * Returns: %TRUE if @self is currently in editing mode
+ * Returns: true if @self is currently in editing mode
  */
 gboolean
 gtk_editable_label_get_editing (GtkEditableLabel *self)
@@ -510,7 +510,7 @@ gtk_editable_label_start_editing (GtkEditableLabel *self)
  *
  * Switches the label out of “editing mode”.
  *
- * If @commit is %TRUE, the resulting text is kept as the
+ * If @commit is true, the resulting text is kept as the
  * [property@Gtk.Editable:text] property value, otherwise the
  * resulting text is discarded and the label will keep its
  * previous [property@Gtk.Editable:text] property value.

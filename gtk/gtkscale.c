@@ -997,9 +997,9 @@ gtk_scale_new_with_range (GtkOrientation orientation,
  *
  * Also causes the value of the adjustment to be rounded to this number
  * of digits, so the retrieved value matches the displayed one, if
- * [property@Gtk.Scale:draw-value] is %TRUE when the value changes. If
+ * [property@Gtk.Scale:draw-value] is true when the value changes. If
  * you want to enforce rounding the value when [property@Gtk.Scale:draw-value]
- * is %FALSE, you can set [property@Gtk.Range:round-digits] instead.
+ * is false, you can set [property@Gtk.Range:round-digits] instead.
  *
  * Note that rounding to a small number of digits can interfere with
  * the smooth autoscrolling that is built into `GtkScale`. As an alternative,
@@ -1088,7 +1088,7 @@ update_value_position (GtkScale *scale)
 /**
  * gtk_scale_set_draw_value: (attributes org.gtk.Method.set_property=draw-value)
  * @scale: a `GtkScale`
- * @draw_value: %TRUE to draw the value
+ * @draw_value: true to draw the value
  *
  * Specifies whether the current value is displayed as a string next
  * to the slider.
@@ -1149,11 +1149,11 @@ gtk_scale_get_draw_value (GtkScale *scale)
 /**
  * gtk_scale_set_has_origin: (attributes org.gtk.Method.set_property=has-origin)
  * @scale: a `GtkScale`
- * @has_origin: %TRUE if the scale has an origin
+ * @has_origin: true if the scale has an origin
  *
  * Sets whether the scale has an origin.
  *
- * If [property@Gtk.Scale:has-origin] is set to %TRUE (the default),
+ * If [property@Gtk.Scale:has-origin] is set to true (the default),
  * the scale will highlight the part of the trough between the origin
  * (bottom or left side) and the current value.
  */
@@ -1181,7 +1181,7 @@ gtk_scale_set_has_origin (GtkScale *scale,
  *
  * Returns whether the scale has an origin.
  *
- * Returns: %TRUE if the scale has an origin.
+ * Returns: true if the scale has an origin.
  */
 gboolean
 gtk_scale_get_has_origin (GtkScale *scale)
@@ -1563,7 +1563,7 @@ gtk_scale_finalize (GObject *object)
  *
  * Returns: (transfer none) (nullable): the [class@Pango.Layout]
  *   for this scale, or %NULL if the [property@Gtk.Scale:draw-value]
- *   property is %FALSE.
+ *   property is false.
  */
 PangoLayout *
 gtk_scale_get_layout (GtkScale *scale)
@@ -1590,7 +1590,7 @@ gtk_scale_get_layout (GtkScale *scale)
  * Remember when using the `PangoLayout` function you need to
  * convert to and from pixels using `PANGO_PIXELS()` or `PANGO_SCALE`.
  *
- * If the [property@Gtk.Scale:draw-value] property is %FALSE, the return
+ * If the [property@Gtk.Scale:draw-value] property is false, the return
  * values are undefined.
  */
 void

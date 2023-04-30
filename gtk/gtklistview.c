@@ -1073,7 +1073,7 @@ gtk_list_view_set_factory (GtkListView        *self,
 /**
  * gtk_list_view_set_show_separators: (attributes org.gtk.Method.set_property=show-separators)
  * @self: a `GtkListView`
- * @show_separators: %TRUE to show separators
+ * @show_separators: true to show separators
  *
  * Sets whether the list box should show separators
  * between rows.
@@ -1104,7 +1104,7 @@ gtk_list_view_set_show_separators (GtkListView *self,
  * Returns whether the list box should show separators
  * between rows.
  *
- * Returns: %TRUE if the list box shows separators
+ * Returns: true if the list box shows separators
  */
 gboolean
 gtk_list_view_get_show_separators (GtkListView *self)
@@ -1117,7 +1117,7 @@ gtk_list_view_get_show_separators (GtkListView *self)
 /**
  * gtk_list_view_set_single_click_activate: (attributes org.gtk.Method.set_property=single-click-activate)
  * @self: a `GtkListView`
- * @single_click_activate: %TRUE to activate items on single click
+ * @single_click_activate: true to activate items on single click
  *
  * Sets whether rows should be activated on single click and
  * selected on hover.
@@ -1153,7 +1153,7 @@ gtk_list_view_set_single_click_activate (GtkListView *self,
  * Returns whether rows will be activated on single click and
  * selected on hover.
  *
- * Returns: %TRUE if rows are activated on single click
+ * Returns: true if rows are activated on single click
  */
 gboolean
 gtk_list_view_get_single_click_activate (GtkListView *self)
@@ -1166,7 +1166,7 @@ gtk_list_view_get_single_click_activate (GtkListView *self)
 /**
  * gtk_list_view_set_enable_rubberband: (attributes org.gtk.Method.set_property=enable-rubberband)
  * @self: a `GtkListView`
- * @enable_rubberband: %TRUE to enable rubberband selection
+ * @enable_rubberband: true to enable rubberband selection
  *
  * Sets whether selections can be changed by dragging with the mouse.
  */
@@ -1190,7 +1190,7 @@ gtk_list_view_set_enable_rubberband (GtkListView *self,
  *
  * Returns whether rows can be selected by dragging with the mouse.
  *
- * Returns: %TRUE if rubberband selection is enabled
+ * Returns: true if rubberband selection is enabled
  */
 gboolean
 gtk_list_view_get_enable_rubberband (GtkListView *self)

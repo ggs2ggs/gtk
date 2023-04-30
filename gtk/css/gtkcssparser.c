@@ -702,7 +702,7 @@ gtk_css_parser_consume_function (GtkCssParser *self,
  *
  * Checks if the next token is of @token_type.
  *
- * Returns: %TRUE if the next token is of @token_type
+ * Returns: true if the next token is of @token_type
  **/
 gboolean
 gtk_css_parser_has_token (GtkCssParser    *self,
@@ -722,7 +722,7 @@ gtk_css_parser_has_token (GtkCssParser    *self,
  *
  * Checks if the next token is an identifier with the given @name.
  *
- * Returns: %TRUE if the next token is an identifier with the given @name
+ * Returns: true if the next token is an identifier with the given @name
  **/
 gboolean
 gtk_css_parser_has_ident (GtkCssParser *self,
@@ -754,7 +754,7 @@ gtk_css_parser_has_integer (GtkCssParser *self)
  *
  * Checks if the next token is a function with the given @name.
  *
- * Returns: %TRUE if the next token is a function with the given @name
+ * Returns: true if the next token is a function with the given @name
  */
 gboolean
 gtk_css_parser_has_function (GtkCssParser *self,
@@ -775,12 +775,12 @@ gtk_css_parser_has_function (GtkCssParser *self,
  *
  * Checks if the current token is a delimiter matching the given
  * @codepoint. If that is the case, the token is consumed and
- * %TRUE is returned.
+ * true is returned.
  *
  * Keep in mind that not every unicode codepoint can be a delim
  * token.
  *
- * Returns: %TRUE if the token matched and was consumed.
+ * Returns: true if the token matched and was consumed.
  **/
 gboolean
 gtk_css_parser_try_delim (GtkCssParser *self,
@@ -805,9 +805,9 @@ gtk_css_parser_try_delim (GtkCssParser *self,
  *
  * Checks if the current token is an identifier matching the given
  * @ident string. If that is the case, the token is consumed
- * and %TRUE is returned.
+ * and true is returned.
  *
- * Returns: %TRUE if the token matched and was consumed.
+ * Returns: true if the token matched and was consumed.
  **/
 gboolean
 gtk_css_parser_try_ident (GtkCssParser *self,
@@ -832,9 +832,9 @@ gtk_css_parser_try_ident (GtkCssParser *self,
  *
  * Checks if the current token is an at-keyword token with the
  * given @keyword. If that is the case, the token is consumed
- * and %TRUE is returned.
+ * and true is returned.
  *
- * Returns: %TRUE if the token matched and was consumed.
+ * Returns: true if the token matched and was consumed.
  **/
 gboolean
 gtk_css_parser_try_at_keyword (GtkCssParser *self,
@@ -864,7 +864,7 @@ gtk_css_parser_try_at_keyword (GtkCssParser *self,
  *   ... parse one element ...
  * } while (gtk_css_parser_try_token (parser, GTK_CSS_TOKEN_COMMA);
  *
- * Returns: %TRUE if a token was consumed
+ * Returns: true if a token was consumed
  **/
 gboolean
 gtk_css_parser_try_token (GtkCssParser    *self,

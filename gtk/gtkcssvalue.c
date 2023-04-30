@@ -324,7 +324,7 @@ _gtk_css_value_print (const GtkCssValue *value,
  *
  * Use gtk_css_value_get_dynamic_value() to get the value for a given timestamp.
  *
- * Returns %TRUE if the value is dynamic
+ * Returns true if the value is dynamic
  */
 gboolean
 gtk_css_value_is_dynamic (const GtkCssValue *value)

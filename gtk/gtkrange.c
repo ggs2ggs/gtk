@@ -343,8 +343,8 @@ gtk_range_class_init (GtkRangeClass *class)
    *
    * It allows an application to determine the type of scroll event
    * that occurred and the resultant new value. The application can
-   * handle the event itself and return %TRUE to prevent further
-   * processing. Or, by returning %FALSE, it can pass the event to
+   * handle the event itself and return true to prevent further
+   * processing. Or, by returning false, it can pass the event to
    * other handlers until the default GTK handler is reached.
    *
    * The value parameter is unrounded. An application that overrides
@@ -352,8 +352,8 @@ gtk_range_class_init (GtkRangeClass *class)
    * to the desired number of decimal digits; the default GTK
    * handler clamps the value based on [property@Gtk.Range:round-digits].
    *
-   * Returns: %TRUE to prevent other handlers from being invoked for
-   *     the signal, %FALSE to propagate the signal further
+   * Returns: true to prevent other handlers from being invoked for
+   *     the signal, false to propagate the signal further
    */
   signals[CHANGE_VALUE] =
     g_signal_new (I_("change-value"),
@@ -381,7 +381,7 @@ gtk_range_class_init (GtkRangeClass *class)
   /**
    * GtkRange:inverted: (attributes org.gtk.Property.get=gtk_range_get_inverted org.gtk.Property.set=gtk_range_set_inverted)
    *
-   * If %TRUE, the direction in which the slider moves is inverted.
+   * If true, the direction in which the slider moves is inverted.
    */
   properties[PROP_INVERTED] =
       g_param_spec_boolean ("inverted", NULL, NULL,
@@ -784,7 +784,7 @@ update_fill_position (GtkRange *range)
 /**
  * gtk_range_set_inverted: (attributes org.gtk.Method.set_property=inverted)
  * @range: a `GtkRange`
- * @setting: %TRUE to invert the range
+ * @setting: true to invert the range
  *
  * Sets whether to invert the range.
  *
@@ -824,7 +824,7 @@ gtk_range_set_inverted (GtkRange *range,
  *
  * See [method@Gtk.Range.set_inverted].
  *
- * Returns: %TRUE if the range is inverted
+ * Returns: true if the range is inverted
  */
 gboolean
 gtk_range_get_inverted (GtkRange *range)
@@ -839,7 +839,7 @@ gtk_range_get_inverted (GtkRange *range)
 /**
  * gtk_range_set_flippable:
  * @range: a `GtkRange`
- * @flippable: %TRUE to make the range flippable
+ * @flippable: true to make the range flippable
  *
  * Sets whether the `GtkRange` respects text direction.
  *
@@ -876,7 +876,7 @@ gtk_range_set_flippable (GtkRange *range,
  *
  * See [method@Gtk.Range.set_flippable].
  *
- * Returns: %TRUE if the range is flippable
+ * Returns: true if the range is flippable
  */
 gboolean
 gtk_range_get_flippable (GtkRange *range)
@@ -891,7 +891,7 @@ gtk_range_get_flippable (GtkRange *range)
 /**
  * gtk_range_set_slider_size_fixed:
  * @range: a `GtkRange`
- * @size_fixed: %TRUE to make the slider size constant
+ * @size_fixed: true to make the slider size constant
  *
  * Sets whether the range’s slider has a fixed size, or a size that
  * depends on its adjustment’s page size.
@@ -1179,7 +1179,7 @@ gtk_range_set_show_fill_level (GtkRange *range,
  *
  * Gets whether the range displays the fill level graphically.
  *
- * Returns: %TRUE if @range shows the fill level.
+ * Returns: true if @range shows the fill level.
  */
 gboolean
 gtk_range_get_show_fill_level (GtkRange *range)
@@ -1226,7 +1226,7 @@ gtk_range_set_restrict_to_fill_level (GtkRange *range,
  *
  * Gets whether the range is restricted to the fill level.
  *
- * Returns: %TRUE if @range is restricted to the fill level.
+ * Returns: true if @range is restricted to the fill level.
  **/
 gboolean
 gtk_range_get_restrict_to_fill_level (GtkRange *range)

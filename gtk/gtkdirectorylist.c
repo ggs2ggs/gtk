@@ -35,7 +35,7 @@
  * [property@Gtk.DirectoryList:file] property is set.
  *
  * While the `GtkDirectoryList` is being filled, the
- * [property@Gtk.DirectoryList:loading] property will be set to %TRUE. You can
+ * [property@Gtk.DirectoryList:loading] property will be set to true. You can
  * listen to that property if you want to show information like a `GtkSpinner`
  * or a "Loading..." text.
  *
@@ -337,7 +337,7 @@ gtk_directory_list_class_init (GtkDirectoryListClass *class)
   /**
    * GtkDirectoryList:loading: (attributes org.gtk.Property.get=gtk_directory_list_is_loading)
    *
-   * %TRUE if files are being loaded.
+   * true if files are being loaded.
    */
   properties[PROP_LOADING] =
       g_param_spec_boolean ("loading", NULL, NULL,
@@ -347,7 +347,7 @@ gtk_directory_list_class_init (GtkDirectoryListClass *class)
   /**
    * GtkDirectoryList:monitored: (attributes org.gtk.Property.get=gtk_directory_list_get_monitored org.gtk.Property.set=gtk_directory_list_set_monitored)
    *
-   * %TRUE if the directory is monitored for changed.
+   * true if the directory is monitored for changed.
    */
   properties[PROP_MONITORED] =
       g_param_spec_boolean ("monitored", NULL, NULL,
@@ -953,14 +953,14 @@ gtk_directory_list_get_io_priority (GtkDirectoryList *self)
  * gtk_directory_list_is_loading: (attributes org.gtk.Method.get_property=loading)
  * @self: a `GtkDirectoryList`
  *
- * Returns %TRUE if the children enumeration is currently in
+ * Returns true if the children enumeration is currently in
  * progress.
  *
  * Files will be added to @self from time to time while loading is
  * going on. The order in which are added is undefined and may change
  * in between runs.
  *
- * Returns: %TRUE if @self is loading
+ * Returns: true if @self is loading
  */
 gboolean
 gtk_directory_list_is_loading (GtkDirectoryList *self)
@@ -997,7 +997,7 @@ gtk_directory_list_get_error (GtkDirectoryList *self)
 /**
  * gtk_directory_list_set_monitored: (attributes org.gtk.Method.set_property=monitored)
  * @self: a `GtkDirectoryList`
- * @monitored: %TRUE to monitor the directory for changes
+ * @monitored: true to monitor the directory for changes
  *
  * Sets whether the directory list will monitor the directory
  * for changes.
@@ -1036,7 +1036,7 @@ gtk_directory_list_set_monitored (GtkDirectoryList *self,
  * Returns whether the directory list is monitoring
  * the directory for changes.
  *
- * Returns: %TRUE if the directory is monitored
+ * Returns: true if the directory is monitored
  */
 gboolean
 gtk_directory_list_get_monitored (GtkDirectoryList *self)

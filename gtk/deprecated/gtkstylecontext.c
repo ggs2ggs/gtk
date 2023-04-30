@@ -667,10 +667,10 @@ gtk_style_context_remove_class (GtkStyleContext *context,
  * @context: a `GtkStyleContext`
  * @class_name: a class name
  *
- * Returns %TRUE if @context currently has defined the
+ * Returns true if @context currently has defined the
  * given class name.
  *
- * Returns: %TRUE if @context has @class_name defined
+ * Returns: true if @context has @class_name defined
  *
  * Deprecated: 4.10: Use [method@Gtk.Widget.has_css_class] instead
  **/
@@ -798,7 +798,7 @@ gtk_style_context_resolve_color (GtkStyleContext    *context,
  *
  * Looks up and resolves a color name in the @context color map.
  *
- * Returns: %TRUE if @color_name was found and resolved, %FALSE otherwise
+ * Returns: true if @color_name was found and resolved, false otherwise
  *
  * Deprecated: 4.10: This api will be removed in GTK 5
  */

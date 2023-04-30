@@ -464,7 +464,7 @@ gtk_print_unix_dialog_class_init (GtkPrintUnixDialogClass *class)
    /**
     * GtkPrintUnixDialog:embed-page-setup: (attributes org.gtk.Property.get=gtk_print_unix_dialog_get_embed_page_setup org.gtk.Property.set=gtk_print_unix_dialog_set_embed_page_setup)
     *
-    * %TRUE if the page setup controls are embedded.
+    * true if the page setup controls are embedded.
     */
    g_object_class_install_property (object_class,
                                    PROP_EMBED_PAGE_SETUP,
@@ -3416,7 +3416,7 @@ gtk_print_unix_dialog_get_manual_capabilities (GtkPrintUnixDialog *dialog)
 /**
  * gtk_print_unix_dialog_set_support_selection: (attributes org.gtk.Method.set_property=support-selection)
  * @dialog: a `GtkPrintUnixDialog`
- * @support_selection: %TRUE to allow print selection
+ * @support_selection: true to allow print selection
  *
  * Sets whether the print dialog allows user to print a selection.
  */
@@ -3460,7 +3460,7 @@ gtk_print_unix_dialog_get_support_selection (GtkPrintUnixDialog *dialog)
 /**
  * gtk_print_unix_dialog_set_has_selection: (attributes org.gtk.Method.set_property=has-selection)
  * @dialog: a `GtkPrintUnixDialog`
- * @has_selection: %TRUE indicates that a selection exists
+ * @has_selection: true indicates that a selection exists
  *
  * Sets whether a selection exists.
  */

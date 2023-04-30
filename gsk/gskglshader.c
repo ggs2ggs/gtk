@@ -523,7 +523,7 @@ gsk_gl_shader_new_from_resource (const char *resource_path)
  *
  * Tries to compile the @shader for the given @renderer.
  *
- * If there is a problem, this function returns %FALSE and reports
+ * If there is a problem, this function returns false and reports
  * an error. You should use this function before relying on the shader
  * for rendering and use a fallback with a simpler shader or without
  * shaders if it fails.
@@ -534,7 +534,7 @@ gsk_gl_shader_new_from_resource (const char *resource_path)
  * want to call this from the realize signal of a widget, or during
  * widget snapshot.
  *
- * Returns: %TRUE on success, %FALSE if an error occurred
+ * Returns: true on success, false if an error occurred
  */
 gboolean
 gsk_gl_shader_compile (GskGLShader  *shader,

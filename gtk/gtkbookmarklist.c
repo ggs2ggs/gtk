@@ -261,7 +261,7 @@ gtk_bookmark_list_class_init (GtkBookmarkListClass *class)
   /**
    * GtkBookmarkList:loading: (attributes org.gtk.Property.get=gtk_bookmark_list_is_loading)
    *
-   * %TRUE if files are being loaded.
+   * true if files are being loaded.
    */
   properties[PROP_LOADING] =
       g_param_spec_boolean ("loading", NULL, NULL,
@@ -599,13 +599,13 @@ gtk_bookmark_list_get_io_priority (GtkBookmarkList *self)
  * gtk_bookmark_list_is_loading: (attributes org.gtk.Method.get_property=loading)
  * @self: a `GtkBookmarkList`
  *
- * Returns %TRUE if the files are currently being loaded.
+ * Returns true if the files are currently being loaded.
  *
  * Files will be added to @self from time to time while loading is
  * going on. The order in which are added is undefined and may change
  * in between runs.
  *
- * Returns: %TRUE if @self is loading
+ * Returns: true if @self is loading
  */
 gboolean
 gtk_bookmark_list_is_loading (GtkBookmarkList *self)

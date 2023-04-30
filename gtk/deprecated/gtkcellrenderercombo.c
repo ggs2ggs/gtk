@@ -161,7 +161,7 @@ gtk_cell_renderer_combo_class_init (GtkCellRendererComboClass *klass)
   /**
    * GtkCellRendererCombo:has-entry:
    *
-   * If %TRUE, the cell renderer will include an entry and allow to enter
+   * If true, the cell renderer will include an entry and allow to enter
    * values other than the ones in the popup list.
    */
   g_object_class_install_property (object_class,

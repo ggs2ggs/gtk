@@ -2509,7 +2509,7 @@ gtk_places_view_set_search_query (GtkPlacesView *view,
  * gtk_places_view_get_loading:
  * @view: a GtkPlacesView
  *
- * Returns %TRUE if the view is loading locations.
+ * Returns true if the view is loading locations.
  */
 gboolean
 gtk_places_view_get_loading (GtkPlacesView *view)

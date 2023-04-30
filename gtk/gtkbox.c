@@ -356,8 +356,8 @@ gtk_box_new (GtkOrientation orientation,
 /**
  * gtk_box_set_homogeneous: (attributes org.gtk.Method.set_property=homogeneous)
  * @box: a `GtkBox`
- * @homogeneous: a boolean value, %TRUE to create equal allotments,
- *   %FALSE for variable allotments
+ * @homogeneous: a boolean value, true to create equal allotments,
+ *   false for variable allotments
  *
  * Sets whether or not all children of @box are given equal space
  * in the box.
@@ -387,7 +387,7 @@ gtk_box_set_homogeneous (GtkBox  *box,
  * Returns whether the box is homogeneous (all children are the
  * same size).
  *
- * Returns: %TRUE if the box is homogeneous.
+ * Returns: true if the box is homogeneous.
  */
 gboolean
 gtk_box_get_homogeneous (GtkBox *box)

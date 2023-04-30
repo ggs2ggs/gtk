@@ -2304,10 +2304,10 @@ gtk_tree_model_sort_convert_child_path_to_path (GtkTreeModelSort *tree_model_sor
  * @child_iter: A valid `GtkTreeIter` pointing to a row on the child model
  *
  * Sets @sort_iter to point to the row in @tree_model_sort that corresponds to
- * the row pointed at by @child_iter.  If @sort_iter was not set, %FALSE
+ * the row pointed at by @child_iter.  If @sort_iter was not set, false
  * is returned.  Note: a boolean is only returned since 2.14.
  *
- * Returns: %TRUE, if @sort_iter was set, i.e. if @sort_iter is a
+ * Returns: true, if @sort_iter was set, i.e. if @sort_iter is a
  * valid iterator pointer to a visible row in the child model.
  *
  * Deprecated: 4.10
@@ -2779,7 +2779,7 @@ gtk_tree_model_sort_iter_is_valid_helper (GtkTreeIter *iter,
  *
  * Checks if the given iter is a valid iter for this `GtkTreeModelSort`.
  *
- * Returns: %TRUE if the iter is valid, %FALSE if the iter is invalid.
+ * Returns: true if the iter is valid, false if the iter is invalid.
  *
  * Deprecated: 4.10
  **/

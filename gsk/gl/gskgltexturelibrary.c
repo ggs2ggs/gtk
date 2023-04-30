@@ -479,7 +479,7 @@ gsk_gl_texture_library_clear_cache (GskGLTextureLibrary *self)
  * generally means to traverse them to look for unused pixels over
  * a certain threshold and release them if necessary.
  *
- * Returns: %TRUE if any compaction occurred.
+ * Returns: true if any compaction occurred.
  */
 gboolean
 gsk_gl_texture_library_compact (GskGLTextureLibrary *self,

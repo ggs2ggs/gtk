@@ -32,7 +32,7 @@
  *
  * The model will use the filter to determine if it should include items
  * or not by calling [method@Gtk.Filter.match] for each item and only
- * keeping the ones that the function returns %TRUE for.
+ * keeping the ones that the function returns true for.
  *
  * Filters may change what items they match through their lifetime. In that
  * case, they will emit the [signal@Gtk.Filter::changed] signal to notify
@@ -121,8 +121,8 @@ gtk_filter_init (GtkFilter *self)
  *
  * Checks if the given @item is matched by the filter or not.
  *
- * Returns: %TRUE if the filter matches the item and a filter model should
- *   keep it, %FALSE if not.
+ * Returns: true if the filter matches the item and a filter model should
+ *   keep it, false if not.
  */
 gboolean
 gtk_filter_match (GtkFilter *self,

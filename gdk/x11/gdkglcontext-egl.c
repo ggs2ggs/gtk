@@ -117,7 +117,7 @@ gdk_x11_gl_context_egl_init (GdkX11GLContextEGL *self)
  *
  * Retrieves the version of the EGL implementation.
  *
- * Returns: %TRUE if EGL is available
+ * Returns: true if EGL is available
  *
  * Since: 4.4
  */

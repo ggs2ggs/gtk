@@ -1243,7 +1243,7 @@ gtk_menu_button_set_has_frame (GtkMenuButton *menu_button,
  *
  * Returns whether the button has a frame.
  *
- * Returns: %TRUE if the button has a frame
+ * Returns: true if the button has a frame
  */
 gboolean
 gtk_menu_button_get_has_frame (GtkMenuButton *menu_button)
@@ -1324,7 +1324,7 @@ gtk_menu_button_set_create_popup_func (GtkMenuButton                *menu_button
 /**
  * gtk_menu_button_set_use_underline: (attributes org.gtk.Method.set_property=use-underline)
  * @menu_button: a `GtkMenuButton`
- * @use_underline: %TRUE if underlines in the text indicate mnemonics
+ * @use_underline: true if underlines in the text indicate mnemonics
  *
  * If true, an underline in the text indicates a mnemonic.
  */
@@ -1351,7 +1351,7 @@ gtk_menu_button_set_use_underline (GtkMenuButton *menu_button,
  * Returns whether an embedded underline in the text indicates a
  * mnemonic.
  *
- * Returns: %TRUE whether an embedded underline in the text indicates
+ * Returns: true whether an embedded underline in the text indicates
  *   the mnemonic accelerator keys.
  */
 gboolean
@@ -1461,7 +1461,7 @@ gtk_menu_button_set_primary (GtkMenuButton *menu_button,
  *
  * Returns whether the menu button acts as a primary menu.
  *
- * Returns: %TRUE if the button is a primary menu
+ * Returns: true if the button is a primary menu
  *
  * Since: 4.4
  */

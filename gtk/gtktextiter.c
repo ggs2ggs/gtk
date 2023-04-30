@@ -1127,12 +1127,12 @@ gtk_text_iter_get_marks (const GtkTextIter *iter)
 /**
  * gtk_text_iter_get_toggled_tags:
  * @iter: an iterator
- * @toggled_on: %TRUE to get toggled-on tags
+ * @toggled_on: true to get toggled-on tags
  *
  * Returns a list of `GtkTextTag` that are toggled on or off at this
  * point.
  *
- * If @toggled_on is %TRUE, the list contains tags that are
+ * If @toggled_on is true, the list contains tags that are
  * toggled on. If a tag is toggled on at @iter, then some non-empty
  * range of characters following @iter has that tag applied to it.  If
  * a tag is toggled off, then some non-empty range following @iter
@@ -1190,16 +1190,16 @@ gtk_text_iter_get_toggled_tags  (const GtkTextIter  *iter,
  * @iter: an iterator
  * @tag: (nullable): a `GtkTextTag`
  *
- * Returns %TRUE if @tag is toggled on at exactly this point.
+ * Returns true if @tag is toggled on at exactly this point.
  *
- * If @tag is %NULL, returns %TRUE if any tag is toggled on at this point.
+ * If @tag is %NULL, returns true if any tag is toggled on at this point.
  *
- * Note that if this function returns %TRUE, it means that
+ * Note that if this function returns true, it means that
  * @iter is at the beginning of the tagged range, and that the
  * character at @iter is inside the tagged range. In other
  * words, unlike [method@Gtk.TextIter.ends_tag], if
- * this function returns %TRUE, [method@Gtk.TextIter.has_tag]
- * will also return %TRUE for the same parameters.
+ * this function returns true, [method@Gtk.TextIter.has_tag]
+ * will also return true for the same parameters.
  *
  * Returns: whether @iter is the start of a range tagged with @tag
  **/
@@ -1240,16 +1240,16 @@ gtk_text_iter_starts_tag (const GtkTextIter *iter,
  * @iter: an iterator
  * @tag: (nullable): a `GtkTextTag`
  *
- * Returns %TRUE if @tag is toggled off at exactly this point.
+ * Returns true if @tag is toggled off at exactly this point.
  *
- * If @tag is %NULL, returns %TRUE if any tag is toggled off at this point.
+ * If @tag is %NULL, returns true if any tag is toggled off at this point.
  *
- * Note that if this function returns %TRUE, it means that
+ * Note that if this function returns true, it means that
  * @iter is at the end of the tagged range, but that the character
  * at @iter is outside the tagged range. In other words,
  * unlike [method@Gtk.TextIter.starts_tag], if this function
- * returns %TRUE, [method@Gtk.TextIter.has_tag] will return
- * %FALSE for the same parameters.
+ * returns true, [method@Gtk.TextIter.has_tag] will return
+ * false for the same parameters.
  *
  * Returns: whether @iter is the end of a range tagged with @tag
  */
@@ -1334,7 +1334,7 @@ gtk_text_iter_toggles_tag (const GtkTextIter  *iter,
  * @iter: an iterator
  * @tag: a `GtkTextTag`
  *
- * Returns %TRUE if @iter points to a character that is part
+ * Returns true if @iter points to a character that is part
  * of a range tagged with @tag.
  *
  * See also [method@Gtk.TextIter.starts_tag] and
@@ -1418,7 +1418,7 @@ gtk_text_iter_get_tags (const GtkTextIter *iter)
 /**
  * gtk_text_iter_editable:
  * @iter: an iterator
- * @default_setting: %TRUE if text is editable by default
+ * @default_setting: true if text is editable by default
  *
  * Returns whether the character at @iter is within an editable region
  * of text.
@@ -1461,7 +1461,7 @@ gtk_text_iter_editable (const GtkTextIter *iter,
 /**
  * gtk_text_iter_can_insert:
  * @iter: an iterator
- * @default_editability: %TRUE if text is editable by default
+ * @default_editability: true if text is editable by default
  *
  * Considering the default editability of the buffer, and tags that
  * affect editability, determines whether text inserted at @iter would
@@ -1555,7 +1555,7 @@ gtk_text_iter_get_language (const GtkTextIter *iter)
  * gtk_text_iter_starts_line:
  * @iter: an iterator
  *
- * Returns %TRUE if @iter begins a paragraph.
+ * Returns true if @iter begins a paragraph.
  *
  * This is the case if [method@Gtk.TextIter.get_line_offset]
  * would return 0. However this function is potentially more
@@ -1594,7 +1594,7 @@ gtk_text_iter_starts_line (const GtkTextIter   *iter)
  * gtk_text_iter_ends_line:
  * @iter: an iterator
  *
- * Returns %TRUE if @iter points to the start of the paragraph
+ * Returns true if @iter points to the start of the paragraph
  * delimiter characters for a line.
  *
  * Delimiters will be either a newline, a carriage return, a carriage
@@ -1658,7 +1658,7 @@ gtk_text_iter_ends_line (const GtkTextIter   *iter)
  * gtk_text_iter_is_end:
  * @iter: an iterator
  *
- * Returns %TRUE if @iter is the end iterator.
+ * Returns true if @iter is the end iterator.
  *
  * This means it is one past the last dereferenceable iterator
  * in the buffer. [method@Gtk.TextIter.is_end] is the most efficient
@@ -1699,7 +1699,7 @@ gtk_text_iter_is_end (const GtkTextIter *iter)
  * gtk_text_iter_is_start:
  * @iter: an iterator
  *
- * Returns %TRUE if @iter is the first iterator in the buffer.
+ * Returns true if @iter is the first iterator in the buffer.
  *
  * Returns: whether @iter is the first in the buffer
  */
@@ -2241,7 +2241,7 @@ _gtk_text_iter_backward_indexable_segment (GtkTextIter *iter)
  * this function may actually move onto an image instead of a character,
  * if you have images in your buffer. If @iter is the end iterator or
  * one character before it, @iter will now point at the end iterator,
- * and this function returns %FALSE for convenience when writing loops.
+ * and this function returns false for convenience when writing loops.
  *
  * Returns: whether @iter moved and is dereferenceable
  */
@@ -2269,8 +2269,8 @@ gtk_text_iter_forward_char (GtkTextIter *iter)
  *
  * Moves backward by one character offset.
  *
- * Returns %TRUE if movement was possible; if @iter was the first
- * in the buffer (character offset 0), this function returns %FALSE
+ * Returns true if movement was possible; if @iter was the first
+ * in the buffer (character offset 0), this function returns false
  * for convenience when writing loops.
  *
  * Returns: whether movement was possible
@@ -2313,7 +2313,7 @@ gtk_text_iter_backward_char (GtkTextIter *iter)
  * The return value indicates whether the new position of
  * @iter is different from its original position, and dereferenceable
  * (the last iterator in the buffer is not dereferenceable). If @count
- * is 0, the function does nothing and returns %FALSE.
+ * is 0, the function does nothing and returns false.
  *
  * Returns: whether @iter moved and is dereferenceable
  */
@@ -2386,8 +2386,8 @@ gtk_text_iter_forward_chars (GtkTextIter *iter, int count)
  *
  * The return value indicates whether the iterator moved
  * onto a dereferenceable position; if the iterator didn’t move, or
- * moved onto the end iterator, then %FALSE is returned. If @count is 0,
- * the function does nothing and returns %FALSE.
+ * moved onto the end iterator, then false is returned. If @count is 0,
+ * the function does nothing and returns false.
  *
  * Returns: whether @iter moved and is dereferenceable
  */
@@ -2544,7 +2544,7 @@ gtk_text_iter_backward_text_chars (GtkTextIter *iter,
  * If the iter is already on the last line of the buffer,
  * moves the iter to the end of the current line. If after
  * the operation, the iter is at the end of the buffer and not
- * dereferenceable, returns %FALSE. Otherwise, returns %TRUE.
+ * dereferenceable, returns false. Otherwise, returns true.
  *
  * Returns: whether @iter can be dereferenced
  */
@@ -2592,11 +2592,11 @@ gtk_text_iter_forward_line (GtkTextIter *iter)
  *
  * Moves @iter to the start of the previous line.
  *
- * Returns %TRUE if @iter could be moved; i.e. if @iter was at
- * character offset 0, this function returns %FALSE. Therefore,
+ * Returns true if @iter could be moved; i.e. if @iter was at
+ * character offset 0, this function returns false. Therefore,
  * if @iter was already on line 0, but not at the start of the line,
  * @iter is snapped to the start of the line and the function returns
- * %TRUE. (Note that this implies that
+ * true. (Note that this implies that
  * in a loop calling this function, the line number may not change on
  * every iteration, if your first iteration is on line 0.)
  *
@@ -2678,8 +2678,8 @@ gtk_text_iter_backward_line (GtkTextIter *iter)
  *
  * The return value indicates whether the iterator moved
  * onto a dereferenceable position; if the iterator didn’t move, or
- * moved onto the end iterator, then %FALSE is returned. If @count is 0,
- * the function does nothing and returns %FALSE. If @count is negative,
+ * moved onto the end iterator, then false is returned. If @count is 0,
+ * the function does nothing and returns false. If @count is negative,
  * moves backward by 0 - @count lines.
  *
  * Returns: whether @iter moved and is dereferenceable
@@ -2732,8 +2732,8 @@ gtk_text_iter_forward_lines (GtkTextIter *iter, int count)
  *
  * The return value indicates whether the iterator moved
  * onto a dereferenceable position; if the iterator didn’t move, or
- * moved onto the end iterator, then %FALSE is returned. If @count is 0,
- * the function does nothing and returns %FALSE. If @count is negative,
+ * moved onto the end iterator, then false is returned. If @count is 0,
+ * the function does nothing and returns false. If @count is negative,
  * moves forward by 0 - @count lines.
  *
  * Returns: whether @iter moved and is dereferenceable
@@ -2769,8 +2769,8 @@ gtk_text_iter_backward_lines (GtkTextIter *iter, int count)
  *
  * Moves @iter to the start of the next visible line.
  *
- * Returns %TRUE if there
- * was a next line to move to, and %FALSE if @iter was simply moved to
+ * Returns true if there
+ * was a next line to move to, and false if @iter was simply moved to
  * the end of the buffer and is now not dereferenceable, or if @iter was
  * already at the end of the buffer.
  *
@@ -2806,11 +2806,11 @@ gtk_text_iter_forward_visible_line (GtkTextIter *iter)
  *
  * Moves @iter to the start of the previous visible line.
  *
- * Returns %TRUE if
+ * Returns true if
  * @iter could be moved; i.e. if @iter was at character offset 0, this
- * function returns %FALSE. Therefore if @iter was already on line 0,
+ * function returns false. Therefore if @iter was already on line 0,
  * but not at the start of the line, @iter is snapped to the start of
- * the line and the function returns %TRUE. (Note that this implies that
+ * the line and the function returns true. (Note that this implies that
  * in a loop calling this function, the line number may not change on
  * every iteration, if your first iteration is on line 0.)
  *
@@ -2852,8 +2852,8 @@ gtk_text_iter_backward_visible_line (GtkTextIter *iter)
  *
  * The return value indicates whether the iterator moved
  * onto a dereferenceable position; if the iterator didn’t move, or
- * moved onto the end iterator, then %FALSE is returned. If @count is 0,
- * the function does nothing and returns %FALSE. If @count is negative,
+ * moved onto the end iterator, then false is returned. If @count is 0,
+ * the function does nothing and returns false. If @count is negative,
  * moves backward by 0 - @count lines.
  *
  * Returns: whether @iter moved and is dereferenceable
@@ -2893,8 +2893,8 @@ gtk_text_iter_forward_visible_lines (GtkTextIter *iter,
  *
  * The return value indicates whether the iterator moved
  * onto a dereferenceable position; if the iterator didn’t move, or
- * moved onto the end iterator, then %FALSE is returned. If @count is 0,
- * the function does nothing and returns %FALSE. If @count is negative,
+ * moved onto the end iterator, then false is returned. If @count is 0,
+ * the function does nothing and returns false. If @count is negative,
  * moves forward by 0 - @count lines.
  *
  * Returns: whether @iter moved and is dereferenceable
@@ -3287,7 +3287,7 @@ move_multiple_steps (GtkTextIter *iter,
  * Word breaks are determined by Pango and should be correct
  * for nearly any language.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_forward_word_end (GtkTextIter *iter)
@@ -3307,7 +3307,7 @@ gtk_text_iter_forward_word_end (GtkTextIter *iter)
  * Word breaks are determined by Pango and should be correct
  * for nearly any language
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_backward_word_start (GtkTextIter *iter)
@@ -3326,7 +3326,7 @@ gtk_text_iter_backward_word_start (GtkTextIter *iter)
  *
  * Calls [method@Gtk.TextIter.forward_word_end] up to @count times.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_forward_word_ends (GtkTextIter      *iter,
@@ -3344,7 +3344,7 @@ gtk_text_iter_forward_word_ends (GtkTextIter      *iter,
  *
  * Calls [method@Gtk.TextIter.backward_word_start] up to @count times.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_backward_word_starts (GtkTextIter      *iter,
@@ -3367,7 +3367,7 @@ gtk_text_iter_backward_word_starts (GtkTextIter      *iter,
  * Word breaks are determined by Pango and should be correct
  * for nearly any language
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_forward_visible_word_end (GtkTextIter *iter)
@@ -3387,7 +3387,7 @@ gtk_text_iter_forward_visible_word_end (GtkTextIter *iter)
  * Word breaks are determined by Pango and should be correct
  * for nearly any language.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_backward_visible_word_start (GtkTextIter      *iter)
@@ -3402,7 +3402,7 @@ gtk_text_iter_backward_visible_word_start (GtkTextIter      *iter)
  *
  * Calls [method@Gtk.TextIter.forward_visible_word_end] up to @count times.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_forward_visible_word_ends (GtkTextIter *iter,
@@ -3420,7 +3420,7 @@ gtk_text_iter_forward_visible_word_ends (GtkTextIter *iter,
  *
  * Calls [method@Gtk.TextIter.backward_visible_word_start] up to @count times.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_backward_visible_word_starts (GtkTextIter *iter,
@@ -3440,7 +3440,7 @@ gtk_text_iter_backward_visible_word_starts (GtkTextIter *iter,
  * Word breaks are determined by Pango and should be correct
  * for nearly any language.
  *
- * Returns: %TRUE if @iter is at the start of a word
+ * Returns: true if @iter is at the start of a word
  */
 gboolean
 gtk_text_iter_starts_word (const GtkTextIter *iter)
@@ -3457,7 +3457,7 @@ gtk_text_iter_starts_word (const GtkTextIter *iter)
  * Word breaks are determined by Pango and should be correct
  * for nearly any language.
  *
- * Returns: %TRUE if @iter is at the end of a word
+ * Returns: true if @iter is at the end of a word
  */
 gboolean
 gtk_text_iter_ends_word (const GtkTextIter *iter)
@@ -3475,11 +3475,11 @@ gtk_text_iter_ends_word (const GtkTextIter *iter)
  * Word breaks are determined by Pango and should be correct
  * for nearly any language.
  *
- * Note that if [method@Gtk.TextIter.starts_word] returns %TRUE,
- * then this function returns %TRUE too, since @iter points to
+ * Note that if [method@Gtk.TextIter.starts_word] returns true,
+ * then this function returns true too, since @iter points to
  * the first character of the word.
  *
- * Returns: %TRUE if @iter is inside a word
+ * Returns: true if @iter is inside a word
  */
 gboolean
 gtk_text_iter_inside_word (const GtkTextIter *iter)
@@ -3496,7 +3496,7 @@ gtk_text_iter_inside_word (const GtkTextIter *iter)
  * Sentence boundaries are determined by Pango and
  * should be correct for nearly any language.
  *
- * Returns: %TRUE if @iter is at the start of a sentence.
+ * Returns: true if @iter is at the start of a sentence.
  */
 gboolean
 gtk_text_iter_starts_sentence (const GtkTextIter *iter)
@@ -3513,7 +3513,7 @@ gtk_text_iter_starts_sentence (const GtkTextIter *iter)
  * Sentence boundaries are determined by Pango and should
  * be correct for nearly any language.
  *
- * Returns: %TRUE if @iter is at the end of a sentence.
+ * Returns: true if @iter is at the end of a sentence.
  */
 gboolean
 gtk_text_iter_ends_sentence (const GtkTextIter *iter)
@@ -3532,7 +3532,7 @@ gtk_text_iter_ends_sentence (const GtkTextIter *iter)
  * Sentence boundaries are determined by Pango and should be correct
  * for nearly any language.
  *
- * Returns: %TRUE if @iter is inside a sentence.
+ * Returns: true if @iter is inside a sentence.
  */
 gboolean
 gtk_text_iter_inside_sentence (const GtkTextIter *iter)
@@ -3552,7 +3552,7 @@ gtk_text_iter_inside_sentence (const GtkTextIter *iter)
  * Sentence boundaries are determined by Pango and should
  * be correct for nearly any language.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_forward_sentence_end (GtkTextIter *iter)
@@ -3572,7 +3572,7 @@ gtk_text_iter_forward_sentence_end (GtkTextIter *iter)
  * Sentence boundaries are determined by Pango and should
  * be correct for nearly any language.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_backward_sentence_start (GtkTextIter *iter)
@@ -3592,7 +3592,7 @@ gtk_text_iter_backward_sentence_start (GtkTextIter *iter)
  *
  * If @count is negative, moves backward instead of forward.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_forward_sentence_ends (GtkTextIter      *iter,
@@ -3612,7 +3612,7 @@ gtk_text_iter_forward_sentence_ends (GtkTextIter      *iter,
  *
  * If @count is negative, moves forward instead of backward.
  *
- * Returns: %TRUE if @iter moved and is not the end iterator
+ * Returns: true if @iter moved and is not the end iterator
  */
 gboolean
 gtk_text_iter_backward_sentence_starts (GtkTextIter *iter,
@@ -3700,7 +3700,7 @@ is_cursor_pos_func (const PangoLogAttr *attrs,
  * See also the [struct@Pango.LogAttr] struct and the [func@Pango.break]
  * function.
  *
- * Returns: %TRUE if we moved and the new position is dereferenceable
+ * Returns: true if we moved and the new position is dereferenceable
  */
 gboolean
 gtk_text_iter_forward_cursor_position (GtkTextIter *iter)
@@ -3714,7 +3714,7 @@ gtk_text_iter_forward_cursor_position (GtkTextIter *iter)
  *
  * Like [method@Gtk.TextIter.forward_cursor_position], but moves backward.
  *
- * Returns: %TRUE if we moved
+ * Returns: true if we moved
  */
 gboolean
 gtk_text_iter_backward_cursor_position (GtkTextIter *iter)
@@ -3731,7 +3731,7 @@ gtk_text_iter_backward_cursor_position (GtkTextIter *iter)
  *
  * See [method@Gtk.TextIter.forward_cursor_position] for details.
  *
- * Returns: %TRUE if we moved and the new position is dereferenceable
+ * Returns: true if we moved and the new position is dereferenceable
  */
 gboolean
 gtk_text_iter_forward_cursor_positions (GtkTextIter *iter,
@@ -3751,7 +3751,7 @@ gtk_text_iter_forward_cursor_positions (GtkTextIter *iter,
  *
  * See [method@Gtk.TextIter.forward_cursor_position] for details.
  *
- * Returns: %TRUE if we moved and the new position is dereferenceable
+ * Returns: true if we moved and the new position is dereferenceable
  */
 gboolean
 gtk_text_iter_backward_cursor_positions (GtkTextIter *iter,
@@ -3770,7 +3770,7 @@ gtk_text_iter_backward_cursor_positions (GtkTextIter *iter,
  *
  * See [method@Gtk.TextIter.forward_cursor_position] for details.
  *
- * Returns: %TRUE if we moved and the new position is dereferenceable
+ * Returns: true if we moved and the new position is dereferenceable
  */
 gboolean
 gtk_text_iter_forward_visible_cursor_position (GtkTextIter *iter)
@@ -3786,7 +3786,7 @@ gtk_text_iter_forward_visible_cursor_position (GtkTextIter *iter)
  *
  * See [method@Gtk.TextIter.backward_cursor_position] for details.
  *
- * Returns: %TRUE if we moved and the new position is dereferenceable
+ * Returns: true if we moved and the new position is dereferenceable
  */
 gboolean
 gtk_text_iter_backward_visible_cursor_position (GtkTextIter *iter)
@@ -3803,7 +3803,7 @@ gtk_text_iter_backward_visible_cursor_position (GtkTextIter *iter)
  *
  * See [method@Gtk.TextIter.forward_cursor_position] for details.
  *
- * Returns: %TRUE if we moved and the new position is dereferenceable
+ * Returns: true if we moved and the new position is dereferenceable
  */
 gboolean
 gtk_text_iter_forward_visible_cursor_positions (GtkTextIter *iter,
@@ -3823,7 +3823,7 @@ gtk_text_iter_forward_visible_cursor_positions (GtkTextIter *iter,
  *
  * See [method@Gtk.TextIter.backward_cursor_position] for details.
  *
- * Returns: %TRUE if we moved and the new position is dereferenceable
+ * Returns: true if we moved and the new position is dereferenceable
  */
 gboolean
 gtk_text_iter_backward_visible_cursor_positions (GtkTextIter *iter,
@@ -3844,7 +3844,7 @@ gtk_text_iter_backward_visible_cursor_positions (GtkTextIter *iter,
  * [struct@Pango.LogAttr] or [func@Pango.break] for details
  * on what a cursor position is.
  *
- * Returns: %TRUE if the cursor can be placed at @iter
+ * Returns: true if the cursor can be placed at @iter
  */
 gboolean
 gtk_text_iter_is_cursor_position (const GtkTextIter *iter)
@@ -4193,9 +4193,9 @@ find_paragraph_delimiter_for_line (GtkTextIter *iter)
  * characters, moves to the paragraph delimiter characters for the
  * next line. If @iter is on the last line in the buffer, which does
  * not end in paragraph delimiters, moves to the end iterator (end of
- * the last line), and returns %FALSE.
+ * the last line), and returns false.
  *
- * Returns: %TRUE if we moved and the new location is not the end iterator
+ * Returns: true if we moved and the new location is not the end iterator
  */
 gboolean
 gtk_text_iter_forward_to_line_end (GtkTextIter *iter)
@@ -4242,7 +4242,7 @@ gtk_text_iter_forward_to_line_end (GtkTextIter *iter)
  * @tag is %NULL.
  *
  * If no matching tag toggles are found,
- * returns %FALSE, otherwise %TRUE. Does not return toggles
+ * returns false, otherwise true. Does not return toggles
  * located at @iter, only toggles after @iter. Sets @iter to
  * the location of the toggle, or to the end of the buffer
  * if no toggle is found.
@@ -4329,7 +4329,7 @@ gtk_text_iter_forward_to_tag_toggle (GtkTextIter *iter,
  * @tag is %NULL.
  *
  * If no matching tag toggles are found,
- * returns %FALSE, otherwise %TRUE. Does not return toggles
+ * returns false, otherwise true. Does not return toggles
  * located at @iter, only toggles before @iter. Sets @iter
  * to the location of the toggle, or the start of the buffer
  * if no toggle is found.
@@ -4443,8 +4443,8 @@ matches_pred (GtkTextIter *iter,
  *
  * Advances @iter, calling @pred on each character.
  *
- * If @pred returns %TRUE, returns %TRUE and stops scanning.
- * If @pred never returns %TRUE, @iter is set to @limit if
+ * If @pred returns true, returns true and stops scanning.
+ * If @pred never returns true, @iter is set to @limit if
  * @limit is non-%NULL, otherwise to the end iterator.
  *
  * Returns: whether a match was found
@@ -5445,7 +5445,7 @@ gtk_text_iter_backward_search (const GtkTextIter *iter,
  * iterator and comparing the offsets yourself. Also, it’s a
  * bit faster than [method@Gtk.TextIter.compare].
  *
- * Returns: %TRUE if the iterators point to the same place in the buffer
+ * Returns: true if the iterators point to the same place in the buffer
  **/
 gboolean
 gtk_text_iter_equal (const GtkTextIter *lhs,
@@ -5576,7 +5576,7 @@ gtk_text_iter_compare (const GtkTextIter *lhs,
  *
  * @start and @end must be in ascending order.
  *
- * Returns: %TRUE if @iter is in the range
+ * Returns: true if @iter is in the range
  */
 gboolean
 gtk_text_iter_in_range (const GtkTextIter *iter,

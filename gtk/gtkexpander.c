@@ -367,7 +367,7 @@ gtk_expander_class_init (GtkExpanderClass *klass)
   /**
    * GtkExpander:resize-toplevel: (attributes org.gtk.Property.get=gtk_expander_get_resize_toplevel org.gtk.Property.set=gtk_expander_set_resize_toplevel)
    *
-   * When this property is %TRUE, the expander will resize the toplevel
+   * When this property is true, the expander will resize the toplevel
    * widget containing the expander upon expanding and collapsing.
    */
   g_object_class_install_property (gobject_class,
@@ -863,8 +863,8 @@ gtk_expander_new_with_mnemonic (const char *label)
  *
  * Sets the state of the expander.
  *
- * Set to %TRUE, if you want the child widget to be revealed,
- * and %FALSE if you want the child widget to be hidden.
+ * Set to true, if you want the child widget to be revealed,
+ * and false if you want the child widget to be hidden.
  */
 void
 gtk_expander_set_expanded (GtkExpander *expander,
@@ -919,7 +919,7 @@ gtk_expander_set_expanded (GtkExpander *expander,
  *
  * Queries a `GtkExpander` and returns its current state.
  *
- * Returns %TRUE if the child widget is revealed.
+ * Returns true if the child widget is revealed.
  *
  * Returns: the current state of the expander
  */
@@ -993,7 +993,7 @@ gtk_expander_get_label (GtkExpander *expander)
 /**
  * gtk_expander_set_use_underline: (attributes org.gtk.Method.set_property=use-underline)
  * @expander: a `GtkExpander`
- * @use_underline: %TRUE if underlines in the text indicate mnemonics
+ * @use_underline: true if underlines in the text indicate mnemonics
  *
  * If true, an underline in the text indicates a mnemonic.
  */
@@ -1022,7 +1022,7 @@ gtk_expander_set_use_underline (GtkExpander *expander,
  *
  * Returns whether an underline in the text indicates a mnemonic.
  *
- * Returns: %TRUE if an embedded underline in the expander
+ * Returns: true if an embedded underline in the expander
  *   label indicates the mnemonic accelerator keys
  */
 gboolean
@@ -1036,7 +1036,7 @@ gtk_expander_get_use_underline (GtkExpander *expander)
 /**
  * gtk_expander_set_use_markup: (attributes org.gtk.Method.set_property=use-markup)
  * @expander: a `GtkExpander`
- * @use_markup: %TRUE if the label’s text should be parsed for markup
+ * @use_markup: true if the label’s text should be parsed for markup
  *
  * Sets whether the text of the label contains Pango markup.
  */
@@ -1065,7 +1065,7 @@ gtk_expander_set_use_markup (GtkExpander *expander,
  *
  * Returns whether the label’s text is interpreted as Pango markup.
  *
- * Returns: %TRUE if the label’s text will be parsed for markup
+ * Returns: true if the label’s text will be parsed for markup
  */
 gboolean
 gtk_expander_get_use_markup (GtkExpander *expander)

@@ -399,7 +399,7 @@ gdk_content_formats_contain_interned_mime_type (const GdkContentFormats *formats
  *
  * Checks if @first and @second have any matching formats.
  *
- * Returns: %TRUE if a matching format was found.
+ * Returns: true if a matching format was found.
  */
 gboolean
 gdk_content_formats_match (const GdkContentFormats *first,
@@ -479,7 +479,7 @@ gdk_content_formats_match_mime_type (const GdkContentFormats *first,
  *
  * Checks if a given `GType` is part of the given @formats.
  *
- * Returns: %TRUE if the `GType` was found
+ * Returns: true if the `GType` was found
  */
 gboolean
 gdk_content_formats_contain_gtype (const GdkContentFormats *formats,
@@ -505,7 +505,7 @@ gdk_content_formats_contain_gtype (const GdkContentFormats *formats,
  *
  * Checks if a given mime type is part of the given @formats.
  *
- * Returns: %TRUE if the mime_type was found
+ * Returns: true if the mime_type was found
  */
 gboolean
 gdk_content_formats_contain_mime_type (const GdkContentFormats *formats,

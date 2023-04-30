@@ -205,9 +205,9 @@ gtk_print_settings_unset (GtkPrintSettings *settings,
  * @settings: a `GtkPrintSettings`
  * @key: a key
  *
- * Returns %TRUE, if a value is associated with @key.
+ * Returns true, if a value is associated with @key.
  *
- * Returns: %TRUE, if @key has a value
+ * Returns: true, if @key has a value
  */
 gboolean        
 gtk_print_settings_has_key (GtkPrintSettings *settings,
@@ -225,10 +225,10 @@ gtk_print_settings_has_key (GtkPrintSettings *settings,
  * Returns the boolean represented by the value
  * that is associated with @key.
  *
- * The string “true” represents %TRUE, any other
- * string %FALSE.
+ * The string “true” represents true, any other
+ * string false.
  *
- * Returns: %TRUE, if @key maps to a true value.
+ * Returns: true, if @key maps to a true value.
  */
 gboolean
 gtk_print_settings_get_bool (GtkPrintSettings *settings,
@@ -253,8 +253,8 @@ gtk_print_settings_get_bool (GtkPrintSettings *settings,
  * that is associated with @key, or @default_val
  * if the value does not represent a boolean.
  *
- * The string “true” represents %TRUE, the string
- * “false” represents %FALSE.
+ * The string “true” represents true, the string
+ * “false” represents false.
  *
  * Returns: the boolean value associated with @key
  */
@@ -1566,7 +1566,7 @@ gtk_print_settings_set_output_bin (GtkPrintSettings *settings,
  *
  * See [method@Gtk.PrintSettings.to_file].
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_print_settings_load_file (GtkPrintSettings *settings,
@@ -1633,7 +1633,7 @@ gtk_print_settings_new_from_file (const char   *file_name,
  * If the file could not be loaded then error is set to either a
  * `GFileError` or `GKeyFileError`.
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_print_settings_load_key_file (GtkPrintSettings *settings,
@@ -1724,7 +1724,7 @@ gtk_print_settings_new_from_key_file (GKeyFile     *key_file,
  * If the file could not be written then error is set to either a
  * `GFileError` or `GKeyFileError`.
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gtk_print_settings_to_file (GtkPrintSettings  *settings,

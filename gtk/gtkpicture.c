@@ -875,13 +875,13 @@ gtk_picture_get_paintable (GtkPicture *self)
  * @self: a `GtkPicture`
  * @keep_aspect_ratio: whether to keep aspect ratio
  *
- * If set to %TRUE, the @self will render its contents according to
+ * If set to true, the @self will render its contents according to
  * their aspect ratio.
  *
  * That means that empty space may show up at the top/bottom or
  * left/right of @self.
  *
- * If set to %FALSE or if the contents provide no aspect ratio,
+ * If set to false or if the contents provide no aspect ratio,
  * the contents will be stretched over the picture's whole area.
  *
  * Deprecated: 4.8: Use [method@Gtk.Picture.set_content_fit] instead. If still
@@ -905,7 +905,7 @@ gtk_picture_set_keep_aspect_ratio (GtkPicture *self,
  *
  * Returns whether the `GtkPicture` preserves its contents aspect ratio.
  *
- * Returns: %TRUE if the self tries to keep the contents' aspect ratio
+ * Returns: true if the self tries to keep the contents' aspect ratio
  *
  * Deprecated: 4.8: Use [method@Gtk.Picture.get_content_fit] instead. This will
  *   now return `FALSE` only if [property@Gtk.Picture:content-fit] is
@@ -924,7 +924,7 @@ gtk_picture_get_keep_aspect_ratio (GtkPicture *self)
  * @self: a `GtkPicture`
  * @can_shrink: if @self can be made smaller than its contents
  *
- * If set to %TRUE, the @self can be made smaller than its contents.
+ * If set to true, the @self can be made smaller than its contents.
  *
  * The contents will then be scaled down when rendering.
  *
@@ -957,7 +957,7 @@ gtk_picture_set_can_shrink (GtkPicture *self,
  *
  * Returns whether the `GtkPicture` respects its contents size.
  *
- * Returns: %TRUE if the picture can be made smaller than its contents
+ * Returns: true if the picture can be made smaller than its contents
  */
 gboolean
 gtk_picture_get_can_shrink (GtkPicture *self)

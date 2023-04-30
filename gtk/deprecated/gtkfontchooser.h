@@ -39,7 +39,7 @@ G_BEGIN_DECLS
  *
  * See [method@Gtk.FontChooser.set_filter_func].
  *
- * Returns: %TRUE if the font should be displayed
+ * Returns: true if the font should be displayed
  */
 typedef gboolean (*GtkFontFilterFunc) (const PangoFontFamily *family,
                                        const PangoFontFace   *face,

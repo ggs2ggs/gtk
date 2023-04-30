@@ -1560,7 +1560,7 @@ gtk_column_view_get_columns (GtkColumnView *self)
 /**
  * gtk_column_view_set_show_row_separators: (attributes org.gtk.Method.set_property=show-row-separators)
  * @self: a `GtkColumnView`
- * @show_row_separators: %TRUE to show row separators
+ * @show_row_separators: true to show row separators
  *
  * Sets whether the list should show separators
  * between rows.
@@ -1586,7 +1586,7 @@ gtk_column_view_set_show_row_separators (GtkColumnView *self,
  * Returns whether the list should show separators
  * between rows.
  *
- * Returns: %TRUE if the list shows separators
+ * Returns: true if the list shows separators
  */
 gboolean
 gtk_column_view_get_show_row_separators (GtkColumnView *self)
@@ -1599,7 +1599,7 @@ gtk_column_view_get_show_row_separators (GtkColumnView *self)
 /**
  * gtk_column_view_set_show_column_separators: (attributes org.gtk.Method.set_property=show-column-separators)
  * @self: a `GtkColumnView`
- * @show_column_separators: %TRUE to show column separators
+ * @show_column_separators: true to show column separators
  *
  * Sets whether the list should show separators
  * between columns.
@@ -1630,7 +1630,7 @@ gtk_column_view_set_show_column_separators (GtkColumnView *self,
  * Returns whether the list should show separators
  * between columns.
  *
- * Returns: %TRUE if the list shows column separators
+ * Returns: true if the list shows column separators
  */
 gboolean
 gtk_column_view_get_show_column_separators (GtkColumnView *self)
@@ -1909,7 +1909,7 @@ gtk_column_view_sort_by_column (GtkColumnView       *self,
 /**
  * gtk_column_view_set_single_click_activate: (attributes org.gtk.Method.set_property=single-click-activate)
  * @self: a `GtkColumnView`
- * @single_click_activate: %TRUE to activate items on single click
+ * @single_click_activate: true to activate items on single click
  *
  * Sets whether rows should be activated on single click and
  * selected on hover.
@@ -1935,7 +1935,7 @@ gtk_column_view_set_single_click_activate (GtkColumnView *self,
  * Returns whether rows will be activated on single click and
  * selected on hover.
  *
- * Returns: %TRUE if rows are activated on single click
+ * Returns: true if rows are activated on single click
  */
 gboolean
 gtk_column_view_get_single_click_activate (GtkColumnView *self)
@@ -1972,7 +1972,7 @@ gtk_column_view_set_reorderable (GtkColumnView *self,
  *
  * Returns whether columns are reorderable.
  *
- * Returns: %TRUE if columns are reorderable
+ * Returns: true if columns are reorderable
  */
 gboolean
 gtk_column_view_get_reorderable (GtkColumnView *self)
@@ -1985,7 +1985,7 @@ gtk_column_view_get_reorderable (GtkColumnView *self)
 /**
  * gtk_column_view_set_enable_rubberband: (attributes org.gtk.Method.set_property=enable-rubberband)
  * @self: a `GtkColumnView`
- * @enable_rubberband: %TRUE to enable rubberband selection
+ * @enable_rubberband: true to enable rubberband selection
  *
  * Sets whether selections can be changed by dragging with the mouse.
  */
@@ -2009,7 +2009,7 @@ gtk_column_view_set_enable_rubberband (GtkColumnView *self,
  *
  * Returns whether rows can be selected by dragging with the mouse.
  *
- * Returns: %TRUE if rubberband selection is enabled
+ * Returns: true if rubberband selection is enabled
  */
 gboolean
 gtk_column_view_get_enable_rubberband (GtkColumnView *self)

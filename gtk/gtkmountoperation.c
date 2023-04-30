@@ -1728,7 +1728,7 @@ gtk_mount_operation_new (GtkWindow *parent)
  * Returns whether the `GtkMountOperation` is currently displaying
  * a window.
  *
- * Returns: %TRUE if @op is currently displaying a window
+ * Returns: true if @op is currently displaying a window
  */
 gboolean
 gtk_mount_operation_is_showing (GtkMountOperation *op)

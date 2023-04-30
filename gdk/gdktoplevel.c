@@ -341,7 +341,7 @@ gdk_toplevel_present (GdkToplevel       *toplevel,
  *
  * The windowing system may choose to ignore the request.
  *
- * Returns: %TRUE if the surface was minimized
+ * Returns: true if the surface was minimized
  */
 gboolean
 gdk_toplevel_minimize (GdkToplevel *toplevel)
@@ -359,7 +359,7 @@ gdk_toplevel_minimize (GdkToplevel *toplevel)
  *
  * The windowing system may choose to ignore the request.
  *
- * Returns: %TRUE if the surface was lowered
+ * Returns: true if the surface was lowered
  */
 gboolean
 gdk_toplevel_lower (GdkToplevel *toplevel)
@@ -475,7 +475,7 @@ gdk_toplevel_set_transient_for (GdkToplevel *toplevel,
 /**
  * gdk_toplevel_set_modal: (attributes org.gtk.Method.set_property=modal)
  * @toplevel: a `GdkToplevel`
- * @modal: %TRUE if the surface is modal, %FALSE otherwise.
+ * @modal: true if the surface is modal, false otherwise.
  *
  * Sets the toplevel to be modal.
  *
@@ -533,7 +533,7 @@ gdk_toplevel_set_icon_list (GdkToplevel *toplevel,
  * for windows using client-side decorations, activating it with a
  * right-click on the window decorations.
  *
- * Returns: %TRUE if the window menu was shown and %FALSE otherwise.
+ * Returns: true if the window menu was shown and false otherwise.
  */
 gboolean
 gdk_toplevel_show_window_menu (GdkToplevel *toplevel,
@@ -547,11 +547,11 @@ gdk_toplevel_show_window_menu (GdkToplevel *toplevel,
 /**
  * gdk_toplevel_set_decorated: (attributes org.gtk.Method.set_property=decorated)
  * @toplevel: a `GdkToplevel`
- * @decorated: %TRUE to request decorations
+ * @decorated: true to request decorations
  *
  * Sets the toplevel to be decorated.
  *
- * Setting @decorated to %FALSE hints the desktop environment
+ * Setting @decorated to false hints the desktop environment
  * that the surface has its own, client-side decorations and
  * does not need to have window decorations added.
  */
@@ -567,11 +567,11 @@ gdk_toplevel_set_decorated (GdkToplevel *toplevel,
 /**
  * gdk_toplevel_set_deletable: (attributes org.gtk.Method.set_property=deletable)
  * @toplevel: a `GdkToplevel`
- * @deletable: %TRUE to request a delete button
+ * @deletable: true to request a delete button
  *
  * Sets the toplevel to be deletable.
  *
- * Setting @deletable to %TRUE hints the desktop environment
+ * Setting @deletable to true hints the desktop environment
  * that it should offer the user a way to close the surface.
  */
 void
@@ -590,7 +590,7 @@ gdk_toplevel_set_deletable (GdkToplevel *toplevel,
  * Returns whether the desktop environment supports
  * tiled window states.
  *
- * Returns: %TRUE if the desktop environment supports tiled window states
+ * Returns: true if the desktop environment supports tiled window states
  */
 gboolean
 gdk_toplevel_supports_edge_constraints (GdkToplevel *toplevel)

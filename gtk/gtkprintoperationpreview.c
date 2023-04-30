@@ -169,7 +169,7 @@ gtk_print_operation_preview_end_preview (GtkPrintOperationPreview *preview)
  * Returns whether the given page is included in the set of pages that
  * have been selected for printing.
  *
- * Returns: %TRUE if the page has been selected for printing
+ * Returns: true if the page has been selected for printing
  */
 gboolean
 gtk_print_operation_preview_is_selected (GtkPrintOperationPreview *preview,

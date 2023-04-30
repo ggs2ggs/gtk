@@ -390,7 +390,7 @@ gtk_list_item_get_position (GtkListItem *self)
  * The selected state is maintained by the liste widget and its model
  * and cannot be set otherwise.
  *
- * Returns: %TRUE if the item is selected.
+ * Returns: true if the item is selected.
  */
 gboolean
 gtk_list_item_get_selected (GtkListItem *self)
@@ -414,7 +414,7 @@ gtk_list_item_get_selected (GtkListItem *self)
  *
  * Do not confuse this function with [method@Gtk.ListItem.get_selected].
  *
- * Returns: %TRUE if the item is selectable
+ * Returns: true if the item is selectable
  */
 gboolean
 gtk_list_item_get_selectable (GtkListItem *self)
@@ -466,7 +466,7 @@ gtk_list_item_set_selectable (GtkListItem *self,
  * Checks if a list item has been set to be activatable via
  * gtk_list_item_set_activatable().
  *
- * Returns: %TRUE if the item is activatable
+ * Returns: true if the item is activatable
  */
 gboolean
 gtk_list_item_get_activatable (GtkListItem *self)
@@ -515,7 +515,7 @@ gtk_list_item_set_activatable (GtkListItem *self,
  * Checks if a list item has been set to be focusable via
  * gtk_list_item_set_focusable().
  *
- * Returns: %TRUE if the item is focusable
+ * Returns: true if the item is focusable
  *
  * Since: 4.12
  */

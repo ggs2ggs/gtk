@@ -173,8 +173,8 @@ gtk_accessible_value_to_string (const GtkAccessibleValue *self)
  *
  * This function is %NULL-safe.
  *
- * Returns: %TRUE if the given `GtkAccessibleValue` instances are equal,
- *   and %FALSE otherwise
+ * Returns: true if the given `GtkAccessibleValue` instances are equal,
+ *   and false otherwise
  */
 gboolean
 gtk_accessible_value_equal (const GtkAccessibleValue *value_a,

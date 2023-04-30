@@ -138,10 +138,10 @@ G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GtkIMContext, gtk_im_context, G_TYPE_OBJECT
  * @filter_keypress: Called via [method@Gtk.IMContext.filter_keypress] on every
  *   key press or release event. Every non-trivial input method needs to
  *   override this in order to implement the mapping from key events to text.
- *   A return value of %TRUE indicates to the caller that the event was
+ *   A return value of true indicates to the caller that the event was
  *   consumed by the input method. In that case, the [signal@Gtk.IMContext::commit]
  *   signal should be emitted upon completion of a key sequence to pass the
- *   resulting text back to the input widget. Alternatively, %FALSE may be
+ *   resulting text back to the input widget. Alternatively, false may be
  *   returned to indicate that the event wasn’t handled by the input method.
  *   If a builtin mapping exists for the key, it is used to produce a
  *   character.
@@ -284,7 +284,7 @@ gtk_im_context_class_init (GtkIMContextClass *klass)
    * The callback should set the input method surrounding context by
    * calling the [method@Gtk.IMContext.set_surrounding] method.
    *
-   * Returns: %TRUE if the signal was handled.
+   * Returns: true if the signal was handled.
    */
   im_context_signals[RETRIEVE_SURROUNDING] =
     g_signal_new (I_("retrieve-surrounding"),
@@ -309,7 +309,7 @@ gtk_im_context_class_init (GtkIMContextClass *klass)
    * The ::delete-surrounding signal is emitted when the input method
    * needs to delete all or part of the context surrounding the cursor.
    *
-   * Returns: %TRUE if the signal was handled.
+   * Returns: true if the signal was handled.
    */
   im_context_signals[DELETE_SURROUNDING] =
     g_signal_new (I_("delete-surrounding"),
@@ -515,10 +515,10 @@ gtk_im_context_get_preedit_string (GtkIMContext   *context,
  * Allow an input method to internally handle key press and release
  * events.
  *
- * If this function returns %TRUE, then no further processing
+ * If this function returns true, then no further processing
  * should be done for this key event.
  *
- * Returns: %TRUE if the input method handled the key event.
+ * Returns: true if the input method handled the key event.
  */
 gboolean
 gtk_im_context_filter_keypress (GtkIMContext *context,
@@ -548,7 +548,7 @@ gtk_im_context_filter_keypress (GtkIMContext *context,
  * to another input method without necessarily having a `GdkEvent`
  * available.
  *
- * Returns: %TRUE if the input method handled the key event.
+ * Returns: true if the input method handled the key event.
  */
 gboolean
 gtk_im_context_filter_key (GtkIMContext    *context,
@@ -715,7 +715,7 @@ gtk_im_context_set_cursor_location (GtkIMContext       *context,
  * Sets whether the IM context should use the preedit string
  * to display feedback.
  *
- * If @use_preedit is %FALSE (default is %TRUE), then the IM context
+ * If @use_preedit is false (default is true), then the IM context
  * may use some other method to display feedback, such as displaying
  * it in a child of the root window.
  */
@@ -805,7 +805,7 @@ gtk_im_context_set_surrounding_with_selection (GtkIMContext  *context,
  * @context: a `GtkIMContext`
  * @text: (out) (transfer full): location to store a UTF-8 encoded
  *   string of text holding context around the insertion point.
- *   If the function returns %TRUE, then you must free the result
+ *   If the function returns true, then you must free the result
  *   stored in this location with g_free().
  * @cursor_index: (out): location to store byte index of the insertion
  *   cursor within @text.
@@ -847,7 +847,7 @@ gtk_im_context_get_surrounding (GtkIMContext  *context,
  * @context: a `GtkIMContext`
  * @text: (out) (transfer full): location to store a UTF-8 encoded
  *   string of text holding context around the insertion point.
- *   If the function returns %TRUE, then you must free the result
+ *   If the function returns true, then you must free the result
  *   stored in this location with g_free().
  * @cursor_index: (out): location to store byte index of the insertion
  *   cursor within @text.
@@ -937,7 +937,7 @@ gtk_im_context_get_surrounding_with_selection (GtkIMContext  *context,
  * substitutions in the existing text in response to new input.
  * It is not useful for applications.
  *
- * Returns: %TRUE if the signal was handled.
+ * Returns: true if the signal was handled.
  */
 gboolean
 gtk_im_context_delete_surrounding (GtkIMContext *context,

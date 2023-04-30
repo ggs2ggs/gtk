@@ -162,14 +162,14 @@ struct _GtkWidget
  *   interpreted as width or height. A widget will never be allocated less
  *   than its minimum size.
  * @mnemonic_activate: Activates the @widget if @group_cycling is
- *   %FALSE, and just grabs the focus if @group_cycling is %TRUE.
+ *   false, and just grabs the focus if @group_cycling is true.
  * @grab_focus: Causes @widget to have the keyboard focus for the
  *   `GtkWindow` it’s inside.
  * @focus: Vfunc for gtk_widget_child_focus()
  * @set_focus_child: Sets the focused child of a widget. Must chain up
  * @move_focus: Signal emitted when a change of focus is requested
  * @keynav_failed: Signal emitted if keyboard navigation fails.
- * @query_tooltip: Signal emitted when “has-tooltip” is %TRUE and the
+ * @query_tooltip: Signal emitted when “has-tooltip” is true and the
  *   hover timeout has expired with the cursor hovering “above”
  *   widget; or emitted when widget got focus in keyboard mode.
  * @compute_expand: Computes whether a container should give this

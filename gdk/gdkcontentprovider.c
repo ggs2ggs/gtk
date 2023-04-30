@@ -322,7 +322,7 @@ gdk_content_provider_write_mime_type_async (GdkContentProvider  *provider,
  *
  * See [method@Gdk.ContentProvider.write_mime_type_async].
  *
- * Returns: %TRUE if the operation was completed successfully. Otherwise
+ * Returns: true if the operation was completed successfully. Otherwise
  *   @error will be set to describe the failure.
  */
 gboolean
@@ -350,7 +350,7 @@ gdk_content_provider_write_mime_type_finish (GdkContentProvider  *provider,
  * given `GType` is not supported, this operation can fail and
  * `G_IO_ERROR_NOT_SUPPORTED` will be reported.
  *
- * Returns: %TRUE if the value was set successfully. Otherwise
+ * Returns: true if the value was set successfully. Otherwise
  *   @error will be set to describe the failure.
  */
 gboolean

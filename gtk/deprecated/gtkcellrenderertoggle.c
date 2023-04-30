@@ -530,11 +530,11 @@ gtk_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
 /**
  * gtk_cell_renderer_toggle_set_radio:
  * @toggle: a `GtkCellRendererToggle`
- * @radio: %TRUE to make the toggle look like a radio button
+ * @radio: true to make the toggle look like a radio button
  *
- * If @radio is %TRUE, the cell renderer renders a radio toggle
+ * If @radio is true, the cell renderer renders a radio toggle
  * (i.e. a toggle in a group of mutually-exclusive toggles).
- * If %FALSE, it renders a check toggle (a standalone boolean option).
+ * If false, it renders a check toggle (a standalone boolean option).
  * This can be set globally for the cell renderer, or changed just
  * before rendering each cell in the model (for `GtkTreeView`, you set
  * up a per-row setting using `GtkTreeViewColumn` to associate model
@@ -559,7 +559,7 @@ gtk_cell_renderer_toggle_set_radio (GtkCellRendererToggle *toggle,
  *
  * Returns whether we’re rendering radio toggles rather than checkboxes.
  *
- * Returns: %TRUE if we’re rendering radio toggles rather than checkboxes
+ * Returns: true if we’re rendering radio toggles rather than checkboxes
  *
  * Deprecated: 4.10
  **/
@@ -580,7 +580,7 @@ gtk_cell_renderer_toggle_get_radio (GtkCellRendererToggle *toggle)
  * Returns whether the cell renderer is active. See
  * gtk_cell_renderer_toggle_set_active().
  *
- * Returns: %TRUE if the cell renderer is active.
+ * Returns: true if the cell renderer is active.
  *
  * Deprecated: 4.10
  **/
@@ -619,7 +619,7 @@ gtk_cell_renderer_toggle_set_active (GtkCellRendererToggle *toggle,
  * Returns whether the cell renderer is activatable. See
  * gtk_cell_renderer_toggle_set_activatable().
  *
- * Returns: %TRUE if the cell renderer is activatable.
+ * Returns: true if the cell renderer is activatable.
  *
  * Deprecated: 4.10
  **/

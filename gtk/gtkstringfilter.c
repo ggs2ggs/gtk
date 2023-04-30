@@ -431,7 +431,7 @@ gtk_string_filter_set_expression (GtkStringFilter *self,
  *
  * Returns whether the filter ignores case differences.
  *
- * Returns: %TRUE if the filter ignores case
+ * Returns: true if the filter ignores case
  */
 gboolean
 gtk_string_filter_get_ignore_case (GtkStringFilter *self)
@@ -444,7 +444,7 @@ gtk_string_filter_get_ignore_case (GtkStringFilter *self)
 /**
  * gtk_string_filter_set_ignore_case: (attributes org.gtk.Method.set_property=ignore-case)
  * @self: a `GtkStringFilter`
- * @ignore_case: %TRUE to ignore case
+ * @ignore_case: true to ignore case
  *
  * Sets whether the filter ignores case differences.
  */

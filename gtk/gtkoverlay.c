@@ -342,7 +342,7 @@ gtk_overlay_class_init (GtkOverlayClass *klass)
    * `GtkScrolledWindow`, the overlays are placed relative
    * to its contents.
    *
-   * Returns: %TRUE if the @allocation has been filled
+   * Returns: true if the @allocation has been filled
    */
   signals[GET_CHILD_POSITION] =
     g_signal_new (I_("get-child-position"),
@@ -465,7 +465,7 @@ gtk_overlay_remove_overlay (GtkOverlay *overlay,
  * Sets whether @widget is included in the measured size of @overlay.
  *
  * The overlay will request the size of the largest child that has
- * this property set to %TRUE. Children who are not included may
+ * this property set to true. Children who are not included may
  * be drawn outside of @overlay's allocation if they are too large.
  */
 void

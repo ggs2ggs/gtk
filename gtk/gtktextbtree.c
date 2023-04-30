@@ -5048,7 +5048,7 @@ gtk_text_btree_node_invalidate_upward (GtkTextBTreeNode *node, gpointer view_id)
  * Check to see if the entire GtkTextBTree is valid or not for
  * the given view.
  *
- * Returns: %TRUE if the entire GtkTextBTree is valid
+ * Returns: true if the entire GtkTextBTree is valid
  **/
 gboolean
 _gtk_text_btree_is_valid (GtkTextBTree *tree,
@@ -5249,7 +5249,7 @@ gtk_text_btree_node_validate (BTreeView         *view,
  * Validate a single contiguous invalid region of a GtkTextBTree for
  * a given view.
  *
- * Returns: %TRUE if a region has been validated, %FALSE if the
+ * Returns: true if a region has been validated, false if the
  * entire tree was already valid.
  **/
 gboolean

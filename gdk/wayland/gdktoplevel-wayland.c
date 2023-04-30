@@ -2453,7 +2453,7 @@ export_handle_done (GObject      *source,
  * Note that this API depends on an unstable Wayland protocol,
  * and thus may require changes in the future.
  *
- * Return value: %TRUE if the handle has been requested, %FALSE if
+ * Return value: true if the handle has been requested, false if
  *   an error occurred.
  */
 gboolean
@@ -2540,8 +2540,8 @@ static const struct zxdg_imported_v2_listener xdg_imported_listener_v2 = {
  * Note that this API depends on an unstable Wayland protocol,
  * and thus may require changes in the future.
  *
- * Return value: %TRUE if the surface has been marked as transient,
- *   %FALSE if an error occurred.
+ * Return value: true if the surface has been marked as transient,
+ *   false if an error occurred.
  */
 gboolean
 gdk_wayland_toplevel_set_transient_for_exported (GdkToplevel *toplevel,

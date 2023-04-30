@@ -289,7 +289,7 @@ static const GtkSortKeysClass GTK_DEFAULT_SORT_KEYS_CLASS =
  * with the new keys.
  *
  * When [method@Gtk.SortKeys.is_compatible] for the old and new keys
- * returns %TRUE, you can reuse keys you generated previously.
+ * returns true, you can reuse keys you generated previously.
  *
  * Returns: (transfer full): the sort keys to sort with
  */

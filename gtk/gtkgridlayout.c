@@ -1726,7 +1726,7 @@ gtk_grid_layout_new (void)
 /**
  * gtk_grid_layout_set_row_homogeneous: (attributes org.gtk.Method.set_property=row-homogeneous)
  * @grid: a `GtkGridLayout`
- * @homogeneous: %TRUE to make rows homogeneous
+ * @homogeneous: true to make rows homogeneous
  *
  * Sets whether all rows of @grid should have the same height.
  */
@@ -1752,7 +1752,7 @@ gtk_grid_layout_set_row_homogeneous (GtkGridLayout *grid,
  *
  * Checks whether all rows of @grid should have the same height.
  *
- * Returns: %TRUE if the rows are homogeneous, and %FALSE otherwise
+ * Returns: true if the rows are homogeneous, and false otherwise
  */
 gboolean
 gtk_grid_layout_get_row_homogeneous (GtkGridLayout *grid)
@@ -1804,7 +1804,7 @@ gtk_grid_layout_get_row_spacing (GtkGridLayout *grid)
 /**
  * gtk_grid_layout_set_column_homogeneous: (attributes org.gtk.Method.set_property=column-homogeneous)
  * @grid: a `GtkGridLayout`
- * @homogeneous: %TRUE to make columns homogeneous
+ * @homogeneous: true to make columns homogeneous
  *
  * Sets whether all columns of @grid should have the same width.
  */
@@ -1830,7 +1830,7 @@ gtk_grid_layout_set_column_homogeneous (GtkGridLayout *grid,
  *
  * Checks whether all columns of @grid should have the same width.
  *
- * Returns: %TRUE if the columns are homogeneous, and %FALSE otherwise
+ * Returns: true if the columns are homogeneous, and false otherwise
  */
 gboolean
 gtk_grid_layout_get_column_homogeneous (GtkGridLayout *grid)

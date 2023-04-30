@@ -711,8 +711,8 @@ gtk_tree_list_model_class_init (GtkTreeListModelClass *class)
    *
    * Gets whether the model is in passthrough mode.
    *
-   * If %FALSE, the `GListModel` functions for this object return custom
-   * [class@Gtk.TreeListRow] objects. If %TRUE, the values of the child
+   * If false, the `GListModel` functions for this object return custom
+   * [class@Gtk.TreeListRow] objects. If true, the values of the child
    * models are pass through unmodified.
    */
   properties[PROP_PASSTHROUGH] =
@@ -733,8 +733,8 @@ gtk_tree_list_model_init (GtkTreeListModel *self)
 /**
  * gtk_tree_list_model_new:
  * @root: (transfer full): The `GListModel` to use as root
- * @passthrough: %TRUE to pass through items from the models
- * @autoexpand: %TRUE to set the autoexpand property and expand the @root model
+ * @passthrough: true to pass through items from the models
+ * @autoexpand: true to set the autoexpand property and expand the @root model
  * @create_func: Function to call to create the `GListModel` for the children
  *   of an item
  * @user_data: (closure): Data to pass to @create_func
@@ -794,16 +794,16 @@ gtk_tree_list_model_get_model (GtkTreeListModel *self)
  *
  * Gets whether the model is passing through original row items.
  *
- * If this function returns %FALSE, the `GListModel` functions for @self
+ * If this function returns false, the `GListModel` functions for @self
  * return custom `GtkTreeListRow` objects. You need to call
  * [method@Gtk.TreeListRow.get_item] on these objects to get the original
  * item.
  *
- * If %TRUE, the values of the child models are passed through in their
+ * If true, the values of the child models are passed through in their
  * original state. You then need to call [method@Gtk.TreeListModel.get_row]
  * to get the custom `GtkTreeListRow`s.
  *
- * Returns: %TRUE if the model is passing through original row items
+ * Returns: true if the model is passing through original row items
  **/
 gboolean
 gtk_tree_list_model_get_passthrough (GtkTreeListModel *self)
@@ -816,11 +816,11 @@ gtk_tree_list_model_get_passthrough (GtkTreeListModel *self)
 /**
  * gtk_tree_list_model_set_autoexpand: (attributes org.gtk.Method.set_property=autoexpand)
  * @self: a `GtkTreeListModel`
- * @autoexpand: %TRUE to make the model autoexpand its rows
+ * @autoexpand: true to make the model autoexpand its rows
  *
  * Sets whether the model should autoexpand.
  *
- * If set to %TRUE, the model will recursively expand all rows that
+ * If set to true, the model will recursively expand all rows that
  * get added to the model. This can be either rows added by changes
  * to the underlying models or via [method@Gtk.TreeListRow.set_expanded].
  */
@@ -848,7 +848,7 @@ gtk_tree_list_model_set_autoexpand (GtkTreeListModel *self,
  * This can be either rows added by changes to the underlying
  * models or via [method@Gtk.TreeListRow.set_expanded].
  *
- * Returns: %TRUE if the model is set to autoexpand
+ * Returns: true if the model is set to autoexpand
  */
 gboolean
 gtk_tree_list_model_get_autoexpand (GtkTreeListModel *self)
@@ -1163,7 +1163,7 @@ gtk_tree_list_row_get_depth (GtkTreeListRow *self)
 /**
  * gtk_tree_list_row_set_expanded: (attributes org.gtk.Method.set_property=expanded)
  * @self: a `GtkTreeListRow`
- * @expanded: %TRUE if the row should be expanded
+ * @expanded: true if the row should be expanded
  *
  * Expands or collapses a row.
  *
@@ -1224,7 +1224,7 @@ gtk_tree_list_row_set_expanded (GtkTreeListRow *self,
  *
  * Gets if a row is currently expanded.
  *
- * Returns: %TRUE if the row is expanded
+ * Returns: true if the row is expanded
  */
 gboolean
 gtk_tree_list_row_get_expanded (GtkTreeListRow *self)
@@ -1247,9 +1247,9 @@ gtk_tree_list_row_get_expanded (GtkTreeListRow *self)
  * this can be checked with [method@Gtk.TreeListRow.get_expanded].
  *
  * If a row is expandable never changes until the row is removed
- * from its model at which point it will forever return %FALSE.
+ * from its model at which point it will forever return false.
  *
- * Returns: %TRUE if the row is expandable
+ * Returns: true if the row is expandable
  */
 gboolean
 gtk_tree_list_row_is_expandable (GtkTreeListRow *self)

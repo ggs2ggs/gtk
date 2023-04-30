@@ -902,7 +902,7 @@ gdk_event_unref (GdkEvent *event)
  *
  * Emulated pointer events typically originate from a touch events.
  *
- * Returns: %TRUE if this event is emulated
+ * Returns: true if this event is emulated
  */
 gboolean
 gdk_event_get_pointer_emulated (GdkEvent *event)
@@ -938,7 +938,7 @@ gdk_event_get_pointer_emulated (GdkEvent *event)
  * To find out which axes are used, use [method@Gdk.DeviceTool.get_axes]
  * on the device tool returned by [method@Gdk.Event.get_device_tool].
  *
- * Returns: %TRUE if the specified axis was found, otherwise %FALSE
+ * Returns: true if the specified axis was found, otherwise false
  */
 gboolean
 gdk_event_get_axis (GdkEvent   *event,
@@ -984,7 +984,7 @@ gdk_event_get_axis (GdkEvent   *event,
  * This function should always be used instead of simply checking for
  * event->button == %GDK_BUTTON_SECONDARY.
  *
- * Returns: %TRUE if the event should trigger a context menu.
+ * Returns: true if the event should trigger a context menu.
  */
 gboolean
 gdk_event_triggers_context_menu (GdkEvent *event)
@@ -1043,9 +1043,9 @@ gdk_events_get_axis_distances (GdkEvent *event1,
  * Returns the distance between the event locations.
  *
  * This assumes that both events have X/Y information.
- * If not, this function returns %FALSE.
+ * If not, this function returns false.
  *
- * Returns: %TRUE if the distance could be calculated.
+ * Returns: true if the distance could be calculated.
  **/
 gboolean
 gdk_events_get_distance (GdkEvent *event1,
@@ -1070,9 +1070,9 @@ gdk_events_get_distance (GdkEvent *event1,
  * angles is from the positive X axis towards the positive Y axis.
  *
  * This assumes that both events have X/Y information.
- * If not, this function returns %FALSE.
+ * If not, this function returns false.
  *
- * Returns: %TRUE if the angle could be calculated.
+ * Returns: true if the angle could be calculated.
  */
 gboolean
 gdk_events_get_angle (GdkEvent *event1,
@@ -1113,9 +1113,9 @@ gdk_events_get_angle (GdkEvent *event1,
  * Returns the point halfway between the events' positions.
  *
  * This assumes that both events have X/Y information.
- * If not, this function returns %FALSE.
+ * If not, this function returns false.
  *
- * Returns: %TRUE if the center could be calculated.
+ * Returns: true if the center could be calculated.
  */
 gboolean
 gdk_events_get_center (GdkEvent *event1,
@@ -1167,7 +1167,7 @@ G_DEFINE_BOXED_TYPE (GdkEventSequence, gdk_event_sequence,
  * To find out which axes are used, use [method@Gdk.DeviceTool.get_axes]
  * on the device tool returned by [method@Gdk.Event.get_device_tool].
  *
- * Returns: %TRUE on success, otherwise %FALSE
+ * Returns: true on success, otherwise false
  */
 gboolean
 gdk_event_get_axes (GdkEvent  *event,
@@ -1755,7 +1755,7 @@ gdk_key_event_get_consumed_modifiers (GdkEvent *event)
  *
  * Extracts whether the key event is for a modifier key.
  *
- * Returns: %TRUE if the @event is for a modifier key
+ * Returns: true if the @event is for a modifier key
  */
 gboolean
 gdk_key_event_is_modifier (GdkEvent *event)
@@ -1918,7 +1918,7 @@ gdk_key_event_matches (GdkEvent        *event,
  *
  * See [method@Gdk.KeyEvent.matches].
  *
- * Returns: %TRUE on success
+ * Returns: true on success
  */
 gboolean
 gdk_key_event_get_match (GdkEvent        *event,
@@ -2092,7 +2092,7 @@ gdk_touch_event_new (GdkEventType      type,
  *
  * Extracts whether a touch event is emulating a pointer event.
  *
- * Returns: %TRUE if @event is emulating
+ * Returns: true if @event is emulating
  **/
 gboolean
 gdk_touch_event_get_emulating_pointer (GdkEvent *event)
@@ -2217,7 +2217,7 @@ gdk_crossing_event_get_mode (GdkEvent *event)
  *
  * Checks if the @event surface is the focus surface.
  *
- * Returns: %TRUE if the surface is the focus surface
+ * Returns: true if the surface is the focus surface
  */
 gboolean
 gdk_crossing_event_get_focus (GdkEvent *event)
@@ -2324,7 +2324,7 @@ gdk_focus_event_new (GdkSurface *surface,
  * Extracts whether this event is about focus entering or
  * leaving the surface.
  *
- * Returns: %TRUE of the focus is entering
+ * Returns: true of the focus is entering
  */
 gboolean
 gdk_focus_event_get_in (GdkEvent *event)
@@ -2557,7 +2557,7 @@ gdk_scroll_event_get_deltas (GdkEvent *event,
  *
  * Stop scroll events always have a delta of 0/0.
  *
- * Returns: %TRUE if the event is a scroll stop event
+ * Returns: true if the event is a scroll stop event
  */
 gboolean
 gdk_scroll_event_is_stop (GdkEvent *event)
@@ -3418,7 +3418,7 @@ gdk_grab_broken_event_get_grab_surface (GdkEvent *event)
  *
  * Checks whether the grab broken event is for an implicit grab.
  *
- * Returns: %TRUE if the an implicit grab was broken
+ * Returns: true if the an implicit grab was broken
  */
 gboolean
 gdk_grab_broken_event_get_implicit (GdkEvent *event)

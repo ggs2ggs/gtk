@@ -711,7 +711,7 @@ gtk_text_tag_class_init (GtkTextTagClass *klass)
    *
    * Whether font fallback is enabled.
    *
-   * When set to %TRUE, other fonts will be substituted
+   * When set to true, other fonts will be substituted
    * where the current font is missing glyphs.
    */
   g_object_class_install_property (object_class,
@@ -825,8 +825,8 @@ gtk_text_tag_class_init (GtkTextTagClass *klass)
    *
    * Whether the margins accumulate or override each other.
    *
-   * When set to %TRUE the margins of this tag are added to the margins
-   * of any other non-accumulative margins present. When set to %FALSE
+   * When set to true the margins of this tag are added to the margins
+   * of any other non-accumulative margins present. When set to false
    * the margins override one another (the default).
    */
   g_object_class_install_property (object_class,

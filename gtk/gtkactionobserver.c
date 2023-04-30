@@ -57,7 +57,7 @@ gtk_action_observer_default_init (GtkActionObserverInterface *class)
  * @observer: a `GtkActionObserver`
  * @observable: the source of the event
  * @action_name: the name of the action
- * @enabled: %TRUE if the action is now enabled
+ * @enabled: true if the action is now enabled
  * @parameter_type: (nullable): the parameter type for action invocations
  * @state: (nullable): the current state of the action
  *
@@ -86,7 +86,7 @@ gtk_action_observer_action_added (GtkActionObserver   *observer,
  * @observer: a `GtkActionObserver`
  * @observable: the source of the event
  * @action_name: the name of the action
- * @enabled: %TRUE if the action is now enabled
+ * @enabled: true if the action is now enabled
  *
  * This function is called when an action that the observer is
  * registered to receive events for becomes enabled or disabled.

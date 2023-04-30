@@ -39,18 +39,18 @@ G_DECLARE_INTERFACE (GtkSelectionModel, gtk_selection_model, GTK, SELECTION_MODE
  *   items in the given range. By default, this function will call
  *   `GtkSelectionModel::is_selected()` on all items in the given range.
  * @select_item: Select the item in the given position. If the operation
- *   is known to fail, return %FALSE.
+ *   is known to fail, return false.
  * @unselect_item: Unselect the item in the given position. If the
- *   operation is known to fail, return %FALSE.
+ *   operation is known to fail, return false.
  * @select_range: Select all items in the given range. If the operation
- *   is unsupported or known to fail for all items, return %FALSE.
+ *   is unsupported or known to fail for all items, return false.
  * @unselect_range: Unselect all items in the given range. If the
  *   operation is unsupported or known to fail for all items, return
- *   %FALSE.
+ *   false.
  * @select_all: Select all items in the model. If the operation is
- *   unsupported or known to fail for all items, return %FALSE.
+ *   unsupported or known to fail for all items, return false.
  * @unselect_all: Unselect all items in the model. If the operation is
- *   unsupported or known to fail for all items, return %FALSE.
+ *   unsupported or known to fail for all items, return false.
  * @set_selection: Set selection state of all items in mask to selected.
  *   See gtk_selection_model_set_selection() for a detailed explanation
  *   of this function.

@@ -496,7 +496,7 @@ gtk_print_context_get_dpi_y (GtkPrintContext *context)
  * Obtains the hardware printer margins of the `GtkPrintContext`,
  * in units.
  *
- * Returns: %TRUE if the hard margins were retrieved
+ * Returns: true if the hard margins were retrieved
  */
 gboolean
 gtk_print_context_get_hard_margins (GtkPrintContext *context,

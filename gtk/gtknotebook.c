@@ -1140,7 +1140,7 @@ gtk_notebook_class_init (GtkNotebookClass *class)
   /**
    * GtkNotebook:scrollable: (attributes org.gtk.Property.get=gtk_notebook_get_scrollable org.gtk.Property.set=gtk_notebook_set_scrollable)
    *
-   * If %TRUE, scroll arrows are added if there are too many pages to fit.
+   * If true, scroll arrows are added if there are too many pages to fit.
    */
   properties[PROP_SCROLLABLE] =
       g_param_spec_boolean ("scrollable", NULL, NULL,
@@ -1150,7 +1150,7 @@ gtk_notebook_class_init (GtkNotebookClass *class)
   /**
    * GtkNotebook:enable-popup:
    *
-   * If %TRUE, pressing the right mouse button on the notebook shows a page switching menu.
+   * If true, pressing the right mouse button on the notebook shows a page switching menu.
    */
   properties[PROP_ENABLE_POPUP] =
       g_param_spec_boolean ("enable-popup", NULL, NULL,
@@ -6083,7 +6083,7 @@ gtk_notebook_prev_page (GtkNotebook *notebook)
 /**
  * gtk_notebook_set_show_border: (attributes org.gtk.Method.set_property=show-border)
  * @notebook: a `GtkNotebook`
- * @show_border: %TRUE if a bevel should be drawn around the notebook
+ * @show_border: true if a bevel should be drawn around the notebook
  *
  * Sets whether a bevel will be drawn around the notebook pages.
  *
@@ -6114,7 +6114,7 @@ gtk_notebook_set_show_border (GtkNotebook *notebook,
  *
  * Returns whether a bevel will be drawn around the notebook pages.
  *
- * Returns: %TRUE if the bevel is drawn
+ * Returns: true if the bevel is drawn
  */
 gboolean
 gtk_notebook_get_show_border (GtkNotebook *notebook)
@@ -6127,7 +6127,7 @@ gtk_notebook_get_show_border (GtkNotebook *notebook)
 /**
  * gtk_notebook_set_show_tabs: (attributes org.gtk.Method.set_property=show-tabs)
  * @notebook: a `GtkNotebook`
- * @show_tabs: %TRUE if the tabs should be shown
+ * @show_tabs: true if the tabs should be shown
  *
  * Sets whether to show the tabs for the notebook or not.
  */
@@ -6188,7 +6188,7 @@ gtk_notebook_set_show_tabs (GtkNotebook *notebook,
  *
  * Returns whether the tabs of the notebook are shown.
  *
- * Returns: %TRUE if the tabs are shown
+ * Returns: true if the tabs are shown
  */
 gboolean
 gtk_notebook_get_show_tabs (GtkNotebook *notebook)
@@ -6326,7 +6326,7 @@ gtk_notebook_get_tab_pos (GtkNotebook *notebook)
 /**
  * gtk_notebook_set_scrollable: (attributes org.gtk.Method.set_property=scrollable)
  * @notebook: a `GtkNotebook`
- * @scrollable: %TRUE if scroll arrows should be added
+ * @scrollable: true if scroll arrows should be added
  *
  * Sets whether the tab label area will have arrows for
  * scrolling if there are too many tabs to fit in the area.
@@ -6358,7 +6358,7 @@ gtk_notebook_set_scrollable (GtkNotebook *notebook,
  *
  * Returns whether the tab label area has arrows for scrolling.
  *
- * Returns: %TRUE if arrows for scrolling are present
+ * Returns: true if arrows for scrolling are present
  */
 gboolean
 gtk_notebook_get_scrollable (GtkNotebook *notebook)
@@ -6894,7 +6894,7 @@ gtk_notebook_get_group_name (GtkNotebook *notebook)
  *
  * Gets whether the tab can be reordered via drag and drop or not.
  *
- * Returns: %TRUE if the tab is reorderable.
+ * Returns: true if the tab is reorderable.
  */
 gboolean
 gtk_notebook_get_tab_reorderable (GtkNotebook *notebook,
@@ -6956,7 +6956,7 @@ gtk_notebook_set_tab_reorderable (GtkNotebook *notebook,
  *
  * Returns whether the tab contents can be detached from @notebook.
  *
- * Returns: %TRUE if the tab is detachable.
+ * Returns: true if the tab is detachable.
  */
 gboolean
 gtk_notebook_get_tab_detachable (GtkNotebook *notebook,

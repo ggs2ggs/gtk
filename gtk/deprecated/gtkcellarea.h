@@ -63,7 +63,7 @@ typedef struct _GtkCellAreaContext       GtkCellAreaContext;
  * The type of the callback functions used for iterating over
  * the cell renderers of a `GtkCellArea`, see gtk_cell_area_foreach().
  *
- * Returns: %TRUE to stop iterating over cells.
+ * Returns: true to stop iterating over cells.
  */
 typedef gboolean    (*GtkCellCallback) (GtkCellRenderer  *renderer,
                                         gpointer          data);
@@ -81,7 +81,7 @@ typedef gboolean    (*GtkCellCallback) (GtkCellRenderer  *renderer,
  * cell renderers and their allocated areas inside a `GtkCellArea`,
  * see gtk_cell_area_foreach_alloc().
  *
- * Returns: %TRUE to stop iterating over cells.
+ * Returns: true to stop iterating over cells.
  */
 typedef gboolean    (*GtkCellAllocCallback) (GtkCellRenderer    *renderer,
                                              const GdkRectangle *cell_area,
@@ -101,10 +101,10 @@ struct _GtkCellArea
  * @add: adds a `GtkCellRenderer` to the area.
  * @remove: removes a `GtkCellRenderer` from the area.
  * @foreach: calls the `GtkCellCallback` function on every `GtkCellRenderer` in
- *   the area with the provided user data until the callback returns %TRUE.
+ *   the area with the provided user data until the callback returns true.
  * @foreach_alloc: Calls the `GtkCellAllocCallback` function on every
  *   `GtkCellRenderer` in the area with the allocated area for the cell
- *   and the provided user data until the callback returns %TRUE.
+ *   and the provided user data until the callback returns true.
  * @event: Handle an event in the area, this is generally used to activate
  *   a cell at the event location for button events but can also be used
  *   to generically pass events to `GtkWidget`s drawn onto the area.
@@ -152,7 +152,7 @@ struct _GtkCellArea
  *   child cell properties for a given child `GtkCellRenderer`.
  * @focus: This virtual method should be implemented to navigate focus from
  *   cell to cell inside the `GtkCellArea`. The `GtkCellArea` should move
- *   focus from cell to cell inside the area and return %FALSE if focus
+ *   focus from cell to cell inside the area and return false if focus
  *   logically leaves the area with the following exceptions: When the
  *   area contains no activatable cells, the entire area receives focus.
  *   Focus should not be given to cells that are actually “focus siblings”

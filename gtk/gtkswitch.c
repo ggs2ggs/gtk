@@ -589,14 +589,14 @@ gtk_switch_class_init (GtkSwitchClass *klass)
    * To implement delayed state change, applications can connect to this
    * signal, initiate the change of the underlying state, and call
    * [method@Gtk.Switch.set_state] when the underlying state change is
-   * complete. The signal handler should return %TRUE to prevent the
+   * complete. The signal handler should return true to prevent the
    * default handler from running.
    *
    * Visually, the underlying state is represented by the trough color of
    * the switch, while the [property@Gtk.Switch:active] property is
    * represented by the position of the switch.
    *
-   * Returns: %TRUE to stop the signal emission
+   * Returns: true to stop the signal emission
    */
   signals[STATE_SET] =
     g_signal_new (I_("state-set"),
@@ -694,7 +694,7 @@ gtk_switch_new (void)
 /**
  * gtk_switch_set_active: (attributes org.gtk.Method.set_property=active)
  * @self: a `GtkSwitch`
- * @is_active: %TRUE if @self should be active, and %FALSE otherwise
+ * @is_active: true if @self should be active, and false otherwise
  *
  * Changes the state of @self to the desired one.
  */
@@ -737,7 +737,7 @@ gtk_switch_set_active (GtkSwitch *self,
  *
  * Gets whether the `GtkSwitch` is in its “on” or “off” state.
  *
- * Returns: %TRUE if the `GtkSwitch` is active, and %FALSE otherwise
+ * Returns: true if the `GtkSwitch` is active, and false otherwise
  */
 gboolean
 gtk_switch_get_active (GtkSwitch *self)

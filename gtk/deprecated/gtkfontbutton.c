@@ -821,7 +821,7 @@ gtk_font_button_get_title (GtkFontButton *font_button)
 /**
  * gtk_font_button_set_modal: (attributes org.gtk.Method.set_property=modal)
  * @font_button: a `GtkFontButton`
- * @modal: %TRUE to make the dialog modal
+ * @modal: true to make the dialog modal
  *
  * Sets whether the dialog should be modal.
  *
@@ -850,7 +850,7 @@ gtk_font_button_set_modal (GtkFontButton *font_button,
  *
  * Gets whether the dialog is modal.
  *
- * Returns: %TRUE if the dialog is modal
+ * Returns: true if the dialog is modal
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialogButton] instead
  */
@@ -883,9 +883,9 @@ gtk_font_button_get_use_font (GtkFontButton *font_button)
 /**
  * gtk_font_button_set_use_font: (attributes org.gtk.Method.set_property=use-font)
  * @font_button: a `GtkFontButton`
- * @use_font: If %TRUE, font name will be written using font chosen.
+ * @use_font: If true, font name will be written using font chosen.
  *
- * If @use_font is %TRUE, the font name will be written
+ * If @use_font is true, the font name will be written
  * using the selected font.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialogButton] instead
@@ -930,10 +930,10 @@ gtk_font_button_get_use_size (GtkFontButton *font_button)
 /**
  * gtk_font_button_set_use_size: (attributes org.gtk.Method.set_property=use-size)
  * @font_button: a `GtkFontButton`
- * @use_size: If %TRUE, font name will be written using the
+ * @use_size: If true, font name will be written using the
  *   selected size.
  *
- * If @use_size is %TRUE, the font name will be written using
+ * If @use_size is true, the font name will be written using
  * the selected size.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialogButton] instead

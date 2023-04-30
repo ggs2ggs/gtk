@@ -2576,7 +2576,7 @@ gtk_icon_theme_lookup_symbolic_colors (GtkCssStyle *style,
  * Checks whether an icon theme includes an icon
  * for a particular name.
  *
- * Returns: %TRUE if @self includes an
+ * Returns: true if @self includes an
  *  icon for @icon_name.
  */
 gboolean
@@ -2613,7 +2613,7 @@ gtk_icon_theme_has_icon (GtkIconTheme *self,
  * Checks whether an icon theme includes an icon
  * for a particular `GIcon`.
  *
- * Returns: %TRUE if @self includes an icon for @gicon
+ * Returns: true if @self includes an icon for @gicon
  *
  * Since: 4.2
  */
@@ -3699,7 +3699,7 @@ gtk_icon_paintable_get_icon_name (GtkIconPaintable *icon)
  * Note that to render a symbolic `GtkIconPaintable` properly (with
  * recoloring), you have to set its icon name on a `GtkImage`.
  *
- * Returns: %TRUE if the icon is symbolic, %FALSE otherwise
+ * Returns: true if the icon is symbolic, false otherwise
  */
 gboolean
 gtk_icon_paintable_is_symbolic (GtkIconPaintable *icon)

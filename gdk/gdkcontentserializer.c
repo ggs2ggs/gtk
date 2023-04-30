@@ -585,7 +585,7 @@ gdk_content_serialize_async (GOutputStream       *stream,
  *
  * Finishes a content serialization operation.
  *
- * Returns: %TRUE if the operation was successful, %FALSE if an
+ * Returns: true if the operation was successful, false if an
  *   error occurred. In this case, @error is set
  */
 gboolean

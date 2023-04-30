@@ -166,7 +166,7 @@ gdk_cairo_set_source_pixbuf (cairo_t         *cr,
  * You must explicitly check the return value of you want to handle
  * that case.
  *
- * Returns: %TRUE if the extents fit in a `GdkRectangle`, %FALSE if not
+ * Returns: true if the extents fit in a `GdkRectangle`, false if not
  */
 gboolean
 _gdk_cairo_surface_extents (cairo_surface_t *surface,

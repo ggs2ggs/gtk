@@ -590,14 +590,14 @@ do_post_parse_initialization (void)
  *
  * This function does the same work as gtk_init() with only a single
  * change: It does not terminate the program if the windowing system
- * can’t be initialized. Instead it returns %FALSE on failure.
+ * can’t be initialized. Instead it returns false on failure.
  *
  * This way the application can fall back to some other means of
  * communication with the user - for example a curses or command line
  * interface.
  *
- * Returns: %TRUE if the windowing system has been successfully
- *   initialized, %FALSE otherwise
+ * Returns: true if the windowing system has been successfully
+ *   initialized, false otherwise
  */
 gboolean
 gtk_init_check (void)
@@ -1983,7 +1983,7 @@ gtk_propagate_event_internal (GtkWidget *widget,
  * gtk_widget_queue_draw() instead
  * of making up expose events.
  *
- * Returns: %TRUE if the event was handled
+ * Returns: true if the event was handled
  */
 gboolean
 gtk_propagate_event (GtkWidget *widget,

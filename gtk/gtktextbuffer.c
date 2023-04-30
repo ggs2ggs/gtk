@@ -2177,7 +2177,7 @@ gtk_text_buffer_delete_interactive (GtkTextBuffer *buffer,
  * Returns the text in the range [@start,@end).
  *
  * Excludes undisplayed text (text marked with tags that set the
- * invisibility attribute) if @include_hidden_chars is %FALSE.
+ * invisibility attribute) if @include_hidden_chars is false.
  * Does not include characters representing embedded images, so
  * byte and character indexes into the returned string do not
  * correspond to byte and character indexes into the buffer.
@@ -2213,7 +2213,7 @@ gtk_text_buffer_get_text (GtkTextBuffer     *buffer,
  * Returns the text in the range [@start,@end).
  *
  * Excludes undisplayed text (text marked with tags that set the
- * invisibility attribute) if @include_hidden_chars is %FALSE.
+ * invisibility attribute) if @include_hidden_chars is false.
  * The returned string includes a 0xFFFC character whenever the
  * buffer contains embedded images, so byte and character indexes
  * into the returned string do correspond to byte and character
@@ -2406,7 +2406,7 @@ gtk_text_buffer_mark_set (GtkTextBuffer     *buffer,
  * @iter: location for the mark
  * @left_gravity: if the mark is created by this function, gravity for
  *   the new mark
- * @should_exist: if %TRUE, warn if the mark does not exist, and return
+ * @should_exist: if true, warn if the mark does not exist, and return
  *   immediately
  *
  * Move the mark to the given position.
@@ -2458,7 +2458,7 @@ gtk_text_buffer_set_mark (GtkTextBuffer     *buffer,
  * If a mark has left gravity, and text is inserted at the mark’s
  * current location, the mark will be moved to the left of the
  * newly-inserted text. If the mark has right gravity
- * (@left_gravity = %FALSE), the mark will end up on the right of
+ * (@left_gravity = false), the mark will end up on the right of
  * newly-inserted text. The standard left-to-right cursor is a mark
  * with right gravity (when you type, the cursor stays on the right
  * side of the text you’re typing).
@@ -3466,11 +3466,11 @@ gtk_text_buffer_get_bounds (GtkTextBuffer *buffer,
  *
  * Indicates whether the buffer has been modified since the last call
  * to [method@Gtk.TextBuffer.set_modified] set the modification flag to
- * %FALSE.
+ * false.
  *
  * Used for example to enable a “save” function in a text editor.
  *
- * Returns: %TRUE if the buffer has been modified
+ * Returns: true if the buffer has been modified
  */
 gboolean
 gtk_text_buffer_get_modified (GtkTextBuffer *buffer)
@@ -3517,7 +3517,7 @@ gtk_text_buffer_set_modified (GtkTextBuffer *buffer,
  *
  * Indicates whether the buffer has some text currently selected.
  *
- * Returns: %TRUE if the there is text selected
+ * Returns: true if the there is text selected
  */
 gboolean
 gtk_text_buffer_get_has_selection (GtkTextBuffer *buffer)
@@ -3984,7 +3984,7 @@ gtk_text_buffer_paste_clipboard (GtkTextBuffer *buffer,
  * Deletes the range between the “insert” and “selection_bound” marks,
  * that is, the currently-selected text.
  *
- * If @interactive is %TRUE, the editability of the selection will be
+ * If @interactive is true, the editability of the selection will be
  * considered (users can’t delete uneditable text).
  *
  * Returns: whether there was a non-empty selection to delete
@@ -4031,7 +4031,7 @@ gtk_text_buffer_delete_selection (GtkTextBuffer *buffer,
  * invalid after calling this function; however, the @iter will be
  * re-initialized to point to the location where text was deleted.
  *
- * Returns: %TRUE if the buffer was modified
+ * Returns: true if the buffer was modified
  */
 gboolean
 gtk_text_buffer_backspace (GtkTextBuffer *buffer,
@@ -4209,7 +4209,7 @@ gtk_text_buffer_copy_clipboard (GtkTextBuffer *buffer,
  * @start: (out): iterator to initialize with selection start
  * @end: (out): iterator to initialize with selection end
  *
- * Returns %TRUE if some text is selected; places the bounds
+ * Returns true if some text is selected; places the bounds
  * of the selection in @start and @end.
  *
  * If the selection has length 0, then @start and @end are filled
@@ -4866,7 +4866,7 @@ gtk_text_buffer_real_redo (GtkTextBuffer *buffer)
  *
  * Gets whether there is an undoable action in the history.
  *
- * Returns: %TRUE if there is an undoable action
+ * Returns: true if there is an undoable action
  */
 gboolean
 gtk_text_buffer_get_can_undo (GtkTextBuffer *buffer)
@@ -4882,7 +4882,7 @@ gtk_text_buffer_get_can_undo (GtkTextBuffer *buffer)
  *
  * Gets whether there is a redoable action in the history.
  *
- * Returns: %TRUE if there is a redoable action
+ * Returns: true if there is a redoable action
  */
 gboolean
 gtk_text_buffer_get_can_redo (GtkTextBuffer *buffer)
@@ -5004,7 +5004,7 @@ gtk_text_buffer_redo (GtkTextBuffer *buffer)
  * [method@Gtk.TextBuffer.end_irreversible_action] to create
  * changes to the buffer that cannot be undone.
  *
- * Returns: %TRUE if undoing and redoing changes to the buffer is allowed.
+ * Returns: true if undoing and redoing changes to the buffer is allowed.
  */
 gboolean
 gtk_text_buffer_get_enable_undo (GtkTextBuffer *buffer)
@@ -5017,7 +5017,7 @@ gtk_text_buffer_get_enable_undo (GtkTextBuffer *buffer)
 /**
  * gtk_text_buffer_set_enable_undo: (attributes org.gtk.Method.set_property=enable-undo)
  * @buffer: a `GtkTextBuffer`
- * @enable_undo: %TRUE to enable undo
+ * @enable_undo: true to enable undo
  *
  * Sets whether or not to enable undoable actions in the text buffer.
  *

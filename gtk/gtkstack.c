@@ -960,7 +960,7 @@ gtk_stack_class_init (GtkStackClass *klass)
   /**
    * GtkStack:hhomogeneous: (attributes org.gtk.Property.get=gtk_stack_get_hhomogeneous org.gtk.Property.set=gtk_stack_set_hhomogeneous)
    *
-   * %TRUE if the stack allocates the same width for all children.
+   * true if the stack allocates the same width for all children.
    */
   stack_props[PROP_HHOMOGENEOUS] =
       g_param_spec_boolean ("hhomogeneous", NULL, NULL,
@@ -970,7 +970,7 @@ gtk_stack_class_init (GtkStackClass *klass)
   /**
    * GtkStack:vhomogeneous: (attributes org.gtk.Property.get=gtk_stack_get_vhomogeneous org.gtk.Property.set=gtk_stack_set_vhomogeneous)
    *
-   * %TRUE if the stack allocates the same height for all children.
+   * true if the stack allocates the same height for all children.
    */
   stack_props[PROP_VHOMOGENEOUS] =
       g_param_spec_boolean ("vhomogeneous", NULL, NULL,
@@ -1870,7 +1870,7 @@ gtk_stack_page_get_child (GtkStackPage *self)
 /**
  * gtk_stack_set_hhomogeneous: (attributes org.gtk.Method.set_property=hhomogeneous)
  * @stack: a `GtkStack`
- * @hhomogeneous: %TRUE to make @stack horizontally homogeneous
+ * @hhomogeneous: true to make @stack horizontally homogeneous
  *
  * Sets the `GtkStack` to be horizontally homogeneous or not.
  *
@@ -1920,7 +1920,7 @@ gtk_stack_get_hhomogeneous (GtkStack *stack)
 /**
  * gtk_stack_set_vhomogeneous: (attributes org.gtk.Method.set_property=vhomogeneous)
  * @stack: a `GtkStack`
- * @vhomogeneous: %TRUE to make @stack vertically homogeneous
+ * @vhomogeneous: true to make @stack vertically homogeneous
  *
  * Sets the `GtkStack` to be vertically homogeneous or not.
  *
@@ -2066,7 +2066,7 @@ gtk_stack_set_transition_type (GtkStack              *stack,
  * Returns whether the @stack is currently in a transition from one page to
  * another.
  *
- * Returns: %TRUE if the transition is currently running, %FALSE otherwise.
+ * Returns: true if the transition is currently running, false otherwise.
  */
 gboolean
 gtk_stack_get_transition_running (GtkStack *stack)
@@ -2087,7 +2087,7 @@ gtk_stack_get_transition_running (GtkStack *stack)
  * changing the visible child.
  *
  * If the [property@Gtk.Stack:interpolate-size] property is set
- * to %TRUE, @stack will interpolate its size between the current
+ * to true, @stack will interpolate its size between the current
  * one and the one it'll take after changing the visible child,
  * according to the set transition duration.
  */
@@ -2115,7 +2115,7 @@ gtk_stack_set_interpolate_size (GtkStack *stack,
  * Returns whether the `GtkStack` is set up to interpolate between
  * the sizes of children on page switch.
  *
- * Returns: %TRUE if child sizes are interpolated
+ * Returns: true if child sizes are interpolated
  */
 gboolean
 gtk_stack_get_interpolate_size (GtkStack *stack)
@@ -2829,7 +2829,7 @@ gtk_stack_get_pages (GtkStack *stack)
  * This is independent from the [property@Gtk.Widget:visible]
  * property of its widget.
  *
- * Returns: %TRUE if @page is visible
+ * Returns: true if @page is visible
  */
 gboolean
 gtk_stack_page_get_visible (GtkStackPage *self)

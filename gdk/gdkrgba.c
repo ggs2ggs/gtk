@@ -95,7 +95,7 @@ gdk_rgba_free (GdkRGBA *rgba)
  *
  * That is, drawing with the value would not produce any change.
  *
- * Returns: %TRUE if the @rgba is clear
+ * Returns: true if the @rgba is clear
  */
 gboolean
 gdk_rgba_is_clear (const GdkRGBA *rgba)
@@ -112,7 +112,7 @@ gdk_rgba_is_clear (const GdkRGBA *rgba)
  * That is, drawing with the value will not retain any results
  * from previous contents.
  *
- * Returns: %TRUE if the @rgba is opaque
+ * Returns: true if the @rgba is opaque
  */
 gboolean
 gdk_rgba_is_opaque (const GdkRGBA *rgba)
@@ -185,7 +185,7 @@ parse_rgb_value (const char   *str,
  * values in the range 0% to 100%, and a is a floating point value
  * in the range 0 to 1.
  *
- * Returns: %TRUE if the parsing succeeded
+ * Returns: true if the parsing succeeded
  */
 gboolean
 gdk_rgba_parse (GdkRGBA    *rgba,
@@ -363,7 +363,7 @@ gdk_rgba_hash (gconstpointer p)
  *
  * Compares two `GdkRGBA` colors.
  *
- * Returns: %TRUE if the two colors compare equal
+ * Returns: true if the two colors compare equal
  */
 gboolean
 gdk_rgba_equal (gconstpointer p1,

@@ -1641,7 +1641,7 @@ _gtk_css_selector_to_string (const GtkCssSelector *selector)
  *
  * Checks if the @selector matches the given @node.
  *
- * Returns: %TRUE if the selector matches @node
+ * Returns: true if the selector matches @node
  **/
 gboolean
 gtk_css_selector_matches (const GtkCssSelector *selector,

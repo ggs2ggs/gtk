@@ -228,11 +228,11 @@ gtk_gesture_drag_new (void)
  *
  * Gets the point where the drag started.
  *
- * If the @gesture is active, this function returns %TRUE
+ * If the @gesture is active, this function returns true
  * and fills in @x and @y with the drag start coordinates,
  * in widget-relative coordinates.
  *
- * Returns: %TRUE if the gesture is active
+ * Returns: true if the gesture is active
  */
 gboolean
 gtk_gesture_drag_get_start_point (GtkGestureDrag *gesture,
@@ -268,11 +268,11 @@ gtk_gesture_drag_get_start_point (GtkGestureDrag *gesture,
  *
  * Gets the offset from the start point.
  *
- * If the @gesture is active, this function returns %TRUE and
+ * If the @gesture is active, this function returns true and
  * fills in @x and @y with the coordinates of the current point,
  * as an offset to the starting drag point.
  *
- * Returns: %TRUE if the gesture is active
+ * Returns: true if the gesture is active
  */
 gboolean
 gtk_gesture_drag_get_offset (GtkGestureDrag *gesture,

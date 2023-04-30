@@ -186,7 +186,7 @@ gtk_print_job_class_init (GtkPrintJobClass *class)
   /**
    * GtkPrintJob:track-print-status: (attributes org.gtk.Property.get=gtk_print_job_get_track_print_status org.gtk.Property.set=gtk_print_job_set_track_print_status)
    *
-   * %TRUE if the print job will continue to emit status-changed
+   * true if the print job will continue to emit status-changed
    * signals after the print data has been setn to the printer.
    */
   g_object_class_install_property (object_class,
@@ -415,7 +415,7 @@ gtk_print_job_set_status (GtkPrintJob   *job,
  * PDF may work too). See [method@Gtk.Printer.accepts_pdf] and
  * [method@Gtk.Printer.accepts_ps].
  *
- * Returns: %FALSE if an error occurred
+ * Returns: false if an error occurred
  */
 gboolean
 gtk_print_job_set_source_file (GtkPrintJob *job,
@@ -463,7 +463,7 @@ gtk_print_job_set_source_file (GtkPrintJob *job,
  * but takes expects an open file descriptor for the file,
  * instead of a filename.
  *
- * Returns: %FALSE if an error occurred
+ * Returns: false if an error occurred
  */
 gboolean
 gtk_print_job_set_source_fd (GtkPrintJob  *job,
@@ -559,9 +559,9 @@ gtk_print_job_get_surface (GtkPrintJob  *job,
 /**
  * gtk_print_job_set_track_print_status: (attributes org.gtk.Method.set_property=track-print-status)
  * @job: a `GtkPrintJob`
- * @track_status: %TRUE to track status after printing
+ * @track_status: true to track status after printing
  *
- * If track_status is %TRUE, the print job will try to continue report
+ * If track_status is true, the print job will try to continue report
  * on the status of the print job in the printer queues and printer.
  *
  * This can allow your application to show things like “out of paper”
@@ -594,7 +594,7 @@ gtk_print_job_set_track_print_status (GtkPrintJob *job,
  *
  * For details, see [method@Gtk.PrintJob.set_track_print_status].
  *
- * Returns: %TRUE if print job status will be reported after printing
+ * Returns: true if print job status will be reported after printing
  */
 gboolean
 gtk_print_job_get_track_print_status (GtkPrintJob *job)

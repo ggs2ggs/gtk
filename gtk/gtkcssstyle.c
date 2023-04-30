@@ -316,14 +316,14 @@ gtk_css_style_get_static_style (GtkCssStyle *style)
  * @style: a `GtkCssStyle`
  * @string: the `GString` to print to
  * @indent: level of indentation to use
- * @skip_initial: %TRUE to skip properties that have their initial value
+ * @skip_initial: true to skip properties that have their initial value
  *
  * Print the @style to @string, in CSS format. Every property is printed
  * on a line by itself, indented by @indent spaces. If @skip_initial is
- * %TRUE, properties are only printed if their value in @style is different
+ * true, properties are only printed if their value in @style is different
  * from the initial value of the property.
  *
- * Returns: %TRUE is any properties have been printed
+ * Returns: true is any properties have been printed
  */
 gboolean
 gtk_css_style_print (GtkCssStyle *style,

@@ -51,7 +51,7 @@ typedef struct _GtkEntryCompletion            GtkEntryCompletion;
  * have access to the unmodified key via
  * `gtk_editable_get_text (GTK_EDITABLE (gtk_entry_completion_get_entry ()))`.
  *
- * Returns: %TRUE if @iter should be displayed as a possible completion
+ * Returns: true if @iter should be displayed as a possible completion
  *   for @key
  */
 typedef gboolean (* GtkEntryCompletionMatchFunc) (GtkEntryCompletion *completion,

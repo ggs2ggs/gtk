@@ -1665,7 +1665,7 @@ get_has_renderer (GtkCellRenderer  *renderer,
  *
  * Checks if @area contains @renderer.
  *
- * Returns: %TRUE if @renderer is in the @area.
+ * Returns: true if @renderer is in the @area.
  *
  * Deprecated: 4.10
  */
@@ -1748,7 +1748,7 @@ gtk_cell_area_foreach_alloc (GtkCellArea          *area,
  *
  * Delegates event handling to a `GtkCellArea`.
  *
- * Returns: %TRUE if the event was handled by @area.
+ * Returns: true if the event was handled by @area.
  *
  * Deprecated: 4.10
  */
@@ -2869,7 +2869,7 @@ gtk_cell_area_is_activatable (GtkCellArea *area)
  * method to receive and navigate focus in its own way particular
  * to how it lays out cells.
  *
- * Returns: %TRUE if focus remains inside @area as a result of this call.
+ * Returns: true if focus remains inside @area as a result of this call.
  *
  * Deprecated: 4.10
  */
@@ -2889,7 +2889,7 @@ gtk_cell_area_focus (GtkCellArea      *area,
  * @widget: the `GtkWidget` that @area is rendering on
  * @cell_area: the size and location of @area relative to @widget’s allocation
  * @flags: the `GtkCellRenderer`State flags for @area for this row of data.
- * @edit_only: if %TRUE then only cell renderers that are %GTK_CELL_RENDERER_MODE_EDITABLE
+ * @edit_only: if true then only cell renderers that are %GTK_CELL_RENDERER_MODE_EDITABLE
  *             will be activated.
  *
  * Activates @area, usually by activating the currently focused
@@ -3076,7 +3076,7 @@ gtk_cell_area_remove_focus_sibling (GtkCellArea     *area,
  * Returns whether @sibling is one of @renderer’s focus siblings
  * (see gtk_cell_area_add_focus_sibling()).
  *
- * Returns: %TRUE if @sibling is a focus sibling of @renderer
+ * Returns: true if @sibling is a focus sibling of @renderer
  *
  * Deprecated: 4.10
  */
@@ -3424,7 +3424,7 @@ gtk_cell_area_activate_cell (GtkCellArea          *area,
  *
  * Explicitly stops the editing of the currently edited cell.
  *
- * If @canceled is %TRUE, the currently edited cell renderer
+ * If @canceled is true, the currently edited cell renderer
  * will emit the ::editing-canceled signal, otherwise the
  * the ::editing-done signal will be emitted on the current
  * edit widget.

@@ -147,7 +147,7 @@ gtk_root_set_focus (GtkRoot   *self,
  *
  * Note that this is the widget that would have the focus
  * if the root is active; if the root is not focused then
- * `gtk_widget_has_focus (widget)` will be %FALSE for the
+ * `gtk_widget_has_focus (widget)` will be false for the
  * widget.
  *
  * Returns: (nullable) (transfer none): the currently focused widget

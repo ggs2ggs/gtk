@@ -72,12 +72,12 @@ typedef struct _GtkTreeSelection      GtkTreeSelection;
  * particular spot (as determined by @prev_column and @next_column).  In
  * left to right locales, @prev_column is on the left of the potential drop
  * spot, and @next_column is on the right.  In right to left mode, this is
- * reversed.  This function should return %TRUE if the spot is a valid drop
- * spot.  Please note that returning %TRUE does not actually indicate that
+ * reversed.  This function should return true if the spot is a valid drop
+ * spot.  Please note that returning true does not actually indicate that
  * the column drop was made, but is meant only to indicate a possible drop
  * spot to the user.
  *
- * Returns: %TRUE, if @column can be dropped in this spot
+ * Returns: true, if @column can be dropped in this spot
  */
 typedef gboolean (* GtkTreeViewColumnDropFunc) (GtkTreeView             *tree_view,
 						GtkTreeViewColumn       *column,
@@ -111,7 +111,7 @@ typedef void     (* GtkTreeViewMappingFunc)    (GtkTreeView             *tree_vi
  * is reversed from what you would normally expect, though it
  * has some similarity to strcmp() returning 0 for equal strings.
  *
- * Returns: %FALSE if the row matches, %TRUE otherwise.
+ * Returns: false if the row matches, true otherwise.
  */
 typedef gboolean (*GtkTreeViewSearchEqualFunc) (GtkTreeModel            *model,
 						int                      column,
@@ -130,7 +130,7 @@ typedef gboolean (*GtkTreeViewSearchEqualFunc) (GtkTreeModel            *model,
  * boolean column in the model, whose values the `GtkTreeViewRowSeparatorFunc`
  * returns.
  *
- * Returns: %TRUE if the row is a separator
+ * Returns: true if the row is a separator
  */
 typedef gboolean (*GtkTreeViewRowSeparatorFunc) (GtkTreeModel      *model,
 						 GtkTreeIter       *iter,

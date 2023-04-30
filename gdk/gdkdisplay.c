@@ -210,7 +210,7 @@ gdk_display_class_init (GdkDisplayClass *class)
   /**
    * GdkDisplay:composited: (attributes org.gtk.Property.get=gdk_display_is_composited)
    *
-   * %TRUE if the display properly composites the alpha channel.
+   * true if the display properly composites the alpha channel.
    */
   props[PROP_COMPOSITED] =
     g_param_spec_boolean ("composited", NULL, NULL,
@@ -220,7 +220,7 @@ gdk_display_class_init (GdkDisplayClass *class)
   /**
    * GdkDisplay:rgba: (attributes org.gtk.Property.get=gdk_display_is_rgba)
    *
-   * %TRUE if the display supports an alpha channel.
+   * true if the display supports an alpha channel.
    */
   props[PROP_RGBA] =
     g_param_spec_boolean ("rgba", NULL, NULL,
@@ -230,7 +230,7 @@ gdk_display_class_init (GdkDisplayClass *class)
   /**
    * GdkDisplay:input-shapes: (attributes org.gtk.Property.get=gdk_display_supports_input_shapes)
    *
-   * %TRUE if the display supports input shapes.
+   * true if the display supports input shapes.
    */
   props[PROP_INPUT_SHAPES] =
     g_param_spec_boolean ("input-shapes", NULL, NULL,
@@ -257,7 +257,7 @@ gdk_display_class_init (GdkDisplayClass *class)
   /**
    * GdkDisplay::closed:
    * @display: the object on which the signal is emitted
-   * @is_error: %TRUE if the display was closed due to an error
+   * @is_error: true if the display was closed due to an error
    *
    * Emitted when the connection to the windowing system for @display is closed.
    */
@@ -432,7 +432,7 @@ gdk_display_close (GdkDisplay *display)
  *
  * Finds out if the display has been closed.
  *
- * Returns: %TRUE if the display is closed.
+ * Returns: true if the display is closed.
  */
 gboolean
 gdk_display_is_closed  (GdkDisplay  *display)
@@ -866,12 +866,12 @@ _gdk_display_pointer_info_foreach (GdkDisplay                   *display,
  * @device: device to get the grab information from
  * @grab_surface: (out) (transfer none): location to store current grab surface
  * @owner_events: (out): location to store boolean indicating whether
- *   the @owner_events flag to gdk_device_grab() was %TRUE.
+ *   the @owner_events flag to gdk_device_grab() was true.
  *
  * Determines information about the current keyboard grab.
  * This is not public API and must not be used by applications.
  *
- * Returns: %TRUE if this application currently has the
+ * Returns: true if this application currently has the
  *  keyboard grabbed.
  */
 gboolean
@@ -905,9 +905,9 @@ gdk_device_grab_info (GdkDisplay  *display,
  * @display: a `GdkDisplay`
  * @device: a `GdkDevice`
  *
- * Returns %TRUE if there is an ongoing grab on @device for @display.
+ * Returns true if there is an ongoing grab on @device for @display.
  *
- * Returns: %TRUE if there is a grab in effect for @device.
+ * Returns: true if there is a grab in effect for @device.
  */
 gboolean
 gdk_display_device_is_grabbed (GdkDisplay *display,
@@ -1048,14 +1048,14 @@ gdk_display_get_primary_clipboard (GdkDisplay *display)
  * gdk_display_supports_input_shapes: (attributes org.gtk.Method.get_property=input-shapes)
  * @display: a `GdkDisplay`
  *
- * Returns %TRUE if the display supports input shapes.
+ * Returns true if the display supports input shapes.
  *
  * This means that [method@Gdk.Surface.set_input_region] can
  * be used to modify the input shape of surfaces on @display.
  *
- * On modern displays, this value is always %TRUE.
+ * On modern displays, this value is always true.
  *
- * Returns: %TRUE if surfaces with modified input shape are supported
+ * Returns: true if surfaces with modified input shape are supported
  */
 gboolean
 gdk_display_supports_input_shapes (GdkDisplay *display)
@@ -1263,7 +1263,7 @@ gdk_display_init_gl (GdkDisplay *self)
  * Checks that OpenGL is available for @self and ensures that it is
  * properly initialized.
  * When this fails, an @error will be set describing the error and this
- * function returns %FALSE.
+ * function returns false.
  *
  * Note that even if this function succeeds, creating a `GdkGLContext`
  * may still fail.
@@ -1275,7 +1275,7 @@ gdk_display_init_gl (GdkDisplay *self)
  * as needed. But you can use it as a check when setting up code that
  * might make use of OpenGL.
  *
- * Returns: %TRUE if the display supports OpenGL
+ * Returns: true if the display supports OpenGL
  *
  * Since: 4.4
  **/
@@ -1807,7 +1807,7 @@ gdk_display_set_debug_flags (GdkDisplay    *display,
  * On X11 this function returns whether a compositing manager is
  * compositing on @display.
  *
- * On modern displays, this value is always %TRUE.
+ * On modern displays, this value is always true.
  *
  * Returns: Whether surfaces with RGBA visuals can reasonably
  *   be expected to have their alpha channels drawn correctly
@@ -1846,17 +1846,17 @@ gdk_display_set_composited (GdkDisplay *display,
  * Returns whether surfaces on this @display are created with an
  * alpha channel.
  *
- * Even if a %TRUE is returned, it is possible that the
+ * Even if a true is returned, it is possible that the
  * surface’s alpha channel won’t be honored when displaying the
  * surface on the screen: in particular, for X an appropriate
  * windowing manager and compositing manager must be running to
  * provide appropriate display. Use [method@Gdk.Display.is_composited]
  * to check if that is the case.
  *
- * On modern displays, this value is always %TRUE.
+ * On modern displays, this value is always true.
  *
- * Returns: %TRUE if surfaces are created with an alpha channel or
- *   %FALSE if the display does not support this functionality.
+ * Returns: true if surfaces are created with an alpha channel or
+ *   false if the display does not support this functionality.
  */
 gboolean
 gdk_display_is_rgba (GdkDisplay *display)
@@ -2066,8 +2066,8 @@ gdk_display_emit_opened (GdkDisplay *display)
  * Retrieves a desktop-wide setting such as double-click time
  * for the @display.
  *
- * Returns: %TRUE if the setting existed and a value was stored
- *   in @value, %FALSE otherwise
+ * Returns: true if the setting existed and a value was stored
+ *   in @value, false otherwise
  */
 gboolean
 gdk_display_get_setting (GdkDisplay *display,
@@ -2135,7 +2135,7 @@ gdk_display_set_cursor_theme (GdkDisplay *display,
  *
  * The returned array should be freed with g_free().
  *
- * Returns: %TRUE if keys were found and returned
+ * Returns: true if keys were found and returned
  */
 gboolean
 gdk_display_map_keyval (GdkDisplay    *display,
@@ -2169,7 +2169,7 @@ gdk_display_map_keyval (GdkDisplay    *display,
  *
  * Free the returned arrays with g_free().
  *
- * Returns: %TRUE if there were any entries
+ * Returns: true if there were any entries
  */
 gboolean
 gdk_display_map_keycode (GdkDisplay    *display,
@@ -2217,7 +2217,7 @@ gdk_display_map_keycode (GdkDisplay    *display,
  * contains the translated keyval. It is exported for the benefit of
  * virtualized test environments.
  *
- * Returns: %TRUE if there was a keyval bound to keycode/state/group.
+ * Returns: true if there was a keyval bound to keycode/state/group.
  */
 gboolean
 gdk_display_translate_key (GdkDisplay      *display,

@@ -906,7 +906,7 @@ gtk_tree_rbtree_reorder (GtkTreeRBTree *tree,
  * Checks if @potential_child is a child (direct or via intermediate
  * trees) of @tree.
  *
- * Returns: %TRUE if @potential_child is a child of @tree.
+ * Returns: true if @potential_child is a child of @tree.
  **/
 gboolean
 gtk_tree_rbtree_contains (GtkTreeRBTree *tree,

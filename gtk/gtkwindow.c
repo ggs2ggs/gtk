@@ -792,7 +792,7 @@ gtk_window_class_init (GtkWindowClass *klass)
   /**
    * GtkWindow:resizable: (attributes org.gtk.Property.get=gtk_window_get_resizable org.gtk.Property.set=gtk_window_set_resizable)
    *
-   * If %TRUE, users can resize the window.
+   * If true, users can resize the window.
    */
   window_props[PROP_RESIZABLE] =
       g_param_spec_boolean ("resizable", NULL, NULL,
@@ -802,7 +802,7 @@ gtk_window_class_init (GtkWindowClass *klass)
   /**
    * GtkWindow:modal: (attributes org.gtk.Property.get=gtk_window_get_modal org.gtk.Property.set=gtk_window_set_modal)
    *
-   * If %TRUE, the window is modal.
+   * If true, the window is modal.
    */
   window_props[PROP_MODAL] =
       g_param_spec_boolean ("modal", NULL, NULL,
@@ -1111,8 +1111,8 @@ gtk_window_class_init (GtkWindowClass *klass)
    *
    * Emitted when the user enables or disables interactive debugging.
    *
-   * When @toggle is %TRUE, interactive debugging is toggled on or off,
-   * when it is %FALSE, the debugger will be pointed at the widget
+   * When @toggle is true, interactive debugging is toggled on or off,
+   * when it is false, the debugger will be pointed at the widget
    * under the pointer.
    *
    * This is a [keybinding signal](class.SignalAction.html).
@@ -1120,7 +1120,7 @@ gtk_window_class_init (GtkWindowClass *klass)
    * The default bindings for this signal are Ctrl-Shift-I
    * and Ctrl-Shift-D.
    *
-   * Return: %TRUE if the key binding was handled
+   * Return: true if the key binding was handled
    */
   window_signals[ENABLE_DEBUGGING] =
     g_signal_new (I_("enable-debugging"),
@@ -1138,7 +1138,7 @@ gtk_window_class_init (GtkWindowClass *klass)
    *
    * Emitted when the user clicks on the close button of the window.
    *
-   * Return: %TRUE to stop other handlers from being invoked for the signal
+   * Return: true to stop other handlers from being invoked for the signal
    */
   window_signals[CLOSE_REQUEST] =
     g_signal_new (I_("close-request"),
@@ -2391,7 +2391,7 @@ _gtk_window_notify_keys_changed (GtkWindow *window)
  * Note that this is the widget that would have the focus
  * if the toplevel window focused; if the toplevel window
  * is not focused then `gtk_widget_has_focus (widget)` will
- * not be %TRUE for the widget.
+ * not be true for the widget.
  *
  * Returns: (nullable) (transfer none): the currently focused widget
  */
@@ -2472,7 +2472,7 @@ gtk_window_set_modal (GtkWindow *window,
  *
  * Returns whether the window is modal.
  *
- * Returns: %TRUE if the window is set to be modal and
+ * Returns: true if the window is set to be modal and
  *   establishes a grab when shown
  */
 gboolean
@@ -2826,7 +2826,7 @@ gtk_window_set_application (GtkWindow      *window,
  * @window: a `GtkWindow`
  * @setting: whether to destroy @window with its transient parent
  *
- * If @setting is %TRUE, then destroying the transient parent of @window
+ * If @setting is true, then destroying the transient parent of @window
  * will also destroy @window itself.
  *
  * This is useful for dialogs that shouldn’t persist beyond the lifetime
@@ -2854,7 +2854,7 @@ gtk_window_set_destroy_with_parent (GtkWindow *window,
  *
  * Returns whether the window will be destroyed with its transient parent.
  *
- * Returns: %TRUE if the window will be destroyed with its transient parent.
+ * Returns: true if the window will be destroyed with its transient parent.
  */
 gboolean
 gtk_window_get_destroy_with_parent (GtkWindow *window)
@@ -2871,7 +2871,7 @@ gtk_window_get_destroy_with_parent (GtkWindow *window)
  * @window: a `GtkWindow`
  * @setting: whether to hide the window when it is closed
  *
- * If @setting is %TRUE, then clicking the close button on the window
+ * If @setting is true, then clicking the close button on the window
  * will not destroy it, but only hide it.
  */
 void
@@ -2896,7 +2896,7 @@ gtk_window_set_hide_on_close (GtkWindow *window,
  *
  * Returns whether the window will be hidden when the close button is clicked.
  *
- * Returns: %TRUE if the window will be hidden
+ * Returns: true if the window will be hidden
  */
 gboolean
 gtk_window_get_hide_on_close (GtkWindow *window)
@@ -3075,14 +3075,14 @@ gtk_window_get_titlebar (GtkWindow *window)
 /**
  * gtk_window_set_decorated: (attributes org.gtk.Method.set_property=decorated)
  * @window: a `GtkWindow`
- * @setting: %TRUE to decorate the window
+ * @setting: true to decorate the window
  *
  * Sets whether the window should be decorated.
  *
  * By default, windows are decorated with a title bar, resize
  * controls, etc. Some window managers allow GTK to disable these
  * decorations, creating a borderless window. If you set the decorated
- * property to %FALSE using this function, GTK will do its best to
+ * property to false using this function, GTK will do its best to
  * convince the window manager not to decorate the window. Depending on
  * the system, this function may not have any effect when called on a
  * window that is already visible, so you should call it before calling
@@ -3121,7 +3121,7 @@ gtk_window_set_decorated (GtkWindow *window,
  *
  * Returns whether the window has been set to have decorations.
  *
- * Returns: %TRUE if the window has been set to have decorations
+ * Returns: true if the window has been set to have decorations
  */
 gboolean
 gtk_window_get_decorated (GtkWindow *window)
@@ -3136,13 +3136,13 @@ gtk_window_get_decorated (GtkWindow *window)
 /**
  * gtk_window_set_deletable: (attributes org.gtk.Method.set_property=deletable)
  * @window: a `GtkWindow`
- * @setting: %TRUE to decorate the window as deletable
+ * @setting: true to decorate the window as deletable
  *
  * Sets whether the window should be deletable.
  *
  * By default, windows have a close button in the window frame.
  * Some  window managers allow GTK to disable this button. If you
- * set the deletable property to %FALSE using this function, GTK
+ * set the deletable property to false using this function, GTK
  * will do its best to convince the window manager not to show a
  * close button. Depending on the system, this function may not
  * have any effect when called on a window that is already visible,
@@ -3180,7 +3180,7 @@ gtk_window_set_deletable (GtkWindow *window,
  *
  * Returns whether the window has been set to have a close button.
  *
- * Returns: %TRUE if the window has been set to have a close button
+ * Returns: true if the window has been set to have a close button
  */
 gboolean
 gtk_window_get_deletable (GtkWindow *window)
@@ -5570,7 +5570,7 @@ gtk_window_unfullscreen (GtkWindow *window)
 /**
  * gtk_window_set_resizable: (attributes org.gtk.Method.set_property=resizable)
  * @window: a `GtkWindow`
- * @resizable: %TRUE if the user can resize this window
+ * @resizable: true if the user can resize this window
  *
  * Sets whether the user can resize a window.
  *
@@ -5607,7 +5607,7 @@ gtk_window_set_resizable (GtkWindow *window,
  *
  * Gets the value set by gtk_window_set_resizable().
  *
- * Returns: %TRUE if the user can resize the window
+ * Returns: true if the user can resize the window
  **/
 gboolean
 gtk_window_get_resizable (GtkWindow *window)
@@ -5716,11 +5716,11 @@ gtk_window_on_theme_variant_changed (GtkSettings *settings,
  *
  * The active toplevel is the window receiving keystrokes.
  *
- * The return value is %TRUE if the window is active toplevel itself.
+ * The return value is true if the window is active toplevel itself.
  * You might use this function if you wanted to draw a widget
  * differently in an active window from a widget in an inactive window.
  *
- * Returns: %TRUE if the window part of the current active window.
+ * Returns: true if the window part of the current active window.
  */
 gboolean
 gtk_window_is_active (GtkWindow *window)
@@ -5767,7 +5767,7 @@ gtk_window_get_group (GtkWindow *window)
  *
  * Returns whether @window has an explicit window group.
  *
- * Returns: %TRUE if @window has an explicit window group.
+ * Returns: true if @window has an explicit window group.
  */
 gboolean
 gtk_window_has_group (GtkWindow *window)
@@ -5844,7 +5844,7 @@ gtk_window_keys_changed (GtkWindow *window)
 /*
  * _gtk_window_set_is_active:
  * @window: a `GtkWindow`
- * @is_active: %TRUE if the window is in the currently active toplevel
+ * @is_active: true if the window is in the currently active toplevel
  *
  * Internal function that sets whether the `GtkWindow` is part
  * of the currently active toplevel window (taking into account
@@ -5888,7 +5888,7 @@ _gtk_window_set_is_active (GtkWindow *window,
 
 /**
  * gtk_window_set_auto_startup_notification:
- * @setting: %TRUE to automatically do startup notification
+ * @setting: true to automatically do startup notification
  *
  * Sets whether the window should request startup notification.
  *
@@ -5915,7 +5915,7 @@ gtk_window_set_auto_startup_notification (gboolean setting)
  *
  * Gets whether mnemonics are supposed to be visible.
  *
- * Returns: %TRUE if mnemonics are supposed to be visible
+ * Returns: true if mnemonics are supposed to be visible
  *   in this window.
  */
 gboolean
@@ -5992,7 +5992,7 @@ _gtk_window_schedule_mnemonics_visible (GtkWindow *window)
  *
  * Gets whether “focus rectangles” are supposed to be visible.
  *
- * Returns: %TRUE if “focus rectangles” are supposed to be visible
+ * Returns: true if “focus rectangles” are supposed to be visible
  *   in this window.
  */
 gboolean
@@ -6180,7 +6180,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 
 /**
  * gtk_window_set_interactive_debugging:
- * @enable: %TRUE to enable interactive debugging
+ * @enable: true to enable interactive debugging
  *
  * Opens or closes the [interactive debugger](running.html#interactive-debugging).
  *
@@ -6837,7 +6837,7 @@ gtk_window_grab_notify (GtkWindow *window,
 /**
  * gtk_window_set_handle_menubar_accel: (attributes org.gtk.Method.set_property=handle-menubar-accel)
  * @window: a `GtkWindow`
- * @handle_menubar_accel: %TRUE to make @window handle F10
+ * @handle_menubar_accel: true to make @window handle F10
  *
  * Sets whether this window should react to F10 key presses
  * by activating a menubar it contains.
@@ -6870,7 +6870,7 @@ gtk_window_set_handle_menubar_accel (GtkWindow *window,
  * Returns whether this window reacts to F10 key presses by
  * activating a menubar it contains.
  *
- * Returns: %TRUE if the window handles F10
+ * Returns: true if the window handles F10
  *
  * Since: 4.2
  */

@@ -197,7 +197,7 @@ gtk_event_controller_key_class_init (GtkEventControllerKeyClass *klass)
    *
    * Emitted whenever a key is pressed.
    *
-   * Returns: %TRUE if the key press was handled, %FALSE otherwise.
+   * Returns: true if the key press was handled, false otherwise.
    */
   signals[KEY_PRESSED] =
     g_signal_new (I_("key-pressed"),

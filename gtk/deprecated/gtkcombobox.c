@@ -736,7 +736,7 @@ gtk_combo_box_class_init (GtkComboBoxClass *klass)
     * The model column to associate with strings from the entry.
     *
     * This is property only relevant if the combo was created with
-    * [property@Gtk.ComboBox:has-entry] is %TRUE.
+    * [property@Gtk.ComboBox:has-entry] is true.
     */
    g_object_class_install_property (object_class,
                                     PROP_ENTRY_TEXT_COLUMN,
@@ -2056,7 +2056,7 @@ gtk_combo_box_set_active_internal (GtkComboBox *combo_box,
  *
  * If no item is active, @iter is left unchanged.
  *
- * Returns: %TRUE if @iter was set, %FALSE otherwise
+ * Returns: true if @iter was set, false otherwise
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
  */
@@ -2539,7 +2539,7 @@ gtk_combo_box_start_editing (GtkCellEditable *cell_editable,
  *
  * Specifies whether the popup’s width should be a fixed width.
  *
- * If @fixed is %TRUE, the popup's width is set to match the
+ * If @fixed is true, the popup's width is set to match the
  * allocated width of the combo box.
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
@@ -2566,7 +2566,7 @@ gtk_combo_box_set_popup_fixed_width (GtkComboBox *combo_box,
  *
  * Gets whether the popup uses a fixed width.
  *
- * Returns: %TRUE if the popup uses a fixed width
+ * Returns: true if the popup uses a fixed width
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
  */
@@ -2726,7 +2726,7 @@ gtk_combo_box_get_has_entry (GtkComboBox *combo_box)
  * type %G_TYPE_STRING.
  *
  * This is only relevant if @combo_box has been created with
- * [property@Gtk.ComboBox:has-entry] as %TRUE.
+ * [property@Gtk.ComboBox:has-entry] as true.
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
  */
@@ -2953,11 +2953,11 @@ gtk_combo_box_get_active_id (GtkComboBox *combo_box)
  *
  * If the [property@Gtk.ComboBox:id-column] property of @combo_box is
  * unset or if no row has the given ID then the function does nothing
- * and returns %FALSE.
+ * and returns false.
  *
- * Returns: %TRUE if a row with a matching ID was found. If a %NULL
+ * Returns: true if a row with a matching ID was found. If a %NULL
  *   @active_id was given to unset the active row, the function
- *   always returns %TRUE.
+ *   always returns true.
  *
  * Deprecated: 4.10: Use [class@Gtk.DropDown]
  */

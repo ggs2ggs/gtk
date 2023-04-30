@@ -81,8 +81,8 @@ gtk_event_controller_legacy_class_init (GtkEventControllerLegacyClass *klass)
    *
    * Emitted for each GDK event delivered to @controller.
    *
-   * Returns: %TRUE to stop other handlers from being invoked for the event
-   *   and the emission of this signal. %FALSE to propagate the event further.
+   * Returns: true to stop other handlers from being invoked for the event
+   *   and the emission of this signal. false to propagate the event further.
    */
   signals[EVENT] =
     g_signal_new (I_("event"),

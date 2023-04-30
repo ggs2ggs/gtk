@@ -1383,7 +1383,7 @@ msgstr "FixMaj es activate"
 #. * file name with a button to bring up a #GtkFileChooserDialog.
 #. * The user can then use that dialog to change the file associated with
 #. * that button.  This widget does not support setting the
-#. * #GtkFileChooser:select-multiple property to %TRUE.
+#. * #GtkFileChooser:select-multiple property to true.
 #. *
 #. * <example>
 #. * <title>Create a button to let the user select a file in /etc</title>

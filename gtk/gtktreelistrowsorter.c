@@ -562,7 +562,7 @@ gtk_tree_list_row_sorter_init (GtkTreeListRowSorter *self)
  * of @sorter to the levels of a `GtkTreeListModel`.
  *
  * Note that this sorter relies on [property@Gtk.TreeListModel:passthrough]
- * being %FALSE as it can only sort [class@Gtk.TreeListRow]s.
+ * being false as it can only sort [class@Gtk.TreeListRow]s.
  *
  * Returns: a new `GtkTreeListRowSorter`
  */

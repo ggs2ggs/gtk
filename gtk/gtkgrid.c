@@ -446,7 +446,7 @@ gtk_grid_class_init (GtkGridClass *class)
   /**
    * GtkGrid:row-homogeneous: (attributes org.gtk.Property.get=gtk_grid_get_row_homogeneous org.gtk.Property.set=gtk_grid_set_row_homogeneous)
    *
-   * If %TRUE, the rows are all the same height.
+   * If true, the rows are all the same height.
    */
   obj_properties[PROP_ROW_HOMOGENEOUS] =
     g_param_spec_boolean ("row-homogeneous", NULL, NULL,
@@ -456,7 +456,7 @@ gtk_grid_class_init (GtkGridClass *class)
   /**
    * GtkGrid:column-homogeneous: (attributes org.gtk.Property.get=gtk_grid_get_column_homogeneous org.gtk.Property.set=gtk_grid_set_column_homogeneous)
    *
-   * If %TRUE, the columns are all the same width.
+   * If true, the columns are all the same width.
    */
   obj_properties[PROP_COLUMN_HOMOGENEOUS] =
     g_param_spec_boolean ("column-homogeneous", NULL, NULL,
@@ -962,7 +962,7 @@ gtk_grid_insert_next_to (GtkGrid         *grid,
 /**
  * gtk_grid_set_row_homogeneous: (attributes org.gtk.Method.set_property=row-homogeneous)
  * @grid: a `GtkGrid`
- * @homogeneous: %TRUE to make rows homogeneous
+ * @homogeneous: true to make rows homogeneous
  *
  * Sets whether all rows of @grid will have the same height.
  */
@@ -1004,7 +1004,7 @@ gtk_grid_get_row_homogeneous (GtkGrid *grid)
 /**
  * gtk_grid_set_column_homogeneous: (attributes org.gtk.Method.set_property=column-homogeneous)
  * @grid: a `GtkGrid`
- * @homogeneous: %TRUE to make columns homogeneous
+ * @homogeneous: true to make columns homogeneous
  *
  * Sets whether all columns of @grid will have the same width.
  */

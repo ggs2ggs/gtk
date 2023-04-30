@@ -547,7 +547,7 @@ gdk_device_get_name (GdkDevice *device)
  * This is not meaningful for keyboard devices, which
  * don't have a pointer.
  *
- * Returns: %TRUE if the pointer follows device motion
+ * Returns: true if the pointer follows device motion
  */
 gboolean
 gdk_device_get_has_cursor (GdkDevice *device)
@@ -689,7 +689,7 @@ gdk_device_get_n_axes (GdkDevice *device)
  * Interprets an array of `double` as axis values and get the value
  * for a given axis use.
  *
- * Returns: %TRUE if the given axis use was found, otherwise %FALSE
+ * Returns: true if the given axis use was found, otherwise false
  */
 gboolean
 gdk_device_get_axis (GdkDevice  *device,
@@ -1224,7 +1224,7 @@ gdk_device_get_device_tool (GdkDevice *device)
  *
  * This is only relevant for keyboard devices.
  *
- * Returns: %TRUE if Caps Lock is on for @device
+ * Returns: true if Caps Lock is on for @device
  */
 gboolean
 gdk_device_get_caps_lock_state (GdkDevice *device)
@@ -1245,7 +1245,7 @@ gdk_device_get_caps_lock_state (GdkDevice *device)
  *
  * This is only relevant for keyboard devices.
  *
- * Returns: %TRUE if Num Lock is on for @device
+ * Returns: true if Num Lock is on for @device
  */
 gboolean
 gdk_device_get_num_lock_state (GdkDevice *device)
@@ -1266,7 +1266,7 @@ gdk_device_get_num_lock_state (GdkDevice *device)
  *
  * This is only relevant for keyboard devices.
  *
- * Returns: %TRUE if Scroll Lock is on for @device
+ * Returns: true if Scroll Lock is on for @device
  */
 gboolean
 gdk_device_get_scroll_lock_state (GdkDevice *device)
@@ -1335,7 +1335,7 @@ gdk_device_get_direction (GdkDevice *device)
  *
  * This is only relevant for keyboard devices.
  *
- * Returns: %TRUE if there are layouts with both directions, %FALSE otherwise
+ * Returns: true if there are layouts with both directions, false otherwise
  */
 gboolean
 gdk_device_has_bidi_layouts (GdkDevice *device)

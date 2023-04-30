@@ -547,8 +547,8 @@ gtk_event_controller_scroll_class_init (GtkEventControllerScrollClass *klass)
    * For the representation unit of the deltas, see
    * [method@Gtk.EventControllerScroll.get_unit].
    *
-   * Returns: %TRUE if the scroll event was handled,
-   *   %FALSE otherwise.
+   * Returns: true if the scroll event was handled,
+   *   false otherwise.
    */
   signals[SCROLL] =
     g_signal_new (I_("scroll"),

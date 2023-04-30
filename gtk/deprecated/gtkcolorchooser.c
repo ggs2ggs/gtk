@@ -75,7 +75,7 @@ gtk_color_chooser_default_init (GtkColorChooserInterface *iface)
    *
    * Whether colors may have alpha (translucency).
    *
-   * When ::use-alpha is %FALSE, the `GdkRGBA` struct obtained
+   * When ::use-alpha is false, the `GdkRGBA` struct obtained
    * via the [property@Gtk.ColorChooser:rgba] property will be
    * forced to have alpha == 1.
    *
@@ -165,8 +165,8 @@ gtk_color_chooser_set_rgba (GtkColorChooser *chooser,
  *
  * Returns whether the color chooser shows the alpha channel.
  *
- * Returns: %TRUE if the color chooser uses the alpha channel,
- *   %FALSE if not
+ * Returns: true if the color chooser uses the alpha channel,
+ *   false if not
  *
  * Deprecated: 4.10: Use [class@Gtk.ColorDialog] instead
  */
@@ -185,7 +185,7 @@ gtk_color_chooser_get_use_alpha (GtkColorChooser *chooser)
 /**
  * gtk_color_chooser_set_use_alpha: (attributes org.gtk.Method.set_property=use-alpha)
  * @chooser: a `GtkColorChooser`
- * @use_alpha: %TRUE if color chooser should use alpha channel, %FALSE if not
+ * @use_alpha: true if color chooser should use alpha channel, false if not
  *
  * Sets whether or not the color chooser should use the alpha channel.
  *
@@ -213,7 +213,7 @@ gtk_color_chooser_set_use_alpha (GtkColorChooser *chooser,
  * Adds a palette to the color chooser.
  *
  * If @orientation is horizontal, the colors are grouped in rows,
- * with @colors_per_line colors in each row. If @horizontal is %FALSE,
+ * with @colors_per_line colors in each row. If @horizontal is false,
  * the colors are grouped in columns instead.
  *
  * The default color palette of [class@Gtk.ColorChooserWidget] has

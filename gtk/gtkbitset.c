@@ -102,7 +102,7 @@ gtk_bitset_unref (GtkBitset *self)
  *
  * Checks if the given @value has been added to @self
  *
- * Returns: %TRUE if @self contains @value
+ * Returns: true if @self contains @value
  **/
 gboolean
 gtk_bitset_contains (const GtkBitset *self,
@@ -119,7 +119,7 @@ gtk_bitset_contains (const GtkBitset *self,
  *
  * Check if no value is contained in bitset.
  *
- * Returns: %TRUE if @self is empty
+ * Returns: true if @self is empty
  **/
 gboolean
 gtk_bitset_is_empty (const GtkBitset *self)
@@ -134,9 +134,9 @@ gtk_bitset_is_empty (const GtkBitset *self)
  * @self: a `GtkBitset`
  * @other: another `GtkBitset`
  *
- * Returns %TRUE if @self and @other contain the same values.
+ * Returns true if @self and @other contain the same values.
  *
- * Returns: %TRUE if @self and @other contain the same values
+ * Returns: true if @self and @other contain the same values
  **/
 gboolean
 gtk_bitset_equals (const GtkBitset *self,
@@ -345,7 +345,7 @@ gtk_bitset_remove_all (GtkBitset *self)
  *
  * Adds @value to @self if it wasn't part of it before.
  *
- * Returns: %TRUE if @value was not part of @self and @self
+ * Returns: true if @value was not part of @self and @self
  *   was changed
  */
 gboolean
@@ -364,7 +364,7 @@ gtk_bitset_add (GtkBitset *self,
  *
  * Removes @value from @self if it was part of it before.
  *
- * Returns: %TRUE if @value was part of @self and @self
+ * Returns: true if @value was part of @self and @self
  *   was changed
  */
 gboolean
@@ -783,9 +783,9 @@ G_DEFINE_BOXED_TYPE (GtkBitsetIter, gtk_bitset_iter, gtk_bitset_iter_copy, gtk_b
  * Initializes an iterator for @set and points it to the first
  * value in @set.
  *
- * If @set is empty, %FALSE is returned and @value is set to %G_MAXUINT.
+ * If @set is empty, false is returned and @value is set to %G_MAXUINT.
  *
- * Returns: %TRUE if @set isn't empty.
+ * Returns: true if @set isn't empty.
  */
 gboolean
 gtk_bitset_iter_init_first (GtkBitsetIter   *iter,
@@ -814,9 +814,9 @@ gtk_bitset_iter_init_first (GtkBitsetIter   *iter,
  * Initializes an iterator for @set and points it to the last
  * value in @set.
  *
- * If @set is empty, %FALSE is returned.
+ * If @set is empty, false is returned.
  *
- * Returns: %TRUE if @set isn't empty.
+ * Returns: true if @set isn't empty.
  **/
 gboolean
 gtk_bitset_iter_init_last (GtkBitsetIter    *iter,
@@ -846,9 +846,9 @@ gtk_bitset_iter_init_last (GtkBitsetIter    *iter,
  * Initializes @iter to point to @target.
  *
  * If @target is not found, finds the next value after it.
- * If no value >= @target exists in @set, this function returns %FALSE.
+ * If no value >= @target exists in @set, this function returns false.
  *
- * Returns: %TRUE if a value was found.
+ * Returns: true if a value was found.
  */
 gboolean
 gtk_bitset_iter_init_at (GtkBitsetIter   *iter,
@@ -883,9 +883,9 @@ gtk_bitset_iter_init_at (GtkBitsetIter   *iter,
  * Moves @iter to the next value in the set.
  *
  * If it was already pointing to the last value in the set,
- * %FALSE is returned and @iter is invalidated.
+ * false is returned and @iter is invalidated.
  *
- * Returns: %TRUE if a next value existed
+ * Returns: true if a next value existed
  */
 gboolean
 gtk_bitset_iter_next (GtkBitsetIter *iter,
@@ -916,9 +916,9 @@ gtk_bitset_iter_next (GtkBitsetIter *iter,
  * Moves @iter to the previous value in the set.
  *
  * If it was already pointing to the first value in the set,
- * %FALSE is returned and @iter is invalidated.
+ * false is returned and @iter is invalidated.
  *
- * Returns: %TRUE if a previous value existed
+ * Returns: true if a previous value existed
  */
 gboolean
 gtk_bitset_iter_previous (GtkBitsetIter *iter,
@@ -948,7 +948,7 @@ gtk_bitset_iter_previous (GtkBitsetIter *iter,
  * Gets the current value that @iter points to.
  *
  * If @iter is not valid and [method@Gtk.BitsetIter.is_valid]
- * returns %FALSE, this function returns 0.
+ * returns false, this function returns 0.
  *
  * Returns: The current value pointer to by @iter
  */
@@ -971,7 +971,7 @@ gtk_bitset_iter_get_value (const GtkBitsetIter *iter)
  *
  * Checks if @iter points to a valid value.
  *
- * Returns: %TRUE if @iter points to a valid value
+ * Returns: true if @iter points to a valid value
  */
 gboolean
 gtk_bitset_iter_is_valid (const GtkBitsetIter *iter)

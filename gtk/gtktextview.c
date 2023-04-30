@@ -1116,7 +1116,7 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
    *
    * Whether text should be displayed in a monospace font.
    *
-   * If %TRUE, set the .monospace style class on the
+   * If true, set the .monospace style class on the
    * text view to indicate that a monospace font is desired.
    */
   g_object_class_install_property (gobject_class,
@@ -1151,7 +1151,7 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
    * @text_view: the object which received the signal
    * @step: the granularity of the move, as a `GtkMovementStep`
    * @count: the number of @step units to move
-   * @extend_selection: %TRUE if the move should extend the selection
+   * @extend_selection: true if the move should extend the selection
    *
    * Gets emitted when the user initiates a cursor movement.
    *
@@ -1404,7 +1404,7 @@ gtk_text_view_class_init (GtkTextViewClass *klass)
   /**
    * GtkTextView::select-all:
    * @text_view: the object which received the signal
-   * @select: %TRUE to select, %FALSE to unselect
+   * @select: true to select, false to unselect
    *
    * Gets emitted to select or unselect the complete contents of the text view.
    *
@@ -2329,7 +2329,7 @@ gtk_text_view_get_cursor_locations (GtkTextView       *text_view,
  * event, you have to convert those to buffer coordinates with
  * [method@Gtk.TextView.window_to_buffer_coords].
  *
- * Returns: %TRUE if the position is over text
+ * Returns: true if the position is over text
  */
 gboolean
 gtk_text_view_get_iter_at_location (GtkTextView *text_view,
@@ -2367,7 +2367,7 @@ gtk_text_view_get_iter_at_location (GtkTextView *text_view,
  * Note that this is different from [method@Gtk.TextView.get_iter_at_location],
  * which returns cursor locations, i.e. positions between characters.
  *
- * Returns: %TRUE if the position is over text
+ * Returns: true if the position is over text
  */
 gboolean
 gtk_text_view_get_iter_at_position (GtkTextView *text_view,
@@ -2691,7 +2691,7 @@ _gtk_text_view_scroll_to_iter (GtkTextView   *text_view,
  * @text_view: a `GtkTextView`
  * @iter: a `GtkTextIter`
  * @within_margin: margin as a [0.0,0.5) fraction of screen size
- * @use_align: whether to use alignment arguments (if %FALSE,
+ * @use_align: whether to use alignment arguments (if false,
  *    just get the mark onscreen)
  * @xalign: horizontal alignment of mark within visible area
  * @yalign: vertical alignment of mark within visible area
@@ -2700,7 +2700,7 @@ _gtk_text_view_scroll_to_iter (GtkTextView   *text_view,
  * indicated by @xalign and @yalign.
  *
  * An alignment of 0.0 indicates left or top, 1.0 indicates right or
- * bottom, 0.5 means center. If @use_align is %FALSE, the text scrolls
+ * bottom, 0.5 means center. If @use_align is false, the text scrolls
  * the minimal distance to get the mark onscreen, possibly not scrolling
  * at all. The effective screen for purposes of this function is reduced
  * by a margin of size @within_margin.
@@ -2712,7 +2712,7 @@ _gtk_text_view_scroll_to_iter (GtkTextView   *text_view,
  * using [method@Gtk.TextView.scroll_to_mark] which saves a point to be
  * scrolled to after line validation.
  *
- * Returns: %TRUE if scrolling occurred
+ * Returns: true if scrolling occurred
  */
 gboolean
 gtk_text_view_scroll_to_iter (GtkTextView   *text_view,
@@ -2954,7 +2954,7 @@ flush_update_im_spot_location (GtkTextView *text_view)
  * @text_view: a `GtkTextView`
  * @mark: a `GtkTextMark`
  * @within_margin: margin as a [0.0,0.5) fraction of screen size
- * @use_align: whether to use alignment arguments (if %FALSE, just
+ * @use_align: whether to use alignment arguments (if false, just
  *    get the mark onscreen)
  * @xalign: horizontal alignment of mark within visible area
  * @yalign: vertical alignment of mark within visible area
@@ -2963,7 +2963,7 @@ flush_update_im_spot_location (GtkTextView *text_view)
  * indicated by @xalign and @yalign.
  *
  * An alignment of 0.0 indicates left or top, 1.0 indicates right or
- * bottom, 0.5 means center. If @use_align is %FALSE, the text scrolls
+ * bottom, 0.5 means center. If @use_align is false, the text scrolls
  * the minimal distance to get the mark onscreen, possibly not scrolling
  * at all. The effective screen for purposes of this function is reduced
  * by a margin of size @within_margin.
@@ -3043,7 +3043,7 @@ clamp_iter_onscreen (GtkTextView *text_view, GtkTextIter *iter)
  * Moves a mark within the buffer so that it's
  * located within the currently-visible text area.
  *
- * Returns: %TRUE if the mark moved (wasn’t already onscreen)
+ * Returns: true if the mark moved (wasn’t already onscreen)
  */
 gboolean
 gtk_text_view_move_mark_onscreen (GtkTextView *text_view,
@@ -3834,7 +3834,7 @@ gtk_text_view_reset_cursor_blink (GtkTextView *text_view)
  * Moves the cursor to the currently visible region of the
  * buffer.
  *
- * Returns: %TRUE if the cursor had to be moved.
+ * Returns: true if the cursor had to be moved.
  */
 gboolean
 gtk_text_view_place_cursor_onscreen (GtkTextView *text_view)
@@ -7162,7 +7162,7 @@ gtk_text_view_get_overwrite (GtkTextView *text_view)
 /**
  * gtk_text_view_set_overwrite: (attributes org.gtk.Method.set_property=overwrite)
  * @text_view: a `GtkTextView`
- * @overwrite: %TRUE to turn on overwrite mode, %FALSE to turn it off
+ * @overwrite: true to turn on overwrite mode, false to turn it off
  *
  * Changes the `GtkTextView` overwrite mode.
  */
@@ -7180,14 +7180,14 @@ gtk_text_view_set_overwrite (GtkTextView *text_view,
 /**
  * gtk_text_view_set_accepts_tab: (attributes org.gtk.Method.set_property=accepts-tab)
  * @text_view: A `GtkTextView`
- * @accepts_tab: %TRUE if pressing the Tab key should insert a tab
- *    character, %FALSE, if pressing the Tab key should move the
+ * @accepts_tab: true if pressing the Tab key should insert a tab
+ *    character, false, if pressing the Tab key should move the
  *    keyboard focus.
  *
  * Sets the behavior of the text widget when the <kbd>Tab</kbd> key is pressed.
  *
- * If @accepts_tab is %TRUE, a tab character is inserted. If @accepts_tab
- * is %FALSE the keyboard focus is moved to the next widget in the focus
+ * If @accepts_tab is true, a tab character is inserted. If @accepts_tab
+ * is false the keyboard focus is moved to the next widget in the focus
  * chain.
  *
  * Focus can always be moved using <kbd>Ctrl</kbd>+<kbd>Tab</kbd>.
@@ -7216,8 +7216,8 @@ gtk_text_view_set_accepts_tab (GtkTextView *text_view,
  *
  * See [method@Gtk.TextView.set_accepts_tab].
  *
- * Returns: %TRUE if pressing the Tab key inserts a tab character,
- *   %FALSE if pressing the Tab key moves the keyboard focus.
+ * Returns: true if pressing the Tab key inserts a tab character,
+ *   false if pressing the Tab key moves the keyboard focus.
  */
 gboolean
 gtk_text_view_get_accepts_tab (GtkTextView *text_view)
@@ -8074,7 +8074,7 @@ gtk_text_view_reset_im_context (GtkTextView *text_view)
  * Allow the `GtkTextView` input method to internally handle key press
  * and release events.
  *
- * If this function returns %TRUE, then no further processing should be
+ * If this function returns true, then no further processing should be
  * done for this key event. See [method@Gtk.IMContext.filter_keypress].
  *
  * Note that you are expected to call this function from your handler
@@ -8103,7 +8103,7 @@ gtk_text_view_reset_im_context (GtkTextView *text_view)
  * }
  * ```
  *
- * Returns: %TRUE if the input method handled the key event.
+ * Returns: true if the input method handled the key event.
  */
 gboolean
 gtk_text_view_im_context_filter_keypress (GtkTextView *text_view,
@@ -9780,7 +9780,7 @@ gtk_text_view_move_overlay (GtkTextView *text_view,
  * they depend on the view’s width; paragraphs are the same in all
  * views, since they depend on the contents of the `GtkTextBuffer`.
  *
- * Returns: %TRUE if @iter was moved and is not on the end iterator
+ * Returns: true if @iter was moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_forward_display_line (GtkTextView *text_view,
@@ -9809,7 +9809,7 @@ gtk_text_view_forward_display_line (GtkTextView *text_view,
  * they depend on the view’s width; paragraphs are the same in all
  * views, since they depend on the contents of the `GtkTextBuffer`.
  *
- * Returns: %TRUE if @iter was moved and is not on the end iterator
+ * Returns: true if @iter was moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_backward_display_line (GtkTextView *text_view,
@@ -9838,7 +9838,7 @@ gtk_text_view_backward_display_line (GtkTextView *text_view,
  * they depend on the view’s width; paragraphs are the same in all
  * views, since they depend on the contents of the `GtkTextBuffer`.
  *
- * Returns: %TRUE if @iter was moved and is not on the end iterator
+ * Returns: true if @iter was moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_forward_display_line_end (GtkTextView *text_view,
@@ -9867,7 +9867,7 @@ gtk_text_view_forward_display_line_end (GtkTextView *text_view,
  * they depend on the view’s width; paragraphs are the same in all
  * views, since they depend on the contents of the `GtkTextBuffer`.
  *
- * Returns: %TRUE if @iter was moved and is not on the end iterator
+ * Returns: true if @iter was moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_backward_display_line_start (GtkTextView *text_view,
@@ -9891,7 +9891,7 @@ gtk_text_view_backward_display_line_start (GtkTextView *text_view,
  * See [method@Gtk.TextView.forward_display_line] for an
  * explanation of display lines vs. paragraphs.
  *
- * Returns: %TRUE if @iter begins a wrapped line
+ * Returns: true if @iter begins a wrapped line
  */
 gboolean
 gtk_text_view_starts_display_line (GtkTextView       *text_view,
@@ -9925,7 +9925,7 @@ gtk_text_view_starts_display_line (GtkTextView       *text_view,
  * of the current run, and there may be jumps when the cursor
  * is moved off of the end of a run.
  *
- * Returns: %TRUE if @iter moved and is not on the end iterator
+ * Returns: true if @iter moved and is not on the end iterator
  */
 gboolean
 gtk_text_view_move_visually (GtkTextView *text_view,
@@ -10038,7 +10038,7 @@ gtk_text_view_get_input_hints (GtkTextView *text_view)
 /**
  * gtk_text_view_set_monospace: (attributes org.gtk.Method.set_property=monospace)
  * @text_view: a `GtkTextView`
- * @monospace: %TRUE to request monospace styling
+ * @monospace: true to request monospace styling
  *
  * Sets whether the `GtkTextView` should display text in
  * monospace styling.
@@ -10070,7 +10070,7 @@ gtk_text_view_set_monospace (GtkTextView *text_view,
  *
  * Gets whether the `GtkTextView` uses monospace styling.
  *
- * Return: %TRUE if monospace fonts are desired
+ * Return: true if monospace fonts are desired
  */
 gboolean
 gtk_text_view_get_monospace (GtkTextView *text_view)

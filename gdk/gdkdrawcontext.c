@@ -202,13 +202,13 @@ gdk_draw_context_init (GdkDrawContext *self)
  * gdk_draw_context_is_in_frame:
  * @context: a `GdkDrawContext`
  *
- * Returns %TRUE if @context is in the process of drawing to its surface.
+ * Returns true if @context is in the process of drawing to its surface.
  *
  * This is the case between calls to [method@Gdk.DrawContext.begin_frame]
  * and [method@Gdk.DrawContext.end_frame]. In this situation, drawing commands
  * may be effecting the contents of the @context's surface.
  *
- * Returns: %TRUE if the context is between [method@Gdk.DrawContext.begin_frame]
+ * Returns: true if the context is between [method@Gdk.DrawContext.begin_frame]
  *   and [method@Gdk.DrawContext.end_frame] calls.
  */
 gboolean
@@ -315,7 +315,7 @@ gdk_draw_context_begin_frame (GdkDrawContext       *context,
 }
 
 /*
- * @prefers_high_depth: %TRUE to request a higher bit depth
+ * @prefers_high_depth: true to request a higher bit depth
  *
  * If high depth is preferred, GDK will see about providing a rendering target
  * that supports higher bit depth than 8 bits per channel. Typically this means

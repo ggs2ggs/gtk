@@ -720,7 +720,7 @@ gdk_drag_set_hotspot (GdkDrag *drag,
  *
  * Informs GDK that the drop ended.
  *
- * Passing %FALSE for @success may trigger a drag cancellation
+ * Passing false for @success may trigger a drag cancellation
  * animation.
  *
  * This function is called by the drag source, and should be the
@@ -809,10 +809,10 @@ gdk_drag_get_cursor (GdkDrag       *drag,
  * Checks if @action represents a single action or includes
  * multiple actions.
  *
- * When @action is 0 - ie no action was given, %TRUE
+ * When @action is 0 - ie no action was given, true
  * is returned.
  *
- * Returns: %TRUE if exactly one action was given
+ * Returns: true if exactly one action was given
  */
 gboolean
 gdk_drag_action_is_unique (GdkDragAction action)

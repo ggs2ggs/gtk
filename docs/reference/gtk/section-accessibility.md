@@ -347,7 +347,7 @@ your tabs are accessible in the same way as `GtkStackSwitcher` or `GtkNotebook`:
 - Set up the %GTK_ACCESSIBLE_RELATION_CONTROLS relation between each
   tab and the `GtkStackPage` object for its page
 - Set the %GTK_ACCESSIBLE_PROPERTY_SELECTED property on each tab, with
-  the active tab getting the value %TRUE, all others %FALSE
+  the active tab getting the value true, all others false
 
 To allow changing the active tab via accessible technologies, you can
 export actions. Since the accessibility interfaces only support actions

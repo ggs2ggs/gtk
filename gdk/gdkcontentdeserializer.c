@@ -582,8 +582,8 @@ gdk_content_deserialize_async (GInputStream        *stream,
  *
  * Finishes a content deserialization operation.
  *
- * Returns: %TRUE if the operation was successful. In this case,
- *   @value is set. %FALSE if an error occurred. In this case,
+ * Returns: true if the operation was successful. In this case,
+ *   @value is set. false if an error occurred. In this case,
  *   @error is set
  */
 gboolean

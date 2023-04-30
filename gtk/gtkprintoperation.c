@@ -763,7 +763,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    * [method@Gtk.PrintOperation.get_error] for more information.
    *
    * If you enabled print status tracking then
-   * [method@Gtk.PrintOperation.is_finished] may still return %FALSE
+   * [method@Gtk.PrintOperation.is_finished] may still return false
    * after the ::done signal was emitted.
    */
   signals[DONE] =
@@ -805,19 +805,19 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    * Emitted after the ::begin-print signal, but before the actual rendering
    * starts.
    *
-   * It keeps getting emitted until a connected signal handler returns %TRUE.
+   * It keeps getting emitted until a connected signal handler returns true.
    *
    * The ::paginate signal is intended to be used for paginating a document
    * in small chunks, to avoid blocking the user interface for a long
    * time. The signal handler should update the number of pages using
-   * [method@Gtk.PrintOperation.set_n_pages], and return %TRUE if the document
+   * [method@Gtk.PrintOperation.set_n_pages], and return true if the document
    * has been completely paginated.
    *
    * If you don't need to do pagination in chunks, you can simply do
    * it all in the ::begin-print handler, and set the number of pages
    * from there.
    *
-   * Returns: %TRUE if pagination is complete
+   * Returns: true if pagination is complete
    */
   signals[PAGINATE] =
     g_signal_new (I_("paginate"),
@@ -1045,7 +1045,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    * application to preview.
    *
    * To implement a custom print preview, an application must return
-   * %TRUE from its handler for this signal. In order to use the
+   * true from its handler for this signal. In order to use the
    * provided @context for the preview implementation, it must be
    * given a suitable cairo context with
    * [method@Gtk.PrintContext.set_cairo_context].
@@ -1057,7 +1057,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
    * finished by calling [method@Gtk.PrintOperationPreview.end_preview]
    * (typically in response to the user clicking a close button).
    *
-   * Returns: %TRUE if the listener wants to take over control of the preview
+   * Returns: true if the listener wants to take over control of the preview
    */
   signals[PREVIEW] =
     g_signal_new (I_("preview"),
@@ -1160,7 +1160,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
   /**
    * GtkPrintOperation:use-full-page: (attributes org.gtk.Property.set=gtk_print_operation_set_use_full_page)
    *
-   * If %TRUE, the transformation for the cairo context obtained
+   * If true, the transformation for the cairo context obtained
    * from `GtkPrintContext` puts the origin at the top left corner
    * of the page.
    *
@@ -1178,7 +1178,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
   /**
    * GtkPrintOperation:track-print-status: (attributes org.gtk.Property.set=gtk_print_operation_set_track_print_status)
    *
-   * If %TRUE, the print operation will try to continue report on
+   * If true, the print operation will try to continue report on
    * the status of the print job in the printer queues and printer.
    *
    * This can allow your application to show things like “out of paper”
@@ -1306,7 +1306,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
   /**
    * GtkPrintOperation:support-selection: (attributes org.gtk.Property.get=gtk_print_operation_get_support_selection org.gtk.Property.set=gtk_print_operation_set_support_selection)
    *
-   * If %TRUE, the print operation will support print of selection.
+   * If true, the print operation will support print of selection.
    *
    * This allows the print dialog to show a "Selection" button.
    */
@@ -1334,7 +1334,7 @@ gtk_print_operation_class_init (GtkPrintOperationClass *class)
   /**
    * GtkPrintOperation:embed-page-setup: (attributes org.gtk.Property.get=gtk_print_operation_get_embed_page_setup org.gtk.Property.set=gtk_print_operation_set_embed_page_setup)
    *
-   * If %TRUE, page size combo box and orientation combo box
+   * If true, page size combo box and orientation combo box
    * are embedded into page setup page.
    */
   g_object_class_install_property (gobject_class,
@@ -1590,9 +1590,9 @@ gtk_print_operation_set_current_page (GtkPrintOperation *op,
 /**
  * gtk_print_operation_set_use_full_page: (attributes org.gtk.Method.set_property=use-full-page)
  * @op: a `GtkPrintOperation`
- * @full_page: %TRUE to set up the `GtkPrintContext` for the full page
+ * @full_page: true to set up the `GtkPrintContext` for the full page
  *
- * If @full_page is %TRUE, the transformation for the cairo context
+ * If @full_page is true, the transformation for the cairo context
  * obtained from `GtkPrintContext` puts the origin at the top left
  * corner of the page.
  *
@@ -1646,9 +1646,9 @@ gtk_print_operation_set_unit (GtkPrintOperation *op,
 /**
  * gtk_print_operation_set_track_print_status: (attributes org.gtk.Method.set_property=track-print-status)
  * @op: a `GtkPrintOperation`
- * @track_status: %TRUE to track status after printing
+ * @track_status: true to track status after printing
  *
- * If track_status is %TRUE, the print operation will try to continue
+ * If track_status is true, the print operation will try to continue
  * report on the status of the print job in the printer queues and printer.
  *
  * This can allow your application to show things like “out of paper”
@@ -1769,7 +1769,7 @@ gtk_print_operation_get_status_string (GtkPrintOperation *op)
  * can be in a non-finished state even after done has been called, as
  * the operation status then tracks the print job status on the printer.
  *
- * Returns: %TRUE, if the print operation is finished.
+ * Returns: true, if the print operation is finished.
  */
 gboolean
 gtk_print_operation_is_finished (GtkPrintOperation *op)
@@ -1786,9 +1786,9 @@ gtk_print_operation_is_finished (GtkPrintOperation *op)
 /**
  * gtk_print_operation_set_show_progress: (attributes org.gtk.Method.set_property=show-progress)
  * @op: a `GtkPrintOperation`
- * @show_progress: %TRUE to show a progress dialog
+ * @show_progress: true to show a progress dialog
  *
- * If @show_progress is %TRUE, the print operation will show
+ * If @show_progress is true, the print operation will show
  * a progress dialog during the print operation.
  */
 void
@@ -1812,7 +1812,7 @@ gtk_print_operation_set_show_progress (GtkPrintOperation  *op,
 /**
  * gtk_print_operation_set_allow_async: (attributes org.gtk.Method.set_property=allow-async)
  * @op: a `GtkPrintOperation`
- * @allow_async: %TRUE to allow asynchronous operation
+ * @allow_async: true to allow asynchronous operation
  *
  * Sets whether gtk_print_operation_run() may return
  * before the print operation is completed.
@@ -2271,7 +2271,7 @@ gtk_print_operation_set_defer_drawing (GtkPrintOperation *op)
 /**
  * gtk_print_operation_set_embed_page_setup: (attributes org.gtk.Method.set_property=embed-page-setup)
  * @op: a `GtkPrintOperation`
- * @embed: %TRUE to embed page setup selection in the `GtkPrintUnixDialog`
+ * @embed: true to embed page setup selection in the `GtkPrintUnixDialog`
  *
  * Embed page size combo box and orientation combo box into page setup page.
  *
@@ -3153,7 +3153,7 @@ gtk_print_operation_cancel (GtkPrintOperation *op)
 /**
  * gtk_print_operation_set_support_selection: (attributes org.gtk.Method.set_property=support-selection)
  * @op: a `GtkPrintOperation`
- * @support_selection: %TRUE to support selection
+ * @support_selection: true to support selection
  *
  * Sets whether selection is supported by `GtkPrintOperation`.
  */
@@ -3194,7 +3194,7 @@ gtk_print_operation_get_support_selection (GtkPrintOperation *op)
 /**
  * gtk_print_operation_set_has_selection: (attributes org.gtk.Method.set_property=has-selection)
  * @op: a `GtkPrintOperation`
- * @has_selection: %TRUE indicates that a selection exists
+ * @has_selection: true indicates that a selection exists
  *
  * Sets whether there is a selection to print.
  *

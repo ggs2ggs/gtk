@@ -717,7 +717,7 @@ gtk_cell_renderer_snapshot (GtkCellRenderer      *cell,
  * Some cell renderers may use events; for example, `GtkCellRendererToggle`
  * toggles when it gets a mouse click.
  *
- * Returns: %TRUE if the event was consumed/handled
+ * Returns: true if the event was consumed/handled
  *
  * Deprecated: 4.10
  **/
@@ -1054,7 +1054,7 @@ gtk_cell_renderer_set_visible (GtkCellRenderer *cell,
  *
  * Returns the cell renderer’s visibility.
  *
- * Returns: %TRUE if the cell renderer is visible
+ * Returns: true if the cell renderer is visible
  *
  * Deprecated: 4.10
  */
@@ -1098,7 +1098,7 @@ gtk_cell_renderer_set_sensitive (GtkCellRenderer *cell,
  *
  * Returns the cell renderer’s sensitivity.
  *
- * Returns: %TRUE if the cell renderer is sensitive
+ * Returns: true if the cell renderer is sensitive
  *
  * Deprecated: 4.10
  */
@@ -1117,7 +1117,7 @@ gtk_cell_renderer_get_sensitive (GtkCellRenderer *cell)
  *
  * Checks whether the cell renderer can do something when activated.
  *
- * Returns: %TRUE if the cell renderer can do anything when activated
+ * Returns: true if the cell renderer can do anything when activated
  *
  * Deprecated: 4.10
  */
@@ -1139,10 +1139,10 @@ gtk_cell_renderer_is_activatable (GtkCellRenderer *cell)
 /**
  * gtk_cell_renderer_stop_editing:
  * @cell: A `GtkCellRenderer`
- * @canceled: %TRUE if the editing has been canceled
+ * @canceled: true if the editing has been canceled
  *
  * Informs the cell renderer that the editing is stopped.
- * If @canceled is %TRUE, the cell renderer will emit the
+ * If @canceled is true, the cell renderer will emit the
  * `GtkCellRenderer`::editing-canceled signal.
  *
  * This function should be called by cell renderer implementations
@@ -1743,7 +1743,7 @@ gtk_cell_renderer_set_is_expander (GtkCellRenderer *cell,
  *
  * Checks whether the given `GtkCellRenderer` is an expander.
  *
- * Returns: %TRUE if @cell is an expander, and %FALSE otherwise
+ * Returns: true if @cell is an expander, and false otherwise
  *
  * Deprecated: 4.10
  */
@@ -1790,7 +1790,7 @@ gtk_cell_renderer_set_is_expanded (GtkCellRenderer *cell,
  *
  * Checks whether the given `GtkCellRenderer` is expanded.
  *
- * Returns: %TRUE if the cell renderer is expanded
+ * Returns: true if the cell renderer is expanded
  *
  * Deprecated: 4.10
  */

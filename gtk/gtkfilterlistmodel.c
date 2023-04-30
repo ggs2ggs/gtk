@@ -816,7 +816,7 @@ gtk_filter_list_model_get_model (GtkFilterListModel *self)
 /**
  * gtk_filter_list_model_set_incremental: (attributes org.gtk.Method.set_property=incremental)
  * @self: a `GtkFilterListModel`
- * @incremental: %TRUE to enable incremental filtering
+ * @incremental: true to enable incremental filtering
  *
  * Sets the filter model to do an incremental sort.
  *
@@ -870,7 +870,7 @@ gtk_filter_list_model_set_incremental (GtkFilterListModel *self,
  *
  * See [method@Gtk.FilterListModel.set_incremental].
  *
- * Returns: %TRUE if incremental filtering is enabled
+ * Returns: true if incremental filtering is enabled
  */
 gboolean
 gtk_filter_list_model_get_incremental (GtkFilterListModel *self)
@@ -898,7 +898,7 @@ gtk_filter_list_model_get_incremental (GtkFilterListModel *self)
  * ```
  *
  * If no filter operation is ongoing - in particular when
- * [property@Gtk.FilterListModel:incremental] is %FALSE - this
+ * [property@Gtk.FilterListModel:incremental] is false - this
  * function returns 0.
  *
  * Returns: The number of items not yet filtered

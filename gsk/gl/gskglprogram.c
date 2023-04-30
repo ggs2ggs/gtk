@@ -103,7 +103,7 @@ gsk_gl_program_init (GskGLProgram *self)
  * gsk_gl_program_set_uniform1i (program, UNIFORM_SOURCE, 1);
  * ```
  *
- * Returns: %TRUE if the uniform was found; otherwise %FALSE
+ * Returns: true if the uniform was found; otherwise false
  */
 gboolean
 gsk_gl_program_add_uniform (GskGLProgram *self,

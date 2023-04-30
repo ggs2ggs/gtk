@@ -274,7 +274,7 @@ gtk_selection_model_default_init (GtkSelectionModelInterface *iface)
  *
  * Checks if the given item is selected.
  *
- * Returns: %TRUE if the item is selected
+ * Returns: true if the item is selected
  */
 gboolean
 gtk_selection_model_is_selected (GtkSelectionModel *model,
@@ -352,7 +352,7 @@ gtk_selection_model_get_selection_in_range (GtkSelectionModel *model,
  *
  * Requests to select an item in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean the item was selected.
  */
 gboolean
@@ -375,7 +375,7 @@ gtk_selection_model_select_item (GtkSelectionModel *model,
  *
  * Requests to unselect an item in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean the item was unselected.
  */
 gboolean
@@ -399,7 +399,7 @@ gtk_selection_model_unselect_item (GtkSelectionModel *model,
  *
  * Requests to select a range of items in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean the range was selected.
  */
 gboolean
@@ -424,7 +424,7 @@ gtk_selection_model_select_range (GtkSelectionModel *model,
  *
  * Requests to unselect a range of items in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean the range was unselected.
  */
 gboolean
@@ -446,7 +446,7 @@ gtk_selection_model_unselect_range (GtkSelectionModel *model,
  *
  * Requests to select all items in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean that all items are now selected.
  */
 gboolean
@@ -466,7 +466,7 @@ gtk_selection_model_select_all (GtkSelectionModel *model)
  *
  * Requests to unselect all items in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean that all items are now unselected.
  */
 gboolean
@@ -520,7 +520,7 @@ gtk_selection_model_unselect_all (GtkSelectionModel *model)
  * same bitset, which would mean that every item in the set should
  * be selected.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean that all items were updated according
  *   to the inputs.
  */

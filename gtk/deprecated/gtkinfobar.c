@@ -1150,7 +1150,7 @@ gtk_info_bar_get_message_type (GtkInfoBar *info_bar)
 /**
  * gtk_info_bar_set_show_close_button: (attributes org.gtk.Method.set_property=show-close-button)
  * @info_bar: a `GtkInfoBar`
- * @setting: %TRUE to include a close button
+ * @setting: true to include a close button
  *
  * If true, a standard close button is shown.
  *
@@ -1177,7 +1177,7 @@ gtk_info_bar_set_show_close_button (GtkInfoBar *info_bar,
  *
  * Returns whether the widget will display a standard close button.
  *
- * Returns: %TRUE if the widget displays standard close button
+ * Returns: true if the widget displays standard close button
  *
  * Deprecated: 4.10
  */
@@ -1201,7 +1201,7 @@ gtk_info_bar_get_show_close_button (GtkInfoBar *info_bar)
  *
  * Note: this does not show or hide @info_bar in the
  * [property@Gtk.Widget:visible] sense, so revealing has no effect
- * if [property@Gtk.Widget:visible] is %FALSE.
+ * if [property@Gtk.Widget:visible] is false.
  *
  * Deprecated: 4.10
  */
