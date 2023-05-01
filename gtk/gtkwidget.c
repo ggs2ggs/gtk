@@ -4906,6 +4906,19 @@ gtk_widget_grab_focus (GtkWidget *widget)
   return GTK_WIDGET_GET_CLASS (widget)->grab_focus (widget);
 }
 
+/**
+ * gtk_widget_grab_focus_self:
+ * @widget: a #GtkWidget
+ *
+ * A helper function for widget implementations.
+ *
+ * This function can be used as grab_focus vfunc implementation
+ * for focusable widgets with children that don't receive focus.
+ *
+ * Also see [method@Gtk.Widget.focus_self].
+ *
+ * Since: 4.12
+ */
 gboolean
 gtk_widget_grab_focus_self (GtkWidget *widget)
 {
@@ -4919,6 +4932,19 @@ gtk_widget_grab_focus_self (GtkWidget *widget)
   return TRUE;
 }
 
+/**
+ * gtk_widget_grab_focus_child:
+ * @widget: a #GtkWidget
+ *
+ * A helper function for widget implementations.
+ *
+ * This function can be used as grab_focus vfunc implementation
+ * for non-focusable widgets with children that receive focus.
+ *
+ * Also see [method@Gtk.Widget.focus_child].
+ *
+ * Since: 4.12
+ */
 gboolean
 gtk_widget_grab_focus_child (GtkWidget *widget)
 {
@@ -5089,6 +5115,21 @@ gtk_widget_real_focus (GtkWidget        *widget,
     }
 }
 
+/**
+ * gtk_widget_focus_self:
+ * @widget: a #GtkWidget
+ *
+ * A helper function for widget implementations.
+ *
+ * This function can be used as focus vfunc implementation
+ * for focusable widgets with children that don't receive focus.
+ *
+ * Also see [method@Gtk.Widget.grab_focus_self].
+ *
+ * Returns: whether the focus was moved.
+ *
+ * Since: 4.12
+ */
 gboolean
 gtk_widget_focus_self (GtkWidget         *widget,
                        GtkDirectionType   direction)
@@ -5101,6 +5142,21 @@ gtk_widget_focus_self (GtkWidget         *widget,
   return FALSE;
 }
 
+/**
+ * gtk_widget_focus_child:
+ * @widget: a #GtkWidget
+ *
+ * A helper function for widget implementations.
+ *
+ * This function can be used as focus vfunc implementation
+ * for non-focusable widgets with children that receive focus.
+ *
+ * Also see [method@Gtk.Widget.grab_focus_child].
+ *
+ * Returns: whether the focus was moved.
+ *
+ * Since: 4.12
+ */
 gboolean
 gtk_widget_focus_child (GtkWidget         *widget,
                         GtkDirectionType   direction)
