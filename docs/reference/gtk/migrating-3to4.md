@@ -22,9 +22,6 @@ to build and work with the latest minor release in the 3.24 series.
 Over the years, a number of functions, and in some cases, entire
 widgets have been deprecated. These deprecations are clearly spelled
 out in the API reference, with hints about the recommended replacements.
-The API reference for GTK 3 also includes an
-[index](https://developer.gnome.org/gtk3/3.24/api-index-deprecated.html)
-of all deprecated symbols.
 
 To verify that your program does not use any deprecated symbols,
 you can use defines to remove deprecated symbols from the header files,
@@ -59,7 +56,7 @@ command line arguments like `--gtk-debug` you should use the `GTK_DEBUG`
 environment variable instead. If you are using `--g-fatal-warnings` for
 debugging purposes, you should use the `G_DEBUG` environment variable, as
 specified by the
-[GLib documentation](https://developer.gnome.org/glib/stable/glib-running.html).
+[GLib documentation](https://docs.gtk.org/glib/running.html).
 
 ### Do not use widget style properties
 

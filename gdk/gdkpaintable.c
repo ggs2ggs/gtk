@@ -39,7 +39,6 @@ void            gtk_snapshot_pop                        (GdkSnapshot            
  * The content of a `GdkPaintable` can be painted anywhere at any size
  * without requiring any sort of layout. The interface is inspired by
  * similar concepts elsewhere, such as
- * [ClutterContent](https://developer.gnome.org/clutter/stable/ClutterContent.html),
  * [HTML/CSS Paint Sources](https://www.w3.org/TR/css-images-4/#paint-source),
  * or [SVG Paint Servers](https://www.w3.org/TR/SVG2/pservers.html).
  *
