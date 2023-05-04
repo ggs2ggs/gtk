@@ -37,7 +37,7 @@ Here are some rules about an action:
 - the parameter type is immutable
 - the parameter type is optional: it can be `NULL`
 - if the parameter type is `NULL` then action activation must be done
-  without a parameter (ie: a `NULL` GVariant pointer)
+  without a parameter (ie: a `NULL` [struct@GLib.Variant] pointer)
 - if the parameter type is non-`NULL` then the parameter must have this
   type
 - the state can change, but it cannot change type
