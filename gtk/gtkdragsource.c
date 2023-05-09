@@ -406,7 +406,7 @@ gtk_drag_source_class_init (GtkDragSourceClass *class)
    * GtkDragSource::drag-end:
    * @source: the `GtkDragSource`
    * @drag: the `GdkDrag` object
-   * @delete_data: %TRUE if the drag was performing %GDK_ACTION_MOVE,
+   * @delete_data: true if the drag was performing %GDK_ACTION_MOVE,
    *    and the data should be deleted
    *
    * Emitted on the drag source when a drag is finished.
@@ -435,10 +435,10 @@ gtk_drag_source_class_init (GtkDragSourceClass *class)
    * Emitted on the drag source when a drag has failed.
    *
    * The signal handler may handle a failed drag operation based on
-   * the type of error. It should return %TRUE if the failure has been handled
+   * the type of error. It should return true if the failure has been handled
    * and the default "drag operation failed" animation should not be shown.
    *
-   * Returns: %TRUE if the failed drag operation has been already handled
+   * Returns: true if the failed drag operation has been already handled
    */
   signals[DRAG_CANCEL] =
       g_signal_new (I_("drag-cancel"),
@@ -638,7 +638,7 @@ gtk_drag_source_new (void)
  *
  * Gets the current content provider of a `GtkDragSource`.
  *
- * Returns: (nullable) (transfer none): the `GdkContentProvider` of @source
+ * Returns: (nullable) (transfer none): the `GdkContentProvider` of `source`
  */
 GdkContentProvider *
 gtk_drag_source_get_content (GtkDragSource *source)
@@ -662,7 +662,7 @@ gtk_drag_source_get_content (GtkDragSource *source)
  * or in a handler for the [signal@Gtk.DragSource::prepare] signal.
  *
  * You may consider setting the content provider back to
- * %NULL in a [signal@Gtk.DragSource::drag-end] signal handler.
+ * `NULL` in a [signal@Gtk.DragSource::drag-end] signal handler.
  */
 void
 gtk_drag_source_set_content (GtkDragSource      *source,
@@ -682,7 +682,7 @@ gtk_drag_source_set_content (GtkDragSource      *source,
  *
  * Gets the actions that are currently set on the `GtkDragSource`.
  *
- * Returns: the actions set on @source
+ * Returns: the actions set on `source`
  */
 GdkDragAction
 gtk_drag_source_get_actions (GtkDragSource *source)
@@ -700,9 +700,9 @@ gtk_drag_source_get_actions (GtkDragSource *source)
  * Sets the actions on the `GtkDragSource`.
  *
  * During a DND operation, the actions are offered to potential
- * drop targets. If @actions include %GDK_ACTION_MOVE, you need
+ * drop targets. If `actions` include %GDK_ACTION_MOVE, you need
  * to listen to the [signal@Gtk.DragSource::drag-end] signal and
- * handle @delete_data being %TRUE.
+ * handle `delete_data` being true.
  *
  * This function can be called before a drag is started,
  * or in a handler for the [signal@Gtk.DragSource::prepare] signal.
@@ -733,7 +733,7 @@ gtk_drag_source_set_actions (GtkDragSource *source,
  * The hotspot coordinates determine the point on the icon
  * that gets aligned with the hotspot of the cursor.
  *
- * If @paintable is %NULL, a default icon is used.
+ * If `paintable` is `NULL`, a default icon is used.
  *
  * This function can be called before a drag is started, or in
  * a [signal@Gtk.DragSource::prepare] or
@@ -800,7 +800,7 @@ gtk_drag_source_drag_cancel (GtkDragSource *source)
  *
  * Checks to see if a drag movement has passed the GTK drag threshold.
  *
- * Returns: %TRUE if the drag threshold has been passed.
+ * Returns: true if the drag threshold has been passed.
  */
 gboolean
 gtk_drag_check_threshold (GtkWidget *widget,

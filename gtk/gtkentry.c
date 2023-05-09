@@ -529,7 +529,7 @@ gtk_entry_class_init (GtkEntryClass *class)
   /**
    * GtkEntry:truncate-multiline:
    *
-   * When %TRUE, pasted multi-line text is truncated to the first line.
+   * When true, pasted multi-line text is truncated to the first line.
    */
   entry_props[PROP_TRUNCATE_MULTILINE] =
       g_param_spec_boolean ("truncate-multiline", NULL, NULL,
@@ -808,7 +808,7 @@ gtk_entry_class_init (GtkEntryClass *class)
    *
    * See [class@Gtk.IMContext].
    *
-   * Setting this to a non-%NULL value overrides the system-wide IM
+   * Setting this to a non-`NULL` value overrides the system-wide IM
    * module setting. See the GtkSettings [property@Gtk.Settings:gtk-im-module]
    * property.
    */
@@ -867,7 +867,7 @@ gtk_entry_class_init (GtkEntryClass *class)
    *
    * This is mainly useful to change the size or weight of the text.
    *
-   * The `PangoAttribute`'s @start_index and @end_index must refer to the
+   * The `PangoAttribute`'s `start_index` and `end_index` must refer to the
    * [class@Gtk.EntryBuffer] text, i.e. without the preedit string.
    */
   entry_props[PROP_ATTRIBUTES] =
@@ -1805,14 +1805,14 @@ gtk_entry_snapshot (GtkWidget   *widget,
  * gtk_entry_grab_focus_without_selecting:
  * @entry: a `GtkEntry`
  *
- * Causes @entry to have keyboard focus.
+ * Causes `entry` to have keyboard focus.
  *
  * It behaves like [method@Gtk.Widget.grab_focus], except that it doesn't
  * select the contents of the entry. You only want to call this on some
  * special entries which the user usually doesn't want to replace all text
  * in, such as search-as-you-type entries.
  *
- * Returns: %TRUE if focus is now inside @self
+ * Returns: true if focus is now inside `self`
  */
 gboolean
 gtk_entry_grab_focus_without_selecting (GtkEntry *entry)
@@ -2052,11 +2052,11 @@ gtk_entry_set_buffer (GtkEntry       *entry,
 /**
  * gtk_entry_set_visibility: (attributes org.gtk.Method.set_property=visibility)
  * @entry: a `GtkEntry`
- * @visible: %TRUE if the contents of the entry are displayed as plaintext
+ * @visible: true if the contents of the entry are displayed as plaintext
  *
  * Sets whether the contents of the entry are visible or not.
  *
- * When visibility is set to %FALSE, characters are displayed
+ * When visibility is set to false, characters are displayed
  * as the invisible char, and will also appear that way when
  * the text in the entry widget is copied elsewhere.
  *
@@ -2067,7 +2067,7 @@ gtk_entry_set_buffer (GtkEntry       *entry,
  * Note that you probably want to set [property@Gtk.Entry:input-purpose]
  * to %GTK_INPUT_PURPOSE_PASSWORD or %GTK_INPUT_PURPOSE_PIN to
  * inform input methods about the purpose of this entry,
- * in addition to setting visibility to %FALSE.
+ * in addition to setting visibility to false.
  */
 void
 gtk_entry_set_visibility (GtkEntry *entry,
@@ -2084,11 +2084,11 @@ gtk_entry_set_visibility (GtkEntry *entry,
  * gtk_entry_get_visibility: (attributes org.gtk.Method.get_property=visibility)
  * @entry: a `GtkEntry`
  *
- * Retrieves whether the text in @entry is visible.
+ * Retrieves whether the text in `entry` is visible.
  *
  * See [method@Gtk.Entry.set_visibility].
  *
- * Returns: %TRUE if the text is currently visible
+ * Returns: true if the text is currently visible
  */
 gboolean
 gtk_entry_get_visibility (GtkEntry *entry)
@@ -2213,7 +2213,7 @@ gtk_entry_get_overwrite_mode (GtkEntry *entry)
  * If the current contents are longer than the given length, then
  * they will be truncated to fit. The length is in characters.
  *
- * This is equivalent to getting @entry's `GtkEntryBuffer` and
+ * This is equivalent to getting `entry`'s `GtkEntryBuffer` and
  * calling [method@Gtk.EntryBuffer.set_max_length] on it.
  */
 void
@@ -2231,7 +2231,7 @@ gtk_entry_set_max_length (GtkEntry     *entry,
  * gtk_entry_get_max_length: (attributes org.gtk.Method.get_property=max-length)
  * @entry: a `GtkEntry`
  *
- * Retrieves the maximum allowed length of the text in @entry.
+ * Retrieves the maximum allowed length of the text in `entry`.
  *
  * See [method@Gtk.Entry.set_max_length].
  *
@@ -2252,9 +2252,9 @@ gtk_entry_get_max_length (GtkEntry *entry)
  * gtk_entry_get_text_length: (attributes org.gtk.Method.get_property=text-length)
  * @entry: a `GtkEntry`
  *
- * Retrieves the current length of the text in @entry.
+ * Retrieves the current length of the text in `entry`.
  *
- * This is equivalent to getting @entry's `GtkEntryBuffer`
+ * This is equivalent to getting `entry`'s `GtkEntryBuffer`
  * and calling [method@Gtk.EntryBuffer.get_length] on it.
  *
  * Returns: the current number of characters
@@ -2273,9 +2273,9 @@ gtk_entry_get_text_length (GtkEntry *entry)
 /**
  * gtk_entry_set_activates_default: (attributes org.gtk.Method.set_property=activates-default)
  * @entry: a `GtkEntry`
- * @setting: %TRUE to activate window’s default widget on Enter keypress
+ * @setting: true to activate window’s default widget on Enter keypress
  *
- * Sets whether pressing Enter in the @entry will activate the default
+ * Sets whether pressing Enter in the `entry` will activate the default
  * widget for the window containing the entry.
  *
  * This usually means that the dialog containing the entry will be closed,
@@ -2298,7 +2298,7 @@ gtk_entry_set_activates_default (GtkEntry *entry,
  *
  * Retrieves the value set by gtk_entry_set_activates_default().
  *
- * Returns: %TRUE if the entry will activate the default widget
+ * Returns: true if the entry will activate the default widget
  */
 gboolean
 gtk_entry_get_activates_default (GtkEntry *entry)
@@ -2404,7 +2404,7 @@ gtk_entry_get_alignment (GtkEntry *entry)
  *
  * Sets the icon shown in the specified position using a `GdkPaintable`.
  *
- * If @paintable is %NULL, no icon will be shown in the specified position.
+ * If `paintable` is `NULL`, no icon will be shown in the specified position.
  */
 void
 gtk_entry_set_icon_from_paintable (GtkEntry             *entry,
@@ -2463,7 +2463,7 @@ gtk_entry_set_icon_from_paintable (GtkEntry             *entry,
  * If the icon name isn’t known, a “broken image” icon will be
  * displayed instead.
  *
- * If @icon_name is %NULL, no icon will be shown in the
+ * If `icon_name` is `NULL`, no icon will be shown in the
  * specified position.
  */
 void
@@ -2519,7 +2519,7 @@ gtk_entry_set_icon_from_icon_name (GtkEntry             *entry,
  * If the icon isn’t known, a “broken image” icon will be
  * displayed instead.
  *
- * If @icon is %NULL, no icon will be shown in the
+ * If `icon` is `NULL`, no icon will be shown in the
  * specified position.
  */
 void
@@ -2566,7 +2566,7 @@ gtk_entry_set_icon_from_gicon (GtkEntry             *entry,
  * gtk_entry_set_icon_activatable:
  * @entry: A `GtkEntry`
  * @icon_pos: Icon position
- * @activatable: %TRUE if the icon should be activatable
+ * @activatable: true if the icon should be activatable
  *
  * Sets whether the icon is activatable.
  */
@@ -2604,7 +2604,7 @@ gtk_entry_set_icon_activatable (GtkEntry             *entry,
  *
  * Returns whether the icon is activatable.
  *
- * Returns: %TRUE if the icon is activatable.
+ * Returns: true if the icon is activatable.
  */
 gboolean
 gtk_entry_get_icon_activatable (GtkEntry             *entry,
@@ -2628,7 +2628,7 @@ gtk_entry_get_icon_activatable (GtkEntry             *entry,
  *
  * Retrieves the `GdkPaintable` used for the icon.
  *
- * If no `GdkPaintable` was used for the icon, %NULL is returned.
+ * If no `GdkPaintable` was used for the icon, `NULL` is returned.
  *
  * Returns: (transfer none) (nullable): A `GdkPaintable`
  *   if no icon is set for this position or the icon set is not
@@ -2659,7 +2659,7 @@ gtk_entry_get_icon_paintable (GtkEntry             *entry,
  *
  * Retrieves the `GIcon` used for the icon.
  *
- * %NULL will be returned if there is no icon or if the icon was
+ * `NULL` will be returned if there is no icon or if the icon was
  * set by some other method (e.g., by `GdkPaintable` or icon name).
  *
  * Returns: (transfer none) (nullable): A `GIcon`
@@ -2689,7 +2689,7 @@ gtk_entry_get_icon_gicon (GtkEntry             *entry,
  *
  * Retrieves the icon name used for the icon.
  *
- * %NULL is returned if there is no icon or if the icon was set
+ * `NULL` is returned if there is no icon or if the icon was set
  * by some other method (e.g., by `GdkPaintable` or gicon).
  *
  * Returns: (nullable): An icon name
@@ -2753,7 +2753,7 @@ gtk_entry_set_icon_sensitive (GtkEntry             *entry,
  *
  * Returns whether the icon appears sensitive or insensitive.
  *
- * Returns: %TRUE if the icon is sensitive.
+ * Returns: true if the icon is sensitive.
  */
 gboolean
 gtk_entry_get_icon_sensitive (GtkEntry             *entry,
@@ -2807,13 +2807,13 @@ gtk_entry_get_icon_storage_type (GtkEntry             *entry,
 /**
  * gtk_entry_get_icon_at_pos:
  * @entry: a `GtkEntry`
- * @x: the x coordinate of the position to find, relative to @entry
- * @y: the y coordinate of the position to find, relative to @entry
+ * @x: the x coordinate of the position to find, relative to `entry`
+ * @y: the y coordinate of the position to find, relative to `entry`
  *
  * Finds the icon at the given position and return its index.
  *
- * The position’s coordinates are relative to the @entry’s
- * top left corner. If @x, @y doesn’t lie inside an icon,
+ * The position’s coordinates are relative to the `entry`’s
+ * top left corner. If `x`, `y` doesn’t lie inside an icon,
  * -1 is returned. This function is intended for use in a
  *  [signal@Gtk.Widget::query-tooltip] signal handler.
  *
@@ -2916,15 +2916,15 @@ gtk_entry_get_current_icon_drag_source (GtkEntry *entry)
  * @icon_pos: Icon position
  * @icon_area: (out): Return location for the icon’s area
  *
- * Gets the area where entry’s icon at @icon_pos is drawn.
+ * Gets the area where entry’s icon at `icon_pos` is drawn.
  *
  * This function is useful when drawing something to the
  * entry in a draw callback.
  *
  * If the entry is not realized or has no icon at the given
- * position, @icon_area is filled with zeros. Otherwise,
- * @icon_area will be filled with the icon's allocation,
- * relative to @entry's allocation.
+ * position, `icon_area` is filled with zeros. Otherwise,
+ * `icon_area` will be filled with the icon's allocation,
+ * relative to `entry`'s allocation.
  */
 void
 gtk_entry_get_icon_area (GtkEntry             *entry,
@@ -2991,7 +2991,7 @@ ensure_has_tooltip (GtkEntry *entry)
  * @icon_pos: the icon position
  *
  * Gets the contents of the tooltip on the icon at the specified
- * position in @entry.
+ * position in `entry`.
  *
  * Returns: (nullable) (transfer full): the tooltip text
  */
@@ -3024,10 +3024,10 @@ gtk_entry_get_icon_tooltip_text (GtkEntry             *entry,
  * @icon_pos: the icon position
  * @tooltip: (nullable): the contents of the tooltip for the icon
  *
- * Sets @tooltip as the contents of the tooltip for the icon
+ * Sets `tooltip` as the contents of the tooltip for the icon
  * at the specified position.
  *
- * Use %NULL for @tooltip to remove an existing tooltip.
+ * Use `NULL` for `tooltip` to remove an existing tooltip.
  *
  * See also [method@Gtk.Widget.set_tooltip_text] and
  * [method@Gtk.Entry.set_icon_tooltip_markup].
@@ -3035,10 +3035,10 @@ gtk_entry_get_icon_tooltip_text (GtkEntry             *entry,
  * If you unset the widget tooltip via
  * [method@Gtk.Widget.set_tooltip_text] or
  * [method@Gtk.Widget.set_tooltip_markup], this sets
- * [property@Gtk.Widget:has-tooltip] to %FALSE, which suppresses
+ * [property@Gtk.Widget:has-tooltip] to false, which suppresses
  * icon tooltips too. You can resolve this by then calling
  * [method@Gtk.Widget.set_has_tooltip] to set
- * [property@Gtk.Widget:has-tooltip] back to %TRUE, or
+ * [property@Gtk.Widget:has-tooltip] back to true, or
  * setting at least one non-empty tooltip on any icon
  * achieves the same result.
  */
@@ -3080,7 +3080,7 @@ gtk_entry_set_icon_tooltip_text (GtkEntry             *entry,
  * @icon_pos: the icon position
  *
  * Gets the contents of the tooltip on the icon at the specified
- * position in @entry.
+ * position in `entry`.
  *
  * Returns: (nullable) (transfer full): the tooltip text
  */
@@ -3108,12 +3108,12 @@ gtk_entry_get_icon_tooltip_markup (GtkEntry             *entry,
  * @icon_pos: the icon position
  * @tooltip: (nullable): the contents of the tooltip for the icon
  *
- * Sets @tooltip as the contents of the tooltip for the icon at
+ * Sets `tooltip` as the contents of the tooltip for the icon at
  * the specified position.
  *
- * @tooltip is assumed to be marked up with Pango Markup.
+ * `tooltip` is assumed to be marked up with Pango Markup.
  *
- * Use %NULL for @tooltip to remove an existing tooltip.
+ * Use `NULL` for `tooltip` to remove an existing tooltip.
  *
  * See also [method@Gtk.Widget.set_tooltip_markup] and
  * [method@Gtk.Entry.set_icon_tooltip_text].
@@ -3193,12 +3193,12 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
  * @entry: A `GtkEntry`
  * @completion: (nullable): The `GtkEntryCompletion`
  *
- * Sets @completion to be the auxiliary completion object
- * to use with @entry.
+ * Sets `completion` to be the auxiliary completion object
+ * to use with `entry`.
  *
  * All further configuration of the completion mechanism is
- * done on @completion using the `GtkEntryCompletion` API.
- * Completion is disabled if @completion is set to %NULL.
+ * done on `completion` using the `GtkEntryCompletion` API.
+ * Completion is disabled if `completion` is set to `NULL`.
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
  */
@@ -3243,10 +3243,10 @@ gtk_entry_set_completion (GtkEntry           *entry,
  * @entry: A `GtkEntry`
  *
  * Returns the auxiliary completion object currently
- * in use by @entry.
+ * in use by `entry`.
  *
  * Returns: (nullable) (transfer none): The auxiliary
- *   completion object currently in use by @entry
+ *   completion object currently in use by `entry`
  *
  * Deprecated: 4.10: GtkEntryCompletion will be removed in GTK 5.
  */
@@ -3416,9 +3416,9 @@ gtk_entry_progress_pulse (GtkEntry *entry)
 /**
  * gtk_entry_set_placeholder_text: (attributes org.gtk.Method.set_property=placeholder-text)
  * @entry: a `GtkEntry`
- * @text: (nullable): a string to be displayed when @entry is empty and unfocused
+ * @text: (nullable): a string to be displayed when `entry` is empty and unfocused
  *
- * Sets text to be displayed in @entry when it is empty.
+ * Sets text to be displayed in `entry` when it is empty.
  *
  * This can be used to give a visual hint of the expected
  * contents of the `GtkEntry`.
@@ -3442,14 +3442,14 @@ gtk_entry_set_placeholder_text (GtkEntry    *entry,
  * gtk_entry_get_placeholder_text: (attributes org.gtk.Method.get_property=placeholder-text)
  * @entry: a `GtkEntry`
  *
- * Retrieves the text that will be displayed when @entry
+ * Retrieves the text that will be displayed when `entry`
  * is empty and unfocused
  *
  * Returns: (nullable) (transfer none):a pointer to the
  *   placeholder text as a string. This string points to
  *   internally allocated storage in the widget and must
  *   not be freed, modified or stored. If no placeholder
- *   text has been set, %NULL will be returned.
+ *   text has been set, `NULL` will be returned.
  */
 const char *
 gtk_entry_get_placeholder_text (GtkEntry *entry)
@@ -3708,7 +3708,7 @@ gtk_entry_get_text_widget (GtkEntry *entry)
  * @model: (nullable): a `GMenuModel`
  *
  * Sets a menu model to add when constructing
- * the context menu for @entry.
+ * the context menu for `entry`.
  */
 void
 gtk_entry_set_extra_menu (GtkEntry   *entry,
@@ -3750,10 +3750,10 @@ gtk_entry_get_extra_menu (GtkEntry *entry)
  *
  * This causes the [signal@Gtk.Entry::icon-press] and
  * [signal@Gtk.Entry::icon-release] signals to be emitted
- * on the @entry icon at the given @pos, if the icon is
+ * on the `entry` icon at the given `pos`, if the icon is
  * set and activatable.
  *
- * Returns: %TRUE if the signal was emitted
+ * Returns: true if the signal was emitted
  */
 gboolean
 gtk_entry_activate_icon (GtkEntry             *entry,

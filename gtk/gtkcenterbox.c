@@ -352,7 +352,7 @@ gtk_center_box_new (void)
  *
  * Sets the start widget.
  *
- * To remove the existing start widget, pass %NULL.
+ * To remove the existing start widget, pass `NULL`.
  */
 void
 gtk_center_box_set_start_widget (GtkCenterBox *self,
@@ -386,7 +386,7 @@ gtk_center_box_set_start_widget (GtkCenterBox *self,
  *
  * Sets the center widget.
  *
- * To remove the existing center widget, pass %NULL.
+ * To remove the existing center widget, pass `NULL`.
  */
 void
 gtk_center_box_set_center_widget (GtkCenterBox *self,
@@ -420,7 +420,7 @@ gtk_center_box_set_center_widget (GtkCenterBox *self,
  *
  * Sets the end widget.
  *
- * To remove the existing end widget, pass %NULL.
+ * To remove the existing end widget, pass `NULL`.
  */
 void
 gtk_center_box_set_end_widget (GtkCenterBox *self,
@@ -451,7 +451,7 @@ gtk_center_box_set_end_widget (GtkCenterBox *self,
  * gtk_center_box_get_start_widget:
  * @self: a `GtkCenterBox`
  *
- * Gets the start widget, or %NULL if there is none.
+ * Gets the start widget, or `NULL` if there is none.
  *
  * Returns: (transfer none) (nullable): the start widget.
  */
@@ -465,7 +465,7 @@ gtk_center_box_get_start_widget (GtkCenterBox *self)
  * gtk_center_box_get_center_widget:
  * @self: a `GtkCenterBox`
  *
- * Gets the center widget, or %NULL if there is none.
+ * Gets the center widget, or `NULL` if there is none.
  *
  * Returns: (transfer none) (nullable): the center widget.
  */
@@ -479,7 +479,7 @@ gtk_center_box_get_center_widget (GtkCenterBox *self)
  * gtk_center_box_get_end_widget:
  * @self: a `GtkCenterBox`
  *
- * Gets the end widget, or %NULL if there is none.
+ * Gets the end widget, or `NULL` if there is none.
  *
  * Returns: (transfer none) (nullable): the end widget.
  */
@@ -499,7 +499,7 @@ gtk_center_box_get_end_widget (GtkCenterBox *self)
  * This affects only horizontal boxes with at least one baseline
  * aligned child. If there is more vertical space available than
  * requested, and the baseline is not allocated by the parent then
- * @position is used to allocate the baseline wrt. the extra space
+ * `position` is used to allocate the baseline wrt. the extra space
  * available.
  */
 void
@@ -582,7 +582,7 @@ gtk_center_box_set_shrink_center_last (GtkCenterBox *self,
  * gtk_center_box_get_shrink_center_last: (attributes org.gtk.Method.get_property=shrink-center-last)
  * @self: a `GtkCenterBox`
  *
- * Gets whether @self shrinks the center widget after other children.
+ * Gets whether `self` shrinks the center widget after other children.
  *
  * Returns: whether to shrink the center widget after others
  *

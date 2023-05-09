@@ -19,7 +19,7 @@
  * Modified by the GTK+ Team and others 1997-2000.  See the AUTHORS
  * file for a list of people on the GTK+ Team.  See the ChangeLog
  * files for a list of changes.  These files are distributed with
- * GTK+ at ftp://ftp.gtk.org/pub/gtk/. 
+ * GTK+ at ftp://ftp.gtk.org/pub/gtk/.
  */
 
 #include "config.h"
@@ -133,9 +133,9 @@ gtk_get_interface_age (void)
  *
  * Compatibility is defined by two things: first the version
  * of the running library is newer than the version
- * @required_major.required_minor.@required_micro. Second
+ * `required_major`.`required_minor`.`required_micro`. Second
  * the running library must be binary compatible with the
- * version @required_major.required_minor.@required_micro
+ * version `required_major`.`required_minor`.`required_micro`
  * (same major version.)
  *
  * This function is primarily for GTK modules; the module
@@ -146,7 +146,7 @@ gtk_get_interface_age (void)
  * old version of gtk_check_version(), but still get loaded
  * into an application using a newer version of GTK.
  *
- * Returns: (nullable): %NULL if the GTK library is compatible with the
+ * Returns: (nullable): `NULL` if the GTK library is compatible with the
  *   given version, or a string describing the version mismatch.
  *   The returned string is owned by GTK and should not be modified
  *   or freed.

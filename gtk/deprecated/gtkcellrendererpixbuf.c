@@ -41,10 +41,10 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
  * `GtkCellRendererPixbuf:icon-name` property).
  *
  * To support the tree view, `GtkCellRendererPixbuf` also supports rendering two
- * alternative pixbufs, when the `GtkCellRenderer:is-expander` property is %TRUE.
- * If the `GtkCellRenderer:is-expanded property` is %TRUE and the
+ * alternative pixbufs, when the `GtkCellRenderer:is-expander` property is true.
+ * If the `GtkCellRenderer:is-expanded property` is true and the
  * `GtkCellRendererPixbuf:pixbuf-expander-open` property is set to a pixbuf, it
- * renders that pixbuf, if the `GtkCellRenderer:is-expanded` property is %FALSE
+ * renders that pixbuf, if the `GtkCellRenderer:is-expanded` property is false
  * and the `GtkCellRendererPixbuf:pixbuf-expander-closed` property is set to a
  * pixbuf, it renders that one.
  *

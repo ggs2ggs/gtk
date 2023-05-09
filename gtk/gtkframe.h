@@ -53,7 +53,7 @@ struct _GtkFrame
 /**
  * GtkFrameClass:
  * @parent_class: The parent class.
- * @compute_child_allocation:
+ * `compute_child_allocation`:
  */
 struct _GtkFrameClass
 {

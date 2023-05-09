@@ -118,7 +118,7 @@ struct _GdkDisplayClass
   GType popup_type;           /* Type for GdkPopup, must be set */
   GType cairo_context_type;   /* type for GdkCairoContext, must be set */
   GType vk_context_type;      /* type for GdkVulkanContext, must be set if vk_extension_name != NULL */
-  const char *vk_extension_name; /* Name of required windowing vulkan extension or %NULL (default) if Vulkan isn't supported */
+  const char *vk_extension_name; /* Name of required windowing vulkan extension or `NULL` (default) if Vulkan isn't supported */
 
   const char *              (*get_name)           (GdkDisplay *display);
   void                       (*beep)               (GdkDisplay *display);

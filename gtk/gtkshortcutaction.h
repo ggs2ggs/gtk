@@ -37,7 +37,7 @@ G_BEGIN_DECLS
  *
  * Prototype for shortcuts based on user callbacks.
  *
- * Returns: %TRUE if the action was successful.
+ * Returns: true if the action was successful.
  */
 typedef gboolean (* GtkShortcutFunc) (GtkWidget *widget,
                                       GVariant  *args,

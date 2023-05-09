@@ -244,7 +244,7 @@ G_DEFINE_BOXED_TYPE (GtkExpressionWatch, gtk_expression_watch,
  * @type_name: the type name, in snake case
  * @type_info: the address of the `GtkExpressionTypeInfo` for the expression type
  *
- * Registers a new `GtkExpression` subclass with the given @TypeName and @type_info.
+ * Registers a new `GtkExpression` subclass with the given `TypeName` and `type_info`.
  *
  * Similarly to %G_DEFINE_TYPE, this macro will generate a `get_type()`
  * function that registers the event type.
@@ -802,7 +802,7 @@ GTK_DEFINE_EXPRESSION_TYPE (GtkConstantExpression,
 /**
  * gtk_constant_expression_new:
  * @value_type: The type of the object
- * @...: arguments to create the object from
+ * `...`: arguments to create the object from
  *
  * Creates a `GtkExpression` that evaluates to the
  * object given by the arguments.
@@ -1674,11 +1674,11 @@ GTK_DEFINE_EXPRESSION_TYPE (GtkCClosureExpression,
  * gtk_cclosure_expression_new: (constructor)
  * @value_type: the type of the value that this expression evaluates to
  * @marshal: (scope call) (nullable): marshaller used for creating a closure
- * @n_params: the number of params needed for evaluating @closure
+ * @n_params: the number of params needed for evaluating `closure`
  * @params: (array length=n_params) (transfer full): expressions for each parameter
  * @callback_func: (scope notified) (closure user_data) (destroy user_destroy): callback used for creating a closure
  * @user_data: (nullable): user data used for creating a closure
- * @user_destroy: (nullable): destroy notify for @user_data
+ * @user_destroy: (nullable): destroy notify for `user_data`
  *
  * Creates a `GtkExpression` that calls `callback_func` when it is evaluated.
  *
@@ -1791,7 +1791,7 @@ gtk_expression_get_value_type (GtkExpression *self)
  * @value: an empty `GValue`
  *
  * Evaluates the given expression and on success stores the result
- * in @value.
+ * in `value`.
  *
  * The `GType` of `value` will be the type given by
  * [method@Gtk.Expression.get_value_type].
@@ -1877,12 +1877,12 @@ gtk_expression_watch_cb (gpointer data)
  *
  * Watch the given `expression` for changes.
  *
- * The @notify function will be called whenever the evaluation of `self`
+ * The `notify` function will be called whenever the evaluation of `self`
  * may have changed.
  *
- * GTK cannot guarantee that the evaluation did indeed change when the @notify
+ * GTK cannot guarantee that the evaluation did indeed change when the `notify`
  * gets invoked, but it guarantees the opposite: When it did in fact change,
- * the @notify will be invoked.
+ * the `notify` will be invoked.
  *
  * Returns: (transfer none): The newly installed watch. Note that the only
  *   reference held to the watch will be released when the watch is unwatched

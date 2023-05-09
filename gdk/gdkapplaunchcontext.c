@@ -172,9 +172,9 @@ gdk_app_launch_context_get_display_name (GAppLaunchContext *context,
  * gdk_app_launch_context_get_display: (attributes org.gtk.Method.get_property=display)
  * @context: a `GdkAppLaunchContext`
  *
- * Gets the `GdkDisplay` that @context is for.
+ * Gets the `GdkDisplay` that `context` is for.
  *
- * Returns: (transfer none): the display of @context
+ * Returns: (transfer none): the display of `context`
  */
 GdkDisplay *
 gdk_app_launch_context_get_display (GdkAppLaunchContext *context)
@@ -199,7 +199,7 @@ gdk_app_launch_context_get_display (GdkAppLaunchContext *context)
  *
  * This only works when using the X11 backend.
  *
- * When the workspace is not specified or @desktop is set to -1,
+ * When the workspace is not specified or `desktop` is set to -1,
  * it is up to the window manager to pick one, typically it will
  * be the current workspace.
  */
@@ -217,7 +217,7 @@ gdk_app_launch_context_set_desktop (GdkAppLaunchContext *context,
  * @context: a `GdkAppLaunchContext`
  * @timestamp: a timestamp
  *
- * Sets the timestamp of @context.
+ * Sets the timestamp of `context`.
  *
  * The timestamp should ideally be taken from the event that
  * triggered the launch.
@@ -273,11 +273,11 @@ gdk_app_launch_context_set_icon (GdkAppLaunchContext *context,
  *
  * Sets the icon for applications that are launched with this context.
  *
- * The @icon_name will be interpreted in the same way as the Icon field
+ * The `icon_name` will be interpreted in the same way as the Icon field
  * in desktop files. See also [method@Gdk.AppLaunchContext.set_icon].
  *
- * If both @icon and @icon_name are set, the @icon_name takes priority.
- * If neither @icon or @icon_name is set, the icon is taken from either
+ * If both `icon` and `icon_name` are set, the `icon_name` takes priority.
+ * If neither `icon` or `icon_name` is set, the icon is taken from either
  * the file that is passed to launched application or from the `GAppInfo`
  * for the launched application itself.
  */

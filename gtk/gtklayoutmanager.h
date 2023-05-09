@@ -80,10 +80,10 @@ struct _GtkLayoutManagerClass
   /**
    * GtkLayoutManagerClass::create_layout_child:
    * @manager: the `GtkLayoutManager`
-   * @widget: the widget using the @manager
-   * @for_child: the child of @widget
+   * @widget: the widget using the `manager`
+   * @for_child: the child of `widget`
    *
-   * Create a `GtkLayoutChild` instance for the given @for_child widget.
+   * Create a `GtkLayoutChild` instance for the given `for_child` widget.
    *
    * Returns: (transfer full): a `GtkLayoutChild`
    */

@@ -736,10 +736,10 @@ get_layout_attribute (GtkConstraintLayout    *self,
  * @constraint: a [class@Gtk.Constraint]
  *
  * Turns a `GtkConstraint` into a `GtkConstraintRef` inside the
- * constraint solver associated to @self.
+ * constraint solver associated to `self`.
  *
- * If @self does not have a `GtkConstraintSolver`, because it
- * has not been rooted yet, we just store the @constraint instance,
+ * If `self` does not have a `GtkConstraintSolver`, because it
+ * has not been rooted yet, we just store the `constraint` instance,
  * and we're going to call this function when the layout manager
  * gets rooted.
  */
@@ -1752,7 +1752,7 @@ gtk_constraint_layout_new (void)
  *  - set to a child of the [class@Gtk.Widget] using `layout`
  *  - set to a [class@Gtk.ConstraintGuide] that is part of `layout`
  *
- * The @layout acquires the ownership of @constraint after calling
+ * The `layout` acquires the ownership of `constraint` after calling
  * this function.
  */
 void
@@ -2137,7 +2137,7 @@ gtk_constraint_layout_add_constraints_from_descriptionv (GtkConstraintLayout *la
  * @error: return location for a `GError`
  * @first_view: the name of a view in the VFL description, followed by the
  *   [iface@Gtk.ConstraintTarget] to which it maps
- * @...: a `NULL`-terminated list of view names and [iface@Gtk.ConstraintTarget]s
+ * `...`: a `NULL`-terminated list of view names and [iface@Gtk.ConstraintTarget]s
  *
  * Creates a list of constraints from a VFL description.
  *

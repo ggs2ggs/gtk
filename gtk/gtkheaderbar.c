@@ -285,14 +285,14 @@ construct_title_label (GtkHeaderBar *bar)
  *
  * Sets the title for the `GtkHeaderBar`.
  *
- * When set to %NULL, the headerbar will display the title of
+ * When set to `NULL`, the headerbar will display the title of
  * the window it is contained in.
  *
  * The title should help a user identify the current view.
  * To achieve the same style as the builtin title, use the
  * “title” style class.
  *
- * You should set the title widget to %NULL, for the window
+ * You should set the title widget to `NULL`, for the window
  * title label to be visible again.
  */
 void
@@ -656,10 +656,10 @@ gtk_header_bar_buildable_init (GtkBuildableIface *iface)
 /**
  * gtk_header_bar_pack_start:
  * @bar: A `GtkHeaderBar`
- * @child: the `GtkWidget` to be added to @bar
+ * @child: the `GtkWidget` to be added to `bar`
  *
- * Adds @child to @bar, packed with reference to the
- * start of the @bar.
+ * Adds `child` to `bar`, packed with reference to the
+ * start of the `bar`.
  */
 void
 gtk_header_bar_pack_start (GtkHeaderBar *bar,
@@ -671,10 +671,10 @@ gtk_header_bar_pack_start (GtkHeaderBar *bar,
 /**
  * gtk_header_bar_pack_end:
  * @bar: A `GtkHeaderBar`
- * @child: the `GtkWidget` to be added to @bar
+ * @child: the `GtkWidget` to be added to `bar`
  *
- * Adds @child to @bar, packed with reference to the
- * end of the @bar.
+ * Adds `child` to `bar`, packed with reference to the
+ * end of the `bar`.
  */
 void
 gtk_header_bar_pack_end (GtkHeaderBar *bar,
@@ -703,7 +703,7 @@ gtk_header_bar_new (void)
  * Returns whether this header bar shows the standard window
  * title buttons.
  *
- * Returns: %TRUE if title buttons are shown
+ * Returns: true if title buttons are shown
  */
 gboolean
 gtk_header_bar_get_show_title_buttons (GtkHeaderBar *bar)
@@ -716,7 +716,7 @@ gtk_header_bar_get_show_title_buttons (GtkHeaderBar *bar)
 /**
  * gtk_header_bar_set_show_title_buttons: (attributes org.gtk.Method.set_property=show-title-buttons)
  * @bar: a `GtkHeaderBar`
- * @setting: %TRUE to show standard title buttons
+ * @setting: true to show standard title buttons
  *
  * Sets whether this header bar shows the standard window
  * title buttons.
@@ -757,7 +757,7 @@ gtk_header_bar_set_show_title_buttons (GtkHeaderBar *bar,
 /**
  * gtk_header_bar_set_decoration_layout: (attributes org.gtk.Method.set_property=decoration-layout)
  * @bar: a `GtkHeaderBar`
- * @layout: (nullable): a decoration layout, or %NULL to unset the layout
+ * @layout: (nullable): a decoration layout, or `NULL` to unset the layout
  *
  * Sets the decoration layout for this header bar.
  *

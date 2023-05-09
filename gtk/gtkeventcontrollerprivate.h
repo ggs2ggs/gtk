@@ -58,17 +58,17 @@ typedef struct _GtkCrossingData GtkCrossingData;
  * @mode: the crossing mode
  * @old_target: the old target
  * @old_descendent: the direct child of the receiving widget that
- *   is an ancestor of @old_target, or %NULL if @old_target is not
+ *   is an ancestor of `old_target`, or `NULL` if `old_target` is not
  *   a descendent of the receiving widget
  * @new_target: the new target
  * @new_descendent: the direct child of the receiving widget that
- *   is an ancestor of @new_target, or %NULL if @new_target is not
+ *   is an ancestor of `new_target`, or `NULL` if `new_target` is not
  *   a descendent of the receiving widget
  * @drop: the `GdkDrop` if this is info for a drop operation
  *
  * The struct that is passed to gtk_event_controller_handle_crossing().
  *
- * The @old_target and @new_target fields are set to the old or new
+ * The `old_target` and `new_target` fields are set to the old or new
  * focus, drop or hover location.
  */
 struct _GtkCrossingData {
@@ -107,7 +107,7 @@ struct _GtkEventControllerClass
 
   /*<private>*/
 
-  /* Tells whether the event is filtered out, %TRUE makes
+  /* Tells whether the event is filtered out, true makes
    * the event unseen by the handle_event vfunc.
    */
   gboolean (* filter_event) (GtkEventController *controller,

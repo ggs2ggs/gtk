@@ -198,7 +198,7 @@ static inline guint
 get_action_position (GtkWidgetAction *action)
 {
   guint slot;
-  /* We use the length of @action to the end of the chain as the slot so that
+  /* We use the length of `action` to the end of the chain as the slot so that
    * we have stable positions for any class or it's subclasses. Doing so helps
    * us avoid having mutable arrays in the class data as we will not have
    * access to the ClassPrivate data during instance _init() functions.
@@ -1249,19 +1249,19 @@ gtk_action_muxer_class_init (GObjectClass *class)
  * @prefix: the prefix string for the action group
  * @action_group: a `GActionGroup`
  *
- * Adds the actions in @action_group to the list of actions provided by
- * @muxer.  @prefix is prefixed to each action name, such that for each
- * action `x` in @action_group, there is an equivalent
- * action @prefix`.x` in @muxer.
+ * Adds the actions in `action_group` to the list of actions provided by
+ * `muxer`.  `prefix` is prefixed to each action name, such that for each
+ * action `x` in `action_group`, there is an equivalent
+ * action `prefix``.x` in `muxer`.
  *
- * For example, if @prefix is “`app`” and @action_group
- * contains an action called “`quit`”, then @muxer will
+ * For example, if `prefix` is “`app`” and `action_group`
+ * contains an action called “`quit`”, then `muxer` will
  * now contain an action called “`app.quit`”.
  *
  * If any `GtkActionObserver`s are registered for actions in the group,
  * “action_added” notifications will be emitted, as appropriate.
  *
- * @prefix must not contain a dot ('.').
+ * `prefix` must not contain a dot ('.').
  */
 void
 gtk_action_muxer_insert (GtkActionMuxer *muxer,
@@ -1355,7 +1355,7 @@ gtk_action_muxer_new (GtkWidget *widget)
  * gtk_action_muxer_get_parent:
  * @muxer: a `GtkActionMuxer`
  *
- * Returns: (transfer none): the parent of @muxer, or NULL.
+ * Returns: (transfer none): the parent of `muxer`, or NULL.
  */
 GtkActionMuxer *
 gtk_action_muxer_get_parent (GtkActionMuxer *muxer)
@@ -1370,7 +1370,7 @@ gtk_action_muxer_get_parent (GtkActionMuxer *muxer)
  * @muxer: a `GtkActionMuxer`
  * @parent: (nullable): the new parent `GtkActionMuxer`
  *
- * Sets the parent of @muxer to @parent.
+ * Sets the parent of `muxer` to `parent`.
  */
 void
 gtk_action_muxer_set_parent (GtkActionMuxer *muxer,

@@ -279,7 +279,7 @@ typedef enum
  * @GTK_LIST_TAB_CELL: Cycle only through a single cell, then
  *   move focus out of the list. Moving focus between cells needs to
  *   be done with the arrow keys. This is only relevant for
- *   cell-based widgets like #GtkColumnView, otherwise it behaves
+ *   cell-based widgets like `GtkColumnView`, otherwise it behaves
  *   like `GTK_LIST_TAB_ITEM`.
  *
  * Used to configure the focus behavior in the `GTK_DIR_TAB_FORWARD`
@@ -1629,7 +1629,7 @@ typedef enum {
  *
  * Note that the %GTK_ACCESSIBLE_TRISTATE_FALSE and
  * %GTK_ACCESSIBLE_TRISTATE_TRUE have the same values
- * as %FALSE and %TRUE.
+ * as false and true.
  */
 typedef enum {
   GTK_ACCESSIBLE_TRISTATE_FALSE,
@@ -1649,7 +1649,7 @@ typedef enum {
  *
  * Note that the %GTK_ACCESSIBLE_INVALID_FALSE and
  * %GTK_ACCESSIBLE_INVALID_TRUE have the same values
- * as %FALSE and %TRUE.
+ * as false and true.
  */
 typedef enum { /*< prefix=GTK_ACCESSIBLE_INVALID >*/
   GTK_ACCESSIBLE_INVALID_FALSE,

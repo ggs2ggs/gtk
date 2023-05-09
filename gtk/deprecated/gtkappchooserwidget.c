@@ -909,7 +909,7 @@ gtk_app_chooser_widget_class_init (GtkAppChooserWidgetClass *klass)
    * Determines whether the app chooser should show the default
    * handler for the content type in a separate section.
    *
-   * If %FALSE, the default handler is listed among the recommended
+   * If false, the default handler is listed among the recommended
    * applications.
    */
   pspec = g_param_spec_boolean ("show-default", NULL, NULL,
@@ -923,7 +923,7 @@ gtk_app_chooser_widget_class_init (GtkAppChooserWidgetClass *klass)
    * Determines whether the app chooser should show a section
    * for recommended applications.
    *
-   * If %FALSE, the recommended applications are listed
+   * If false, the recommended applications are listed
    * among the other applications.
    */
   pspec = g_param_spec_boolean ("show-recommended", NULL, NULL,
@@ -937,7 +937,7 @@ gtk_app_chooser_widget_class_init (GtkAppChooserWidgetClass *klass)
    * Determines whether the app chooser should show a section
    * for fallback applications.
    *
-   * If %FALSE, the fallback applications are listed among the
+   * If false, the fallback applications are listed among the
    * other applications.
    */
   pspec = g_param_spec_boolean ("show-fallback", NULL, NULL,
@@ -959,7 +959,7 @@ gtk_app_chooser_widget_class_init (GtkAppChooserWidgetClass *klass)
   /**
    * GtkAppChooserWidget:show-all: (attributes org.gtk.Property.get=gtk_app_chooser_widget_get_show_all org.gtk.Property.set=gtk_app_chooser_widget_set_show_all)
    *
-   * If %TRUE, the app chooser presents all applications
+   * If true, the app chooser presents all applications
    * in a single list, without subsections for default,
    * recommended or related applications.
    */

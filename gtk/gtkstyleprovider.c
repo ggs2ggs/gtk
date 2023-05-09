@@ -185,8 +185,8 @@ gtk_style_provider_emit_error (GtkStyleProvider *provider,
  *   %GTK_STYLE_PROVIDER_PRIORITY_FALLBACK and
  *   %GTK_STYLE_PROVIDER_PRIORITY_USER
  *
- * Adds a global style provider to @display, which will be used
- * in style construction for all `GtkStyleContexts` under @display.
+ * Adds a global style provider to `display`, which will be used
+ * in style construction for all `GtkStyleContexts` under `display`.
  *
  * GTK uses this to make styling information from `GtkSettings`
  * available.
@@ -215,7 +215,7 @@ gtk_style_context_add_provider_for_display (GdkDisplay       *display,
  * @display: a `GdkDisplay`
  * @provider: a `GtkStyleProvider`
  *
- * Removes @provider from the global style providers list in @display.
+ * Removes `provider` from the global style providers list in `display`.
  */
 void
 gtk_style_context_remove_provider_for_display (GdkDisplay       *display,

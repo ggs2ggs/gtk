@@ -915,7 +915,7 @@ gtk_scale_get_property (GObject      *object,
  * gtk_scale_new:
  * @orientation: the scale’s orientation.
  * @adjustment: (nullable): the [class@Gtk.Adjustment] which sets
- *   the range of the scale, or %NULL to create a new adjustment.
+ *   the range of the scale, or `NULL` to create a new adjustment.
  *
  * Creates a new `GtkScale`.
  *
@@ -941,16 +941,16 @@ gtk_scale_new (GtkOrientation  orientation,
  * @max: maximum value
  * @step: step increment (tick size) used with keyboard shortcuts
  *
- * Creates a new scale widget with a range from @min to @max.
+ * Creates a new scale widget with a range from `min` to `max`.
  *
  * The returns scale will have the given orientation and will let the
- * user input a number between @min and @max (including @min and @max)
- * with the increment @step. @step must be nonzero; it’s the distance
+ * user input a number between `min` and `max` (including `min` and `max`)
+ * with the increment `step`. `step` must be nonzero; it’s the distance
  * the slider moves when using the arrow keys to adjust the scale
  * value.
  *
  * Note that the way in which the precision is derived works best if
- * @step is a power of ten. If the resulting precision is not suitable
+ * `step` is a power of ten. If the resulting precision is not suitable
  * for your needs, use [method@Gtk.Scale.set_digits] to correct it.
  *
  * Returns: a new `GtkScale`
@@ -997,9 +997,9 @@ gtk_scale_new_with_range (GtkOrientation orientation,
  *
  * Also causes the value of the adjustment to be rounded to this number
  * of digits, so the retrieved value matches the displayed one, if
- * [property@Gtk.Scale:draw-value] is %TRUE when the value changes. If
+ * [property@Gtk.Scale:draw-value] is true when the value changes. If
  * you want to enforce rounding the value when [property@Gtk.Scale:draw-value]
- * is %FALSE, you can set [property@Gtk.Range:round-digits] instead.
+ * is false, you can set [property@Gtk.Range:round-digits] instead.
  *
  * Note that rounding to a small number of digits can interfere with
  * the smooth autoscrolling that is built into `GtkScale`. As an alternative,
@@ -1088,7 +1088,7 @@ update_value_position (GtkScale *scale)
 /**
  * gtk_scale_set_draw_value: (attributes org.gtk.Method.set_property=draw-value)
  * @scale: a `GtkScale`
- * @draw_value: %TRUE to draw the value
+ * @draw_value: true to draw the value
  *
  * Specifies whether the current value is displayed as a string next
  * to the slider.
@@ -1149,11 +1149,11 @@ gtk_scale_get_draw_value (GtkScale *scale)
 /**
  * gtk_scale_set_has_origin: (attributes org.gtk.Method.set_property=has-origin)
  * @scale: a `GtkScale`
- * @has_origin: %TRUE if the scale has an origin
+ * @has_origin: true if the scale has an origin
  *
  * Sets whether the scale has an origin.
  *
- * If [property@Gtk.Scale:has-origin] is set to %TRUE (the default),
+ * If [property@Gtk.Scale:has-origin] is set to true (the default),
  * the scale will highlight the part of the trough between the origin
  * (bottom or left side) and the current value.
  */
@@ -1181,7 +1181,7 @@ gtk_scale_set_has_origin (GtkScale *scale,
  *
  * Returns whether the scale has an origin.
  *
- * Returns: %TRUE if the scale has an origin.
+ * Returns: true if the scale has an origin.
  */
 gboolean
 gtk_scale_get_has_origin (GtkScale *scale)
@@ -1562,8 +1562,8 @@ gtk_scale_finalize (GObject *object)
  * to be freed by the caller.
  *
  * Returns: (transfer none) (nullable): the [class@Pango.Layout]
- *   for this scale, or %NULL if the [property@Gtk.Scale:draw-value]
- *   property is %FALSE.
+ *   for this scale, or `NULL` if the [property@Gtk.Scale:draw-value]
+ *   property is false.
  */
 PangoLayout *
 gtk_scale_get_layout (GtkScale *scale)
@@ -1590,7 +1590,7 @@ gtk_scale_get_layout (GtkScale *scale)
  * Remember when using the `PangoLayout` function you need to
  * convert to and from pixels using `PANGO_PIXELS()` or `PANGO_SCALE`.
  *
- * If the [property@Gtk.Scale:draw-value] property is %FALSE, the return
+ * If the [property@Gtk.Scale:draw-value] property is false, the return
  * values are undefined.
  */
 void
@@ -1665,13 +1665,13 @@ gtk_scale_clear_marks (GtkScale *scale)
  *   the left of the scale, anything else to the right.
  * @markup: (nullable): Text to be shown at the mark, using Pango markup
  *
- * Adds a mark at @value.
+ * Adds a mark at `value`.
  *
  * A mark is indicated visually by drawing a tick mark next to the scale,
  * and GTK makes it easy for the user to position the scale exactly at the
  * marks value.
  *
- * If @markup is not %NULL, text is shown next to the tick mark.
+ * If `markup` is not `NULL`, text is shown next to the tick mark.
  *
  * To remove marks from a scale, use [method@Gtk.Scale.clear_marks].
  */
@@ -2031,15 +2031,15 @@ gtk_scale_buildable_custom_finished (GtkBuildable *buildable,
  * gtk_scale_set_format_value_func:
  * @scale: a `GtkScale`
  * @func: (nullable): function that formats the value
- * @user_data: (closure): user data to pass to @func
- * @destroy_notify: (nullable): destroy function for @user_data
+ * @user_data: (closure): user data to pass to `func`
+ * @destroy_notify: (nullable): destroy function for `user_data`
  *
- * @func allows you to change how the scale value is displayed.
+ * `func` allows you to change how the scale value is displayed.
  *
  * The given function will return an allocated string representing
- * @value. That string will then be used to display the scale's value.
+ * `value`. That string will then be used to display the scale's value.
  *
- * If #NULL is passed as @func, the value will be displayed on
+ * If `NULL` is passed as `func`, the value will be displayed on
  * its own, rounded according to the value of the
  * [property@Gtk.Scale:digits] property.
  */

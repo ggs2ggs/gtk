@@ -595,7 +595,7 @@ gdk_wayland_device_get_data_device (GdkDevice *gdk_device)
  * Sets the selection of the `GdkDevice.
  *
  * This is calling wl_data_device_set_selection() on
- * the `wl_data_device` of @gdk_device.
+ * the `wl_data_device` of `gdk_device`.
  */
 void
 gdk_wayland_device_set_selection (GdkDevice             *gdk_device,
@@ -619,7 +619,7 @@ gdk_wayland_device_set_selection (GdkDevice             *gdk_device,
  *
  * For `GdkDevice`s that possibly coalesce multiple hardware
  * devices (eg. mouse, keyboard, touch,...), this function
- * will return %NULL.
+ * will return `NULL`.
  *
  * This is most notably implemented for devices of type
  * %GDK_SOURCE_PEN, %GDK_SOURCE_TABLET_PAD.

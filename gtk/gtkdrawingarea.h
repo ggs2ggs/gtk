@@ -54,7 +54,7 @@ typedef struct _GtkDrawingAreaClass  GtkDrawingAreaClass;
  *   as wide as GtkDrawingArea:height.
  * @user_data: (closure): user data
  *
- * Whenever @drawing_area needs to redraw, this function will be called.
+ * Whenever `drawing_area` needs to redraw, this function will be called.
  *
  * This function should exclusively redraw the contents of the drawing area
  * and must not call any widget functions that cause changes.

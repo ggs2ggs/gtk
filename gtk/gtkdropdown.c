@@ -1034,7 +1034,7 @@ gtk_drop_down_get_selected (GtkDropDown *self)
  * gtk_drop_down_get_selected_item: (attributes org.gtk.Method.get_property=selected-item)
  * @self: a `GtkDropDown`
  *
- * Gets the selected item. If no item is selected, %NULL is returned.
+ * Gets the selected item. If no item is selected, `NULL` is returned.
  *
  * Returns: (transfer none) (type GObject) (nullable): The selected item
  */
@@ -1085,7 +1085,7 @@ gtk_drop_down_set_enable_search (GtkDropDown *self,
  *
  * Returns whether search is enabled.
  *
- * Returns: %TRUE if the popup includes a search entry
+ * Returns: true if the popup includes a search entry
  */
 gboolean
 gtk_drop_down_get_enable_search (GtkDropDown *self)
@@ -1177,7 +1177,7 @@ gtk_drop_down_set_show_arrow (GtkDropDown *self,
  *
  * Returns whether to show an arrow within the widget.
  *
- * Returns: %TRUE if an arrow will be shown.
+ * Returns: true if an arrow will be shown.
  *
  * Since: 4.6
  */

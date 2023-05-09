@@ -456,7 +456,7 @@ gdk_memory_format_alignment (GdkMemoryFormat format)
  * Usually this is the case when
  * gdk_memory_format_bytes_per_pixel() is larger than 4.
  *
- * Returns: %TRUE if the format benefits from being
+ * Returns: true if the format benefits from being
  *     composited in hgiher bit depths.
  **/
 gboolean

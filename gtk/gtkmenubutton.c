@@ -765,19 +765,19 @@ menu_deactivate_cb (GtkMenuButton *self)
 /**
  * gtk_menu_button_set_menu_model: (attributes org.gtk.Method.set_property=menu-model)
  * @menu_button: a `GtkMenuButton`
- * @menu_model: (nullable): a `GMenuModel`, or %NULL to unset and disable the
+ * @menu_model: (nullable): a `GMenuModel`, or `NULL` to unset and disable the
  *   button
  *
  * Sets the `GMenuModel` from which the popup will be constructed.
  *
- * If @menu_model is %NULL, the button is disabled.
+ * If `menu_model` is `NULL`, the button is disabled.
  *
  * A [class@Gtk.Popover] will be created from the menu model with
  * [ctor@Gtk.PopoverMenu.new_from_model]. Actions will be connected
  * as documented for this function.
  *
  * If [property@Gtk.MenuButton:popover] is already set, it will be
- * dissociated from the @menu_button, and the property is set to %NULL.
+ * dissociated from the `menu_button`, and the property is set to `NULL`.
  */
 void
 gtk_menu_button_set_menu_model (GtkMenuButton *menu_button,
@@ -870,7 +870,7 @@ popover_destroy_cb (GtkMenuButton *menu_button)
  * If the does not fit in the available space in the given direction,
  * GTK will its best to keep it inside the screen and fully visible.
  *
- * If you pass %GTK_ARROW_NONE for a @direction, the popup will behave
+ * If you pass %GTK_ARROW_NONE for a `direction`, the popup will behave
  * as if you passed %GTK_ARROW_DOWN (although you won’t see any arrows).
  */
 void
@@ -934,14 +934,14 @@ gtk_menu_button_dispose (GObject *object)
 /**
  * gtk_menu_button_set_popover: (attributes org.gtk.Method.set_property=popover)
  * @menu_button: a `GtkMenuButton`
- * @popover: (nullable): a `GtkPopover`, or %NULL to unset and disable the button
+ * @popover: (nullable): a `GtkPopover`, or `NULL` to unset and disable the button
  *
- * Sets the `GtkPopover` that will be popped up when the @menu_button is clicked.
+ * Sets the `GtkPopover` that will be popped up when the `menu_button` is clicked.
  *
- * If @popover is %NULL, the button is disabled.
+ * If `popover` is `NULL`, the button is disabled.
  *
  * If [property@Gtk.MenuButton:menu-model] is set, the menu model is dissociated
- * from the @menu_button, and the property is set to %NULL.
+ * from the `menu_button`, and the property is set to `NULL`.
  */
 void
 gtk_menu_button_set_popover (GtkMenuButton *menu_button,
@@ -994,9 +994,9 @@ gtk_menu_button_set_popover (GtkMenuButton *menu_button,
  * Returns the `GtkPopover` that pops out of the button.
  *
  * If the button is not using a `GtkPopover`, this function
- * returns %NULL.
+ * returns `NULL`.
  *
- * Returns: (nullable) (transfer none): a `GtkPopover` or %NULL
+ * Returns: (nullable) (transfer none): a `GtkPopover` or `NULL`
  */
 GtkPopover *
 gtk_menu_button_get_popover (GtkMenuButton *menu_button)
@@ -1243,7 +1243,7 @@ gtk_menu_button_set_has_frame (GtkMenuButton *menu_button,
  *
  * Returns whether the button has a frame.
  *
- * Returns: %TRUE if the button has a frame
+ * Returns: true if the button has a frame
  */
 gboolean
 gtk_menu_button_get_has_frame (GtkMenuButton *menu_button)
@@ -1285,23 +1285,23 @@ gtk_menu_button_popdown (GtkMenuButton *menu_button)
  * gtk_menu_button_set_create_popup_func:
  * @menu_button: a `GtkMenuButton`
  * @func: (nullable): function to call when a popup is about to
- *   be shown, but none has been provided via other means, or %NULL
+ *   be shown, but none has been provided via other means, or `NULL`
  *   to reset to default behavior.
- * @user_data: (closure): user data to pass to @func.
- * @destroy_notify: (nullable): destroy notify for @user_data
+ * @user_data: (closure): user data to pass to `func`.
+ * @destroy_notify: (nullable): destroy notify for `user_data`
  *
- * Sets @func to be called when a popup is about to be shown.
+ * Sets `func` to be called when a popup is about to be shown.
  *
- * @func should use one of
+ * `func` should use one of
  *
  *  - [method@Gtk.MenuButton.set_popover]
  *  - [method@Gtk.MenuButton.set_menu_model]
  *
- * to set a popup for @menu_button.
- * If @func is non-%NULL, @menu_button will always be sensitive.
+ * to set a popup for `menu_button`.
+ * If `func` is non-`NULL`, `menu_button` will always be sensitive.
  *
  * Using this function will not reset the menu widget attached to
- * @menu_button. Instead, this can be done manually in @func.
+ * `menu_button`. Instead, this can be done manually in `func`.
  */
 void
 gtk_menu_button_set_create_popup_func (GtkMenuButton                *menu_button,
@@ -1324,7 +1324,7 @@ gtk_menu_button_set_create_popup_func (GtkMenuButton                *menu_button
 /**
  * gtk_menu_button_set_use_underline: (attributes org.gtk.Method.set_property=use-underline)
  * @menu_button: a `GtkMenuButton`
- * @use_underline: %TRUE if underlines in the text indicate mnemonics
+ * @use_underline: true if underlines in the text indicate mnemonics
  *
  * If true, an underline in the text indicates a mnemonic.
  */
@@ -1351,7 +1351,7 @@ gtk_menu_button_set_use_underline (GtkMenuButton *menu_button,
  * Returns whether an embedded underline in the text indicates a
  * mnemonic.
  *
- * Returns: %TRUE whether an embedded underline in the text indicates
+ * Returns: true whether an embedded underline in the text indicates
  *   the mnemonic accelerator keys.
  */
 gboolean
@@ -1461,7 +1461,7 @@ gtk_menu_button_set_primary (GtkMenuButton *menu_button,
  *
  * Returns whether the menu button acts as a primary menu.
  *
- * Returns: %TRUE if the button is a primary menu
+ * Returns: true if the button is a primary menu
  *
  * Since: 4.4
  */
@@ -1478,7 +1478,7 @@ gtk_menu_button_get_primary (GtkMenuButton *menu_button)
  * @menu_button: a `GtkMenuButton`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @menu_button.
+ * Sets the child widget of `menu_button`.
  *
  * Setting a child resets [property@Gtk.MenuButton:label] and
  * [property@Gtk.MenuButton:icon-name].
@@ -1535,9 +1535,9 @@ gtk_menu_button_set_child (GtkMenuButton *menu_button,
  * gtk_menu_button_get_child: (attributes org.gtk.Method.get_property=child)
  * @menu_button: a `GtkMenuButton`
  *
- * Gets the child widget of @menu_button.
+ * Gets the child widget of `menu_button`.
  *
- * Returns: (nullable) (transfer none): the child widget of @menu_button
+ * Returns: (nullable) (transfer none): the child widget of `menu_button`
  *
  * Since: 4.6
  */
@@ -1599,7 +1599,7 @@ gtk_menu_button_get_active (GtkMenuButton *menu_button)
  * Sets whether the button size can be smaller than the natural size of
  * its contents.
  *
- * For text buttons, setting @can_shrink to true will ellipsize the label.
+ * For text buttons, setting `can_shrink` to true will ellipsize the label.
  *
  * For icon buttons, this function has no effect.
  *

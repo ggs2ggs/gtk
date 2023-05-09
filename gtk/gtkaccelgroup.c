@@ -45,7 +45,7 @@
  * and matches the “Ctrl+a” accelerator. But, you can't, for instance, use
  * the %GDK_KEY_Control_L keyval as an accelerator.
  *
- * Returns: %TRUE if the accelerator is valid
+ * Returns: true if the accelerator is valid
  */
 gboolean
 gtk_accelerator_valid (guint           keyval,
@@ -228,7 +228,7 @@ is_keycode (const char *string)
 /**
  * gtk_accelerator_parse_with_keycode:
  * @accelerator: string representing an accelerator
- * @display: (nullable): the `GdkDisplay` to look up @accelerator_codes in
+ * @display: (nullable): the `GdkDisplay` to look up `accelerator_codes` in
  * @accelerator_key: (out) (optional): return location for accelerator keyval
  * @accelerator_codes: (out) (array zero-terminated=1) (transfer full) (optional):
  *   return location for accelerator keycodes
@@ -241,16 +241,16 @@ is_keycode (const char *string)
  * well. This is only useful for system-level components, applications should
  * use [func@Gtk.accelerator_parse] instead.
  *
- * If @accelerator_codes is given and the result stored in it is non-%NULL,
+ * If `accelerator_codes` is given and the result stored in it is non-`NULL`,
  * the result must be freed with g_free().
  *
- * If a keycode is present in the accelerator and no @accelerator_codes
+ * If a keycode is present in the accelerator and no `accelerator_codes`
  * is given, the parse will fail.
  *
- * If the parse fails, @accelerator_key, @accelerator_mods and
- * @accelerator_codes will be set to 0 (zero).
+ * If the parse fails, `accelerator_key`, `accelerator_mods` and
+ * `accelerator_codes` will be set to 0 (zero).
  *
- * Returns: %TRUE if parsing succeeded
+ * Returns: true if parsing succeeded
  */
 gboolean
 gtk_accelerator_parse_with_keycode (const char      *accelerator,
@@ -503,7 +503,7 @@ out:
  * - `<Super>` for `GDK_SUPER_MASK`
  * - `<Hyper>` for `GDK_HYPER_MASK`
  *
- * If the parse operation fails, @accelerator_key and @accelerator_mods will
+ * If the parse operation fails, `accelerator_key` and `accelerator_mods` will
  * be set to 0 (zero).
  */
 gboolean
@@ -516,7 +516,7 @@ gtk_accelerator_parse (const char      *accelerator,
 
 /**
  * gtk_accelerator_name_with_keycode:
- * @display: (nullable): a `GdkDisplay` or %NULL to use the default display
+ * @display: (nullable): a `GdkDisplay` or `NULL` to use the default display
  * @accelerator_key: accelerator keyval
  * @keycode: accelerator keycode
  * @accelerator_mods: accelerator modifier mask
@@ -632,7 +632,7 @@ gtk_accelerator_name (guint           accelerator_key,
 
 /**
  * gtk_accelerator_get_label_with_keycode:
- * @display: (nullable): a `GdkDisplay` or %NULL to use the default display
+ * @display: (nullable): a `GdkDisplay` or `NULL` to use the default display
  * @accelerator_key: accelerator keyval
  * @keycode: accelerator keycode
  * @accelerator_mods: accelerator modifier mask

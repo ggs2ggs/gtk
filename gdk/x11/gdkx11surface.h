@@ -93,7 +93,7 @@ void     gdk_x11_surface_set_frame_sync_enabled (GdkSurface *surface,
  *
  * Returns the X window belonging to a `GdkSurface`.
  *
- * Returns: the Xlib Window of @win.
+ * Returns: the Xlib Window of `win`.
  */
 #define GDK_SURFACE_XID(win)           (gdk_x11_surface_get_xid (win))
 

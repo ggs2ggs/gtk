@@ -308,7 +308,7 @@ gtk_cell_area_context_real_allocate (GtkCellAreaContext *context,
  * gtk_cell_area_context_get_area:
  * @context: a `GtkCellAreaContext`
  *
- * Fetches the `GtkCellArea` this @context was created by.
+ * Fetches the `GtkCellArea` this `context` was created by.
  *
  * This is generally unneeded by layouting widgets; however,
  * it is important for the context implementation itself to
@@ -374,12 +374,12 @@ gtk_cell_area_context_reset (GtkCellAreaContext *context)
  * gtk_cell_area_context_allocate:
  * @context: a `GtkCellAreaContext`
  * @width: the allocated width for all `GtkTreeModel` rows rendered
- *   with @context, or -1
+ *   with `context`, or -1
  * @height: the allocated height for all `GtkTreeModel` rows rendered
- *   with @context, or -1
+ *   with `context`, or -1
  *
  * Allocates a width and/or a height for all rows which are to be
- * rendered with @context.
+ * rendered with `context`.
  *
  * Usually allocation is performed only horizontally or sometimes
  * vertically since a group of rows are usually rendered side by
@@ -468,8 +468,8 @@ gtk_cell_area_context_get_preferred_height (GtkCellAreaContext *context,
  * @minimum_height: (out) (optional): location to store the minimum height
  * @natural_height: (out) (optional): location to store the natural height
  *
- * Gets the accumulative preferred height for @width for all rows
- * which have been requested for the same said @width with this context.
+ * Gets the accumulative preferred height for `width` for all rows
+ * which have been requested for the same said `width` with this context.
  *
  * After gtk_cell_area_context_reset() is called and/or before ever
  * requesting the size of a `GtkCellArea`, the returned values are -1.
@@ -498,8 +498,8 @@ gtk_cell_area_context_get_preferred_height_for_width (GtkCellAreaContext *contex
  * @minimum_width: (out) (optional): location to store the minimum width
  * @natural_width: (out) (optional): location to store the natural width
  *
- * Gets the accumulative preferred width for @height for all rows which
- * have been requested for the same said @height with this context.
+ * Gets the accumulative preferred width for `height` for all rows which
+ * have been requested for the same said `height` with this context.
  *
  * After gtk_cell_area_context_reset() is called and/or before ever
  * requesting the size of a `GtkCellArea`, the returned values are -1.
@@ -527,7 +527,7 @@ gtk_cell_area_context_get_preferred_width_for_height (GtkCellAreaContext *contex
  * @width: (out) (optional): location to store the allocated width
  * @height: (out) (optional): location to store the allocated height
  *
- * Fetches the current allocation size for @context.
+ * Fetches the current allocation size for `context`.
  *
  * If the context was not allocated in width or height, or if the
  * context was recently reset with gtk_cell_area_context_reset(),
@@ -554,8 +554,8 @@ gtk_cell_area_context_get_allocation (GtkCellAreaContext *context,
 /**
  * gtk_cell_area_context_push_preferred_width:
  * @context: a `GtkCellAreaContext`
- * @minimum_width: the proposed new minimum width for @context
- * @natural_width: the proposed new natural width for @context
+ * @minimum_width: the proposed new minimum width for `context`
+ * @natural_width: the proposed new natural width for `context`
  *
  * Causes the minimum and/or natural width to grow if the new
  * proposed sizes exceed the current minimum and natural width.
@@ -598,8 +598,8 @@ gtk_cell_area_context_push_preferred_width (GtkCellAreaContext *context,
 /**
  * gtk_cell_area_context_push_preferred_height:
  * @context: a `GtkCellAreaContext`
- * @minimum_height: the proposed new minimum height for @context
- * @natural_height: the proposed new natural height for @context
+ * @minimum_height: the proposed new minimum height for `context`
+ * @natural_height: the proposed new natural height for `context`
  *
  * Causes the minimum and/or natural height to grow if the new
  * proposed sizes exceed the current minimum and natural height.

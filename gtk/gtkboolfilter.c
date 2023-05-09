@@ -253,7 +253,7 @@ gtk_bool_filter_set_expression (GtkBoolFilter *self,
  *
  * Returns whether the filter inverts the expression.
  *
- * Returns: %TRUE if the filter inverts
+ * Returns: true if the filter inverts
  */
 gboolean
 gtk_bool_filter_get_invert (GtkBoolFilter *self)
@@ -266,7 +266,7 @@ gtk_bool_filter_get_invert (GtkBoolFilter *self)
 /**
  * gtk_bool_filter_set_invert: (attributes org.gtk.Method.set_property=invert)
  * @self: a `GtkBoolFilter`
- * @invert: %TRUE to invert
+ * @invert: true to invert
  *
  * Sets whether the filter should invert the expression.
  */

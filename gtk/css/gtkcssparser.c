@@ -152,8 +152,8 @@ gtk_css_parser_unref (GtkCssParser *self)
  * gtk_css_parser_get_file:
  * @self: a `GtkCssParser`
  *
- * Gets the file being parsed. If no file is associated with @self -
- * for example when raw data is parsed - %NULL is returned.
+ * Gets the file being parsed. If no file is associated with `self` -
+ * for example when raw data is parsed - `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The file being parsed
  */
@@ -700,9 +700,9 @@ gtk_css_parser_consume_function (GtkCssParser *self,
  * @self: a `GtkCssParser`
  * @token_type: type of the token to check
  *
- * Checks if the next token is of @token_type.
+ * Checks if the next token is of `token_type`.
  *
- * Returns: %TRUE if the next token is of @token_type
+ * Returns: true if the next token is of `token_type`
  **/
 gboolean
 gtk_css_parser_has_token (GtkCssParser    *self,
@@ -720,9 +720,9 @@ gtk_css_parser_has_token (GtkCssParser    *self,
  * @self: a `GtkCssParser`
  * @ident: name of identifier
  *
- * Checks if the next token is an identifier with the given @name.
+ * Checks if the next token is an identifier with the given `name`.
  *
- * Returns: %TRUE if the next token is an identifier with the given @name
+ * Returns: true if the next token is an identifier with the given `name`
  **/
 gboolean
 gtk_css_parser_has_ident (GtkCssParser *self,
@@ -752,9 +752,9 @@ gtk_css_parser_has_integer (GtkCssParser *self)
  * @self: a `GtkCssParser`
  * @name: name of function
  *
- * Checks if the next token is a function with the given @name.
+ * Checks if the next token is a function with the given `name`.
  *
- * Returns: %TRUE if the next token is a function with the given @name
+ * Returns: true if the next token is a function with the given `name`
  */
 gboolean
 gtk_css_parser_has_function (GtkCssParser *self,
@@ -774,13 +774,13 @@ gtk_css_parser_has_function (GtkCssParser *self,
  * @codepoint: unicode character codepoint to check
  *
  * Checks if the current token is a delimiter matching the given
- * @codepoint. If that is the case, the token is consumed and
- * %TRUE is returned.
+ * `codepoint`. If that is the case, the token is consumed and
+ * true is returned.
  *
  * Keep in mind that not every unicode codepoint can be a delim
  * token.
  *
- * Returns: %TRUE if the token matched and was consumed.
+ * Returns: true if the token matched and was consumed.
  **/
 gboolean
 gtk_css_parser_try_delim (GtkCssParser *self,
@@ -804,10 +804,10 @@ gtk_css_parser_try_delim (GtkCssParser *self,
  * @ident: identifier to check for
  *
  * Checks if the current token is an identifier matching the given
- * @ident string. If that is the case, the token is consumed
- * and %TRUE is returned.
+ * `ident` string. If that is the case, the token is consumed
+ * and true is returned.
  *
- * Returns: %TRUE if the token matched and was consumed.
+ * Returns: true if the token matched and was consumed.
  **/
 gboolean
 gtk_css_parser_try_ident (GtkCssParser *self,
@@ -831,10 +831,10 @@ gtk_css_parser_try_ident (GtkCssParser *self,
  * @keyword: name of keyword to check for
  *
  * Checks if the current token is an at-keyword token with the
- * given @keyword. If that is the case, the token is consumed
- * and %TRUE is returned.
+ * given `keyword`. If that is the case, the token is consumed
+ * and true is returned.
  *
- * Returns: %TRUE if the token matched and was consumed.
+ * Returns: true if the token matched and was consumed.
  **/
 gboolean
 gtk_css_parser_try_at_keyword (GtkCssParser *self,
@@ -857,14 +857,14 @@ gtk_css_parser_try_at_keyword (GtkCssParser *self,
  * @self: a `GtkCssParser`
  * @token_type: type of token to try
  *
- * Consumes the next token if it matches the given @token_type.
+ * Consumes the next token if it matches the given `token_type`.
  *
  * This function can be used in loops like this:
  * do {
  *   ... parse one element ...
  * } while (gtk_css_parser_try_token (parser, GTK_CSS_TOKEN_COMMA);
  *
- * Returns: %TRUE if a token was consumed
+ * Returns: true if a token was consumed
  **/
 gboolean
 gtk_css_parser_try_token (GtkCssParser    *self,
@@ -889,7 +889,7 @@ gtk_css_parser_try_token (GtkCssParser    *self,
  * its name.
  *
  * If the current token is not an identifier, an error is emitted
- * and %NULL is returned.
+ * and `NULL` is returned.
  *
  * Returns: (transfer full): the name of the consumed identifier
  */
@@ -920,7 +920,7 @@ gtk_css_parser_consume_ident (GtkCssParser *self)
  * If the current token is a string, consumes it and return the string.
  *
  * If the current token is not a string, an error is emitted
- * and %NULL is returned.
+ * and `NULL` is returned.
  *
  * Returns: (transfer full): the name of the consumed string
  **/
@@ -965,7 +965,7 @@ gtk_css_parser_parse_url_arg (GtkCssParser *parser,
  * If the parser matches the `<url>` token from the [CSS
  * specification](https://drafts.csswg.org/css-values-4/#url-value),
  * consumes it, resolves the URL and returns the resulting `GFile`.
- * On failure, an error is emitted and %NULL is returned.
+ * On failure, an error is emitted and `NULL` is returned.
  *
  * Returns: (nullable) (transfer full): the resulting URL
  **/

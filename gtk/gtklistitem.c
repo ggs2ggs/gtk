@@ -36,10 +36,10 @@
  *
  * 1. The unbound stage where the listitem is not currently connected to
  *    an item in the list. In that case, the [property@Gtk.ListItem:item]
- *    property is set to %NULL.
+ *    property is set to `NULL`.
  *
  * 2. The bound stage where the listitem references an item from the list.
- *    The [property@Gtk.ListItem:item] property is not %NULL.
+ *    The [property@Gtk.ListItem:item] property is not `NULL`.
  */
 
 enum
@@ -272,9 +272,9 @@ gtk_list_item_do_notify (GtkListItem *list_item,
  * gtk_list_item_get_item: (attributes org.gtk.Method.get_property=item)
  * @self: a `GtkListItem`
  *
- * Gets the model item that associated with @self.
+ * Gets the model item that associated with `self`.
  *
- * If @self is unbound, this function returns %NULL.
+ * If `self` is unbound, this function returns `NULL`.
  *
  * Returns: (nullable) (transfer none) (type GObject): The item displayed
  **/
@@ -296,7 +296,7 @@ gtk_list_item_get_item (GtkListItem *self)
  * @self: a `GtkListItem`
  *
  * Gets the child previously set via gtk_list_item_set_child() or
- * %NULL if none was set.
+ * `NULL` if none was set.
  *
  * Returns: (transfer none) (nullable): The child
  */
@@ -314,7 +314,7 @@ gtk_list_item_get_child (GtkListItem *self)
 /**
  * gtk_list_item_set_child: (attributes org.gtk.Method.set_property=child)
  * @self: a `GtkListItem`
- * @child: (nullable): The list item's child or %NULL to unset
+ * @child: (nullable): The list item's child or `NULL` to unset
  *
  * Sets the child to be used for this listitem.
  *
@@ -362,9 +362,9 @@ gtk_list_item_set_child (GtkListItem *self,
  * gtk_list_item_get_position: (attributes org.gtk.Method.get_property=position)
  * @self: a `GtkListItem`
  *
- * Gets the position in the model that @self currently displays.
+ * Gets the position in the model that `self` currently displays.
  *
- * If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
+ * If `self` is unbound, %GTK_INVALID_LIST_POSITION is returned.
  *
  * Returns: The position of this item
  */
@@ -390,7 +390,7 @@ gtk_list_item_get_position (GtkListItem *self)
  * The selected state is maintained by the liste widget and its model
  * and cannot be set otherwise.
  *
- * Returns: %TRUE if the item is selected.
+ * Returns: true if the item is selected.
  */
 gboolean
 gtk_list_item_get_selected (GtkListItem *self)
@@ -414,7 +414,7 @@ gtk_list_item_get_selected (GtkListItem *self)
  *
  * Do not confuse this function with [method@Gtk.ListItem.get_selected].
  *
- * Returns: %TRUE if the item is selectable
+ * Returns: true if the item is selectable
  */
 gboolean
 gtk_list_item_get_selectable (GtkListItem *self)
@@ -429,7 +429,7 @@ gtk_list_item_get_selectable (GtkListItem *self)
  * @self: a `GtkListItem`
  * @selectable: if the item should be selectable
  *
- * Sets @self to be selectable.
+ * Sets `self` to be selectable.
  *
  * If an item is selectable, clicking on the item or using the keyboard
  * will try to select or unselect the item. If this succeeds is up to
@@ -466,7 +466,7 @@ gtk_list_item_set_selectable (GtkListItem *self,
  * Checks if a list item has been set to be activatable via
  * gtk_list_item_set_activatable().
  *
- * Returns: %TRUE if the item is activatable
+ * Returns: true if the item is activatable
  */
 gboolean
 gtk_list_item_get_activatable (GtkListItem *self)
@@ -481,7 +481,7 @@ gtk_list_item_get_activatable (GtkListItem *self)
  * @self: a `GtkListItem`
  * @activatable: if the item should be activatable
  *
- * Sets @self to be activatable.
+ * Sets `self` to be activatable.
  *
  * If an item is activatable, double-clicking on the item, using
  * the Return key or calling gtk_widget_activate() will activate
@@ -515,7 +515,7 @@ gtk_list_item_set_activatable (GtkListItem *self,
  * Checks if a list item has been set to be focusable via
  * gtk_list_item_set_focusable().
  *
- * Returns: %TRUE if the item is focusable
+ * Returns: true if the item is focusable
  *
  * Since: 4.12
  */
@@ -532,7 +532,7 @@ gtk_list_item_get_focusable (GtkListItem *self)
  * @self: a `GtkListItem`
  * @focusable: if the item should be focusable
  *
- * Sets @self to be focusable.
+ * Sets `self` to be focusable.
  *
  * If an item is focusable, it can be focused using the keyboard.
  * This works similar to [method@Gtk.Widget.set_focusable].

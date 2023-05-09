@@ -34,8 +34,8 @@ gtk_action_observable_default_init (GtkActionObservableInterface *iface)
  * @action_name: the name of the action
  * @observer: the `GtkActionObserver` to which the events will be reported
  *
- * Registers @observer as being interested in changes to @action_name on
- * @observable.
+ * Registers `observer` as being interested in changes to `action_name` on
+ * `observable`.
  */
 void
 gtk_action_observable_register_observer (GtkActionObservable *observable,
@@ -54,8 +54,8 @@ gtk_action_observable_register_observer (GtkActionObservable *observable,
  * @action_name: the name of the action
  * @observer: the `GtkActionObserver` to which the events will be reported
  *
- * Removes the registration of @observer as being interested in changes
- * to @action_name on @observable.
+ * Removes the registration of `observer` as being interested in changes
+ * to `action_name` on `observable`.
  *
  * If the observer was registered multiple times, it must be
  * unregistered an equal number of times.

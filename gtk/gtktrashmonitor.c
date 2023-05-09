@@ -275,7 +275,7 @@ _gtk_trash_monitor_get_icon (GtkTrashMonitor *monitor)
  * _gtk_trash_monitor_get_has_trash:
  * @monitor: a GtkTrashMonitor
  *
- * Returns: #TRUE if there is trash in the trash:/// folder, or #FALSE otherwise.
+ * Returns: true if there is trash in the trash:/// folder, or false otherwise.
  */
 gboolean
 _gtk_trash_monitor_get_has_trash (GtkTrashMonitor *monitor)

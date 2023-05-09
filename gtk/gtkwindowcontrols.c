@@ -79,7 +79,7 @@
  * exist and where they are placed exactly depends on the desktop environment
  * and [property@Gtk.WindowControls:decoration-layout] value.
  *
- * When [property@Gtk.WindowControls:empty] is %TRUE, it gets the .empty
+ * When [property@Gtk.WindowControls:empty] is true, it gets the .empty
  * style class.
  *
  * # Accessibility
@@ -643,7 +643,7 @@ gtk_window_controls_set_side (GtkWindowControls *self,
  *
  * Gets the decoration layout of this `GtkWindowControls`.
  *
- * Returns: (nullable): the decoration layout or %NULL if it is unset
+ * Returns: (nullable): the decoration layout or `NULL` if it is unset
  */
 const char *
 gtk_window_controls_get_decoration_layout (GtkWindowControls *self)
@@ -656,7 +656,7 @@ gtk_window_controls_get_decoration_layout (GtkWindowControls *self)
 /**
  * gtk_window_controls_set_decoration_layout: (attributes org.gtk.Method.set_property=decoration-layout)
  * @self: a `GtkWindowControls`
- * @layout: (nullable): a decoration layout, or %NULL to unset the layout
+ * @layout: (nullable): a decoration layout, or `NULL` to unset the layout
  *
  * Sets the decoration layout for the title buttons.
  *
@@ -671,7 +671,7 @@ gtk_window_controls_get_decoration_layout (GtkWindowControls *self)
  * For example, “icon:minimize,maximize,close” specifies a icon
  * on the left, and minimize, maximize and close buttons on the right.
  *
- * If [property@Gtk.WindowControls:side] value is @GTK_PACK_START, @self
+ * If [property@Gtk.WindowControls:side] value is `GTK_PACK_START`, `self`
  * will display the part before the colon, otherwise after that.
  */
 void
@@ -694,7 +694,7 @@ gtk_window_controls_set_decoration_layout (GtkWindowControls *self,
  *
  * Gets whether the widget has any window buttons.
  *
- * Returns: %TRUE if the widget has window buttons, otherwise %FALSE
+ * Returns: true if the widget has window buttons, otherwise false
  */
 gboolean
 gtk_window_controls_get_empty (GtkWindowControls *self)

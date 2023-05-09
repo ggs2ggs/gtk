@@ -763,9 +763,9 @@ gtk_tree_expander_new (void)
  * gtk_tree_expander_get_child: (attributes org.gtk.Method.get_property=child)
  * @self: a `GtkTreeExpander`
  *
- * Gets the child widget displayed by @self.
+ * Gets the child widget displayed by `self`.
  *
- * Returns: (nullable) (transfer none): The child displayed by @self
+ * Returns: (nullable) (transfer none): The child displayed by `self`
  **/
 GtkWidget *
 gtk_tree_expander_get_child (GtkTreeExpander *self)
@@ -815,12 +815,12 @@ gtk_tree_expander_set_child (GtkTreeExpander *self,
  * gtk_tree_expander_get_item: (attributes org.gtk.Method.get_property=item)
  * @self: a `GtkTreeExpander`
  *
- * Forwards the item set on the `GtkTreeListRow` that @self is managing.
+ * Forwards the item set on the `GtkTreeListRow` that `self` is managing.
  *
  * This call is essentially equivalent to calling:
  *
  * ```c
- * gtk_tree_list_row_get_item (gtk_tree_expander_get_list_row (@self));
+ * gtk_tree_list_row_get_item (gtk_tree_expander_get_list_row (`self`));
  * ```
  *
  * Returns: (nullable) (transfer full) (type GObject): The item of the row
@@ -840,9 +840,9 @@ gtk_tree_expander_get_item (GtkTreeExpander *self)
  * gtk_tree_expander_get_list_row: (attributes org.gtk.Method.get_property=list-row)
  * @self: a `GtkTreeExpander`
  *
- * Gets the list row managed by @self.
+ * Gets the list row managed by `self`.
  *
- * Returns: (nullable) (transfer none): The list row displayed by @self
+ * Returns: (nullable) (transfer none): The list row displayed by `self`
  */
 GtkTreeListRow *
 gtk_tree_expander_get_list_row (GtkTreeExpander *self)

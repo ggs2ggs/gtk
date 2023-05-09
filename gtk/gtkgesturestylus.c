@@ -270,7 +270,7 @@ gtk_gesture_stylus_new (void)
  * Stylus-only gestures will signal events exclusively from stylus
  * input devices.
  *
- * Returns: %TRUE if the gesture is only for stylus events
+ * Returns: true if the gesture is only for stylus events
  *
  * Since: 4.10
  */
@@ -317,14 +317,14 @@ gtk_gesture_stylus_set_stylus_only (GtkGestureStylus *gesture, gboolean stylus_o
  * @axis: requested device axis
  * @value: (out): return location for the axis value
  *
- * Returns the current value for the requested @axis.
+ * Returns the current value for the requested `axis`.
  *
  * This function must be called from the handler of one of the
  * [signal@Gtk.GestureStylus::down], [signal@Gtk.GestureStylus::motion],
  * [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
  * signals.
  *
- * Returns: %TRUE if there is a current value for the axis
+ * Returns: true if there is a current value for the axis
  **/
 gboolean
 gtk_gesture_stylus_get_axis (GtkGestureStylus *gesture,
@@ -350,14 +350,14 @@ gtk_gesture_stylus_get_axis (GtkGestureStylus *gesture,
  * @axes: (array): array of requested axes, terminated with %GDK_AXIS_IGNORE
  * @values: (out) (array): return location for the axis values
  *
- * Returns the current values for the requested @axes.
+ * Returns the current values for the requested `axes`.
  *
  * This function must be called from the handler of one of the
  * [signal@Gtk.GestureStylus::down], [signal@Gtk.GestureStylus::motion],
  * [signal@Gtk.GestureStylus::up] or [signal@Gtk.GestureStylus::proximity]
  * signals.
  *
- * Returns: %TRUE if there is a current value for the axes
+ * Returns: true if there is a current value for the axes
  */
 gboolean
 gtk_gesture_stylus_get_axes (GtkGestureStylus  *gesture,
@@ -417,9 +417,9 @@ gtk_gesture_stylus_get_axes (GtkGestureStylus  *gesture,
  * [method@Gtk.GestureStylus.get_axis] express the latest (most up-to-date)
  * state in motion history.
  *
- * The @backlog is provided in chronological order.
+ * The `backlog` is provided in chronological order.
  *
- * Returns: %TRUE if there is a backlog to unfold in the current state.
+ * Returns: true if there is a backlog to unfold in the current state.
  */
 gboolean
 gtk_gesture_stylus_get_backlog (GtkGestureStylus  *gesture,

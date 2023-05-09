@@ -243,10 +243,10 @@ gtk_action_bar_buildable_interface_init (GtkBuildableIface *iface)
 /**
  * gtk_action_bar_pack_start:
  * @action_bar: A `GtkActionBar`
- * @child: the `GtkWidget` to be added to @action_bar
+ * @child: the `GtkWidget` to be added to `action_bar`
  *
- * Adds @child to @action_bar, packed with reference to the
- * start of the @action_bar.
+ * Adds `child` to `action_bar`, packed with reference to the
+ * start of the `action_bar`.
  */
 void
 gtk_action_bar_pack_start (GtkActionBar *action_bar,
@@ -258,10 +258,10 @@ gtk_action_bar_pack_start (GtkActionBar *action_bar,
 /**
  * gtk_action_bar_pack_end:
  * @action_bar: A `GtkActionBar`
- * @child: the `GtkWidget` to be added to @action_bar
+ * @child: the `GtkWidget` to be added to `action_bar`
  *
- * Adds @child to @action_bar, packed with reference to the
- * end of the @action_bar.
+ * Adds `child` to `action_bar`, packed with reference to the
+ * end of the `action_bar`.
  */
 void
 gtk_action_bar_pack_end (GtkActionBar *action_bar,
@@ -275,7 +275,7 @@ gtk_action_bar_pack_end (GtkActionBar *action_bar,
  * @action_bar: a `GtkActionBar`
  * @child: the `GtkWidget` to be removed
  *
- * Removes a child from @action_bar.
+ * Removes a child from `action_bar`.
  */
 void
 gtk_action_bar_remove (GtkActionBar *action_bar,
@@ -342,7 +342,7 @@ gtk_action_bar_new (void)
  *
  * Reveals or conceals the content of the action bar.
  *
- * Note: this does not show or hide @action_bar in the
+ * Note: this does not show or hide `action_bar` in the
  * [property@Gtk.Widget:visible] sense, so revealing has
  * no effect if the action bar is hidden.
  */

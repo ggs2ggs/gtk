@@ -545,11 +545,11 @@ gtk_css_image_get_parser_type (GtkCssParser *parser)
  * @parser: a css parser
  *
  * Checks if the parser can potentially parse the given stream as an
- * image from looking at the first token of @parser. This is useful for
+ * image from looking at the first token of `parser`. This is useful for
  * implementing shorthand properties. A successful parse of an image
  * can not be guaranteed.
  *
- * Returns: %TRUE if it looks like an image.
+ * Returns: true if it looks like an image.
  **/
 gboolean
 _gtk_css_image_can_parse (GtkCssParser *parser)

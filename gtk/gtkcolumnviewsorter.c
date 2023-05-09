@@ -552,12 +552,12 @@ gtk_column_view_sorter_get_n_sort_columns (GtkColumnViewSorter *self)
  *     primary sort column)
  * @sort_order: (out): return location for the sort order
  *
- * Gets the @position'th sort column and its associated sort order.
+ * Gets the `position`'th sort column and its associated sort order.
  *
  * Use the [signal@Gtk.Sorter::changed] signal to get notified
  * when sort columns change.
  *
- * Returns: (nullable) (transfer none): the @positions sort column
+ * Returns: (nullable) (transfer none): the `positions` sort column
  *
  * Since: 4.10
  */

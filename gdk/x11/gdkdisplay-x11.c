@@ -1404,7 +1404,7 @@ gdk_x11_display_init_leader_surface (GdkX11Display *self)
  *   See the XOpenDisplay() for details.
  *
  * Tries to open a new display to the X server given by
- * @display_name. If opening the display fails, %NULL is
+ * `display_name`. If opening the display fails, `NULL` is
  * returned.
  *
  * Returns: (nullable) (transfer full): The new display
@@ -1846,11 +1846,11 @@ gdk_x11_display_has_pending (GdkDisplay *display)
  * @display: (type GdkX11Display): a `GdkDisplay`
  *
  * Returns the default group leader surface for all toplevel surfaces
- * on @display. This surface is implicitly created by GDK.
+ * on `display`. This surface is implicitly created by GDK.
  * See gdk_x11_surface_set_group().
  *
  * Returns: (transfer none): The default group leader surface
- * for @display
+ * for `display`
  */
 GdkSurface *
 gdk_x11_display_get_default_group (GdkDisplay *display)
@@ -1864,7 +1864,7 @@ gdk_x11_display_get_default_group (GdkDisplay *display)
  * gdk_x11_display_grab:
  * @display: (type GdkX11Display): a `GdkDisplay`
  *
- * Call XGrabServer() on @display.
+ * Call XGrabServer() on `display`.
  * To ungrab the display again, use gdk_x11_display_ungrab().
  *
  * gdk_x11_display_grab()/gdk_x11_display_ungrab() calls can be nested.
@@ -1887,7 +1887,7 @@ gdk_x11_display_grab (GdkDisplay *display)
  * gdk_x11_display_ungrab:
  * @display: (type GdkX11Display): a `GdkDisplay`
  *
- * Ungrab @display after it has been grabbed with
+ * Ungrab `display` after it has been grabbed with
  * gdk_x11_display_grab().
  **/
 void
@@ -1983,9 +1983,9 @@ gdk_x11_display_finalize (GObject *object)
  * gdk_x11_lookup_xdisplay:
  * @xdisplay: a pointer to an X Display
  *
- * Find the `GdkDisplay` corresponding to @xdisplay, if any exists.
+ * Find the `GdkDisplay` corresponding to `xdisplay`, if any exists.
 *
- * Returns: (transfer none) (type GdkX11Display): the `GdkDisplay`, if found, otherwise %NULL.
+ * Returns: (transfer none) (type GdkX11Display): the `GdkDisplay`, if found, otherwise `NULL`.
  **/
 GdkDisplay *
 gdk_x11_lookup_xdisplay (Display *xdisplay)
@@ -2168,12 +2168,12 @@ broadcast_xmessage (GdkDisplay *display,
  * @display: (type GdkX11Display): a `GdkDisplay`
  * @message_type: startup notification message type ("new", "change",
  * or "remove")
- * @...: a list of key/value pairs (as strings), terminated by a
- * %NULL key. (A %NULL value for a key will cause that key to be
+ * `...`: a list of key/value pairs (as strings), terminated by a
+ * `NULL` key. (A `NULL` value for a key will cause that key to be
  * skipped in the output.)
  *
- * Sends a startup notification message of type @message_type to
- * @display. 
+ * Sends a startup notification message of type `message_type` to
+ * `display`. 
  *
  * This is a convenience function for use by code that implements the
  * freedesktop startup notification specification. Applications should
@@ -2282,7 +2282,7 @@ gdk_x11_display_request_selection_notification (GdkDisplay *display,
  * @display: (type GdkX11Display): a `GdkDisplay`
  *
  * Returns the timestamp of the last user interaction on
- * @display. The timestamp is taken from events caused
+ * `display`. The timestamp is taken from events caused
  * by user interaction such as key presses or pointer
  * movements. See gdk_x11_surface_set_user_time().
  *
@@ -2300,7 +2300,7 @@ gdk_x11_display_get_user_time (GdkDisplay *display)
  *
  * Gets the startup notification ID for a display.
  * 
- * Returns: the startup notification ID for @display
+ * Returns: the startup notification ID for `display`
  *
  * Deprecated: 4.10
  */
@@ -2508,7 +2508,7 @@ delete_outdated_error_traps (GdkX11Display *display_x11)
  * gdk_x11_display_error_trap_push:
  * @display: (type GdkX11Display): a `GdkDisplay`
  *
- * Begins a range of X requests on @display for which X error events
+ * Begins a range of X requests on `display` for which X error events
  * will be ignored. Unignored errors (when no trap is pushed) will abort
  * the application. Use gdk_x11_display_error_trap_pop() or
  * gdk_x11_display_error_trap_pop_ignored()to lift a trap pushed
@@ -2616,7 +2616,7 @@ gdk_x11_display_error_trap_pop_internal (GdkDisplay *display,
  *
  * Forces a specific window scale for all windows on this display,
  * instead of using the default or user configured scale. This
- * is can be used to disable scaling support by setting @scale to
+ * is can be used to disable scaling support by setting `scale` to
  * 1, or to programmatically set the window scale.
  *
  * Once the scale is set by this call it will not change in response
@@ -2694,7 +2694,7 @@ gdk_x11_display_error_trap_pop_ignored (GdkDisplay *display)
 /**
  * gdk_x11_set_sm_client_id:
  * @sm_client_id: (nullable): the client id assigned by the session manager
- *    when the connection was opened, or %NULL to remove the property.
+ *    when the connection was opened, or `NULL` to remove the property.
  *
  * Sets the `SM_CLIENT_ID` property on the application’s leader window so that
  * the window manager can save the application’s state using the X11R6 ICCCM
@@ -2739,7 +2739,7 @@ gdk_x11_display_get_max_request_size (GdkDisplay *display)
  * gdk_x11_display_get_screen:
  * @display: (type GdkX11Display): a `GdkX11Display`
  *
- * Retrieves the `GdkX11Screen` of the @display.
+ * Retrieves the `GdkX11Screen` of the `display`.
  *
  * Returns: (transfer none): the `GdkX11Screen`
  */
@@ -3071,9 +3071,9 @@ G_GNUC_END_IGNORE_DEPRECATIONS
    * The ::xevent signal is a low level signal that is emitted
    * whenever an XEvent has been received.
    *
-   * When handlers to this signal return %TRUE, no other handlers will be
+   * When handlers to this signal return true, no other handlers will be
    * invoked. In particular, the default handler for this function is
-   * GDK's own event handling mechanism, so by returning %TRUE for an event
+   * GDK's own event handling mechanism, so by returning true for an event
    * that GDK expects to translate, you may break GDK and/or GTK+ in
    * interesting ways. You have been warned.
    *
@@ -3084,8 +3084,8 @@ G_GNUC_END_IGNORE_DEPRECATIONS
    * XGetEventData() has been already called on the event, and
    * XFreeEventData() will be called afterwards.
    *
-   * Returns: %TRUE to stop other handlers from being invoked for the event.
-   *   %FALSE to propagate the event further.
+   * Returns: true to stop other handlers from being invoked for the event.
+   *   false to propagate the event further.
    */
   signals[XEVENT] =
     g_signal_new (g_intern_static_string ("xevent"),

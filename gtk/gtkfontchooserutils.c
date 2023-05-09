@@ -175,10 +175,10 @@ _gtk_font_chooser_delegate_iface_init (GtkFontChooserIface *iface)
  * @receiver: a `GObject` implementing `GtkFontChooser`
  * @delegate: another `GObject` implementing `GtkFontChooser`
  *
- * Establishes that calls on @receiver for `GtkFontChooser`
- * methods should be delegated to @delegate, and that
- * `GtkFontChooser` signals emitted on @delegate should be
- * forwarded to @receiver. Must be used in conjunction with
+ * Establishes that calls on `receiver` for `GtkFontChooser`
+ * methods should be delegated to `delegate`, and that
+ * `GtkFontChooser` signals emitted on `delegate` should be
+ * forwarded to `receiver`. Must be used in conjunction with
  * _gtk_font_chooser_delegate_iface_init().
  */
 void

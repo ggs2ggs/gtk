@@ -115,7 +115,7 @@ focus_sort_tab (GtkWidget        *widget,
     reverse_ptr_array (focus_order);
 }
 
-/* Look for a child in @children that is intermediate between
+/* Look for a child in `children` that is intermediate between
  * the focus widget and container. This widget, if it exists,
  * acts as the starting widget for focus navigation.
  */
@@ -429,7 +429,7 @@ gtk_widget_focus_sort (GtkWidget        *widget,
         }
     }
 
-  /* Now sort that list depending on @direction */
+  /* Now sort that list depending on `direction` */
   switch (direction)
     {
     case GTK_DIR_TAB_FORWARD:

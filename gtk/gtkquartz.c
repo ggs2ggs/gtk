@@ -66,7 +66,7 @@ _data_provider_release_cairo_surface (void       *info,
   cairo_surface_destroy ((cairo_surface_t *)info);
 }
 
-/* Returns a new NSImage or %NULL in case of an error.
+/* Returns a new NSImage or `NULL` in case of an error.
  * The device scale factor will be transferred to the NSImage (hidpi)
  */
 NSImage *

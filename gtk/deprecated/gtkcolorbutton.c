@@ -609,7 +609,7 @@ gtk_color_button_get_title (GtkColorButton *button)
 /**
  * gtk_color_button_set_modal: (attributes org.gtk.Method.set_property=modal)
  * @button: a `GtkColorButton`
- * @modal: %TRUE to make the dialog modal
+ * @modal: true to make the dialog modal
  *
  * Sets whether the dialog should be modal.
  *
@@ -638,7 +638,7 @@ gtk_color_button_set_modal (GtkColorButton *button,
  *
  * Gets whether the dialog is modal.
  *
- * Returns: %TRUE if the dialog is modal
+ * Returns: true if the dialog is modal
  *
  * Deprecated: 4.10: Use [class@Gtk.ColorDialogButton] instead
  */

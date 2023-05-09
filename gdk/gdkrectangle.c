@@ -57,13 +57,13 @@
  * gdk_rectangle_union:
  * @src1: a `GdkRectangle`
  * @src2: a `GdkRectangle`
- * @dest: (out): return location for the union of @src1 and @src2
+ * @dest: (out): return location for the union of `src1` and `src2`
  *
  * Calculates the union of two rectangles.
  *
- * The union of rectangles @src1 and @src2 is the smallest rectangle which
- * includes both @src1 and @src2 within it. It is allowed for @dest to be
- * the same as either @src1 or @src2.
+ * The union of rectangles `src1` and `src2` is the smallest rectangle which
+ * includes both `src1` and `src2` within it. It is allowed for `dest` to be
+ * the same as either `src1` or `src2`.
  *
  * Note that this function does not ignore 'empty' rectangles (ie. with
  * zero width or height).
@@ -92,17 +92,17 @@ gdk_rectangle_union (const GdkRectangle *src1,
  * @src1: a `GdkRectangle`
  * @src2: a `GdkRectangle`
  * @dest: (out caller-allocates) (optional): return location for the
- *   intersection of @src1 and @src2
+ *   intersection of `src1` and `src2`
  *
  * Calculates the intersection of two rectangles.
  *
- * It is allowed for @dest to be the same as either @src1 or @src2.
- * If the rectangles do not intersect, @dest’s width and height is set
+ * It is allowed for `dest` to be the same as either `src1` or `src2`.
+ * If the rectangles do not intersect, `dest`’s width and height is set
  * to 0 and its x and y values are undefined. If you are only interested
  * in whether the rectangles intersect, but not in the intersecting area
- * itself, pass %NULL for @dest.
+ * itself, pass `NULL` for `dest`.
  *
- * Returns: %TRUE if the rectangles intersect.
+ * Returns: true if the rectangles intersect.
  */
 gboolean
 gdk_rectangle_intersect (const GdkRectangle *src1,
@@ -149,9 +149,9 @@ gdk_rectangle_intersect (const GdkRectangle *src1,
  * @x: X coordinate
  * @y: Y coordinate
  *
- * Returns %TRUE if @rect contains the point described by @x and @y.
+ * Returns true if `rect` contains the point described by `x` and `y`.
  *
- * Returns: %TRUE if @rect contains the point
+ * Returns: true if `rect` contains the point
  **/
 gboolean
 gdk_rectangle_contains_point (const GdkRectangle *rect,
@@ -173,7 +173,7 @@ gdk_rectangle_contains_point (const GdkRectangle *rect,
  *
  * Checks if the two given rectangles are equal.
  *
- * Returns: %TRUE if the rectangles are equal.
+ * Returns: true if the rectangles are equal.
  */
 gboolean
 gdk_rectangle_equal (const GdkRectangle *rect1,

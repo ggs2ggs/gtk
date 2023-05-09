@@ -500,7 +500,7 @@ gtk_shortcut_label_class_init (GtkShortcutLabelClass *klass)
   /**
    * GtkShortcutLabel:accelerator: (attributes org.gtk.Property.get=gtk_shortcut_label_get_accelerator org.gtk.Property.set=gtk_shortcut_label_set_accelerator)
    *
-   * The accelerator that @self displays.
+   * The accelerator that `self` displays.
    *
    * See [property@Gtk.ShortcutsShortcut:accelerator]
    * for the accepted syntax.
@@ -537,7 +537,7 @@ gtk_shortcut_label_init (GtkShortcutLabel *self)
  * gtk_shortcut_label_new:
  * @accelerator: the initial accelerator
  *
- * Creates a new `GtkShortcutLabel` with @accelerator set.
+ * Creates a new `GtkShortcutLabel` with `accelerator` set.
  *
  * Returns: a newly-allocated `GtkShortcutLabel`
  */
@@ -553,7 +553,7 @@ gtk_shortcut_label_new (const char *accelerator)
  * gtk_shortcut_label_get_accelerator: (attributes org.gtk.Method.get_property=accelerator)
  * @self: a `GtkShortcutLabel`
  *
- * Retrieves the current accelerator of @self.
+ * Retrieves the current accelerator of `self`.
  *
  * Returns: (transfer none)(nullable): the current accelerator.
  */
@@ -570,7 +570,7 @@ gtk_shortcut_label_get_accelerator (GtkShortcutLabel *self)
  * @self: a `GtkShortcutLabel`
  * @accelerator: the new accelerator
  *
- * Sets the accelerator to be displayed by @self.
+ * Sets the accelerator to be displayed by `self`.
  */
 void
 gtk_shortcut_label_set_accelerator (GtkShortcutLabel *self,
@@ -609,7 +609,7 @@ gtk_shortcut_label_get_disabled_text (GtkShortcutLabel *self)
  * @self: a `GtkShortcutLabel`
  * @disabled_text: the text to be displayed when no accelerator is set
  *
- * Sets the text to be displayed by @self when no accelerator is set.
+ * Sets the text to be displayed by `self` when no accelerator is set.
  */
 void
 gtk_shortcut_label_set_disabled_text (GtkShortcutLabel *self,

@@ -454,7 +454,7 @@ marshal_root (GString        *marshaled,
 /**
  * _gtk_buildable_parser_precompile:
  * @text: chunk of text to parse
- * @text_len: length of @text in bytes
+ * @text_len: length of `text` in bytes
  *
  * Converts the xml format typically used by GtkBuilder to a
  * binary form that is more efficient to parse. This is a custom

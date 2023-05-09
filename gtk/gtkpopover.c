@@ -2004,7 +2004,7 @@ gtk_popover_new (void)
  * @popover: a `GtkPopover`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @popover.
+ * Sets the child widget of `popover`.
  */
 void
 gtk_popover_set_child (GtkPopover *popover,
@@ -2033,9 +2033,9 @@ gtk_popover_set_child (GtkPopover *popover,
  * gtk_popover_get_child: (attributes org.gtk.Method.get_property=child)
  * @popover: a `GtkPopover`
  *
- * Gets the child widget of @popover.
+ * Gets the child widget of `popover`.
  *
- * Returns: (nullable) (transfer none): the child widget of @popover
+ * Returns: (nullable) (transfer none): the child widget of `popover`
  */
 GtkWidget *
 gtk_popover_get_child (GtkPopover *popover)
@@ -2051,8 +2051,8 @@ gtk_popover_get_child (GtkPopover *popover)
 /**
  * gtk_popover_set_default_widget: (attributes org.gtk.Method.set_property=default-widget)
  * @popover: a `GtkPopover`
- * @widget: (nullable): a child widget of @popover to set as
- *   the default, or %NULL to unset the default widget for the popover
+ * @widget: (nullable): a child widget of `popover` to set as
+ *   the default, or `NULL` to unset the default widget for the popover
  *
  * Sets the default widget of a `GtkPopover`.
  *
@@ -2131,9 +2131,9 @@ gtk_popover_buildable_init (GtkBuildableIface *iface)
  * @popover: a `GtkPopover`
  * @rect: (nullable): rectangle to point to
  *
- * Sets the rectangle that @popover points to.
+ * Sets the rectangle that `popover` points to.
  *
- * This is in the coordinate space of the @popover parent.
+ * This is in the coordinate space of the `popover` parent.
  */
 void
 gtk_popover_set_pointing_to (GtkPopover         *popover,
@@ -2167,11 +2167,11 @@ gtk_popover_set_pointing_to (GtkPopover         *popover,
  * Gets the rectangle that the popover points to.
  *
  * If a rectangle to point to has been set, this function will
- * return %TRUE and fill in @rect with such rectangle, otherwise
- * it will return %FALSE and fill in @rect with the parent
+ * return true and fill in `rect` with such rectangle, otherwise
+ * it will return false and fill in `rect` with the parent
  * widget coordinates.
  *
- * Returns: %TRUE if a rectangle to point to was set.
+ * Returns: true if a rectangle to point to was set.
  */
 gboolean
 gtk_popover_get_pointing_to (GtkPopover   *popover,
@@ -2206,9 +2206,9 @@ gtk_popover_get_pointing_to (GtkPopover   *popover,
  * @popover: a `GtkPopover`
  * @position: preferred popover position
  *
- * Sets the preferred position for @popover to appear.
+ * Sets the preferred position for `popover` to appear.
  *
- * If the @popover is currently visible, it will be immediately
+ * If the `popover` is currently visible, it will be immediately
  * updated.
  *
  * This preference will be respected where possible, although
@@ -2241,7 +2241,7 @@ gtk_popover_set_position (GtkPopover      *popover,
  * gtk_popover_get_position: (attributes org.gtk.Method.get_property=position)
  * @popover: a `GtkPopover`
  *
- * Returns the preferred position of @popover.
+ * Returns the preferred position of `popover`.
  *
  * Returns: The preferred position.
  */
@@ -2258,9 +2258,9 @@ gtk_popover_get_position (GtkPopover *popover)
 /**
  * gtk_popover_set_autohide: (attributes org.gtk.Method.set_property=autohide)
  * @popover: a `GtkPopover`
- * @autohide: %TRUE to dismiss the popover on outside clicks
+ * @autohide: true to dismiss the popover on outside clicks
  *
- * Sets whether @popover is modal.
+ * Sets whether `popover` is modal.
  *
  * A modal popover will grab the keyboard focus on it when being
  * displayed. Focus will wrap around within the popover. Clicking
@@ -2299,7 +2299,7 @@ gtk_popover_set_autohide (GtkPopover *popover,
  * See [method@Gtk.Popover.set_autohide] for the
  * implications of this.
  *
- * Returns: %TRUE if @popover is modal
+ * Returns: true if `popover` is modal
  */
 gboolean
 gtk_popover_get_autohide (GtkPopover *popover)
@@ -2315,7 +2315,7 @@ gtk_popover_get_autohide (GtkPopover *popover)
  * gtk_popover_popup:
  * @popover: a `GtkPopover`
  *
- * Pops @popover up.
+ * Pops `popover` up.
  */
 void
 gtk_popover_popup (GtkPopover *popover)
@@ -2354,7 +2354,7 @@ cascade_popdown (GtkPopover *popover)
  * gtk_popover_popdown:
  * @popover: a `GtkPopover`
  *
- * Pops @popover down.
+ * Pops `popover` down.
  *
  * This may have the side-effect of closing a parent popover
  * as well. See [property@Gtk.Popover:cascade-popdown].
@@ -2380,7 +2380,7 @@ gtk_popover_get_contents_widget (GtkPopover *popover)
 /**
  * gtk_popover_set_has_arrow: (attributes org.gtk.Method.set_property=has-arrow)
  * @popover: a `GtkPopover`
- * @has_arrow: %TRUE to draw an arrow
+ * @has_arrow: true to draw an arrow
  *
  * Sets whether this popover should draw an arrow
  * pointing at the widget it is relative to.
@@ -2457,7 +2457,7 @@ gtk_popover_set_mnemonics_visible (GtkPopover *popover,
  *
  * Gets whether mnemonics are visible.
  *
- * Returns: %TRUE if mnemonics are supposed to be visible
+ * Returns: true if mnemonics are supposed to be visible
  *   in this popover
  */
 gboolean
@@ -2535,12 +2535,12 @@ gtk_popover_get_offset (GtkPopover *popover,
 /**
  * gtk_popover_set_cascade_popdown: (attributes org.gtk.Method.set_property=cascade-popdown)
  * @popover: A `GtkPopover`
- * @cascade_popdown: %TRUE if the popover should follow a child closing
+ * @cascade_popdown: true if the popover should follow a child closing
  *
- * If @cascade_popdown is %TRUE, the popover will be
+ * If `cascade_popdown` is true, the popover will be
  * closed when a child modal popover is closed.
  *
- * If %FALSE, @popover will stay visible.
+ * If false, `popover` will stay visible.
  */
 void
 gtk_popover_set_cascade_popdown (GtkPopover *popover,
@@ -2561,7 +2561,7 @@ gtk_popover_set_cascade_popdown (GtkPopover *popover,
  *
  * Returns whether the popover will close after a modal child is closed.
  *
- * Returns: %TRUE if @popover will close after a modal child.
+ * Returns: true if `popover` will close after a modal child.
  */
 gboolean
 gtk_popover_get_cascade_popdown (GtkPopover *popover)

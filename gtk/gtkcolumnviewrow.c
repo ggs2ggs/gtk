@@ -248,9 +248,9 @@ gtk_column_view_row_do_notify (GtkColumnViewRow *column_view_row,
  * gtk_column_view_row_get_item: (attributes org.gtk.Method.get_property=item)
  * @self: a `GtkColumnViewRow`
  *
- * Gets the model item that associated with @self.
+ * Gets the model item that associated with `self`.
  *
- * If @self is unbound, this function returns %NULL.
+ * If `self` is unbound, this function returns `NULL`.
  *
  * Returns: (nullable) (transfer none) (type GObject): The item displayed
  *
@@ -271,9 +271,9 @@ gtk_column_view_row_get_item (GtkColumnViewRow *self)
  * gtk_column_view_row_get_position: (attributes org.gtk.Method.get_property=position)
  * @self: a `GtkColumnViewRow`
  *
- * Gets the position in the model that @self currently displays.
+ * Gets the position in the model that `self` currently displays.
  *
- * If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
+ * If `self` is unbound, %GTK_INVALID_LIST_POSITION is returned.
  *
  * Returns: The position of this row 
  *
@@ -299,7 +299,7 @@ gtk_column_view_row_get_position (GtkColumnViewRow *self)
  * The selected state is maintained by the list widget and its model
  * and cannot be set otherwise.
  *
- * Returns: %TRUE if the item is selected.
+ * Returns: true if the item is selected.
  *
  * Since: 4.12
  */
@@ -323,7 +323,7 @@ gtk_column_view_row_get_selected (GtkColumnViewRow *self)
  *
  * Do not confuse this function with [method@Gtk.ColumnViewRow.get_selected].
  *
- * Returns: %TRUE if the row is selectable
+ * Returns: true if the row is selectable
  *
  * Since: 4.12
  */
@@ -340,7 +340,7 @@ gtk_column_view_row_get_selectable (GtkColumnViewRow *self)
  * @self: a `GtkColumnViewRow`
  * @selectable: if the row should be selectable
  *
- * Sets @self to be selectable.
+ * Sets `self` to be selectable.
  *
  * If a row is selectable, clicking on the row or using the keyboard
  * will try to select or unselect the row. Whether this succeeds is up to
@@ -378,7 +378,7 @@ gtk_column_view_row_set_selectable (GtkColumnViewRow *self,
  * Checks if the row has been set to be activatable via
  * gtk_column_view_row_set_activatable().
  *
- * Returns: %TRUE if the row is activatable
+ * Returns: true if the row is activatable
  *
  * Since: 4.12
  */
@@ -395,7 +395,7 @@ gtk_column_view_row_get_activatable (GtkColumnViewRow *self)
  * @self: a `GtkColumnViewRow`
  * @activatable: if the row should be activatable
  *
- * Sets @self to be activatable.
+ * Sets `self` to be activatable.
  *
  * If a row is activatable, double-clicking on the row, using
  * the Return key or calling gtk_widget_activate() will activate
@@ -430,7 +430,7 @@ gtk_column_view_row_set_activatable (GtkColumnViewRow *self,
  * Checks if a row item has been set to be focusable via
  * gtk_column_view_row_set_focusable().
  *
- * Returns: %TRUE if the row is focusable
+ * Returns: true if the row is focusable
  *
  * Since: 4.12
  */
@@ -447,7 +447,7 @@ gtk_column_view_row_get_focusable (GtkColumnViewRow *self)
  * @self: a `GtkColumnViewRow`
  * @focusable: if the row should be focusable
  *
- * Sets @self to be focusable.
+ * Sets `self` to be focusable.
  *
  * If a row is focusable, it can be focused using the keyboard.
  * This works similar to [method@Gtk.Widget.set_focusable].

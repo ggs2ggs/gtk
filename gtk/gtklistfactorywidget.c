@@ -343,14 +343,14 @@ gtk_list_factory_widget_class_init (GtkListFactoryWidgetClass *klass)
 
   /**
    * GtkListItem|listitem.select:
-   * @modify: %TRUE to toggle the existing selection, %FALSE to select
-   * @extend: %TRUE to extend the selection
+   * @modify: true to toggle the existing selection, false to select
+   * @extend: true to extend the selection
    *
    * Changes selection if the item is selectable.
    * If the item is not selectable, nothing happens.
    *
    * This function will emit the list.select-item action and the resulting
-   * behavior, in particular the interpretation of @modify and @extend
+   * behavior, in particular the interpretation of `modify` and `extend`
    * depends on the view containing this listitem. See for example
    * GtkListView|list.select-item or GtkGridView|list.select-item.
    */

@@ -863,7 +863,7 @@ gtk_adjustment_configure (GtkAdjustment *adjustment,
  * @upper: the upper value
  *
  * Updates the value property to ensure that the range
- * between @lower and @upper is in the current page.
+ * between `lower` and `upper` is in the current page.
  *
  * The current page goes from `value` to `value` + `page-size`.
  * If the range is larger than the page size, then only the
@@ -908,7 +908,7 @@ gtk_adjustment_clamp_page (GtkAdjustment *adjustment,
  *
  * Gets the smaller of step increment and page increment.
  *
- * Returns: the minimum increment of @adjustment
+ * Returns: the minimum increment of `adjustment`
  */
 double
 gtk_adjustment_get_minimum_increment (GtkAdjustment *adjustment)

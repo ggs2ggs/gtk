@@ -48,7 +48,7 @@ typedef enum _GskGLCommandKind
 
 typedef struct _GskGLCommandBind
 {
-  /* @texture is the value passed to glActiveTexture(), the "slot" the
+  /* `texture` is the value passed to glActiveTexture(), the "slot" the
    * texture will be placed into. We always use GL_TEXTURE_2D so we don't
    * waste any bits here to indicate that.
    */
@@ -124,18 +124,18 @@ typedef struct _GskGLCommandDraw
    */
   guint vbo_count : 16;
 
-  /* The offset within the VBO containing @vbo_count vertices to send with
+  /* The offset within the VBO containing `vbo_count` vertices to send with
    * glDrawArrays().
    */
   guint vbo_offset;
 
   /* The offset within the array of uniform changes to be made containing
-   * @uniform_count `GskGLCommandUniform` elements to apply.
+   * `uniform_count` `GskGLCommandUniform` elements to apply.
    */
   guint uniform_offset;
 
   /* The offset within the array of bind changes to be made containing
-   * @bind_count `GskGLCommandBind` elements to apply.
+   * `bind_count` `GskGLCommandBind` elements to apply.
    */
   guint bind_offset;
 } GskGLCommandDraw;
@@ -249,7 +249,7 @@ struct _GskGLCommandQueue
    */
   int max_texture_size;
 
-  /* The index of the last batch in @batches, which may not be the element
+  /* The index of the last batch in `batches`, which may not be the element
    * at the end of the array, as batches can be reordered. This is used to
    * update the "next" index when adding a new batch.
    */

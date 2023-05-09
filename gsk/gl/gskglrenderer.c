@@ -196,7 +196,7 @@ get_render_region (GdkSurface   *surface,
   whole_surface.height = gdk_surface_get_height (surface);
 
   /* Damage does not have scale factor applied so we can compare it to
-   * @whole_surface which also doesn't have the scale factor applied.
+   * `whole_surface` which also doesn't have the scale factor applied.
    */
   damage = gdk_draw_context_get_frame_region (GDK_DRAW_CONTEXT (context));
 

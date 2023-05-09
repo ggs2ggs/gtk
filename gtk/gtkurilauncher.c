@@ -264,13 +264,13 @@ G_GNUC_END_IGNORE_DEPRECATIONS
  * @parent: (nullable): the parent `GtkWindow`
  * @cancellable: (nullable): a `GCancellable` to cancel the operation
  * @callback: (scope async): a callback to call when the operation is complete
- * @user_data: (closure callback): data to pass to @callback
+ * @user_data: (closure callback): data to pass to `callback`
  *
  * Launch an application to open the uri.
  *
  * This may present an app chooser dialog to the user.
  *
- * The @callback will be called when the operation is completed.
+ * The `callback` will be called when the operation is completed.
  * It should call [method@Gtk.UriLauncher.launch_finish] to obtain
  * the result.
  *
@@ -319,7 +319,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
  * returns the result.
  *
  * Returns: `TRUE` if an application was launched,
- *     or `FALSE` and @error is set
+ *     or `FALSE` and `error` is set
  *
  * Since: 4.10
  */

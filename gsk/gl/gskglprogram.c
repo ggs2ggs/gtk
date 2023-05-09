@@ -84,7 +84,7 @@ gsk_gl_program_init (GskGLProgram *self)
  * @name: the name of the uniform such as "u_source"
  * @key: the identifier to use for the uniform
  *
- * This method will create a mapping between @key and the location
+ * This method will create a mapping between `key` and the location
  * of the uniform on the GPU. This simplifies calling code to not
  * need to know where the uniform location is and only register it
  * when creating the program.
@@ -103,7 +103,7 @@ gsk_gl_program_init (GskGLProgram *self)
  * gsk_gl_program_set_uniform1i (program, UNIFORM_SOURCE, 1);
  * ```
  *
- * Returns: %TRUE if the uniform was found; otherwise %FALSE
+ * Returns: true if the uniform was found; otherwise false
  */
 gboolean
 gsk_gl_program_add_uniform (GskGLProgram *self,

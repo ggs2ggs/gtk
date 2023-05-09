@@ -39,7 +39,7 @@
  * the characteristics of the surface.
  *
  * Support for `GdkVulkanContext` is platform-specific and context creation
- * can fail, returning %NULL context.
+ * can fail, returning `NULL` context.
  */
 
 typedef struct _GdkVulkanContextPrivate GdkVulkanContextPrivate;
@@ -750,7 +750,7 @@ gdk_vulkan_context_initable_init (GInitableIface *iface)
  * gdk_vulkan_context_get_instance:
  * @context: a `GdkVulkanContext`
  *
- * Gets the Vulkan instance that is associated with @context.
+ * Gets the Vulkan instance that is associated with `context`.
  *
  * Returns: (transfer none): the VkInstance
  */
@@ -869,7 +869,7 @@ gdk_vulkan_context_get_n_images (GdkVulkanContext *context)
  * @context: a `GdkVulkanContext`
  * @id: the index of the image to return
  *
- * Gets the image with index @id that this context is using.
+ * Gets the image with index `id` that this context is using.
  *
  * Returns: (transfer none): the VkImage
  */

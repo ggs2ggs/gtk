@@ -740,7 +740,7 @@ gtk_app_chooser_dialog_new_for_content_type (GtkWindow      *parent,
  *
  * Returns the `GtkAppChooserWidget` of this dialog.
  *
- * Returns: (transfer none): the `GtkAppChooserWidget` of @self
+ * Returns: (transfer none): the `GtkAppChooserWidget` of `self`
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -795,7 +795,7 @@ gtk_app_chooser_dialog_set_heading (GtkAppChooserDialog *self,
  * Returns the text to display at the top of the dialog.
  *
  * Returns: (nullable): the text to display at the top of the dialog,
- *   or %NULL, in which case a default text is displayed
+ *   or `NULL`, in which case a default text is displayed
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */

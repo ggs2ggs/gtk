@@ -686,7 +686,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * Setting this property allows finer grained reaction to an ongoing
    * drop at the cost of loading more data.
    *
-   * The default value for this property is %FALSE to avoid downloading
+   * The default value for this property is false to avoid downloading
    * huge amounts of data by accident.
    *
    * For example, if somebody drags a full document of gigabytes of text
@@ -709,7 +709,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    *
    * The value for this drop operation.
    *
-   * This is %NULL if the data has not been loaded yet or no drop
+   * This is `NULL` if the data has not been loaded yet or no drop
    * operation is going on.
    *
    * Data may be available before the [signal@Gtk.DropTarget::drop]
@@ -731,22 +731,22 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    *
    * Emitted on the drop site when a drop operation is about to begin.
    *
-   * If the drop is not accepted, %FALSE will be returned and the drop target
-   * will ignore the drop. If %TRUE is returned, the drop is accepted for now
+   * If the drop is not accepted, false will be returned and the drop target
+   * will ignore the drop. If true is returned, the drop is accepted for now
    * but may be rejected later via a call to [method@Gtk.DropTarget.reject]
-   * or ultimately by returning %FALSE from a [signal@Gtk.DropTarget::drop]
+   * or ultimately by returning false from a [signal@Gtk.DropTarget::drop]
    * handler.
    *
    * The default handler for this signal decides whether to accept the drop
-   * based on the formats provided by the @drop.
+   * based on the formats provided by the `drop`.
    *
    * If the decision whether the drop will be accepted or rejected depends
-   * on the data, this function should return %TRUE, the
+   * on the data, this function should return true, the
    * [property@Gtk.DropTarget:preload] property should be set and the value
    * should be inspected via the ::notify:value signal, calling
    * [method@Gtk.DropTarget.reject] if required.
    *
-   * Returns: %TRUE if @drop is accepted
+   * Returns: true if `drop` is accepted
    */
   signals[ACCEPT] =
       g_signal_new (I_("accept"),
@@ -769,7 +769,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * It can be used to set up custom highlighting.
    *
    * Returns: Preferred action for this drag operation or 0 if
-   *   dropping is not supported at the current @x,@y location.
+   *   dropping is not supported at the current `x`,`y` location.
    */
   signals[ENTER] =
       g_signal_new (I_("enter"),
@@ -790,7 +790,7 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * Emitted while the pointer is moving over the drop target.
    *
    * Returns: Preferred action for this drag operation or 0 if
-   *   dropping is not supported at the current @x,@y location.
+   *   dropping is not supported at the current `x`,`y` location.
    */
   signals[MOTION] =
       g_signal_new (I_("motion"),
@@ -830,11 +830,11 @@ gtk_drop_target_class_init (GtkDropTargetClass *class)
    * Emitted on the drop site when the user drops the data onto the widget.
    *
    * The signal handler must determine whether the pointer position is in
-   * a drop zone or not. If it is not in a drop zone, it returns %FALSE
+   * a drop zone or not. If it is not in a drop zone, it returns false
    * and no further processing is necessary.
    *
-   * Otherwise, the handler returns %TRUE. In this case, this handler will
-   * accept the drop. The handler is responsible for using the given @value
+   * Otherwise, the handler returns true. In this case, this handler will
+   * accept the drop. The handler is responsible for using the given `value`
    * and performing the drop operation.
    *
    * Returns: whether the drop was accepted at the given pointer position
@@ -863,7 +863,7 @@ gtk_drop_target_init (GtkDropTarget *self)
  * Creates a new `GtkDropTarget` object.
  *
  * If the drop target should support more than 1 type, pass
- * %G_TYPE_INVALID for @type and then call
+ * %G_TYPE_INVALID for `type` and then call
  * [method@Gtk.DropTarget.set_gtypes].
  *
  * Returns: the new `GtkDropTarget`
@@ -896,7 +896,7 @@ gtk_drop_target_new (GType         type,
  *
  * Gets the data formats that this drop target accepts.
  *
- * If the result is %NULL, all formats are expected to be supported.
+ * If the result is `NULL`, all formats are expected to be supported.
  *
  * Returns: (nullable) (transfer none): the supported data formats
  */
@@ -913,7 +913,7 @@ gtk_drop_target_get_formats (GtkDropTarget *self)
  * @self: a `GtkDropTarget`
  * @types: (nullable) (transfer none) (array length=n_types): all supported `GType`s
  *   that can be dropped on the target
- * @n_types: number of @types
+ * @n_types: number of `types`
  *
  * Sets the supported `GTypes` for this drop target.
  */
@@ -1002,7 +1002,7 @@ gtk_drop_target_get_actions (GtkDropTarget *self)
 /**
  * gtk_drop_target_set_preload: (attributes org.gtk.Method.set_property=preload)
  * @self: a `GtkDropTarget`
- * @preload: %TRUE to preload drop data
+ * @preload: true to preload drop data
  *
  * Sets whether data should be preloaded on hover.
  */
@@ -1026,7 +1026,7 @@ gtk_drop_target_set_preload (GtkDropTarget *self,
  *
  * Gets whether data should be preloaded on hover.
  *
- * Returns: %TRUE if drop data should be preloaded
+ * Returns: true if drop data should be preloaded
  */
 gboolean
 gtk_drop_target_get_preload (GtkDropTarget *self)
@@ -1042,7 +1042,7 @@ gtk_drop_target_get_preload (GtkDropTarget *self)
  *
  * Gets the currently handled drop operation.
  *
- * If no drop operation is going on, %NULL is returned.
+ * If no drop operation is going on, `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The current drop
  *
@@ -1062,7 +1062,7 @@ gtk_drop_target_get_drop (GtkDropTarget *self)
  *
  * Gets the currently handled drop operation.
  *
- * If no drop operation is going on, %NULL is returned.
+ * If no drop operation is going on, `NULL` is returned.
  *
  * Returns: (nullable) (transfer none): The current drop
  *
@@ -1102,7 +1102,7 @@ gtk_drop_target_get_value (GtkDropTarget *self)
  * Rejects the ongoing drop operation.
  *
  * If no drop operation is ongoing, i.e when [property@Gtk.DropTarget:current-drop]
- * is %NULL, this function does nothing.
+ * is `NULL`, this function does nothing.
  *
  * This function should be used when delaying the decision
  * on whether to accept a drag or not until after reading

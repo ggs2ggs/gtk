@@ -455,9 +455,9 @@ gtk_constraint_guide_new (void)
  * @width: the new minimum width, or -1 to not change it
  * @height: the new minimum height, or -1 to not change it
  *
- * Sets the minimum size of @guide.
+ * Sets the minimum size of `guide`.
  *
- * If @guide is attached to a `GtkConstraintLayout`,
+ * If `guide` is attached to a `GtkConstraintLayout`,
  * the constraints will be updated to reflect the new size.
  */
 void
@@ -486,7 +486,7 @@ gtk_constraint_guide_set_min_size (GtkConstraintGuide *guide,
  * @width: (out) (optional): return location for the minimum width
  * @height: (out) (optional): return location for the minimum height
  *
- * Gets the minimum size of @guide.
+ * Gets the minimum size of `guide`.
  */
 void
 gtk_constraint_guide_get_min_size (GtkConstraintGuide *guide,
@@ -507,9 +507,9 @@ gtk_constraint_guide_get_min_size (GtkConstraintGuide *guide,
  * @width: the new natural width, or -1 to not change it
  * @height: the new natural height, or -1 to not change it
  *
- * Sets the natural size of @guide.
+ * Sets the natural size of `guide`.
  *
- * If @guide is attached to a `GtkConstraintLayout`,
+ * If `guide` is attached to a `GtkConstraintLayout`,
  * the constraints will be updated to reflect the new size.
  */
 void
@@ -538,7 +538,7 @@ gtk_constraint_guide_set_nat_size (GtkConstraintGuide *guide,
  * @width: (out) (optional): return location for the natural width
  * @height: (out) (optional): return location for the natural height
  *
- * Gets the natural size of @guide.
+ * Gets the natural size of `guide`.
  */
 void
 gtk_constraint_guide_get_nat_size (GtkConstraintGuide *guide,
@@ -559,9 +559,9 @@ gtk_constraint_guide_get_nat_size (GtkConstraintGuide *guide,
  * @width: the new maximum width, or -1 to not change it
  * @height: the new maximum height, or -1 to not change it
  *
- * Sets the maximum size of @guide.
+ * Sets the maximum size of `guide`.
  *
- * If @guide is attached to a `GtkConstraintLayout`,
+ * If `guide` is attached to a `GtkConstraintLayout`,
  * the constraints will be updated to reflect the new size.
  */
 void
@@ -590,7 +590,7 @@ gtk_constraint_guide_set_max_size (GtkConstraintGuide *guide,
  * @width: (out) (optional): return location for the maximum width
  * @height: (out) (optional): return location for the maximum height
  *
- * Gets the maximum size of @guide.
+ * Gets the maximum size of `guide`.
  */
 void
 gtk_constraint_guide_get_max_size (GtkConstraintGuide *guide,
@@ -624,7 +624,7 @@ gtk_constraint_guide_get_name (GtkConstraintGuide *guide)
 /**
  * gtk_constraint_guide_set_name: (attributes org.gtk.Method.set_property=name)
  * @guide: a `GtkConstraintGuide`
- * @name: (nullable): a name for the @guide
+ * @name: (nullable): a name for the `guide`
  *
  * Sets a name for the given `GtkConstraintGuide`.
  *

@@ -217,18 +217,18 @@ gtk_buildable_parse_context_parse (GtkBuildableParseContext *context,
  * (except in the case that the parser aborts due to an error).
  *
  * All tags, text and other data between the matching tags is
- * redirected to the subparser given by @parser. @user_data is used
- * as the user_data for that parser. @user_data is also passed to the
+ * redirected to the subparser given by `parser`. `user_data` is used
+ * as the user_data for that parser. `user_data` is also passed to the
  * error callback in the event that an error occurs. This includes
  * errors that occur in subparsers of the subparser.
  *
  * The end tag matching the start tag for which this call was made is
  * handled by the previous parser (which is given its own user_data)
  * which is why gtk_buildable_parse_context_pop() is provided to allow "one
- * last access" to the @user_data provided to this function. In the
- * case of error, the @user_data provided here is passed directly to
+ * last access" to the `user_data` provided to this function. In the
+ * case of error, the `user_data` provided here is passed directly to
  * the error callback of the subparser and gtk_buildable_parse_context_pop()
- * should not be called. In either case, if @user_data was allocated
+ * should not be called. In either case, if `user_data` was allocated
  * then it ought to be freed from both of these locations.
  *
  * This function is not intended to be directly called by users
@@ -270,7 +270,7 @@ gtk_buildable_parse_context_push (GtkBuildableParseContext *context,
  * in the end_element handler corresponding to the start_element
  * handler during which gtk_buildable_parse_context_push() was called.
  * You must not call this function from the error callback -- the
- * @user_data is provided directly to the callback in that case.
+ * `user_data` is provided directly to the callback in that case.
  *
  * This function is not intended to be directly called by users
  * interested in invoking subparsers. Instead, it is intended to

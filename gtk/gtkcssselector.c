@@ -55,7 +55,7 @@ struct _GtkCssSelectorClass {
 
   void              (* print)                   (const GtkCssSelector       *selector,
                                                  GString                    *string);
-  /* NULL or an iterator that returns the next node or %NULL if there are no
+  /* NULL or an iterator that returns the next node or `NULL` if there are no
    * more nodes.
    * Call it like:
    * for (iter = gtk_css_selector_iterator (node, NULL);
@@ -1639,9 +1639,9 @@ _gtk_css_selector_to_string (const GtkCssSelector *selector)
  * @selector: the selector
  * @node: The node to match
  *
- * Checks if the @selector matches the given @node.
+ * Checks if the `selector` matches the given `node`.
  *
- * Returns: %TRUE if the selector matches @node
+ * Returns: true if the selector matches `node`
  **/
 gboolean
 gtk_css_selector_matches (const GtkCssSelector *selector,

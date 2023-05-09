@@ -84,9 +84,9 @@ struct _GtkAccessibleInterface
    * @self: an accessible object
    * @state: the state to query
    *
-   * Checks if the given @state applies to the accessible object.
+   * Checks if the given `state` applies to the accessible object.
    *
-   * Returns: true if the @state is set, and false otherwise
+   * Returns: true if the `state` is set, and false otherwise
    *
    * Since: 4.10
    */

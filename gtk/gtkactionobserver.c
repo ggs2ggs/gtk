@@ -57,7 +57,7 @@ gtk_action_observer_default_init (GtkActionObserverInterface *class)
  * @observer: a `GtkActionObserver`
  * @observable: the source of the event
  * @action_name: the name of the action
- * @enabled: %TRUE if the action is now enabled
+ * @enabled: true if the action is now enabled
  * @parameter_type: (nullable): the parameter type for action invocations
  * @state: (nullable): the current state of the action
  *
@@ -86,7 +86,7 @@ gtk_action_observer_action_added (GtkActionObserver   *observer,
  * @observer: a `GtkActionObserver`
  * @observable: the source of the event
  * @action_name: the name of the action
- * @enabled: %TRUE if the action is now enabled
+ * @enabled: true if the action is now enabled
  *
  * This function is called when an action that the observer is
  * registered to receive events for becomes enabled or disabled.
@@ -165,10 +165,10 @@ gtk_action_observer_action_removed (GtkActionObserver   *observer,
  * registered to receive events for has one of its accelerators changed.
  *
  * Accelerator changes are reported for all targets associated with the
- * action. The @action_and_target string should be used to check if the
+ * action. The `action_and_target` string should be used to check if the
  * reported target is the one that the observer is interested in.
  *
- * Either @action_name or @action_and_target may be %NULL.
+ * Either `action_name` or `action_and_target` may be `NULL`.
  */
 void
 gtk_action_observer_primary_accel_changed (GtkActionObserver   *observer,

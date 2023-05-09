@@ -248,9 +248,9 @@ gtk_scale_button_class_init (GtkScaleButtonClass *klass)
    * be used for all the other values, spread evenly over the
    * range of values.
    *
-   * If there's only one icon name in the @icons array, it will
+   * If there's only one icon name in the `icons` array, it will
    * be used for all the values. If only two icon names are in
-   * the @icons array, the first one will be used for the bottom
+   * the `icons` array, the first one will be used for the bottom
    * 50% of the scale, and the second one for the top 50%.
    *
    * It is recommended to use at least 3 icons so that the
@@ -577,14 +577,14 @@ gtk_scale_button_dispose (GObject *object)
  * @max: the maximum value of the scale (usually 100)
  * @step: the stepping of value when a scroll-wheel event,
  *   or up/down arrow event occurs (usually 2)
- * @icons: (nullable) (array zero-terminated=1): a %NULL-terminated
- *   array of icon names, or %NULL if you want to set the list
+ * @icons: (nullable) (array zero-terminated=1): a `NULL`-terminated
+ *   array of icon names, or `NULL` if you want to set the list
  *   later with gtk_scale_button_set_icons()
  *
  * Creates a `GtkScaleButton`.
  *
- * The new scale button has a range between @min and @max,
- * with a stepping of @step.
+ * The new scale button has a range between `min` and `max`,
+ * with a stepping of `step`.
  *
  * Returns: a new `GtkScaleButton`
  */
@@ -653,7 +653,7 @@ gtk_scale_button_set_value (GtkScaleButton *button,
 /**
  * gtk_scale_button_set_icons: (attributes org.gtk.Method.set_property=icons)
  * @button: a `GtkScaleButton`
- * @icons: (array zero-terminated=1): a %NULL-terminated array of icon names
+ * @icons: (array zero-terminated=1): a `NULL`-terminated array of icon names
  *
  * Sets the icons to be used by the scale button.
  */
@@ -799,7 +799,7 @@ gtk_scale_button_get_popup (GtkScaleButton *button)
  *
  * Queries a `GtkScaleButton` and returns its current state.
  *
- * Returns %TRUE if the scale button is pressed in and %FALSE
+ * Returns true if the scale button is pressed in and false
  * if it is raised.
  *
  * Returns: whether the button is pressed

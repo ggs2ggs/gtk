@@ -51,13 +51,13 @@ _gtk_css_lookup_is_missing (const GtkCssLookup *lookup,
  * _gtk_css_lookup_set:
  * @lookup: the lookup
  * @id: id of the property to set, see _gtk_style_property_get_id()
- * @section: (nullable): The @section the value was defined in
+ * @section: (nullable): The `section` the value was defined in
  * @value: the “cascading value” to use
  *
- * Sets the @value for a given @id. No value may have been set for @id
+ * Sets the `value` for a given `id`. No value may have been set for `id`
  * before. See _gtk_css_lookup_is_missing(). This function is used to
  * set the “winning declaration” of a lookup. Note that for performance
- * reasons @value and @section are not copied. It is your responsibility
+ * reasons `value` and `section` are not copied. It is your responsibility
  * to ensure they are kept alive until _gtk_css_lookup_free() is called.
  **/
 void

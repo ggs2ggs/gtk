@@ -441,8 +441,8 @@ parse_markup_idle (gpointer data)
   return G_SOURCE_REMOVE;
 }
 
-/* Takes a ref on @buffer while it is operating,
- * and consumes @markup.
+/* Takes a ref on `buffer` while it is operating,
+ * and consumes `markup`.
  */
 static void
 insert_markup (GtkTextBuffer *buffer,

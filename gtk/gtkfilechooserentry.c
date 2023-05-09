@@ -816,8 +816,8 @@ delete_text_callback (GtkFileChooserEntry *chooser_entry,
 
 /**
  * _gtk_file_chooser_entry_new:
- * @eat_tabs: If %FALSE, allow focus navigation with the tab key.
- * @eat_escape: If %TRUE, capture Escape key presses and emit ::hide-entry
+ * @eat_tabs: If false, allow focus navigation with the tab key.
+ * @eat_escape: If true, capture Escape key presses and emit ::hide-entry
  *
  * Creates a new `GtkFileChooserEntry` object. `GtkFileChooserEntry`
  * is an internal implementation widget for the GTK file chooser
@@ -879,10 +879,10 @@ _gtk_file_chooser_entry_set_base_folder (GtkFileChooserEntry *chooser_entry,
  * folder (see _gtk_file_chooser_entry_set_base_folder()), but if the
  * user has entered a relative or absolute path, then it will be
  * different. If the user has entered unparsable text, or text which
- * the entry cannot handle, this will return %NULL.
+ * the entry cannot handle, this will return `NULL`.
  *
  * Returns: (nullable) (transfer full): the file for the current folder
- *   or %NULL if the current folder can not be determined
+ *   or `NULL` if the current folder can not be determined
  */
 GFile *
 _gtk_file_chooser_entry_get_current_folder (GtkFileChooserEntry *chooser_entry)

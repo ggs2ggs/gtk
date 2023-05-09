@@ -235,7 +235,7 @@ gtk_multi_filter_init (GtkMultiFilter *self)
  * @self: a `GtkMultiFilter`
  * @filter: (transfer full): A new filter to use
  *
- * Adds a @filter to @self to use for matching.
+ * Adds a `filter` to `self` to use for matching.
  */
 void
 gtk_multi_filter_append (GtkMultiFilter *self,
@@ -258,10 +258,10 @@ gtk_multi_filter_append (GtkMultiFilter *self,
  * @self: a `GtkMultiFilter`
  * @position: position of filter to remove
  *
- * Removes the filter at the given @position from the list of filters used
- * by @self.
+ * Removes the filter at the given `position` from the list of filters used
+ * by `self`.
  *
- * If @position is larger than the number of filters, nothing happens and
+ * If `position` is larger than the number of filters, nothing happens and
  * the function returns.
  **/
 void

@@ -247,7 +247,7 @@ gtk_selection_model_default_init (GtkSelectionModelInterface *iface)
    * @position: The first item that may have changed
    * @n_items: number of items with changes
    *
-   * Emitted when the selection state of some of the items in @model changes.
+   * Emitted when the selection state of some of the items in `model` changes.
    *
    * Note that this signal does not specify the new selection state of the
    * items, they need to be queried manually. It is also not necessary for
@@ -274,7 +274,7 @@ gtk_selection_model_default_init (GtkSelectionModelInterface *iface)
  *
  * Checks if the given item is selected.
  *
- * Returns: %TRUE if the item is selected
+ * Returns: true if the item is selected
  */
 gboolean
 gtk_selection_model_is_selected (GtkSelectionModel *model,
@@ -299,7 +299,7 @@ gtk_selection_model_is_selected (GtkSelectionModel *model,
  * interested in a few, consider [method@Gtk.SelectionModel.get_selection_in_range].
  *
  * Returns: (transfer full): a `GtkBitset` containing all the values currently
- *   selected in @model. If no items are selected, the bitset is empty.
+ *   selected in `model`. If no items are selected, the bitset is empty.
  *   The bitset must not be modified.
  */
 GtkBitset *
@@ -352,7 +352,7 @@ gtk_selection_model_get_selection_in_range (GtkSelectionModel *model,
  *
  * Requests to select an item in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean the item was selected.
  */
 gboolean
@@ -375,7 +375,7 @@ gtk_selection_model_select_item (GtkSelectionModel *model,
  *
  * Requests to unselect an item in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean the item was unselected.
  */
 gboolean
@@ -399,7 +399,7 @@ gtk_selection_model_unselect_item (GtkSelectionModel *model,
  *
  * Requests to select a range of items in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean the range was selected.
  */
 gboolean
@@ -424,7 +424,7 @@ gtk_selection_model_select_range (GtkSelectionModel *model,
  *
  * Requests to unselect a range of items in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean the range was unselected.
  */
 gboolean
@@ -446,7 +446,7 @@ gtk_selection_model_unselect_range (GtkSelectionModel *model,
  *
  * Requests to select all items in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean that all items are now selected.
  */
 gboolean
@@ -466,7 +466,7 @@ gtk_selection_model_select_all (GtkSelectionModel *model)
  *
  * Requests to unselect all items in the model.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean that all items are now unselected.
  */
 gboolean
@@ -493,8 +493,8 @@ gtk_selection_model_unselect_all (GtkSelectionModel *model)
  * you should try the simpler versions, as implementations are more
  * likely to implement support for those.
  *
- * Requests that the selection state of all positions set in @mask
- * be updated to the respective value in the @selected bitmask.
+ * Requests that the selection state of all positions set in `mask`
+ * be updated to the respective value in the `selected` bitmask.
  *
  * In pseudocode, it would look something like this:
  *
@@ -516,11 +516,11 @@ gtk_selection_model_unselect_all (GtkSelectionModel *model)
  *                                        n_changed_items);
  * ```
  *
- * @mask and @selected must not be modified. They may refer to the
+ * `mask` and `selected` must not be modified. They may refer to the
  * same bitset, which would mean that every item in the set should
  * be selected.
  *
- * Returns: %TRUE if this action was supported and no fallback should be
+ * Returns: true if this action was supported and no fallback should be
  *   tried. This does not mean that all items were updated according
  *   to the inputs.
  */

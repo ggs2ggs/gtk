@@ -597,7 +597,7 @@ capture_widget_key_handled (GtkEventControllerKey *controller,
  * @bar: a `GtkSearchBar`
  * @widget: (nullable) (transfer none): a `GtkWidget`
  *
- * Sets @widget as the widget that @bar will capture key events
+ * Sets `widget` as the widget that `bar` will capture key events
  * from.
  *
  * If key events are handled by the search bar, the bar will
@@ -605,7 +605,7 @@ capture_widget_key_handled (GtkEventControllerKey *controller,
  *
  * Note that despite the name of this function, the events
  * are only 'captured' in the bubble phase, which means that
- * editable child widgets of @widget will receive text input
+ * editable child widgets of `widget` will receive text input
  * before it gets captured. If that is not desired, you can
  * capture and forward the events yourself with
  * [method@Gtk.EventControllerKey.forward].
@@ -652,7 +652,7 @@ gtk_search_bar_set_key_capture_widget (GtkSearchBar *bar,
  * gtk_search_bar_get_key_capture_widget: (attributes org.gtk.Method.get_property=key-capture-widget)
  * @bar: a `GtkSearchBar`
  *
- * Gets the widget that @bar is capturing key events from.
+ * Gets the widget that `bar` is capturing key events from.
  *
  * Returns: (nullable) (transfer none): The key capture widget.
  **/
@@ -669,7 +669,7 @@ gtk_search_bar_get_key_capture_widget (GtkSearchBar *bar)
  * @bar: a `GtkSearchBar`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @bar.
+ * Sets the child widget of `bar`.
  */
 void
 gtk_search_bar_set_child (GtkSearchBar *bar,
@@ -706,9 +706,9 @@ gtk_search_bar_set_child (GtkSearchBar *bar,
  * gtk_search_bar_get_child: (attributes org.gtk.Method.get_property=child)
  * @bar: a `GtkSearchBar`
  *
- * Gets the child widget of @bar.
+ * Gets the child widget of `bar`.
  *
- * Returns: (nullable) (transfer none): the child widget of @bar
+ * Returns: (nullable) (transfer none): the child widget of `bar`
  */
 GtkWidget *
 gtk_search_bar_get_child (GtkSearchBar *bar)

@@ -261,7 +261,7 @@ gdk_x11_cursor_create_for_name (GdkDisplay  *display,
 /**
  * gdk_x11_display_set_cursor_theme:
  * @display: (type GdkX11Display): a `GdkDisplay`
- * @theme: (nullable): the name of the cursor theme to use, or %NULL
+ * @theme: (nullable): the name of the cursor theme to use, or `NULL`
  *   to unset a previously set value
  * @size: the cursor size to use, or 0 to keep the previous size
  *
@@ -342,7 +342,7 @@ gdk_x11_display_set_cursor_theme (GdkDisplay  *display,
  * Returns the X cursor belonging to a `GdkCursor`, potentially
  * creating the cursor.
  *
- * Be aware that the returned cursor may not be unique to @cursor.
+ * Be aware that the returned cursor may not be unique to `cursor`.
  * It may for example be shared with its fallback cursor. On old
  * X servers that don't support the XCursor extension, all cursors
  * may even fall back to a few default cursors.

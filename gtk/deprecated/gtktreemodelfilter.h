@@ -36,13 +36,13 @@ G_BEGIN_DECLS
 /**
  * GtkTreeModelFilterVisibleFunc:
  * @model: the child model of the `GtkTreeModelFilter`
- * @iter: a `GtkTreeIter` pointing to the row in @model whose visibility
+ * @iter: a `GtkTreeIter` pointing to the row in `model` whose visibility
  *   is determined
  * @data: (closure): user data given to gtk_tree_model_filter_set_visible_func()
  *
- * A function which decides whether the row indicated by @iter is visible.
+ * A function which decides whether the row indicated by `iter` is visible.
  *
- * Returns: Whether the row indicated by @iter is visible.
+ * Returns: Whether the row indicated by `iter` is visible.
  */
 typedef gboolean (* GtkTreeModelFilterVisibleFunc) (GtkTreeModel *model,
                                                     GtkTreeIter  *iter,
@@ -53,13 +53,13 @@ typedef gboolean (* GtkTreeModelFilterVisibleFunc) (GtkTreeModel *model,
  * @model: the `GtkTreeModelFilter`
  * @iter: a `GtkTreeIter` pointing to the row whose display values are determined
  * @value: (out caller-allocates): A `GValue` which is already initialized for
- *  with the correct type for the column @column.
+ *  with the correct type for the column `column`.
  * @column: the column whose display value is determined
  * @data: (closure): user data given to gtk_tree_model_filter_set_modify_func()
  *
  * A function which calculates display values from raw values in the model.
- * It must fill @value with the display value for the column @column in the
- * row indicated by @iter.
+ * It must fill `value` with the display value for the column `column` in the
+ * row indicated by `iter`.
  *
  * Since this function is called for each data access, it’s not a
  * particularly efficient operation.

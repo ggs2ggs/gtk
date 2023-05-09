@@ -55,7 +55,7 @@ typedef struct _GtkImage              GtkImage;
  * returns %GTK_IMAGE_PAINTABLE, then you can call gtk_image_get_paintable().
  *
  * For empty images, you can request any storage type (call any of the "get"
- * functions), but they will all return %NULL values.
+ * functions), but they will all return `NULL` values.
  */
 typedef enum
 {

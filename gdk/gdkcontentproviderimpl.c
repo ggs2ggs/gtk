@@ -110,7 +110,7 @@ gdk_content_provider_value_init (GdkContentProviderValue *content)
  * gdk_content_provider_new_for_value:
  * @value: a `GValue`
  *
- * Create a content provider that provides the given @value.
+ * Create a content provider that provides the given `value`.
  *
  * Returns: a new `GdkContentProvider`
  */
@@ -131,10 +131,10 @@ gdk_content_provider_new_for_value (const GValue *value)
 /**
  * gdk_content_provider_new_typed:
  * @type: Type of value to follow
- * @...: value
+ * `...`: value
  *
  * Create a content provider that provides the value of the given
- * @type.
+ * `type`.
  *
  * The value is provided using G_VALUE_COLLECT(), so the same rules
  * apply as when calling g_object_new() or g_object_set().
@@ -397,10 +397,10 @@ gdk_content_provider_union_init (GdkContentProviderUnion *self)
  *   The `GdkContentProvider`s to present the union of
  * @n_providers: the number of providers
  *
- * Creates a content provider that represents all the given @providers.
+ * Creates a content provider that represents all the given `providers`.
  *
  * Whenever data needs to be written, the union provider will try the given
- * @providers in the given order and the first one supporting a format will
+ * `providers` in the given order and the first one supporting a format will
  * be chosen to provide it.
  *
  * This allows an easy way to support providing data in different formats.
@@ -575,10 +575,10 @@ gdk_content_provider_bytes_init (GdkContentProviderBytes *content)
 /**
  * gdk_content_provider_new_for_bytes:
  * @mime_type: the mime type
- * @bytes: (transfer none): a `GBytes` with the data for @mime_type
+ * @bytes: (transfer none): a `GBytes` with the data for `mime_type`
  *
- * Create a content provider that provides the given @bytes as data for
- * the given @mime_type.
+ * Create a content provider that provides the given `bytes` as data for
+ * the given `mime_type`.
  *
  * Returns: a new `GdkContentProvider`
  */

@@ -418,7 +418,7 @@ gtk_entry_buffer_class_init (GtkEntryBufferClass *klass)
 /**
  * gtk_entry_buffer_new:
  * @initial_chars: (nullable): initial buffer text
- * @n_initial_chars: number of characters in @initial_chars, or -1
+ * @n_initial_chars: number of characters in `initial_chars`, or -1
  *
  * Create a new `GtkEntryBuffer` object.
  *
@@ -512,7 +512,7 @@ gtk_entry_buffer_get_text (GtkEntryBuffer *buffer)
  * gtk_entry_buffer_set_text: (attributes org.gtk.Method.set_property=text)
  * @buffer: a `GtkEntryBuffer`
  * @chars: the new text
- * @n_chars: the number of characters in @text, or -1
+ * @n_chars: the number of characters in `text`, or -1
  *
  * Sets the text in the buffer.
  *
@@ -520,7 +520,7 @@ gtk_entry_buffer_get_text (GtkEntryBuffer *buffer)
  * [method@Gtk.EntryBuffer.delete_text] and
  * [method@Gtk.EntryBuffer.insert_text].
  *
- * Note that @n_chars is in characters, not in bytes.
+ * Note that `n_chars` is in characters, not in bytes.
  **/
 void
 gtk_entry_buffer_set_text (GtkEntryBuffer *buffer,
@@ -572,7 +572,7 @@ gtk_entry_buffer_set_max_length (GtkEntryBuffer *buffer,
  * gtk_entry_buffer_get_max_length: (attributes org.gtk.Method.get_property=max-length)
  * @buffer: a `GtkEntryBuffer`
  *
- * Retrieves the maximum allowed length of the text in @buffer.
+ * Retrieves the maximum allowed length of the text in `buffer`.
  *
  * Returns: the maximum allowed number of characters
  *   in `GtkEntryBuffer`, or 0 if there is no maximum.
@@ -594,11 +594,11 @@ gtk_entry_buffer_get_max_length (GtkEntryBuffer *buffer)
  * @chars: the text to insert into the buffer.
  * @n_chars: the length of the text in characters, or -1
  *
- * Inserts @n_chars characters of @chars into the contents of the
- * buffer, at position @position.
+ * Inserts `n_chars` characters of `chars` into the contents of the
+ * buffer, at position `position`.
  *
- * If @n_chars is negative, then characters from chars will be inserted
- * until a null-terminator is found. If @position or @n_chars are out of
+ * If `n_chars` is negative, then characters from chars will be inserted
+ * until a null-terminator is found. If `position` or `n_chars` are out of
  * bounds, or the maximum buffer text length is exceeded, then they are
  * coerced to sane values.
  *
@@ -653,11 +653,11 @@ gtk_entry_buffer_insert_text (GtkEntryBuffer *buffer,
  *
  * Deletes a sequence of characters from the buffer.
  *
- * @n_chars characters are deleted starting at @position.
- * If @n_chars is negative, then all characters until the
+ * `n_chars` characters are deleted starting at `position`.
+ * If `n_chars` is negative, then all characters until the
  * end of the text are deleted.
  *
- * If @position or @n_chars are out of bounds, then they
+ * If `position` or `n_chars` are out of bounds, then they
  * are coerced to sane values.
  *
  * Note that the positions are specified in characters,

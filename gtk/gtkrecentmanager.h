@@ -47,9 +47,9 @@ typedef struct _GtkRecentManagerPrivate GtkRecentManagerPrivate;
 /**
  * GtkRecentData:
  * @display_name: a UTF-8 encoded string, containing the name of the recently
- *   used resource to be displayed, or %NULL;
+ *   used resource to be displayed, or `NULL`;
  * @description: a UTF-8 encoded string, containing a short description of
- *   the resource, or %NULL;
+ *   the resource, or `NULL`;
  * @mime_type: the MIME type of the resource;
  * @app_name: the name of the application that is registering this recently
  *   used resource;

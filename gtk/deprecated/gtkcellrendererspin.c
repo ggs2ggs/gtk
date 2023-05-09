@@ -124,7 +124,7 @@ gtk_cell_renderer_spin_class_init (GtkCellRendererSpinClass *klass)
    * GtkCellRendererSpin:adjustment:
    *
    * The adjustment that holds the value of the spinbutton.
-   * This must be non-%NULL for the cell renderer to be editable.
+   * This must be non-`NULL` for the cell renderer to be editable.
    */
   g_object_class_install_property (object_class,
 				   PROP_ADJUSTMENT,

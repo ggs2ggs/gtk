@@ -132,7 +132,7 @@ gtk_spinner_css_changed (GtkWidget         *widget,
  *
  * Returns whether the spinner is spinning.
  *
- * Returns: %TRUE if the spinner is active
+ * Returns: true if the spinner is active
  */
 gboolean
 gtk_spinner_get_spinning (GtkSpinner *spinner)

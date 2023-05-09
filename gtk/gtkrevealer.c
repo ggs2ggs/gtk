@@ -47,7 +47,7 @@
  * `GtkRevealer` has a single CSS node with name revealer.
  * When styling `GtkRevealer` using CSS, remember that it only hides its contents,
  * not itself. That means applied margin, padding and borders will be visible even
- * when the [property@Gtk.Revealer:reveal-child] property is set to %FALSE.
+ * when the [property@Gtk.Revealer:reveal-child] property is set to false.
  *
  * # Accessibility
  *
@@ -670,12 +670,12 @@ gtk_revealer_start_animation (GtkRevealer *revealer,
 /**
  * gtk_revealer_set_reveal_child: (attributes org.gtk.Method.set_property=reveal-child)
  * @revealer: a `GtkRevealer`
- * @reveal_child: %TRUE to reveal the child
+ * @reveal_child: true to reveal the child
  *
  * Tells the `GtkRevealer` to reveal or conceal its child.
  *
  * The transition will be animated with the current
- * transition type of @revealer.
+ * transition type of `revealer`.
  */
 void
 gtk_revealer_set_reveal_child (GtkRevealer *revealer,
@@ -695,12 +695,12 @@ gtk_revealer_set_reveal_child (GtkRevealer *revealer,
  *
  * Returns whether the child is currently revealed.
  *
- * This function returns %TRUE as soon as the transition
+ * This function returns true as soon as the transition
  * is to the revealed state is started. To learn whether
  * the child is fully revealed (ie the transition is completed),
  * use [method@Gtk.Revealer.get_child_revealed].
  *
- * Returns: %TRUE if the child is revealed.
+ * Returns: true if the child is revealed.
  */
 gboolean
 gtk_revealer_get_reveal_child (GtkRevealer *revealer)
@@ -719,7 +719,7 @@ gtk_revealer_get_reveal_child (GtkRevealer *revealer)
  * In other words, this returns whether the transition
  * to the revealed state is completed.
  *
- * Returns: %TRUE if the child is fully revealed
+ * Returns: true if the child is fully revealed
  */
 gboolean
 gtk_revealer_get_child_revealed (GtkRevealer *revealer)
@@ -816,9 +816,9 @@ gtk_revealer_set_transition_duration (GtkRevealer *revealer,
  * @revealer: a `GtkRevealer`
  *
  * Gets the type of animation that will be used
- * for transitions in @revealer.
+ * for transitions in `revealer`.
  *
- * Returns: the current transition type of @revealer
+ * Returns: the current transition type of `revealer`
  */
 GtkRevealerTransitionType
 gtk_revealer_get_transition_type (GtkRevealer *revealer)
@@ -834,7 +834,7 @@ gtk_revealer_get_transition_type (GtkRevealer *revealer)
  * @transition: the new transition type
  *
  * Sets the type of animation that will be used for
- * transitions in @revealer.
+ * transitions in `revealer`.
  *
  * Available types include various kinds of fades and slides.
  */
@@ -857,7 +857,7 @@ gtk_revealer_set_transition_type (GtkRevealer               *revealer,
  * @revealer: a `GtkRevealer`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @revealer.
+ * Sets the child widget of `revealer`.
  */
 void
 gtk_revealer_set_child (GtkRevealer *revealer,
@@ -885,9 +885,9 @@ gtk_revealer_set_child (GtkRevealer *revealer,
  * gtk_revealer_get_child: (attributes org.gtk.Method.get_property=child)
  * @revealer: a `GtkRevealer`
  *
- * Gets the child widget of @revealer.
+ * Gets the child widget of `revealer`.
  *
- * Returns: (nullable) (transfer none): the child widget of @revealer
+ * Returns: (nullable) (transfer none): the child widget of `revealer`
  */
 GtkWidget *
 gtk_revealer_get_child (GtkRevealer *revealer)

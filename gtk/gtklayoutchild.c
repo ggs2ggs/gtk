@@ -152,7 +152,7 @@ gtk_layout_child_init (GtkLayoutChild *self)
  * @layout_child: a `GtkLayoutChild`
  *
  * Retrieves the `GtkLayoutManager` instance that created the
- * given @layout_child.
+ * given `layout_child`.
  *
  * Returns: (transfer none): a `GtkLayoutManager`
  */
@@ -170,7 +170,7 @@ gtk_layout_child_get_layout_manager (GtkLayoutChild *layout_child)
  * gtk_layout_child_get_child_widget: (attributes org.gtk.Method.get_property=child-widget)
  * @layout_child: a `GtkLayoutChild`
  *
- * Retrieves the `GtkWidget` associated to the given @layout_child.
+ * Retrieves the `GtkWidget` associated to the given `layout_child`.
  *
  * Returns: (transfer none): a `GtkWidget`
  */

@@ -161,7 +161,7 @@ gtk_cell_renderer_combo_class_init (GtkCellRendererComboClass *klass)
   /**
    * GtkCellRendererCombo:has-entry:
    *
-   * If %TRUE, the cell renderer will include an entry and allow to enter
+   * If true, the cell renderer will include an entry and allow to enter
    * values other than the ones in the popup list.
    */
   g_object_class_install_property (object_class,
@@ -182,7 +182,7 @@ gtk_cell_renderer_combo_class_init (GtkCellRendererComboClass *klass)
    * This signal is emitted each time after the user selected an item in
    * the combo box, either by using the mouse or the arrow keys.  Contrary
    * to GtkComboBox, GtkCellRendererCombo::changed is not emitted for
-   * changes made to a selected item in the entry.  The argument @new_iter
+   * changes made to a selected item in the entry.  The argument `new_iter`
    * corresponds to the newly selected item in the combo box and it is relative
    * to the GtkTreeModel set via the model property on GtkCellRendererCombo.
    *

@@ -1569,9 +1569,9 @@ gtk_paned_new (GtkOrientation orientation)
  * @paned: a `GtkPaned`
  * @child: (nullable): the widget to add
  *
- * Sets the start child of @paned to @child.
+ * Sets the start child of `paned` to `child`.
  *
- * If @child is `NULL`, the existing child will be removed.
+ * If `child` is `NULL`, the existing child will be removed.
  */
 void
 gtk_paned_set_start_child (GtkPaned  *paned,
@@ -1689,9 +1689,9 @@ gtk_paned_get_shrink_start_child (GtkPaned *paned)
  * @paned: a `GtkPaned`
  * @child: (nullable): the widget to add
  *
- * Sets the end child of @paned to @child.
+ * Sets the end child of `paned` to `child`.
  *
- * If @child is `NULL`, the existing child will be removed.
+ * If `child` is `NULL`, the existing child will be removed.
  */
 void
 gtk_paned_set_end_child (GtkPaned  *paned,
@@ -2535,7 +2535,7 @@ gtk_paned_set_wide_handle (GtkPaned *paned,
  *
  * Gets whether the separator should be wide.
  *
- * Returns: %TRUE if the paned should have a wide handle
+ * Returns: true if the paned should have a wide handle
  */
 gboolean
 gtk_paned_get_wide_handle (GtkPaned *paned)

@@ -104,9 +104,9 @@ gdk_drag_surface_default_init (GdkDragSurfaceInterface *iface)
  * @width: the unconstrained drag_surface width to layout
  * @height: the unconstrained drag_surface height to layout
  *
- * Present @drag_surface.
+ * Present `drag_surface`.
  *
- * Returns: %FALSE if it failed to be presented, otherwise %TRUE.
+ * Returns: false if it failed to be presented, otherwise true.
  */
 gboolean
 gdk_drag_surface_present (GdkDragSurface *drag_surface,

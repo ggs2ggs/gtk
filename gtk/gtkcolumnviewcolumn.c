@@ -369,7 +369,7 @@ gtk_column_view_column_init (GtkColumnViewColumn *self)
  * @title: (nullable): Title to use for this column
  * @factory: (transfer full) (nullable): The factory to populate items with
  *
- * Creates a new `GtkColumnViewColumn` that uses the given @factory for
+ * Creates a new `GtkColumnViewColumn` that uses the given `factory` for
  * mapping items to widgets.
  *
  * You most likely want to call [method@Gtk.ColumnView.append_column] next.
@@ -381,7 +381,7 @@ gtk_column_view_column_init (GtkColumnViewColumn *self)
  *   gtk_builder_list_item_factory_new_from_resource ("/name.ui"));
  * ```
  *
- * Returns: a new `GtkColumnViewColumn` using the given @factory
+ * Returns: a new `GtkColumnViewColumn` using the given `factory`
  */
 GtkColumnViewColumn *
 gtk_column_view_column_new (const char         *title,
@@ -596,9 +596,9 @@ gtk_column_view_column_ensure_cells (GtkColumnViewColumn *self)
  *
  * Gets the column view that's currently displaying this column.
  *
- * If @self has not been added to a column view yet, %NULL is returned.
+ * If `self` has not been added to a column view yet, `NULL` is returned.
  *
- * Returns: (nullable) (transfer none): The column view displaying @self.
+ * Returns: (nullable) (transfer none): The column view displaying `self`.
  */
 GtkColumnView *
 gtk_column_view_column_get_column_view (GtkColumnViewColumn *self)
@@ -768,11 +768,11 @@ gtk_column_view_column_remove_from_sorter (GtkColumnViewColumn *self)
 /**
  * gtk_column_view_column_set_sorter: (attributes org.gtk.Method.set_property=sorter)
  * @self: a `GtkColumnViewColumn`
- * @sorter: (nullable): the `GtkSorter` to associate with @column
+ * @sorter: (nullable): the `GtkSorter` to associate with `column`
  *
  * Associates a sorter with the column.
  *
- * If @sorter is %NULL, the column will not let users change
+ * If `sorter` is `NULL`, the column will not let users change
  * the sorting by clicking on its header.
  *
  * This sorter can be made active by clicking on the column
@@ -805,7 +805,7 @@ gtk_column_view_column_set_sorter (GtkColumnViewColumn *self,
  *
  * Returns the sorter that is associated with the column.
  *
- * Returns: (nullable) (transfer none): the `GtkSorter` of @self
+ * Returns: (nullable) (transfer none): the `GtkSorter` of `self`
  */
 GtkSorter *
 gtk_column_view_column_get_sorter (GtkColumnViewColumn *self)
@@ -857,7 +857,7 @@ gtk_column_view_column_set_visible (GtkColumnViewColumn *self,
  *
  * Returns whether this column is visible.
  *
- * Returns: %TRUE if this column is visible
+ * Returns: true if this column is visible
  */
 gboolean
 gtk_column_view_column_get_visible (GtkColumnViewColumn *self)
@@ -911,12 +911,12 @@ gtk_column_view_column_get_header_menu (GtkColumnViewColumn *self)
 /**
  * gtk_column_view_column_set_expand: (attributes org.gtk.Method.set_property=expand)
  * @self: a `GtkColumnViewColumn`
- * @expand: %TRUE if this column should expand to fill available sace
+ * @expand: true if this column should expand to fill available sace
  *
  * Sets the column to take available extra space.
  *
  * The extra space is shared equally amongst all columns that
- * have the expand set to %TRUE.
+ * have the expand set to true.
  */
 void
 gtk_column_view_column_set_expand (GtkColumnViewColumn *self,
@@ -941,7 +941,7 @@ gtk_column_view_column_set_expand (GtkColumnViewColumn *self,
  *
  * Returns whether this column should expand.
  *
- * Returns: %TRUE if this column expands
+ * Returns: true if this column expands
  */
 gboolean
 gtk_column_view_column_get_expand (GtkColumnViewColumn *self)
@@ -978,7 +978,7 @@ gtk_column_view_column_set_resizable (GtkColumnViewColumn *self,
  *
  * Returns whether this column is resizable.
  *
- * Returns: %TRUE if this column is resizable
+ * Returns: true if this column is resizable
  */
 gboolean
 gtk_column_view_column_get_resizable (GtkColumnViewColumn *self)
@@ -993,7 +993,7 @@ gtk_column_view_column_get_resizable (GtkColumnViewColumn *self)
  * @self: a `GtkColumnViewColumn`
  * @fixed_width: the new fixed width, or -1
  *
- * If @fixed_width is not -1, sets the fixed width of @column;
+ * If `fixed_width` is not -1, sets the fixed width of `column`;
  * otherwise unsets it.
  *
  * Setting a fixed width overrides the automatically calculated

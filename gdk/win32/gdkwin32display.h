@@ -77,7 +77,7 @@ typedef enum {
  * Specifies the type of function used to filter Windows messages before they are
  * processed by GDK Win32 backend.
  *
- * The @return_value must be set, if this function returns
+ * The `return_value` must be set, if this function returns
  * `GDK_WIN32_MESSAGE_FILTER_REMOVE`, otherwise it is ignored.
  *
  * The event translation and message filtering are orthogonal -

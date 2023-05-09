@@ -37,10 +37,10 @@
  *
  * 1. The unbound stage where the listitem is not currently connected to
  *    an item in the list. In that case, the [property@Gtk.ColumnViewCell:item]
- *    property is set to %NULL.
+ *    property is set to `NULL`.
  *
  * 2. The bound stage where the listitem references an item from the list.
- *    The [property@Gtk.ColumnViewCell:item] property is not %NULL.
+ *    The [property@Gtk.ColumnViewCell:item] property is not `NULL`.
  *
  * Since: 4.12
  */
@@ -248,9 +248,9 @@ gtk_column_view_cell_do_notify (GtkColumnViewCell *column_view_cell,
  * gtk_column_view_cell_get_item: (attributes org.gtk.Method.get_property=item)
  * @self: a `GtkColumnViewCell`
  *
- * Gets the model item that associated with @self.
+ * Gets the model item that associated with `self`.
  *
- * If @self is unbound, this function returns %NULL.
+ * If `self` is unbound, this function returns `NULL`.
  *
  * Returns: (nullable) (transfer none) (type GObject): The item displayed
  *
@@ -272,7 +272,7 @@ gtk_column_view_cell_get_item (GtkColumnViewCell *self)
  * @self: a `GtkColumnViewCell`
  *
  * Gets the child previously set via gtk_column_view_cell_set_child() or
- * %NULL if none was set.
+ * `NULL` if none was set.
  *
  * Returns: (transfer none) (nullable): The child
  *
@@ -289,7 +289,7 @@ gtk_column_view_cell_get_child (GtkColumnViewCell *self)
 /**
  * gtk_column_view_cell_set_child: (attributes org.gtk.Method.set_property=child)
  * @self: a `GtkColumnViewCell`
- * @child: (nullable): The list item's child or %NULL to unset
+ * @child: (nullable): The list item's child or `NULL` to unset
  *
  * Sets the child to be used for this listitem.
  *
@@ -327,9 +327,9 @@ gtk_column_view_cell_set_child (GtkColumnViewCell *self,
  * gtk_column_view_cell_get_position: (attributes org.gtk.Method.get_property=position)
  * @self: a `GtkColumnViewCell`
  *
- * Gets the position in the model that @self currently displays.
+ * Gets the position in the model that `self` currently displays.
  *
- * If @self is unbound, %GTK_INVALID_LIST_POSITION is returned.
+ * If `self` is unbound, %GTK_INVALID_LIST_POSITION is returned.
  *
  * Returns: The position of this item
  *
@@ -355,7 +355,7 @@ gtk_column_view_cell_get_position (GtkColumnViewCell *self)
  * The selected state is maintained by the liste widget and its model
  * and cannot be set otherwise.
  *
- * Returns: %TRUE if the item is selected.
+ * Returns: true if the item is selected.
  *
  * Since: 4.12
  */
@@ -377,7 +377,7 @@ gtk_column_view_cell_get_selected (GtkColumnViewCell *self)
  * Checks if a list item has been set to be focusable via
  * gtk_column_view_cell_set_focusable().
  *
- * Returns: %TRUE if the item is focusable
+ * Returns: true if the item is focusable
  *
  * Since: 4.12
  */
@@ -394,7 +394,7 @@ gtk_column_view_cell_get_focusable (GtkColumnViewCell *self)
  * @self: a `GtkColumnViewCell`
  * @focusable: if the item should be focusable
  *
- * Sets @self to be focusable.
+ * Sets `self` to be focusable.
  *
  * If an item is focusable, it can be focused using the keyboard.
  * This works similar to [method@Gtk.Widget.set_focusable].

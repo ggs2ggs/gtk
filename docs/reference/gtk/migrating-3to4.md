@@ -22,9 +22,6 @@ to build and work with the latest minor release in the 3.24 series.
 Over the years, a number of functions, and in some cases, entire
 widgets have been deprecated. These deprecations are clearly spelled
 out in the API reference, with hints about the recommended replacements.
-The API reference for GTK 3 also includes an
-[index](https://developer.gnome.org/gtk3/3.24/api-index-deprecated.html)
-of all deprecated symbols.
 
 To verify that your program does not use any deprecated symbols,
 you can use defines to remove deprecated symbols from the header files,
@@ -59,7 +56,7 @@ command line arguments like `--gtk-debug` you should use the `GTK_DEBUG`
 environment variable instead. If you are using `--g-fatal-warnings` for
 debugging purposes, you should use the `G_DEBUG` environment variable, as
 specified by the
-[GLib documentation](https://developer.gnome.org/glib/stable/glib-running.html).
+[GLib documentation](https://docs.gtk.org/glib/running.html).
 
 ### Do not use widget style properties
 
@@ -989,7 +986,7 @@ since these windows no longer exist:
 
 ### Widgets are now visible by default
 
-The default value of [property@Gtk.Widget:visible] in GTK 4 is %TRUE, so you no
+The default value of [property@Gtk.Widget:visible] in GTK 4 is true, so you no
 longer need to explicitly show all your widgets. On the flip side, you
 need to hide widgets that are not meant to be visible from the start.
 The only widgets that still need to be explicitly shown are toplevel
@@ -1134,7 +1131,7 @@ The way search entries are connected to global events has changed;
 
 ### Adapt to GtkScale changes
 
-The default value of `GtkScale:draw-value` has been changed to %FALSE.
+The default value of `GtkScale:draw-value` has been changed to false.
 If you want your scales to draw values, you will have to set this
 property explicitly now.
 

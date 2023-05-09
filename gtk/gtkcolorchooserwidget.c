@@ -717,7 +717,7 @@ gtk_color_chooser_widget_class_init (GtkColorChooserWidgetClass *class)
   /**
    * GtkColorChooserWidget:show-editor:
    *
-   * %TRUE when the color chooser is showing the single-color editor.
+   * true when the color chooser is showing the single-color editor.
    *
    * It can be set to switch the color chooser into single-color editing mode.
    */

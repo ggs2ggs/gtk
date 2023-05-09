@@ -367,7 +367,7 @@ gtk_expander_class_init (GtkExpanderClass *klass)
   /**
    * GtkExpander:resize-toplevel: (attributes org.gtk.Property.get=gtk_expander_get_resize_toplevel org.gtk.Property.set=gtk_expander_set_resize_toplevel)
    *
-   * When this property is %TRUE, the expander will resize the toplevel
+   * When this property is true, the expander will resize the toplevel
    * widget containing the expander upon expanding and collapsing.
    */
   g_object_class_install_property (gobject_class,
@@ -821,7 +821,7 @@ gtk_expander_measure (GtkWidget      *widget,
  * gtk_expander_new:
  * @label: (nullable): the text of the label
  *
- * Creates a new expander using @label as the text of the label.
+ * Creates a new expander using `label` as the text of the label.
  *
  * Returns: a new `GtkExpander` widget.
  */
@@ -836,9 +836,9 @@ gtk_expander_new (const char *label)
  * @label: (nullable): the text of the label with an underscore
  *   in front of the mnemonic character
  *
- * Creates a new expander using @label as the text of the label.
+ * Creates a new expander using `label` as the text of the label.
  *
- * If characters in @label are preceded by an underscore, they are
+ * If characters in `label` are preceded by an underscore, they are
  * underlined. If you need a literal underscore character in a label,
  * use “__” (two underscores). The first underlined character represents
  * a keyboard accelerator called a mnemonic.
@@ -863,8 +863,8 @@ gtk_expander_new_with_mnemonic (const char *label)
  *
  * Sets the state of the expander.
  *
- * Set to %TRUE, if you want the child widget to be revealed,
- * and %FALSE if you want the child widget to be hidden.
+ * Set to true, if you want the child widget to be revealed,
+ * and false if you want the child widget to be hidden.
  */
 void
 gtk_expander_set_expanded (GtkExpander *expander,
@@ -915,11 +915,11 @@ gtk_expander_set_expanded (GtkExpander *expander,
 
 /**
  * gtk_expander_get_expanded: (attributes org.gtk.Method.get_property=expanded)
- * @expander:a `GtkExpander`
+ * `expander`:a `GtkExpander`
  *
  * Queries a `GtkExpander` and returns its current state.
  *
- * Returns %TRUE if the child widget is revealed.
+ * Returns true if the child widget is revealed.
  *
  * Returns: the current state of the expander
  */
@@ -936,7 +936,7 @@ gtk_expander_get_expanded (GtkExpander *expander)
  * @expander: a `GtkExpander`
  * @label: (nullable): a string
  *
- * Sets the text of the label of the expander to @label.
+ * Sets the text of the label of the expander to `label`.
  *
  * This will also clear any previously set labels.
  */
@@ -972,7 +972,7 @@ gtk_expander_set_label (GtkExpander *expander,
  *
  * This is including any embedded underlines indicating mnemonics and
  * Pango markup, as set by [method@Gtk.Expander.set_label]. If the label
- * text has not been set the return value will be %NULL. This will be the
+ * text has not been set the return value will be `NULL`. This will be the
  * case if you create an empty button with gtk_button_new() to use as a
  * container.
  *
@@ -993,7 +993,7 @@ gtk_expander_get_label (GtkExpander *expander)
 /**
  * gtk_expander_set_use_underline: (attributes org.gtk.Method.set_property=use-underline)
  * @expander: a `GtkExpander`
- * @use_underline: %TRUE if underlines in the text indicate mnemonics
+ * @use_underline: true if underlines in the text indicate mnemonics
  *
  * If true, an underline in the text indicates a mnemonic.
  */
@@ -1022,7 +1022,7 @@ gtk_expander_set_use_underline (GtkExpander *expander,
  *
  * Returns whether an underline in the text indicates a mnemonic.
  *
- * Returns: %TRUE if an embedded underline in the expander
+ * Returns: true if an embedded underline in the expander
  *   label indicates the mnemonic accelerator keys
  */
 gboolean
@@ -1036,7 +1036,7 @@ gtk_expander_get_use_underline (GtkExpander *expander)
 /**
  * gtk_expander_set_use_markup: (attributes org.gtk.Method.set_property=use-markup)
  * @expander: a `GtkExpander`
- * @use_markup: %TRUE if the label’s text should be parsed for markup
+ * @use_markup: true if the label’s text should be parsed for markup
  *
  * Sets whether the text of the label contains Pango markup.
  */
@@ -1065,7 +1065,7 @@ gtk_expander_set_use_markup (GtkExpander *expander,
  *
  * Returns whether the label’s text is interpreted as Pango markup.
  *
- * Returns: %TRUE if the label’s text will be parsed for markup
+ * Returns: true if the label’s text will be parsed for markup
  */
 gboolean
 gtk_expander_get_use_markup (GtkExpander *expander)
@@ -1178,7 +1178,7 @@ gtk_expander_get_resize_toplevel (GtkExpander *expander)
  * @expander: a `GtkExpander`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @expander.
+ * Sets the child widget of `expander`.
  */
 void
 gtk_expander_set_child (GtkExpander *expander,
@@ -1230,9 +1230,9 @@ gtk_expander_set_child (GtkExpander *expander,
  * gtk_expander_get_child: (attributes org.gtk.Method.get_property=child)
  * @expander: a `GtkExpander`
  *
- * Gets the child widget of @expander.
+ * Gets the child widget of `expander`.
  *
- * Returns: (nullable) (transfer none): the child widget of @expander
+ * Returns: (nullable) (transfer none): the child widget of `expander`
  */
 GtkWidget *
 gtk_expander_get_child (GtkExpander *expander)

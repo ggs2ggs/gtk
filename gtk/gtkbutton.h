@@ -56,7 +56,7 @@ struct _GtkButton
  * @clicked: Signal emitted when the button has been activated (pressed and released).
  * @activate: Signal that causes the button to animate press then
  *    release. Applications should never connect to this signal, but use
- *    the @clicked signal.
+ *    the `clicked` signal.
  */
 struct _GtkButtonClass
 {

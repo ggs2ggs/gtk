@@ -576,7 +576,7 @@ gtk_check_button_class_init (GtkCheckButtonClass *class)
    *
    * If the check button is active.
    *
-   * Setting `active` to %TRUE will add the `:checked:` state to both
+   * Setting `active` to true will add the `:checked:` state to both
    * the check button and the indicator CSS node.
    */
   props[PROP_ACTIVE] =
@@ -778,7 +778,7 @@ gtk_check_button_new_with_mnemonic (const char *label)
 /**
  * gtk_check_button_set_inconsistent: (attributes org.gtk.Method.set_property=inconsistent)
  * @check_button: a `GtkCheckButton`
- * @inconsistent: %TRUE if state is inconsistent
+ * @inconsistent: true if state is inconsistent
  *
  * Sets the `GtkCheckButton` to inconsistent state.
  *
@@ -821,7 +821,7 @@ gtk_check_button_set_inconsistent (GtkCheckButton *check_button,
  *
  * Returns whether the check button is in an inconsistent state.
  *
- * Returns: %TRUE if @check_button is currently in an inconsistent state
+ * Returns: true if `check_button` is currently in an inconsistent state
  */
 gboolean
 gtk_check_button_get_inconsistent (GtkCheckButton *check_button)
@@ -909,8 +909,8 @@ gtk_check_button_set_active (GtkCheckButton *self,
  *
  * Returns the label of the check button or `NULL` if [property@CheckButton:child] is set.
  *
- * Returns: (nullable) (transfer none): The label @self shows next
- *   to the indicator. If no label is shown, %NULL will be returned.
+ * Returns: (nullable) (transfer none): The label `self` shows next
+ *   to the indicator. If no label is shown, `NULL` will be returned.
  */
 const char *
 gtk_check_button_get_label (GtkCheckButton *self)
@@ -928,13 +928,13 @@ gtk_check_button_get_label (GtkCheckButton *self)
 /**
  * gtk_check_button_set_label: (attributes org.gtk.Method.set_property=label)
  * @self: a `GtkCheckButton`
- * @label: (nullable): The text shown next to the indicator, or %NULL
+ * @label: (nullable): The text shown next to the indicator, or `NULL`
  *   to show no text
  *
- * Sets the text of @self.
+ * Sets the text of `self`.
  *
- * If [property@Gtk.CheckButton:use-underline] is %TRUE, an underscore
- * in @label is interpreted as mnemonic indicator, see
+ * If [property@Gtk.CheckButton:use-underline] is true, an underscore
+ * in `label` is interpreted as mnemonic indicator, see
  * [method@Gtk.CheckButton.set_use_underline] for details on this behavior.
  */
 void
@@ -985,7 +985,7 @@ gtk_check_button_set_label (GtkCheckButton *self,
  * @group: (nullable) (transfer none): another `GtkCheckButton` to
  *   form a group with
  *
- * Adds @self to the group of @group.
+ * Adds `self` to the group of `group`.
  *
  * In a group of multiple check buttons, only one button can be active
  * at a time. The behavior of a checkbutton in a group is also commonly
@@ -1086,7 +1086,7 @@ gtk_check_button_get_use_underline (GtkCheckButton *self)
  *
  * Sets whether underlines in the label indicate mnemonics.
  *
- * If @setting is %TRUE, an underscore character in @self's label
+ * If `setting` is true, an underscore character in `self`'s label
  * indicates a mnemonic accelerator key. This behavior is similar
  * to [property@Gtk.Label:use-underline].
  */
@@ -1115,13 +1115,13 @@ gtk_check_button_set_use_underline (GtkCheckButton *self,
  * @button: a `GtkCheckButton`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @button.
+ * Sets the child widget of `button`.
  *
  * Note that by using this API, you take full responsibility for setting
- * up the proper accessibility label and description information for @button.
+ * up the proper accessibility label and description information for `button`.
  * Most likely, you'll either set the accessibility label or description
- * for @button explicitly, or you'll set a labelled-by or described-by
- * relations from @child to @button.
+ * for `button` explicitly, or you'll set a labelled-by or described-by
+ * relations from `child` to `button`.
  *
  * Since: 4.8
  */
@@ -1152,9 +1152,9 @@ gtk_check_button_set_child (GtkCheckButton *button,
  * gtk_check_button_get_child: (attributes org.gtk.Method.get_property=child)
  * @button: a `GtkCheckButton`
  *
- * Gets the child widget of @button or `NULL` if [property@CheckButton:label] is set.
+ * Gets the child widget of `button` or `NULL` if [property@CheckButton:label] is set.
  *
- * Returns: (nullable) (transfer none): the child widget of @button
+ * Returns: (nullable) (transfer none): the child widget of `button`
  *
  * Since: 4.8
  */

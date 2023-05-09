@@ -535,7 +535,7 @@ gtk_file_filter_new (void)
 /**
  * gtk_file_filter_set_name: (attributes org.gtk.Method.set_property=name)
  * @filter: a `GtkFileFilter`
- * @name: (nullable): the human-readable-name for the filter, or %NULL
+ * @name: (nullable): the human-readable-name for the filter, or `NULL`
  *   to remove any existing name.
  *
  * Sets a human-readable name of the filter.
@@ -610,7 +610,7 @@ file_filter_add_attribute (GtkFileFilter *filter,
  * @filter: A `GtkFileFilter`
  * @mime_type: name of a MIME type
  *
- * Adds a rule allowing a given mime type to @filter.
+ * Adds a rule allowing a given mime type to `filter`.
  */
 void
 gtk_file_filter_add_mime_type (GtkFileFilter *filter,
@@ -666,7 +666,7 @@ gtk_file_filter_add_pattern (GtkFileFilter *filter,
  * Adds a suffix match rule to a filter.
  *
  * This is similar to adding a match for the pattern
- * "*.@suffix".
+ * "*.`suffix`".
  *
  * In contrast to pattern matches, suffix matches
  * are *always* case-insensitive.

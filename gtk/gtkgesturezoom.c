@@ -236,9 +236,9 @@ gtk_gesture_zoom_new (void)
  *
  * Gets the scale delta.
  *
- * If @gesture is active, this function returns the zooming
+ * If `gesture` is active, this function returns the zooming
  * difference since the gesture was recognized (hence the
- * starting point is considered 1:1). If @gesture is not
+ * starting point is considered 1:1). If `gesture` is not
  * active, 1 is returned.
  *
  * Returns: the scale delta

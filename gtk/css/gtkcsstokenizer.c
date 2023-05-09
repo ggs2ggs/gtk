@@ -158,7 +158,7 @@ append_string (GString    *string,
  *
  * An obvious example for this is the ';' token.
  *
- * Returns: %TRUE if the token is considered finite.
+ * Returns: true if the token is considered finite.
  **/
 gboolean
 gtk_css_token_is_finite (const GtkCssToken *token)
@@ -223,7 +223,7 @@ gtk_css_token_is_finite (const GtkCssToken *token)
  * Tokens that start a block require different error recovery when parsing,
  * so CSS parsers want to look at this function
  *
- * Returns: %TRUE if the token is considered preserved.
+ * Returns: true if the token is considered preserved.
  */
 gboolean
 gtk_css_token_is_preserved (const GtkCssToken *token,

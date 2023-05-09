@@ -229,9 +229,9 @@ gtk_drop_controller_motion_class_init (GtkDropControllerMotionClass *klass)
    * The ongoing drop operation over the controller's widget or
    * its descendant.
    *
-   * If no drop operation is going on, this property returns %NULL.
+   * If no drop operation is going on, this property returns `NULL`.
    *
-   * The event controller should not modify the @drop, but it might
+   * The event controller should not modify the `drop`, but it might
    * want to query its properties.
    *
    * When handling crossing events, this property is updated
@@ -344,9 +344,9 @@ gtk_drop_controller_motion_new (void)
  * @self: a `GtkDropControllerMotion`
  *
  * Returns if a Drag-and-Drop operation is within the widget
- * @self or one of its children.
+ * `self` or one of its children.
  *
- * Returns: %TRUE if a dragging pointer is within @self or one of its children.
+ * Returns: true if a dragging pointer is within `self` or one of its children.
  */
 gboolean
 gtk_drop_controller_motion_contains_pointer (GtkDropControllerMotion *self)
@@ -361,10 +361,10 @@ gtk_drop_controller_motion_contains_pointer (GtkDropControllerMotion *self)
  * @self: a `GtkDropControllerMotion`
  *
  * Returns the `GdkDrop` of a current Drag-and-Drop operation
- * over the widget of @self.
+ * over the widget of `self`.
  *
  * Returns: (transfer none) (nullable): The `GdkDrop` currently
- *   happening within @self
+ *   happening within `self`
  */
 GdkDrop *
 gtk_drop_controller_motion_get_drop (GtkDropControllerMotion *self)
@@ -379,9 +379,9 @@ gtk_drop_controller_motion_get_drop (GtkDropControllerMotion *self)
  * @self: a `GtkDropControllerMotion`
  *
  * Returns if a Drag-and-Drop operation is within the widget
- * @self, not one of its children.
+ * `self`, not one of its children.
  *
- * Returns: %TRUE if a dragging pointer is within @self but
+ * Returns: true if a dragging pointer is within `self` but
  *   not one of its children
  */
 gboolean

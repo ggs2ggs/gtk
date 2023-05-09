@@ -1481,7 +1481,7 @@ _gdk_win32_texture_to_hicon (GdkTexture *texture)
  * Returns the Win32 HCURSOR wrapper object belonging to a `GdkCursor`,
  * potentially creating the cursor object.
  *
- * Be aware that the returned cursor may not be unique to @cursor.
+ * Be aware that the returned cursor may not be unique to `cursor`.
  * It may for example be shared with its fallback cursor.
  *
  * Returns: a GdkWin32HCursor

@@ -767,7 +767,7 @@ gtk_shortcuts_window_class_init (GtkShortcutsWindowClass *klass)
    * property of some of the [class@Gtk.ShortcutsGroup] objects that
    * are inside this shortcuts window.
    *
-   * Set this to %NULL to show all groups.
+   * Set this to `NULL` to show all groups.
    */
   properties[PROP_VIEW_NAME] =
     g_param_spec_string ("view-name", NULL, NULL,

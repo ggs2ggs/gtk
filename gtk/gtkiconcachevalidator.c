@@ -372,15 +372,15 @@ check_hash (CacheInfo *info,
  * gtk_icon_cache_validate:
  * @info: a CacheInfo structure
  *
- * Validates the icon cache passed in the @cache and
- * @cache_size fields of the @info structure. The
+ * Validates the icon cache passed in the `cache` and
+ * `cache_size` fields of the `info` structure. The
  * validator checks that offsets specified in the
  * cache do not point outside the mapped area, that
  * strings look reasonable, and that pixbufs can
  * be deserialized. The amount of validation can
- * be controlled with the @flags field.
+ * be controlled with the `flags` field.
  *
- * Returns: %TRUE if the cache is valid
+ * Returns: true if the cache is valid
  */
 gboolean
 gtk_icon_cache_validate (CacheInfo *info)

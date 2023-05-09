@@ -1471,7 +1471,7 @@ _gdk_x11_keymap_add_virt_mods (GdkKeymap       *keymap,
  * processing raw X events, since `GdkEventKey` directly includes
  * an is_modifier field.
  *
- * Returns: %TRUE if the hardware keycode is a modifier key
+ * Returns: true if the hardware keycode is a modifier key
  */
 gboolean
 gdk_x11_keymap_key_is_modifier (GdkKeymap *keymap,

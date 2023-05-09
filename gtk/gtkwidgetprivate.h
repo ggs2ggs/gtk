@@ -136,7 +136,7 @@ struct _GtkWidgetPrivate
    */
   char *name;
 
-  /* The root this widget belongs to or %NULL if widget is not
+  /* The root this widget belongs to or `NULL` if widget is not
    * rooted or is a GtkRoot itself.
    */
   GtkRoot *root;
@@ -163,10 +163,10 @@ struct _GtkWidgetPrivate
   /* The widget's requested sizes */
   SizeRequestCache requests;
 
-  /* The render node we draw or %NULL if not yet created.*/
+  /* The render node we draw or `NULL` if not yet created.*/
   GskRenderNode *render_node;
 
-  /* The layout manager, or %NULL */
+  /* The layout manager, or `NULL` */
   GtkLayoutManager *layout_manager;
 
   GSList *paintables;

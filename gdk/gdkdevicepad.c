@@ -79,9 +79,9 @@ gdk_device_pad_get_n_groups (GdkDevicePad *pad)
  * @pad: a `GdkDevicePad`
  * @group_idx: group to get the number of available modes from
  *
- * Returns the number of modes that @group may have.
+ * Returns the number of modes that `group` may have.
  *
- * Returns: The number of modes available in @group.
+ * Returns: The number of modes available in `group`.
  */
 int
 gdk_device_pad_get_group_n_modes (GdkDevicePad *pad,
@@ -102,7 +102,7 @@ gdk_device_pad_get_group_n_modes (GdkDevicePad *pad,
  *
  * Returns the number of features a tablet pad has.
  *
- * Returns: The amount of elements of type @feature that this pad has.
+ * Returns: The amount of elements of type `feature` that this pad has.
  */
 int
 gdk_device_pad_get_n_features (GdkDevicePad        *pad,
@@ -121,9 +121,9 @@ gdk_device_pad_get_n_features (GdkDevicePad        *pad,
  * @feature: the feature type to get the group from
  * @feature_idx: the index of the feature to get the group from
  *
- * Returns the group the given @feature and @idx belong to.
+ * Returns the group the given `feature` and `idx` belong to.
  *
- * f the feature or index do not exist in @pad, -1 is returned.
+ * f the feature or index do not exist in `pad`, -1 is returned.
  *
  * Returns: The group number of the queried pad feature.
  */

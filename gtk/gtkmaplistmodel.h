@@ -40,7 +40,7 @@ G_DECLARE_FINAL_TYPE (GtkMapListModel, gtk_map_list_model, GTK, MAP_LIST_MODEL, 
  * @item: (type GObject) (transfer full): The item to map
  * @user_data: user data
  *
- * User function that is called to map an @item of the original model to
+ * User function that is called to map an `item` of the original model to
  * an item expected by the map model.
  *
  * The returned items must conform to the item type of the model they are

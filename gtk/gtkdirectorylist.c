@@ -35,7 +35,7 @@
  * [property@Gtk.DirectoryList:file] property is set.
  *
  * While the `GtkDirectoryList` is being filled, the
- * [property@Gtk.DirectoryList:loading] property will be set to %TRUE. You can
+ * [property@Gtk.DirectoryList:loading] property will be set to true. You can
  * listen to that property if you want to show information like a `GtkSpinner`
  * or a "Loading..." text.
  *
@@ -337,7 +337,7 @@ gtk_directory_list_class_init (GtkDirectoryListClass *class)
   /**
    * GtkDirectoryList:loading: (attributes org.gtk.Property.get=gtk_directory_list_is_loading)
    *
-   * %TRUE if files are being loaded.
+   * true if files are being loaded.
    */
   properties[PROP_LOADING] =
       g_param_spec_boolean ("loading", NULL, NULL,
@@ -347,7 +347,7 @@ gtk_directory_list_class_init (GtkDirectoryListClass *class)
   /**
    * GtkDirectoryList:monitored: (attributes org.gtk.Property.get=gtk_directory_list_get_monitored org.gtk.Property.set=gtk_directory_list_set_monitored)
    *
-   * %TRUE if the directory is monitored for changed.
+   * true if the directory is monitored for changed.
    */
   properties[PROP_MONITORED] =
       g_param_spec_boolean ("monitored", NULL, NULL,
@@ -385,8 +385,8 @@ gtk_directory_list_init (GtkDirectoryList *self)
  *
  * Creates a new `GtkDirectoryList`.
  *
- * The `GtkDirectoryList` is querying the given @file
- * with the given @attributes.
+ * The `GtkDirectoryList` is querying the given `file`
+ * with the given `attributes`.
  *
  * Returns: a new `GtkDirectoryList`
  **/
@@ -814,9 +814,9 @@ gtk_directory_list_update_monitoring (GtkDirectoryList *self)
  * @self: a `GtkDirectoryList`
  * @file: (nullable): the `GFile` to be enumerated
  *
- * Sets the @file to be enumerated and starts the enumeration.
+ * Sets the `file` to be enumerated and starts the enumeration.
  *
- * If @file is %NULL, the result will be an empty list.
+ * If `file` is `NULL`, the result will be an empty list.
  */
 void
 gtk_directory_list_set_file (GtkDirectoryList *self,
@@ -862,9 +862,9 @@ gtk_directory_list_get_file (GtkDirectoryList *self)
  * @self: a `GtkDirectoryList`
  * @attributes: (nullable): the attributes to enumerate
  *
- * Sets the @attributes to be enumerated and starts the enumeration.
+ * Sets the `attributes` to be enumerated and starts the enumeration.
  *
- * If @attributes is %NULL, the list of file infos will still be created, it will just
+ * If `attributes` is `NULL`, the list of file infos will still be created, it will just
  * not contain any extra attributes.
  */
 void
@@ -911,7 +911,7 @@ gtk_directory_list_get_attributes (GtkDirectoryList *self)
  *
  * Sets the IO priority to use while loading directories.
  *
- * Setting the priority while @self is loading will reprioritize the
+ * Setting the priority while `self` is loading will reprioritize the
  * ongoing load as soon as possible.
  *
  * The default IO priority is %G_PRIORITY_DEFAULT, which is higher than
@@ -953,14 +953,14 @@ gtk_directory_list_get_io_priority (GtkDirectoryList *self)
  * gtk_directory_list_is_loading: (attributes org.gtk.Method.get_property=loading)
  * @self: a `GtkDirectoryList`
  *
- * Returns %TRUE if the children enumeration is currently in
+ * Returns true if the children enumeration is currently in
  * progress.
  *
- * Files will be added to @self from time to time while loading is
+ * Files will be added to `self` from time to time while loading is
  * going on. The order in which are added is undefined and may change
  * in between runs.
  *
- * Returns: %TRUE if @self is loading
+ * Returns: true if `self` is loading
  */
 gboolean
 gtk_directory_list_is_loading (GtkDirectoryList *self)
@@ -983,7 +983,7 @@ gtk_directory_list_is_loading (GtkDirectoryList *self)
  * An error being set does not mean that no files were loaded, and all
  * successfully queried files will remain in the list.
  *
- * Returns: (nullable) (transfer none): The loading error or %NULL if
+ * Returns: (nullable) (transfer none): The loading error or `NULL` if
  *   loading finished successfully
  */
 const GError *
@@ -997,7 +997,7 @@ gtk_directory_list_get_error (GtkDirectoryList *self)
 /**
  * gtk_directory_list_set_monitored: (attributes org.gtk.Method.set_property=monitored)
  * @self: a `GtkDirectoryList`
- * @monitored: %TRUE to monitor the directory for changes
+ * @monitored: true to monitor the directory for changes
  *
  * Sets whether the directory list will monitor the directory
  * for changes.
@@ -1036,7 +1036,7 @@ gtk_directory_list_set_monitored (GtkDirectoryList *self,
  * Returns whether the directory list is monitoring
  * the directory for changes.
  *
- * Returns: %TRUE if the directory is monitored
+ * Returns: true if the directory is monitored
  */
 gboolean
 gtk_directory_list_get_monitored (GtkDirectoryList *self)

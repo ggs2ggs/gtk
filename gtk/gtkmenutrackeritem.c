@@ -42,9 +42,9 @@
  * role of the item determines its accessibility role, along with its
  * decoration if the GtkMenuTrackerItem::toggled property is true. As an
  * example, if the item has the role %GTK_MENU_TRACKER_ITEM_ROLE_CHECK and
- * GtkMenuTrackerItem::toggled is %FALSE, its accessible role should be that of
+ * GtkMenuTrackerItem::toggled is false, its accessible role should be that of
  * a check menu item, and no decoration should be drawn. But if
- * GtkMenuTrackerItem::toggled is %TRUE, a checkmark should be drawn.
+ * GtkMenuTrackerItem::toggled is true, a checkmark should be drawn.
  *
  * All properties except for the two class-determining properties,
  * GtkMenuTrackerItem::is-separator and GtkMenuTrackerItem::has-submenu are
@@ -72,7 +72,7 @@
  * the application may want to be notified so it can cancel the expensive
  * operation that it was using to build the submenu. Thus,
  * gtk_menu_tracker_item_request_submenu_shown() takes a boolean parameter.
- * Use %TRUE when the user wants to open the submenu, and %FALSE when the
+ * Use true when the user wants to open the submenu, and false when the
  * user wants to close the submenu.
  */
 

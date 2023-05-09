@@ -479,7 +479,7 @@ gtk_text_child_anchor_finalize (GObject *obj)
  * The order in which the widgets are returned is not defined.
  *
  * Returns: (array length=out_len) (transfer container): an
- *   array of widgets anchored at @anchor
+ *   array of widgets anchored at `anchor`
  */
 GtkWidget **
 gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor,
@@ -530,7 +530,7 @@ gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor,
  * function — otherwise all deleted child anchors will also
  * be finalized.
  *
- * Returns: %TRUE if the child anchor has been deleted from its buffer
+ * Returns: true if the child anchor has been deleted from its buffer
  */
 gboolean
 gtk_text_child_anchor_get_deleted (GtkTextChildAnchor *anchor)

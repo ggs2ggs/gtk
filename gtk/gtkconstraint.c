@@ -523,7 +523,7 @@ gtk_constraint_get_strength (GtkConstraint *constraint)
  * Checks whether the constraint is a required relation for solving the
  * constraint layout.
  *
- * Returns: %TRUE if the constraint is required
+ * Returns: true if the constraint is required
  */
 gboolean
 gtk_constraint_is_required (GtkConstraint *constraint)

@@ -484,7 +484,7 @@ _gdk_frame_clock_begin_frame (GdkFrameClock *frame_clock)
  * [method@Gdk.FrameClock.get_history_start].
  *
  * Returns: (nullable) (transfer none): the `GdkFrameTimings` object
- *   for the specified frame, or %NULL if it is not available
+ *   for the specified frame, or `NULL` if it is not available
  */
 GdkFrameTimings *
 gdk_frame_clock_get_timings (GdkFrameClock *frame_clock,
@@ -517,7 +517,7 @@ gdk_frame_clock_get_timings (GdkFrameClock *frame_clock,
  * Returns: (nullable) (transfer none): the `GdkFrameTimings` for the
  *   frame currently being processed, or even no frame is being
  *   processed, for the previous frame. Before any frames have been
- *   processed, returns %NULL.
+ *   processed, returns `NULL`.
  */
 GdkFrameTimings *
 gdk_frame_clock_get_current_timings (GdkFrameClock *frame_clock)
@@ -589,7 +589,7 @@ _gdk_frame_clock_debug_print_timings (GdkFrameClock   *clock,
  * @frame_clock: a `GdkFrameClock`
  * @base_time: base time for determining a presentaton time
  * @refresh_interval_return: (out) (optional): a location to store the
- *   determined refresh interval, or %NULL. A default refresh interval of
+ *   determined refresh interval, or `NULL`. A default refresh interval of
  *   1/60th of a second will be stored if no history is present.
  * @presentation_time_return: (out): a location to store the next
  *   candidate presentation time after the given base time.
@@ -601,7 +601,7 @@ _gdk_frame_clock_debug_print_timings (GdkFrameClock   *clock,
  * known presentation time and refresh interval, and assuming that
  * presentation times are separated by the refresh interval,
  * predicts a presentation time that is a multiple of the refresh
- * interval after the last presentation time, and later than @base_time.
+ * interval after the last presentation time, and later than `base_time`.
  */
 void
 gdk_frame_clock_get_refresh_info (GdkFrameClock *frame_clock,
@@ -761,7 +761,7 @@ guess_refresh_interval (GdkFrameClock *frame_clock)
  * @frame_clock: a `GdkFrameClock`
  *
  * Calculates the current frames-per-second, based on the
- * frame timings of @frame_clock.
+ * frame timings of `frame_clock`.
  *
  * Returns: the current fps, as a `double`
  */

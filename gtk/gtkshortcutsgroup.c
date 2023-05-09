@@ -287,7 +287,7 @@ gtk_shortcuts_group_class_init (GtkShortcutsGroupClass *klass)
    * The group will be hidden if the [property@Gtk.ShortcutsWindow:view-name]
    * property does not match the view of this group.
    *
-   * Set this to %NULL to make the group always visible.
+   * Set this to `NULL` to make the group always visible.
    */
   properties[PROP_VIEW] =
     g_param_spec_string ("view", NULL, NULL,

@@ -336,13 +336,13 @@ load_cursor(struct wl_cursor_theme *theme,
 
 /** Load a cursor theme to memory shared with the compositor
  *
- * \param name The name of the cursor theme to load. If %NULL, the default
+ * \param name The name of the cursor theme to load. If `NULL`, the default
  * theme will be loaded.
  * \param size Desired size of the cursor images.
  * \param shm The compositor's shm interface.
  *
  * \return An object representing the theme that should be destroyed with
- * wl_cursor_theme_destroy() or %NULL on error. If no theme with the given
+ * wl_cursor_theme_destroy() or `NULL` on error. If no theme with the given
  * name exists, a default theme will be loaded.
  */
 struct wl_cursor_theme *
@@ -392,7 +392,7 @@ wl_cursor_theme_destroy(struct wl_cursor_theme *theme)
  *
  * \param theme The cursor theme
  * \param name Name of the desired cursor
- * \return The theme's cursor of the given name or %NULL if there is no
+ * \return The theme's cursor of the given name or `NULL` if there is no
  * such cursor
  */
 struct wl_cursor *

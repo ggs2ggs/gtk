@@ -172,7 +172,7 @@ _gdk_x11_surface_get_toplevel (GdkSurface *surface)
  * Updates the state of the surface (in particular the drawable's
  * cairo surface) when its size has changed.
  *
- * Returns: %TRUE if the surface was updated, %FALSE if no updates
+ * Returns: true if the surface was updated, false if no updates
  *   where necessary
  */
 static gboolean
@@ -2064,9 +2064,9 @@ get_netwm_cardinal_property (GdkSurface   *surface,
  * gdk_x11_surface_get_desktop:
  * @surface: (type GdkX11Surface): a `GdkSurface`
  *
- * Gets the number of the workspace @surface is on.
+ * Gets the number of the workspace `surface` is on.
  *
- * Returns: the current workspace of @surface
+ * Returns: the current workspace of `surface`
  */
 guint32
 gdk_x11_surface_get_desktop (GdkSurface *surface)
@@ -2282,9 +2282,9 @@ gdk_x11_surface_set_modal_hint (GdkSurface *surface,
 /**
  * gdk_x11_surface_set_skip_taskbar_hint:
  * @surface: (type GdkX11Surface): a native `GdkSurface`
- * @skips_taskbar: %TRUE to skip taskbars
+ * @skips_taskbar: true to skip taskbars
  *
- * Sets a hint on @surface that taskbars should not
+ * Sets a hint on `surface` that taskbars should not
  * display it. See the EWMH for details.
  */
 void
@@ -2308,9 +2308,9 @@ gdk_x11_surface_set_skip_taskbar_hint (GdkSurface *surface,
 /**
  * gdk_x11_surface_set_skip_pager_hint:
  * @surface: (type GdkX11Surface): a `GdkSurface`
- * @skips_pager: %TRUE to skip pagers
+ * @skips_pager: true to skip pagers
  *
- * Sets a hint on @surface that pagers should not
+ * Sets a hint on `surface` that pagers should not
  * display it. See the EWMH for details.
  */
 void
@@ -2334,9 +2334,9 @@ gdk_x11_surface_set_skip_pager_hint (GdkSurface *surface,
 /**
  * gdk_x11_surface_set_urgency_hint:
  * @surface: (type GdkX11Surface): a native `GdkSurface`
- * @urgent: %TRUE to indicate urgenct attention needed
+ * @urgent: true to indicate urgenct attention needed
  *
- * Sets a hint on @surface that it needs user attention.
+ * Sets a hint on `surface` that it needs user attention.
  * See the ICCCM for details.
  */
 void
@@ -2470,7 +2470,7 @@ utf8_is_latin1 (const char *str)
   return TRUE;
 }
 
-/* Set the property to @utf8_str as STRING if the @utf8_str is fully
+/* Set the property to `utf8_str` as STRING if the `utf8_str` is fully
  * convertible to STRING, otherwise, set it as compound text
  */
 static void
@@ -3004,10 +3004,10 @@ gdk_x11_surface_set_user_time (GdkSurface *surface,
  * gdk_x11_surface_set_utf8_property:
  * @surface: (type GdkX11Surface): a `GdkSurface`
  * @name: Property name, will be interned as an X atom
- * @value: (nullable): Property value, or %NULL to delete
+ * @value: (nullable): Property value, or `NULL` to delete
  *
  * This function modifies or removes an arbitrary X11 window
- * property of type UTF8_STRING.  If the given @surface is
+ * property of type UTF8_STRING.  If the given `surface` is
  * not a toplevel surface, it is ignored.
  */
 void
@@ -3506,7 +3506,7 @@ gdk_x11_surface_get_group (GdkSurface *surface)
  * @surface: (type GdkX11Surface): a native `GdkSurface`
  * @leader: a `GdkSurface`
  *
- * Sets the group leader of @surface to be @leader.
+ * Sets the group leader of `surface` to be `leader`.
  * See the ICCCM for details.
  */
 void
@@ -4605,7 +4605,7 @@ gdk_x11_get_server_time (GdkSurface *surface)
  * 
  * Returns the X resource (surface) belonging to a `GdkSurface`.
  * 
- * Returns: the ID of @drawable’s X resource.
+ * Returns: the ID of `drawable`’s X resource.
  **/
 XID
 gdk_x11_surface_get_xid (GdkSurface *surface)

@@ -725,7 +725,7 @@ be placed in the source file, directly above the function.
    *
    * Note that flows may be laminar or turbulent...
    *
-   * Returns: (transfer none): the flow of @widget
+   * Returns: (transfer none): the flow of `widget`
    */
   GtkFlow *
   gtk_get_flow (GtkWidget *widget)

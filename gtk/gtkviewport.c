@@ -560,7 +560,7 @@ gtk_viewport_adjustment_value_changed (GtkAdjustment *adjustment,
  * Gets whether the viewport is scrolling to keep the focused
  * child in view.
  *
- * Returns: %TRUE if the viewport keeps the focus child scrolled to view
+ * Returns: true if the viewport keeps the focus child scrolled to view
  */
 gboolean
 gtk_viewport_get_scroll_to_focus (GtkViewport *viewport)
@@ -679,7 +679,7 @@ clear_focus_change_handler (GtkViewport *viewport)
  * @viewport: a `GtkViewport`
  * @child: (nullable): the child widget
  *
- * Sets the child widget of @viewport.
+ * Sets the child widget of `viewport`.
  */
 void
 gtk_viewport_set_child (GtkViewport *viewport,
@@ -706,9 +706,9 @@ gtk_viewport_set_child (GtkViewport *viewport,
  * gtk_viewport_get_child: (attributes org.gtk.Method.get_property=child)
  * @viewport: a `GtkViewport`
  *
- * Gets the child widget of @viewport.
+ * Gets the child widget of `viewport`.
  *
- * Returns: (nullable) (transfer none): the child widget of @viewport
+ * Returns: (nullable) (transfer none): the child widget of `viewport`
  */
 GtkWidget *
 gtk_viewport_get_child (GtkViewport *viewport)

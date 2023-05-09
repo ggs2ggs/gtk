@@ -182,7 +182,7 @@ gtk_window_group_remove_window (GtkWindowGroup *window_group,
  * gtk_window_group_list_windows:
  * @window_group: a `GtkWindowGroup`
  *
- * Returns a list of the `GtkWindows` that belong to @window_group.
+ * Returns a list of the `GtkWindows` that belong to `window_group`.
  *
  * Returns: (element-type GtkWindow) (transfer container): A
  *   newly-allocated list of windows inside the group.

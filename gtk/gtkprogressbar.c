@@ -229,12 +229,12 @@ gtk_progress_bar_class_init (GtkProgressBarClass *class)
    * to the bar itself.
    *
    * The shown text is either the value of the [property@Gtk.ProgressBar:text]
-   * property or, if that is %NULL, the [property@Gtk.ProgressBar:fraction]
+   * property or, if that is `NULL`, the [property@Gtk.ProgressBar:fraction]
    * value, as a percentage.
    *
    * To make a progress bar that is styled and sized suitably for showing text
    * (even if the actual text is blank), set [property@Gtk.ProgressBar:show-text]
-   * to %TRUE and [property@Gtk.ProgressBar:text] to the empty string (not %NULL).
+   * to true and [property@Gtk.ProgressBar:text] to the empty string (not `NULL`).
    */
   progress_props[PROP_SHOW_TEXT] =
       g_param_spec_boolean ("show-text", NULL, NULL,
@@ -826,17 +826,17 @@ gtk_progress_bar_pulse (GtkProgressBar *pbar)
  * @pbar: a `GtkProgressBar`
  * @text: (nullable): a UTF-8 string
  *
- * Causes the given @text to appear next to the progress bar.
+ * Causes the given `text` to appear next to the progress bar.
  *
- * If @text is %NULL and [property@Gtk.ProgressBar:show-text] is %TRUE,
+ * If `text` is `NULL` and [property@Gtk.ProgressBar:show-text] is true,
  * the current value of [property@Gtk.ProgressBar:fraction] will be displayed
  * as a percentage.
  *
- * If @text is non-%NULL and [property@Gtk.ProgressBar:show-text] is %TRUE,
+ * If `text` is non-`NULL` and [property@Gtk.ProgressBar:show-text] is true,
  * the text will be displayed. In this case, it will not display the progress
- * percentage. If @text is the empty string, the progress bar will still
+ * percentage. If `text` is the empty string, the progress bar will still
  * be styled and sized suitably for containing text, as long as
- * [property@Gtk.ProgressBar:show-text] is %TRUE.
+ * [property@Gtk.ProgressBar:show-text] is true.
  */
 void
 gtk_progress_bar_set_text (GtkProgressBar *pbar,
@@ -865,12 +865,12 @@ gtk_progress_bar_set_text (GtkProgressBar *pbar,
  * Sets whether the progress bar will show text next to the bar.
  *
  * The shown text is either the value of the [property@Gtk.ProgressBar:text]
- * property or, if that is %NULL, the [property@Gtk.ProgressBar:fraction] value,
+ * property or, if that is `NULL`, the [property@Gtk.ProgressBar:fraction] value,
  * as a percentage.
  *
  * To make a progress bar that is styled and sized suitably for containing
  * text (even if the actual text is blank), set [property@Gtk.ProgressBar:show-text]
- * to %TRUE and [property@Gtk.ProgressBar:text] to the empty string (not %NULL).
+ * to true and [property@Gtk.ProgressBar:text] to the empty string (not `NULL`).
  */
 void
 gtk_progress_bar_set_show_text (GtkProgressBar *pbar,
@@ -915,7 +915,7 @@ gtk_progress_bar_set_show_text (GtkProgressBar *pbar,
  *
  * See [method@Gtk.ProgressBar.set_show_text].
  *
- * Returns: %TRUE if text is shown in the progress bar
+ * Returns: true if text is shown in the progress bar
  */
 gboolean
 gtk_progress_bar_get_show_text (GtkProgressBar *pbar)
@@ -996,7 +996,7 @@ gtk_progress_bar_set_orientation (GtkProgressBar *pbar,
 /**
  * gtk_progress_bar_set_inverted: (attributes org.gtk.Method.set_property=inverted)
  * @pbar: a `GtkProgressBar`
- * @inverted: %TRUE to invert the progress bar
+ * @inverted: true to invert the progress bar
  *
  * Sets whether the progress bar is inverted.
  *
@@ -1079,7 +1079,7 @@ gtk_progress_bar_get_pulse_step (GtkProgressBar *pbar)
  *
  * Returns whether the progress bar is inverted.
  *
- * Returns: %TRUE if the progress bar is inverted
+ * Returns: true if the progress bar is inverted
  */
 gboolean
 gtk_progress_bar_get_inverted (GtkProgressBar *pbar)

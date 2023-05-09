@@ -64,7 +64,7 @@ typedef enum { /*< prefix=GTK_BUILDER_CLOSURE >*/
  *   for more details on those.
  *   The C implementation will try to use dlsym() to locate the function name and then
  *   g_cclosure_new() to create a closure for the symbol.
- *   The default implementation just fails and returns %NULL.
+ *   The default implementation just fails and returns `NULL`.
  *
  * The virtual function table to implement for `GtkBuilderScope` implementations.
  * Default implementations for each function do exist, but they usually just fail,

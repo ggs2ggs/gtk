@@ -40,7 +40,7 @@ typedef struct _GdkContentDeserializer GdkContentDeserializer;
  * The type of a function that can be registered with gdk_content_register_deserializer().
  *
  * When the function gets called to operate on content, it can call functions on the
- * @deserializer object to obtain the mime type, input stream, user data, etc. for its
+ * `deserializer` object to obtain the mime type, input stream, user data, etc. for its
  * operation.
  */
 typedef void (* GdkContentDeserializeFunc) (GdkContentDeserializer *deserializer);

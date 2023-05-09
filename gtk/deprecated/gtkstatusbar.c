@@ -408,7 +408,7 @@ gtk_statusbar_pop (GtkStatusbar *statusbar,
  * @message_id: a message identifier, as returned by [method@Gtk.Statusbar.push]
  *
  * Forces the removal of a message from a statusbar’s stack.
- * The exact @context_id and @message_id must be specified.
+ * The exact `context_id` and `message_id` must be specified.
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */
@@ -458,7 +458,7 @@ gtk_statusbar_remove (GtkStatusbar *statusbar,
  * @context_id: a context identifier
  *
  * Forces the removal of all messages from a statusbar's
- * stack with the exact @context_id.
+ * stack with the exact `context_id`.
  *
  * Deprecated: 4.10: This widget will be removed in GTK 5
  */

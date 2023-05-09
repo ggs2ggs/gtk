@@ -10,7 +10,7 @@ the question you have, this list is a good place to start.
 *  How do I get started with GTK?
 
     The GTK [website](https://www.gtk.org) offers some
-    [tutorials](https://www.gtk.org/documentation.php) and other documentation
+    [tutorials](https://www.gtk.org/docs/getting-started/) and other documentation
     This reference manual also contains a introductory
     [Getting Started](#gtk-getting-started) part.
 
@@ -257,7 +257,7 @@ the question you have, this list is a good place to start.
 
 *  How do I use GTK with other non-C languages?
 
-    See the list of [language bindings](https://www.gtk.org/language-bindings.php)
+    See the list of [language bindings](https://www.gtk.org/docs/language-bindings/)
     on the GTK [website](https://www.gtk.org).
 
 *  How do I load an image or animation from a file?

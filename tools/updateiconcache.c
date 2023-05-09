@@ -1449,7 +1449,7 @@ validate_file (const char *file)
  * are unspecified, and many systems will eat your data
  * in this situation unless you explicitly fsync().
  *
- * Returns: %TRUE on success, %FALSE on failure, and will set errno()
+ * Returns: true on success, false on failure, and will set errno()
  */
 static gboolean
 safe_fclose (FILE *f)

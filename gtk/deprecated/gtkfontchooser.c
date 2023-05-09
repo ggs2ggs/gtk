@@ -184,7 +184,7 @@ gtk_font_chooser_default_init (GtkFontChooserInterface *iface)
  *
  * Font families are a collection of font faces.
  *
- * If the selected font is not installed, returns %NULL.
+ * If the selected font is not installed, returns `NULL`.
  *
  * Returns: (nullable) (transfer none): A `PangoFontFamily` representing the
  *   selected font family
@@ -207,7 +207,7 @@ gtk_font_chooser_get_font_family (GtkFontChooser *fontchooser)
  * Gets the `PangoFontFace` representing the selected font group
  * details (i.e. family, slant, weight, width, etc).
  *
- * If the selected font is not installed, returns %NULL.
+ * If the selected font is not installed, returns `NULL`.
  *
  * Returns: (nullable) (transfer none): A `PangoFontFace` representing the
  *   selected font group details
@@ -335,7 +335,7 @@ gtk_font_chooser_get_font_desc (GtkFontChooser *fontchooser)
  * @fontchooser: a `GtkFontChooser`
  * @font_desc: a `PangoFontDescription`
  *
- * Sets the currently-selected font from @font_desc.
+ * Sets the currently-selected font from `font_desc`.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton]
  * instead
@@ -380,7 +380,7 @@ gtk_font_chooser_get_preview_text (GtkFontChooser *fontchooser)
  *
  * Sets the text displayed in the preview area.
  *
- * The @text is used to show how the selected font looks.
+ * The `text` is used to show how the selected font looks.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton]
  * instead
@@ -401,7 +401,7 @@ gtk_font_chooser_set_preview_text (GtkFontChooser *fontchooser,
  *
  * Returns whether the preview entry is shown or not.
  *
- * Returns: %TRUE if the preview entry is shown or %FALSE if it is hidden.
+ * Returns: true if the preview entry is shown or false if it is hidden.
  *
  * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton]
  * instead
@@ -442,8 +442,8 @@ gtk_font_chooser_set_show_preview_entry (GtkFontChooser *fontchooser,
  * gtk_font_chooser_set_filter_func:
  * @fontchooser: a `GtkFontChooser`
  * @filter: (nullable): a `GtkFontFilterFunc`
- * @user_data: (closure): data to pass to @filter
- * @destroy: function to call to free @data when it is no longer needed
+ * @user_data: (closure): data to pass to `filter`
+ * @destroy: function to call to free `data` when it is no longer needed
  *
  * Adds a filter function that decides which fonts to display
  * in the font chooser.
@@ -524,7 +524,7 @@ gtk_font_chooser_set_font_map (GtkFontChooser *fontchooser,
  * @fontchooser: a `GtkFontChooser`
  *
  * Gets the custom font map of this font chooser widget,
- * or %NULL if it does not have one.
+ * or `NULL` if it does not have one.
  *
  * Returns: (nullable) (transfer full): a `PangoFontMap`
  *
