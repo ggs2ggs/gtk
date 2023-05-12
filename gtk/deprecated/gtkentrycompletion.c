@@ -499,6 +499,7 @@ gtk_entry_completion_constructed (GObject *object)
 
   /* pack it all */
   completion->popup_window = gtk_popover_new ();
+  g_object_ref_sink (completion->popup_window);
   gtk_popover_set_position (GTK_POPOVER (completion->popup_window), GTK_POS_BOTTOM);
   gtk_popover_set_autohide (GTK_POPOVER (completion->popup_window), FALSE);
   gtk_popover_set_has_arrow (GTK_POPOVER (completion->popup_window), FALSE);
@@ -672,6 +673,7 @@ gtk_entry_completion_dispose (GObject *object)
   if (completion->entry)
     gtk_entry_set_completion (GTK_ENTRY (completion->entry), NULL);
 
+  g_clear_object (&completion->popup_window);
   g_clear_object (&completion->cell_area);
 
   G_OBJECT_CLASS (gtk_entry_completion_parent_class)->dispose (object);
