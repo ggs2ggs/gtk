@@ -749,6 +749,7 @@ gen_visibility_macros = find_program('build-aux/meson/gen-visibility-macros.py')
 
 subdir('gdk/version')
 subdir('gtk/css')
+subdir('gtk/json')
 subdir('gdk')
 subdir('gsk')
 subdir('gtk')
