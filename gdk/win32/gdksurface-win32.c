@@ -41,6 +41,7 @@
 #include "gdkpopupprivate.h"
 #include "gdkseatprivate.h"
 #include "gdksurfaceprivate.h"
+#include "gdksurfacecssnodeprivate.h"
 #include "gdktoplevelprivate.h"
 #include "gdkwin32surface.h"
 #include "gdkwin32cursor.h"
@@ -52,9 +53,27 @@
 #include "gdkcairocontext-win32.h"
 #include "gdkmonitor-win32.h"
 
+#include "gtk/gtkcsscolorvalueprivate.h"
+#include "gtk/gtksettings.h"
+
 #include <cairo-win32.h>
 #include <dwmapi.h>
 #include <math.h>
+
+enum {
+  WIN32_DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19,
+  WIN32_DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
+  WIN32_DWMWA_CAPTION_COLOR = 35,
+  WIN32_DWMWA_SYSTEMBACKDROP_TYPE = 38,
+  WIN32_DWMSBT_AUTO = 0,
+  WIN32_DWMSBT_NONE = 1
+};
+
+enum GET_WINDOW_ATTRIBUTE_RESULT {
+  WA_FAILED,
+  WA_SUCCESS,
+  WA_UNSET
+};
 
 static void gdk_surface_win32_finalize (GObject *object);
 static void compute_toplevel_size      (GdkSurface *surface,
@@ -302,6 +321,161 @@ _gdk_win32_surface_enable_transparency (GdkSurface *window)
   DeleteObject (empty_region);
 
   return SUCCEEDED (call_result);
+}
+
+static int
+get_immersive_dark_mode (HWND handle, BOOL is_dark)
+{
+  const HRESULT result =
+    SUCCEEDED(DwmGetWindowAttribute (handle, WIN32_DWMWA_USE_IMMERSIVE_DARK_MODE, &is_dark, sizeof (is_dark)))
+    || SUCCEEDED (DwmGetWindowAttribute (handle, WIN32_DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, &is_dark, sizeof (is_dark)));
+
+  if (result == E_INVALIDARG)
+    return WA_UNSET;
+  else if (SUCCEEDED (result))
+    return WA_SUCCESS;
+
+  return WA_FAILED;
+}
+
+static BOOL
+set_immersive_dark_mode(HWND handle, BOOL is_dark)
+{
+  const BOOL success =
+    SUCCEEDED (DwmSetWindowAttribute(handle, WIN32_DWMWA_USE_IMMERSIVE_DARK_MODE, &is_dark, sizeof (is_dark)))
+    || SUCCEEDED (DwmSetWindowAttribute(handle, WIN32_DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, &is_dark, sizeof (is_dark)));
+
+  return success;
+}
+
+static int
+get_titlebar_color (HWND handle, COLORREF colorref)
+{
+  const HRESULT result =
+    DwmGetWindowAttribute (handle, WIN32_DWMWA_CAPTION_COLOR, &colorref, sizeof (colorref));
+
+  if (result == E_INVALIDARG)
+    return WA_UNSET;
+  else if (SUCCEEDED (result))
+    return WA_SUCCESS;
+
+  return WA_FAILED;
+}
+
+static BOOL
+set_titlebar_color (GdkSurface *window, GtkCssStyle *style)
+{
+  if (!GTK_IS_CSS_STYLE (style))
+    return FALSE;
+
+  HWND handle = GDK_SURFACE_HWND (window);
+  GtkCssValue *value = gtk_css_style_get_value (style, GTK_CSS_PROPERTY_BACKGROUND_COLOR);
+
+  if (value == NULL)
+    return FALSE;
+
+  const GdkRGBA *rgba = gtk_css_color_value_get_rgba (value);
+
+  const COLORREF colorref =
+    RGB ((int)(0.5 + CLAMP (rgba->red, 0., 1.) * 255.),
+          (int)(0.5 + CLAMP (rgba->green, 0., 1.) * 255.),
+          (int)(0.5 + CLAMP (rgba->blue, 0., 1.) * 255.));
+
+  return SUCCEEDED (DwmSetWindowAttribute (handle, WIN32_DWMWA_CAPTION_COLOR, &colorref, sizeof (colorref)));
+}
+
+static void
+node_style_changed_cb (GtkCssNode        *node,
+                       GtkCssStyleChange *change,
+                       GdkSurface        *window)
+{
+  if (gtk_css_style_change_affects (change, GTK_CSS_AFFECTS_BACKGROUND))
+    {
+      if (set_titlebar_color (window, gtk_css_style_change_get_new_style (change)))
+        {
+          HWND handle = GDK_SURFACE_HWND (window);
+          SendMessageW (handle, WM_NCPAINT, 0, 0);
+        }
+    }
+}
+
+static void
+theme_changed_cb (GtkCssNode *node,
+                  GParamSpec *pspec,
+                  GdkSurface *window)
+{
+  HWND handle = GDK_SURFACE_HWND (window);
+  gboolean dark_theme_requested;
+
+  g_object_get (gtk_settings_get_for_display (gdk_surface_get_display (window)),
+                "gtk-application-prefer-dark-theme", &dark_theme_requested,
+                NULL);
+
+  if (set_immersive_dark_mode (handle, dark_theme_requested ? TRUE : FALSE))
+    {
+      GdkWin32Surface *impl = GDK_WIN32_SURFACE (window);
+      if (impl->headerbar_node != NULL)
+        {
+          gtk_css_node_invalidate_style_provider (impl->headerbar_node);
+        }
+      SendMessageW (handle, WM_NCPAINT, 0, 0);
+    }
+}
+
+void
+_gdk_win32_surface_set_immersive_titlebar (GdkSurface *window)
+{
+  GdkWin32Surface *impl = GDK_WIN32_SURFACE (window);
+  HWND handle = GDK_SURFACE_HWND (window);
+  COLORREF color = 0x00000000;
+  const int color_result = get_titlebar_color (handle, color);
+  if (color_result != WA_FAILED || color_result == WA_UNSET)
+    {
+      impl->headerbar_node = gdk_surface_css_node_new (window);
+      gtk_css_node_set_name (impl->headerbar_node, g_quark_from_static_string ("headerbar"));
+      set_titlebar_color (window, gtk_css_node_get_style (impl->headerbar_node));
+      g_signal_connect (impl->headerbar_node, "style-changed",
+                        G_CALLBACK (node_style_changed_cb), window);
+    }
+}
+
+void
+_gdk_win32_surface_set_titlebar_theme_variant (GdkSurface *window)
+{
+  BOOL is_dark = FALSE;
+
+  HWND handle = GDK_SURFACE_HWND (window);
+
+  const int is_dark_result = get_immersive_dark_mode (handle, is_dark);
+
+  if (is_dark_result != WA_FAILED || is_dark_result == WA_UNSET)
+    {
+      GtkSettings *settings = gtk_settings_get_for_display (gdk_surface_get_display (window));
+      g_signal_connect (settings,
+                        "notify::gtk-application-prefer-dark-theme",
+                        G_CALLBACK (theme_changed_cb), window);
+
+      gboolean dark_theme_requested;
+
+      g_object_get (settings,
+                    "gtk-application-prefer-dark-theme", &dark_theme_requested,
+                    NULL);
+
+      set_immersive_dark_mode (handle, dark_theme_requested ? TRUE : FALSE);
+    }
+}
+
+BOOL
+_gdk_win32_surface_set_transparent_titlebar (GdkSurface *window, bool is_transparent)
+{
+  HWND handle = GDK_SURFACE_HWND (window);
+  if (is_transparent)
+    return SUCCEEDED (DwmSetWindowAttribute (handle, WIN32_DWMWA_SYSTEMBACKDROP_TYPE, &(DWORD) { WIN32_DWMSBT_AUTO }, sizeof (WIN32_DWMSBT_AUTO))) ? TRUE : FALSE;
+  else
+    {
+      DwmSetWindowAttribute (handle, WIN32_DWMWA_SYSTEMBACKDROP_TYPE, &(DWORD) { WIN32_DWMSBT_NONE }, sizeof (WIN32_DWMSBT_NONE));
+      return FALSE;
+    }
 }
 
 static const char *
@@ -4820,11 +4994,21 @@ gdk_win32_toplevel_get_property (GObject    *object,
 static void
 gdk_win32_toplevel_finalize (GObject *object)
 {
+  GdkSurface *window = GDK_SURFACE (object);
   GdkWin32Surface *self = GDK_WIN32_SURFACE (object);
 
   g_signal_handlers_disconnect_by_func (self,
                                         gdk_win32_toplevel_state_callback,
                                         NULL);
+
+  g_signal_handlers_disconnect_by_func (gtk_settings_get_for_display (gdk_surface_get_display (window)),
+                                        theme_changed_cb,
+                                        window);
+
+  if (self->headerbar_node != NULL)
+    g_signal_handlers_disconnect_by_func (self->headerbar_node,
+                                          node_style_changed_cb,
+                                          window);
 
   G_OBJECT_CLASS (gdk_win32_toplevel_parent_class)->finalize (object);
 }
@@ -4861,6 +5045,17 @@ gdk_win32_toplevel_present (GdkToplevel       *toplevel,
   impl->toplevel_layout = gdk_toplevel_layout_copy (layout);
   compute_toplevel_size (surface, FALSE, &width, &height);
   gdk_win32_surface_resize (surface, width, height);
+
+  if (impl->decorate_all)
+    {
+      _gdk_win32_surface_set_titlebar_theme_variant (surface);
+      const bool should_be_transparent = g_strcmp0 (g_getenv ("GDK_WIN32_TRANSPARENT_TITLEBAR"), "1") == 0;
+      const BOOL is_transparent =
+        _gdk_win32_surface_set_transparent_titlebar (surface,
+                                                     should_be_transparent);
+      if (!is_transparent && g_strcmp0 (g_getenv ("GDK_WIN32_IMMERSIVE_TITLEBAR"), "1") == 0)
+        _gdk_win32_surface_set_immersive_titlebar (surface);
+    }
 
   if (gdk_toplevel_layout_get_maximized (layout, &maximize))
     {
@@ -4975,8 +5170,16 @@ gdk_win32_toplevel_restore_system_shortcuts (GdkToplevel *toplevel)
 static void
 gdk_win32_toplevel_state_callback (GdkSurface *surface)
 {
+  GdkWin32Surface *impl = GDK_WIN32_SURFACE (surface);
+
   if (surface->state & GDK_TOPLEVEL_STATE_FOCUSED)
-    return;
+    {
+      if (impl->headerbar_node != NULL)
+        gtk_css_node_set_state (impl->headerbar_node, GTK_STATE_FLAG_NORMAL);
+      return;
+    }
+  else if (impl->headerbar_node != NULL)
+    gtk_css_node_set_state (impl->headerbar_node, GTK_STATE_FLAG_BACKDROP);
 
   if (surface->shortcuts_inhibited)
     gdk_win32_toplevel_restore_system_shortcuts (GDK_TOPLEVEL (surface));
