@@ -34,6 +34,7 @@
 #include "gtkgestureclick.h"
 #include "gtkgesturedrag.h"
 #include "gtklistviewprivate.h"
+#include "gtkmultiselection.h"
 #include "gtkscrollable.h"
 #include "gtksizerequest.h"
 #include "gtktypebuiltins.h"
@@ -1439,6 +1440,19 @@ gtk_column_view_drag_leave (GtkDropControllerMotion *motion,
 }
 
 static void
+gtk_column_view_model_items_changed_cb (GListModel    *model,
+                                        guint          position,
+                                        guint          removed,
+                                        guint          added,
+                                        GtkColumnView *self)
+{
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_ROW_COUNT,
+                                  g_list_model_get_n_items (model),
+                                  -1);
+}
+
+static void
 gtk_column_view_init (GtkColumnView *self)
 {
   GtkEventController *controller;
@@ -1547,13 +1561,37 @@ void
 gtk_column_view_set_model (GtkColumnView     *self,
                            GtkSelectionModel *model)
 {
+  GtkSelectionModel *old_model;
+
   g_return_if_fail (GTK_IS_COLUMN_VIEW (self));
   g_return_if_fail (model == NULL || GTK_IS_SELECTION_MODEL (model));
 
-  if (gtk_list_view_get_model (self->listview) == model)
+  old_model = gtk_list_view_get_model (self->listview);
+
+  if (old_model == model)
     return;
 
+  if (old_model != NULL)
+    g_signal_handlers_disconnect_by_func (old_model,
+                                          gtk_column_view_model_items_changed_cb,
+                                          self);
+
   gtk_list_view_set_model (self->listview, model);
+
+  gtk_accessible_update_property (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_PROPERTY_MULTI_SELECTABLE,
+                                  model ? GTK_IS_MULTI_SELECTION (model) : FALSE,
+                                  -1);
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_ROW_COUNT,
+                                  model ? g_list_model_get_n_items (G_LIST_MODEL (model)) : 0,
+                                  -1);
+  if (model != NULL)
+    g_signal_connect_object (model,
+                             "items-changed",
+                             G_CALLBACK (gtk_column_view_model_items_changed_cb),
+                             self,
+                             0);
 
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_MODEL]);
 }
@@ -1673,12 +1711,20 @@ void
 gtk_column_view_append_column (GtkColumnView       *self,
                                GtkColumnViewColumn *column)
 {
+  guint i;
+
   g_return_if_fail (GTK_IS_COLUMN_VIEW (self));
   g_return_if_fail (GTK_IS_COLUMN_VIEW_COLUMN (column));
   g_return_if_fail (gtk_column_view_column_get_column_view (column) == NULL);
 
+  i = g_list_model_get_n_items (G_LIST_MODEL (self->columns));
   gtk_column_view_column_set_column_view (column, self);
   g_list_store_append (self->columns, column);
+  gtk_column_view_column_update_position (column, i);
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_COL_COUNT,
+                                  g_list_model_get_n_items (G_LIST_MODEL (self->columns)),
+                                  -1);
 }
 
 /**
@@ -1692,7 +1738,7 @@ void
 gtk_column_view_remove_column (GtkColumnView       *self,
                                GtkColumnViewColumn *column)
 {
-  guint i;
+  guint i, j;
 
   g_return_if_fail (GTK_IS_COLUMN_VIEW (self));
   g_return_if_fail (GTK_IS_COLUMN_VIEW_COLUMN (column));
@@ -1711,6 +1757,14 @@ gtk_column_view_remove_column (GtkColumnView       *self,
   gtk_column_view_column_set_column_view (column, NULL);
   g_list_store_remove (self->columns, i);
 
+  for (j = i; j < g_list_model_get_n_items (G_LIST_MODEL (self->columns)); j++)
+    {
+      GtkColumnViewColumn *item = g_list_model_get_item (G_LIST_MODEL (self->columns), j);
+
+      gtk_column_view_column_update_position (item, j);
+      g_object_unref (item);
+    }
+
   if (self->focus_column == column)
     {
       GtkColumnViewColumn *item;
@@ -1724,6 +1778,11 @@ gtk_column_view_remove_column (GtkColumnView       *self,
 
       gtk_column_view_set_focus_column (self, item);
     }
+
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_COL_COUNT,
+                                  g_list_model_get_n_items (G_LIST_MODEL (self->columns)),
+                                  -1);
 }
 
 /**
@@ -1773,11 +1832,28 @@ gtk_column_view_insert_column (GtkColumnView       *self,
   gtk_column_view_column_set_column_view (column, self);
 
   if (old_position != -1 && position != old_position)
-    gtk_column_view_column_set_position (column, position);
+    {
+      guint i;
+
+      gtk_column_view_column_set_position (column, position);
+
+      for (i = position; i < g_list_model_get_n_items (G_LIST_MODEL (self->columns)); i++)
+        {
+          GtkColumnViewColumn *item = g_list_model_get_item (G_LIST_MODEL (self->columns), i);
+
+          gtk_column_view_column_update_position (item, i);
+          g_object_unref (item);
+        }
+    }
 
   gtk_column_view_column_queue_resize (column);
 
   g_object_unref (column);
+
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_COL_COUNT,
+                                  g_list_model_get_n_items (G_LIST_MODEL (self->columns)),
+                                  -1);
 }
 
 static void

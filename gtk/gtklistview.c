@@ -272,6 +272,7 @@ gtk_list_view_create_list_widget (GtkListBase *base)
     factory = self->factory;
 
   result = gtk_list_item_widget_new (factory,
+                                     base,
                                      "row",
                                      GTK_ACCESSIBLE_ROLE_LIST_ITEM);
 
@@ -840,6 +841,39 @@ gtk_list_view_activate_item (GtkWidget  *widget,
 }
 
 static void
+gtk_list_view_update_item (GtkListBase     *base,
+                           GtkListItemBase *item,
+                           gpointer         object)
+{
+  if (object)
+    {
+      guint pos = gtk_list_item_base_get_position (item);
+
+      gtk_accessible_update_relation (GTK_ACCESSIBLE (item),
+                                      GTK_ACCESSIBLE_RELATION_ROW_INDEX, pos + 1,
+                                      -1);
+    }
+  else
+    {
+      gtk_accessible_reset_relation (GTK_ACCESSIBLE (item),
+                                     GTK_ACCESSIBLE_RELATION_ROW_INDEX);
+    }
+}
+
+static void
+gtk_list_view_model_items_changed_cb (GListModel  *model,
+                                      guint        position,
+                                      guint        removed,
+                                      guint        added,
+                                      GtkListView *self)
+{
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_ROW_COUNT,
+                                  g_list_model_get_n_items (model),
+                                  -1);
+}
+
+static void
 gtk_list_view_class_init (GtkListViewClass *klass)
 {
   GtkListBaseClass *list_base_class = GTK_LIST_BASE_CLASS (klass);
@@ -855,6 +889,7 @@ gtk_list_view_class_init (GtkListViewClass *klass)
   list_base_class->get_position_from_allocation = gtk_list_view_get_position_from_allocation;
   list_base_class->move_focus_along = gtk_list_view_move_focus_along;
   list_base_class->move_focus_across = gtk_list_view_move_focus_across;
+  list_base_class->update_item = gtk_list_view_update_item;
 
   widget_class->measure = gtk_list_view_measure;
   widget_class->size_allocate = gtk_list_view_size_allocate;
@@ -1064,15 +1099,36 @@ void
 gtk_list_view_set_model (GtkListView       *self,
                          GtkSelectionModel *model)
 {
+  GtkSelectionModel *old_model;
+
   g_return_if_fail (GTK_IS_LIST_VIEW (self));
   g_return_if_fail (model == NULL || GTK_IS_SELECTION_MODEL (model));
+
+  old_model = gtk_list_base_get_model (GTK_LIST_BASE (self));
+
+  if (old_model != NULL && old_model != model)
+    g_signal_handlers_disconnect_by_func (old_model,
+                                          gtk_list_view_model_items_changed_cb,
+                                          self);
 
   if (!gtk_list_base_set_model (GTK_LIST_BASE (self), model))
     return;
 
   gtk_accessible_update_property (GTK_ACCESSIBLE (self),
-                                  GTK_ACCESSIBLE_PROPERTY_MULTI_SELECTABLE, GTK_IS_MULTI_SELECTION (model),
+                                  GTK_ACCESSIBLE_PROPERTY_MULTI_SELECTABLE,
+                                  model ? GTK_IS_MULTI_SELECTION (model) : FALSE,
                                   -1);
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_ROW_COUNT,
+                                  model ? g_list_model_get_n_items (G_LIST_MODEL (model)) : 0,
+                                  -1);
+
+  if (model != NULL)
+    g_signal_connect_object (model,
+                             "items-changed",
+                             G_CALLBACK (gtk_list_view_model_items_changed_cb),
+                             self,
+                             0);
 
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_MODEL]);
 }
