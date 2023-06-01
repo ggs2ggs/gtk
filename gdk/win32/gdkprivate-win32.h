@@ -163,33 +163,12 @@ typedef enum
   GDK_DRAG_PROTO_OLE2,
 } GdkDragProtocol;
 
-GType _gdk_gc_win32_get_type (void);
-
 gulong _gdk_win32_get_next_tick (gulong suggested_tick);
 
 BOOL _gdk_win32_get_cursor_pos (LPPOINT lpPoint);
 
-void _gdk_surface_init_position     (GdkSurface *window);
-void _gdk_surface_move_resize_child (GdkSurface *window,
-                                     int        x,
-                                     int        y,
-                                     int        width,
-                                     int        height);
+void gdk_win32_surface_enable_transparency (GdkSurface *self);
 
-gboolean _gdk_win32_surface_enable_transparency (GdkSurface *window);
-
-
-/* GdkSurfaceImpl methods */
-void _gdk_win32_surface_scroll (GdkSurface *window,
-                                int        dx,
-                                int        dy);
-void _gdk_win32_surface_move_region (GdkSurface       *window,
-                                     const cairo_region_t *region,
-                                     int              dx,
-                                     int              dy);
-
-
-void _gdk_win32_selection_init (void);
 void _gdk_win32_dnd_exit (void);
 
 void     gdk_win32_handle_table_insert  (HANDLE   *handle,
@@ -205,8 +184,6 @@ cairo_region_t *_gdk_win32_hrgn_to_region    (HRGN  hrgn,
 
 void    _gdk_win32_adjust_client_rect   (GdkSurface *window,
                                          RECT      *RECT);
-
-void    _gdk_selection_property_delete (GdkSurface *);
 
 void       _gdk_push_modal_window   (GdkSurface *window);
 void       _gdk_remove_modal_window (GdkSurface *window);
@@ -251,11 +228,38 @@ void   _gdk_win32_print_event            (GdkEvent     *event);
 
 #endif
 
-char   *_gdk_win32_last_error_string (void);
 void    _gdk_win32_api_failed        (const char *where,
                                       const char *api);
 void    _gdk_other_api_failed        (const char *where,
                                       const char *api);
+
+static inline HRESULT
+hr_check (HRESULT         hr,
+          const char     *domain,
+          const char     *file,
+          const char     *line,
+          const char     *func,
+          const char     *expr)
+{
+  char *error_string;
+
+  if (G_LIKELY (SUCCEEDED (hr)))
+    return hr;
+
+  error_string = g_win32_error_message (hr);
+
+  g_log_structured_standard (domain,
+                             G_LOG_LEVEL_WARNING, 
+                             file,
+                             line,
+                             func,
+                             "%s = 0x%lx: %s", expr, hr, error_string);
+  g_free (error_string);
+
+  return hr;
+}
+
+#define HR_CHECK(expr) hr_check (expr, G_LOG_DOMAIN, __FILE__, G_STRINGIFY (__LINE__), G_STRFUNC, #expr);
 
 #define WIN32_API_FAILED(api) _gdk_win32_api_failed (G_STRLOC , api)
 #define WIN32_GDI_FAILED(api) WIN32_API_FAILED (api)
@@ -271,8 +275,6 @@ void    _gdk_other_api_failed        (const char *where,
 
 #define GDI_CALL(api, arglist) (api arglist ? 1 : (WIN32_GDI_FAILED (#api), 0))
 #define API_CALL(api, arglist) (api arglist ? 1 : (WIN32_API_FAILED (#api), 0))
-
-#define HR_LOG(hr)
 
 #define HR_CHECK_RETURN(hr) { if G_UNLIKELY (FAILED (hr)) return; }
 #define HR_CHECK_RETURN_VAL(hr, val) { if G_UNLIKELY (FAILED (hr)) return val; }
