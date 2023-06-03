@@ -1641,6 +1641,9 @@ gtk_paned_set_resize_start_child (GtkPaned *paned,
 {
   g_return_if_fail (GTK_IS_PANED (paned));
 
+  if (!paned->start_child)
+    g_critical("The resize_start_child property will be reset when a child is added. You should set this property after adding widgets");
+
   if (paned->resize_start_child == resize)
     return;
 
@@ -1677,6 +1680,9 @@ gtk_paned_set_shrink_start_child (GtkPaned *paned,
                                   gboolean  shrink)
 {
   g_return_if_fail (GTK_IS_PANED (paned));
+
+  if (!paned->start_child)
+    g_critical("shrink_start_child will be reset when a child is added. You should set this property after adding widgets");
 
   if (paned->shrink_start_child == shrink)
     return;
@@ -1761,6 +1767,9 @@ gtk_paned_set_resize_end_child (GtkPaned *paned,
 {
   g_return_if_fail (GTK_IS_PANED (paned));
 
+  if (!paned->end_child)
+    g_critical("resize_end_child will be reset when a child is added. You should set this property after adding widgets");
+
   if (paned->resize_end_child == resize)
     return;
 
@@ -1797,6 +1806,9 @@ gtk_paned_set_shrink_end_child (GtkPaned *paned,
                                 gboolean  shrink)
 {
   g_return_if_fail (GTK_IS_PANED (paned));
+
+  if (!paned->end_child)
+    g_critical("The shrink_end_child property will be reset when a child is added. You should set this property after adding widgets");
 
   if (paned->shrink_end_child == shrink)
     return;
