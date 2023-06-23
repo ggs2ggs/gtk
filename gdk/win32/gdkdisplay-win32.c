@@ -306,78 +306,27 @@ gdk_win32_display_get_next_serial (GdkDisplay *display)
 	return 0;
 }
 
-static LRESULT CALLBACK
-inner_display_change_window_procedure (HWND   hwnd,
-                                       UINT   message,
-                                       WPARAM wparam,
-                                       LPARAM lparam)
+static gboolean
+display_changed (UINT uMsg,
+                 WPARAM wParam,
+                 LPARAM lParam,
+                 LRESULT *result)
 {
-  switch (message)
+  switch (uMsg)
     {
-    case WM_DESTROY:
-      {
-        PostQuitMessage (0);
-        return 0;
-      }
     case WM_DISPLAYCHANGE:
       {
         GdkWin32Display *win32_display = GDK_WIN32_DISPLAY (_gdk_display);
+        GdkWin32Screen *win32_screen = GDK_WIN32_SCREEN (win32_display->screen);
 
-        _gdk_win32_screen_on_displaychange_event (GDK_WIN32_SCREEN (win32_display->screen));
-        return 0;
+        _gdk_win32_screen_on_displaychange_event (win32_screen);
+
+        return TRUE;
       }
-    default:
-      /* Otherwise call DefWindowProcW(). */
-      GDK_NOTE (EVENTS, g_print (" DefWindowProcW"));
-      return DefWindowProc (hwnd, message, wparam, lparam);
+    break;
     }
-}
 
-static LRESULT CALLBACK
-display_change_window_procedure (HWND   hwnd,
-                                 UINT   message,
-                                 WPARAM wparam,
-                                 LPARAM lparam)
-{
-  LRESULT retval;
-
-  GDK_NOTE (EVENTS, g_print ("%s%*s%s %p",
-			     (debug_indent > 0 ? "\n" : ""),
-			     debug_indent, "",
-			     _gdk_win32_message_to_string (message), hwnd));
-  debug_indent += 2;
-  retval = inner_display_change_window_procedure (hwnd, message, wparam, lparam);
-  debug_indent -= 2;
-
-  GDK_NOTE (EVENTS, g_print (" => %" G_GINT64_FORMAT "%s", (gint64) retval, (debug_indent == 0 ? "\n" : "")));
-
-  return retval;
-}
-
-/* Use a hidden window to be notified about display changes */
-static void
-register_display_change_notification (GdkDisplay *display)
-{
-  GdkWin32Display *display_win32 = GDK_WIN32_DISPLAY (display);
-  WNDCLASS wclass = { 0, };
-  ATOM klass;
-
-  wclass.lpszClassName = "GdkDisplayChange";
-  wclass.lpfnWndProc = display_change_window_procedure;
-  wclass.hInstance = _gdk_app_hmodule;
-
-  klass = RegisterClass (&wclass);
-  if (klass)
-    {
-      display_win32->hwnd = CreateWindow (MAKEINTRESOURCE (klass),
-                                          NULL, WS_POPUP,
-                                          0, 0, 0, 0, NULL, NULL,
-                                          _gdk_app_hmodule, NULL);
-      if (!display_win32->hwnd)
-        {
-          UnregisterClass (MAKEINTRESOURCE (klass), _gdk_app_hmodule);
-        }
-    }
+  return FALSE;
 }
 
 GdkDisplay *
@@ -422,7 +371,7 @@ _gdk_win32_display_open (const gchar *display_name)
   /* Precalculate display name */
   (void) gdk_display_get_name (_gdk_display);
 
-  register_display_change_notification (_gdk_display);
+  notif_window_add (WM_DISPLAYCHANGE, display_changed);
 
   g_signal_emit_by_name (_gdk_display, "opened");
 
@@ -523,23 +472,14 @@ gdk_win32_display_supports_selection_notification (GdkDisplay *display)
   return TRUE;
 }
 
-/*
- * maybe this should be integrated with the default message loop - or maybe not ;-)
- */
-static LRESULT CALLBACK
-inner_clipboard_window_procedure (HWND   hwnd,
-                                  UINT   message,
-                                  WPARAM wparam,
-                                  LPARAM lparam)
+static gboolean
+clipboard_updated (UINT message,
+                   WPARAM wParam,
+                   LPARAM lParam,
+                   LRESULT *result)
 {
   switch (message)
     {
-    case WM_DESTROY: /* remove us from chain */
-      {
-        RemoveClipboardFormatListener (hwnd);
-        PostQuitMessage (0);
-        return 0;
-      }
     case WM_CLIPBOARDUPDATE:
       {
         HWND hwnd_owner;
@@ -552,7 +492,6 @@ inner_clipboard_window_procedure (HWND   hwnd,
 
         SetLastError (0);
         hwnd_owner = GetClipboardOwner ();
-
         if (hwnd_owner == NULL && GetLastError () != 0)
           WIN32_API_FAILED ("GetClipboardOwner");
 
@@ -564,7 +503,7 @@ inner_clipboard_window_procedure (HWND   hwnd,
         if (_gdk_debug_flags & GDK_DEBUG_DND)
           {
             if (win32_sel->clipboard_opened_for != INVALID_HANDLE_VALUE ||
-                OpenClipboard (hwnd))
+                OpenClipboard (notif_window_handle))
               {
                 UINT nFormat = 0;
 
@@ -619,73 +558,29 @@ inner_clipboard_window_procedure (HWND   hwnd,
 
         /* clear error to avoid confusing SetClipboardViewer() return */
         SetLastError (0);
-        return 0;
+
+        return TRUE;
       }
+    break;
     default:
-      /* Otherwise call DefWindowProcW(). */
-      GDK_NOTE (EVENTS, g_print (" DefWindowProcW"));
-      return DefWindowProc (hwnd, message, wparam, lparam);
+    break;
     }
+
+  return FALSE;
 }
 
-static LRESULT CALLBACK
-_clipboard_window_procedure (HWND   hwnd,
-                             UINT   message,
-                             WPARAM wparam,
-                             LPARAM lparam)
-{
-  LRESULT retval;
-
-  GDK_NOTE (EVENTS, g_print ("%s%*s%s %p",
-			     (debug_indent > 0 ? "\n" : ""),
-			     debug_indent, "",
-			     _gdk_win32_message_to_string (message), hwnd));
-  debug_indent += 2;
-  retval = inner_clipboard_window_procedure (hwnd, message, wparam, lparam);
-  debug_indent -= 2;
-
-  GDK_NOTE (EVENTS, g_print (" => %" G_GINT64_FORMAT "%s", (gint64) retval, (debug_indent == 0 ? "\n" : "")));
-
-  return retval;
-}
-
-/*
- * Creates a hidden window and adds it to the clipboard chain
- */
 static gboolean
-register_clipboard_notification (GdkDisplay *display)
+register_clipboard_notification (void)
 {
-  GdkWin32Display *display_win32 = GDK_WIN32_DISPLAY (display);
-  WNDCLASS wclass = { 0, };
-  ATOM klass;
+  notif_window_add (WM_CLIPBOARDUPDATE, clipboard_updated);
 
-  wclass.lpszClassName = "GdkClipboardNotification";
-  wclass.lpfnWndProc = _clipboard_window_procedure;
-  wclass.hInstance = _gdk_app_hmodule;
-
-  klass = RegisterClass (&wclass);
-  if (!klass)
-    return FALSE;
-
-  display_win32->clipboard_hwnd = CreateWindow (MAKEINTRESOURCE (klass),
-                                                NULL, WS_POPUP,
-                                                0, 0, 0, 0, NULL, NULL,
-                                                _gdk_app_hmodule, NULL);
-
-  if (display_win32->clipboard_hwnd == NULL)
-    goto failed;
-
-  SetLastError (0);
-
-  if (AddClipboardFormatListener (display_win32->clipboard_hwnd) == FALSE)
-    goto failed;
+  if (!AddClipboardFormatListener (notif_window_handle))
+    {
+      WIN32_API_FAILED ("AddClipboardFormatListener");
+      return FALSE;
+    }
 
   return TRUE;
-
-failed:
-  g_critical ("Failed to install clipboard viewer");
-  UnregisterClass (MAKEINTRESOURCE (klass), _gdk_app_hmodule);
-  return FALSE;
 }
 
 static gboolean
@@ -695,18 +590,23 @@ gdk_win32_display_request_selection_notification (GdkDisplay *display,
 {
   GdkWin32Display *display_win32 = GDK_WIN32_DISPLAY (display);
   gboolean ret = FALSE;
-  gchar *selection_name = gdk_atom_name (selection);
+
+#ifdef G_DEBUG
+  char *selection_name = gdk_atom_name (selection);
 
   GDK_NOTE (DND,
             g_print ("gdk_display_request_selection_notification (..., %s)",
                      selection_name));
+
+  g_clear_pointer (&selection_name, g_free);
+#endif
 
   if (selection == GDK_SELECTION_CLIPBOARD ||
       selection == GDK_SELECTION_PRIMARY)
     {
       if (display_win32->clipboard_hwnd == NULL)
         {
-          if (register_clipboard_notification (display))
+          if (register_clipboard_notification ())
             GDK_NOTE (DND, g_print (" registered"));
           else
             GDK_NOTE (DND, g_print (" failed to register"));
@@ -718,8 +618,6 @@ gdk_win32_display_request_selection_notification (GdkDisplay *display,
       GDK_NOTE (DND, g_print (" unsupported"));
       ret = FALSE;
     }
-
-  g_free (selection_name);
 
   GDK_NOTE (DND, g_print (" -> %s\n", ret ? "TRUE" : "FALSE"));
   return ret;

@@ -87,9 +87,6 @@ static getPointerTouchInfoHistory_t getPointerTouchInfoHistory;
 static setGestureConfig_t setGestureConfig;
 static setWindowFeedbackSetting_t setWindowFeedbackSetting;
 
-static ATOM winpointer_notif_window_class;
-static HWND winpointer_notif_window_handle;
-
 static GPtrArray *winpointer_ignored_interactions;
 
 static GList     *wintab_contexts = NULL;
@@ -490,13 +487,19 @@ winpointer_match_system_device_in_device_manager (GdkDeviceManagerWin32 *device_
   return FALSE;
 }
 
-static void
+static gboolean
+winpointer_ensure_procedures (void);
+
+void
 winpointer_enumerate_devices (GdkDeviceManagerWin32 *device_manager)
 {
   POINTER_DEVICE_INFO *infos = NULL;
   UINT32 infos_count = 0;
   UINT32 i = 0;
   GList *current = NULL;
+
+  if (!winpointer_ensure_procedures ())
+    return;
 
   do
     {
@@ -549,59 +552,25 @@ winpointer_enumerate_devices (GdkDeviceManagerWin32 *device_manager)
   g_free (infos);
 }
 
-static LRESULT CALLBACK
-winpointer_notif_window_proc (HWND hWnd,
-                              UINT uMsg,
-                              WPARAM wParam,
-                              LPARAM lParam)
+static gboolean
+pointer_device_changed (UINT uMsg,
+                        WPARAM wParam,
+                        LPARAM lParam,
+                        LRESULT *result)
 {
   switch (uMsg)
     {
     case WM_POINTERDEVICECHANGE:
       {
-        LONG_PTR user_data = GetWindowLongPtrW (hWnd, GWLP_USERDATA);
-        GdkDeviceManagerWin32 *device_manager = GDK_DEVICE_MANAGER_WIN32 (user_data);
+        GdkDeviceManager *device_manager = gdk_display_get_device_manager (_gdk_display);
+        winpointer_enumerate_devices (GDK_DEVICE_MANAGER_WIN32 (device_manager));
 
-        winpointer_enumerate_devices (device_manager);
+        return TRUE;
       }
-    return 0;
+    break;
     }
 
-  return DefWindowProcW (hWnd, uMsg, wParam, lParam);
-}
-
-static gboolean
-winpointer_notif_window_create ()
-{
-  WNDCLASSEXW wndclass;
-
-  memset (&wndclass, 0, sizeof (wndclass));
-  wndclass.cbSize = sizeof (wndclass);
-  wndclass.lpszClassName = L"GdkWin32WinPointerNotificationsWindowClass";
-  wndclass.lpfnWndProc = winpointer_notif_window_proc;
-  wndclass.hInstance = _gdk_dll_hinstance;
-
-  if ((winpointer_notif_window_class = RegisterClassExW (&wndclass)) == 0)
-    {
-      WIN32_API_FAILED ("RegisterClassExW");
-      return FALSE;
-    }
-
-  if (!(winpointer_notif_window_handle = CreateWindowExW (0,
-                                                          (LPCWSTR) winpointer_notif_window_class,
-                                                          L"GdkWin32 WinPointer Notifications",
-                                                          0,
-                                                          0, 0, 0, 0,
-                                                          HWND_MESSAGE,
-                                                          NULL,
-                                                          _gdk_dll_hinstance,
-                                                          NULL)))
-    {
-      WIN32_API_FAILED ("CreateWindowExW");
-      return FALSE;
-    }
-
-  return TRUE;
+  return FALSE;
 }
 
 static gboolean
@@ -663,27 +632,15 @@ winpointer_initialize (GdkDeviceManagerWin32 *device_manager)
   if (!winpointer_ensure_procedures ())
     return FALSE;
 
-  if (!winpointer_notif_window_create ())
-    return FALSE;
+  winpointer_ignored_interactions = g_ptr_array_new ();
 
-  /* associate device_manager with the window */
-  SetLastError (0);
-  if (SetWindowLongPtrW (winpointer_notif_window_handle,
-                         GWLP_USERDATA,
-                         (LONG_PTR) device_manager) == 0
-      && GetLastError () != 0)
-    {
-      WIN32_API_FAILED ("SetWindowLongPtrW");
-      return FALSE;
-    }
-
-  if (!registerPointerDeviceNotifications (winpointer_notif_window_handle, FALSE))
+  if (!registerPointerDeviceNotifications (notif_window_handle, FALSE))
     {
       WIN32_API_FAILED ("RegisterPointerDeviceNotifications");
       return FALSE;
     }
 
-  winpointer_ignored_interactions = g_ptr_array_new ();
+  notif_window_add (WM_POINTERDEVICECHANGE, pointer_device_changed);
 
   winpointer_enumerate_devices (device_manager);
 

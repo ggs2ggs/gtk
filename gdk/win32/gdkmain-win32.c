@@ -49,6 +49,15 @@
 
 static gboolean gdk_synchronize = FALSE;
 
+ATOM notif_window_class;
+HWND notif_window_handle;
+
+/* () */
+GHashTable *notif_handlers_table;
+
+static gboolean
+notif_window_initialize (void);
+
 #ifdef DLL_EXPORT
 BOOL WINAPI
 DllMain (HINSTANCE hinstDLL,
@@ -81,6 +90,9 @@ _gdk_win32_windowing_init (void)
 #endif
 
   _gdk_app_hmodule = GetModuleHandle (NULL);
+
+  notif_window_initialize ();
+
   _gdk_display_hdc = CreateDC ("DISPLAY", NULL, NULL, NULL);
   _gdk_input_locale = GetKeyboardLayout (0);
   _gdk_win32_keymap_set_active_layout (GDK_WIN32_KEYMAP (_gdk_win32_display_get_keymap (_gdk_display)), _gdk_input_locale);
@@ -92,6 +104,168 @@ _gdk_win32_windowing_init (void)
 			     _gdk_input_locale, _gdk_input_codepage));
 
   _gdk_win32_selection_init ();
+}
+
+LRESULT CALLBACK
+notif_window_proc (HWND hwnd,
+                   UINT uMsg,
+                   WPARAM wParam,
+                   LPARAM lParam)
+{
+  switch (uMsg)
+  {
+    case WM_WINDOWPOSCHANGING:
+      {
+        WINDOWPOS *window_pos = (WINDOWPOS*) lParam;
+
+        /* Visibility of HWNDs can be toggled from
+         * outside our process. Block any such
+         * attempt */
+        if (window_pos->flags & SWP_SHOWWINDOW)
+          {
+            window_pos->flags &= ~SWP_SHOWWINDOW;
+            return 0;
+          }
+      }
+    break;
+
+    case WM_STYLECHANGING:
+      if (wParam & GWL_STYLE)
+        {
+          STYLESTRUCT *style_struct = (STYLESTRUCT*) lParam;
+
+          /* Just as with visibility, block attempts
+           * at disabling our notification window
+           */
+          if (style_struct->styleNew & WS_DISABLED)
+            {
+              style_struct->styleNew &= ~WS_DISABLED;
+              return 0;
+            }
+        }
+    break;
+
+    case WM_SHOWWINDOW:
+      if (wParam != 0)
+        return 0;
+    break;
+
+    case WM_CLOSE:
+      return 0;
+
+    case WM_NCDESTROY:
+      notif_window_handle = NULL;
+    break;
+
+    default:
+      if G_LIKELY (notif_handlers_table)
+        {
+          GPtrArray *handlers = g_hash_table_lookup (notif_handlers_table, GUINT_TO_POINTER (uMsg));
+          LRESULT result = 0;
+          gboolean handled = FALSE;
+
+          if (handlers)
+            {
+              for (unsigned int i = 0; i < handlers->len; i++)
+                {
+                  message_handler_t handler = (message_handler_t) g_ptr_array_index (handlers, i);
+
+                  if (handler (uMsg, wParam, lParam, &result))
+                    handled = TRUE;
+                }
+            }
+
+          if (handled)
+            return result;
+        }
+    break;
+  }
+
+  return DefWindowProcW (hwnd, uMsg, wParam, lParam);
+}
+
+#define MAKEINTATOMW(value) \
+((LPCWSTR)(UINT_PTR)value)
+
+static gboolean
+register_notif_window_class (void)
+{
+  WNDCLASSEXW wndclassex;
+
+  g_assert_true (notif_window_class == 0);
+
+  memset (&wndclassex, 0, sizeof (wndclassex));
+  wndclassex.cbSize = sizeof (wndclassex);
+  wndclassex.hInstance = _gdk_dll_hinstance;
+  wndclassex.lpszClassName = L"GdkWin32NotifWindowClass";
+  wndclassex.lpfnWndProc = notif_window_proc;
+  wndclassex.style = CS_NOCLOSE;
+  wndclassex.hbrBackground = (HBRUSH) GetStockObject (NULL_BRUSH);
+
+  notif_window_class = RegisterClassExW (&wndclassex);
+  if (notif_window_class == 0)
+    {
+      WIN32_API_FAILED ("RegisterClassEx");
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+create_notif_window (void)
+{
+  g_assert_null (notif_window_handle);
+
+  notif_window_handle = CreateWindowExW (WS_EX_TOOLWINDOW,
+                                         MAKEINTATOMW (notif_window_class),
+                                         L"GDK Notifications",
+                                         WS_POPUP,
+                                         0, 0, 10, 10,
+                                         NULL, NULL,
+                                         _gdk_dll_hinstance,
+                                         NULL);
+  if (notif_window_handle == NULL)
+    {
+      WIN32_API_FAILED ("CreateWindowEx");
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+notif_window_initialize (void)
+{
+  if (notif_handlers_table)
+    return TRUE;
+
+  notif_handlers_table = g_hash_table_new_full (g_direct_hash,
+                                                g_direct_equal,
+                                                NULL,
+                                                g_ptr_array_unref);
+
+  return register_notif_window_class () &&
+         create_notif_window ();
+}
+
+void
+notif_window_add (UINT msg,
+                  message_handler_t handler)
+{
+  GPtrArray *handlers = g_hash_table_lookup (notif_handlers_table, GUINT_TO_POINTER (msg));
+
+  if (!handlers)
+    {
+      handlers = g_ptr_array_new ();
+      g_hash_table_insert (notif_handlers_table, GUINT_TO_POINTER (msg), handlers);
+    }
+
+  if (g_ptr_array_find (handlers, handler, NULL))
+    return;
+
+  g_assert (handler != NULL);
+  g_ptr_array_add (handlers, handler);
 }
 
 void
