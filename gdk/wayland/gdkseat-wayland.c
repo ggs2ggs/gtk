@@ -38,6 +38,7 @@
 #include "gdkwayland.h"
 #include "gdkprivate.h"
 
+#include "cursor-shape-v1-client-protocol.h"
 #include "pointer-gestures-unstable-v1-client-protocol.h"
 #include "tablet-unstable-v2-client-protocol.h"
 
@@ -2097,6 +2098,12 @@ static void
 _gdk_wayland_seat_remove_tool (GdkWaylandSeat           *seat,
                                GdkWaylandTabletToolData *tool)
 {
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (seat->display);
+  if (display_wayland->shape_manager)
+    {
+      g_clear_pointer (&tool->shape_device,
+                       wp_cursor_shape_device_v1_destroy);
+    }
   seat->tablet_tools = g_list_remove (seat->tablet_tools, tool);
 
   gdk_seat_tool_removed (GDK_SEAT (seat), tool->tool);
@@ -2380,9 +2387,19 @@ seat_handle_capabilities (void                    *data,
                                                         &gesture_hold_listener, seat);
             }
         }
+      if (display_wayland->shape_manager)
+        {
+          seat->pointer_info.shape_device =
+              wp_cursor_shape_manager_v1_get_pointer (display_wayland->shape_manager, seat->wl_pointer);
+        }
     }
   else if (!(caps & WL_SEAT_CAPABILITY_POINTER) && seat->wl_pointer)
     {
+      if (display_wayland->shape_manager)
+        {
+          g_clear_pointer (&seat->pointer_info.shape_device,
+                           wp_cursor_shape_device_v1_destroy);
+        }
       g_clear_pointer (&seat->wp_pointer_gesture_swipe,
                        zwp_pointer_gesture_swipe_v1_destroy);
       g_clear_pointer (&seat->wp_pointer_gesture_pinch,
@@ -3709,11 +3726,19 @@ tablet_seat_handle_tool_added (void                      *data,
                                struct zwp_tablet_tool_v2 *wp_tablet_tool)
 {
   GdkWaylandSeat *seat = data;
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (seat->display);
   GdkWaylandTabletToolData *tool;
 
   tool = g_new0 (GdkWaylandTabletToolData, 1);
   tool->wp_tablet_tool = wp_tablet_tool;
   tool->seat = GDK_SEAT (seat);
+
+  if (display_wayland->shape_manager)
+    {
+      tool->shape_device =
+          wp_cursor_shape_manager_v1_get_tablet_tool_v2 (
+              display_wayland->shape_manager, tool->wp_tablet_tool);
+    }
 
   zwp_tablet_tool_v2_add_listener (wp_tablet_tool, &tablet_tool_listener, tool);
   zwp_tablet_tool_v2_set_user_data (wp_tablet_tool, tool);
