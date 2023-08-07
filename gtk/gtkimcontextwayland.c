@@ -176,7 +176,7 @@ text_input_preedit_apply (GtkIMContextWaylandGlobal *global)
 {
   GtkIMContextWayland *context;
   gboolean state_change;
-  struct preedit defaults = {0};
+  struct preedit defaults = {0}, pending_preedit;
 
   if (!global->current)
     return;
@@ -186,15 +186,17 @@ text_input_preedit_apply (GtkIMContextWaylandGlobal *global)
       context->current_preedit.text == NULL)
     return;
 
-  state_change = ((context->pending_preedit.text == NULL)
+  pending_preedit = context->pending_preedit;
+  context->pending_preedit = defaults;
+
+  state_change = ((pending_preedit.text == NULL)
                  != (context->current_preedit.text == NULL));
 
   if (state_change && !context->current_preedit.text)
     g_signal_emit_by_name (context, "preedit-start");
 
   g_free (context->current_preedit.text);
-  context->current_preedit = context->pending_preedit;
-  context->pending_preedit = defaults;
+  context->current_preedit = pending_preedit;
 
   g_signal_emit_by_name (context, "preedit-changed");
 
@@ -223,11 +225,14 @@ static void
 text_input_commit_apply (GtkIMContextWaylandGlobal *global)
 {
   GtkIMContextWayland *context;
+  gchar *pending_commit;
+
   context = GTK_IM_CONTEXT_WAYLAND (global->current);
-  if (context->pending_commit)
-    g_signal_emit_by_name (global->current, "commit", context->pending_commit);
-  g_free (context->pending_commit);
+  pending_commit = context->pending_commit;
   context->pending_commit = NULL;
+  if (pending_commit)
+    g_signal_emit_by_name (global->current, "commit", pending_commit);
+  g_free (pending_commit);
 }
 
 static void
@@ -264,22 +269,23 @@ text_input_delete_surrounding_text_apply (GtkIMContextWaylandGlobal *global)
   GtkIMContextWayland *context;
   gboolean retval;
   int len;
-  struct surrounding_delete defaults = {0};
+  struct surrounding_delete defaults = {0}, pending_surrounding_delete;
 
   context = GTK_IM_CONTEXT_WAYLAND (global->current);
+  pending_surrounding_delete = context->pending_surrounding_delete;
+  context->pending_surrounding_delete = defaults;
 
-  len = context->pending_surrounding_delete.after_length
-      + context->pending_surrounding_delete.before_length;
+
+  len = pending_surrounding_delete.after_length
+      + pending_surrounding_delete.before_length;
   if (len > 0)
     {
       g_signal_emit_by_name (global->current, "delete-surrounding",
-                             -context->pending_surrounding_delete.before_length,
+                             -pending_surrounding_delete.before_length,
                              len, &retval);
       notify_im_change (GTK_IM_CONTEXT_WAYLAND (context),
                         ZWP_TEXT_INPUT_V3_CHANGE_CAUSE_INPUT_METHOD);
     }
-
-  context->pending_surrounding_delete = defaults;
 }
 
 static void
