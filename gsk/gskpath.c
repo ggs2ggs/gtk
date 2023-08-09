@@ -541,6 +541,74 @@ gsk_path_get_closest_point (GskPath                *self,
 }
 
 /**
+ * gsk_path_get_start_point:
+ * @self: a `GskPath`
+ * @result: (out caller-allocates): return location for point
+ *
+ * Gets the start point of the path.
+ *
+ * An empty path has no points, so `FALSE`
+ * is returned in this case.
+ *
+ * Returns: `TRUE` if @result was filled
+ *
+ * Since: 4.14
+ */
+gboolean
+gsk_path_get_start_point (GskPath      *self,
+                          GskPathPoint *result)
+{
+  GskRealPathPoint *res = (GskRealPathPoint *) result;
+
+  g_return_val_if_fail (self != NULL, FALSE);
+  g_return_val_if_fail (result != NULL, FALSE);
+
+  if (self->n_contours == 0)
+    return FALSE;
+
+  gsk_contour_get_start_point (self->contours[0], res);
+
+  res->path = self;
+  res->contour = 0;
+
+  return TRUE;
+}
+
+/**
+ * gsk_path_get_end_point:
+ * @self: a `GskPath`
+ * @result: (out caller-allocates): return location for point
+ *
+ * Gets the end point of the path.
+ *
+ * An empty path has no points, so `FALSE`
+ * is returned in this case.
+ *
+ * Returns: `TRUE` if @result was filled
+ *
+ * Since: 4.14
+ */
+gboolean
+gsk_path_get_end_point (GskPath      *self,
+                        GskPathPoint *result)
+{
+  GskRealPathPoint *res = (GskRealPathPoint *) result;
+
+  g_return_val_if_fail (self != NULL, FALSE);
+  g_return_val_if_fail (result!= NULL, FALSE);
+
+  if (self->n_contours == 0)
+    return FALSE;
+
+  gsk_contour_get_end_point (self->contours[self->n_contours - 1], res);
+
+  res->path = self;
+  res->contour = self->n_contours - 1;
+
+  return TRUE;
+}
+
+/**
  * gsk_path_foreach:
  * @self: a `GskPath`
  * @flags: flags to pass to the foreach function. See [flags@Gsk.PathForeachFlags]
@@ -1322,4 +1390,175 @@ error:
   gsk_path_builder_unref (builder);
 
   return NULL;
+}
+
+/**
+ * gsk_path_builder_add_segment:
+ * @self: a `GskPathBuilder`
+ * @path: the `GskPath` to take the segment to
+ * @start: the point on @path to start at
+ * @end: the point on @path to end at
+ *
+ * Adds to @self the segment of @path from @start to @end.
+ *
+ * If @start is after @end, the path will first add the segment
+ * from @start to the end of the path, and then add the segment from
+ * the beginning to @end. If the path is closed, these segments will
+ * be connected.
+ *
+ * Since: 4.14
+ */
+void
+gsk_path_builder_add_segment (GskPathBuilder     *self,
+                              GskPath            *path,
+                              const GskPathPoint *start,
+                              const GskPathPoint *end)
+{
+  GskRealPathPoint *s = (GskRealPathPoint *) start;
+  GskRealPathPoint *e = (GskRealPathPoint *) end;
+  const GskContour *contour;
+
+  g_return_if_fail (self != NULL);
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (path == s->path);
+  g_return_if_fail (path == e->path);
+
+  contour = gsk_path_get_contour (path, s->contour);
+
+  if (s->contour == e->contour)
+    {
+      if (gsk_contour_point_compare (contour, s, e) < 0)
+        {
+          gsk_contour_add_segment (contour, self, TRUE, s, e);
+          return;
+        }
+      else if (path->n_contours == 1)
+        {
+          gsk_contour_add_segment (contour, self, TRUE, s, NULL);
+          gsk_contour_add_segment (contour, self, FALSE, NULL, e);
+          return;
+        }
+    }
+
+  gsk_contour_add_segment (contour, self, TRUE, s, NULL);
+
+  for (gsize i = (s->contour + 1) % path->n_contours; i != e->contour; i = (i + 1) % path->n_contours)
+    gsk_path_builder_add_contour (self, gsk_contour_dup (gsk_path_get_contour (path, i)));
+
+  contour = gsk_path_get_contour (path, e->contour);
+  gsk_contour_add_segment (contour, self, FALSE, NULL, e);
+}
+
+/**
+ * gsk_path_get_previous_point:
+ * @self: a `GskPath`
+ * @point: a point on @self
+ * @result: (out caller-allocates): Return location for the result
+ *
+ * Gets the previous 'significant' point on @self before @point.
+ *
+ * The 'significant' points of a path are typically the
+ * on-curve points that have been specified when the
+ * path was created.
+ *
+ * For example, in a path with 3 Bézier segments, the
+ * significant points are the start of the first segment,
+ * the start point of the second segment (which coincides
+ * with the end point of the first segment), the start
+ * point of the third segment, and the end point of the
+ * last segment.
+ *
+ * If @point is the start point of the path, there is no
+ * prior point, and this function returns `FALSE`.
+ *
+ * Returns: `TRUE` if @result has been set to a point
+ */
+gboolean
+gsk_path_get_previous_point (GskPath            *self,
+                             const GskPathPoint *point,
+                             GskPathPoint       *result)
+{
+  GskRealPathPoint *p = (GskRealPathPoint *) point;
+  GskRealPathPoint *res = (GskRealPathPoint *) result;
+  const GskContour *contour;
+
+  g_return_val_if_fail (self != NULL, FALSE);
+  g_return_val_if_fail (self == p->path, FALSE);
+
+  contour = gsk_path_get_contour (self, p->contour);
+
+  if (gsk_contour_get_previous_point (contour, p, res))
+    {
+      res->path  = self;
+      res->contour = p->contour;
+      return TRUE;
+    }
+
+  if (p->contour > 0)
+    {
+      contour = gsk_path_get_contour (self, p->contour - 1);
+      gsk_contour_get_end_point (contour, res);
+      res->path = self;
+      res->contour = p->contour - 1;
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+/**
+ * gsk_path_get_next_point:
+ * @self: a `GskPath`
+ * @point: a point on @self
+ * @result: (out caller-allocates): Return location for the result
+ *
+ * Gets the next 'significant' point on @self after @point.
+ *
+ * The 'significant' points of a path are typically the
+ * on-curve points that have been specified when the
+ * path was created.
+ *
+ * For example, in a path with 3 Bézier segments, the
+ * significant points are the start of the first segment,
+ * the start point of the second segment (which coincides
+ * with the end point of the first segment), the start
+ * point of the third segment, and the end point of the
+ * last segment.
+ *
+ * If @point is the end point of the path, there is no
+ * next point, and this function returns `FALSE`.
+ *
+ * Returns: `TRUE` if @result has been set to a point
+ */
+gboolean
+gsk_path_get_next_point (GskPath            *self,
+                         const GskPathPoint *point,
+                         GskPathPoint       *result)
+{
+  GskRealPathPoint *p = (GskRealPathPoint *) point;
+  GskRealPathPoint *res = (GskRealPathPoint *) result;
+  const GskContour *contour;
+
+  g_return_val_if_fail (self != NULL, FALSE);
+  g_return_val_if_fail (self == p->path, FALSE);
+
+  contour = gsk_path_get_contour (self, p->contour);
+
+  if (gsk_contour_get_next_point (contour, p, res))
+    {
+      res->path  = self;
+      res->contour = p->contour;
+      return TRUE;
+    }
+
+  if (p->contour < self->n_contours - 1)
+    {
+      contour = gsk_path_get_contour (self, p->contour + 1);
+      gsk_contour_get_start_point (contour, res);
+      res->path = self;
+      res->contour = p->contour + 1;
+      return TRUE;
+    }
+
+  return FALSE;
 }
