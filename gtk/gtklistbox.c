@@ -1028,8 +1028,8 @@ gtk_list_box_set_placeholder (GtkListBox *box,
   if (placeholder)
     {
       gtk_widget_set_parent (placeholder, GTK_WIDGET (box));
-      gtk_widget_set_child_visible (placeholder,
-                                    box->n_visible_rows == 0);
+      gtk_widget_set_visible (placeholder,
+                              box->n_visible_rows == 0);
     }
 }
 
@@ -2074,8 +2074,8 @@ list_box_add_visible_rows (GtkListBox *box,
 
   if (box->placeholder &&
       (was_zero || box->n_visible_rows == 0))
-    gtk_widget_set_child_visible (GTK_WIDGET (box->placeholder),
-                                  box->n_visible_rows == 0);
+    gtk_widget_set_visible (GTK_WIDGET (box->placeholder),
+                            box->n_visible_rows == 0);
 }
 
 /* Children are visible if they are shown by the app (visible)
@@ -2494,7 +2494,7 @@ gtk_list_box_measure (GtkWidget     *widget,
       *minimum = 0;
       *natural = 0;
 
-      if (box->placeholder && gtk_widget_get_child_visible (box->placeholder))
+      if (box->placeholder && gtk_widget_get_visible (box->placeholder))
         gtk_widget_measure (box->placeholder, GTK_ORIENTATION_HORIZONTAL, -1,
                             minimum, natural,
                             NULL, NULL);
@@ -2543,7 +2543,7 @@ gtk_list_box_measure (GtkWidget     *widget,
 
       *minimum = 0;
 
-      if (box->placeholder && gtk_widget_get_child_visible (box->placeholder))
+      if (box->placeholder && gtk_widget_get_visible (box->placeholder))
         gtk_widget_measure (box->placeholder, orientation, for_size,
                             minimum, NULL,
                             NULL, NULL);
@@ -2604,7 +2604,7 @@ gtk_list_box_size_allocate (GtkWidget *widget,
   header_allocation.width = width;
   header_allocation.height = 0;
 
-  if (box->placeholder && gtk_widget_get_child_visible (box->placeholder))
+  if (box->placeholder && gtk_widget_get_visible (box->placeholder))
     {
       gtk_widget_measure (box->placeholder, GTK_ORIENTATION_VERTICAL,
                           width,
