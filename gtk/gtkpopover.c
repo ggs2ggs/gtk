@@ -148,6 +148,9 @@ typedef struct {
   GskRenderer *renderer;
   GtkWidget *default_widget;
 
+  GtkWidget *prev_focus_widget;
+  guint prev_focus_unmap_id;
+
   GdkRectangle pointing_to;
   gboolean has_pointing_to;
   guint surface_transform_changed_cb;
@@ -1079,10 +1082,29 @@ gtk_popover_focus (GtkWidget        *widget,
 }
 
 static void
+popover_unset_prev_focus (GtkPopover *popover)
+{
+  GtkPopoverPrivate *priv = gtk_popover_get_instance_private (popover);
+
+  if (!priv->prev_focus_widget)
+    return;
+
+  if (priv->prev_focus_unmap_id)
+    {
+      g_signal_handler_disconnect (priv->prev_focus_widget,
+                                   priv->prev_focus_unmap_id);
+      priv->prev_focus_unmap_id = 0;
+    }
+
+  priv->prev_focus_widget = NULL;
+}
+
+static void
 gtk_popover_show (GtkWidget *widget)
 {
   GtkPopover *popover = GTK_POPOVER (widget);
   GtkPopoverPrivate *priv = gtk_popover_get_instance_private (popover);
+  GtkWidget *prev_focus;
 
   _gtk_widget_set_visible_flag (widget, TRUE);
   gtk_widget_realize (widget);
@@ -1093,6 +1115,18 @@ gtk_popover_show (GtkWidget *widget)
 
   if (priv->autohide)
     {
+      g_assert (priv->prev_focus_widget == NULL);
+      g_assert (priv->prev_focus_unmap_id == 0);
+      prev_focus = gtk_root_get_focus (gtk_widget_get_root (widget));
+      if (prev_focus && !gtk_widget_is_ancestor (prev_focus, widget))
+        {
+          priv->prev_focus_widget = prev_focus;
+          priv->prev_focus_unmap_id =
+            g_signal_connect_object (prev_focus, "unmap",
+                                     G_CALLBACK (popover_unset_prev_focus),
+                                     widget, G_CONNECT_SWAPPED);
+        }
+
       if (!gtk_widget_get_focus_child (widget))
         gtk_widget_child_focus (widget, GTK_DIR_TAB_FORWARD);
     }
@@ -1160,7 +1194,13 @@ gtk_popover_unmap (GtkWidget *widget)
   GtkWidget *parent;
 
   if (priv->autohide)
-    gtk_grab_remove (widget);
+    {
+      gtk_grab_remove (widget);
+      if (priv->prev_focus_widget)
+        gtk_root_set_focus (gtk_widget_get_root (widget),
+                            priv->prev_focus_widget);
+      popover_unset_prev_focus (popover);
+    }
 
   parent = gtk_widget_get_parent (widget);
   gtk_widget_remove_surface_transform_changed_callback (parent,
@@ -1180,6 +1220,8 @@ gtk_popover_dispose (GObject *object)
   g_clear_object (&priv->default_widget);
   g_clear_pointer (&priv->contents_widget, gtk_widget_unparent);
   g_clear_pointer (&priv->arrow_render_node, gsk_render_node_unref);
+
+  popover_unset_prev_focus (popover);
 
   G_OBJECT_CLASS (gtk_popover_parent_class)->dispose (object);
 }
