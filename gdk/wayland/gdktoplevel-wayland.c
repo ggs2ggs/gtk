@@ -583,6 +583,11 @@ xdg_toplevel_configure (void                *data,
   GdkWaylandToplevel *toplevel = GDK_WAYLAND_TOPLEVEL (surface);
   uint32_t *p;
   GdkToplevelState pending_state = 0;
+  GdkToplevelState resize_constraint_state =
+    (GDK_TOPLEVEL_STATE_TOP_RESIZABLE |
+     GDK_TOPLEVEL_STATE_RIGHT_RESIZABLE |
+     GDK_TOPLEVEL_STATE_BOTTOM_RESIZABLE |
+     GDK_TOPLEVEL_STATE_LEFT_RESIZABLE);
 
   toplevel->pending.is_resizing = FALSE;
 
@@ -620,6 +625,22 @@ xdg_toplevel_configure (void                *data,
           pending_state |= (GDK_TOPLEVEL_STATE_TILED |
                             GDK_TOPLEVEL_STATE_LEFT_TILED);
           break;
+        case XDG_TOPLEVEL_STATE_CONSTRAINED_TOP:
+          fprintf(stderr, ":::: %s:%d %s() - constrained top\n", __FILE__, __LINE__, __func__);
+          resize_constraint_state ^= GDK_TOPLEVEL_STATE_TOP_RESIZABLE;
+          break;
+        case XDG_TOPLEVEL_STATE_CONSTRAINED_RIGHT:
+          fprintf(stderr, ":::: %s:%d %s() - constrained right\n", __FILE__, __LINE__, __func__);
+          resize_constraint_state ^= GDK_TOPLEVEL_STATE_RIGHT_RESIZABLE;
+          break;
+        case XDG_TOPLEVEL_STATE_CONSTRAINED_BOTTOM:
+          fprintf(stderr, ":::: %s:%d %s() - constrained bottom\n", __FILE__, __LINE__, __func__);
+          resize_constraint_state ^= GDK_TOPLEVEL_STATE_BOTTOM_RESIZABLE;
+          break;
+        case XDG_TOPLEVEL_STATE_CONSTRAINED_LEFT:
+          fprintf(stderr, ":::: %s:%d %s() - constrained left\n", __FILE__, __LINE__, __func__);
+          resize_constraint_state ^= GDK_TOPLEVEL_STATE_LEFT_RESIZABLE;
+          break;
 #ifdef HAVE_TOPLEVEL_STATE_SUSPENDED
         case XDG_TOPLEVEL_STATE_SUSPENDED:
           pending_state |= GDK_TOPLEVEL_STATE_SUSPENDED;
@@ -629,6 +650,13 @@ xdg_toplevel_configure (void                *data,
           /* Unknown state */
           break;
         }
+    }
+
+  if (xdg_toplevel_get_version (toplevel->display_server.xdg_toplevel) >=
+      XDG_TOPLEVEL_STATE_CONSTRAINED_LEFT_SINCE_VERSION)
+    {
+      fprintf(stderr, ":::: %s:%d %s() - resizable: 0x%x\n", __FILE__, __LINE__, __func__, resize_constraint_state);
+    pending_state |= resize_constraint_state;
     }
 
   toplevel->pending.state |= pending_state;
