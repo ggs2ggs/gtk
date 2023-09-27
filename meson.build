@@ -14,7 +14,7 @@ project('gtk', 'c',
 glib_req           = '>= 2.76.0'
 introspection_req  = '>= 1.76.0' # keep this in sync with glib
 pango_req          = '>= 1.50.0' # keep this in sync with .gitlab-ci/test-msys.sh
-harfbuzz_req       = '>= 2.6.0'
+harfbuzz_req       = '>= 4.0.0'
 fribidi_req        = '>= 1.0.6'
 cairo_req          = '>= 1.14.0'
 gdk_pixbuf_req     = '>= 2.30.0'
@@ -26,6 +26,7 @@ cloudproviders_req = '>= 0.3.1'
 xkbcommon_req      = '>= 0.2.0'
 sysprof_req        = '>= 3.38.0'
 vulkan_req         = '>= 1.2'
+libglyphy_req      = '>= 0.2.0'
 
 fs = import('fs')
 gnome = import('gnome')
@@ -382,6 +383,9 @@ fribidi_dep    = dependency('fribidi', version: fribidi_req,
                             default_options: ['docs=false'])
 harfbuzz_dep   = dependency('harfbuzz', version: harfbuzz_req,
                             default_options: ['coretext=enabled'])
+libglyphy_dep  = dependency('glyphy', version: libglyphy_req,
+                             default_options: ['default_library=static', 'demo=disabled'],
+                            fallback : ['glyphy', 'libglyphy_dep'])
 
 # Require PangoFT2 if on X11 or wayland
 pangoft_dep    = dependency('pangoft2', version: pango_req,

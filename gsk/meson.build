@@ -20,6 +20,9 @@ gsk_private_gl_shaders = [
   'gl/resources/custom.glsl',
   'gl/resources/filled_border.glsl',
   'gl/resources/mask.glsl',
+  'gl/resources/glyphy.atlas.glsl',
+  'gl/resources/glyphy.fs.glsl',
+  'gl/resources/glyphy.vs.glsl',
 ]
 
 gsk_public_sources = files([
@@ -29,6 +32,7 @@ gsk_public_sources = files([
   'gskpath.c',
   'gskpathbuilder.c',
   'gskpathmeasure.c',
+  'gskpathops.c',
   'gskpathparser.c',
   'gskpathpoint.c',
   'gskrenderer.c',
@@ -45,6 +49,7 @@ gsk_private_sources = files([
   'gskcairoblur.c',
   'gskcontour.c',
   'gskcurve.c',
+  'gskcurveintersect.c',
   'gskdebug.c',
   'gskprivate.c',
   'gskprofiler.c',
@@ -54,6 +59,7 @@ gsk_private_sources = files([
   'gl/gskglcompiler.c',
   'gl/gskgldriver.c',
   'gl/gskglglyphlibrary.c',
+  'gl/gskglglyphylibrary.c',
   'gl/gskgliconlibrary.c',
   'gl/gskglprogram.c',
   'gl/gskglrenderjob.c',
@@ -194,6 +200,7 @@ gsk_deps = [
   cairo_dep,
   cairo_csi_dep,
   libgdk_dep,
+  libglyphy_dep
 ]
 
 libgsk_f16c = static_library('gsk_f16c',

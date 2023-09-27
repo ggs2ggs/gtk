@@ -1,5 +1,7 @@
 gtk_tests = [
   # testname, optional extra sources
+  ['movingtext'],
+  ['bigfont'],
   ['testsections'],
   ['testfilelauncher'],
   ['input'],
