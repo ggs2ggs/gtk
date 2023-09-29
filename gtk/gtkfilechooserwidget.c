@@ -6006,6 +6006,10 @@ recent_start_loading (GtkFileChooserWidget *impl)
               !gtk_recent_info_has_application (info, app_name))
             continue;
 
+          if (gtk_recent_info_is_local (info) &&
+              !gtk_recent_info_exists (info))
+            continue;
+
 
           file = g_file_new_for_uri (gtk_recent_info_get_uri (info));
           _gtk_file_system_model_add_and_query_file (impl->recent_model,
