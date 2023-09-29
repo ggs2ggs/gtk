@@ -7756,6 +7756,9 @@ populate_model_with_recent_items (GtkFileChooserWidget *impl,
       if (recent_item_is_private (info))
         continue;
 
+      if (gtk_recent_info_is_local (info) && !gtk_recent_info_exists (info))
+        continue;
+
       file = g_file_new_for_uri (gtk_recent_info_get_uri (info));
       _gtk_file_system_model_add_and_query_file (priv->recent_model,
                                                  file,
