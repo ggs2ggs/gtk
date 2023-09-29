@@ -5963,6 +5963,23 @@ recent_clear_model (GtkFileChooserWidget *impl,
   g_set_object (&impl->recent_model, NULL);
 }
 
+static gint
+recent_compare_modified (gconstpointer a, gconstpointer b)
+{
+  const GtkRecentInfo *info_a;
+  const GtkRecentInfo *info_b;
+  GDateTime *modified_a, *modified_b;
+
+  info_a = a;
+  info_b = b;
+
+  modified_a = gtk_recent_info_get_modified (info_a);
+  modified_b = gtk_recent_info_get_modified (info_b);
+
+  /* We want more recent entries first */
+  return g_date_time_compare(modified_b, modified_a);
+}
+
 static void
 recent_start_loading (GtkFileChooserWidget *impl)
 {
@@ -5984,6 +6001,11 @@ recent_start_loading (GtkFileChooserWidget *impl)
   items = gtk_recent_manager_get_items (impl->recent_manager);
   if (!items)
     return;
+
+  /* Sort the list so that if we need to limit the list, then we'll drop
+   * the oldest entries
+   */
+  items = g_list_sort (items, recent_compare_modified);
 
   if (impl->action == GTK_FILE_CHOOSER_ACTION_OPEN)
     {
