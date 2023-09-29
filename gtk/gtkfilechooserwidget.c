@@ -370,7 +370,7 @@ static guint signals[LAST_SIGNAL] = { 0 };
                          "access::can-rename,access::can-delete,access::can-trash," \
                          "standard::target-uri"
 
-#define DEFAULT_RECENT_FILES_LIMIT 50
+#define DEFAULT_RECENT_FILES_LIMIT 250
 
 static void gtk_file_chooser_widget_iface_init       (GtkFileChooserIface        *iface);
 
