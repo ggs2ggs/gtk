@@ -447,7 +447,7 @@ enum {
         G_TYPE_STRING,            /* MODEL_COL_LOCATION_TEXT */ \
         PANGO_TYPE_ELLIPSIZE_MODE /* MODEL_COL_ELLIPSIZE */
 
-#define DEFAULT_RECENT_FILES_LIMIT 50
+#define DEFAULT_RECENT_FILES_LIMIT 250
 
 /* Icon size for if we can't get it from the theme */
 #define FALLBACK_ICON_SIZE 16
