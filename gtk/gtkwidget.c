@@ -12628,6 +12628,22 @@ gtk_widget_class_set_layout_manager_type (GtkWidgetClass *widget_class,
   priv = widget_class->priv;
 
   priv->layout_manager_type = type;
+
+#ifdef G_ENABLE_DEBUG
+  /* Warn if the widget class both uses a layout manager and overrides
+   * any of the layout vfuncs.  To prevent false positives on classes
+   * that always override *all* of vfuncs (for bindings), only do this
+   * if some otherwise rarely overridden vfuncs are not overridden.
+   */
+  if (G_UNLIKELY ((widget_class->get_request_mode != gtk_widget_real_get_request_mode ||
+                   widget_class->measure != gtk_widget_real_measure ||
+                   widget_class->size_allocate != gtk_widget_real_size_allocate) &&
+                  (widget_class->mnemonic_activate == gtk_widget_real_mnemonic_activate ||
+                   widget_class->contains == gtk_widget_real_contains)))
+    g_warning ("%s both uses a layout manager and overrides layout vfuncs. "
+               "The vfuncs won't get called if a layout manager is set.",
+               g_type_name (G_TYPE_FROM_CLASS (widget_class)));
+#endif
 }
 
 /**
