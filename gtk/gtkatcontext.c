@@ -834,7 +834,7 @@ gtk_at_context_set_accessible_state (GtkATContext       *self,
   else
     res = gtk_accessible_attribute_set_remove (self->states, state);
 
-  if (res)
+  if (self->realized && res)
     self->updated_states |= (1 << state);
 }
 
@@ -901,7 +901,7 @@ gtk_at_context_set_accessible_property (GtkATContext          *self,
   else
     res = gtk_accessible_attribute_set_remove (self->properties, property);
 
-  if (res)
+  if (self->realized && res)
     self->updated_properties |= (1 << property);
 }
 
@@ -968,7 +968,7 @@ gtk_at_context_set_accessible_relation (GtkATContext          *self,
   else
     res = gtk_accessible_attribute_set_remove (self->relations, relation);
 
-  if (res)
+  if (self->realized && res)
     self->updated_relations |= (1 << relation);
 }
 
