@@ -64,6 +64,7 @@ struct _GtkStackSidebar
   GtkListBox *list;
   GtkStack *stack;
   GtkSelectionModel *pages;
+  /* HashTable<ref GtkStackPage, GtkListBoxRow> */
   GHashTable *rows;
 };
 
