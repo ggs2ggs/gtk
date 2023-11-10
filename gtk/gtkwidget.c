@@ -877,7 +877,7 @@ gtk_widget_real_size_allocate (GtkWidget *widget,
 {
 }
 
-static void
+void
 gtk_widget_set_accessible_role (GtkWidget         *self,
                                 GtkAccessibleRole  role)
 {

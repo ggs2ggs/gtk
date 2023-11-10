@@ -1031,6 +1031,8 @@ gtk_check_button_set_group (GtkCheckButton *self,
         gtk_css_node_set_name (gtk_widget_get_css_node (priv->indicator_widget),
                                g_quark_from_static_string("check"));
 
+      gtk_widget_set_accessible_role (GTK_WIDGET (self), GTK_ACCESSIBLE_ROLE_CHECKBOX);
+
       return;
     }
 
@@ -1055,6 +1057,9 @@ gtk_check_button_set_group (GtkCheckButton *self,
 
   gtk_css_node_set_name (gtk_widget_get_css_node (group_priv->indicator_widget),
                          g_quark_from_static_string("radio"));
+
+  gtk_widget_set_accessible_role (GTK_WIDGET (self), GTK_ACCESSIBLE_ROLE_RADIO);
+  gtk_widget_set_accessible_role (GTK_WIDGET (group), GTK_ACCESSIBLE_ROLE_RADIO);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_GROUP]);
 }
