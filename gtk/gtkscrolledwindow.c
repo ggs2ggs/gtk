@@ -185,6 +185,8 @@
 /* Scrolled off indication */
 #define UNDERSHOOT_SIZE 40
 
+#define INTERPOLATION_ANIMATION_DURATION 200000
+
 #define MAGIC_SCROLL_FACTOR 2.5
 
 typedef struct _GtkScrolledWindowClass         GtkScrolledWindowClass;
@@ -224,6 +226,23 @@ typedef struct
   guint      tick_id;
   guint      over_timeout_id;
 } Indicator;
+
+typedef struct
+{
+  double start;
+  double target;
+  double start_speed;
+} InterpolationAxis;
+
+typedef struct
+{
+  gint64 start_time;
+  InterpolationAxis x;
+  InterpolationAxis y;
+
+  gboolean animation_tick_id_defined;
+  guint animation_tick_id;
+} Interpolation;
 
 typedef struct
 {
@@ -283,6 +302,8 @@ typedef struct
 
   double                 unclamped_hadj_value;
   double                 unclamped_vadj_value;
+
+  Interpolation interpolation;
 } GtkScrolledWindowPrivate;
 
 enum {
@@ -1300,6 +1321,305 @@ stop_kinetic_scrolling_cb (GtkEventControllerScroll *scroll,
     gtk_kinetic_scrolling_stop (priv->vscrolling);
 }
 
+/*
+  Interpolation animation formulas explanations :
+
+  s : start position of the curve
+  w : final position of the curve
+  v : speed at the start of the curve
+  t : duration of the animation
+
+  ax³ + bx² + cx + d    Position formula
+  3ax² + 2bx + c        Derivate of the position formula, so it's the "speed" formula
+
+  We have 4 equalities that set the conditions of the system :
+
+  a0³ + b0² + c0 + d = s    At time 0, the position is the desired start position.
+  3a0² + 2b0 + c = v        At time 0, the speed is the desired start speed.
+  at³ + bt² + ct + d = w    At the end of the animation, the position is the desired target position.
+  3at² + 2bt + c = 0        At the end of the animation, the speed is 0 (smooth end).
+
+  "s", "w", "v" and "t" are known values. We need to express "a", "b", "c", and
+  "d" from these values.
+
+  a0³ + b0² + c0 + d = s
+  d = s
+
+  3a0² + 2b0 + c = v
+  c = v
+
+  We have "c" and "d". We're left with "a" and "b".
+
+  at³ + bt² + ct + d = w
+
+  at³ = w - d - ct - bt²
+
+      w - d - ct - bt²
+  a = ----------------
+             t³
+
+  We have "a" but it is calculated with "b" which is unknown.
+  So we reinject this definition of "a" in the last equality.
+
+  3at² + 2bt + c = 0
+
+      w - d - ct - bt²
+  3 * ---------------- * t² + 2bt + c = 0
+             t³
+
+      w - d - ct - bt²
+  3 * ---------------- + 2bt + c = 0
+             t
+
+        w - d
+  3 * ( ----- - c - bt) + 2bt + c = 0
+          t
+
+      w - d
+  3 * ----- - 3c - 3bt + 2bt + c = 0
+        t
+
+      w - d
+  3 * ----- - 2c - bt = 0
+        t
+
+           w - d
+  bt = 3 * ----- - 2c
+             t
+
+          w - d
+      3 * ----- - 2c
+            t
+  b = --------------
+            t
+
+          w - d   2c
+  b = 3 * ----- - --
+            t²    t
+
+          w - d   2ct
+  b = 3 * ----- - ---
+            t²     t²
+
+      3w - 3d   2ct
+  b = ------- - ---
+         t²      t²
+
+      3w - 3d - 2ct
+  b = -------------
+           t²
+
+  We have expressed "b" with known values only. So "b" become a known value and
+  "a" too!
+*/
+static double
+interpolation_axis_get_current_value (InterpolationAxis *axis,
+                                      double             elapsed)
+{
+  double t = INTERPOLATION_ANIMATION_DURATION;
+  double w = axis->target;
+
+  double d = axis->start;
+  double c = axis->start_speed;
+
+  double b = (3 * w - 3 * d - 2 * c * t) / (t * t);
+  double a = (w - d - c * t - b * t * t) / (t * t * t);
+
+  double x = elapsed;
+
+  return a * x * x * x + b * x * x + c * x + d;
+}
+
+static double
+interpolation_axis_get_current_speed (InterpolationAxis *axis,
+                                      double             elapsed)
+{
+  double t = INTERPOLATION_ANIMATION_DURATION;
+  double w = axis->target;
+
+  double d = axis->start;
+  double c = axis->start_speed;
+
+  double b = (3 * w - 3 * d - 2 * c * t) / (t * t);
+  double a = (w - d - c * t - b * t * t) / (t * t * t);
+
+  double x = elapsed;
+
+  return 3 * a * x * x + 2 * b * x + c;
+}
+
+static gboolean
+interpolation_animation_cb_process_axis (GtkScrolledWindow *scrolled_window,
+                                         double             elapsed,
+                                         InterpolationAxis *interpolation_axis,
+                                         GtkAdjustment     *adj,
+                                         gboolean         (*may_scroll)(GtkScrolledWindow*))
+{
+  if (interpolation_axis->start == interpolation_axis->target
+      || !may_scroll(scrolled_window))
+    {
+      return FALSE;
+    }
+
+  GtkScrolledWindowPrivate *priv = gtk_scrolled_window_get_instance_private (
+      scrolled_window);
+  Interpolation *interpolation = &priv->interpolation;
+
+  double animation_value = interpolation_axis_get_current_value (
+                               interpolation_axis, elapsed);
+  double scroll_value;
+
+  if (interpolation->animation_tick_id_defined
+      && elapsed < INTERPOLATION_ANIMATION_DURATION)
+    {
+      scroll_value = animation_value;
+    }
+  else
+    {
+      scroll_value = interpolation_axis->target;
+    }
+
+  _gtk_scrolled_window_set_adjustment_value (scrolled_window, adj,
+                                             scroll_value);
+
+  double lower = gtk_adjustment_get_lower (adj) - MAX_OVERSHOOT_DISTANCE;
+  double upper = gtk_adjustment_get_upper (adj) + MAX_OVERSHOOT_DISTANCE
+                 - gtk_adjustment_get_page_size (adj);
+
+  return interpolation->animation_tick_id_defined
+         && elapsed < INTERPOLATION_ANIMATION_DURATION
+         && animation_value >= lower && animation_value <= upper;
+}
+
+static gboolean
+interpolation_animation_cb (GtkWidget     *widget,
+                            GdkFrameClock *clock,
+                            gpointer       user_data)
+{
+  GtkScrolledWindow *scrolled_window = (GtkScrolledWindow*) widget;
+  GtkScrolledWindowPrivate *priv
+      = gtk_scrolled_window_get_instance_private (scrolled_window);
+  Interpolation *interpolation = &priv->interpolation;
+
+  double elapsed = gdk_frame_clock_get_frame_time (clock)
+                   - interpolation->start_time;
+
+  gboolean keep_going = interpolation_animation_cb_process_axis (
+      scrolled_window, elapsed, &interpolation->x,
+      gtk_scrollbar_get_adjustment (GTK_SCROLLBAR (priv->hscrollbar)),
+      may_hscroll);
+
+  keep_going |= interpolation_animation_cb_process_axis (scrolled_window,
+      elapsed, &interpolation->y, gtk_scrollbar_get_adjustment (GTK_SCROLLBAR (
+      priv->vscrollbar)), may_vscroll);
+
+  gtk_scrolled_window_invalidate_overshoot (scrolled_window);
+
+  if (keep_going)
+    {
+      return G_SOURCE_CONTINUE;
+    }
+  else
+    {
+      priv->scroll_events_overshoot_id =
+        g_timeout_add (50, start_scroll_deceleration_cb, scrolled_window);
+
+      interpolation->animation_tick_id_defined = FALSE;
+      return G_SOURCE_REMOVE;
+    }
+}
+
+static void
+scrolled_window_scroll_interpolate_process_axis (GtkScrolledWindow *scrolled_window,
+                                                 double             elapsed,
+                                                 InterpolationAxis *interpolation_axis,
+                                                 GtkScrollbar      *scrollbar,
+                                                 double             unclamped_adj_value,
+                                                 double             delta,
+                                                 gboolean         (*may_scroll)(GtkScrolledWindow*))
+{
+  if (!may_scroll (scrolled_window))
+    {
+      return;
+    }
+
+  GtkScrolledWindowPrivate *priv
+      = gtk_scrolled_window_get_instance_private (scrolled_window);
+  Interpolation *interpolation = &priv->interpolation;
+
+  double current_value;
+  double animation_value = interpolation_axis_get_current_value (
+                           interpolation_axis, elapsed);
+
+  GtkAdjustment *adj = gtk_scrollbar_get_adjustment (scrollbar);
+  double lower = gtk_adjustment_get_lower (adj) - MAX_OVERSHOOT_DISTANCE;
+  double upper = gtk_adjustment_get_upper (adj) + MAX_OVERSHOOT_DISTANCE
+                 - gtk_adjustment_get_page_size (adj);
+
+  if (interpolation->animation_tick_id_defined
+      && elapsed < INTERPOLATION_ANIMATION_DURATION)
+    {
+      current_value = CLAMP(animation_value, lower, upper);
+    }
+  else
+    {
+      current_value = unclamped_adj_value;
+    }
+
+  double pixels_delta = delta * get_wheel_detent_scroll_step (scrollbar);
+
+  if (interpolation->animation_tick_id_defined
+      && elapsed < INTERPOLATION_ANIMATION_DURATION
+      && animation_value >= lower && animation_value <= upper)
+    {
+      double current_speed = interpolation_axis_get_current_speed (
+                             interpolation_axis, elapsed);
+
+      interpolation_axis->start = current_value;
+      interpolation_axis->target += pixels_delta;
+      interpolation_axis->start_speed = current_speed;
+    }
+  else
+    {
+      interpolation_axis->start = current_value;
+      interpolation_axis->target = current_value + pixels_delta;
+      interpolation_axis->start_speed = 0;
+    }
+}
+
+static void
+scrolled_window_scroll_interpolate (GtkScrolledWindow *scrolled_window,
+                                    double             delta_x,
+                                    double             delta_y)
+{
+  GtkScrolledWindowPrivate *priv =
+    gtk_scrolled_window_get_instance_private (scrolled_window);
+  Interpolation *interpolation = &priv->interpolation;
+
+  GdkFrameClock *clock = gtk_widget_get_frame_clock (GTK_WIDGET (
+                         scrolled_window));
+
+  double current_time = gdk_frame_clock_get_frame_time (clock);
+  double elapsed = current_time - interpolation->start_time;
+
+  scrolled_window_scroll_interpolate_process_axis (scrolled_window, elapsed,
+      &interpolation->x, GTK_SCROLLBAR (priv->hscrollbar),
+      priv->unclamped_hadj_value, delta_x, may_hscroll);
+
+  scrolled_window_scroll_interpolate_process_axis (scrolled_window, elapsed,
+      &interpolation->y, GTK_SCROLLBAR (priv->vscrollbar),
+      priv->unclamped_vadj_value, delta_y, may_vscroll);
+
+  interpolation->start_time = current_time;
+
+  if (!interpolation->animation_tick_id_defined)
+    {
+      interpolation->animation_tick_id_defined = TRUE;
+      interpolation->animation_tick_id = gtk_widget_add_tick_callback (
+          GTK_WIDGET (scrolled_window), interpolation_animation_cb, NULL, NULL);
+    }
+}
+
 static void
 scrolled_window_scroll (GtkScrolledWindow        *scrolled_window,
                         double                    delta_x,
@@ -1314,8 +1634,6 @@ scrolled_window_scroll (GtkScrolledWindow        *scrolled_window,
   state = gtk_event_controller_get_current_event_state (GTK_EVENT_CONTROLLER (scroll));
   shifted = (state & GDK_SHIFT_MASK) != 0;
 
-  gtk_scrolled_window_invalidate_overshoot (scrolled_window);
-
   if (shifted)
     {
       double delta;
@@ -1325,15 +1643,23 @@ scrolled_window_scroll (GtkScrolledWindow        *scrolled_window,
       delta_y = delta;
     }
 
+  GdkScrollUnit scroll_unit = gtk_event_controller_scroll_get_unit (scroll);
+
+  if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
+    {
+      scrolled_window_scroll_interpolate (scrolled_window, delta_x, delta_y);
+      return;
+    }
+
+  gtk_scrolled_window_invalidate_overshoot (scrolled_window);
+
   if (delta_x != 0.0 &&
       may_hscroll (scrolled_window))
     {
       GtkAdjustment *adj;
       double new_value;
-      GdkScrollUnit scroll_unit;
 
       adj = gtk_scrollbar_get_adjustment (GTK_SCROLLBAR (priv->hscrollbar));
-      scroll_unit = gtk_event_controller_scroll_get_unit (scroll);
 
       if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
         {
@@ -1352,10 +1678,8 @@ scrolled_window_scroll (GtkScrolledWindow        *scrolled_window,
     {
       GtkAdjustment *adj;
       double new_value;
-      GdkScrollUnit scroll_unit;
 
       adj = gtk_scrollbar_get_adjustment (GTK_SCROLLBAR (priv->vscrollbar));
-      scroll_unit = gtk_event_controller_scroll_get_unit (scroll);
 
       if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
         {
@@ -2042,6 +2366,8 @@ gtk_scrolled_window_init (GtkScrolledWindow *scrolled_window)
 
   priv->overlay_scrolling = TRUE;
 
+  priv->interpolation.animation_tick_id_defined = FALSE;
+
   priv->drag_gesture = gtk_gesture_drag_new ();
   gtk_gesture_single_set_touch_only (GTK_GESTURE_SINGLE (priv->drag_gesture), TRUE);
   g_signal_connect_swapped (priv->drag_gesture, "drag-begin",
@@ -2641,6 +2967,12 @@ gtk_scrolled_window_dispose (GObject *object)
     {
       gtk_widget_remove_tick_callback (GTK_WIDGET (self), priv->deceleration_id);
       priv->deceleration_id = 0;
+    }
+
+  if (priv->interpolation.animation_tick_id_defined)
+    {
+      gtk_widget_remove_tick_callback (GTK_WIDGET (self),
+                                       priv->interpolation.animation_tick_id);
     }
 
   g_clear_pointer (&priv->hscrolling, gtk_kinetic_scrolling_free);
