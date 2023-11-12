@@ -252,6 +252,65 @@ gdk_wayland_device_set_emulating_touch (GdkWaylandDevice    *wayland_device,
   priv->emulating_touch = touch;
 }
 
+static const struct
+{
+  const gchar *cursor_name;
+  const gint shape_val;
+} shape_map[] = {
+  { "default", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_DEFAULT },
+  { "context-menu", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_CONTEXT_MENU },
+  { "help", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_HELP },
+  { "pointer", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_POINTER },
+  { "progress", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_PROGRESS },
+  { "wait", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_WAIT },
+  { "cell", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_CELL },
+  { "crosshair", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_CROSSHAIR },
+  { "text", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_TEXT },
+  { "vertical-text", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_VERTICAL_TEXT },
+  { "alias", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_ALIAS },
+  { "copy", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_COPY },
+  { "move", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_MOVE },
+  { "no-drop", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_NO_DROP },
+  { "not-allowed", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_NOT_ALLOWED },
+  { "grab", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_GRAB },
+  { "grabbing", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_GRABBING },
+  { "e-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_E_RESIZE },
+  { "n-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_N_RESIZE },
+  { "ne-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_NE_RESIZE },
+  { "nw-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_NW_RESIZE },
+  { "s-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_S_RESIZE },
+  { "se-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_SE_RESIZE },
+  { "sw-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_SW_RESIZE },
+  { "w-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_W_RESIZE },
+  { "ew-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_EW_RESIZE },
+  { "ns-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_NS_RESIZE },
+  { "nesw-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_NESW_RESIZE },
+  { "nwse-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_NWSE_RESIZE },
+  { "col-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_COL_RESIZE },
+  { "row-resize", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_ROW_RESIZE },
+  { "all-scroll", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_ALL_SCROLL },
+  { "zoom-in", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_ZOOM_IN },
+  { "zoom-out", WP_CURSOR_SHAPE_DEVICE_V1_SHAPE_ZOOM_OUT },
+  { NULL, 0 }
+};
+
+static gint
+_gdk_wayland_cursor_get_enum (GdkCursor *cursor)
+{
+  gint i;
+  const char *cursor_name = gdk_cursor_get_name (cursor);
+  if (cursor_name == NULL)
+    return 0;
+
+  for (i = 0; shape_map[i].cursor_name; i++)
+    {
+      if (g_str_equal (shape_map[i].cursor_name, cursor_name))
+        return shape_map[i].shape_val;
+    }
+
+  return 0;
+}
+
 gboolean
 gdk_wayland_device_update_surface_cursor (GdkDevice *device)
 {
@@ -260,35 +319,47 @@ gdk_wayland_device_update_surface_cursor (GdkDevice *device)
   GdkWaylandPointerData *pointer =
     gdk_wayland_device_get_pointer (wayland_device);
   struct wl_buffer *buffer;
-  int x, y, w, h, scale;
+  int x, y, w, h, scale, num;
   guint next_image_index, next_image_delay;
   gboolean retval = G_SOURCE_REMOVE;
   GdkWaylandTabletData *tablet;
 
   tablet = gdk_wayland_seat_find_tablet (seat, device);
 
-  if (pointer->cursor)
+  if (!pointer->cursor)
     {
-      buffer = _gdk_wayland_cursor_get_buffer (GDK_WAYLAND_DISPLAY (seat->display),
-                                               pointer->cursor,
-                                               pointer->current_output_scale,
-                                               pointer->cursor_image_index,
-                                               &x, &y, &w, &h, &scale);
+      pointer->cursor_timeout_id = 0;
+      return G_SOURCE_REMOVE;
     }
-  else
+  if (tablet && !tablet->current_tool)
     {
       pointer->cursor_timeout_id = 0;
       return G_SOURCE_REMOVE;
     }
 
+  num = _gdk_wayland_cursor_get_enum (pointer->cursor);
+  if (num != 0)
+    {
+      if (tablet && tablet->current_tool->shape_device)
+        {
+          wp_cursor_shape_device_v1_set_shape (tablet->current_tool->shape_device, pointer->enter_serial, num);
+          return G_SOURCE_CONTINUE;
+        }
+      else if (seat->wl_pointer && pointer->shape_device)
+        {
+          wp_cursor_shape_device_v1_set_shape (pointer->shape_device, pointer->enter_serial, num);
+          return G_SOURCE_CONTINUE;
+        }
+    }
+
+  buffer = _gdk_wayland_cursor_get_buffer (GDK_WAYLAND_DISPLAY (seat->display),
+                                           pointer->cursor,
+                                           pointer->current_output_scale,
+                                           pointer->cursor_image_index,
+                                           &x, &y, &w, &h, &scale);
+
   if (tablet)
     {
-      if (!tablet->current_tool)
-        {
-          pointer->cursor_timeout_id = 0;
-          return G_SOURCE_REMOVE;
-        }
-
       zwp_tablet_tool_v2_set_cursor (tablet->current_tool->wp_tablet_tool,
                                      pointer->enter_serial,
                                      pointer->pointer_surface,
