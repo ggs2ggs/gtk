@@ -1915,6 +1915,9 @@ gtk_flow_box_get_request_mode (GtkWidget *widget)
 {
   GtkFlowBox *box = GTK_FLOW_BOX (widget);
 
+  if (get_visible_children (box) == 0)
+    return GTK_SIZE_REQUEST_CONSTANT_SIZE;
+
   return (BOX_PRIV (box)->orientation == GTK_ORIENTATION_HORIZONTAL) ?
     GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH : GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
 }
