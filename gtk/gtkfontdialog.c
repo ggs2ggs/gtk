@@ -83,6 +83,7 @@ static void
 gtk_font_dialog_init (GtkFontDialog *self)
 {
   self->modal = TRUE;
+  self->sorted = FALSE;
   self->language = pango_language_get_default ();
 }
 
@@ -261,7 +262,7 @@ gtk_font_dialog_class_init (GtkFontDialogClass *class)
    */
   properties[PROP_SORTED] =
       g_param_spec_boolean ("sorted", NULL, NULL,
-                            TRUE,
+                            FALSE,
                             G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
 
@@ -396,7 +397,7 @@ gtk_font_dialog_set_modal (GtkFontDialog *self,
 gboolean
 gtk_font_dialog_get_sorted (GtkFontDialog *self)
 {
-  g_return_val_if_fail (GTK_IS_FONT_DIALOG (self), TRUE);
+  g_return_val_if_fail (GTK_IS_FONT_DIALOG (self), FALSE);
 
   return self->sorted;
 }
@@ -673,6 +674,8 @@ create_font_chooser (GtkFontDialog        *self,
     gtk_font_chooser_dialog_set_filter (GTK_FONT_CHOOSER_DIALOG (window), self->filter);
   if (initial_value)
     gtk_font_chooser_set_font_desc (GTK_FONT_CHOOSER (window), initial_value);
+
+  gtk_font_chooser_set_sorted (GTK_FONT_CHOOSER (window), self->sorted);
 
   return window;
 }

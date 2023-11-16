@@ -146,6 +146,9 @@ _gtk_font_chooser_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass,
                                     GTK_FONT_CHOOSER_PROP_LANGUAGE,
                                     "language");
+  g_object_class_override_property (klass,
+                                    GTK_FONT_CHOOSER_PROP_SORTED,
+                                    "sorted");
 }
 
 /**
@@ -187,11 +190,11 @@ _gtk_font_chooser_set_delegate (GtkFontChooser *receiver,
 {
   g_return_if_fail (GTK_IS_FONT_CHOOSER (receiver));
   g_return_if_fail (GTK_IS_FONT_CHOOSER (delegate));
-  
+
   g_object_set_qdata (G_OBJECT (receiver),
                       GTK_FONT_CHOOSER_DELEGATE_QUARK,
   		      delegate);
-  
+
   g_signal_connect (delegate, "notify",
   		    G_CALLBACK (delegate_notify), receiver);
   g_signal_connect (delegate, "font-activated",
