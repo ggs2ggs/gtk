@@ -71,6 +71,13 @@ GDK_AVAILABLE_IN_4_10
 void             gtk_font_dialog_set_filter    (GtkFontDialog        *self,
                                                 GtkFilter            *filter);
 
+GDK_AVAILABLE_IN_4_14
+gboolean         gtk_font_dialog_get_sorted    (GtkFontDialog        *self);
+
+GDK_AVAILABLE_IN_4_14
+void             gtk_font_dialog_set_sorted    (GtkFontDialog        *self,
+                                                gboolean              sorted);
+
 GDK_AVAILABLE_IN_4_10
 void             gtk_font_dialog_choose_family (GtkFontDialog        *self,
                                                 GtkWindow            *parent,

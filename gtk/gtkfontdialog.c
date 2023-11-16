@@ -58,6 +58,7 @@ struct _GtkFontDialog
   PangoFontMap *fontmap;
 
   unsigned int modal : 1;
+  unsigned int sorted : 1;
 
   GtkFilter *filter;
 };
@@ -69,6 +70,7 @@ enum
   PROP_LANGUAGE,
   PROP_FONT_MAP,
   PROP_FILTER,
+  PROP_SORTED,
 
   NUM_PROPERTIES
 };
@@ -114,6 +116,10 @@ gtk_font_dialog_get_property (GObject    *object,
       g_value_set_object (value, self->filter);
       break;
 
+    case PROP_SORTED:
+      g_value_set_boolean (value, self->sorted);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -148,6 +154,10 @@ gtk_font_dialog_set_property (GObject      *object,
 
     case PROP_FILTER:
       gtk_font_dialog_set_filter (self, g_value_get_object (value));
+      break;
+
+    case PROP_SORTED:
+      gtk_font_dialog_set_sorted (self, g_value_get_boolean (value));
       break;
 
     default:
@@ -241,6 +251,19 @@ gtk_font_dialog_class_init (GtkFontDialogClass *class)
       g_param_spec_object ("filter", NULL, NULL,
                            GTK_TYPE_FILTER,
                            G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * GtkFontDialog:sorted: (attributes org.gtk.Property.get=gtk_font_dialog_get_sorted org.gtk.Property.set=gtk_font_dialog_set_sorted)
+   *
+   * Whether fonts in the the font chooser dialog are sorted by name.
+   *
+   * Since: 4.14
+   */
+  properties[PROP_SORTED] =
+      g_param_spec_boolean ("sorted", NULL, NULL,
+                            TRUE,
+                            G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
+
 
   g_object_class_install_properties (object_class, NUM_PROPERTIES, properties);
 }
@@ -357,6 +380,49 @@ gtk_font_dialog_set_modal (GtkFontDialog *self,
   self->modal = modal;
 
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_MODAL]);
+}
+
+/**
+ * gtk_font_dialog_get_modal:
+ * @self: a `GtkFontDialog`
+ *
+ * Returns whether fonts in the the font chooser dialog
+ * are sorted by name.
+ *
+ * Returns: `TRUE` if fonts are sorted by name
+ *
+ * Since: 4.10
+ */
+gboolean
+gtk_font_dialog_get_sorted (GtkFontDialog *self)
+{
+  g_return_val_if_fail (GTK_IS_FONT_DIALOG (self), TRUE);
+
+  return self->sorted;
+}
+
+/**
+ * gtk_font_dialog_set_modal:
+ * @self: a `GtkFontDialog`
+ * @modal: the new value
+ *
+ * Sets whether fonts in the the font chooser dialog
+ * should be sorted by name.
+ *
+ * Since: 4.10
+ */
+void
+gtk_font_dialog_set_sorted (GtkFontDialog *self,
+                           gboolean       sorted)
+{
+  g_return_if_fail (GTK_IS_FONT_DIALOG (self));
+
+  if (self->sorted == sorted)
+    return;
+
+  self->sorted = sorted;
+
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_SORTED]);
 }
 
 /**
