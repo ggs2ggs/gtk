@@ -30,6 +30,7 @@
 #include "gtkbinlayout.h"
 #include "gtkcheckbutton.h"
 #include "gtkcustomfilter.h"
+#include "gtkcustomsorter.h"
 #include "gtkentry.h"
 #include "gtkfilter.h"
 #include "gtkframe.h"
@@ -119,6 +120,7 @@ struct _GtkFontChooserWidget
   char            *preview_text;
   gboolean         show_preview_entry;
   gboolean         preview_text_set;
+  gboolean         sorted;
 
   GtkWidget *size_label;
   GtkWidget *size_spin;
@@ -212,6 +214,7 @@ static GtkFontChooserLevel gtk_font_chooser_widget_get_level (GtkFontChooserWidg
 static void                gtk_font_chooser_widget_set_language (GtkFontChooserWidget *fontchooser,
                                                                  const char           *language);
 static void update_font_features (GtkFontChooserWidget *fontchooser);
+static void update_fontlist (GtkFontChooserWidget *self);
 
 static void gtk_font_chooser_widget_iface_init (GtkFontChooserIface *iface);
 
@@ -430,6 +433,15 @@ language_check_changed (GtkCheckButton       *check,
   gtk_filter_changed (GTK_FILTER (self->user_filter),
                       self->filter_by_language ? GTK_FILTER_CHANGE_MORE_STRICT
                                                : GTK_FILTER_CHANGE_LESS_STRICT);
+}
+
+static void
+sorted_check_changed (GtkCheckButton       *check,
+                      GParamSpec           *pspec,
+                      GtkFontChooserWidget *self)
+{
+  self->sorted = gtk_check_button_get_active (check);
+  update_fontlist (self);
 }
 
 static void
@@ -947,6 +959,7 @@ gtk_font_chooser_widget_class_init (GtkFontChooserWidgetClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, resize_by_scroll_cb);
   gtk_widget_class_bind_template_callback (widget_class, monospace_check_changed);
   gtk_widget_class_bind_template_callback (widget_class, language_check_changed);
+  gtk_widget_class_bind_template_callback (widget_class, sorted_check_changed);
 
   gtk_widget_class_set_layout_manager_type (widget_class, GTK_TYPE_BIN_LAYOUT);
   gtk_widget_class_set_css_name (widget_class, I_("fontchooser"));
@@ -1144,6 +1157,23 @@ add_to_fontlist (GtkWidget     *widget,
     return G_SOURCE_CONTINUE;
 }
 
+static int
+font_sort_func (gconstpointer a,
+                gconstpointer b,
+                gpointer      user_data)
+{
+  GObject *a_font = (gpointer)a;
+  GObject *b_font = (gpointer)b;
+
+  if (a_font == NULL || b_font == NULL)
+    return 0;
+
+  const char *a_name = get_font_name(NULL, a_font);
+  const char *b_name = get_font_name(NULL, b_font);
+
+  return g_ascii_strcasecmp (a_name, b_name);
+}
+
 static void
 update_fontlist (GtkFontChooserWidget *self)
 {
@@ -1159,7 +1189,16 @@ update_fontlist (GtkFontChooserWidget *self)
   else
     model = G_LIST_MODEL (gtk_flatten_list_model_new (G_LIST_MODEL (g_object_ref (fontmap))));
 
-  model = G_LIST_MODEL (gtk_slice_list_model_new (model, 0, 20));
+  if (self->sorted) {
+    GtkSortListModel *sorted_model;
+    GtkSorter *sorter;
+    sorter = GTK_SORTER (gtk_custom_sorter_new (font_sort_func, NULL, NULL));
+    sorted_model = gtk_sort_list_model_new (model, sorter);
+    model = G_LIST_MODEL (gtk_slice_list_model_new (G_LIST_MODEL(sorted_model), 0, 20));
+  } else {
+    model = G_LIST_MODEL (gtk_slice_list_model_new (model, 0, 20));
+  }
+
   gtk_widget_add_tick_callback (GTK_WIDGET (self), add_to_fontlist, g_object_ref (model), g_object_unref);
 
   gtk_filter_list_model_set_model (self->filter_model, model);
@@ -1266,6 +1305,7 @@ gtk_font_chooser_widget_init (GtkFontChooserWidget *self)
   /* Default preview string  */
   self->preview_text = g_strdup (pango_language_get_sample_string (NULL));
   self->show_preview_entry = TRUE;
+  self->sorted = TRUE;
   self->font_desc = pango_font_description_new ();
   self->level = GTK_FONT_CHOOSER_LEVEL_FAMILY |
                 GTK_FONT_CHOOSER_LEVEL_STYLE |
