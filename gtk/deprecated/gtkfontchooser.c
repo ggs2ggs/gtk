@@ -162,8 +162,8 @@ gtk_font_chooser_default_init (GtkFontChooserInterface *iface)
   g_object_interface_install_property
      (iface,
       g_param_spec_boolean ("sorted", NULL, NULL,
-                          FALSE,
-                          GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY));
+                            FALSE,
+                            GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY));
 
   /**
    * GtkFontChooser::font-activated:
