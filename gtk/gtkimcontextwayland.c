@@ -909,6 +909,8 @@ gtk_im_context_wayland_set_cursor_location (GtkIMContext *context,
     gtk_event_controller_reset (GTK_EVENT_CONTROLLER (context_wayland->gesture));
 
   context_wayland->cursor_rect = *rect;
+  notify_cursor_location (context_wayland);
+  commit_state (context_wayland);
 }
 
 static void
