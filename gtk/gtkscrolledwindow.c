@@ -1645,7 +1645,11 @@ scrolled_window_scroll (GtkScrolledWindow        *scrolled_window,
 
   GdkScrollUnit scroll_unit = gtk_event_controller_scroll_get_unit (scroll);
 
-  if (scroll_unit == GDK_SCROLL_UNIT_WHEEL)
+  GtkSettings *settings = gtk_widget_get_settings (GTK_WIDGET (scrolled_window));
+  gboolean interpolation_enabled;
+  g_object_get (settings, "gtk-scroll-interpolation", &interpolation_enabled, NULL);
+
+  if (interpolation_enabled && scroll_unit == GDK_SCROLL_UNIT_WHEEL)
     {
       scrolled_window_scroll_interpolate (scrolled_window, delta_x, delta_y);
       return;
