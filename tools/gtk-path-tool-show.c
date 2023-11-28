@@ -32,12 +32,14 @@
 #include "path-view.h"
 
 static void
-show_path_fill (GskPath       *path,
+show_path_fill (GskPath       *path1,
+                GskPath       *path2,
                 GskFillRule    fill_rule,
                 const GdkRGBA *fg_color,
                 const GdkRGBA *bg_color,
                 gboolean       show_points,
                 gboolean       show_controls,
+                gboolean       show_intersections,
                 const GdkRGBA *point_color)
 {
   GtkWidget *window, *sw, *child;
@@ -52,14 +54,17 @@ show_path_fill (GskPath       *path,
   gtk_scrolled_window_set_propagate_natural_height (GTK_SCROLLED_WINDOW (sw), TRUE);
   gtk_window_set_child (GTK_WINDOW (window), sw);
 
-  child = path_view_new (path);
+  child = g_object_new (PATH_TYPE_VIEW, NULL);
   g_object_set (child,
+                "path1", path1,
+                "path2", path2,
                 "do-fill", TRUE,
                 "fill-rule", fill_rule,
                 "fg-color", fg_color,
                 "bg-color", bg_color,
                 "show-points", show_points,
                 "show-controls", show_controls,
+                "show-intersections", show_intersections,
                 "point-color", point_color,
                 NULL);
 
@@ -74,12 +79,14 @@ show_path_fill (GskPath       *path,
 }
 
 static void
-show_path_stroke (GskPath       *path,
+show_path_stroke (GskPath       *path1,
+                  GskPath       *path2,
                   GskStroke     *stroke,
                   const GdkRGBA *fg_color,
                   const GdkRGBA *bg_color,
                   gboolean       show_points,
                   gboolean       show_controls,
+                  gboolean       show_intersections,
                   const GdkRGBA *point_color)
 {
   GtkWidget *window, *sw, *child;
@@ -94,14 +101,17 @@ show_path_stroke (GskPath       *path,
   gtk_scrolled_window_set_propagate_natural_height (GTK_SCROLLED_WINDOW (sw), TRUE);
   gtk_window_set_child (GTK_WINDOW (window), sw);
 
-  child = path_view_new (path);
+  child = g_object_new (PATH_TYPE_VIEW, NULL);
   g_object_set (child,
+                "path1", path1,
+                "path2", path2,
                 "do-fill", FALSE,
                 "stroke", stroke,
                 "fg-color", fg_color,
                 "bg-color", bg_color,
                 "show-points", show_points,
                 "show-controls", show_controls,
+                "show-intersections", show_intersections,
                 "point-color", point_color,
                 NULL);
 
@@ -123,6 +133,7 @@ do_show (int          *argc,
   gboolean do_stroke = FALSE;
   gboolean show_points = FALSE;
   gboolean show_controls = FALSE;
+  gboolean show_intersections = FALSE;
   const char *fill = "winding";
   const char *fg_color = "black";
   const char *bg_color = "white";
@@ -141,6 +152,7 @@ do_show (int          *argc,
     { "stroke", 0, 0, G_OPTION_ARG_NONE, &do_stroke, N_("Stroke the path"), NULL },
     { "points", 0, 0, G_OPTION_ARG_NONE, &show_points, N_("Show path points"), NULL },
     { "controls", 0, 0, G_OPTION_ARG_NONE, &show_controls, N_("Show control points"), NULL },
+    { "intersections", 0, 0, G_OPTION_ARG_NONE, &show_intersections, N_("Show intersections"), NULL },
     { "fg-color", 0, 0, G_OPTION_ARG_STRING, &fg_color, N_("Foreground color"), N_("COLOR") },
     { "bg-color", 0, 0, G_OPTION_ARG_STRING, &bg_color, N_("Background color"), N_("COLOR") },
     { "point-color", 0, 0, G_OPTION_ARG_STRING, &point_color, N_("Point color"), N_("COLOR") },
@@ -160,7 +172,8 @@ do_show (int          *argc,
     { "dash-offset", 0, 0, G_OPTION_ARG_DOUBLE, &dash_offset, N_("Dash offset (number)"), N_("VALUE") },
     { NULL, }
   };
-  GskPath *path;
+  GskPath *path1;
+  GskPath *path2;
   GskFillRule fill_rule;
   GdkRGBA fg, bg, pc;
   GskLineCap line_cap;
@@ -210,13 +223,17 @@ do_show (int          *argc,
       exit (1);
     }
 
-  if (g_strv_length (args) > 1)
+  if (g_strv_length (args) > 2)
     {
-      g_printerr ("%s\n", _("Can only show a single path"));
+      g_printerr ("%s\n", _("Can only show one or two paths"));
       exit (1);
     }
 
-  path = get_path (args[0]);
+  path1 = get_path (args[0]);
+  if (g_strv_length (args) > 1)
+    path2 = get_path (args[1]);
+  else
+    path2 = NULL;
 
   fill_rule = get_enum_value (GSK_TYPE_FILL_RULE, _("fill rule"), fill);
   get_color (&fg, fg_color);
@@ -234,11 +251,12 @@ do_show (int          *argc,
   _gsk_stroke_set_dashes (stroke, dashes);
 
   if (do_stroke)
-    show_path_stroke (path, stroke, &fg, &bg, show_points, show_controls, &pc);
+    show_path_stroke (path1, path2, stroke, &fg, &bg, show_points, show_controls, show_intersections, &pc);
   else
-    show_path_fill (path, fill_rule, &fg, &bg, show_points, show_controls, &pc);
+    show_path_fill (path1, path2, fill_rule, &fg, &bg, show_points, show_controls, show_intersections, &pc);
 
-  gsk_path_unref (path);
+  g_clear_pointer (&path1, gsk_path_unref);
+  g_clear_pointer (&path2, gsk_path_unref);
 
   g_strfreev (args);
 }
