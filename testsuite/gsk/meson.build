@@ -417,6 +417,8 @@ tests = [
   ['shader'],
   ['path', [ 'path-utils.c' ] ],
   ['path-special-cases'],
+  ['path-intersect'],
+  ['path-ops', [ 'path-utils.c' ] ],
 ]
 
 test_cargs = []
@@ -449,6 +451,7 @@ endforeach
 internal_tests = [
   [ 'curve' ],
   [ 'curve-special-cases' ],
+  [ 'curve-intersect' ],
   [ 'path-private' ],
   [ 'diff' ],
   [ 'half-float' ],

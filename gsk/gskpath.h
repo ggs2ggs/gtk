@@ -144,6 +144,79 @@ gboolean                gsk_path_foreach                        (GskPath        
                                                                  GskPathForeachFunc      func,
                                                                  gpointer                user_data);
 
+/**
+ * GskPathIntersection:
+ * @GSK_PATH_INTERSECTION_NONE: No intersection
+ * @GSK_PATH_INTERSECTION_NORMAL: A normal intersection, where the two paths
+ *   cross each other
+ * @GSK_PATH_INTERSECTION_START: The start of a segment where the two paths coincide
+ * @GSK_PATH_INTERSECTION_END: The end of a segment where the two paths coincide
+ *
+ * The values of this enumeration classify intersections
+ * between paths.
+ */
+typedef enum
+{
+  GSK_PATH_INTERSECTION_NONE,
+  GSK_PATH_INTERSECTION_NORMAL,
+  GSK_PATH_INTERSECTION_START,
+  GSK_PATH_INTERSECTION_END,
+} GskPathIntersection;
+
+/**
+ * GskPathIntersectionFunc:
+ * @path1: the first path
+ * @point1: the intersection as point on @path1
+ * @path2: the second path
+ * @point2: the intersection as point on @path2
+ * @kind: specify the nature of the intersection
+ * @user_data: user data
+ *
+ * Prototype of the callback to iterate through the
+ * intersections of two paths.
+ *
+ * Returns: %TRUE to continue iterating, %FALSE to
+ *   immediately abort and not call the function again
+ *
+ * Since: 4.14
+ */
+typedef gboolean (* GskPathIntersectionFunc)                    (GskPath                *path1,
+                                                                 const GskPathPoint     *point1,
+                                                                 GskPath                *path2,
+                                                                 const GskPathPoint     *point2,
+                                                                 GskPathIntersection     kind,
+                                                                 gpointer                user_data);
+
+GDK_AVAILABLE_IN_4_14
+gboolean                gsk_path_foreach_intersection           (GskPath                *path1,
+                                                                 GskPath                *path2,
+                                                                 GskPathIntersectionFunc func,
+                                                                 gpointer                user_data);
+
+GDK_AVAILABLE_IN_4_14
+GskPath *               gsk_path_union                          (GskPath                *first,
+                                                                 GskPath                *second,
+                                                                 GskFillRule             fill_rule);
+
+GDK_AVAILABLE_IN_4_14
+GskPath *               gsk_path_intersection                   (GskPath                *first,
+                                                                 GskPath                *second,
+                                                                 GskFillRule             fill_rule);
+
+GDK_AVAILABLE_IN_4_14
+GskPath *               gsk_path_difference                     (GskPath                *first,
+                                                                 GskPath                *second,
+                                                                 GskFillRule             fill_rule);
+
+GDK_AVAILABLE_IN_4_14
+GskPath *               gsk_path_symmetric_difference           (GskPath                *first,
+                                                                 GskPath                *second,
+                                                                 GskFillRule             fill_rule);
+
+GDK_AVAILABLE_IN_4_14
+GskPath *               gsk_path_simplify                       (GskPath                *self,
+                                                                 GskFillRule             fill_rule);
+
 G_DEFINE_AUTOPTR_CLEANUP_FUNC(GskPath, gsk_path_unref)
 
 G_END_DECLS
