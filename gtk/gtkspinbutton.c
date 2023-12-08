@@ -1172,6 +1172,7 @@ adjustment_changed_cb (GtkAdjustment *adjustment, gpointer data)
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MAX, gtk_adjustment_get_upper (adjustment),
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MIN, gtk_adjustment_get_lower (adjustment),
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_NOW, gtk_adjustment_get_value (adjustment),
+                                  GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, gtk_adjustment_get_minimum_increment (adjustment),
                                   -1);
 
   gtk_widget_queue_resize (GTK_WIDGET (spin_button));
@@ -1766,6 +1767,7 @@ gtk_spin_button_configure (GtkSpinButton *spin_button,
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MAX, gtk_adjustment_get_upper (adjustment),
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MIN, gtk_adjustment_get_lower (adjustment),
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_NOW, gtk_adjustment_get_value (adjustment),
+                                  GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, gtk_adjustment_get_minimum_increment (adjustment),
                                   -1);
 
   gtk_spin_button_value_changed (adjustment, spin_button);

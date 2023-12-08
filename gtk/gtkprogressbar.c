@@ -479,6 +479,7 @@ gtk_progress_bar_init (GtkProgressBar *pbar)
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MAX, 1.0,
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MIN, 0.0,
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_NOW, 0.0,
+                                  GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, 0.01,
                                   -1);
 }
 
@@ -769,8 +770,6 @@ gtk_progress_bar_set_fraction (GtkProgressBar *pbar,
   update_fraction_classes (pbar);
 
   gtk_accessible_update_property (GTK_ACCESSIBLE (pbar),
-                                  GTK_ACCESSIBLE_PROPERTY_VALUE_MAX, 1.0,
-                                  GTK_ACCESSIBLE_PROPERTY_VALUE_MIN, 0.0,
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_NOW, fraction,
                                   -1);
 

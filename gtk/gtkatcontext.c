@@ -304,6 +304,7 @@ static const char *property_attrs[] = {
   [GTK_ACCESSIBLE_PROPERTY_VALUE_MIN]           = "valuemin",
   [GTK_ACCESSIBLE_PROPERTY_VALUE_NOW]           = "valuenow",
   [GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT]          = "valuetext",
+  [GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT]   = "minimumincrement"
 };
 
 /*< private >
@@ -318,7 +319,7 @@ const char *
 gtk_accessible_property_get_attribute_name (GtkAccessibleProperty property)
 {
   g_return_val_if_fail (property >= GTK_ACCESSIBLE_PROPERTY_AUTOCOMPLETE &&
-                        property <= GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT,
+                        property <= GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT,
                         "<none>");
 
   return property_attrs[property];

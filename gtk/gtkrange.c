@@ -704,6 +704,7 @@ gtk_range_set_adjustment (GtkRange      *range,
                                       GTK_ACCESSIBLE_PROPERTY_VALUE_MAX, gtk_adjustment_get_upper (adjustment),
                                       GTK_ACCESSIBLE_PROPERTY_VALUE_MIN, gtk_adjustment_get_lower (adjustment),
                                       GTK_ACCESSIBLE_PROPERTY_VALUE_NOW, gtk_adjustment_get_value (adjustment),
+                                      GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, gtk_adjustment_get_minimum_increment (adjustment),
                                       -1);
 
       gtk_range_adjustment_changed (adjustment, range);
@@ -2368,6 +2369,7 @@ gtk_range_adjustment_changed (GtkAdjustment *adjustment,
   gtk_accessible_update_property (GTK_ACCESSIBLE (range),
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MAX, upper,
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MIN, lower,
+                                  GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, gtk_adjustment_get_minimum_increment (priv->adjustment),
                                   -1);
 
   /* Note that we don't round off to priv->round_digits here.
