@@ -1393,7 +1393,7 @@ gtk_drag_get_dest_info (GdkDragContext *context,
   if (!info && create)
     {
       info = g_slice_new0 (GtkDragDestInfo);
-      info->context = context;
+      info->context = g_object_ref (context);
       g_object_set_qdata_full (G_OBJECT (context), info_quark,
                                info, gtk_drag_dest_info_destroy);
     }
