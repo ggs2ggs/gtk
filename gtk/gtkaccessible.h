@@ -53,6 +53,26 @@ typedef enum {
 } GtkAccessiblePlatformState;
 
 /**
+ * GtkAccessiblePlatformChange:
+ * @GTK_ACCESSIBLE_PLATFORM_CHANGE_FOCUSABLE: whether the accessible has changed
+ *   its focusable state
+ * @GTK_ACCESSIBLE_PLATFORM_CHANGE_FOCUSED: whether the accessible has changed its
+ *   focused state
+ * @GTK_ACCESSIBLE_PLATFORM_CHANGE_ACTIVE: whether the accessible has changed its
+ *   active state
+ *
+ * Represents the various platform changes which can occur and are communicated
+ * using [method@Gtk.Accessible.platform_changed].
+ *
+ * Since: 4.14
+ */
+typedef enum {
+  GTK_ACCESSIBLE_PLATFORM_CHANGE_FOCUSABLE = 1 << GTK_ACCESSIBLE_PLATFORM_STATE_FOCUSABLE,
+  GTK_ACCESSIBLE_PLATFORM_CHANGE_FOCUSED   = 1 << GTK_ACCESSIBLE_PLATFORM_STATE_FOCUSED,
+  GTK_ACCESSIBLE_PLATFORM_CHANGE_ACTIVE    = 1 << GTK_ACCESSIBLE_PLATFORM_STATE_ACTIVE,
+} GtkAccessiblePlatformChange;
+
+/**
  * GtkAccessibleInterface:
  * @get_at_context: retrieve the platform-specific accessibility context
  *   for the accessible implementation
@@ -160,6 +180,9 @@ GtkATContext *  gtk_accessible_get_at_context   (GtkAccessible *self);
 GDK_AVAILABLE_IN_4_10
 gboolean gtk_accessible_get_platform_state (GtkAccessible              *self,
                                             GtkAccessiblePlatformState  state);
+GDK_AVAILABLE_IN_4_14
+void gtk_accessible_platform_changed (GtkAccessible                *self,
+                                      GtkAccessiblePlatformChange   change);
 
 GDK_AVAILABLE_IN_4_10
 GtkAccessible * gtk_accessible_get_accessible_parent (GtkAccessible *self);

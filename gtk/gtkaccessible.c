@@ -1012,7 +1012,7 @@ gtk_accessible_role_is_abstract (GtkAccessibleRole role)
     }
 }
 
-/*< private >
+/**
  * gtk_accessible_platform_changed:
  * @self: a `GtkAccessible`
  * @change: the platform state change to report
