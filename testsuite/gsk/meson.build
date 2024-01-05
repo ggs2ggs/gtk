@@ -448,6 +448,7 @@ tests = [
   ['shader'],
   ['path', [ 'path-utils.c' ] ],
   ['path-special-cases'],
+  ['dash'],
 ]
 
 test_cargs = []
