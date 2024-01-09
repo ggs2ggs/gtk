@@ -998,6 +998,13 @@ list > row button.image-button:not(.flat) {
   }
 }
 
+/* Make GtkToggleButton's checked status visible inside a stack, see issue #6245 */
+stack button.toggle.flat:checked {
+  background: if($variant == 'light', image(darken($bg_color, 17%)), image(darken($bg_color, 9%)));
+  border-color: if($variant == 'light', darken($bg_color, 17%), darken($bg_color, 9%));
+  border-radius: 5px;
+}
+
 /*********
  * Links *
  *********/
