@@ -34,4 +34,5 @@ typedef struct _GskRenderNode           GskRenderNode;
 typedef struct _GskRoundedRect          GskRoundedRect;
 typedef struct _GskStroke               GskStroke;
 typedef struct _GskTransform            GskTransform;
-
+typedef struct _GskScale                GskScale;
+typedef struct _GskPoint                GskPoint;

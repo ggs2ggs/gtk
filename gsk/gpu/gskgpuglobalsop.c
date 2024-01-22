@@ -12,6 +12,8 @@
 #include "gskvulkandescriptorsprivate.h"
 #endif
 
+#include "gskrectprivate.h"
+
 typedef struct _GskGpuGlobalsOp GskGpuGlobalsOp;
 
 struct _GskGpuGlobalsOp
@@ -87,15 +89,16 @@ static const GskGpuOpClass GSK_GPU_GLOBALS_OP_CLASS = {
 
 void
 gsk_gpu_globals_op (GskGpuFrame             *frame,
-                    const graphene_vec2_t   *scale,
+                    const GskScale          *scale,
                     const graphene_matrix_t *mvp,
                     const GskRoundedRect    *clip)
 {
   GskGpuGlobalsOp *self;
+  GskPoint zero = gsk_point_init (0, 0);
 
   self = (GskGpuGlobalsOp *) gsk_gpu_op_alloc (frame, &GSK_GPU_GLOBALS_OP_CLASS);
 
   graphene_matrix_to_float (mvp, self->instance.mvp);
-  gsk_rounded_rect_to_float (clip, graphene_point_zero (), self->instance.clip);
-  graphene_vec2_to_float (scale, self->instance.scale);
+  gsk_gpu_rounded_rect_to_float (clip, &zero, self->instance.clip);
+  gsk_scale_to_float (scale, self->instance.scale);
 }
