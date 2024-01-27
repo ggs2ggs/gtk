@@ -98,5 +98,8 @@ GDK_AVAILABLE_IN_4_12
 GtkStringFilterMatchMode
                 gtk_drop_down_get_search_match_mode             (GtkDropDown            *self);
 
+GDK_AVAILABLE_IN_4_14
+gboolean        gtk_drop_down_get_popup_shown                   (GtkDropDown            *self);
+
 G_END_DECLS
 
