@@ -297,8 +297,8 @@ check_property (GObject *instance, GParamSpec *pspec)
       guint i;
       NotifyData data;
       gulong id;
+      double current;
       double value;
-      double new_value;
       int current_count;
       double delta;
 
@@ -306,28 +306,30 @@ check_property (GObject *instance, GParamSpec *pspec)
       data.count = 0;
       id = g_signal_connect (instance, "notify", G_CALLBACK (count_notify), &data);
 
-      /* don't check redundant notifications */
-      g_object_get (instance, pspec->name, &value, NULL);
-
       if (p->maximum > 100 || p->minimum < -100)
         delta = M_PI;
       else
         delta = (p->maximum - p->minimum) / 10.0;
 
-      new_value = p->minimum;
+      value = p->minimum;
       for (i = 0; i < 10; i++)
         {
-          new_value += delta;
+          value += delta;
 
-          if (fabs (value - new_value) < p->epsilon)
+          g_object_get (instance, pspec->name, &current, NULL);
+          if (fabs (value - current) < p->epsilon)
             continue;
 
-          if (new_value > p->maximum)
+          if (value > p->maximum)
             break;
 
           current_count = data.count + 1;
-          g_object_set (instance, pspec->name, new_value, NULL);
-          assert_notifies (instance, pspec->name, data.count, current_count);
+
+          g_object_set (instance, pspec->name, value, NULL);
+          g_object_get (instance, pspec->name, &current, NULL);
+
+          if (fabs (value - current) < p->epsilon)
+            assert_notifies (instance, pspec->name, data.count, current_count);
         }
 
       g_signal_handler_disconnect (instance, id);
