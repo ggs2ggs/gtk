@@ -1288,7 +1288,10 @@ move_focus (GtkCalendar *calendar,
             int          updown)
 {
   GtkTextDirection text_dir = gtk_widget_get_direction (GTK_WIDGET (calendar));
-  int x, y;
+  GtkWidget *label;
+
+  label = calendar->day_number_labels[calendar->focus_row][calendar->focus_col];
+  gtk_widget_unset_state_flags (label, GTK_STATE_FLAG_FOCUSED);
 
   if (updown == 1)
     {
@@ -1338,16 +1341,8 @@ move_focus (GtkCalendar *calendar,
         calendar->focus_row = 0;
     }
 
-  for (y = 0; y < 6; y ++)
-    for (x = 0; x < 7; x ++)
-      {
-        GtkWidget *label = calendar->day_number_labels[y][x];
-
-        if (calendar->focus_row == y && calendar->focus_col == x)
-          gtk_widget_set_state_flags (label, GTK_STATE_FLAG_FOCUSED, FALSE);
-        else
-          gtk_widget_unset_state_flags (label, GTK_STATE_FLAG_FOCUSED);
-      }
+  label = calendar->day_number_labels[calendar->focus_row][calendar->focus_col];
+  gtk_widget_set_state_flags (label, GTK_STATE_FLAG_FOCUSED, FALSE);
 }
 
 static gboolean
