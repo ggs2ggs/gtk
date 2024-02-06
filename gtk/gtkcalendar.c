@@ -793,9 +793,6 @@ gtk_calendar_init (GtkCalendar *calendar)
   calendar->show_heading = TRUE;
   calendar->show_day_names = TRUE;
 
-  calendar->focus_row = -1;
-  calendar->focus_col = -1;
-
   target = gtk_drop_target_new (G_TYPE_STRING, GDK_ACTION_COPY);
   gtk_drop_target_set_preload (target, TRUE);
   g_signal_connect (target, "notify::value", G_CALLBACK (gtk_calendar_drag_notify_value), calendar);
@@ -973,6 +970,7 @@ calendar_set_date (GtkCalendar *calendar,
   int i;
   int x, y;
   int today_day;
+  GtkWidget *label;
 
   day_changed = g_date_time_get_day_of_month (calendar->date) != g_date_time_get_day_of_month (date);
   month_changed = g_date_time_get_month (calendar->date) != g_date_time_get_month (date);
@@ -1020,11 +1018,13 @@ calendar_set_date (GtkCalendar *calendar,
   g_date_time_unref (today);
 
   /* Update day labels */
+  label = calendar->day_number_labels[calendar->focus_row][calendar->focus_col];
+  gtk_widget_unset_state_flags (label, GTK_STATE_FLAG_FOCUSED);
   for (y = 0; y < 6; y ++)
     for (x = 0; x < 7; x ++)
       {
         const int day = calendar->day[y][x];
-        GtkWidget *label = calendar->day_number_labels[y][x];
+        label = calendar->day_number_labels[y][x];
         /* Translators: this defines whether the day numbers should use
          * localized digits or the ones used in English (0123...).
          *
@@ -1053,14 +1053,14 @@ calendar_set_date (GtkCalendar *calendar,
 
         if (new_day == day &&
             calendar->day_month[y][x] == MONTH_CURRENT)
-          gtk_widget_set_state_flags (label, GTK_STATE_FLAG_SELECTED, FALSE);
+          {
+            gtk_widget_set_state_flags (label, GTK_STATE_FLAG_SELECTED, FALSE);
+            calendar->focus_row = y;
+            calendar->focus_col = x;
+            gtk_widget_set_state_flags (label, GTK_STATE_FLAG_FOCUSED, FALSE);
+          }
         else
           gtk_widget_unset_state_flags (label, GTK_STATE_FLAG_SELECTED);
-
-        if (calendar->focus_row == y && calendar->focus_col == x)
-          gtk_widget_set_state_flags (label, GTK_STATE_FLAG_FOCUSED, FALSE);
-        else
-          gtk_widget_unset_state_flags (label, GTK_STATE_FLAG_FOCUSED);
 
         if (day == today_day &&
             calendar->day_month[y][x] == MONTH_CURRENT)
@@ -1116,24 +1116,10 @@ calendar_set_date (GtkCalendar *calendar,
 }
 
 static void
-calendar_select_and_focus_day (GtkCalendar *calendar,
-                               int          day)
+calendar_select_day (GtkCalendar *calendar,
+                     int          day)
 {
   GDateTime *new_date;
-  int row;
-  int col;
-
-  for (row = 0; row < 6; row ++)
-    for (col = 0; col < 7; col++)
-      {
-        if (calendar->day_month[row][col] == MONTH_CURRENT &&
-            calendar->day[row][col] == day)
-          {
-            calendar->focus_row = row;
-            calendar->focus_col = col;
-            break;
-          }
-      }
 
   new_date = g_date_time_new_local (g_date_time_get_year (calendar->date),
                                     g_date_time_get_month (calendar->date),
@@ -1269,7 +1255,7 @@ gtk_calendar_button_press (GtkGestureClick *gesture,
   if (!gtk_widget_has_focus (widget))
     gtk_widget_grab_focus (widget);
 
-  calendar_select_and_focus_day (calendar, day);
+  calendar_select_day (calendar, day);
 }
 
 static gboolean
@@ -1442,18 +1428,15 @@ gtk_calendar_key_controller_key_pressed (GtkEventControllerKey *controller,
       row = calendar->focus_row;
       col = calendar->focus_col;
 
-      if (row > -1 && col > -1)
-        {
-          return_val = TRUE;
+      return_val = TRUE;
 
-          day = calendar->day[row][col];
-          if (calendar->day_month[row][col] == MONTH_PREV)
-            calendar_set_month_prev (calendar);
-          else if (calendar->day_month[row][col] == MONTH_NEXT)
-            calendar_set_month_next (calendar);
+      day = calendar->day[row][col];
+      if (calendar->day_month[row][col] == MONTH_PREV)
+        calendar_set_month_prev (calendar);
+      else if (calendar->day_month[row][col] == MONTH_NEXT)
+        calendar_set_month_next (calendar);
 
-          calendar_select_and_focus_day (calendar, day);
-        }
+      calendar_select_day (calendar, day);
       break;
     default:
       break;
