@@ -368,7 +368,7 @@ static guint signals[LAST_SIGNAL] = { 0 };
                          "access::can-rename,access::can-delete,access::can-trash," \
                          "standard::target-uri"
 
-#define DEFAULT_RECENT_FILES_LIMIT 50
+#define DEFAULT_RECENT_FILES_LIMIT 250
 
 static void gtk_file_chooser_widget_iface_init       (GtkFileChooserIface        *iface);
 
@@ -5898,6 +5898,23 @@ recent_clear_model (GtkFileChooserWidget *impl,
   g_set_object (&impl->recent_model, NULL);
 }
 
+static gint
+recent_compare_modified (gconstpointer a, gconstpointer b)
+{
+  const GtkRecentInfo *info_a;
+  const GtkRecentInfo *info_b;
+  GDateTime *modified_a, *modified_b;
+
+  info_a = a;
+  info_b = b;
+
+  modified_a = gtk_recent_info_get_modified (info_a);
+  modified_b = gtk_recent_info_get_modified (info_b);
+
+  /* We want more recent entries first */
+  return g_date_time_compare(modified_b, modified_a);
+}
+
 static void
 recent_start_loading (GtkFileChooserWidget *impl)
 {
@@ -5920,6 +5937,11 @@ recent_start_loading (GtkFileChooserWidget *impl)
   if (!items)
     return;
 
+  /* Sort the list so that if we need to limit the list, then we'll drop
+   * the oldest entries
+   */
+  items = g_list_sort (items, recent_compare_modified);
+
   if (impl->action == GTK_FILE_CHOOSER_ACTION_OPEN)
     {
       const int limit = DEFAULT_RECENT_FILES_LIMIT;
@@ -5939,6 +5961,10 @@ recent_start_loading (GtkFileChooserWidget *impl)
 
           if (gtk_recent_info_get_private_hint (info) &&
               !gtk_recent_info_has_application (info, app_name))
+            continue;
+
+          if (gtk_recent_info_is_local (info) &&
+              !gtk_recent_info_exists (info))
             continue;
 
 
