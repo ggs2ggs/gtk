@@ -286,6 +286,8 @@ struct _GtkLabel
 
   guint    mnemonic_keyval;
 
+  unsigned int baseline_row;
+
   int      width_chars;
   int      max_width_chars;
   int      lines;
@@ -383,6 +385,7 @@ enum {
   PROP_0,
   PROP_LABEL,
   PROP_ATTRIBUTES,
+  PROP_BASELINE_ROW,
   PROP_USE_MARKUP,
   PROP_USE_UNDERLINE,
   PROP_JUSTIFY,
@@ -479,6 +482,9 @@ gtk_label_set_property (GObject      *object,
     case PROP_ATTRIBUTES:
       gtk_label_set_attributes (self, g_value_get_boxed (value));
       break;
+    case PROP_BASELINE_ROW:
+      gtk_label_set_baseline_row (self, g_value_get_uint (value));
+      break;
     case PROP_USE_MARKUP:
       gtk_label_set_use_markup (self, g_value_get_boolean (value));
       break;
@@ -551,6 +557,9 @@ gtk_label_get_property (GObject     *object,
       break;
     case PROP_ATTRIBUTES:
       g_value_set_boxed (value, self->attrs);
+      break;
+    case PROP_BASELINE_ROW:
+      g_value_set_uint (value, self->baseline_row);
       break;
     case PROP_USE_MARKUP:
       g_value_set_boolean (value, self->use_markup);
@@ -1093,6 +1102,31 @@ get_default_widths (GtkLabel    *self,
     }
 }
 
+static int
+get_layout_baseline (GtkLabel    *self,
+                     PangoLayout *layout)
+{
+  PangoLayoutIter *iter;
+  int baseline;
+  unsigned int lineno;
+
+  lineno = 0;
+  iter = pango_layout_get_iter (layout);
+  do
+    {
+      if (lineno == self->baseline_row)
+        break;
+
+      lineno++;
+    }
+  while (pango_layout_iter_next_line (iter));
+
+  baseline = pango_layout_iter_get_baseline (iter);
+  pango_layout_iter_free (iter);
+
+  return baseline;
+}
+
 static void
 get_static_size (GtkLabel       *self,
                  GtkOrientation  orientation,
@@ -1128,7 +1162,7 @@ get_static_size (GtkLabel       *self,
   else
     {
       pango_layout_get_size (layout, NULL, minimum);
-      *minimum_baseline = pango_layout_get_baseline (layout);
+      *minimum_baseline = get_layout_baseline (self, layout);
 
       *natural = *minimum;
       *natural_baseline = *minimum_baseline;
@@ -1153,7 +1187,7 @@ get_height_for_width (GtkLabel *self,
       /* Minimum height is assuming infinite width */
       layout = gtk_label_get_measuring_layout (self, NULL, -1);
       pango_layout_get_size (layout, NULL, minimum_height);
-      baseline = pango_layout_get_baseline (layout);
+      baseline = get_layout_baseline (self, layout);
       *minimum_baseline = baseline;
 
       /* Natural height is assuming natural width */
@@ -1161,7 +1195,7 @@ get_height_for_width (GtkLabel *self,
 
       layout = gtk_label_get_measuring_layout (self, layout, natural_width);
       pango_layout_get_size (layout, NULL, natural_height);
-      baseline = pango_layout_get_baseline (layout);
+      baseline = get_layout_baseline (self, layout);
       *natural_baseline = baseline;
     }
   else
@@ -1174,7 +1208,7 @@ get_height_for_width (GtkLabel *self,
       *minimum_height = text_height;
       *natural_height = text_height;
 
-      baseline = pango_layout_get_baseline (layout);
+      baseline = get_layout_baseline (self, layout);
       *minimum_baseline = baseline;
       *natural_baseline = baseline;
     }
@@ -1342,7 +1376,7 @@ get_layout_location (GtkLabel  *self,
   baseline = gtk_widget_get_baseline (widget);
   if (baseline != -1)
     {
-      int layout_baseline = pango_layout_get_baseline (self->layout) / PANGO_SCALE;
+      int layout_baseline = get_layout_baseline (self, self->layout) / PANGO_SCALE;
       /* yalign is 0 because we can't support yalign while baseline aligning */
       y = baseline - layout_baseline;
     }
@@ -2610,6 +2644,21 @@ gtk_label_class_init (GtkLabelClass *class)
       g_param_spec_boxed ("tabs", NULL, NULL,
                           PANGO_TYPE_TAB_ARRAY,
                           GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * GtkLabel:baseline-row: (attributes org.gtk.Property.get=gtk_label_get_baseline_row org.gtk.Property.set=gtk_label_set_baseline_row)
+   *
+   * The line in the text to which the baseline is aligned.
+   *
+   * If this number is bigger than the the number of lines in the formatted
+   * text, the baseline is aligned to the last line.
+   *
+   * Since: 4.12
+   */
+  label_props[PROP_BASELINE_ROW] =
+      g_param_spec_uint ("baseline-row", NULL, NULL,
+                         0, G_MAXUINT, 0,
+                         GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (gobject_class, NUM_PROPERTIES, label_props);
 
@@ -6050,4 +6099,49 @@ gtk_label_get_tabs (GtkLabel *self)
   g_return_val_if_fail (GTK_IS_LABEL (self), NULL);
 
   return self->tabs ? pango_tab_array_copy (self->tabs) : NULL;
+}
+
+/**
+ * gtk_label_set_baseline_row:
+ * @self: a `GtkLabel`
+ * @baseline_row: the row to align with the baseline
+ *
+ * Sets the row to align with the baseline.
+ *
+ * This is only relevant if the label is inside a container
+ * that is doing baseline alignment.
+ *
+ * Since: 4.12
+ */
+void
+gtk_label_set_baseline_row (GtkLabel     *self,
+                            unsigned int  baseline_row)
+{
+  g_return_if_fail (GTK_IS_LABEL (self));
+
+  if (self->baseline_row == baseline_row)
+    return;
+
+  self->baseline_row = baseline_row;
+
+  g_object_notify_by_pspec (G_OBJECT (self), label_props[PROP_BASELINE_ROW]);
+  gtk_widget_queue_resize (GTK_WIDGET (self));
+}
+
+/**
+ * gtk_label_get_baseline_row:
+ * @self: a `GtkLabel`
+ *
+ * Gets the row to align with the baseline.
+ *
+ * Returns: the row to align with the baseline
+ *
+ * Since: 4.12
+ */
+unsigned int
+gtk_label_get_baseline_row (GtkLabel *self)
+{
+  g_return_val_if_fail (GTK_IS_LABEL (self), 0);
+
+  return self->baseline_row;
 }
