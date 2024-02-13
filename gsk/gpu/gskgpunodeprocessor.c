@@ -42,6 +42,7 @@
 #include "gsktransformprivate.h"
 
 #include "gdk/gdkrgbaprivate.h"
+#include "gdk/gdksubsurfaceprivate.h"
 
 /* A note about coordinate systems
  *
@@ -733,6 +734,28 @@ gsk_gpu_node_processor_image_op (GskGpuNodeProcessor   *self,
     }
 }
 
+static GskGpuImage *
+gsk_gpu_node_processor_create_offscreen (GskGpuFrame           *frame,
+                                         const graphene_vec2_t *scale,
+                                         const graphene_rect_t *viewport,
+                                         GskRenderNode         *node)
+{
+  GskGpuNodeProcessor self;
+  GskGpuImage *image;
+
+  image = gsk_gpu_node_processor_init_draw (&self,
+                                            frame,
+                                            gsk_render_node_get_preferred_depth (node),
+                                            scale,
+                                            viewport);
+
+  gsk_gpu_node_processor_add_node (&self, node);
+
+  gsk_gpu_node_processor_finish_draw (&self, image);
+
+  return image;
+}
+
 /*
  * gsk_gpu_get_node_as_image:
  * @frame: frame to render in
@@ -762,7 +785,6 @@ gsk_gpu_get_node_as_image (GskGpuFrame            *frame,
                            GskRenderNode          *node,
                            graphene_rect_t        *out_bounds)
 {
-  graphene_rect_t clipped;
   GskGpuImage *result;
 
   switch ((guint) gsk_render_node_get_node_type (node))
@@ -785,37 +807,29 @@ gsk_gpu_get_node_as_image (GskGpuFrame            *frame,
       }
 
     case GSK_CAIRO_NODE:
-      gsk_rect_intersection (clip_bounds, &node->bounds, &clipped);
-      if (gsk_rect_is_empty (&clipped))
-        return NULL;
-
       result = gsk_gpu_upload_cairo_op (frame,
                                         scale,
-                                        &clipped,
+                                        clip_bounds,
                                         (GskGpuCairoFunc) gsk_render_node_draw_fallback,
                                         gsk_render_node_ref (node),
                                         (GDestroyNotify) gsk_render_node_unref);
 
       g_object_ref (result);
 
-      *out_bounds = clipped;
+      *out_bounds = *clip_bounds;
       return result;
 
     default:
       break;
     }
 
-  gsk_rect_intersection (clip_bounds, &node->bounds, &clipped);
-  if (gsk_rect_is_empty (&clipped))
-    return NULL;
-
   GSK_DEBUG (FALLBACK, "Offscreening node '%s'", g_type_name_from_instance ((GTypeInstance *) node));
-  result = gsk_gpu_render_pass_op_offscreen (frame,
-                                             scale,
-                                             &clipped,
-                                             node);
+  result = gsk_gpu_node_processor_create_offscreen (frame,
+                                                    scale,
+                                                    clip_bounds,
+                                                    node);
 
-  *out_bounds = clipped;
+  *out_bounds = *clip_bounds;
   return result;
 }
 
@@ -2056,10 +2070,10 @@ gsk_gpu_node_processor_add_texture_scale_node (GskGpuNodeProcessor *self,
       if (!gsk_gpu_node_processor_clip_node_bounds (self, node, &clip_bounds))
         return;
       gsk_rect_round_larger (&clip_bounds);
-      offscreen = gsk_gpu_render_pass_op_offscreen (self->frame,
-                                                    graphene_vec2_one (),
-                                                    &clip_bounds,
-                                                    node);
+      offscreen = gsk_gpu_node_processor_create_offscreen (self->frame,
+                                                           graphene_vec2_one (),
+                                                           &clip_bounds,
+                                                           node);
       descriptor = gsk_gpu_node_processor_add_image (self, offscreen, GSK_GPU_SAMPLER_DEFAULT);
       gsk_gpu_texture_op (self->frame,
                           gsk_gpu_clip_get_shader_clip (&self->clip, &self->offset, &node->bounds),
@@ -3252,10 +3266,10 @@ gsk_gpu_node_processor_repeat_tile (GskGpuNodeProcessor    *self,
     }
 
   GSK_DEBUG (FALLBACK, "Offscreening node '%s' for tiling", g_type_name_from_instance ((GTypeInstance *) child));
-  image = gsk_gpu_render_pass_op_offscreen (self->frame,
-                                            &self->scale,
-                                            &clipped_child_bounds,
-                                            child);
+  image = gsk_gpu_node_processor_create_offscreen (self->frame,
+                                                   &self->scale,
+                                                   &clipped_child_bounds,
+                                                   child);
 
   g_return_if_fail (image);
 
@@ -3728,6 +3742,12 @@ static void
 gsk_gpu_node_processor_add_container_node (GskGpuNodeProcessor *self,
                                            GskRenderNode       *node)
 {
+  if (self->opacity < 1.0 && !gsk_container_node_is_disjoint (node))
+    {
+      gsk_gpu_node_processor_add_without_opacity (self, node);
+      return;
+    }
+
   for (guint i = 0; i < gsk_container_node_get_n_children (node); i++)
     gsk_gpu_node_processor_add_node (self, gsk_container_node_get_child (node, i));
 }
@@ -3767,7 +3787,7 @@ static const struct
   },
   [GSK_CONTAINER_NODE] = {
     GSK_GPU_GLOBAL_MATRIX | GSK_GPU_GLOBAL_SCALE | GSK_GPU_GLOBAL_CLIP | GSK_GPU_GLOBAL_SCISSOR,
-    0,
+    GSK_GPU_HANDLE_OPACITY,
     gsk_gpu_node_processor_add_container_node,
     NULL,
   },

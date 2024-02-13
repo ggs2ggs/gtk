@@ -31,7 +31,8 @@ typedef struct
   GdkSubsurface *subsurface;
   GdkTexture *texture;
   GdkSubsurface *place_above;
-  graphene_rect_t rect;
+  graphene_rect_t dest;
+  graphene_rect_t source;
 
   guint was_offloaded : 1;
   guint can_offload   : 1;
@@ -42,9 +43,10 @@ typedef struct
   guint is_above      : 1;
 } GskOffloadInfo;
 
-GskOffload *        gsk_offload_new                      (GdkSurface    *surface,
-                                                          GskRenderNode *root);
-void                gsk_offload_free                     (GskOffload    *self);
+GskOffload *        gsk_offload_new                      (GdkSurface       *surface,
+                                                          GskRenderNode    *root,
+                                                          cairo_region_t   *diff);
+void                gsk_offload_free                     (GskOffload       *self);
 
-GskOffloadInfo    * gsk_offload_get_subsurface_info      (GskOffload    *self,
-                                                          GdkSubsurface *subsurface);
+GskOffloadInfo    * gsk_offload_get_subsurface_info      (GskOffload       *self,
+                                                          GdkSubsurface    *subsurface);

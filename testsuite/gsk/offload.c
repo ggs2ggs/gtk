@@ -196,6 +196,9 @@ collect_offload_info (GdkSurface *surface,
       else
         g_snprintf (above, sizeof (above), "-");
 
+      /* NOTE: We look at can_offload here, not is_offloaded, since we don't have
+       * dmabuf textures here, so attaching them to subsurfaces won't succeed.
+       */
       if (info->can_offload)
         {
           g_string_append_printf (s, "%u: offloaded, %s%sabove: %s, ",
@@ -206,9 +209,12 @@ collect_offload_info (GdkSurface *surface,
           g_string_append_printf (s, "texture: %dx%d, ",
                                   gdk_texture_get_width (info->texture),
                                   gdk_texture_get_height (info->texture));
-          g_string_append_printf (s, "rect: %g %g %g %g\n",
-                                  info->rect.origin.x, info->rect.origin.y,
-                                  info->rect.size.width, info->rect.size.height);
+          g_string_append_printf (s, "source: %g %g %g %g, ",
+                                  info->source.origin.x, info->source.origin.y,
+                                  info->source.size.width, info->source.size.height);
+          g_string_append_printf (s, "dest: %g %g %g %g\n",
+                                  info->dest.origin.x, info->dest.origin.y,
+                                  info->dest.size.width, info->dest.size.height);
         }
       else
         g_string_append_printf (s, "%u: %snot offloaded\n",
@@ -389,9 +395,11 @@ parse_node_file (GFile *file, const char *generate)
   gsk_render_node_unref (node);
   node = tmp;
 
-  offload = gsk_offload_new (surface, node);
+  region = cairo_region_create ();
+  offload = gsk_offload_new (surface, node, region);
   offload_state = collect_offload_info (surface, offload);
   gsk_offload_free (offload);
+  cairo_region_destroy (region);
 
   if (g_strcmp0 (generate, "offload") == 0)
     {
@@ -425,7 +433,8 @@ parse_node_file (GFile *file, const char *generate)
       gsk_render_node_unref (node2);
       node2 = tmp;
 
-      offload = gsk_offload_new (surface, node2);
+      clip = cairo_region_create ();
+      offload = gsk_offload_new (surface, node2, clip);
       offload_state = collect_offload_info (surface, offload);
 
       if (g_strcmp0 (generate, "offload2") == 0)
@@ -452,8 +461,7 @@ parse_node_file (GFile *file, const char *generate)
       g_clear_pointer (&diff, g_bytes_unref);
       g_clear_pointer (&reference_file, g_free);
 
-      clip = cairo_region_create ();
-      gsk_render_node_diff (node, node2, clip, offload);
+      gsk_render_node_diff (node, node2, &(GskDiffData) { clip, surface });
 
       if (g_strcmp0 (generate, "diff") == 0)
         {
@@ -479,6 +487,8 @@ parse_node_file (GFile *file, const char *generate)
       g_clear_pointer (&offload, gsk_offload_free);
       g_clear_pointer (&node2, gsk_render_node_unref);
     }
+
+  g_clear_pointer (&path, g_free);
 
   g_clear_pointer (&node, gsk_render_node_unref);
   gdk_surface_destroy (surface);

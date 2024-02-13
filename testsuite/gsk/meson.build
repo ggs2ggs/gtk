@@ -100,6 +100,7 @@ compare_render_tests = [
   'nested-rounded-clips',
   'offscreen-fractional-translate-nogl',
   'offscreen-pixel-alignment-nogl-nocairo',
+  'offscreen-pixel-alignment2',
   'opacity_clip',
   'opacity-colormatrix-combinations',
   'opacity-overdraw',
@@ -121,6 +122,7 @@ compare_render_tests = [
   'repeat-no-repeat',
   'repeat-node-tiling-horizontal',
   'repeat-node-tiling-vertical',
+  'repeat-noninteger-nogl-nocairo',
   'repeat-repeats',
   'repeat-repeats-nested-nogl',
   'repeat-scaling',
@@ -183,13 +185,6 @@ renderers = [
   { 'name': 'vulkan' },
 ]
 
-compare_xfails = [
-  # Both tests fail because of some font rendering issue
-  'empty-linear-gradient',
-  'unaligned-offscreen',
-  'upside-down-label-nocairo',
-]
-
 compare_xfails_small_texture = [
   'big-checkerboard',
   'big-checkerboard-scaled-down',
@@ -197,10 +192,35 @@ compare_xfails_small_texture = [
   'repeat-repeats', # only fails when rotated
 ]
 
-foreach renderer : renderers
-  foreach testname : compare_render_tests
+variants = {
+  'plain': '--plain',
+  'flipped': '--flip',
+  'rotated': '--rotate',
+  'repeated': '--repeat',
+  'masked': '--mask',
+  'replayed': '--replay',
+  'clipped': '--clip',
+}
 
-    renderer_name = renderer.get('name')
+compare_xfails = {
+  'ngl': { 'shadow-offset-to-outside-clip': ['clipped'], # 6425
+           'clip-intersection-fail-opacity-nogl': ['clipped'], # 6425
+           'scaled-texture-scale': ['clipped'], # 6428
+           'repeat-scaling': ['clipped'], # 6429
+           'radial-gradient-with-64-colorstops': ['clipped'],
+         },
+  'vulkan': { 'shadow-offset-to-outside-clip': ['clipped'], # 6425
+              'clip-intersection-fail-opacity-nogl': ['clipped'], # 6425
+              'scaled-texture-scale': ['clipped'], # 6428
+            },
+}
+
+foreach renderer : renderers
+  renderer_name = renderer.get('name')
+  renderer_xfails = compare_xfails.get(renderer_name, { })
+
+  foreach testname : compare_render_tests
+    test_xfails = renderer_xfails.get(testname, [])
     exclude_term = '-no' + renderer_name
 
     suites = [
@@ -225,65 +245,23 @@ foreach renderer : renderers
     if ((not testname.contains(exclude_term)) and
         (renderer_name != 'broadway' or broadway_enabled) and
         (renderer_name != 'vulkan' or have_vulkan))
-      test('compare ' + renderer_name + ' ' + testname, compare_render,
-        args: [
-          '--output', join_paths(meson.current_build_dir(), 'compare', renderer_name),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.node'),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.png'),
-        ],
-        env: test_env,
-        suite: suites,
-      )
-      test('compare ' + renderer_name + ' ' + testname + ' flipped', compare_render,
-        args: [
-          '--flip',
-          '--output', join_paths(meson.current_build_dir(), 'compare', renderer_name),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.node'),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.png'),
-        ],
-        env: test_env,
-        suite: suites + [ 'gsk-compare-flipped-' + renderer_name ],
-      )
-      test('compare ' + renderer_name + ' ' + testname + ' repeated', compare_render,
-        args: [
-          '--repeat',
-          '--output', join_paths(meson.current_build_dir(), 'compare', renderer_name),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.node'),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.png'),
-        ],
-        env: test_env,
-        suite: suites + [ 'gsk-compare-repeated-' + renderer_name ],
-      )
-      test('compare ' + renderer_name + ' ' + testname + ' rotated', compare_render,
-        args: [
-          '--rotate',
-          '--output', join_paths(meson.current_build_dir(), 'compare', renderer_name),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.node'),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.png'),
-        ],
-        env: test_env,
-        suite: suites + [ 'gsk-compare-rotated-' + renderer_name ],
-      )
-      test('compare ' + renderer_name + ' ' + testname + ' masked', compare_render,
-        args: [
-          '--mask',
-          '--output', join_paths(meson.current_build_dir(), 'compare', renderer_name),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.node'),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.png'),
-        ],
-        env: test_env,
-        suite: suites + [ 'gsk-compare-masked-' + renderer_name ],
-      )
-      test('compare ' + renderer_name + ' ' + testname + ' replayed', compare_render,
-        args: [
-          '--replay',
-          '--output', join_paths(meson.current_build_dir(), 'compare', renderer_name),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.node'),
-          join_paths(meson.current_source_dir(), 'compare', testname + '.png'),
-        ],
-        env: test_env,
-        suite: suites + [ 'gsk-compare-replayed-' + renderer_name ],
-      )
+
+      foreach variant : variants.keys()
+        extra_suites = [ 'gsk-compare-' + variant + '-' + renderer_name ]
+        if test_xfails.contains(variant) or (renderer_name == 'cairo' and variant == 'clipped')
+          extra_suites += ['failing']
+        endif
+        test('compare ' + renderer_name + ' ' + testname + ' ' + variant, compare_render,
+          args: [
+            variants.get(variant),
+            '--output', join_paths(meson.current_build_dir(), 'compare', renderer_name),
+            join_paths(meson.current_source_dir(), 'compare', testname + '.node'),
+            join_paths(meson.current_source_dir(), 'compare', testname + '.png'),
+          ],
+          env: test_env,
+          suite: suites + extra_suites
+        )
+      endforeach
     endif
   endforeach
 endforeach
@@ -451,6 +429,8 @@ if os_linux
     'move.node',
     'start_offloading.node',
     'stop_offloading.node',
+    'source.node',
+    'nested.node',
   ]
 
   foreach test : offload_tests
