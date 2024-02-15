@@ -916,6 +916,8 @@ rewrite_event_for_surface (GdkEvent  *event,
   GdkEventType type;
   double x = -G_MAXDOUBLE, y = -G_MAXDOUBLE;
   double dx, dy;
+  gconstpointer platform_data;
+  gsize platform_data_size;
 
   type = gdk_event_get_event_type (event);
 
@@ -923,6 +925,7 @@ rewrite_event_for_surface (GdkEvent  *event,
     {
     case GDK_BUTTON_PRESS:
     case GDK_BUTTON_RELEASE:
+      platform_data = gdk_event_get_platform_data (event, &platform_data_size);
       return gdk_button_event_new (type,
                                    new_surface,
                                    gdk_event_get_device (event),
@@ -931,7 +934,8 @@ rewrite_event_for_surface (GdkEvent  *event,
                                    gdk_event_get_modifier_state (event),
                                    gdk_button_event_get_button (event),
                                    x, y,
-                                   gdk_event_dup_axes (event));
+                                   gdk_event_dup_axes (event),
+                                   platform_data, platform_data_size);
     case GDK_MOTION_NOTIFY:
       return gdk_motion_event_new (new_surface,
                                    gdk_event_get_device (event),
@@ -944,6 +948,7 @@ rewrite_event_for_surface (GdkEvent  *event,
     case GDK_TOUCH_UPDATE:
     case GDK_TOUCH_END:
     case GDK_TOUCH_CANCEL:
+      platform_data = gdk_event_get_platform_data (event, &platform_data_size);
       return gdk_touch_event_new (type,
                                   gdk_event_get_event_sequence (event),
                                   new_surface,
@@ -952,7 +957,8 @@ rewrite_event_for_surface (GdkEvent  *event,
                                   gdk_event_get_modifier_state (event),
                                   x, y,
                                   gdk_event_dup_axes (event),
-                                  gdk_touch_event_get_emulating_pointer (event));
+                                  gdk_touch_event_get_emulating_pointer (event),
+                                  platform_data, platform_data_size);
     case GDK_TOUCHPAD_SWIPE:
       gdk_touchpad_event_get_deltas (event, &dx, &dy);
       return gdk_touchpad_event_new_swipe (new_surface,
@@ -1065,6 +1071,8 @@ rewrite_event_for_toplevel (GdkEvent *event)
   GdkSurface *surface;
   GdkEventType event_type;
   GdkTranslatedKey *key, *key_no_lock;
+  gconstpointer platform_data;
+  gsize platform_data_size;
 
   surface = gdk_event_get_surface (event);
   if (!surface->parent)
@@ -1081,6 +1089,8 @@ rewrite_event_for_toplevel (GdkEvent *event)
   key = gdk_key_event_get_translated_key (event, FALSE);
   key_no_lock = gdk_key_event_get_translated_key (event, TRUE);
 
+  platform_data = gdk_event_get_platform_data (event, &platform_data_size);
+
   return gdk_key_event_new (gdk_event_get_event_type (event),
                             surface,
                             gdk_event_get_device (event),
@@ -1089,7 +1099,8 @@ rewrite_event_for_toplevel (GdkEvent *event)
                             gdk_event_get_modifier_state (event),
                             gdk_key_event_is_modifier (event),
                             key, key_no_lock,
-                            gdk_key_event_get_compose_sequence (event));
+                            gdk_key_event_get_compose_sequence (event),
+                            platform_data, platform_data_size);
 }
 
 static gboolean

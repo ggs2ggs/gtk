@@ -835,7 +835,7 @@ pointer_handle_button (void              *data,
                                 gdk_button,
                                 seat->pointer_info.surface_x,
                                 seat->pointer_info.surface_y,
-                                NULL);
+                                NULL, NULL, 0);
 
   gdk_wayland_seat_set_frame_event (seat, event);
 
@@ -1328,7 +1328,7 @@ deliver_key_event (GdkWaylandSeat *seat,
                              _gdk_wayland_keymap_key_is_modifier (keymap, key),
                              &translated,
                              &no_lock,
-                             NULL);
+                             NULL, NULL, 0);
 
   _gdk_wayland_display_deliver_event (seat->display, event);
 
@@ -1649,7 +1649,8 @@ touch_handle_down (void              *data,
                                gdk_wayland_device_get_modifiers (seat->logical_touch),
                                touch->x, touch->y,
                                NULL,
-                               touch->initial_touch);
+                               touch->initial_touch,
+                               NULL, 0);
 
   if (touch->initial_touch)
     {
@@ -1692,7 +1693,8 @@ touch_handle_up (void            *data,
                                gdk_wayland_device_get_modifiers (seat->logical_touch),
                                touch->x, touch->y,
                                NULL,
-                               touch->initial_touch);
+                               touch->initial_touch,
+                               NULL, 0);
 
   if (GDK_DISPLAY_DEBUG_CHECK (gdk_seat_get_display (GDK_SEAT (seat)), EVENTS))
     {
@@ -1740,7 +1742,8 @@ touch_handle_motion (void            *data,
                                gdk_wayland_device_get_modifiers (seat->logical_touch),
                                touch->x, touch->y,
                                NULL,
-                               touch->initial_touch);
+                               touch->initial_touch,
+                               NULL, 0);
 
   if (GDK_DISPLAY_DEBUG_CHECK (gdk_seat_get_display (GDK_SEAT (seat)), EVENTS))
     {
@@ -1782,7 +1785,8 @@ touch_handle_cancel (void            *data,
                                    gdk_wayland_device_get_modifiers (seat->logical_touch),
                                    touch->x, touch->y,
                                    NULL,
-                                   touch->initial_touch);
+                                   touch->initial_touch,
+                                   NULL, 0);
       _gdk_wayland_display_deliver_event (seat->display, event);
       g_hash_table_iter_remove (&iter);
     }
@@ -2884,7 +2888,8 @@ tablet_create_button_event_frame (GdkWaylandTabletData *tablet,
                                 button,
                                 tablet->pointer_info.surface_x,
                                 tablet->pointer_info.surface_y,
-                                tablet_copy_axes (tablet));
+                                tablet_copy_axes (tablet),
+                                NULL, 0);
   gdk_wayland_tablet_set_frame_event (tablet, event);
 }
 

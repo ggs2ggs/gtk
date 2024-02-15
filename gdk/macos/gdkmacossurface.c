@@ -876,7 +876,7 @@ _gdk_macos_surface_synthesize_null_key (GdkMacosSurface *self)
                              FALSE,
                              &translated,
                              &no_lock,
-                             NULL);
+                             NULL, NULL, 0);
   _gdk_event_queue_append (display, event);
 }
 

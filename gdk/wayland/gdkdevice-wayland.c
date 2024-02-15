@@ -483,7 +483,8 @@ gdk_wayland_device_unset_touch_grab (GdkDevice        *gdk_device,
                                gdk_wayland_device_get_modifiers (seat->logical_touch),
                                touch->x, touch->y,
                                NULL,
-                               touch->initial_touch);
+                               touch->initial_touch,
+                               NULL, 0);
   _gdk_wayland_display_deliver_event (seat->display, event);
 }
 

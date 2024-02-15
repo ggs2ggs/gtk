@@ -286,6 +286,8 @@ typedef struct {
   gboolean (* get_axes) (GdkEvent  *event,
                          double   **axes,
                          guint     *n_axes);
+  gconstpointer (* get_platform_data) (GdkEvent *event,
+                                       gsize    *platform_data_size);
 } GdkEventTypeInfo;
 
 static void
@@ -308,6 +310,8 @@ gdk_event_generic_class_init (gpointer g_class,
     event_class->get_tool = info->get_tool;
   if (info->get_axes != NULL)
     event_class->get_axes = info->get_axes;
+  if (info->get_platform_data != NULL)
+    event_class->get_platform_data = info->get_platform_data;
 
   g_free (info);
 }
@@ -1200,6 +1204,21 @@ gdk_event_dup_axes (GdkEvent *event)
   return NULL;
 }
 
+gconstpointer
+gdk_event_get_platform_data (GdkEvent *event,
+                             gsize    *platform_data_size)
+{
+  g_return_val_if_fail (GDK_IS_EVENT (event), NULL);
+
+  if (*platform_data_size)
+    *platform_data_size = 0;
+  if (!GDK_EVENT_GET_CLASS (event)->get_platform_data)
+    return NULL;
+
+  return GDK_EVENT_GET_CLASS (event)->get_platform_data (event,
+                                                         platform_data_size);
+}
+
 /**
  * gdk_event_get_event_type:
  * @event: a `GdkEvent`
@@ -1397,6 +1416,7 @@ gdk_button_event_finalize (GdkEvent *event)
 
   g_clear_object (&self->tool);
   g_clear_pointer (&self->axes, g_free);
+  g_clear_pointer (&self->platform_data, g_bytes_unref);
 
   GDK_EVENT_SUPER (event)->finalize (event);
 }
@@ -1447,6 +1467,20 @@ gdk_button_event_get_axes (GdkEvent  *event,
   return TRUE;
 }
 
+static gconstpointer
+gdk_button_event_get_platform_data (GdkEvent *event,
+                                    gsize    *platform_data_size)
+{
+  GdkButtonEvent *self = (GdkButtonEvent *) event;
+
+  if (*platform_data_size)
+    *platform_data_size = 0;
+  if (!self->platform_data)
+    return NULL;
+
+  return g_bytes_get_data (self->platform_data, platform_data_size);
+}
+
 static const GdkEventTypeInfo gdk_button_event_info = {
   sizeof (GdkButtonEvent),
   NULL,
@@ -1456,6 +1490,7 @@ static const GdkEventTypeInfo gdk_button_event_info = {
   NULL,
   gdk_button_event_get_tool,
   gdk_button_event_get_axes,
+  gdk_button_event_get_platform_data,
 };
 
 GDK_DEFINE_EVENT_TYPE (GdkButtonEvent, gdk_button_event,
@@ -1473,7 +1508,10 @@ gdk_button_event_new (GdkEventType     type,
                       guint            button,
                       double           x,
                       double           y,
-                      double          *axes)
+                      double          *axes,
+                      gconstpointer    platform_data,
+                      gsize            platform_data_size)
+
 {
   g_return_val_if_fail (type == GDK_BUTTON_PRESS ||
                         type == GDK_BUTTON_RELEASE, NULL);
@@ -1486,6 +1524,7 @@ gdk_button_event_new (GdkEventType     type,
   self->button = button;
   self->x = x;
   self->y = y;
+  self->platform_data = g_bytes_new (platform_data, platform_data_size);
 
   return (GdkEvent *) self;
 }
@@ -1525,6 +1564,7 @@ gdk_key_event_finalize (GdkEvent *event)
   GdkKeyEvent *self = (GdkKeyEvent *) event;
 
   g_free (self->compose_sequence);
+  g_clear_pointer (&self->platform_data, g_bytes_unref);
 
   GDK_EVENT_SUPER (event)->finalize (event);
 }
@@ -1537,6 +1577,20 @@ gdk_key_event_get_state (GdkEvent *event)
   return self->state;
 }
 
+static gconstpointer
+gdk_key_event_get_platform_data (GdkEvent *event,
+                                 gsize    *platform_data_size)
+{
+  GdkKeyEvent *self = (GdkKeyEvent *) event;
+
+  if (*platform_data_size)
+    *platform_data_size = 0;
+  if (!self->platform_data)
+    return NULL;
+
+  return g_bytes_get_data (self->platform_data, platform_data_size);
+}
+
 static const GdkEventTypeInfo gdk_key_event_info = {
   sizeof (GdkKeyEvent),
   NULL,
@@ -1546,6 +1600,7 @@ static const GdkEventTypeInfo gdk_key_event_info = {
   NULL,
   NULL,
   NULL,
+  gdk_key_event_get_platform_data,
 };
 
 GDK_DEFINE_EVENT_TYPE (GdkKeyEvent, gdk_key_event,
@@ -1583,7 +1638,9 @@ gdk_key_event_new (GdkEventType      type,
                    gboolean          is_modifier,
                    GdkTranslatedKey *translated,
                    GdkTranslatedKey *no_lock,
-                   char             *compose_sequence)
+                   char             *compose_sequence,
+                   gconstpointer     platform_data,
+                   gsize             platform_data_size)
 {
   g_return_val_if_fail (type == GDK_KEY_PRESS ||
                         type == GDK_KEY_RELEASE, NULL);
@@ -1597,6 +1654,7 @@ gdk_key_event_new (GdkEventType      type,
   self->translated[0] = *translated;
   self->translated[1] = *no_lock;
   self->compose_sequence = g_strdup (compose_sequence);
+  self->platform_data = g_bytes_new (platform_data, platform_data_size);
 
   return event;
 }
@@ -1985,6 +2043,7 @@ gdk_touch_event_finalize (GdkEvent *event)
   GdkTouchEvent *self = (GdkTouchEvent *) event;
 
   g_clear_pointer (&self->axes, g_free);
+  g_clear_pointer (&self->platform_data, g_bytes_unref);
 
   GDK_EVENT_SUPER (event)->finalize (event);
 }
@@ -2035,6 +2094,20 @@ gdk_touch_event_get_axes (GdkEvent  *event,
   return TRUE;
 }
 
+static gconstpointer
+gdk_touch_event_get_platform_data (GdkEvent *event,
+                                   gsize    *platform_data_size)
+{
+  GdkTouchEvent *self = (GdkTouchEvent *) event;
+
+  if (*platform_data_size)
+    *platform_data_size = 0;
+  if (!self->platform_data)
+    return NULL;
+
+  return g_bytes_get_data (self->platform_data, platform_data_size);
+}
+
 static const GdkEventTypeInfo gdk_touch_event_info = {
   sizeof (GdkTouchEvent),
   NULL,
@@ -2044,6 +2117,7 @@ static const GdkEventTypeInfo gdk_touch_event_info = {
   gdk_touch_event_get_sequence,
   NULL,
   gdk_touch_event_get_axes,
+  gdk_touch_event_get_platform_data,
 };
 
 GDK_DEFINE_EVENT_TYPE (GdkTouchEvent, gdk_touch_event,
@@ -2063,7 +2137,9 @@ gdk_touch_event_new (GdkEventType      type,
                      double            x,
                      double            y,
                      double           *axes,
-                     gboolean          emulating)
+                     gboolean          emulating,
+                     gconstpointer     platform_data,
+                     gsize             platform_data_size)
 {
   GdkTouchEvent *self;
 
@@ -2080,6 +2156,7 @@ gdk_touch_event_new (GdkEventType      type,
   self->axes = axes;
   self->touch_emulating = emulating;
   self->pointer_emulated = emulating;
+  self->platform_data = g_bytes_new (platform_data, platform_data_size);
 
   return (GdkEvent *) self;
 }
