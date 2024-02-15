@@ -65,5 +65,8 @@ gboolean                gdk_wayland_display_query_registry      (GdkDisplay  *di
 GDK_AVAILABLE_IN_4_4
 gpointer                gdk_wayland_display_get_egl_display     (GdkDisplay  *display);
 
+GDK_AVAILABLE_IN_4_14
+uint32_t gdk_wayland_event_get_serial (GdkEvent *event);
+
 G_END_DECLS
 

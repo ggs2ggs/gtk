@@ -835,7 +835,8 @@ pointer_handle_button (void              *data,
                                 gdk_button,
                                 seat->pointer_info.surface_x,
                                 seat->pointer_info.surface_y,
-                                NULL, NULL, 0);
+                                NULL,
+                                &serial, sizeof (uint32_t));
 
   gdk_wayland_seat_set_frame_event (seat, event);
 
@@ -1328,7 +1329,9 @@ deliver_key_event (GdkWaylandSeat *seat,
                              _gdk_wayland_keymap_key_is_modifier (keymap, key),
                              &translated,
                              &no_lock,
-                             NULL, NULL, 0);
+                             NULL,
+                             &seat->keyboard_key_serial,
+                             sizeof (uint32_t));
 
   _gdk_wayland_display_deliver_event (seat->display, event);
 
@@ -1650,7 +1653,7 @@ touch_handle_down (void              *data,
                                touch->x, touch->y,
                                NULL,
                                touch->initial_touch,
-                               NULL, 0);
+                               &serial, sizeof (uint32_t));
 
   if (touch->initial_touch)
     {
@@ -1694,7 +1697,7 @@ touch_handle_up (void            *data,
                                touch->x, touch->y,
                                NULL,
                                touch->initial_touch,
-                               NULL, 0);
+                               &serial, sizeof (uint32_t));
 
   if (GDK_DISPLAY_DEBUG_CHECK (gdk_seat_get_display (GDK_SEAT (seat)), EVENTS))
     {
@@ -2889,7 +2892,8 @@ tablet_create_button_event_frame (GdkWaylandTabletData *tablet,
                                 tablet->pointer_info.surface_x,
                                 tablet->pointer_info.surface_y,
                                 tablet_copy_axes (tablet),
-                                NULL, 0);
+                                &tablet->pointer_info.press_serial,
+                                sizeof (uint32_t));
   gdk_wayland_tablet_set_frame_event (tablet, event);
 }
 
