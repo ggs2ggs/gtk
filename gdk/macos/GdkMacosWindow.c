@@ -743,7 +743,7 @@ typedef NSString *CALayerContentsGravity;
 
   is_opaque = (([self styleMask] & NSWindowStyleMaskTitled) != 0);
 
-  _gdk_macos_surface_update_fullscreen_state (gdk_surface);
+  _gdk_macos_toplevel_surface_update_fullscreen_state (gdk_surface);
 
   if (was_opaque != is_opaque)
     {

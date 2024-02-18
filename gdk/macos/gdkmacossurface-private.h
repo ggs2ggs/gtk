@@ -112,7 +112,6 @@ void               _gdk_macos_surface_set_geometry_hints      (GdkMacosSurface  
 void               _gdk_macos_surface_resize                  (GdkMacosSurface      *self,
                                                                int                   width,
                                                                int                   height);
-void               _gdk_macos_surface_update_fullscreen_state (GdkMacosSurface      *self);
 void               _gdk_macos_surface_request_frame           (GdkMacosSurface      *self);
 void               _gdk_macos_surface_frame_presented         (GdkMacosSurface      *self,
                                                                gint64                predicted_presentation_time,

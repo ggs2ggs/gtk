@@ -31,6 +31,29 @@
 #include "gdkmacosmonitor-private.h"
 #include "gdkmacosutils-private.h"
 
+
+void
+_gdk_macos_toplevel_surface_update_fullscreen_state (GdkMacosSurface *self)
+{
+  GdkToplevelState state;
+  gboolean is_fullscreen;
+  gboolean was_fullscreen;
+
+  g_return_if_fail (GDK_IS_MACOS_SURFACE (self));
+
+  state = GDK_SURFACE (self)->state;
+  is_fullscreen = ([self->window styleMask] & NSWindowStyleMaskFullScreen) != 0;
+  was_fullscreen = (state & GDK_TOPLEVEL_STATE_FULLSCREEN) != 0;
+
+  if (is_fullscreen != was_fullscreen)
+    {
+      if (is_fullscreen)
+        gdk_synthesize_surface_state (GDK_SURFACE (self), 0, GDK_TOPLEVEL_STATE_FULLSCREEN);
+      else
+        gdk_synthesize_surface_state (GDK_SURFACE (self), GDK_TOPLEVEL_STATE_FULLSCREEN, 0);
+    }
+}
+
 static void
 _gdk_macos_toplevel_surface_fullscreen (GdkMacosToplevelSurface *self)
 {
