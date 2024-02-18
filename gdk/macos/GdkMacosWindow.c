@@ -734,26 +734,16 @@ typedef NSString *CALayerContentsGravity;
 
 -(void)setStyleMask:(NSWindowStyleMask)styleMask
 {
-  gboolean was_fullscreen;
-  gboolean is_fullscreen;
   gboolean was_opaque;
   gboolean is_opaque;
 
-  was_fullscreen = (([self styleMask] & NSWindowStyleMaskFullScreen) != 0);
   was_opaque = (([self styleMask] & NSWindowStyleMaskTitled) != 0);
 
   [super setStyleMask:styleMask];
 
-  is_fullscreen = (([self styleMask] & NSWindowStyleMaskFullScreen) != 0);
   is_opaque = (([self styleMask] & NSWindowStyleMaskTitled) != 0);
 
-  if (was_fullscreen != is_fullscreen)
-    {
-      if (was_fullscreen)
-        [self setFrame:lastUnfullscreenFrame display:NO];
-
-      _gdk_macos_surface_update_fullscreen_state (gdk_surface);
-    }
+  _gdk_macos_surface_update_fullscreen_state (gdk_surface);
 
   if (was_opaque != is_opaque)
     {
@@ -820,15 +810,9 @@ typedef NSString *CALayerContentsGravity;
   inMaximizeTransition = NO;
 }
 
--(NSSize)window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
-{
-  return [[window screen] frame].size;
-}
-
 -(void)windowWillEnterFullScreen:(NSNotification *)aNotification
 {
   inFullscreenTransition = YES;
-  lastUnfullscreenFrame = [self frame];
 }
 
 -(void)windowDidEnterFullScreen:(NSNotification *)aNotification
