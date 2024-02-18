@@ -743,7 +743,8 @@ typedef NSString *CALayerContentsGravity;
 
   is_opaque = (([self styleMask] & NSWindowStyleMaskTitled) != 0);
 
-  _gdk_macos_toplevel_surface_update_fullscreen_state (gdk_surface);
+  if (GDK_IS_MACOS_TOPLEVEL_SURFACE (gdk_surface))
+    _gdk_macos_toplevel_surface_update_fullscreen_state (GDK_MACOS_TOPLEVEL_SURFACE (gdk_surface));
 
   if (was_opaque != is_opaque)
     {
@@ -857,22 +858,24 @@ typedef NSString *CALayerContentsGravity;
 -(void)setDecorated:(BOOL)decorated
 {
   NSWindowStyleMask style_mask = [self styleMask];
+  BOOL is_fullscreen = ([self styleMask] & NSWindowStyleMaskFullScreen) != 0;
+  BOOL hidden = !decorated && !is_fullscreen;
 
-  if (decorated)
-    {
-      style_mask &= ~NSWindowStyleMaskFullSizeContentView;
-      [self setTitleVisibility:NSWindowTitleVisible];
-    }
-  else
+  if (hidden)
     {
       style_mask |= NSWindowStyleMaskFullSizeContentView;
       [self setTitleVisibility:NSWindowTitleHidden];
     }
+  else
+    {
+      style_mask &= ~NSWindowStyleMaskFullSizeContentView;
+      [self setTitleVisibility:NSWindowTitleVisible];
+    }
 
-  [self setTitlebarAppearsTransparent:!decorated];
-  [[self standardWindowButton:NSWindowCloseButton] setHidden:!decorated];
-  [[self standardWindowButton:NSWindowMiniaturizeButton] setHidden:!decorated];
-  [[self standardWindowButton:NSWindowZoomButton] setHidden:!decorated];
+  [self setTitlebarAppearsTransparent:hidden];
+  [[self standardWindowButton:NSWindowCloseButton] setHidden:hidden];
+  [[self standardWindowButton:NSWindowMiniaturizeButton] setHidden:hidden];
+  [[self standardWindowButton:NSWindowZoomButton] setHidden:hidden];
 
   [self setStyleMask:style_mask];
 }
