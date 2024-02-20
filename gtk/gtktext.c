@@ -2605,6 +2605,8 @@ gtk_text_snapshot (GtkWidget   *widget,
     }
 
   gtk_text_draw_undershoot (self, snapshot);
+
+  update_im_cursor_location (self);
 }
 
 static void
