@@ -2992,11 +2992,15 @@ gsk_gpu_node_processor_add_glyph_node (GskGpuNodeProcessor *self,
   GskGpuDevice *device;
   const PangoGlyphInfo *glyphs;
   PangoFont *font;
+  PangoFont *scaled_font = NULL;
   graphene_point_t offset;
   guint i, num_glyphs;
   float scale, inv_scale;
   GdkRGBA color;
   gboolean glyph_align;
+  GskGpuImage *last_image;
+  guint32 descriptor = 0;
+  GskGpuClip old_clip;
 
   if (self->opacity < 1.0 &&
       gsk_text_node_has_color_glyphs (node))
@@ -3004,6 +3008,10 @@ gsk_gpu_node_processor_add_glyph_node (GskGpuNodeProcessor *self,
       gsk_gpu_node_processor_add_without_opacity (self, node);
       return;
     }
+
+  gsk_gpu_clip_init_copy (&old_clip, &self->clip);
+  if (gsk_gpu_clip_contains_rect (&self->clip, &self->offset, &node->bounds))
+    gsk_gpu_clip_init_contained (&self->clip, &node->bounds);
 
   glyph_align = gsk_gpu_frame_should_optimize (self->frame, GSK_GPU_OPTIMIZE_GLYPH_ALIGN) &&
                 gsk_transform_get_category (self->modelview) >= GSK_TRANSFORM_CATEGORY_2D;
@@ -3020,12 +3028,12 @@ gsk_gpu_node_processor_add_glyph_node (GskGpuNodeProcessor *self,
   scale = MAX (graphene_vec2_get_x (&self->scale), graphene_vec2_get_y (&self->scale));
   inv_scale = 1.f / scale;
 
+  last_image = NULL;
   for (i = 0; i < num_glyphs; i++)
     {
       GskGpuImage *image;
       graphene_rect_t glyph_bounds, glyph_tex_rect;
       graphene_point_t glyph_offset, glyph_origin;
-      guint32 descriptor;
       GskGpuGlyphLookupFlags flags;
 
       glyph_origin = GRAPHENE_POINT_INIT (offset.x + (float) glyphs[i].geometry.x_offset / PANGO_SCALE,
@@ -3051,13 +3059,20 @@ gsk_gpu_node_processor_add_glyph_node (GskGpuNodeProcessor *self,
                                                  flags,
                                                  scale,
                                                  &glyph_bounds,
-                                                 &glyph_offset);
+                                                 &glyph_offset,
+                                                 &scaled_font);
 
       gsk_rect_scale (&GRAPHENE_RECT_INIT (-glyph_bounds.origin.x, -glyph_bounds.origin.y, gsk_gpu_image_get_width (image), gsk_gpu_image_get_height (image)), inv_scale, inv_scale, &glyph_tex_rect);
       gsk_rect_scale (&GRAPHENE_RECT_INIT (0, 0, glyph_bounds.size.width, glyph_bounds.size.height), inv_scale, inv_scale, &glyph_bounds);
       glyph_origin = GRAPHENE_POINT_INIT (glyph_origin.x - glyph_offset.x * inv_scale,
                                           glyph_origin.y - glyph_offset.y * inv_scale);
-      descriptor = gsk_gpu_node_processor_add_image (self, image, GSK_GPU_SAMPLER_DEFAULT);
+
+      if (image != last_image)
+        {
+          descriptor = gsk_gpu_node_processor_add_image (self, image, GSK_GPU_SAMPLER_DEFAULT);
+          last_image = image;
+        }
+
       if (glyphs[i].attr.is_color)
         gsk_gpu_texture_op (self->frame,
                             gsk_gpu_clip_get_shader_clip (&self->clip, &glyph_offset, &glyph_bounds),
@@ -3078,6 +3093,10 @@ gsk_gpu_node_processor_add_glyph_node (GskGpuNodeProcessor *self,
 
       offset.x += (float) glyphs[i].geometry.width / PANGO_SCALE;
     }
+
+  g_clear_object (&scaled_font);
+
+  gsk_gpu_clip_init_copy (&self->clip, &old_clip);
 }
 
 static gboolean
@@ -3087,6 +3106,7 @@ gsk_gpu_node_processor_create_glyph_pattern (GskGpuPatternWriter *self,
   GskGpuDevice *device;
   const PangoGlyphInfo *glyphs;
   PangoFont *font;
+  PangoFont *scaled_font = NULL;
   guint num_glyphs;
   gsize i;
   float scale, inv_scale;
@@ -3126,12 +3146,13 @@ gsk_gpu_node_processor_create_glyph_pattern (GskGpuPatternWriter *self,
                                                  0,
                                                  scale,
                                                  &glyph_bounds,
-                                                 &glyph_offset);
+                                                 &glyph_offset,
+                                                 &scaled_font);
 
       if (image != last_image)
         {
           if (!gsk_gpu_pattern_writer_add_image (self, image, GSK_GPU_SAMPLER_DEFAULT, &tex_id))
-            return FALSE;
+            break;
 
           last_image = image;
         }
@@ -3160,7 +3181,9 @@ gsk_gpu_node_processor_create_glyph_pattern (GskGpuPatternWriter *self,
       offset.x += (float) glyphs[i].geometry.width / PANGO_SCALE;
     }
 
-  return TRUE;
+  g_clear_object (&scaled_font);
+
+  return i == num_glyphs;
 }
 
 static gboolean
