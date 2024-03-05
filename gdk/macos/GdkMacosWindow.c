@@ -734,26 +734,17 @@ typedef NSString *CALayerContentsGravity;
 
 -(void)setStyleMask:(NSWindowStyleMask)styleMask
 {
-  gboolean was_fullscreen;
-  gboolean is_fullscreen;
   gboolean was_opaque;
   gboolean is_opaque;
 
-  was_fullscreen = (([self styleMask] & NSWindowStyleMaskFullScreen) != 0);
   was_opaque = (([self styleMask] & NSWindowStyleMaskTitled) != 0);
 
   [super setStyleMask:styleMask];
 
-  is_fullscreen = (([self styleMask] & NSWindowStyleMaskFullScreen) != 0);
   is_opaque = (([self styleMask] & NSWindowStyleMaskTitled) != 0);
 
-  if (was_fullscreen != is_fullscreen)
-    {
-      if (was_fullscreen)
-        [self setFrame:lastUnfullscreenFrame display:NO];
-
-      _gdk_macos_surface_update_fullscreen_state (gdk_surface);
-    }
+  if (GDK_IS_MACOS_TOPLEVEL_SURFACE (gdk_surface))
+    _gdk_macos_toplevel_surface_update_fullscreen_state (GDK_MACOS_TOPLEVEL_SURFACE (gdk_surface));
 
   if (was_opaque != is_opaque)
     {
@@ -820,15 +811,9 @@ typedef NSString *CALayerContentsGravity;
   inMaximizeTransition = NO;
 }
 
--(NSSize)window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
-{
-  return [[window screen] frame].size;
-}
-
 -(void)windowWillEnterFullScreen:(NSNotification *)aNotification
 {
   inFullscreenTransition = YES;
-  lastUnfullscreenFrame = [self frame];
 }
 
 -(void)windowDidEnterFullScreen:(NSNotification *)aNotification
@@ -873,22 +858,24 @@ typedef NSString *CALayerContentsGravity;
 -(void)setDecorated:(BOOL)decorated
 {
   NSWindowStyleMask style_mask = [self styleMask];
+  BOOL is_fullscreen = ([self styleMask] & NSWindowStyleMaskFullScreen) != 0;
+  BOOL hidden = !decorated && !is_fullscreen;
 
-  if (decorated)
-    {
-      style_mask &= ~NSWindowStyleMaskFullSizeContentView;
-      [self setTitleVisibility:NSWindowTitleVisible];
-    }
-  else
+  if (hidden)
     {
       style_mask |= NSWindowStyleMaskFullSizeContentView;
       [self setTitleVisibility:NSWindowTitleHidden];
     }
+  else
+    {
+      style_mask &= ~NSWindowStyleMaskFullSizeContentView;
+      [self setTitleVisibility:NSWindowTitleVisible];
+    }
 
-  [self setTitlebarAppearsTransparent:!decorated];
-  [[self standardWindowButton:NSWindowCloseButton] setHidden:!decorated];
-  [[self standardWindowButton:NSWindowMiniaturizeButton] setHidden:!decorated];
-  [[self standardWindowButton:NSWindowZoomButton] setHidden:!decorated];
+  [self setTitlebarAppearsTransparent:hidden];
+  [[self standardWindowButton:NSWindowCloseButton] setHidden:hidden];
+  [[self standardWindowButton:NSWindowMiniaturizeButton] setHidden:hidden];
+  [[self standardWindowButton:NSWindowZoomButton] setHidden:hidden];
 
   [self setStyleMask:style_mask];
 }
