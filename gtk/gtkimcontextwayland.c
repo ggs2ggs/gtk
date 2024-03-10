@@ -28,6 +28,8 @@
 #include "gdk/wayland/gdkwayland.h"
 #include "text-input-unstable-v3-client-protocol.h"
 
+#define TEXT_INPUT_SUPPORTED_PROTOCOL_VERSION 2
+
 typedef struct _GtkIMContextWaylandGlobal GtkIMContextWaylandGlobal;
 typedef struct _GtkIMContextWayland GtkIMContextWayland;
 typedef struct _GtkIMContextWaylandClass GtkIMContextWaylandClass;
@@ -90,6 +92,9 @@ struct _GtkIMContextWayland
 
   char *pending_commit;
 
+  uint32_t enable_serial;
+  uint32_t pending_action;
+
   cairo_rectangle_int_t cursor_rect;
   guint use_preedit : 1;
 };
@@ -131,6 +136,25 @@ gtk_im_context_wayland_get_global (GtkIMContextWayland *self)
 }
 
 static void
+notify_handled_actions (GtkIMContextWayland *context)
+{
+  GtkIMContextWaylandGlobal *global;
+  struct wl_array array;
+  uint32_t *action;
+
+  global = gtk_im_context_wayland_get_global (context);
+
+  wl_array_init (&array);
+  action = wl_array_add (&array, sizeof (uint32_t));
+  *action = ZWP_TEXT_INPUT_V3_ACTION_BACKSPACE;
+  action = wl_array_add (&array, sizeof (uint32_t));
+  *action = ZWP_TEXT_INPUT_V3_ACTION_DELETE;
+
+  zwp_text_input_v3_set_available_actions (global->text_input, &array);
+  wl_array_release (&array);
+}
+
+static void
 notify_im_change (GtkIMContextWayland                 *context,
                   enum zwp_text_input_v3_change_cause  cause)
 {
@@ -147,6 +171,7 @@ notify_im_change (GtkIMContextWayland                 *context,
   notify_surrounding_text (context);
   notify_content_type (context);
   notify_cursor_location (context);
+  notify_handled_actions (context);
   commit_state (context);
 }
 
@@ -283,6 +308,26 @@ text_input_delete_surrounding_text_apply (GtkIMContextWaylandGlobal *global)
 }
 
 static void
+text_input_action_apply (GtkIMContextWaylandGlobal *global)
+{
+  GtkIMContextWayland *context;
+
+  context = GTK_IM_CONTEXT_WAYLAND (global->current);
+
+  switch (context->pending_action)
+    {
+    case ZWP_TEXT_INPUT_V3_ACTION_BACKSPACE:
+      gtk_im_context_delete_surrounding (global->current, -1, 1);
+      break;
+    case ZWP_TEXT_INPUT_V3_ACTION_DELETE:
+      gtk_im_context_delete_surrounding (global->current, 0, 1);
+      break;
+    default:
+      break;
+    }
+}
+
+static void
 text_input_done (void                     *data,
                  struct zwp_text_input_v3 *text_input,
                  uint32_t                  serial)
@@ -304,9 +349,12 @@ text_input_done (void                     *data,
   text_input_delete_surrounding_text_apply (global);
   text_input_commit_apply (global);
   text_input_preedit_apply (global);
+  text_input_action_apply (global);
 
   if (update_im && global->serial == serial)
     notify_im_change (context, ZWP_TEXT_INPUT_V3_CHANGE_CAUSE_INPUT_METHOD);
+
+  context->enable_serial = 0;
 }
 
 static void
@@ -392,32 +440,21 @@ notify_cursor_location (GtkIMContextWayland *context)
 {
   GtkIMContextWaylandGlobal *global;
   cairo_rectangle_int_t rect;
-  double nx, ny;
-  graphene_point_t p;
 
   global = gtk_im_context_wayland_get_global (context);
   if (global == NULL)
     return;
 
   rect = context->cursor_rect;
-  if (!gtk_widget_compute_point (context->widget,
-                                 GTK_WIDGET (gtk_widget_get_root (context->widget)),
-                                 &GRAPHENE_POINT_INIT (rect.x, rect.y),
-                                 &p))
-    graphene_point_init (&p, rect.x, rect.y);
-
-  gtk_native_get_surface_transform (gtk_widget_get_native (context->widget), &nx, &ny);
-
-  rect.x = p.x + nx;
-  rect.y = p.y + ny;
   zwp_text_input_v3_set_cursor_rectangle (global->text_input,
                                           rect.x, rect.y,
                                           rect.width, rect.height);
 }
 
 static uint32_t
-translate_hints (GtkInputHints   input_hints,
-                 GtkInputPurpose purpose)
+translate_hints (GtkIMContextWayland *context,
+                 GtkInputHints        input_hints,
+                 GtkInputPurpose      purpose)
 {
   uint32_t hints = 0;
 
@@ -433,6 +470,13 @@ translate_hints (GtkInputHints   input_hints,
     hints |= ZWP_TEXT_INPUT_V3_CONTENT_HINT_TITLECASE;
   if (input_hints & GTK_INPUT_HINT_UPPERCASE_SENTENCES)
     hints |= ZWP_TEXT_INPUT_V3_CONTENT_HINT_AUTO_CAPITALIZATION;
+  if (input_hints & GTK_INPUT_HINT_NO_EMOJI)
+    hints |= ZWP_TEXT_INPUT_V3_CONTENT_HINT_NO_EMOJI;
+  if (input_hints & GTK_INPUT_HINT_INHIBIT_OSK)
+    hints |= ZWP_TEXT_INPUT_V3_CONTENT_HINT_ON_SCREEN_INPUT_PROVIDED;
+
+  if (context->use_preedit)
+    hints |= ZWP_TEXT_INPUT_V3_CONTENT_HINT_PREEDIT_SHOWN;
 
   if (purpose == GTK_INPUT_PURPOSE_PIN ||
       purpose == GTK_INPUT_PURPOSE_PASSWORD)
@@ -495,7 +539,7 @@ notify_content_type (GtkIMContextWayland *context)
                 NULL);
 
   zwp_text_input_v3_set_content_type (global->text_input,
-                                      translate_hints (hints, purpose),
+                                      translate_hints (context, hints, purpose),
                                       translate_purpose (purpose));
 }
 
@@ -579,6 +623,7 @@ gtk_im_context_wayland_set_client_widget (GtkIMContext *context,
                                           GtkWidget    *widget)
 {
   GtkIMContextWayland *context_wayland = GTK_IM_CONTEXT_WAYLAND (context);
+  GtkIMContextWaylandGlobal *global;
 
   if (widget == context_wayland->widget)
     return;
@@ -594,6 +639,9 @@ gtk_im_context_wayland_set_client_widget (GtkIMContext *context,
     }
 
   g_set_object (&context_wayland->widget, widget);
+
+  global = gtk_im_context_wayland_global_get (gtk_widget_get_display (widget));
+  g_assert (global != NULL);
 
   if (widget &&
       !GTK_IS_TEXT (widget) &&
@@ -685,7 +733,18 @@ static gboolean
 gtk_im_context_wayland_filter_keypress (GtkIMContext *context,
                                         GdkEvent     *key)
 {
-  /* This is done by the compositor */
+  GtkIMContextWaylandGlobal *global;
+  GtkIMContextWayland *self = GTK_IM_CONTEXT_WAYLAND (context);
+
+  if (self->widget && !gtk_widget_is_focus (self->widget))
+    {
+      if (self->enable_serial == 0)
+        self->enable_serial = gdk_wayland_event_get_serial (key);
+      return TRUE;
+    }
+  else if (self->enable_serial != 0)
+    return TRUE;
+
   return GTK_IM_CONTEXT_CLASS (gtk_im_context_wayland_parent_class)->filter_keypress (context, key);
 }
 
@@ -694,6 +753,13 @@ enable (GtkIMContextWayland       *context_wayland,
         GtkIMContextWaylandGlobal *global)
 {
   zwp_text_input_v3_enable (global->text_input);
+
+  if (context_wayland->enable_serial != 0)
+    {
+      zwp_text_input_v3_enable_serial (global->text_input,
+                                       context_wayland->enable_serial);
+    }
+
   notify_im_change (context_wayland,
                     ZWP_TEXT_INPUT_V3_CHANGE_CAUSE_OTHER);
 }
@@ -745,6 +811,18 @@ text_input_leave (void                     *data,
     disable (GTK_IM_CONTEXT_WAYLAND (global->current), global);
 }
 
+static void
+text_input_action (void                     *data,
+		   struct zwp_text_input_v3 *text_input,
+		   uint32_t                  action,
+		   uint32_t                  serial)
+{
+  GtkIMContextWaylandGlobal *global = data;
+  GtkIMContextWayland *context = GTK_IM_CONTEXT_WAYLAND (global->current);
+
+  if (context)
+    context->pending_action = action;
+}
 
 static const struct zwp_text_input_v3_listener text_input_listener = {
   text_input_enter,
@@ -753,6 +831,7 @@ static const struct zwp_text_input_v3_listener text_input_listener = {
   text_input_commit,
   text_input_delete_surrounding_text,
   text_input_done,
+  text_input_action,
 };
 
 static void
@@ -770,7 +849,8 @@ registry_handle_global (void               *data,
       global->text_input_manager_wl_id = id;
       global->text_input_manager =
         wl_registry_bind (global->registry, global->text_input_manager_wl_id,
-                          &zwp_text_input_manager_v3_interface, 1);
+                          &zwp_text_input_manager_v3_interface,
+                          MIN (version, TEXT_INPUT_SUPPORTED_PROTOCOL_VERSION));
       global->text_input =
         zwp_text_input_manager_v3_get_text_input (global->text_input_manager,
                                                   gdk_wayland_seat_get_wl_seat (seat));
@@ -881,18 +961,28 @@ gtk_im_context_wayland_reset (GtkIMContext *context)
 
 static void
 gtk_im_context_wayland_set_cursor_location (GtkIMContext *context,
-                                            GdkRectangle *rect)
+                                            GdkRectangle *cursor_rect)
 {
   GtkIMContextWayland *context_wayland;
+  double nx, ny;
+  GdkRectangle rect;
+  graphene_point_t p;
   int side;
 
   context_wayland = GTK_IM_CONTEXT_WAYLAND (context);
 
-  if (context_wayland->cursor_rect.x == rect->x &&
-      context_wayland->cursor_rect.y == rect->y &&
-      context_wayland->cursor_rect.width == rect->width &&
-      context_wayland->cursor_rect.height == rect->height)
-    return;
+  /* Compute surface-local coordinates */
+  rect = *cursor_rect;
+  if (!gtk_widget_compute_point (context_wayland->widget,
+                                 GTK_WIDGET (gtk_widget_get_root (context_wayland->widget)),
+                                 &GRAPHENE_POINT_INIT (rect.x, rect.y),
+                                 &p))
+    graphene_point_init (&p, rect.x, rect.y);
+
+  gtk_native_get_surface_transform (gtk_widget_get_native (context_wayland->widget),
+                                    &nx, &ny);
+  rect.x = p.x + nx;
+  rect.y = p.y + ny;
 
   /* Reset the gesture if the cursor changes too far (eg. clicking
    * between disjoint positions in the text).
@@ -904,11 +994,19 @@ gtk_im_context_wayland_set_cursor_location (GtkIMContext *context,
   side = context_wayland->cursor_rect.height;
 
   if (context_wayland->gesture &&
-      (ABS (rect->x - context_wayland->cursor_rect.x) >= side ||
-       ABS (rect->y - context_wayland->cursor_rect.y) >= side))
+      (ABS (rect.x - context_wayland->cursor_rect.x) >= side ||
+       ABS (rect.y - context_wayland->cursor_rect.y) >= side))
     gtk_event_controller_reset (GTK_EVENT_CONTROLLER (context_wayland->gesture));
 
-  context_wayland->cursor_rect = *rect;
+  if (context_wayland->cursor_rect.x != rect.x ||
+      context_wayland->cursor_rect.y != rect.y ||
+      context_wayland->cursor_rect.width != rect.width ||
+      context_wayland->cursor_rect.height != rect.height)
+    {
+      context_wayland->cursor_rect = rect;
+      notify_im_change (GTK_IM_CONTEXT_WAYLAND (context),
+                        ZWP_TEXT_INPUT_V3_CHANGE_CAUSE_OTHER);
+    }
 }
 
 static void

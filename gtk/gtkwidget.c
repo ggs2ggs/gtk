@@ -1971,6 +1971,8 @@ _gtk_widget_emulate_press (GtkWidget      *widget,
   GdkEvent *press;
   double x, y;
   graphene_point_t p;
+  gconstpointer platform_data;
+  gsize platform_data_size;
 
   if (event_widget == widget)
     return;
@@ -1999,6 +2001,7 @@ _gtk_widget_emulate_press (GtkWidget      *widget,
     case GDK_TOUCH_BEGIN:
     case GDK_TOUCH_UPDATE:
     case GDK_TOUCH_END:
+      platform_data = gdk_event_get_platform_data (event, &platform_data_size);
       press = gdk_touch_event_new (GDK_TOUCH_BEGIN,
                                    gdk_event_get_event_sequence (event),
                                    gdk_event_get_surface (event),
@@ -2007,10 +2010,12 @@ _gtk_widget_emulate_press (GtkWidget      *widget,
                                    gdk_event_get_modifier_state (event),
                                    p.x, p.y,
                                    NULL,
-                                   gdk_touch_event_get_emulating_pointer (event));
+                                   gdk_touch_event_get_emulating_pointer (event),
+                                   platform_data, platform_data_size);
       break;
     case GDK_BUTTON_PRESS:
     case GDK_BUTTON_RELEASE:
+      platform_data = gdk_event_get_platform_data (event, &platform_data_size);
       press = gdk_button_event_new (GDK_BUTTON_PRESS,
                                     gdk_event_get_surface (event),
                                     gdk_event_get_device (event),
@@ -2019,7 +2024,8 @@ _gtk_widget_emulate_press (GtkWidget      *widget,
                                     gdk_event_get_modifier_state (event),
                                     gdk_button_event_get_button (event),
                                     p.x, p.y,
-                                    NULL);
+                                    NULL,
+                                    platform_data, platform_data_size);
       break;
     case GDK_MOTION_NOTIFY:
       {
@@ -2044,7 +2050,7 @@ _gtk_widget_emulate_press (GtkWidget      *widget,
                                       gdk_event_get_modifier_state (event),
                                       button,
                                       p.x, p.y,
-                                      NULL);
+                                      NULL, NULL, 0);
       }
       break;
     default:

@@ -349,7 +349,8 @@ winpointer_make_event (GdkDeviceWinpointer *device,
                                   button,
                                   x,
                                   y,
-                                  copy_axes (axes));
+                                  copy_axes (axes),
+                                  NULL, 0);
     break;
     case GDK_MOTION_NOTIFY:
       evt = gdk_motion_event_new (surface,
@@ -374,7 +375,8 @@ winpointer_make_event (GdkDeviceWinpointer *device,
                                  x,
                                  y,
                                  copy_axes (axes),
-                                 emulating_pointer);
+                                 emulating_pointer,
+                                 NULL, 0);
     break;
     default:
       g_warn_if_reached ();

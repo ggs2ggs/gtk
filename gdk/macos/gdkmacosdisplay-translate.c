@@ -265,7 +265,8 @@ fill_button_event (GdkMacosDisplay *display,
                                get_mouse_button_from_ns_event (nsevent),
                                x,
                                y,
-                               axes);
+                               axes,
+                               NULL, 0);
 }
 
 static GdkEvent *
@@ -432,7 +433,7 @@ fill_key_event (GdkMacosDisplay *display,
                             is_modifier,
                             &translated,
                             &no_lock,
-                            NULL);
+                            NULL, NULL, 0);
 }
 
 static GdkEvent *

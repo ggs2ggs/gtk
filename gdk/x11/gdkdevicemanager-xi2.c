@@ -1592,7 +1592,7 @@ gdk_x11_device_manager_xi2_translate_event (GdkEventTranslator *translator,
                                    gdk_x11_keymap_key_is_modifier (keymap, xev->detail),
                                    &translated,
                                    &no_lock,
-                                   NULL);
+                                   NULL, NULL, 0);
 
         if (ev->evtype == XI_KeyPress)
           set_user_time (event);
@@ -1689,7 +1689,8 @@ gdk_x11_device_manager_xi2_translate_event (GdkEventTranslator *translator,
                                           _gdk_x11_device_xi2_translate_state (&xev->mods, &xev->buttons, &xev->group),
                                           xev->detail,
                                           x, y,
-                                          axes);
+                                          axes,
+                                          NULL, 0);
           }
 
         if (ev->evtype == XI_ButtonPress)
@@ -1851,7 +1852,8 @@ gdk_x11_device_manager_xi2_translate_event (GdkEventTranslator *translator,
                                      state,
                                      x, y,
                                      axes,
-                                     xev->flags & XITouchEmulatingPointer);
+                                     xev->flags & XITouchEmulatingPointer,
+                                     NULL, 0);
 
         if (ev->evtype == XI_TouchBegin)
           set_user_time (event);
@@ -1898,7 +1900,8 @@ gdk_x11_device_manager_xi2_translate_event (GdkEventTranslator *translator,
                                      state,
                                      x, y,
                                      axes,
-                                     xev->flags & XITouchEmulatingPointer);
+                                     xev->flags & XITouchEmulatingPointer,
+                                     NULL, 0);
       }
       break;
 #endif  /* XINPUT_2_2 */

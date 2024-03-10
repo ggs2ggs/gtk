@@ -196,7 +196,7 @@ _gdk_broadway_events_got_input (GdkDisplay *display,
                                       message->button.button,
                                       message->pointer.win_x,
                                       message->pointer.win_y,
-                                      NULL);
+                                      NULL, NULL, 0);
 
         node = _gdk_event_queue_append (display, event);
         _gdk_windowing_got_event (display, node, event, message->base.serial);
@@ -259,7 +259,8 @@ _gdk_broadway_events_got_input (GdkDisplay *display,
                                      message->touch.win_x,
                                      message->touch.win_y,
                                      NULL,
-                                     message->touch.is_emulated);
+                                     message->touch.is_emulated,
+                                     NULL, 0);
 
         node = _gdk_event_queue_append (display, event);
         _gdk_windowing_got_event (display, node, event, message->base.serial);
@@ -288,7 +289,7 @@ _gdk_broadway_events_got_input (GdkDisplay *display,
                                    FALSE,
                                    &translated,
                                    &translated,
-                                   NULL);
+                                   NULL, NULL, 0);
 
         node = _gdk_event_queue_append (display, event);
         _gdk_windowing_got_event (display, node, event, message->base.serial);

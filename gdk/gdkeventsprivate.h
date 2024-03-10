@@ -88,6 +88,8 @@ struct _GdkEventClass
   gboolean              (* get_axes)            (GdkEvent *event,
                                                  double  **axes,
                                                  guint    *n_axes);
+  gconstpointer         (* get_platform_data)   (GdkEvent *event,
+                                                 gsize    *platform_data_size);
 };
 
 /*
@@ -155,6 +157,7 @@ struct _GdkButtonEvent
   double y;
   double *axes;
   GdkDeviceTool *tool;
+  GBytes *platform_data;
 };
 
 /*
@@ -191,6 +194,7 @@ struct _GdkTouchEvent
   GdkEventSequence *sequence;
   gboolean touch_emulating;
   gboolean pointer_emulated;
+  GBytes *platform_data;
 };
 
 /*
@@ -273,6 +277,7 @@ struct _GdkKeyEvent
   gboolean key_is_modifier;
   GdkTranslatedKey translated[2];
   char *compose_sequence;
+  GBytes *platform_data;
 };
 
 /*
@@ -438,7 +443,9 @@ GdkEvent * gdk_button_event_new         (GdkEventType     type,
                                          guint            button,
                                          double           x,
                                          double           y,
-                                         double          *axes);
+                                         double          *axes,
+                                         gconstpointer    platform_data,
+                                         gsize            platform_data_size);
 
 GdkEvent * gdk_motion_event_new         (GdkSurface      *surface,
                                          GdkDevice       *device,
@@ -474,7 +481,9 @@ GdkEvent * gdk_key_event_new            (GdkEventType      type,
                                          gboolean          is_modifier,
                                          GdkTranslatedKey *translated,
                                          GdkTranslatedKey *no_lock,
-                                         char             *compose_sequence);
+                                         char             *compose_sequence,
+                                         gconstpointer    platform_data,
+                                         gsize            platform_data_size);
 
 GdkEvent * gdk_focus_event_new          (GdkSurface      *surface,
                                          GdkDevice       *device,
@@ -517,7 +526,9 @@ GdkEvent * gdk_touch_event_new          (GdkEventType      type,
                                          double            x,
                                          double            y,
                                          double           *axes,
-                                         gboolean          emulating);
+                                         gboolean          emulating,
+                                         gconstpointer     platform_data,
+                                         gsize             platform_data_size);
 
 GdkEvent * gdk_touchpad_event_new_swipe (GdkSurface              *surface,
                                          GdkEventSequence        *sequence,
@@ -631,6 +642,9 @@ void     gdk_event_queue_handle_scroll_compression  (GdkDisplay *display);
 void     _gdk_event_queue_flush                     (GdkDisplay       *display);
 
 double * gdk_event_dup_axes (GdkEvent *event);
+
+gconstpointer gdk_event_get_platform_data (GdkEvent *event,
+                                           gsize    *platform_data_size);
 
 G_END_DECLS
 

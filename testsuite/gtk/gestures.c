@@ -53,7 +53,8 @@ point_press (PointState *point,
                                  point->x,
                                  point->y,
                                  button,
-                                 point->state);
+                                 point->state,
+                                 NULL, 0);
 
       point->state |= GDK_BUTTON1_MASK << (button - 1);
     }
@@ -68,7 +69,8 @@ point_press (PointState *point,
                                 point->state,
                                 point->x,
                                 point->y,
-                                point == &touch_state[0]);
+                                point == &touch_state[0],
+                                NULL, 0);
     }
 
   inject_event (ev);
@@ -123,7 +125,8 @@ point_update (PointState *point,
                                 point->state,
                                 point->x,
                                 point->y,
-                                point == &touch_state[0]);
+                                point == &touch_state[0],
+                                NULL, 0);
     }
 
   inject_event (ev);
@@ -166,7 +169,8 @@ point_release (PointState *point,
                                  point->x,
                                  point->y,
                                  button,
-                                 point->state);
+                                 point->state,
+                                 NULL, 0);
 
       point->state &= ~(GDK_BUTTON1_MASK << (button - 1));
     }
@@ -181,7 +185,8 @@ point_release (PointState *point,
                                 point->state,
                                 point->x,
                                 point->y,
-                                point == &touch_state[0]);
+                                point == &touch_state[0],
+                                NULL, 0);
     }
 
   inject_event (ev);

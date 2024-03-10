@@ -1539,7 +1539,7 @@ generate_button_event (GdkEventType      type,
                                 button,
                                 x,
                                 y,
-                                NULL);
+                                NULL, NULL, 0);
 
   _gdk_win32_append_event (event);
 }
@@ -1853,7 +1853,7 @@ gdk_event_translate (MSG *msg,
                                    FALSE,
                                    &translated,
                                    &translated,
-                                   NULL);
+                                   NULL, NULL, 0);
         _gdk_win32_append_event (event);
       }
       break;
@@ -2054,7 +2054,8 @@ gdk_event_translate (MSG *msg,
                                    is_modifier,
                                    &translated,
                                    &no_lock,
-                                   composed);
+                                   composed,
+                                   NULL, 0);
 
         _gdk_win32_append_event (event);
 
@@ -2138,7 +2139,7 @@ gdk_event_translate (MSG *msg,
                                        FALSE,
                                        &translated,
                                        &translated,
-                                       NULL);
+                                       NULL, NULL, 0);
 
             _gdk_win32_append_event (event);
 
@@ -2152,7 +2153,7 @@ gdk_event_translate (MSG *msg,
                                        FALSE,
                                        &translated,
                                        &translated,
-                                       NULL);
+                                       NULL, NULL, 0);
 
             _gdk_win32_append_event (event);
           }

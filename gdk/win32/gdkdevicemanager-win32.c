@@ -1106,8 +1106,9 @@ gdk_wintab_make_event (GdkDisplay *display,
                                         event_button,
                                         event_x,
                                         event_y,
-                                        axes);
-                                          
+                                        axes,
+                                        NULL, 0);
+
           GDK_NOTE (EVENTS_OR_INPUT,
                     g_print ("WINTAB button %s:%d %g,%g\n",
                              (event->event_type == GDK_BUTTON_PRESS ?

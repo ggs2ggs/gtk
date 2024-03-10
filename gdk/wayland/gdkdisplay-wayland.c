@@ -38,6 +38,7 @@
 #include "gdkwayland.h"
 #include "gdkdisplay.h"
 #include "gdkdisplay-wayland.h"
+#include "gdkeventsprivate.h"
 #include "gdkmonitor-wayland.h"
 #include "gdkseat-wayland.h"
 #include "gdksurface-wayland.h"
@@ -2830,4 +2831,17 @@ gdk_wayland_display_dispatch_queue (GdkDisplay            *display,
                  errno, g_strerror (errno));
       _exit (1);
     }
+}
+
+uint32_t
+gdk_wayland_event_get_serial (GdkEvent *event)
+{
+  gconstpointer platform_data;
+  gsize platform_data_size;
+
+  platform_data = gdk_event_get_platform_data (event, &platform_data_size);
+  if (!platform_data || platform_data_size != sizeof (uint32_t))
+    return 0;
+
+  return *(uint32_t*) platform_data;
 }
