@@ -429,6 +429,8 @@ _gtk_key_hash_lookup (GtkKeyHash      *key_hash,
       while (tmp_list)
 	{
 	  GtkKeyHashEntry *entry = tmp_list->data;
+          GdkModifierType mod_vmask = 0, mod_xmask = 0;
+          gboolean mapped_virtual_modifiers;
 
 	  /* If the virtual Super, Hyper or Meta modifiers are present,
 	   * they will also be mapped to some of the Mod2 - Mod5 modifiers,
@@ -439,9 +441,13 @@ _gtk_key_hash_lookup (GtkKeyHash      *key_hash,
 	   * will not match a Super+Hyper entry.
 	   */
           modifiers = entry->modifiers;
-          if (gdk_keymap_map_virtual_modifiers (key_hash->keymap, &modifiers) &&
-	      ((modifiers & ~consumed_modifiers & mask & ~vmods) == (state & ~consumed_modifiers & mask & ~vmods) ||
-	       (modifiers & ~consumed_modifiers & mask & ~xmods) == (state & ~consumed_modifiers & mask & ~xmods)))
+          mapped_virtual_modifiers = gdk_keymap_map_virtual_modifiers (key_hash->keymap, &modifiers);
+          mod_vmask = (modifiers & ~consumed_modifiers & mask & ~vmods);
+          mod_xmask = (modifiers & ~consumed_modifiers & mask & ~xmods);
+
+          if (mapped_virtual_modifiers &&
+              ((((mod_vmask == 0) == (modifiers == 0)) && mod_vmask == (state & ~consumed_modifiers & mask & ~vmods)) ||
+               (((mod_xmask == 0) == (modifiers == 0)) && mod_xmask == (state & ~consumed_modifiers & mask & ~xmods))))
 	    {
 	      gint i;
 
