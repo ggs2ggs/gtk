@@ -55,6 +55,9 @@
  * it is possible to turn on _rubberband selection_, using
  * [property@Gtk.ListView:enable-rubberband].
  *
+ * `GtkListView` must be placed *directly* inside a [class@GtkScrolledWindow]
+ * or an other [iface@GtkScrollable].
+ *
  * If you need multiple columns with headers, see [class@Gtk.ColumnView].
  *
  * To learn more about the list widget framework, see the
@@ -109,6 +112,7 @@
  *
  *   g_signal_connect (list, "activate", G_CALLBACK (activate_cb), NULL);
  *
+ *   // ListView must be placed directly into a GtkScrolledWindow.
  *   gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (sw), list);
  * ```
  *
