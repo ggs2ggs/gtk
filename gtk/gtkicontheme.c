@@ -3995,6 +3995,8 @@ gtk_icon_paintable_new_for_file (GFile *file,
 {
   GtkIconPaintable *icon;
 
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
   icon = icon_paintable_new (NULL, size, scale);
   icon->loadable = G_LOADABLE_ICON (g_file_icon_new (file));
   icon->is_resource = g_file_has_uri_scheme (file, "resource");
