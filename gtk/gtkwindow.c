@@ -3969,6 +3969,8 @@ gtk_window_map (GtkWidget *widget)
       gtk_widget_get_child_visible (priv->title_box))
     gtk_widget_map (priv->title_box);
 
+  gtk_widget_realize_at_context (widget);
+
   gtk_window_present_toplevel (window);
 
   if (priv->minimize_initially)
@@ -3989,8 +3991,6 @@ gtk_window_map (GtkWidget *widget)
 
   if (priv->application)
     gtk_application_handle_window_map (priv->application, window);
-
-  gtk_widget_realize_at_context (widget);
 }
 
 static void
