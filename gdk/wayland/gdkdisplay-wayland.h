@@ -110,6 +110,7 @@ struct _GdkWaylandDisplay
   struct xdg_wm_base *xdg_wm_base;
   struct zxdg_shell_v6 *zxdg_shell_v6;
   struct gtk_shell1 *gtk_shell;
+  struct wp_system_bell_v1 *system_bell;
   struct wl_data_device_manager *data_device_manager;
   struct wl_subcompositor *subcompositor;
   struct zwp_pointer_gestures_v1 *pointer_gestures;

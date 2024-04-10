@@ -71,6 +71,7 @@ proto_sources = [
   ['fractional-scale', 'staging', 'v1', ],
   ['linux-dmabuf', 'unstable', 'v1', ],
   ['presentation-time', 'stable', 'v1', ],
+  ['system-bell', 'staging', 'v1', ],
 ]
 
 gdk_wayland_gen_headers = []
