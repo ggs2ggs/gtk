@@ -147,6 +147,9 @@ struct _GtkTextLayout
 
   guint overwrite_mode : 1;
 
+  /* The text direction is used when the direction of GtkWidget is set. */
+  guint text_direction : 2;
+
   /* The preedit string and attributes, if any */
 
   char *preedit_string;
@@ -237,6 +240,8 @@ void		   gtk_text_layout_set_overwrite_mode	 (GtkTextLayout     *layout,
 							  gboolean           overwrite);
 void               gtk_text_layout_set_keyboard_direction (GtkTextLayout     *layout,
 							   GtkTextDirection keyboard_dir);
+void               gtk_text_layout_set_text_direction    (GtkTextLayout     *layout,
+							  GtkTextDirection text_dir);
 void               gtk_text_layout_default_style_changed (GtkTextLayout     *layout);
 
 void gtk_text_layout_set_screen_width       (GtkTextLayout     *layout,

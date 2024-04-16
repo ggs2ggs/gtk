@@ -5096,12 +5096,17 @@ gtk_text_view_direction_changed (GtkWidget        *widget,
                                  GtkTextDirection  previous_direction)
 {
   GtkTextViewPrivate *priv = GTK_TEXT_VIEW (widget)->priv;
+  GtkTextDirection direction = GTK_TEXT_DIR_NONE;
 
   if (priv->layout && priv->layout->default_style)
     {
-      priv->layout->default_style->direction = gtk_widget_get_direction (widget);
+      direction = gtk_widget_get_direction (widget);
+
+      priv->layout->default_style->direction = direction;
 
       gtk_text_layout_default_style_changed (priv->layout);
+
+      gtk_text_layout_set_text_direction (priv->layout, direction);
     }
 }
 
