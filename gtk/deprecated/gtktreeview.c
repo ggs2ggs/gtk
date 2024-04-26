@@ -12099,8 +12099,6 @@ gtk_tree_view_set_cursor_on_cell (GtkTreeView       *tree_view,
       (gtk_cell_layout_get_area (GTK_CELL_LAYOUT (priv->edited_column))))
     gtk_tree_view_stop_editing (tree_view, TRUE);
 
-  gtk_tree_view_real_set_cursor (tree_view, path, CLEAR_AND_SELECT | CLAMP_NODE);
-
   if (focus_column &&
       gtk_tree_view_column_get_visible (focus_column))
     {
@@ -12122,6 +12120,8 @@ gtk_tree_view_set_cursor_on_cell (GtkTreeView       *tree_view,
       if (start_editing)
 	gtk_tree_view_start_editing (tree_view, path, TRUE);
     }
+
+  gtk_tree_view_real_set_cursor (tree_view, path, CLEAR_AND_SELECT | CLAMP_NODE);
 }
 
 /**
