@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 RUN apt-get update -qq && apt-get install --no-install-recommends -qq -y \
     adwaita-icon-theme \
