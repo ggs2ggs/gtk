@@ -1629,6 +1629,9 @@ typedef enum {
  *    Value type: double
  * @GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT: Defines the human readable text alternative
  *    of aria-valuenow for a range widget. Value type: string
+ * @GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT: Defines the minimum increment value
+ *   for a range widget. Value type: double
+ * Since: 4.14
  *
  * The possible accessible properties of a [iface@Accessible].
  */
@@ -1651,7 +1654,8 @@ typedef enum {
   GTK_ACCESSIBLE_PROPERTY_VALUE_MAX,
   GTK_ACCESSIBLE_PROPERTY_VALUE_MIN,
   GTK_ACCESSIBLE_PROPERTY_VALUE_NOW,
-  GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT
+  GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT,
+  GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT
 } GtkAccessibleProperty;
 
 /**

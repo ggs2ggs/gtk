@@ -808,6 +808,11 @@ static const GtkAccessibleCollect collect_props[] = {
     .ctype = GTK_ACCESSIBLE_COLLECT_STRING,
     .name = "valuetext"
   },
+  [GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT] = {
+    .value = GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT,
+    .ctype = GTK_ACCESSIBLE_COLLECT_NUMBER,
+    .name = "minimumincrement"
+  },
 };
 
 /* § 6.6.4 Relationship Attributes */
@@ -1662,7 +1667,7 @@ gtk_accessible_value_get_default_for_property (GtkAccessibleProperty property)
 {
   const GtkAccessibleCollect *cstate = &collect_props[property];
 
-  g_return_val_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT, NULL);
+  g_return_val_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, NULL);
 
   switch (cstate->value)
     {
@@ -1683,6 +1688,7 @@ gtk_accessible_value_get_default_for_property (GtkAccessibleProperty property)
     case GTK_ACCESSIBLE_PROPERTY_VALUE_MAX:
     case GTK_ACCESSIBLE_PROPERTY_VALUE_MIN:
     case GTK_ACCESSIBLE_PROPERTY_VALUE_NOW:
+    case GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT:
       return gtk_number_accessible_value_new (0);
 
     /* String properties */
@@ -1732,7 +1738,7 @@ gtk_accessible_value_collect_for_property (GtkAccessibleProperty   property,
 {
   const GtkAccessibleCollect *cstate = &collect_props[property];
 
-  g_return_val_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT, NULL);
+  g_return_val_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, NULL);
 
   return gtk_accessible_value_collect_valist (cstate, error, args);
 }
@@ -1760,7 +1766,7 @@ gtk_accessible_value_collect_for_property_value (GtkAccessibleProperty   propert
 {
   const GtkAccessibleCollect *cstate = &collect_props[property];
 
-  g_return_val_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT, NULL);
+  g_return_val_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, NULL);
 
   return gtk_accessible_value_collect_value (cstate, value, error);
 }
@@ -1773,7 +1779,7 @@ gtk_accessible_value_parse_for_property (GtkAccessibleProperty   property,
 {
   const GtkAccessibleCollect *cstate = &collect_props[property];
 
-  g_return_val_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT, NULL);
+  g_return_val_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, NULL);
 
   return gtk_accessible_value_parse (cstate, str, len, error);
 }
@@ -1794,7 +1800,7 @@ gtk_accessible_property_init_value (GtkAccessibleProperty  property,
 {
   const GtkAccessibleCollect *cstate = &collect_props[property];
 
-  g_return_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_VALUE_TEXT);
+  g_return_if_fail (property <= GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT);
 
   gtk_accessible_attribute_init_value (cstate, value);
 }

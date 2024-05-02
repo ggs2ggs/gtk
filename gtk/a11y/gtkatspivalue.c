@@ -49,6 +49,7 @@ handle_value_get_property (GDBusConnection  *connection,
     { "MinimumValue", GTK_ACCESSIBLE_PROPERTY_VALUE_MIN },
     { "MaximumValue", GTK_ACCESSIBLE_PROPERTY_VALUE_MAX },
     { "CurrentValue", GTK_ACCESSIBLE_PROPERTY_VALUE_NOW },
+    { "MinimumIncrement", GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT },
   };
 
   /* String attributes */
@@ -86,10 +87,6 @@ handle_value_get_property (GDBusConnection  *connection,
             }
         }
     }
-
-  /* Special-case MinimumIncrement as it does not have an ARIA counterpart */
-  if (g_strcmp0 (property_name, "MinimumIncrement") == 0)
-    return g_variant_new_double (0.0);
 
   /* fall back for widgets that should have the
    * properties but don't

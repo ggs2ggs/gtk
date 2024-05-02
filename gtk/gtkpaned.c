@@ -1433,6 +1433,7 @@ gtk_paned_size_allocate (GtkWidget *widget,
                                       (double) (paned->orientation == GTK_ORIENTATION_HORIZONTAL ?  width : height),
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_NOW,
                                       (double) paned->start_child_size,
+                                  GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, 1.0,
                                   -1);
 }
 

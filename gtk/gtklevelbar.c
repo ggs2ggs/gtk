@@ -1062,6 +1062,7 @@ gtk_level_bar_init (GtkLevelBar *self)
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MAX, 1.0,
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_MIN, 0.0,
                                   GTK_ACCESSIBLE_PROPERTY_VALUE_NOW, 0.0,
+                                  GTK_ACCESSIBLE_PROPERTY_MINIMUM_INCREMENT, 0.01,
                                   -1);
 }
 
