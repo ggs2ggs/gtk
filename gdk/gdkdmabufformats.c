@@ -49,14 +49,6 @@
  * Since: 4.14
  */
 
-struct _GdkDmabufFormats
-{
-  int ref_count;
-
-  gsize n_formats;
-  GdkDmabufFormat *formats;
-};
-
 G_DEFINE_BOXED_TYPE (GdkDmabufFormats, gdk_dmabuf_formats, gdk_dmabuf_formats_ref, gdk_dmabuf_formats_unref)
 
 /**
@@ -152,7 +144,36 @@ gdk_dmabuf_formats_get_format (GdkDmabufFormats *formats,
 }
 
 /**
- * gdk_dmabuf_formats_contains:
+ * gdk_dmabuf_formats_next_priority:
+ * @formats: a `GdkDmabufFormats`
+ * @idx: the index of the format to query
+*
+ * Returns the index of the next-lower-priority format.
+ *
+ * The formats in a `GdkDmabufFormats` are sorted by decreasing
+ * priority. This function lets you identify formats with the
+ * same priority: all the formats between @idx and the return
+ * value of this function have the same priority.
+ *
+ * Returns: the index of the next lower priority format
+ *
+ * Since: 4.16
+ */
+gsize
+gdk_dmabuf_formats_next_priority (GdkDmabufFormats *formats,
+                                  gsize             idx)
+{
+  GdkDmabufFormat *format;
+
+  g_return_val_if_fail (idx < formats->n_formats, G_MAXSIZE);
+
+  format = &formats->formats[idx];
+
+  return format->next_priority;
+}
+
+/**
+ * gdk_dmabuf_format_contains:
  * @formats: a `GdkDmabufFormats`
  * @fourcc: a format code
  * @modifier: a format modifier
@@ -184,6 +205,8 @@ gdk_dmabuf_formats_contains (GdkDmabufFormats *formats,
  * gdk_dmabuf_formats_new:
  * @formats: the formats
  * @n_formats: the length of @formats
+ * @device: the DRM device that the compositor uses, or
+ *   0 if this object doesn't describe compositor formats
  *
  * Creates a new `GdkDmabufFormats struct for
  * the given formats.
@@ -197,7 +220,8 @@ gdk_dmabuf_formats_contains (GdkDmabufFormats *formats,
  */
 GdkDmabufFormats *
 gdk_dmabuf_formats_new (GdkDmabufFormat *formats,
-                        gsize            n_formats)
+                        gsize            n_formats,
+                        guint64          device)
 {
   GdkDmabufFormats *self;
 
@@ -206,6 +230,7 @@ gdk_dmabuf_formats_new (GdkDmabufFormat *formats,
   self->ref_count = 1;
   self->n_formats = n_formats;
   self->formats = g_new (GdkDmabufFormat, n_formats);
+  self->device = device;
 
   memcpy (self->formats, formats, n_formats * sizeof (GdkDmabufFormat));
 
@@ -240,6 +265,9 @@ gdk_dmabuf_formats_equal (const GdkDmabufFormats *formats1,
   if (formats1 == NULL || formats2 == NULL)
     return FALSE;
 
+  if (formats1->device != formats2->device)
+    return FALSE;
+
   if (formats1->n_formats != formats2->n_formats)
     return FALSE;
 
@@ -249,7 +277,10 @@ gdk_dmabuf_formats_equal (const GdkDmabufFormats *formats1,
       GdkDmabufFormat *f2 = &formats2->formats[i];
 
       if (f1->fourcc != f2->fourcc ||
-          f1->modifier != f2->modifier)
+          f1->modifier != f2->modifier ||
+          f1->next_priority != f2->next_priority ||
+          f1->flags != f2->flags ||
+          f1->device != f2->device)
         return FALSE;
     }
 
