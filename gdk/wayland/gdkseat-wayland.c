@@ -2244,6 +2244,16 @@ tablet_handle_removed (void                 *data,
   _gdk_wayland_seat_remove_tablet (GDK_WAYLAND_SEAT (tablet->seat), tablet);
 }
 
+static void
+tablet_handle_bustype (void                 *data,
+                       struct zwp_tablet_v2 *wp_tablet,
+                       uint32_t              bustype)
+{
+  GdkWaylandTabletData *tablet = data;
+
+  tablet->bustype = bustype;
+}
+
 static const struct wl_pointer_listener pointer_listener = {
   pointer_handle_enter,
   pointer_handle_leave,
@@ -2299,6 +2309,7 @@ static const struct zwp_tablet_v2_listener tablet_listener = {
   tablet_handle_path,
   tablet_handle_done,
   tablet_handle_removed,
+  tablet_handle_bustype,
 };
 
 static void
