@@ -83,6 +83,7 @@ struct _GdkWaylandTabletPadGroupData
   struct zwp_tablet_pad_group_v2 *wp_tablet_pad_group;
   GList *rings;
   GList *strips;
+  GList *dials;
   GList *buttons;
 
   guint mode_switch_serial;
@@ -110,6 +111,7 @@ struct _GdkWaylandTabletPadData
 
   GList *rings;
   GList *strips;
+  GList *dials;
   GList *mode_groups;
 };
 
