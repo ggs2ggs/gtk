@@ -375,8 +375,10 @@ check_setugid (void)
       egid = getegid ();
     }
 
-  if (ruid != euid || ruid != suid ||
-      rgid != egid || rgid != sgid)
+  if ((ruid != euid || ruid != suid ||
+      rgid != egid || rgid != sgid) &&
+      (ruid == 0 || euid == 0 || suid == 0 ||
+      rgid == 0 || egid == 0 || sgid == 0))
     {
       g_warning ("This process is currently running setuid or setgid.\n"
                  "This is not a supported use of GTK+. You must create a helper\n"
