@@ -2404,21 +2404,38 @@ apply_monitor_change (GdkWaylandMonitor *monitor)
                    monitor->output_geometry.x, monitor->output_geometry.y,
                    monitor->output_geometry.width, monitor->output_geometry.height);
 
+  GdkRectangle output_geometry;
   GdkRectangle logical_geometry;
   gboolean needs_scaling = FALSE;
   double scale;
+
+  output_geometry.x = monitor->output_geometry.x;
+  output_geometry.y = monitor->output_geometry.y;
+  switch (monitor->output_transform)
+    {
+    case WL_OUTPUT_TRANSFORM_90:
+    case WL_OUTPUT_TRANSFORM_270:
+    case WL_OUTPUT_TRANSFORM_FLIPPED_90:
+    case WL_OUTPUT_TRANSFORM_FLIPPED_270:
+      output_geometry.width = monitor->output_geometry.height;
+      output_geometry.height = monitor->output_geometry.width;
+      break;
+    default:
+      output_geometry.width = monitor->output_geometry.width;
+      output_geometry.height = monitor->output_geometry.height;
+    }
 
   if (monitor_has_xdg_output (monitor) &&
       monitor->xdg_output_geometry.width != 0  &&
       monitor->xdg_output_geometry.height != 0)
     {
       logical_geometry = monitor->xdg_output_geometry;
-      needs_scaling = logical_geometry.width == monitor->output_geometry.width &&
-                      logical_geometry.height == monitor->output_geometry.height;
+      needs_scaling = logical_geometry.width == output_geometry.width &&
+                      logical_geometry.height == output_geometry.height;
     }
   else
     {
-      logical_geometry = monitor->output_geometry;
+      logical_geometry = output_geometry;
       needs_scaling = TRUE;
     }
 
@@ -2563,6 +2580,7 @@ output_handle_geometry (void             *data,
                    make, model,
                    transform_to_string (transform));
 
+  monitor->output_transform = transform;
   monitor->output_geometry.x = x;
   monitor->output_geometry.y = y;
 
