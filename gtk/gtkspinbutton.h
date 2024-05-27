@@ -145,6 +145,12 @@ void            gtk_spin_button_get_increments     (GtkSpinButton  *spin_button,
                                                     double         *step,
                                                     double         *page);
 
+GDK_AVAILABLE_IN_4_16
+void            gtk_spin_button_set_input_hints    (GtkSpinButton   *spin_button,
+                                                    GtkInputHints    hints);
+GDK_AVAILABLE_IN_4_16
+GtkInputHints   gtk_spin_button_get_input_hints    (GtkSpinButton   *spin_button);
+
 GDK_AVAILABLE_IN_ALL
 void            gtk_spin_button_set_range          (GtkSpinButton  *spin_button,
                                                     double          min,
