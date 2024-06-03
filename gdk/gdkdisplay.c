@@ -250,7 +250,7 @@ gdk_display_class_init (GdkDisplayClass *class)
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GdkDisplay:shadow-width: (attributes org.gtk.Property.get=gdk_display_supports_shadow_width)
+   * GdkDisplay:shadow-width: (getter supports_shadow_width)
    *
    * %TRUE if the display supports extensible frames.
    *
@@ -262,7 +262,7 @@ gdk_display_class_init (GdkDisplayClass *class)
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GdkDisplay:input-shapes: (attributes org.gtk.Property.get=gdk_display_supports_input_shapes)
+   * GdkDisplay:input-shapes: (getter supports_input_shapes)
    *
    * %TRUE if the display supports input shapes.
    */
@@ -1116,7 +1116,7 @@ gdk_display_get_primary_clipboard (GdkDisplay *display)
 }
 
 /**
- * gdk_display_supports_input_shapes: (attributes org.gtk.Method.get_property=input-shapes)
+ * gdk_display_supports_input_shapes: (get-property input-shapes)
  * @display: a `GdkDisplay`
  *
  * Returns %TRUE if the display supports input shapes.
@@ -2155,7 +2155,7 @@ gdk_display_set_rgba (GdkDisplay *display,
 }
 
 /**
- * gdk_display_supports_shadow_width: (attributes org.gtk.Method.get_property=shadow-width)
+ * gdk_display_supports_shadow_width: (get-property shadow-width)
  * @display: a `GdkDisplay`
  *
  * Returns whether it's possible for a surface to draw outside of the window area.
