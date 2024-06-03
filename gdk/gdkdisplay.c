@@ -230,7 +230,7 @@ gdk_display_class_init (GdkDisplayClass *class)
   class->opened = gdk_display_real_opened;
 
   /**
-   * GdkDisplay:composited: (attributes org.gtk.Property.get=gdk_display_is_composited)
+   * GdkDisplay:composited:
    *
    * %TRUE if the display properly composites the alpha channel.
    */
@@ -240,7 +240,7 @@ gdk_display_class_init (GdkDisplayClass *class)
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GdkDisplay:rgba: (attributes org.gtk.Property.get=gdk_display_is_rgba)
+   * GdkDisplay:rgba:
    *
    * %TRUE if the display supports an alpha channel.
    */
@@ -272,7 +272,7 @@ gdk_display_class_init (GdkDisplayClass *class)
                           G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GdkDisplay:dmabuf-formats: (attributes org.gtk.Property.get=gdk_display_get_dmabuf_formats)
+   * GdkDisplay:dmabuf-formats:
    *
    * The dma-buf formats that are supported on this display
    *

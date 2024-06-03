@@ -426,7 +426,7 @@ gtk_single_selection_class_init (GtkSingleSelectionClass *klass)
   gobject_class->dispose = gtk_single_selection_dispose;
 
   /**
-   * GtkSingleSelection:autoselect: (attributes org.gtk.Property.get=gtk_single_selection_get_autoselect org.gtk.Property.set=gtk_single_selection_set_autoselect)
+   * GtkSingleSelection:autoselect:
    *
    * If the selection will always select an item.
    */
@@ -436,7 +436,7 @@ gtk_single_selection_class_init (GtkSingleSelectionClass *klass)
                           G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GtkSingleSelection:can-unselect: (attributes org.gtk.Property.get=gtk_single_selection_get_can_unselect org.gtk.Property.set=gtk_single_selection_set_can_unselect)
+   * GtkSingleSelection:can-unselect:
    *
    * If unselecting the selected item is allowed.
    */
@@ -458,7 +458,7 @@ gtk_single_selection_class_init (GtkSingleSelectionClass *klass)
                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GtkSingleSelection:model: (attributes org.gtk.Property.get=gtk_single_selection_get_model org.gtk.Property.set=gtk_single_selection_set_model)
+   * GtkSingleSelection:model:
    *
    * The model being managed.
    */
@@ -480,7 +480,7 @@ gtk_single_selection_class_init (GtkSingleSelectionClass *klass)
                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GtkSingleSelection:selected: (attributes org.gtk.Property.get=gtk_single_selection_get_selected org.gtk.Property.set=gtk_single_selection_set_selected)
+   * GtkSingleSelection:selected:
    *
    * Position of the selected item.
    */
@@ -490,7 +490,7 @@ gtk_single_selection_class_init (GtkSingleSelectionClass *klass)
                        G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GtkSingleSelection:selected-item: (attributes org.gtk.Property.get=gtk_single_selection_get_selected_item)
+   * GtkSingleSelection:selected-item:
    *
    * The selected item.
    */

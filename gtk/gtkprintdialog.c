@@ -359,7 +359,7 @@ gtk_print_dialog_class_init (GtkPrintDialogClass *class)
   object_class->set_property = gtk_print_dialog_set_property;
 
   /**
-   * GtkPrintDialog:accept-label: (attributes org.gtk.Property.get=gtk_print_dialog_get_accept_label org.gtk.Property.set=gtk_print_dialog_set_accept_label)
+   * GtkPrintDialog:accept-label:
    *
    * A label that may be shown on the accept button of a print dialog
    * that is presented by [method@Gtk.PrintDialog.setup].
@@ -372,7 +372,7 @@ gtk_print_dialog_class_init (GtkPrintDialogClass *class)
                            G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkPrintDialog:page-setup: (attributes org.gtk.Property.get=gtk_print_dialog_get_page_setup org.gtk.Property.set=gtk_print_dialog_set_page_setup)
+   * GtkPrintDialog:page-setup:
    *
    * The page setup to use.
    *
@@ -384,7 +384,7 @@ gtk_print_dialog_class_init (GtkPrintDialogClass *class)
                            G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkPrintDialog:modal: (attributes org.gtk.Property.get=gtk_print_dialog_get_modal org.gtk.Property.set=gtk_print_dialog_set_modal)
+   * GtkPrintDialog:modal:
    *
    * Whether the print dialog is modal.
    *
@@ -396,7 +396,7 @@ gtk_print_dialog_class_init (GtkPrintDialogClass *class)
                             G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkPrintDialog:print-settings: (attributes org.gtk.Property.get=gtk_print_dialog_get_print_settings org.gtk.Property.set=gtk_print_dialog_set_print_settings)
+   * GtkPrintDialog:print-settings:
    *
    * The print settings to use.
    *
@@ -408,7 +408,7 @@ gtk_print_dialog_class_init (GtkPrintDialogClass *class)
                            G_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkPrintDialog:title: (attributes org.gtk.Property.get=gtk_print_dialog_get_title org.gtk.Property.set=gtk_print_dialog_set_title)
+   * GtkPrintDialog:title:
    *
    * A title that may be shown on the print dialog that is
    * presented by [method@Gtk.PrintDialog.setup].

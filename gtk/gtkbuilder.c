@@ -452,7 +452,7 @@ gtk_builder_class_init (GtkBuilderClass *klass)
   gobject_class->get_property = gtk_builder_get_property;
 
  /**
-  * GtkBuilder:translation-domain: (attributes org.gtk.Property.get=gtk_builder_get_translation_domain org.gtk.Property.set=gtk_builder_set_translation_domain)
+  * GtkBuilder:translation-domain:
   *
   * The translation domain used when translating property values that
   * have been marked as translatable.
@@ -466,7 +466,7 @@ gtk_builder_class_init (GtkBuilderClass *klass)
                            GTK_PARAM_READWRITE);
 
  /**
-  * GtkBuilder:current-object: (attributes org.gtk.Property.get=gtk_builder_get_current_object org.gtk.Property.set=gtk_builder_set_current_object)
+  * GtkBuilder:current-object:
   *
   * The object the builder is evaluating for.
   */
@@ -476,7 +476,7 @@ gtk_builder_class_init (GtkBuilderClass *klass)
                            GTK_PARAM_READWRITE);
 
  /**
-  * GtkBuilder:scope: (attributes org.gtk.Property.get=gtk_builder_get_scope org.gtk.Property.set=gtk_builder_set_scope)
+  * GtkBuilder:scope:
   *
   * The scope the builder is operating in
   */
