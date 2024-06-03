@@ -1908,7 +1908,7 @@ gtk_popover_class_init (GtkPopoverClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkPopover:default-widget: (attributes org.gtk.Popover.set=gtk_popover_set_default_widget)
+   * GtkPopover:default-widget:
    *
    * The default widget inside the popover.
    */
@@ -1918,7 +1918,7 @@ gtk_popover_class_init (GtkPopoverClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkPopover:has-arrow: (attributes org.gtk.Popover.get=gtk_popover_get_has_arrow org.gtk.Property.set=gtk_popover_set_has_arrow)
+   * GtkPopover:has-arrow:
    *
    * Whether to draw an arrow.
    */
