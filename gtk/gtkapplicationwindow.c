@@ -703,7 +703,7 @@ gtk_application_window_new (GtkApplication *application)
 }
 
 /**
- * gtk_application_window_get_show_menubar: (attributes org.gtk.Method.get_property=show-menubar)
+ * gtk_application_window_get_show_menubar:
  * @window: a `GtkApplicationWindow`
  *
  * Returns whether the window will display a menubar for the app menu
@@ -719,7 +719,7 @@ gtk_application_window_get_show_menubar (GtkApplicationWindow *window)
 }
 
 /**
- * gtk_application_window_set_show_menubar: (attributes org.gtk.Method.set_property=show-menubar)
+ * gtk_application_window_set_show_menubar:
  * @window: a `GtkApplicationWindow`
  * @show_menubar: whether to show a menubar when needed
  *

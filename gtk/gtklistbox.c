@@ -1170,7 +1170,7 @@ gtk_list_box_parent_cb (GObject    *object,
 }
 
 /**
- * gtk_list_box_set_selection_mode: (attributes org.gtk.Method.set_property=selection-mode)
+ * gtk_list_box_set_selection_mode:
  * @box: a `GtkListBox`
  * @mode: The `GtkSelectionMode`
  *
@@ -1209,7 +1209,7 @@ gtk_list_box_set_selection_mode (GtkListBox       *box,
 }
 
 /**
- * gtk_list_box_get_selection_mode: (attributes org.gtk.Method.get_property=selection-mode)
+ * gtk_list_box_get_selection_mode:
  * @box: a `GtkListBox`
  *
  * Gets the selection mode of the listbox.
@@ -1489,7 +1489,7 @@ gtk_list_box_got_row_changed (GtkListBox    *box,
 }
 
 /**
- * gtk_list_box_set_activate_on_single_click: (attributes org.gtk.Method.set_property=activate-on-single-click)
+ * gtk_list_box_set_activate_on_single_click:
  * @box: a `GtkListBox`
  * @single: a boolean
  *
@@ -1513,7 +1513,7 @@ gtk_list_box_set_activate_on_single_click (GtkListBox *box,
 }
 
 /**
- * gtk_list_box_get_activate_on_single_click: (attributes org.gtk.Method.get_property=activate-on-single-click)
+ * gtk_list_box_get_activate_on_single_click:
  * @box: a `GtkListBox`
  *
  * Returns whether rows activate on single clicks.
@@ -3013,7 +3013,7 @@ gtk_list_box_row_new (void)
 }
 
 /**
- * gtk_list_box_row_set_child: (attributes org.gtk.Method.set_property=child)
+ * gtk_list_box_row_set_child:
  * @row: a `GtkListBoxRow`
  * @child: (nullable): the child widget
  *
@@ -3041,7 +3041,7 @@ gtk_list_box_row_set_child (GtkListBoxRow *row,
 }
 
 /**
- * gtk_list_box_row_get_child: (attributes org.gtk.Method.get_property=child)
+ * gtk_list_box_row_get_child:
  * @row: a `GtkListBoxRow`
  *
  * Gets the child widget of @row.
@@ -3334,7 +3334,7 @@ gtk_list_box_update_row_styles (GtkListBox *box)
 }
 
 /**
- * gtk_list_box_row_set_activatable: (attributes org.gtk.Method.set_property=activatable)
+ * gtk_list_box_row_set_activatable:
  * @row: a `GtkListBoxRow`
  * @activatable: %TRUE to mark the row as activatable
  *
@@ -3358,7 +3358,7 @@ gtk_list_box_row_set_activatable (GtkListBoxRow *row,
 }
 
 /**
- * gtk_list_box_row_get_activatable: (attributes org.gtk.Method.get_property=activatable)
+ * gtk_list_box_row_get_activatable:
  * @row: a `GtkListBoxRow`
  *
  * Gets whether the row is activatable.
@@ -3374,7 +3374,7 @@ gtk_list_box_row_get_activatable (GtkListBoxRow *row)
 }
 
 /**
- * gtk_list_box_row_set_selectable: (attributes org.gtk.Method.set_property=selectable)
+ * gtk_list_box_row_set_selectable:
  * @row: a `GtkListBoxRow`
  * @selectable: %TRUE to mark the row as selectable
  *
@@ -3410,7 +3410,7 @@ gtk_list_box_row_set_selectable (GtkListBoxRow *row,
 }
 
 /**
- * gtk_list_box_row_get_selectable: (attributes org.gtk.Method.get_property=selectable)
+ * gtk_list_box_row_get_selectable:
  * @row: a `GtkListBoxRow`
  *
  * Gets whether the row can be selected.
@@ -3812,7 +3812,7 @@ gtk_list_box_bind_model (GtkListBox                 *box,
 }
 
 /**
- * gtk_list_box_set_show_separators: (attributes org.gtk.Method.set_property=show-separators)
+ * gtk_list_box_set_show_separators:
  * @box: a `GtkListBox`
  * @show_separators: %TRUE to show separators
  *
@@ -3839,7 +3839,7 @@ gtk_list_box_set_show_separators (GtkListBox *box,
 }
 
 /**
- * gtk_list_box_get_show_separators: (attributes org.gtk.Method.get_property=show-separators)
+ * gtk_list_box_get_show_separators:
  * @box: a `GtkListBox`
  *
  * Returns whether the list box should show separators

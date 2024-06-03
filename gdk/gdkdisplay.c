@@ -2065,7 +2065,7 @@ gdk_display_set_debug_flags (GdkDisplay    *display,
 }
 
 /**
- * gdk_display_is_composited: (attributes org.gtk.Method.get_property=composited)
+ * gdk_display_is_composited:
  * @display: a `GdkDisplay`
  *
  * Returns whether surfaces can reasonably be expected to have
@@ -2110,7 +2110,7 @@ gdk_display_set_composited (GdkDisplay *display,
 }
 
 /**
- * gdk_display_is_rgba: (attributes org.gtk.Method.get_property=rgba)
+ * gdk_display_is_rgba:
  * @display: a `GdkDisplay`
  *
  * Returns whether surfaces on this @display are created with an

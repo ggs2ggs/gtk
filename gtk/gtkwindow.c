@@ -1266,7 +1266,7 @@ gtk_window_class_init (GtkWindowClass *klass)
 }
 
 /**
- * gtk_window_is_maximized: (attributes org.gtk.Method.get_property=maximized)
+ * gtk_window_is_maximized:
  * @window: a `GtkWindow`
  *
  * Retrieves the current maximized state of @window.
@@ -2239,7 +2239,7 @@ gtk_window_new (void)
 }
 
 /**
- * gtk_window_set_title: (attributes org.gtk.Method.set_property=title)
+ * gtk_window_set_title:
  * @window: a `GtkWindow`
  * @title: (nullable): title of the window
  *
@@ -2278,7 +2278,7 @@ gtk_window_set_title (GtkWindow  *window,
 }
 
 /**
- * gtk_window_get_title: (attributes org.gtk.Method.get_property=title)
+ * gtk_window_get_title:
  * @window: a `GtkWindow`
  *
  * Retrieves the title of the window.
@@ -2443,7 +2443,7 @@ gtk_window_real_activate_default (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_modal: (attributes org.gtk.Method.set_property=modal)
+ * gtk_window_set_modal:
  * @window: a `GtkWindow`
  * @modal: whether the window is modal
  *
@@ -2492,7 +2492,7 @@ gtk_window_set_modal (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_modal: (attributes org.gtk.Method.get_property=modal)
+ * gtk_window_get_modal:
  * @window: a `GtkWindow`
  *
  * Returns whether the window is modal.
@@ -2663,7 +2663,7 @@ gtk_window_unset_transient_for (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_transient_for: (attributes org.gtk.Method.set_property=transient-for)
+ * gtk_window_set_transient_for:
  * @window: a `GtkWindow`
  * @parent: (nullable): parent window
  *
@@ -2733,7 +2733,7 @@ gtk_window_set_transient_for (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_transient_for: (attributes org.gtk.Method.get_property=transient-for)
+ * gtk_window_get_transient_for:
  * @window: a `GtkWindow`
  *
  * Fetches the transient parent for this window.
@@ -2751,7 +2751,7 @@ gtk_window_get_transient_for (GtkWindow *window)
 }
 
 /**
- * gtk_window_get_application: (attributes org.gtk.Method.get_property=application)
+ * gtk_window_get_application:
  * @window: a `GtkWindow`
  *
  * Gets the `GtkApplication` associated with the window.
@@ -2790,7 +2790,7 @@ gtk_window_release_application (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_application: (attributes org.gtk.Method.set_property=application)
+ * gtk_window_set_application:
  * @window: a `GtkWindow`
  * @application: (nullable): a `GtkApplication`, or %NULL to unset
  *
@@ -2847,7 +2847,7 @@ gtk_window_set_application (GtkWindow      *window,
 }
 
 /**
- * gtk_window_set_destroy_with_parent: (attributes org.gtk.Method.set_property=destroy-with-parent)
+ * gtk_window_set_destroy_with_parent:
  * @window: a `GtkWindow`
  * @setting: whether to destroy @window with its transient parent
  *
@@ -2874,7 +2874,7 @@ gtk_window_set_destroy_with_parent (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_destroy_with_parent: (attributes org.gtk.Method.get_property=destroy-with-parent)
+ * gtk_window_get_destroy_with_parent:
  * @window: a `GtkWindow`
  *
  * Returns whether the window will be destroyed with its transient parent.
@@ -2892,7 +2892,7 @@ gtk_window_get_destroy_with_parent (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_hide_on_close: (attributes org.gtk.Method.set_property=hide-on-close)
+ * gtk_window_set_hide_on_close:
  * @window: a `GtkWindow`
  * @setting: whether to hide the window when it is closed
  *
@@ -2916,7 +2916,7 @@ gtk_window_set_hide_on_close (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_hide_on_close: (attributes org.gtk.Method.get_property=hide-on-close)
+ * gtk_window_get_hide_on_close:
  * @window: a `GtkWindow`
  *
  * Returns whether the window will be hidden when the close button is clicked.
@@ -3010,7 +3010,7 @@ gtk_window_enable_csd (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_titlebar: (attributes org.gtk.Method.set_property=titlebar)
+ * gtk_window_set_titlebar:
  * @window: a `GtkWindow`
  * @titlebar: (nullable): the widget to use as titlebar
  *
@@ -3079,7 +3079,7 @@ gtk_window_set_titlebar (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_titlebar: (attributes org.gtk.Method.get_property=titlebar)
+ * gtk_window_get_titlebar:
  * @window: a `GtkWindow`
  *
  * Returns the custom titlebar that has been set with
@@ -3098,7 +3098,7 @@ gtk_window_get_titlebar (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_decorated: (attributes org.gtk.Method.set_property=decorated)
+ * gtk_window_set_decorated:
  * @window: a `GtkWindow`
  * @setting: %TRUE to decorate the window
  *
@@ -3141,7 +3141,7 @@ gtk_window_set_decorated (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_decorated: (attributes org.gtk.Method.get_property=decorated)
+ * gtk_window_get_decorated:
  * @window: a `GtkWindow`
  *
  * Returns whether the window has been set to have decorations.
@@ -3159,7 +3159,7 @@ gtk_window_get_decorated (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_deletable: (attributes org.gtk.Method.set_property=deletable)
+ * gtk_window_set_deletable:
  * @window: a `GtkWindow`
  * @setting: %TRUE to decorate the window as deletable
  *
@@ -3200,7 +3200,7 @@ gtk_window_set_deletable (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_deletable: (attributes org.gtk.Method.get_property=deletable)
+ * gtk_window_get_deletable:
  * @window: a `GtkWindow`
  *
  * Returns whether the window has been set to have a close button.
@@ -3434,7 +3434,7 @@ update_themed_icon (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_icon_name: (attributes org.gtk.Method.set_property=icon-name)
+ * gtk_window_set_icon_name:
  * @window: a `GtkWindow`
  * @name: (nullable): the name of the themed icon
  *
@@ -3470,7 +3470,7 @@ gtk_window_set_icon_name (GtkWindow  *window,
 }
 
 /**
- * gtk_window_get_icon_name: (attributes org.gtk.Method.get_property=icon-name)
+ * gtk_window_get_icon_name:
  * @window: a `GtkWindow`
  *
  * Returns the name of the themed icon for the window.
@@ -5290,7 +5290,7 @@ _gtk_window_present (GtkWindow *window,
 }
 
 /**
- * gtk_window_set_startup_id: (attributes org.gtk.Method.set_property=startup-id)
+ * gtk_window_set_startup_id:
  * @window: a `GtkWindow`
  * @startup_id: a string with startup-notification identifier
  *
@@ -5676,7 +5676,7 @@ gtk_window_unfullscreen (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_resizable: (attributes org.gtk.Method.set_property=resizable)
+ * gtk_window_set_resizable:
  * @window: a `GtkWindow`
  * @resizable: %TRUE if the user can resize this window
  *
@@ -5710,7 +5710,7 @@ gtk_window_set_resizable (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_resizable: (attributes org.gtk.Method.get_property=resizable)
+ * gtk_window_get_resizable:
  * @window: a `GtkWindow`
  *
  * Gets the value set by gtk_window_set_resizable().
@@ -5728,7 +5728,7 @@ gtk_window_get_resizable (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_display: (attributes org.gtk.Method.set_property=display)
+ * gtk_window_set_display:
  * @window: a `GtkWindow`
  * @display: a `GdkDisplay`
  *
@@ -5817,7 +5817,7 @@ gtk_window_on_theme_variant_changed (GtkSettings *settings,
 #endif
 
 /**
- * gtk_window_is_active: (attributes org.gtk.Method.get_property=is-active)
+ * gtk_window_is_active:
  * @window: a `GtkWindow`
  *
  * Returns whether the window is part of the current active toplevel.
@@ -6019,7 +6019,7 @@ gtk_window_set_auto_startup_notification (gboolean setting)
 }
 
 /**
- * gtk_window_get_mnemonics_visible: (attributes org.gtk.Method.get_property=mnemonics-visible)
+ * gtk_window_get_mnemonics_visible:
  * @window: a `GtkWindow`
  *
  * Gets whether mnemonics are supposed to be visible.
@@ -6038,7 +6038,7 @@ gtk_window_get_mnemonics_visible (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_mnemonics_visible: (attributes org.gtk.Method.set_property=mnemonics-visible)
+ * gtk_window_set_mnemonics_visible:
  * @window: a `GtkWindow`
  * @setting: the new value
  *
@@ -6099,7 +6099,7 @@ _gtk_window_schedule_mnemonics_visible (GtkWindow *window)
 }
 
 /**
- * gtk_window_get_focus_visible: (attributes org.gtk.Method.get_property=focus-visible)
+ * gtk_window_get_focus_visible:
  * @window: a `GtkWindow`
  *
  * Gets whether “focus rectangles” are supposed to be visible.
@@ -6131,7 +6131,7 @@ unset_focus_visible (gpointer data)
 }
 
 /**
- * gtk_window_set_focus_visible: (attributes org.gtk.Method.set_property=focus-visible)
+ * gtk_window_set_focus_visible:
  * @window: a `GtkWindow`
  * @setting: the new value
  *
@@ -6764,7 +6764,7 @@ gtk_window_maybe_update_cursor (GtkWindow *window,
 }
 
 /**
- * gtk_window_set_child: (attributes org.gtk.Method.set_property=child)
+ * gtk_window_set_child:
  * @window: a `GtkWindow`
  * @child: (nullable): the child widget
  *
@@ -6794,7 +6794,7 @@ gtk_window_set_child (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_child: (attributes org.gtk.Method.get_property=child)
+ * gtk_window_get_child:
  * @window: a `GtkWindow`
  *
  * Gets the child widget of @window.
@@ -6981,7 +6981,7 @@ gtk_window_grab_notify (GtkWindow *window,
 }
 
 /**
- * gtk_window_set_handle_menubar_accel: (attributes org.gtk.Method.set_property=handle-menubar-accel)
+ * gtk_window_set_handle_menubar_accel:
  * @window: a `GtkWindow`
  * @handle_menubar_accel: %TRUE to make @window handle F10
  *
@@ -7010,7 +7010,7 @@ gtk_window_set_handle_menubar_accel (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_handle_menubar_accel: (attributes org.gtk.Method.get_property=handle-menubar-accel)
+ * gtk_window_get_handle_menubar_accel:
  * @window: a `GtkWindow`
  *
  * Returns whether this window reacts to F10 key presses by

@@ -549,7 +549,7 @@ gsk_gl_shader_compile (GskGLShader  *shader,
 
 
 /**
- * gsk_gl_shader_get_source: (attributes org.gtk.Method.get_property=source)
+ * gsk_gl_shader_get_source:
  * @shader: a `GskGLShader`
  *
  * Gets the GLSL sourcecode being used to render this shader.
@@ -565,7 +565,7 @@ gsk_gl_shader_get_source (GskGLShader *shader)
 }
 
 /**
- * gsk_gl_shader_get_resource: (attributes org.gtk.Method.get_property=resource)
+ * gsk_gl_shader_get_resource:
  * @shader: a `GskGLShader`
  *
  * Gets the resource path for the GLSL sourcecode being used

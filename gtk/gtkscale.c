@@ -1040,7 +1040,7 @@ gtk_scale_new_with_range (GtkOrientation orientation,
 }
 
 /**
- * gtk_scale_set_digits: (attributes org.gtk.Method.set_property=digits)
+ * gtk_scale_set_digits:
  * @scale: a `GtkScale`
  * @digits: the number of decimal places to display,
  *   e.g. use 1 to display 1.0, 2 to display 1.00, etc
@@ -1087,7 +1087,7 @@ gtk_scale_set_digits (GtkScale *scale,
 }
 
 /**
- * gtk_scale_get_digits: (attributes org.gtk.Method.get_property=digits)
+ * gtk_scale_get_digits:
  * @scale: a `GtkScale`
  *
  * Gets the number of decimal places that are displayed in the value.
@@ -1138,7 +1138,7 @@ update_value_position (GtkScale *scale)
 }
 
 /**
- * gtk_scale_set_draw_value: (attributes org.gtk.Method.set_property=draw-value)
+ * gtk_scale_set_draw_value:
  * @scale: a `GtkScale`
  * @draw_value: %TRUE to draw the value
  *
@@ -1180,7 +1180,7 @@ gtk_scale_set_draw_value (GtkScale *scale,
 }
 
 /**
- * gtk_scale_get_draw_value: (attributes org.gtk.Method.get_property=draw-value)
+ * gtk_scale_get_draw_value:
  * @scale: a `GtkScale`
  *
  * Returns whether the current value is displayed as a string
@@ -1199,7 +1199,7 @@ gtk_scale_get_draw_value (GtkScale *scale)
 }
 
 /**
- * gtk_scale_set_has_origin: (attributes org.gtk.Method.set_property=has-origin)
+ * gtk_scale_set_has_origin:
  * @scale: a `GtkScale`
  * @has_origin: %TRUE if the scale has an origin
  *
@@ -1228,7 +1228,7 @@ gtk_scale_set_has_origin (GtkScale *scale,
 }
 
 /**
- * gtk_scale_get_has_origin: (attributes org.gtk.Method.get_property=has-origin)
+ * gtk_scale_get_has_origin:
  * @scale: a `GtkScale`
  *
  * Returns whether the scale has an origin.
@@ -1244,7 +1244,7 @@ gtk_scale_get_has_origin (GtkScale *scale)
 }
 
 /**
- * gtk_scale_set_value_pos: (attributes org.gtk.Method.set_property=value-pos)
+ * gtk_scale_set_value_pos:
  * @scale: a `GtkScale`
  * @pos: the position in which the current value is displayed
  *
@@ -1270,7 +1270,7 @@ gtk_scale_set_value_pos (GtkScale        *scale,
 }
 
 /**
- * gtk_scale_get_value_pos: (attributes org.gtk.Method.get_property=value-pos)
+ * gtk_scale_get_value_pos:
  * @scale: a `GtkScale`
  *
  * Gets the position in which the current value is displayed.

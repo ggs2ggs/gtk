@@ -5568,7 +5568,7 @@ get_buffer (GtkText *self)
 }
 
 /**
- * gtk_text_get_buffer: (attributes org.gtk.Method.get_property=buffer)
+ * gtk_text_get_buffer:
  * @self: a `GtkText`
  *
  * Get the `GtkEntryBuffer` object which holds the text for
@@ -5585,7 +5585,7 @@ gtk_text_get_buffer (GtkText *self)
 }
 
 /**
- * gtk_text_set_buffer: (attributes org.gtk.Method.set_property=buffer)
+ * gtk_text_set_buffer:
  * @self: a `GtkText`
  * @buffer: a `GtkEntryBuffer`
  *
@@ -5726,7 +5726,7 @@ gtk_text_set_text (GtkText     *self,
 }
 
 /**
- * gtk_text_set_visibility: (attributes org.gtk.Method.set_property=visibility)
+ * gtk_text_set_visibility:
  * @self: a `GtkText`
  * @visible: %TRUE if the contents of the `GtkText` are displayed
  *   as plaintext
@@ -5772,7 +5772,7 @@ gtk_text_set_visibility (GtkText  *self,
 }
 
 /**
- * gtk_text_get_visibility: (attributes org.gtk.Method.get_property=visibility)
+ * gtk_text_get_visibility:
  * @self: a `GtkText`
  *
  * Retrieves whether the text in @self is visible.
@@ -5790,7 +5790,7 @@ gtk_text_get_visibility (GtkText *self)
 }
 
 /**
- * gtk_text_set_invisible_char: (attributes org.gtk.Method.set_property=invisible-char)
+ * gtk_text_set_invisible_char:
  * @self: a `GtkText`
  * @ch: a Unicode character
  *
@@ -5824,7 +5824,7 @@ gtk_text_set_invisible_char (GtkText  *self,
 }
 
 /**
- * gtk_text_get_invisible_char: (attributes org.gtk.Method.get_property=invisible-char)
+ * gtk_text_get_invisible_char:
  * @self: a `GtkText`
  *
  * Retrieves the character displayed when visibility is set to false.
@@ -5880,7 +5880,7 @@ gtk_text_unset_invisible_char (GtkText *self)
 }
 
 /**
- * gtk_text_set_overwrite_mode: (attributes org.gtk.Method.set_property=overwrite-mode)
+ * gtk_text_set_overwrite_mode:
  * @self: a `GtkText`
  * @overwrite: new value
  *
@@ -5904,7 +5904,7 @@ gtk_text_set_overwrite_mode (GtkText  *self,
 }
 
 /**
- * gtk_text_get_overwrite_mode: (attributes org.gtk.Method.get_property=overwrite-mode)
+ * gtk_text_get_overwrite_mode:
  * @self: a `GtkText`
  *
  * Gets whether text is overwritten when typing in the `GtkText`.
@@ -5925,7 +5925,7 @@ gtk_text_get_overwrite_mode (GtkText *self)
 }
 
 /**
- * gtk_text_set_max_length: (attributes org.gtk.Method.set_property=max-length)
+ * gtk_text_set_max_length:
  * @self: a `GtkText`
  * @length: the maximum length of the `GtkText`, or 0 for no maximum.
  *   (other than the maximum length of entries.) The value passed
@@ -5948,7 +5948,7 @@ gtk_text_set_max_length (GtkText *self,
 }
 
 /**
- * gtk_text_get_max_length: (attributes org.gtk.Method.get_property=max-length)
+ * gtk_text_get_max_length:
  * @self: a `GtkText`
  *
  * Retrieves the maximum allowed length of the text in @self.
@@ -5990,7 +5990,7 @@ gtk_text_get_text_length (GtkText *self)
 }
 
 /**
- * gtk_text_set_activates_default: (attributes org.gtk.Method.set_property=activates-default)
+ * gtk_text_set_activates_default:
  * @self: a `GtkText`
  * @activates: %TRUE to activate window’s default widget on Enter keypress
  *
@@ -6019,7 +6019,7 @@ gtk_text_set_activates_default (GtkText  *self,
 }
 
 /**
- * gtk_text_get_activates_default: (attributes org.gtk.Method.get_property=activates-default)
+ * gtk_text_get_activates_default:
  * @self: a `GtkText`
  *
  * Returns whether pressing Enter will activate
@@ -6830,7 +6830,7 @@ gtk_text_reset_blink_time (GtkText *self)
 }
 
 /**
- * gtk_text_set_placeholder_text: (attributes org.gtk.Method.set_property=placeholder-text)
+ * gtk_text_set_placeholder_text:
  * @self: a `GtkText`
  * @text: (nullable): a string to be displayed when @self
  *   is empty and unfocused
@@ -6871,7 +6871,7 @@ gtk_text_set_placeholder_text (GtkText    *self,
 }
 
 /**
- * gtk_text_get_placeholder_text: (attributes org.gtk.Method.get_property=placeholder-text)
+ * gtk_text_get_placeholder_text:
  * @self: a `GtkText`
  *
  * Retrieves the text that will be displayed when
@@ -6895,7 +6895,7 @@ gtk_text_get_placeholder_text (GtkText *self)
 }
 
 /**
- * gtk_text_set_input_purpose: (attributes org.gtk.Method.set_property=input-purpose)
+ * gtk_text_set_input_purpose:
  * @self: a `GtkText`
  * @purpose: the purpose
  *
@@ -6923,7 +6923,7 @@ gtk_text_set_input_purpose (GtkText         *self,
 }
 
 /**
- * gtk_text_get_input_purpose: (attributes org.gtk.Method.get_property=input-purpose)
+ * gtk_text_get_input_purpose:
  * @self: a `GtkText`
  *
  * Gets the input purpose of the `GtkText`.
@@ -6946,7 +6946,7 @@ gtk_text_get_input_purpose (GtkText *self)
 }
 
 /**
- * gtk_text_set_input_hints: (attributes org.gtk.Method.set_property=input-hints)
+ * gtk_text_set_input_hints:
  * @self: a `GtkText`
  * @hints: the hints
  *
@@ -6974,7 +6974,7 @@ gtk_text_set_input_hints (GtkText       *self,
 }
 
 /**
- * gtk_text_get_input_hints: (attributes org.gtk.Method.get_property=input-hints)
+ * gtk_text_get_input_hints:
  * @self: a `GtkText`
  *
  * Gets the input hints of the `GtkText`.
@@ -6997,7 +6997,7 @@ gtk_text_get_input_hints (GtkText *self)
 }
 
 /**
- * gtk_text_set_attributes: (attributes org.gtk.Method.set_property=attributes)
+ * gtk_text_set_attributes:
  * @self: a `GtkText`
  * @attrs: (nullable): a `PangoAttrList`
  *
@@ -7028,7 +7028,7 @@ gtk_text_set_attributes (GtkText       *self,
 }
 
 /**
- * gtk_text_get_attributes: (attributes org.gtk.Method.get_property=attributes)
+ * gtk_text_get_attributes:
  * @self: a `GtkText`
  *
  * Gets the attribute list that was set on the `GtkText`.
@@ -7048,7 +7048,7 @@ gtk_text_get_attributes (GtkText *self)
 }
 
 /**
- * gtk_text_set_tabs: (attributes org.gtk.Method.set_property=tabs)
+ * gtk_text_set_tabs:
  * @self: a `GtkText`
  * @tabs: (nullable): a `PangoTabArray`
  *
@@ -7077,7 +7077,7 @@ gtk_text_set_tabs (GtkText       *self,
 }
 
 /**
- * gtk_text_get_tabs: (attributes org.gtk.Method.get_property=tabs)
+ * gtk_text_get_tabs:
  * @self: a `GtkText`
  *
  * Gets the tabstops that were set on the `GtkText`.
@@ -7155,7 +7155,7 @@ gtk_text_get_key_controller (GtkText *self)
 }
 
 /**
- * gtk_text_set_extra_menu: (attributes org.gtk.Method.set_property=extra-menu)
+ * gtk_text_set_extra_menu:
  * @self: a `GtkText`
  * @model: (nullable): a `GMenuModel`
  *
@@ -7179,7 +7179,7 @@ gtk_text_set_extra_menu (GtkText    *self,
 }
 
 /**
- * gtk_text_get_extra_menu: (attributes org.gtk.Method.get_property=extra-menu)
+ * gtk_text_get_extra_menu:
  * @self: a `GtkText`
  *
  * Gets the menu model for extra items in the context menu.
@@ -7199,7 +7199,7 @@ gtk_text_get_extra_menu (GtkText *self)
 }
 
 /**
- * gtk_text_set_enable_emoji_completion: (attributes org.gtk.Method.set_property=enable-emoji-completion)
+ * gtk_text_set_enable_emoji_completion:
  * @self: a `GtkText`
  * @enable_emoji_completion: %TRUE to enable Emoji completion
  *
@@ -7231,7 +7231,7 @@ gtk_text_set_enable_emoji_completion (GtkText  *self,
 }
 
 /**
- * gtk_text_get_enable_emoji_completion: (attributes org.gtk.Method.get_property=enable-emoji-completion)
+ * gtk_text_get_enable_emoji_completion:
  * @self: a `GtkText`
  *
  * Returns whether Emoji completion is enabled for this
@@ -7250,7 +7250,7 @@ gtk_text_get_enable_emoji_completion (GtkText *self)
 }
 
 /**
- * gtk_text_set_propagate_text_width: (attributes org.gtk.Method.set_property=propagate-text-width)
+ * gtk_text_set_propagate_text_width:
  * @self: a `GtkText`
  * @propagate_text_width: %TRUE to propagate the text width
  *
@@ -7275,7 +7275,7 @@ gtk_text_set_propagate_text_width (GtkText  *self,
 }
 
 /**
- * gtk_text_get_propagate_text_width: (attributes org.gtk.Method.get_property=propagate-text-width)
+ * gtk_text_get_propagate_text_width:
  * @self: a `GtkText`
  *
  * Returns whether the `GtkText` will grow and shrink
@@ -7294,7 +7294,7 @@ gtk_text_get_propagate_text_width (GtkText *self)
 }
 
 /**
- * gtk_text_set_truncate_multiline: (attributes org.gtk.Method.set_property=truncate-multiline)
+ * gtk_text_set_truncate_multiline:
  * @self: a `GtkText`
  * @truncate_multiline: %TRUE to truncate multi-line text
  *
@@ -7318,7 +7318,7 @@ gtk_text_set_truncate_multiline (GtkText  *self,
 }
 
 /**
- * gtk_text_get_truncate_multiline: (attributes org.gtk.Method.get_property=truncate-multiline)
+ * gtk_text_get_truncate_multiline:
  * @self: a `GtkText`
  *
  * Returns whether the `GtkText` will truncate multi-line text

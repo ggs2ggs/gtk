@@ -242,7 +242,7 @@ gdk_draw_context_surface_resized (GdkDrawContext *context)
 }
 
 /**
- * gdk_draw_context_get_display: (attributes org.gtk.Method.get_property=display)
+ * gdk_draw_context_get_display:
  * @context: a `GdkDrawContext`
  *
  * Retrieves the `GdkDisplay` the @context is created for
@@ -260,7 +260,7 @@ gdk_draw_context_get_display (GdkDrawContext *context)
 }
 
 /**
- * gdk_draw_context_get_surface: (attributes org.gtk.Method.get_property=surface)
+ * gdk_draw_context_get_surface:
  * @context: a `GdkDrawContext`
  *
  * Retrieves the surface that @context is bound to.

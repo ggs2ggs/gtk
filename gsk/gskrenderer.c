@@ -220,7 +220,7 @@ gsk_renderer_init (GskRenderer *self)
 }
 
 /**
- * gsk_renderer_get_surface: (attributes org.gtk.Method.get_property=surface)
+ * gsk_renderer_get_surface:
  * @renderer: a `GskRenderer`
  *
  * Retrieves the `GdkSurface` set using gsk_enderer_realize().
@@ -240,7 +240,7 @@ gsk_renderer_get_surface (GskRenderer *renderer)
 }
 
 /**
- * gsk_renderer_is_realized: (attributes org.gtk.Method.get_property=realized)
+ * gsk_renderer_is_realized:
  * @renderer: a `GskRenderer`
  *
  * Checks whether the @renderer is realized or not.
