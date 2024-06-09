@@ -202,10 +202,9 @@ struct _GtkCalendar
 {
   GtkWidget widget;
 
-  guint show_week_numbers : 1;
-  guint show_heading      : 1;
-  guint show_day_names    : 1;
-  guint year_before       : 1;
+  bool show_week_numbers;
+  bool show_heading;
+  bool show_day_names;
 
   GtkWidget *header_box;
   GtkWidget *year_label;
@@ -219,14 +218,14 @@ struct _GtkCalendar
 
   GDateTime *date;
 
-  int   day_month[6][7];
-  int   day[6][7];
+  int day_month[6][7];
+  int day[6][7];
 
-  int   num_marked_dates;
-  int   marked_date[31];
+  int num_marked_dates;
+  int marked_date[31];
 
-  int   focus_row;
-  int   focus_col;
+  int focus_row;
+  int focus_col;
 
   int week_start;
 };
@@ -551,7 +550,6 @@ gtk_calendar_init (GtkCalendar *calendar)
   char buffer[255];
   time_t tmp_time;
 #endif
-  char *year_before;
 #ifdef HAVE__NL_TIME_FIRST_WEEKDAY
   union { unsigned int word; char *string; } langinfo;
   int week_1stday = 0;
@@ -779,12 +777,12 @@ gtk_calendar_init (GtkCalendar *calendar)
   gtk_widget_set_vexpand (calendar->grid, TRUE);
   gtk_widget_set_parent (calendar->grid, GTK_WIDGET (calendar));
 
-  for (i=0;i<31;i++)
+  for (i = 0; i < 31; i++)
     calendar->marked_date[i] = FALSE;
   calendar->num_marked_dates = 0;
 
-  calendar->show_heading = TRUE;
-  calendar->show_day_names = TRUE;
+  calendar->show_heading = true;
+  calendar->show_day_names = true;
 
   calendar->focus_row = -1;
   calendar->focus_col = -1;
@@ -794,24 +792,6 @@ gtk_calendar_init (GtkCalendar *calendar)
   g_signal_connect (target, "notify::value", G_CALLBACK (gtk_calendar_drag_notify_value), calendar);
   g_signal_connect (target, "drop", G_CALLBACK (gtk_calendar_drag_drop), calendar);
   gtk_widget_add_controller (widget, GTK_EVENT_CONTROLLER (target));
-
-  calendar->year_before = 0;
-
-  /* Translate to calendar:YM if you want years to be displayed
-   * before months; otherwise translate to calendar:MY.
-   * Do *not* translate it to anything else, if it
-   * it isn't calendar:YM or calendar:MY it will not work.
-   *
-   * Note that the ordering described here is logical order, which is
-   * further influenced by BIDI ordering. Thus, if you have a default
-   * text direction of RTL and specify "calendar:YM", then the year
-   * will appear to the right of the month.
-   */
-  year_before = _("calendar:MY");
-  if (strcmp (year_before, "calendar:YM") == 0)
-    calendar->year_before = 1;
-  else if (strcmp (year_before, "calendar:MY") != 0)
-    g_warning ("Whoever translated calendar:MY did so wrongly.");
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (gtk_widget_get_layout_manager (GTK_WIDGET (calendar))),
                                   GTK_ORIENTATION_VERTICAL);
@@ -1645,17 +1625,18 @@ void
 gtk_calendar_set_show_week_numbers (GtkCalendar *self,
                                     gboolean     value)
 {
+  bool show_week_numbers = !!value;
   int i;
 
   g_return_if_fail (GTK_IS_CALENDAR (self));
 
-  if (self->show_week_numbers == value)
+  if (self->show_week_numbers == show_week_numbers)
     return;
 
-  self->show_week_numbers = value;
+  self->show_week_numbers = show_week_numbers;
 
   for (i = 0; i < 6; i ++)
-    gtk_widget_set_visible (self->week_number_labels[i], value);
+    gtk_widget_set_visible (self->week_number_labels[i], show_week_numbers);
 
   g_object_notify (G_OBJECT (self), "show-week-numbers");
 }
@@ -1694,14 +1675,16 @@ void
 gtk_calendar_set_show_heading (GtkCalendar *self,
                                gboolean     value)
 {
+  bool show_heading = !!value;
+
   g_return_if_fail (GTK_IS_CALENDAR (self));
 
-  if (self->show_heading == value)
+  if (self->show_heading == show_heading)
     return;
 
-  self->show_heading = value;
+  self->show_heading = show_heading;
 
-  gtk_widget_set_visible (self->header_box, value);
+  gtk_widget_set_visible (self->header_box, show_heading);
 
   g_object_notify (G_OBJECT (self), "show-heading");
 }
@@ -1736,17 +1719,18 @@ void
 gtk_calendar_set_show_day_names (GtkCalendar *self,
                                  gboolean     value)
 {
+  bool show_day_names = !!value;
   int i;
 
   g_return_if_fail (GTK_IS_CALENDAR (self));
 
-  if (self->show_day_names == value)
+  if (self->show_day_names == show_day_names)
     return;
 
-  self->show_day_names = value;
+  self->show_day_names = show_day_names;
 
   for (i = 0; i < 7; i ++)
-    gtk_widget_set_visible (self->day_name_labels[i], value);
+    gtk_widget_set_visible (self->day_name_labels[i], show_day_names);
 
   g_object_notify (G_OBJECT (self), "show-day-names");
 }
