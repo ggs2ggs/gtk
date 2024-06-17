@@ -35,6 +35,8 @@
 #include "gdk/gdkrgbaprivate.h"
 #include "gdk/gdktextureprivate.h"
 #include "gdk/gdkmemoryformatprivate.h"
+#include "gdk/gdkcolorprivate.h"
+#include "gdk/gdkcolorstateprivate.h"
 #include <gtk/css/gtkcss.h>
 #include "gtk/css/gtkcssdataurlprivate.h"
 #include "gtk/css/gtkcssparserprivate.h"
@@ -494,7 +496,7 @@ parse_color (GtkCssParser *parser,
              Context      *context,
              gpointer      out_color)
 {
-  return gdk_rgba_parser_parse (parser, out_color);
+  return gdk_color_parser_parse (parser, out_color);
 }
 
 static gboolean
@@ -596,9 +598,9 @@ parse_stops (GtkCssParser *parser,
              gpointer      out_stops)
 {
   GArray *stops;
-  GskColorStop stop;
+  GskColorStop2 stop;
 
-  stops = g_array_new (FALSE, FALSE, sizeof (GskColorStop));
+  stops = g_array_new (FALSE, FALSE, sizeof (GskColorStop2));
 
   for (;;)
     {
@@ -609,7 +611,7 @@ parse_stops (GtkCssParser *parser,
 
       stop.offset = dval;
 
-      if (!gdk_rgba_parser_parse (parser, &stop.color))
+      if (!gdk_color_parser_parse (parser, &stop.color))
         goto error;
 
       if (stops->len == 0 && stop.offset < 0)
@@ -694,12 +696,12 @@ parse_colors4 (GtkCssParser *parser,
                Context      *context,
                gpointer      out_colors)
 {
-  GdkRGBA colors[4];
+  GdkColor colors[4];
   int i;
 
   for (i = 0; i < 4 && !gtk_css_parser_has_token (parser, GTK_CSS_TOKEN_EOF); i ++)
     {
-      if (!gdk_rgba_parser_parse (parser, &colors[i]))
+      if (!gdk_color_parser_parse (parser, &colors[i]))
         return FALSE;
     }
   if (i == 0)
@@ -712,7 +714,7 @@ parse_colors4 (GtkCssParser *parser,
       colors[i] = colors[(i - 1) >> 1];
     }
 
-  memcpy (out_colors, colors, sizeof (GdkRGBA) * 4);
+  memcpy (out_colors, colors, sizeof (GdkColor) * 4);
 
   return TRUE;
 }
@@ -726,10 +728,10 @@ parse_shadows (GtkCssParser *parser,
 
   do
     {
-      GskShadow shadow = { GDK_RGBA("000000"), 0, 0, 0 };
+      GskShadow2 shadow = { { NULL, { 0, } } , 0, 0, 0 };
       double dx = 0, dy = 0, radius = 0;
 
-      if (!gdk_rgba_parser_parse (parser, &shadow.color))
+      if (!gdk_color_parser_parse (parser, &shadow.color))
         gtk_css_parser_error_value (parser, "Expected shadow color");
 
       if (!gtk_css_parser_consume_number (parser, &dx))
@@ -1432,13 +1434,23 @@ create_default_texture (void)
 static GskRenderNode *
 create_default_render_node_with_bounds (const graphene_rect_t *rect)
 {
-  return gsk_color_node_new (&GDK_RGBA("FF00CC"), rect);
+  GdkColor color = GDK_COLOR_INIT_SRGB (1, 0, 0.864, 1);
+
+  return gsk_color_node_new2 (&color, rect);
 }
 
 static GskRenderNode *
 create_default_render_node (void)
 {
   return create_default_render_node_with_bounds (&GRAPHENE_RECT_INIT (0, 0, 50, 50));
+}
+
+static GskRenderNode *
+create_alternate_default_render_node (void)
+{
+  GdkColor color = GDK_COLOR_INIT_SRGB (0.667, 1, 0, 1);
+
+  return gsk_color_node_new2 (&color, &GRAPHENE_RECT_INIT (0, 0, 50, 50));
 }
 
 static GskPath *
@@ -1466,7 +1478,7 @@ parse_color_node (GtkCssParser *parser,
                   Context      *context)
 {
   graphene_rect_t bounds = GRAPHENE_RECT_INIT (0, 0, 50, 50);
-  GdkRGBA color = GDK_RGBA("FF00CC");
+  GdkColor color = GDK_COLOR_INIT_SRGB (1, 0, 0.864, 1);
   const Declaration declarations[] = {
     { "bounds", parse_rect, NULL, &bounds },
     { "color", parse_color, NULL, &color },
@@ -1474,7 +1486,110 @@ parse_color_node (GtkCssParser *parser,
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
 
-  return gsk_color_node_new (&color, &bounds);
+  return gsk_color_node_new2 (&color, &bounds);
+}
+
+static gboolean
+parse_color_state (GtkCssParser *parser,
+                   Context      *context,
+                   gpointer      out_color_state)
+{
+  GdkColorState *color_state = NULL;
+
+  if (gtk_css_parser_try_ident (parser, "srgb"))
+    color_state = gdk_color_state_get_srgb ();
+  else if (gtk_css_parser_try_ident (parser, "srgb-linear"))
+    color_state = gdk_color_state_get_srgb_linear ();
+  else if (gtk_css_parser_try_ident (parser, "hsl"))
+    color_state = gdk_color_state_get_hsl ();
+  else if (gtk_css_parser_try_ident (parser, "hwb"))
+    color_state = gdk_color_state_get_hwb ();
+  else if (gtk_css_parser_try_ident (parser, "oklab"))
+    color_state = gdk_color_state_get_oklab ();
+  else if (gtk_css_parser_try_ident (parser, "oklch"))
+    color_state = gdk_color_state_get_oklch ();
+  else if (gtk_css_parser_try_ident (parser, "xyz"))
+    color_state = gdk_color_state_get_xyz ();
+  else if (gtk_css_parser_try_ident (parser, "display-p3"))
+    color_state = gdk_color_state_get_display_p3 ();
+  else if (gtk_css_parser_try_ident (parser, "rec2020"))
+    color_state = gdk_color_state_get_rec2020 ();
+  else if (gtk_css_parser_try_ident (parser, "rec2100-pq"))
+    color_state = gdk_color_state_get_rec2100_pq ();
+  else if (gtk_css_parser_try_ident (parser, "rec2100-linear"))
+    color_state = gdk_color_state_get_rec2100_linear ();
+  else
+    {
+      char *url, *scheme, *mimetype;
+      GBytes *bytes;
+      GError *error = NULL;
+
+      url = gtk_css_parser_consume_url (parser);
+      if (url == NULL)
+        return FALSE;
+
+      scheme = g_uri_parse_scheme (url);
+      if (!scheme || g_ascii_strcasecmp (scheme, "data") != 0)
+        {
+          g_free (scheme);
+          g_free (url);
+          return FALSE;
+        }
+      g_free (scheme);
+
+      bytes = gtk_css_data_url_parse (url, &mimetype, &error);
+      if (!bytes)
+        {
+          gtk_css_parser_error_value (parser, "Could not parse data url: %s", error->message);
+          g_error_free (error);
+          g_free (mimetype);
+          return FALSE;
+        }
+      g_free (url);
+
+      if (g_strcmp0 (mimetype, "application/vnd.iccprofile") != 0)
+        {
+          gtk_css_parser_error_value (parser, "Wrong mimetype for color-state: %s", mimetype);
+          g_free (mimetype);
+          g_bytes_unref (bytes);
+          return FALSE;
+        }
+      g_free (mimetype);
+
+      color_state = gdk_color_state_new_from_icc_profile (bytes, &error);
+      if (!color_state)
+        {
+          gtk_css_parser_error_value (parser, "Invalid ICC profile: %s", error->message);
+          g_error_free (error);
+          g_bytes_unref (bytes);
+          return FALSE;
+        }
+      g_bytes_unref (bytes);
+    }
+
+  if (color_state == NULL)
+    {
+      gtk_css_parser_error_value (parser, "Invalid color-state");
+      return FALSE;
+    }
+
+  *((GdkColorState **) out_color_state) = color_state;
+
+  return TRUE;
+}
+
+static void
+clear_color_state (gpointer inout_color_state)
+{
+  g_clear_pointer ((GdkColorState **) inout_color_state, gdk_color_state_unref);
+}
+
+static gboolean
+parse_hue_interpolation (GtkCssParser *parser,
+                         Context      *context,
+                         gpointer      out_hue_interp)
+{
+  return parse_enum (parser, GSK_TYPE_HUE_INTERPOLATION, out_hue_interp);
 }
 
 static GskRenderNode *
@@ -1486,30 +1601,48 @@ parse_linear_gradient_node_internal (GtkCssParser *parser,
   graphene_point_t start = GRAPHENE_POINT_INIT (0, 0);
   graphene_point_t end = GRAPHENE_POINT_INIT (0, 50);
   GArray *stops = NULL;
+  GdkColorState *color_state = NULL;
+  GskHueInterpolation hue_interp = GSK_HUE_INTERPOLATION_SHORTER;
   const Declaration declarations[] = {
     { "bounds", parse_rect, NULL, &bounds },
     { "start", parse_point, NULL, &start },
     { "end", parse_point, NULL, &end },
     { "stops", parse_stops, clear_stops, &stops },
+    { "color-state", parse_color_state, clear_color_state, &color_state },
+    { "hue-interpolation", parse_hue_interpolation, NULL, &hue_interp },
   };
   GskRenderNode *result;
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
   if (stops == NULL)
     {
-      GskColorStop from = { 0.0, GDK_RGBA("AAFF00") };
-      GskColorStop to = { 1.0, GDK_RGBA("FF00CC") };
+      GskColorStop2 from, to;
 
-      stops = g_array_new (FALSE, FALSE, sizeof (GskColorStop));
+      from.offset = 0;
+      to.offset = 1;
+      gdk_color_init_from_rgba (&from.color, &GDK_RGBA ("AAFF00"));
+      gdk_color_init_from_rgba (&to.color, &GDK_RGBA ("FF00CC"));
+
+      stops = g_array_new (FALSE, FALSE, sizeof (GskColorStop2));
       g_array_append_val (stops, from);
       g_array_append_val (stops, to);
     }
 
-  if (repeating)
-    result = gsk_repeating_linear_gradient_node_new (&bounds, &start, &end, (GskColorStop *) stops->data, stops->len);
-  else
-    result = gsk_linear_gradient_node_new (&bounds, &start, &end, (GskColorStop *) stops->data, stops->len);
+  if (color_state == NULL)
+    color_state = gdk_color_state_get_srgb ();
 
+  if (repeating)
+    result = gsk_repeating_linear_gradient_node_new2 (&bounds,
+                                                      &start, &end,
+                                                      color_state, hue_interp,
+                                                      (GskColorStop2 *) stops->data, stops->len);
+  else
+    result = gsk_linear_gradient_node_new2 (&bounds,
+                                            &start, &end,
+                                            color_state, hue_interp,
+                                            (GskColorStop2 *) stops->data, stops->len);
+
+  gdk_color_state_unref (color_state);
   g_array_free (stops, TRUE);
 
   return result;
@@ -1541,6 +1674,8 @@ parse_radial_gradient_node_internal (GtkCssParser *parser,
   double start = 0;
   double end = 1.0;
   GArray *stops = NULL;
+  GdkColorState *color_state = NULL;
+  GskHueInterpolation hue_interp = GSK_HUE_INTERPOLATION_SHORTER;
   const Declaration declarations[] = {
     { "bounds", parse_rect, NULL, &bounds },
     { "center", parse_point, NULL, &center },
@@ -1549,27 +1684,43 @@ parse_radial_gradient_node_internal (GtkCssParser *parser,
     { "start", parse_positive_double, NULL, &start },
     { "end", parse_positive_double, NULL, &end },
     { "stops", parse_stops, clear_stops, &stops },
+    { "color-state", parse_color_state, clear_color_state, &color_state },
+    { "hue-interpolation", parse_hue_interpolation, NULL, &hue_interp },
   };
   GskRenderNode *result;
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
   if (stops == NULL)
     {
-      GskColorStop from = { 0.0, GDK_RGBA("AAFF00") };
-      GskColorStop to = { 1.0, GDK_RGBA("FF00CC") };
+      GskColorStop2 from, to;
 
-      stops = g_array_new (FALSE, FALSE, sizeof (GskColorStop));
+      from.offset = 0;
+      to.offset = 1;
+      gdk_color_init_from_rgba (&from.color, &GDK_RGBA ("AAFF00"));
+      gdk_color_init_from_rgba (&to.color, &GDK_RGBA ("FF00CC"));
+
+      stops = g_array_new (FALSE, FALSE, sizeof (GskColorStop2));
       g_array_append_val (stops, from);
       g_array_append_val (stops, to);
     }
 
-  if (repeating)
-    result = gsk_repeating_radial_gradient_node_new (&bounds, &center, hradius, vradius, start, end,
-                                                     (GskColorStop *) stops->data, stops->len);
-  else
-    result = gsk_radial_gradient_node_new (&bounds, &center, hradius, vradius, start, end,
-                                           (GskColorStop *) stops->data, stops->len);
+  if (color_state == NULL)
+    color_state = gdk_color_state_get_srgb ();
 
+  if (repeating)
+    result = gsk_repeating_radial_gradient_node_new2 (&bounds,
+                                                      &center, hradius, vradius,
+                                                      start, end,
+                                                      color_state, hue_interp,
+                                                      (GskColorStop2 *) stops->data, stops->len);
+  else
+    result = gsk_radial_gradient_node_new2 (&bounds,
+                                            &center, hradius, vradius,
+                                            start, end,
+                                            color_state, hue_interp,
+                                            (GskColorStop2 *) stops->data, stops->len);
+
+  gdk_color_state_unref (color_state);
   g_array_free (stops, TRUE);
 
   return result;
@@ -1597,28 +1748,41 @@ parse_conic_gradient_node (GtkCssParser *parser,
   graphene_point_t center = GRAPHENE_POINT_INIT (25, 25);
   double rotation = 0.0;
   GArray *stops = NULL;
+  GdkColorState *color_state = NULL;
+  GskHueInterpolation hue_interp = GSK_HUE_INTERPOLATION_SHORTER;
   const Declaration declarations[] = {
     { "bounds", parse_rect, NULL, &bounds },
     { "center", parse_point, NULL, &center },
     { "rotation", parse_double, NULL, &rotation },
     { "stops", parse_stops, clear_stops, &stops },
+    { "color-state", parse_color_state, clear_color_state, &color_state },
+    { "hue-interpolation", parse_hue_interpolation, NULL, &hue_interp },
   };
   GskRenderNode *result;
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
   if (stops == NULL)
     {
-      GskColorStop from = { 0.0, GDK_RGBA("AAFF00") };
-      GskColorStop to = { 1.0, GDK_RGBA("FF00CC") };
+      GskColorStop2 from, to;
 
-      stops = g_array_new (FALSE, FALSE, sizeof (GskColorStop));
+      from.offset = 0;
+      to.offset = 1;
+      gdk_color_init_from_rgba (&from.color, &GDK_RGBA ("AAFF00"));
+      gdk_color_init_from_rgba (&to.color, &GDK_RGBA ("FF00CC"));
+
+      stops = g_array_new (FALSE, FALSE, sizeof (GskColorStop2));
       g_array_append_val (stops, from);
       g_array_append_val (stops, to);
     }
 
-  result = gsk_conic_gradient_node_new (&bounds, &center, rotation,
-                                        (GskColorStop *) stops->data, stops->len);
+  if (color_state == NULL)
+    color_state = gdk_color_state_get_srgb ();
 
+  result = gsk_conic_gradient_node_new2 (&bounds, &center, rotation,
+                                         color_state, hue_interp,
+                                         (GskColorStop2 *) stops->data, stops->len);
+
+  gdk_color_state_unref (color_state);
   g_array_free (stops, TRUE);
 
   return result;
@@ -1629,7 +1793,7 @@ parse_inset_shadow_node (GtkCssParser *parser,
                          Context      *context)
 {
   GskRoundedRect outline = GSK_ROUNDED_RECT_INIT (0, 0, 50, 50);
-  GdkRGBA color = GDK_RGBA("000000");
+  GdkColor color = GDK_COLOR_INIT_SRGB (0, 0, 0, 1);
   double dx = 1, dy = 1, blur = 0, spread = 0;
   const Declaration declarations[] = {
     { "outline", parse_rounded_rect, NULL, &outline },
@@ -1642,7 +1806,7 @@ parse_inset_shadow_node (GtkCssParser *parser,
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
 
-  return gsk_inset_shadow_node_new (&outline, &color, dx, dy, spread, blur);
+  return gsk_inset_shadow_node_new2 (&outline, &color, dx, dy, spread, blur);
 }
 
 typedef union {
@@ -1906,7 +2070,7 @@ parse_mask_node (GtkCssParser *parser,
   if (source == NULL)
     source = create_default_render_node ();
   if (mask == NULL)
-    mask = gsk_color_node_new (&GDK_RGBA("AAFF00"), &GRAPHENE_RECT_INIT (0, 0, 50, 50));
+    mask = create_alternate_default_render_node ();
 
   result = gsk_mask_node_new (source, mask, mode);
 
@@ -1922,7 +2086,10 @@ parse_border_node (GtkCssParser *parser,
 {
   GskRoundedRect outline = GSK_ROUNDED_RECT_INIT (0, 0, 50, 50);
   float widths[4] = { 1, 1, 1, 1 };
-  GdkRGBA colors[4] = { GDK_RGBA("000"), GDK_RGBA("000"), GDK_RGBA("000"), GDK_RGBA("000") };
+  GdkColor colors[4] = { { NULL, { 0, } },
+                         { NULL, { 0, } },
+                         { NULL, { 0, } },
+                         { NULL, { 0, } } };
   const Declaration declarations[] = {
     { "outline", parse_rounded_rect, NULL, &outline },
     { "widths", parse_float4, NULL, &widths },
@@ -1931,7 +2098,13 @@ parse_border_node (GtkCssParser *parser,
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
 
-  return gsk_border_node_new (&outline, widths, colors);
+  for (int i = 0; i < 4; i++)
+    {
+      if (colors[i].color_state == NULL)
+        gdk_color_init_from_rgba (&colors[i], &GDK_RGBA_BLACK);
+    }
+
+  return gsk_border_node_new2 (&outline, widths, colors);
 }
 
 static GskRenderNode *
@@ -2010,7 +2183,7 @@ parse_cairo_node (GtkCssParser *parser,
   else if (pixels != NULL)
     {
       cairo_t *cr = gsk_cairo_node_get_draw_context (node);
-      surface = gdk_texture_download_surface (pixels);
+      surface = gdk_texture_download_surface (pixels, gdk_texture_get_color_state (pixels));
       cairo_set_source_surface (cr, surface, 0, 0);
       cairo_paint (cr);
       cairo_destroy (cr);
@@ -2031,7 +2204,7 @@ parse_outset_shadow_node (GtkCssParser *parser,
                           Context      *context)
 {
   GskRoundedRect outline = GSK_ROUNDED_RECT_INIT (0, 0, 50, 50);
-  GdkRGBA color = GDK_RGBA("000000");
+  GdkColor color = GDK_COLOR_INIT_SRGB (0, 0, 0, 1);
   double dx = 1, dy = 1, blur = 0, spread = 0;
   const Declaration declarations[] = {
     { "outline", parse_rounded_rect, NULL, &outline },
@@ -2044,7 +2217,7 @@ parse_outset_shadow_node (GtkCssParser *parser,
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
 
-  return gsk_outset_shadow_node_new (&outline, &color, dx, dy, spread, blur);
+  return gsk_outset_shadow_node_new2 (&outline, &color, dx, dy, spread, blur);
 }
 
 static GskRenderNode *
@@ -2145,7 +2318,7 @@ parse_cross_fade_node (GtkCssParser *parser,
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
   if (start == NULL)
-    start = gsk_color_node_new (&GDK_RGBA("AAFF00"), &GRAPHENE_RECT_INIT (0, 0, 50, 50));
+    start = create_alternate_default_render_node ();
   if (end == NULL)
     end = create_default_render_node ();
 
@@ -2173,7 +2346,7 @@ parse_blend_node (GtkCssParser *parser,
 
   parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
   if (bottom == NULL)
-    bottom = gsk_color_node_new (&GDK_RGBA("AAFF00"), &GRAPHENE_RECT_INIT (0, 0, 50, 50));
+    bottom = create_alternate_default_render_node ();
   if (top == NULL)
     top = create_default_render_node ();
 
@@ -2332,7 +2505,7 @@ parse_text_node (GtkCssParser *parser,
 {
   PangoFont *font = NULL;
   graphene_point_t offset = GRAPHENE_POINT_INIT (0, 0);
-  GdkRGBA color = GDK_RGBA("000000");
+  GdkColor color = GDK_COLOR_INIT_SRGB (0, 0, 0, 1);
   PangoGlyphString *glyphs = NULL;
   cairo_hint_style_t hint_style = CAIRO_HINT_STYLE_SLIGHT;
   cairo_antialias_t antialias = CAIRO_ANTIALIAS_GRAY;
@@ -2384,7 +2557,7 @@ parse_text_node (GtkCssParser *parser,
     }
   else
     {
-      result = gsk_text_node_new (font, glyphs, &color, &offset);
+      result = gsk_text_node_new2 (font, glyphs, &color, &offset);
       if (result == NULL)
         {
           gtk_css_parser_error_value (parser, "Glyphs result in empty text");
@@ -2669,7 +2842,7 @@ parse_shadow_node (GtkCssParser *parser,
                    Context      *context)
 {
   GskRenderNode *child = NULL;
-  GArray *shadows = g_array_new (FALSE, TRUE, sizeof (GskShadow));
+  GArray *shadows = g_array_new (FALSE, TRUE, sizeof (GskShadow2));
   const Declaration declarations[] = {
     { "child", parse_node, clear_node, &child },
     { "shadows", parse_shadows, clear_shadows, shadows }
@@ -2682,11 +2855,12 @@ parse_shadow_node (GtkCssParser *parser,
 
   if (shadows->len == 0)
     {
-      GskShadow default_shadow = { GDK_RGBA("000000"), 1, 1, 0 };
+      GskShadow2 default_shadow = { { NULL, { 0, } }, 1, 1, 0 };
+      default_shadow.color.color_state = gdk_color_state_get_srgb ();
       g_array_append_val (shadows, default_shadow);
     }
 
-  result = gsk_shadow_node_new (child, (GskShadow *)shadows->data, shadows->len);
+  result = gsk_shadow_node_new2 (child, (GskShadow2 *)shadows->data, shadows->len);
 
   g_array_free (shadows, TRUE);
   gsk_render_node_unref (child);
@@ -2738,6 +2912,33 @@ parse_subsurface_node (GtkCssParser *parser,
   return result;
 }
 
+static GskRenderNode *
+parse_color_state_node (GtkCssParser *parser,
+                        Context      *context)
+{
+  GskRenderNode *child = NULL;
+  GdkColorState *color_state = NULL;
+  const Declaration declarations[] = {
+    { "child", parse_node, clear_node, &child },
+    { "color-state", parse_color_state, clear_color_state, &color_state },
+  };
+  GskRenderNode *result;
+
+  parse_declarations (parser, context, declarations, G_N_ELEMENTS (declarations));
+  if (child == NULL)
+    child = create_default_render_node ();
+
+  if (color_state == NULL)
+    color_state = gdk_color_state_get_srgb ();
+
+  result = gsk_color_state_node_new (child, color_state);
+
+  gsk_render_node_unref (child);
+  gdk_color_state_unref (color_state);
+
+  return result;
+}
+
 static gboolean
 parse_node (GtkCssParser *parser,
             Context      *context,
@@ -2777,6 +2978,7 @@ parse_node (GtkCssParser *parser,
     { "glshader", parse_glshader_node },
     { "mask", parse_mask_node },
     { "subsurface", parse_subsurface_node },
+    { "color-state", parse_color_state_node },
   };
   GskRenderNode **node_p = out_node;
   const GtkCssToken *token;
@@ -3132,6 +3334,10 @@ printer_init_duplicates_for_node (Printer       *printer,
       printer_init_duplicates_for_node (printer, gsk_subsurface_node_get_child (node));
       break;
 
+    case GSK_COLOR_STATE_NODE:
+      printer_init_duplicates_for_node (printer, gsk_color_state_node_get_child (node));
+      break;
+
     default:
     case GSK_NOT_A_RENDER_NODE:
       g_assert_not_reached ();
@@ -3322,13 +3528,13 @@ append_float_param (Printer    *p,
 }
 
 static void
-append_rgba_param (Printer       *p,
-                   const char    *param_name,
-                   const GdkRGBA *value)
+append_color_param (Printer       *p,
+                   const char     *param_name,
+                   const GdkColor *value)
 {
   _indent (p);
   g_string_append_printf (p->str, "%s: ", param_name);
-  gdk_rgba_print (value, p->str);
+  gdk_color_print (value, p->str);
   g_string_append_c (p->str, ';');
   g_string_append_c (p->str, '\n');
 }
@@ -3464,10 +3670,10 @@ append_node_param (Printer       *p,
 }
 
 static void
-append_stops_param (Printer            *p,
-                    const char         *param_name,
-                    const GskColorStop *stops,
-                    gsize               n_stops)
+append_stops_param (Printer             *p,
+                    const char          *param_name,
+                    const GskColorStop2 *stops,
+                    gsize                n_stops)
 {
   gsize i;
 
@@ -3482,7 +3688,7 @@ append_stops_param (Printer            *p,
 
       string_append_double (p->str, stops[i].offset);
       g_string_append_c (p->str, ' ');
-      gdk_rgba_print (&stops[i].color, p->str);
+      gdk_color_print (&stops[i].color, p->str);
     }
   g_string_append (p->str, ";\n");
 }
@@ -3669,7 +3875,6 @@ gsk_text_node_serialize_font (GskRenderNode *node,
   g_free (s);
   pango_font_description_free (desc);
 
-  g_print ("serializing ");
   print_font (font);
   info = g_hash_table_lookup (p->fonts, hb_font_get_face (pango_font_get_hb_font (font)));
   if (info->serialized)
@@ -3867,6 +4072,63 @@ append_dash_param (Printer     *p,
 }
 
 static void
+color_state_serialize (GdkColorState *cs,
+                       Printer       *p)
+{
+  if (GDK_IS_NAMED_COLOR_STATE (cs))
+    {
+      g_string_append_printf (p->str, "%s", gdk_color_state_get_name (cs));
+      return;
+    }
+  else
+    {
+      GBytes *bytes;
+
+      bytes = gdk_color_state_save_to_icc_profile (cs, NULL);
+      if (bytes)
+        {
+          const guchar *data;
+          gsize len;
+          char *b64;
+
+          g_string_append (p->str, "url(\"data:application/vnc.iccprofile;base64,\\\n");
+          data = g_bytes_get_data (bytes, &len);
+          b64 = base64_encode_with_linebreaks (data, len);
+          append_escaping_newlines (p->str, b64);
+          g_free (b64);
+          g_string_append (p->str, "\")");
+          g_bytes_unref (bytes);
+          return;
+        }
+    }
+
+  g_string_append (p->str, "srgb");
+}
+
+static void
+append_color_state (Printer       *p,
+                    const char    *property,
+                    GdkColorState *color_state)
+{
+  if (!gdk_color_state_equal (color_state, gdk_color_state_get_srgb ()))
+    {
+      _indent (p);
+      g_string_append_printf (p->str, "%s: ", property);
+      color_state_serialize (color_state, p);
+      g_string_append (p->str, ";\n");
+    }
+}
+
+static void
+append_hue_interpolation (Printer             *p,
+                          const char          *property,
+                          GskHueInterpolation  hue_interp)
+{
+  if (hue_interp != GSK_HUE_INTERPOLATION_SHORTER)
+    append_enum_param (p, property, GSK_TYPE_HUE_INTERPOLATION, hue_interp);
+}
+
+static void
 render_node_print (Printer       *p,
                    GskRenderNode *node)
 {
@@ -3916,7 +4178,7 @@ render_node_print (Printer       *p,
       {
         start_node (p, "color", node_name);
         append_rect_param (p, "bounds", &node->bounds);
-        append_rgba_param (p, "color", gsk_color_node_get_color (node));
+        append_color_param (p, "color", gsk_color_node_get_color2 (node));
         end_node (p);
       }
       break;
@@ -3944,7 +4206,9 @@ render_node_print (Printer       *p,
         append_rect_param (p, "bounds", &node->bounds);
         append_point_param (p, "start", gsk_linear_gradient_node_get_start (node));
         append_point_param (p, "end", gsk_linear_gradient_node_get_end (node));
-        append_stops_param (p, "stops", gsk_linear_gradient_node_get_color_stops (node, NULL),
+        append_color_state (p, "color-state", gsk_linear_gradient_node_get_color_state (node));
+        append_hue_interpolation (p, "hue-interpolation", gsk_linear_gradient_node_get_hue_interpolation (node));
+        append_stops_param (p, "stops", gsk_linear_gradient_node_get_color_stops2 (node, NULL),
                                         gsk_linear_gradient_node_get_n_color_stops (node));
 
         end_node (p);
@@ -3966,7 +4230,9 @@ render_node_print (Printer       *p,
         append_float_param (p, "start", gsk_radial_gradient_node_get_start (node), 0.0f);
         append_float_param (p, "end", gsk_radial_gradient_node_get_end (node), 1.0f);
 
-        append_stops_param (p, "stops", gsk_radial_gradient_node_get_color_stops (node, NULL),
+        append_color_state (p, "color-state", gsk_radial_gradient_node_get_color_state (node));
+        append_hue_interpolation (p, "hue-interpolation", gsk_radial_gradient_node_get_hue_interpolation (node));
+        append_stops_param (p, "stops", gsk_radial_gradient_node_get_color_stops2 (node, NULL),
                                         gsk_radial_gradient_node_get_n_color_stops (node));
 
         end_node (p);
@@ -3981,7 +4247,9 @@ render_node_print (Printer       *p,
         append_point_param (p, "center", gsk_conic_gradient_node_get_center (node));
         append_float_param (p, "rotation", gsk_conic_gradient_node_get_rotation (node), 0.0f);
 
-        append_stops_param (p, "stops", gsk_conic_gradient_node_get_color_stops (node, NULL),
+        append_color_state (p, "color-state", gsk_conic_gradient_node_get_color_state (node));
+        append_hue_interpolation (p, "hue-interpolation", gsk_conic_gradient_node_get_hue_interpolation (node));
+        append_stops_param (p, "stops", gsk_conic_gradient_node_get_color_stops2 (node, NULL),
                                         gsk_conic_gradient_node_get_n_color_stops (node));
 
         end_node (p);
@@ -4001,13 +4269,13 @@ render_node_print (Printer       *p,
 
     case GSK_OUTSET_SHADOW_NODE:
       {
-        const GdkRGBA *color = gsk_outset_shadow_node_get_color (node);
+        const GdkColor *color = gsk_outset_shadow_node_get_color2 (node);
 
         start_node (p, "outset-shadow", node_name);
 
         append_float_param (p, "blur", gsk_outset_shadow_node_get_blur_radius (node), 0.0f);
-        if (!gdk_rgba_equal (color, &GDK_RGBA("000")))
-          append_rgba_param (p, "color", color);
+        if (!gdk_color_is_black (color))
+          append_color_param (p, "color", color);
         append_float_param (p, "dx", gsk_outset_shadow_node_get_dx (node), 1.0f);
         append_float_param (p, "dy", gsk_outset_shadow_node_get_dy (node), 1.0f);
         append_rounded_rect_param (p, "outline", gsk_outset_shadow_node_get_outline (node));
@@ -4105,18 +4373,21 @@ render_node_print (Printer       *p,
 
     case GSK_BORDER_NODE:
       {
-        const GdkRGBA *colors = gsk_border_node_get_colors (node);
+        const GdkColor *colors = gsk_border_node_get_colors2 (node);
         const float *widths = gsk_border_node_get_widths (node);
         guint i, n;
         start_node (p, "border", node_name);
+        GdkColor transparent;
 
-        if (!gdk_rgba_equal (&colors[3], &colors[1]))
+        gdk_color_init (&transparent, gdk_color_state_get_srgb (), ((float[4]) { 0, 0, 0, 0 }));
+
+        if (!gdk_color_equal (&colors[3], &colors[1]))
           n = 4;
-        else if (!gdk_rgba_equal (&colors[2], &colors[0]))
+        else if (!gdk_color_equal (&colors[2], &colors[0]))
           n = 3;
-        else if (!gdk_rgba_equal (&colors[1], &colors[0]))
+        else if (!gdk_color_equal (&colors[1], &colors[0]))
           n = 2;
-        else if (!gdk_rgba_equal (&colors[0], &GDK_RGBA("000000")))
+        else if (!gdk_color_equal (&colors[0], &transparent))
           n = 1;
         else
           n = 0;
@@ -4129,7 +4400,7 @@ render_node_print (Printer       *p,
               {
                 if (i > 0)
                   g_string_append_c (p->str, ' ');
-                gdk_rgba_print (&colors[i], p->str);
+                gdk_color_print (&colors[i], p->str);
               }
             g_string_append (p->str, ";\n");
           }
@@ -4175,14 +4446,12 @@ render_node_print (Printer       *p,
         g_string_append (p->str, "shadows: ");
         for (i = 0; i < n_shadows; i ++)
           {
-            const GskShadow *s = gsk_shadow_node_get_shadow (node, i);
-            char *color;
+            const GskShadow2 *s = gsk_shadow_node_get_shadow2 (node, i);
 
             if (i > 0)
               g_string_append (p->str, ", ");
 
-            color = gdk_rgba_to_string (&s->color);
-            g_string_append (p->str, color);
+            gdk_color_print (&s->color, p->str);
             g_string_append_c (p->str, ' ');
             string_append_double (p->str, s->dx);
             g_string_append_c (p->str, ' ');
@@ -4192,8 +4461,6 @@ render_node_print (Printer       *p,
                 g_string_append_c (p->str, ' ');
                 string_append_double (p->str, s->radius);
               }
-
-            g_free (color);
           }
 
         g_string_append_c (p->str, ';');
@@ -4206,12 +4473,12 @@ render_node_print (Printer       *p,
 
     case GSK_INSET_SHADOW_NODE:
       {
-        const GdkRGBA *color = gsk_inset_shadow_node_get_color (node);
+        const GdkColor *color = gsk_inset_shadow_node_get_color2 (node);
         start_node (p, "inset-shadow", node_name);
 
         append_float_param (p, "blur", gsk_inset_shadow_node_get_blur_radius (node), 0.0f);
-        if (!gdk_rgba_equal (color, &GDK_RGBA("000")))
-          append_rgba_param (p, "color", color);
+        if (!gdk_color_is_black (color))
+          append_color_param (p, "color", color);
         append_float_param (p, "dx", gsk_inset_shadow_node_get_dx (node), 1.0f);
         append_float_param (p, "dy", gsk_inset_shadow_node_get_dy (node), 1.0f);
         append_rounded_rect_param (p, "outline", gsk_inset_shadow_node_get_outline (node));
@@ -4260,12 +4527,12 @@ render_node_print (Printer       *p,
     case GSK_TEXT_NODE:
       {
         const graphene_point_t *offset = gsk_text_node_get_offset (node);
-        const GdkRGBA *color = gsk_text_node_get_color (node);
+        const GdkColor *color = gsk_text_node_get_color2 (node);
 
         start_node (p, "text", node_name);
 
-        if (!gdk_rgba_equal (color, &GDK_RGBA ("000000")))
-          append_rgba_param (p, "color", color);
+        if (!gdk_color_is_black (color))
+          append_color_param (p, "color", color);
 
         _indent (p);
         g_string_append (p->str, "font: ");
@@ -4552,6 +4819,17 @@ render_node_print (Printer       *p,
         start_node (p, "subsurface", node_name);
 
         append_node_param (p, "child", gsk_subsurface_node_get_child (node));
+
+        end_node (p);
+      }
+      break;
+
+    case GSK_COLOR_STATE_NODE:
+      {
+        start_node (p, "color-state", node_name);
+
+        append_color_state (p, "color-state", gsk_color_state_node_get_color_state (node));
+        append_node_param (p, "child", gsk_color_state_node_get_child (node));
 
         end_node (p);
       }

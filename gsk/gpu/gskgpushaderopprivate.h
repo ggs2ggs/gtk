@@ -64,13 +64,24 @@ GskGpuOp *              gsk_gpu_shader_op_gl_command                    (GskGpuO
                                                                          GskGLCommandState      *state);
 
 static inline void
-gsk_gpu_rgba_to_float (const GdkRGBA *rgba,
-                       float          values[4])
+gsk_gpu_color_to_float (const GdkColor *color,
+                        float           values[4])
 {
-  values[0] = rgba->red;
-  values[1] = rgba->green;
-  values[2] = rgba->blue;
-  values[3] = rgba->alpha;
+  values[0] = color->values[0];
+  values[1] = color->values[1];
+  values[2] = color->values[2];
+  values[3] = color->values[3];
+}
+
+static inline void
+gsk_gpu_convert_color_to_float (const GdkColor *color,
+                                GdkColorState  *in,
+                                float           values[4])
+{
+  GdkColor c;
+
+  gdk_color_convert (&c, in, color);
+  gsk_gpu_color_to_float (&c, values);
 }
 
 #include <graphene.h>

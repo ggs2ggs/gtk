@@ -18,6 +18,7 @@
 #include "gdk/gdktextureprivate.h"
 #include "gdk/gdktexturedownloaderprivate.h"
 #include "gdk/gdkdrawcontextprivate.h"
+#include "gdk/gdkcolorstateprivate.h"
 
 #include <graphene.h>
 
@@ -105,6 +106,7 @@ static void
 gsk_gpu_renderer_dmabuf_downloader_download (GdkDmabufDownloader *downloader,
                                              GdkDmabufTexture    *texture,
                                              GdkMemoryFormat      format,
+                                             GdkColorState       *color_state,
                                              guchar              *data,
                                              gsize                stride)
 {
@@ -244,6 +246,46 @@ gsk_gpu_renderer_unrealize (GskRenderer *renderer)
   g_clear_object (&priv->device);
 }
 
+GdkColorState * find_compositing_color_state (GdkSurface *surface);
+
+GdkColorState *
+find_compositing_color_state (GdkSurface *surface)
+{
+  GdkColorState *ccs = NULL;
+  const char *env = g_getenv ("GSK_COMPOSITING_COLORSTATE");
+
+  if (env)
+    {
+      if (strcmp (env, "srgb") == 0)
+        ccs = gdk_color_state_get_srgb ();
+      else if (strcmp (env, "srgb-linear") == 0)
+        ccs = gdk_color_state_get_srgb_linear ();
+      else if (strcmp (env, "xyz") == 0)
+        ccs = gdk_color_state_get_xyz ();
+      else if (strcmp (env, "rec2100-linear") == 0)
+        ccs = gdk_color_state_get_rec2100_linear ();
+      else
+        g_warning ("Not a supported compositing color state: %s", env);
+    }
+
+  if (ccs == NULL)
+    {
+      if (surface)
+        {
+          if (GDK_DISPLAY_DEBUG_CHECK (gdk_surface_get_display (surface), SRGB))
+            ccs = gdk_color_state_get_srgb ();
+          else if (gdk_color_state_is_linear (gdk_surface_get_color_state (surface)))
+            ccs = gdk_surface_get_color_state (surface);
+          else
+            ccs = gdk_color_state_get_srgb_linear ();
+        }
+      else
+        ccs = gdk_color_state_get_srgb_linear ();
+    }
+
+  return ccs;
+}
+
 static GdkTexture *
 gsk_gpu_renderer_fallback_render_texture (GskGpuRenderer        *self,
                                           GskRenderNode         *root,
@@ -260,9 +302,26 @@ gsk_gpu_renderer_fallback_render_texture (GskGpuRenderer        *self,
   GdkTexture *texture;
   GdkTextureDownloader downloader;
   GskGpuFrame *frame;
+  GdkColorState *color_state;
+  GdkColorState *ccs;
+  GskRenderNode *node;
 
   max_size = gsk_gpu_device_get_max_image_size (priv->device);
   depth = gsk_render_node_get_preferred_depth (root);
+
+  color_state = GDK_COLOR_STATE_SRGB;
+  ccs = find_compositing_color_state (NULL);
+  depth = gdk_memory_depth_merge (depth, gdk_color_state_get_min_depth (color_state));
+  depth = gdk_memory_depth_merge (depth, gdk_color_state_get_min_depth (ccs));
+
+  g_debug ("Compositing color state: %s", gdk_color_state_get_name (ccs));
+  g_debug ("Display color state: %s", gdk_color_state_get_name (color_state));
+
+  if (!gdk_color_state_equal (ccs, color_state))
+    node = gsk_color_state_node_new (root, ccs);
+  else
+    node = gsk_render_node_ref (root);
+
   do
     {
       image = gsk_gpu_device_create_download_image (priv->device,
@@ -282,6 +341,7 @@ gsk_gpu_renderer_fallback_render_texture (GskGpuRenderer        *self,
   stride = width * bpp;
   size = stride * height;
   data = g_malloc_n (stride, height);
+  color_state = gdk_color_state_get_srgb ();
 
   for (y = 0; y < height; y += image_height)
     {
@@ -298,8 +358,9 @@ gsk_gpu_renderer_fallback_render_texture (GskGpuRenderer        *self,
           gsk_gpu_frame_render (frame,
                                 g_get_monotonic_time (),
                                 image,
+                                color_state,
                                 NULL,
-                                root,
+                                node,
                                 &GRAPHENE_RECT_INIT (rounded_viewport->origin.x + x,
                                                      rounded_viewport->origin.y + y,
                                                      image_width,
@@ -320,6 +381,8 @@ gsk_gpu_renderer_fallback_render_texture (GskGpuRenderer        *self,
         }
     }
 
+  gsk_render_node_unref (node);
+
   bytes = g_bytes_new_take (data, size);
   texture = gdk_memory_texture_new (width, height, GDK_MEMORY_DEFAULT, bytes, stride);
   g_bytes_unref (bytes);
@@ -337,17 +400,37 @@ gsk_gpu_renderer_render_texture (GskRenderer           *renderer,
   GskGpuImage *image;
   GdkTexture *texture;
   graphene_rect_t rounded_viewport;
+  GdkMemoryDepth depth;
+  GdkColorState *color_state;
+  GdkColorState *ccs;
+  GskRenderNode *node;
 
   gsk_gpu_device_maybe_gc (priv->device);
 
   gsk_gpu_renderer_make_current (self);
+
+
+  color_state = GDK_COLOR_STATE_SRGB;
+  ccs = find_compositing_color_state (NULL);
+
+  depth = gsk_render_node_get_preferred_depth (root);
+  depth = gdk_memory_depth_merge (depth, gdk_color_state_get_min_depth (color_state));
+  depth = gdk_memory_depth_merge (depth, gdk_color_state_get_min_depth (ccs));
+
+  g_debug ("Compositing color state: %s", gdk_color_state_get_name (ccs));
+  g_debug ("Display color state: %s", gdk_color_state_get_name (color_state));
+
+  if (!gdk_color_state_equal (ccs, color_state))
+    node = gsk_color_state_node_new (root, ccs);
+  else
+    node = gsk_render_node_ref (root);
 
   rounded_viewport = GRAPHENE_RECT_INIT (viewport->origin.x,
                                          viewport->origin.y,
                                          ceil (viewport->size.width),
                                          ceil (viewport->size.height));
   image = gsk_gpu_device_create_download_image (priv->device,
-                                                gsk_render_node_get_preferred_depth (root),
+                                                depth,
                                                 rounded_viewport.size.width,
                                                 rounded_viewport.size.height);
 
@@ -360,13 +443,16 @@ gsk_gpu_renderer_render_texture (GskRenderer           *renderer,
   gsk_gpu_frame_render (frame,
                         g_get_monotonic_time (),
                         image,
+                        color_state,
                         NULL,
-                        root,
+                        node,
                         &rounded_viewport,
                         &texture);
 
   g_object_unref (frame);
   g_object_unref (image);
+
+  gsk_render_node_unref (node);
 
   gsk_gpu_device_queue_gc (priv->device);
 
@@ -387,6 +473,11 @@ gsk_gpu_renderer_render (GskRenderer          *renderer,
   GskGpuImage *backbuffer;
   cairo_region_t *render_region;
   double scale;
+  GdkSurface *surface;
+  GdkColorState *color_state;
+  GdkColorState *ccs;
+  GskRenderNode *node;
+  GdkMemoryDepth depth;
 
   if (cairo_region_is_empty (region))
     {
@@ -394,15 +485,42 @@ gsk_gpu_renderer_render (GskRenderer          *renderer,
       return;
     }
 
-  gdk_draw_context_begin_frame_full (priv->context,
-                                     gsk_render_node_get_preferred_depth (root),
-                                     region);
+  surface = gdk_draw_context_get_surface (priv->context);
+  depth = gsk_render_node_get_preferred_depth (root);
+
+  color_state = gdk_surface_get_color_state (surface);
+  ccs = find_compositing_color_state (surface);
+
+  depth = gdk_memory_depth_merge (depth, gdk_color_state_get_min_depth (color_state));
+
+  g_debug ("Compositing color state: %s", gdk_color_state_get_name (ccs));
+  g_debug ("Display color state: %s", gdk_color_state_get_name (color_state));
+
+  if (ccs == GDK_COLOR_STATE_SRGB_LINEAR && color_state == GDK_COLOR_STATE_SRGB &&
+      depth != GDK_MEMORY_U8)
+    {
+      g_debug ("Can't use fast path because of depth");
+    }
+
+  gdk_draw_context_begin_frame_full (priv->context, depth, region);
+
+  backbuffer = GSK_GPU_RENDERER_GET_CLASS (self)->get_backbuffer (self);
+
+  if (gsk_gpu_image_converts_srgb_linear_to_srgb (backbuffer))
+    {
+      g_debug ("Relying on Vulkan/GL to do framebuffer conversion");
+      color_state = ccs;
+      node = gsk_render_node_ref (root);
+    }
+  else
+    {
+      g_debug ("Using a color state node for framebuffer conversion");
+      node = gsk_color_state_node_new (root, ccs);
+    }
 
   gsk_gpu_device_maybe_gc (priv->device);
 
   gsk_gpu_renderer_make_current (self);
-
-  backbuffer = GSK_GPU_RENDERER_GET_CLASS (self)->get_backbuffer (self);
 
   frame = gsk_gpu_renderer_get_frame (self);
   render_region = get_render_region (self);
@@ -411,14 +529,17 @@ gsk_gpu_renderer_render (GskRenderer          *renderer,
   gsk_gpu_frame_render (frame,
                         g_get_monotonic_time (),
                         backbuffer,
+                        color_state,
                         render_region,
-                        root,
+                        node,
                         &GRAPHENE_RECT_INIT (
                           0, 0,
                           gsk_gpu_image_get_width (backbuffer) / scale,
                           gsk_gpu_image_get_height (backbuffer) / scale
                         ),
                         NULL);
+
+  gsk_render_node_unref (node);
 
   gsk_gpu_device_queue_gc (priv->device);
 

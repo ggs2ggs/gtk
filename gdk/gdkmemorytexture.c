@@ -22,6 +22,7 @@
 #include "gdkmemorytextureprivate.h"
 
 #include "gdkmemoryformatprivate.h"
+#include "gdkcolorstate.h"
 #include "gsk/gl/fp16private.h"
 
 /**
@@ -58,6 +59,7 @@ gdk_memory_texture_dispose (GObject *object)
 static void
 gdk_memory_texture_download (GdkTexture      *texture,
                              GdkMemoryFormat  format,
+                             GdkColorState   *color_state,
                              guchar          *data,
                              gsize            stride)
 {
@@ -65,9 +67,11 @@ gdk_memory_texture_download (GdkTexture      *texture,
 
   gdk_memory_convert (data, stride,
                       format,
+                      color_state,
                       (guchar *) g_bytes_get_data (self->bytes, NULL),
                       self->stride,
                       texture->format,
+                      texture->color_state,
                       gdk_texture_get_width (texture),
                       gdk_texture_get_height (texture));
 }
@@ -131,7 +135,7 @@ gdk_memory_sanitize (GBytes          *bytes,
  * @bytes: the `GBytes` containing the pixel data
  * @stride: rowstride for the data
  *
- * Creates a new texture for a blob of image data.
+ * Creates a new texture for a blob of sRGB image data.
  *
  * The `GBytes` must contain @stride × @height pixels
  * in the given format.
@@ -145,10 +149,42 @@ gdk_memory_texture_new (int              width,
                         GBytes          *bytes,
                         gsize            stride)
 {
+  return  gdk_memory_texture_new_with_color_state (width, height, format,
+                                                   gdk_color_state_get_srgb (),
+                                                   bytes, stride);
+}
+
+/**
+ * gdk_memory_texture_new_with_color_state:
+ * @width: the width of the texture
+ * @height: the height of the texture
+ * @format: the format of the data
+ * @color_state: a `GdkColorSpace`
+ * @bytes: the `GBytes` containing the pixel data
+ * @stride: rowstride for the data
+ *
+ * Creates a new texture for a blob of image data with a given color state.
+ *
+ * The `GBytes` must contain @stride x @height pixels
+ * in the given format.
+ *
+ * Returns: A newly-created `GdkTexture`
+ *
+ * Since: 4.16
+ */
+GdkTexture *
+gdk_memory_texture_new_with_color_state (int              width,
+                                         int              height,
+                                         GdkMemoryFormat  format,
+                                         GdkColorState   *color_state,
+                                         GBytes          *bytes,
+                                         gsize            stride)
+{
   GdkMemoryTexture *self;
 
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
+  g_return_val_if_fail (color_state != NULL, NULL);
   g_return_val_if_fail (bytes != NULL, NULL);
   g_return_val_if_fail (stride >= width * gdk_memory_format_bytes_per_pixel (format), NULL);
   /* needs to be this complex to support subtexture of the bottom right part */
@@ -159,6 +195,7 @@ gdk_memory_texture_new (int              width,
   self = g_object_new (GDK_TYPE_MEMORY_TEXTURE,
                        "width", width,
                        "height", height,
+                       "color-state", color_state,
                        NULL);
 
   GDK_TEXTURE (self)->format = format;
@@ -191,19 +228,19 @@ gdk_memory_texture_new_subtexture (GdkMemoryTexture  *source,
   size = source->stride * (height - 1) + width * bpp;
   bytes = g_bytes_new_from_bytes (source->bytes, offset, size);
 
-  result = gdk_memory_texture_new (width,
-                                   height,
-                                   texture->format,
-                                   bytes,
-                                   source->stride);
+  result = gdk_memory_texture_new_with_color_state (width,
+                                                    height,
+                                                    texture->format,
+                                                    texture->color_state,
+                                                    bytes,
+                                                    source->stride);
   g_bytes_unref (bytes);
 
   return result;
 }
 
 GdkMemoryTexture *
-gdk_memory_texture_from_texture (GdkTexture      *texture,
-                                 GdkMemoryFormat  format)
+gdk_memory_texture_from_texture (GdkTexture *texture)
 {
   GdkTexture *result;
   GBytes *bytes;
@@ -213,23 +250,19 @@ gdk_memory_texture_from_texture (GdkTexture      *texture,
   g_return_val_if_fail (GDK_IS_TEXTURE (texture), NULL);
 
   if (GDK_IS_MEMORY_TEXTURE (texture))
-    {
-      GdkMemoryTexture *memtex = GDK_MEMORY_TEXTURE (texture);
+    return g_object_ref (GDK_MEMORY_TEXTURE (texture));
 
-      if (gdk_texture_get_format (texture) == format)
-        return g_object_ref (memtex);
-    }
-
-  stride = texture->width * gdk_memory_format_bytes_per_pixel (format);
+  stride = texture->width * gdk_memory_format_bytes_per_pixel (texture->format);
   data = g_malloc_n (stride, texture->height);
 
-  gdk_texture_do_download (texture, format, data, stride);
+  gdk_texture_do_download (texture, texture->format, texture->color_state, data, stride);
   bytes = g_bytes_new_take (data, stride * texture->height);
-  result = gdk_memory_texture_new (texture->width,
-                                   texture->height,
-                                   format,
-                                   bytes,
-                                   stride);
+  result = gdk_memory_texture_new_with_color_state (texture->width,
+                                                    texture->height,
+                                                    texture->format,
+                                                    texture->color_state,
+                                                    bytes,
+                                                    stride);
   g_bytes_unref (bytes);
 
   return GDK_MEMORY_TEXTURE (result);

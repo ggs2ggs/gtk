@@ -17,6 +17,7 @@
 
 #include "gdk/gdkdmabufdownloaderprivate.h"
 #include "gdk/gdktexturedownloaderprivate.h"
+#include "gdk/gdkcolorstateprivate.h"
 
 #define DEFAULT_VERTEX_BUFFER_SIZE 128 * 1024
 
@@ -561,6 +562,7 @@ copy_texture (gpointer    user_data,
 static void
 gsk_gpu_frame_record_rect (GskGpuFrame                 *self,
                            GskGpuImage                 *target,
+                           GdkColorState               *target_color_state,
                            const cairo_rectangle_int_t *clip,
                            GskRenderNode               *node,
                            const graphene_rect_t       *viewport)
@@ -572,6 +574,7 @@ gsk_gpu_frame_record_rect (GskGpuFrame                 *self,
 
   gsk_gpu_node_processor_process (self,
                                   target,
+                                  target_color_state,
                                   clip,
                                   node,
                                   viewport);
@@ -585,6 +588,7 @@ static void
 gsk_gpu_frame_record (GskGpuFrame            *self,
                       gint64                  timestamp,
                       GskGpuImage            *target,
+                      GdkColorState          *target_color_state,
                       const cairo_region_t   *clip,
                       GskRenderNode          *node,
                       const graphene_rect_t  *viewport,
@@ -603,13 +607,14 @@ gsk_gpu_frame_record (GskGpuFrame            *self,
           cairo_rectangle_int_t rect;
 
           cairo_region_get_rectangle (clip, i, &rect);
-          gsk_gpu_frame_record_rect (self, target, &rect, node, viewport);
+          gsk_gpu_frame_record_rect (self, target, target_color_state, &rect, node, viewport);
         }
     }
   else
     {
       gsk_gpu_frame_record_rect (self,
                                  target,
+                                 target_color_state,
                                  &(cairo_rectangle_int_t) {
                                      0, 0,
                                      gsk_gpu_image_get_width (target),
@@ -656,6 +661,7 @@ void
 gsk_gpu_frame_render (GskGpuFrame            *self,
                       gint64                  timestamp,
                       GskGpuImage            *target,
+                      GdkColorState          *target_color_state,
                       const cairo_region_t   *region,
                       GskRenderNode          *node,
                       const graphene_rect_t  *viewport,
@@ -663,7 +669,7 @@ gsk_gpu_frame_render (GskGpuFrame            *self,
 {
   gsk_gpu_frame_cleanup (self);
 
-  gsk_gpu_frame_record (self, timestamp, target, region, node, viewport, texture);
+  gsk_gpu_frame_record (self, timestamp, target, target_color_state, region, node, viewport, texture);
 
   gsk_gpu_frame_submit (self);
 }

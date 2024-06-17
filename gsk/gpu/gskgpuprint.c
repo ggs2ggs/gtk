@@ -2,6 +2,8 @@
 
 #include "gskgpuprintprivate.h"
 
+#include "gdk/gdkrgbaprivate.h"
+#include "gdk/gdkcolorstateprivate.h"
 #include "gskgpudescriptorsprivate.h"
 #include "gskgpuimageprivate.h"
 
@@ -121,10 +123,8 @@ gsk_gpu_print_rgba (GString     *string,
                     const float  rgba[4])
 {
   GdkRGBA color = { rgba[0], rgba[1], rgba[2], rgba[3] };
-  char *s = gdk_rgba_to_string (&color);
-  g_string_append (string, s);
+  gdk_rgba_print (&color, string);
   g_string_append_c (string, ' ');
-  g_free (s);
 }
 
 void
@@ -155,3 +155,28 @@ gsk_gpu_print_image_descriptor (GString           *string,
   gsk_gpu_print_image (string, gsk_gpu_descriptors_get_image (desc, id));
 }
 
+void
+gsk_gpu_print_color_conversion (GString *string,
+                                guint    conversion)
+{
+  GdkColorStateId from = conversion & 0xffff;
+  GdkColorStateId to = conversion >> 16;
+
+  g_string_append_printf (string, "%s->%s ",
+                          gdk_color_state_get_name_from_id (from),
+                          gdk_color_state_get_name_from_id (to));
+}
+
+void
+gsk_gpu_print_color_conversion_triple (GString *string,
+                                       guint    conversion)
+{
+  GdkColorStateId from1 = conversion & 31;
+  GdkColorStateId from2 = (conversion >>  5) & 31;
+  GdkColorStateId to    = (conversion >> 10) & 31;
+
+  g_string_append_printf (string, "%s,%s->%s ",
+                          gdk_color_state_get_name_from_id (from1),
+                          gdk_color_state_get_name_from_id (from2),
+                          gdk_color_state_get_name_from_id (to));
+}

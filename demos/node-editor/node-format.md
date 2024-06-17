@@ -117,16 +117,27 @@ should be aware that the allowed values are meant to be used on 3D transformatio
 so their naming might appear awkward. However, it is always possible to use the
 matrix3d() production to specify all 16 values individually.
 
+### color-state
+
+| property    | syntax           | default                | printed     |
+| ----------- | ---------------- | ---------------------- | ----------- |
+| bounds      | `<rect>`         | 50                     | always      |
+| color-state | `<ident>|<url>`  | srgb                   | always      |
+
+Creates a node like `gsk_color_state_node_new()` with the given properties.
+
 ### conic-gradient
 
-| property | syntax           | default                | printed     |
-| -------- | ---------------- | ---------------------- | ----------- |
-| bounds   | `<rect>`         | 50                     | always      |
-| center   | `<point>`        | 25, 25                 | always      |
-| rotation | `<number>`       | 0                      | always      |
-| stops    | `<color-stop>`   | 0 #AF0, 1 #F0C         | always      |
+| property          | syntax            | default                | printed     |
+| ----------------- | ----------------- | ---------------------- | ----------- |
+| bounds            | `<rect>`          | 50                     | always      |
+| center            | `<point>`         | 25, 25                 | always      |
+| rotation          | `<number>`        | 0                      | always      |
+| color-state       | `<ident>`|`<url>` | srgb                   | non-default |
+| hue-interpolation | `<ident>`         | shorter                | non-default |
+| stops             | `<color-stop>`    | 0 #AF0, 1 #F0C         | always      |
 
-Creates a node like `gsk_conic_gradient_node_new()` with the given properties.
+Creates a node like `gsk_conic_gradient_node_new_in()` with the given properties.
 
 ### cross-fade
 
@@ -192,14 +203,16 @@ Creates a node like `gsk_inset_shadow_node_new()` with the given properties.
 
 ### linear-gradient
 
-| property | syntax           | default                | printed     |
-| -------- | ---------------- | ---------------------- | ----------- |
-| bounds   | `<rect>`         | 50                     | always      |
-| start    | `<point>`        | 0 0                    | always      |
-| end      | `<point>`        | 0 50                   | always      |
-| stops    | `<color-stop>`   | 0 #AF0, 1 #F0C         | always      |
+| property          | syntax            | default                | printed     |
+| ----------------- | ----------------- | ---------------------- | ----------- |
+| bounds            | `<rect>`          | 50                     | always      |
+| start             | `<point>`         | 0 0                    | always      |
+| end               | `<point>`         | 0 50                   | always      |
+| color-state       | `<ident>`|`<url>` | srgb                   | non-default |
+| hue-interpolation | `<ident>`         | shorter                | non-default |
+| stops             | `<color-stop>`    | 0 #AF0, 1 #F0C         | always      |
 
-Creates a node like `gsk_linear_gradient_node_new()` with the given properties.
+Creates a node like `gsk_linear_gradient_node_new_in()` with the given properties.
 
 ### mask
 
@@ -235,15 +248,17 @@ Creates a node like `gsk_outset_shadow_node_new()` with the given properties.
 
 ### radial-gradient
 
-| property | syntax           | default                | printed     |
-| -------- | ---------------- | ---------------------- | ----------- |
-| bounds   | `<rect>`         | 50                     | always      |
-| center   | `<point>`        | 25 25                  | always      |
-| hradius  | `<number>`       | 25                     | always      |
-| vradius  | `<number>`       | 25                     | always      |
-| start    | `<number>`       | 0                      | always      |
-| end      | `<number>`       | 1                      | always      |
-| stops    | `<color-stop>`   | 0 #AF0, 1 #F0C         | always      |
+| property          | syntax            | default                | printed     |
+| ----------------- | ----------------- | ---------------------- | ----------- |
+| bounds            | `<rect>`          | 50                     | always      |
+| center            | `<point>`         | 25 25                  | always      |
+| hradius           | `<number>`        | 25                     | always      |
+| vradius           | `<number>`        | 25                     | always      |
+| start             | `<number>`        | 0                      | always      |
+| end               | `<number>`        | 1                      | always      |
+| color-state       | `<ident>`|`<url>` | srgb                   | non-default |
+| hue-interpolation | `<ident>`         | shorter                | non-default |
+| stops             | `<color-stop>`    | 0 #AF0, 1 #F0C         | always      |
 
 Creates a node like `gsk_radial_gradient_node_new()` with the given properties.
 
@@ -259,29 +274,33 @@ Creates a node like `gsk_repeat_node_new()` with the given properties.
 
 ### repeating-linear-gradient
 
-| property | syntax           | default                | printed     |
-| -------- | ---------------- | ---------------------- | ----------- |
-| bounds   | `<rect>`         | 50                     | always      |
-| start    | `<point>`        | 0 0                    | always      |
-| end      | `<point>`        | 0 50                   | always      |
-| stops    | `<color-stop>`   | 0 #AF0, 1 #F0C         | always      |
+| property          | syntax            | default                | printed     |
+| ----------------- | ----------------- | ---------------------- | ----------- |
+| bounds            | `<rect>`          | 50                     | always      |
+| start             | `<point>`         | 0 0                    | always      |
+| end               | `<point>`         | 0 50                   | always      |
+| color-state       | `<ident>`|`<url>` | srgb                   | non-default |
+| hue-interpolation | `<ident>`         | shorter                | non-default |
+| stops             | `<color-stop>`    | 0 #AF0, 1 #F0C         | always      |
 
-Creates a node like `gsk_repeating_linear_gradient_node_new()` with the given
+Creates a node like `gsk_repeating_linear_gradient_node_new_in()` with the given
 properties.
 
 ### repeating radial-gradient
 
-| property | syntax           | default                | printed     |
-| -------- | ---------------- | ---------------------- | ----------- |
-| bounds   | `<rect>`         | 50                     | always      |
-| center   | `<point>`        | 25 25                  | always      |
-| hradius  | `<number>`       | 25                     | always      |
-| vradius  | `<number>`       | 25                     | always      |
-| start    | `<number>`       | 0                      | always      |
-| end      | `<number>`       | 1                      | always      |
-| stops    | `<color-stop>`   | 0 #AF0, 1 #F0C         | always      |
+| property          | syntax            | default                | printed     |
+| ----------------- | ----------------- | ---------------------- | ----------- |
+| bounds            | `<rect>`          | 50                     | always      |
+| center            | `<point>`         | 25 25                  | always      |
+| hradius           | `<number>`        | 25                     | always      |
+| vradius           | `<number>`        | 25                     | always      |
+| start             | `<number>`        | 0                      | always      |
+| end               | `<number>`        | 1                      | always      |
+| color-state       | `<ident>`|`<url>` | srgb                   | non-default |
+| hue-interpolation | `<ident>`         | shorter                | non-default |
+| stops             | `<color-stop>`    | 0 #AF0, 1 #F0C         | always      |
 
-Creates a node like `gsk_repeating_radial_gradient_node_new()` with the given
+Creates a node like `gsk_repeating_radial_gradient_node_new_in()` with the given
 properties.
 
 ### rounded-clip

@@ -30,6 +30,8 @@
 #include "gdksurface.h"
 
 #include "gdkprivate.h"
+#include "gdkcolorstate.h"
+#include "gdkcairo.h"
 #include "gdkcontentprovider.h"
 #include "gdkdeviceprivate.h"
 #include "gdkdisplayprivate.h"
@@ -44,6 +46,7 @@
 #include "gdktoplevelprivate.h"
 #include "gdkvulkancontext.h"
 #include "gdksubsurfaceprivate.h"
+#include "gdkcolorstate.h"
 
 #include <math.h>
 
@@ -73,6 +76,7 @@ struct _GdkSurfacePrivate
 #ifdef HAVE_EGL
   EGLSurface egl_surface;
   gboolean egl_surface_high_depth;
+  gboolean egl_surface_converts_srgb;
 #endif
 
   gpointer widget;
@@ -89,6 +93,7 @@ enum {
 
 enum {
   PROP_0,
+  PROP_COLOR_STATE,
   PROP_CURSOR,
   PROP_DISPLAY,
   PROP_FRAME_CLOCK,
@@ -484,6 +489,18 @@ gdk_surface_init (GdkSurface *surface)
 
   surface->alpha = 255;
 
+  if (g_getenv ("GDK_DISPLAY_COLORSTATE"))
+    {
+      const char *env = g_getenv ("GDK_DISPLAY_COLORSTATE");
+      if (strcmp (env, "srgb") == 0)
+        surface->color_state = gdk_color_state_get_srgb ();
+      else if (strcmp (env, "srgb-linear") == 0)
+        surface->color_state = gdk_color_state_get_srgb_linear ();
+    }
+
+  if (surface->color_state == NULL)
+    surface->color_state = gdk_color_state_get_srgb ();
+
   surface->device_cursor = g_hash_table_new_full (NULL, NULL,
                                                  NULL, g_object_unref);
 
@@ -527,6 +544,25 @@ gdk_surface_class_init (GdkSurfaceClass *klass)
   klass->beep = gdk_surface_real_beep;
   klass->get_scale = gdk_surface_real_get_scale;
   klass->create_subsurface = gdk_surface_real_create_subsurface;
+
+  /**
+   * GdkSurface:color-state: (attributes org.gtk.Property.get=gdk_surface_get_color_state)
+   *
+   * The preferred color state for rendering to the surface
+   *
+   * This color state is negotiated between GTK and the compositor.
+   *
+   * The color state may change as the surface gets moved around - for example
+   * to different monitors or when the compositor gets reconfigured. As long as
+   * the surface isn't shown, the color space may not represent the actual color
+   * state that is going to be used.
+   *
+   * Since: 4.16
+   */
+  properties[PROP_COLOR_STATE] =
+      g_param_spec_boxed ("color-state", NULL, NULL,
+                          GDK_TYPE_COLOR_STATE,
+                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   /**
    * GdkSurface:cursor: (attributes org.gtk.Property.get=gdk_surface_get_cursor org.gtk.Property.set=gdk_surface_set_cursor)
@@ -786,6 +822,10 @@ gdk_surface_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_COLOR_STATE:
+      gdk_surface_set_color_state (surface, g_value_get_object (value));
+      break;
+
     case PROP_CURSOR:
       gdk_surface_set_cursor (surface, g_value_get_object (value));
       break;
@@ -819,6 +859,10 @@ gdk_surface_get_property (GObject    *object,
 
   switch (prop_id)
     {
+    case PROP_COLOR_STATE:
+      g_value_set_object (value, gdk_surface_get_color_state (surface));
+      break;
+
     case PROP_CURSOR:
       g_value_set_object (value, gdk_surface_get_cursor (surface));
       break;
@@ -1139,14 +1183,29 @@ gdk_surface_get_egl_surface (GdkSurface *self)
   return priv->egl_surface;
 }
 
+extern GdkColorState *find_compositing_color_state (GdkSurface *surface);
+
 void
 gdk_surface_ensure_egl_surface (GdkSurface *self,
                                 gboolean    high_depth)
 {
   GdkSurfacePrivate *priv = gdk_surface_get_instance_private (self);
   GdkDisplay *display = gdk_surface_get_display (self);
+  GdkColorState *color_state;
+  GdkColorState *ccs;
+  gboolean want_srgb_conversion = FALSE;
 
   g_return_if_fail (priv->egl_native_window != NULL);
+
+  color_state = gdk_surface_get_color_state (self);
+  ccs = find_compositing_color_state (self);
+
+  if (color_state == GDK_COLOR_STATE_SRGB && ccs == GDK_COLOR_STATE_SRGB_LINEAR &&
+      !high_depth)
+    {
+      /* fast path this */
+      want_srgb_conversion = TRUE;
+    }
 
   if (priv->egl_surface_high_depth != high_depth &&
       priv->egl_surface != NULL &&
@@ -1157,14 +1216,35 @@ gdk_surface_ensure_egl_surface (GdkSurface *self,
       priv->egl_surface = NULL;
     }
 
+  if (want_srgb_conversion != priv->egl_surface_converts_srgb &&
+      priv->egl_surface != NULL &&
+      display->have_egl_gl_colorspace)
+    {
+      gdk_gl_context_clear_current_if_surface (self);
+      eglDestroySurface (gdk_display_get_egl_display (display), priv->egl_surface);
+      priv->egl_surface = NULL;
+    }
+
   if (priv->egl_surface == NULL)
     {
+      EGLint attribs[4];
+      int i;
+
+      i = 0;
+      if (want_srgb_conversion)
+        {
+          attribs[i++] = EGL_GL_COLORSPACE_KHR;
+          attribs[i++] = EGL_GL_COLORSPACE_SRGB_KHR;
+        }
+      attribs[i++] = EGL_NONE;
+
       priv->egl_surface = eglCreateWindowSurface (gdk_display_get_egl_display (display),
                                                   high_depth ? gdk_display_get_egl_config_high_depth (display)
                                                              : gdk_display_get_egl_config (display),
                                                   (EGLNativeWindowType) priv->egl_native_window,
-                                                  NULL);
+                                                  attribs);
       priv->egl_surface_high_depth = high_depth;
+      priv->egl_surface_converts_srgb = want_srgb_conversion;
     }
 #endif
 }
@@ -2330,6 +2410,7 @@ gdk_surface_create_similar_surface (GdkSurface      *surface,
                                                 content == CAIRO_CONTENT_ALPHA ? CAIRO_FORMAT_A8 : CAIRO_FORMAT_ARGB32,
                                                 width * scale, height * scale);
   cairo_surface_set_device_scale (similar_surface, scale, scale);
+  gdk_cairo_surface_set_color_state (similar_surface, gdk_surface_get_color_state (surface));
 
   return similar_surface;
 }
@@ -3075,4 +3156,46 @@ gdk_surface_get_subsurface (GdkSurface *surface,
                             gsize       idx)
 {
   return g_ptr_array_index (surface->subsurfaces, idx);
+}
+
+void
+gdk_surface_set_color_state (GdkSurface    *surface,
+                             GdkColorState *color_state)
+{
+  /* This way we support unsetting, too */
+  if (G_UNLIKELY (gdk_display_get_debug_flags (surface->display) & GDK_DEBUG_SRGB))
+    color_state = gdk_color_state_get_srgb ();
+
+  if (gdk_color_state_equal (surface->color_state, color_state))
+    return;
+
+  g_set_object (&surface->color_state, color_state);
+
+  g_object_notify_by_pspec (G_OBJECT (surface), properties[PROP_COLOR_STATE]);
+}
+
+/**
+ * gdk_surface_get_color_state:
+ * @self: a `GdkSurface`
+ *
+ * Returns the preferred color state for rendering to the given @surface.
+ *
+ * Returns: (transfer none): The color state of @surface
+ *
+ * Since: 4.16
+ */
+GdkColorState *
+gdk_surface_get_color_state (GdkSurface *surface)
+{
+  g_return_val_if_fail (GDK_IS_SURFACE (surface), gdk_color_state_get_srgb ());
+
+  return surface->color_state;
+}
+
+gboolean
+gdk_surface_get_egl_surface_converts_srgb (GdkSurface *surface)
+{
+  GdkSurfacePrivate *priv = gdk_surface_get_instance_private (surface);
+
+  return priv->egl_surface_converts_srgb;
 }

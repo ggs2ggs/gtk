@@ -93,6 +93,14 @@
  * Since: 4.14
  */
 
+/**
+ * GSK_COLOR_STATE_NODE:
+ *
+ * A node that changes the compositing color state.
+ *
+ * Since: 4.16
+ */
+
 typedef enum {
   GSK_NOT_A_RENDER_NODE = 0,
   GSK_CONTAINER_NODE,
@@ -125,6 +133,7 @@ typedef enum {
   GSK_FILL_NODE,
   GSK_STROKE_NODE,
   GSK_SUBSURFACE_NODE,
+  GSK_COLOR_STATE_NODE,
 } GskRenderNodeType;
 
 /**
@@ -474,3 +483,11 @@ typedef enum
   GSK_MASK_MODE_LUMINANCE,
   GSK_MASK_MODE_INVERTED_LUMINANCE
 } GskMaskMode;
+
+typedef enum
+{
+  GSK_HUE_INTERPOLATION_SHORTER,
+  GSK_HUE_INTERPOLATION_LONGER,
+  GSK_HUE_INTERPOLATION_INCREASING,
+  GSK_HUE_INTERPOLATION_DECREASING
+} GskHueInterpolation;

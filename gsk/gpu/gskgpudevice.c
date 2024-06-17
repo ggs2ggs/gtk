@@ -12,6 +12,7 @@
 
 #include "gsk/gskdebugprivate.h"
 #include "gsk/gskprivate.h"
+#include "gdk/gdkcolorstateprivate.h"
 
 #define MAX_SLICES_PER_ATLAS 64
 
@@ -325,9 +326,9 @@ gsk_gpu_cached_texture_destroy_cb (gpointer data)
 }
 
 static GskGpuCachedTexture *
-gsk_gpu_cached_texture_new (GskGpuDevice *device,
-                            GdkTexture   *texture,
-                            GskGpuImage  *image)
+gsk_gpu_cached_texture_new (GskGpuDevice  *device,
+                            GdkTexture    *texture,
+                            GskGpuImage   *image)
 {
   GskGpuDevicePrivate *priv = gsk_gpu_device_get_instance_private (device);
   GskGpuCachedTexture *self;
@@ -850,9 +851,9 @@ gsk_gpu_device_add_atlas_image (GskGpuDevice      *self,
 }
 
 GskGpuImage *
-gsk_gpu_device_lookup_texture_image (GskGpuDevice *self,
-                                     GdkTexture   *texture,
-                                     gint64        timestamp)
+gsk_gpu_device_lookup_texture_image (GskGpuDevice   *self,
+                                     GdkTexture     *texture,
+                                     gint64          timestamp)
 {
   GskGpuDevicePrivate *priv = gsk_gpu_device_get_instance_private (self);
   GskGpuCachedTexture *cache;
@@ -861,7 +862,7 @@ gsk_gpu_device_lookup_texture_image (GskGpuDevice *self,
   if (cache == NULL)
     cache = g_hash_table_lookup (priv->texture_cache, texture);
 
-  if (!cache || !cache->image || gsk_gpu_cached_texture_is_invalid (cache))
+  if (!cache || cache->image == NULL || gsk_gpu_cached_texture_is_invalid (cache))
     return NULL;
 
   gsk_gpu_cached_use (self, (GskGpuCached *) cache, timestamp);
@@ -870,10 +871,10 @@ gsk_gpu_device_lookup_texture_image (GskGpuDevice *self,
 }
 
 void
-gsk_gpu_device_cache_texture_image (GskGpuDevice *self,
-                                    GdkTexture   *texture,
-                                    gint64        timestamp,
-                                    GskGpuImage  *image)
+gsk_gpu_device_cache_texture_image (GskGpuDevice  *self,
+                                    GdkTexture    *texture,
+                                    gint64         timestamp,
+                                    GskGpuImage   *image)
 {
   GskGpuCachedTexture *cache;
 
@@ -969,6 +970,7 @@ gsk_gpu_device_lookup_glyph_image (GskGpuDevice           *self,
 
   gsk_gpu_upload_glyph_op (frame,
                            cache->image,
+                           (flags & GSK_GPU_GLYPH_LINEAR) != 0,
                            scaled_font,
                            glyph,
                            &(cairo_rectangle_int_t) {

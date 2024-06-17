@@ -137,6 +137,9 @@ struct _GtkSnapshotState {
     struct {
       GdkSubsurface *subsurface;
     } subsurface;
+    struct {
+      GdkColorState *color_state;
+    } color_state;
   } data;
 };
 
@@ -703,8 +706,9 @@ gtk_snapshot_collect_repeat (GtkSnapshot      *snapshot,
       graphene_rect_equal (child_bounds, &node->bounds))
     {
       /* Repeating a color node entirely is pretty easy by just increasing
-       * the size of the color node. */
-      GskRenderNode *color_node = gsk_color_node_new (gsk_color_node_get_color (node), bounds);
+       * the size of the color node.
+       */
+      GskRenderNode *color_node = gsk_color_node_new2 (gsk_color_node_get_color2 (node), bounds);
 
       gsk_render_node_unref (node);
 
@@ -2913,4 +2917,52 @@ gtk_snapshot_push_subsurface (GtkSnapshot   *snapshot,
                                    gtk_snapshot_clear_subsurface);
 
   state->data.subsurface.subsurface = g_object_ref (subsurface);
+}
+
+static GskRenderNode *
+gtk_snapshot_collect_color_state (GtkSnapshot      *snapshot,
+                                  GtkSnapshotState *state,
+                                  GskRenderNode   **nodes,
+                                  guint             n_nodes)
+{
+  GskRenderNode *node, *color_state_node;
+
+  node = gtk_snapshot_collect_default (snapshot, state, nodes, n_nodes);
+  if (node == NULL)
+    return NULL;
+
+  color_state_node = gsk_color_state_node_new (node, state->data.color_state.color_state);
+  gsk_render_node_unref (node);
+
+  return color_state_node;
+}
+
+static void
+gtk_snapshot_clear_color_state (GtkSnapshotState *state)
+{
+  gdk_color_state_unref (state->data.color_state.color_state);
+}
+
+/**
+ * gtk_snapshot_push_color_state:
+ * @snapshot: a `GtkSnapshot`
+ * @color_state: the color state to use
+ *
+ * Inserts a color state node.
+ *
+ * Since: 4.16
+ */
+void
+gtk_snapshot_push_color_state (GtkSnapshot   *snapshot,
+                               GdkColorState *color_state)
+{
+  const GtkSnapshotState *current_state = gtk_snapshot_get_current_state (snapshot);
+  GtkSnapshotState *state;
+
+  state = gtk_snapshot_push_state (snapshot,
+                                   current_state->transform,
+                                   gtk_snapshot_collect_color_state,
+                                   gtk_snapshot_clear_color_state);
+
+  state->data.color_state.color_state = gdk_color_state_ref (color_state);
 }

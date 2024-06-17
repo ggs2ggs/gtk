@@ -105,6 +105,8 @@ struct _GdkSurface
    */
   GdkSubsurface *subsurfaces_above;
   GdkSubsurface *subsurfaces_below;
+
+  GdkColorState *color_state;
 };
 
 struct _GdkSurfaceClass
@@ -302,6 +304,8 @@ void                    gdk_surface_ensure_egl_surface          (GdkSurface     
                                                                  gboolean                hdr);
 gpointer /*EGLSurface*/ gdk_surface_get_egl_surface             (GdkSurface             *self);
 
+gboolean                gdk_surface_get_egl_surface_converts_srgb (GdkSurface             *self);
+
 void                    gdk_surface_set_widget                  (GdkSurface             *self,
                                                                  gpointer                widget);
 gpointer                gdk_surface_get_widget                  (GdkSurface             *self);
@@ -354,5 +358,8 @@ GdkSubsurface * gdk_surface_create_subsurface  (GdkSurface          *surface);
 gsize           gdk_surface_get_n_subsurfaces  (GdkSurface          *surface);
 GdkSubsurface * gdk_surface_get_subsurface     (GdkSurface          *surface,
                                                 gsize                idx);
+
+void            gdk_surface_set_color_state    (GdkSurface          *surface,
+                                                GdkColorState       *color_state);
 
 G_END_DECLS

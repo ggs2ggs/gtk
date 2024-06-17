@@ -106,7 +106,7 @@ gsk_gl_icon_library_add (GskGLIconLibrary     *self,
   icon_data->source_texture = g_object_ref (key);
 
   /* actually upload the texture */
-  surface = gdk_texture_download_surface (key);
+  surface = gdk_texture_download_surface (key, gdk_color_state_get_srgb ());
   surface_data = cairo_image_surface_get_data (surface);
   gdk_gl_context_push_debug_group_printf (gdk_gl_context_get_current (),
                                           "Uploading texture");
@@ -116,8 +116,11 @@ gsk_gl_icon_library_add (GskGLIconLibrary     *self,
       pixel_data = free_data = g_malloc (width * height * 4);
       gdk_memory_convert (pixel_data, width * 4,
                           GDK_MEMORY_R8G8B8A8_PREMULTIPLIED,
+                          gdk_color_state_get_srgb (),
                           surface_data, cairo_image_surface_get_stride (surface),
-                          GDK_MEMORY_DEFAULT, width, height);
+                          GDK_MEMORY_DEFAULT,
+                          gdk_texture_get_color_state (key),
+                          width, height);
       gl_format = GL_RGBA;
       gl_type = GL_UNSIGNED_BYTE;
     }
