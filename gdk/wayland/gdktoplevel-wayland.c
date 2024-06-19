@@ -38,6 +38,7 @@
 #include <wayland/xdg-shell-unstable-v6-client-protocol.h>
 #include <wayland/xdg-foreign-unstable-v2-client-protocol.h>
 #include <wayland/xdg-dialog-v1-client-protocol.h>
+#include <wayland/xdg-session-management-v1-client-protocol.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -141,6 +142,7 @@ struct _GdkWaylandToplevel
   gboolean has_bounds;
 
   char *title;
+  char *session_id;
 
   GdkGeometry geometry_hints;
   GdkSurfaceHints geometry_mask;
@@ -149,6 +151,8 @@ struct _GdkWaylandToplevel
   struct zxdg_imported_v1 *imported_transient_for;
   struct zxdg_imported_v2 *imported_transient_for_v2;
   GHashTable *shortcuts_inhibitors;
+
+  struct xdg_toplevel_session_v1 *xdg_toplevel_session;
 };
 
 typedef struct
@@ -819,6 +823,23 @@ create_zxdg_toplevel_v6_resources (GdkWaylandToplevel *toplevel)
 }
 
 static void
+attempt_restore_toplevel (GdkWaylandToplevel *wayland_toplevel)
+{
+  GdkDisplay *display = gdk_surface_get_display (GDK_SURFACE (wayland_toplevel));
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (display);
+
+  if (display_wayland->xdg_session &&
+      wayland_toplevel->session_id &&
+      wayland_toplevel->display_server.xdg_toplevel)
+    {
+      wayland_toplevel->xdg_toplevel_session =
+        xdg_session_v1_restore_toplevel (display_wayland->xdg_session,
+                                         wayland_toplevel->display_server.xdg_toplevel,
+                                         wayland_toplevel->session_id);
+    }
+}
+
+static void
 gdk_wayland_surface_create_xdg_toplevel (GdkWaylandToplevel *wayland_toplevel)
 {
   GdkSurface *surface = GDK_SURFACE (wayland_toplevel);
@@ -883,6 +904,8 @@ gdk_wayland_surface_create_xdg_toplevel (GdkWaylandToplevel *wayland_toplevel)
   maybe_set_gtk_surface_dbus_properties (wayland_toplevel);
   if (!maybe_set_xdg_dialog_modal (wayland_toplevel))
     maybe_set_gtk_surface_modal (wayland_toplevel);
+
+  attempt_restore_toplevel (wayland_toplevel);
 
   gdk_profiler_add_mark (GDK_PROFILER_CURRENT_TIME, 0, "Wayland surface commit", NULL);
   wl_surface_commit (wayland_surface->display_server.wl_surface);
@@ -2771,6 +2794,41 @@ gdk_wayland_toplevel_set_transient_for_exported (GdkToplevel *toplevel,
   gdk_wayland_toplevel_sync_parent_of_imported (wayland_toplevel);
 
   return TRUE;
+}
+
+void
+gdk_wayland_toplevel_set_session_id (GdkToplevel *toplevel,
+                                     const char  *session_id)
+{
+  GdkWaylandToplevel *wayland_toplevel = GDK_WAYLAND_TOPLEVEL (toplevel);
+
+  g_clear_pointer (&wayland_toplevel->session_id, g_free);
+  wayland_toplevel->session_id = g_strdup (session_id);
+}
+
+void
+gdk_wayland_toplevel_restore_from_session (GdkToplevel *toplevel)
+{
+  GdkWaylandToplevel *wayland_toplevel = GDK_WAYLAND_TOPLEVEL (toplevel);
+  GdkDisplay *display = gdk_surface_get_display (GDK_SURFACE (toplevel));
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (display);
+
+  if (display_wayland->xdg_session && wayland_toplevel->display_server.xdg_toplevel)
+    xdg_session_v1_restore_toplevel (display_wayland->xdg_session,
+                                     wayland_toplevel->display_server.xdg_toplevel,
+                                     wayland_toplevel->session_id);
+}
+
+void
+gdk_wayland_toplevel_remove_from_session (GdkToplevel *toplevel)
+{
+  GdkWaylandToplevel *wayland_toplevel = GDK_WAYLAND_TOPLEVEL (toplevel);
+  GdkDisplay *display = gdk_surface_get_display (GDK_SURFACE (toplevel));
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (display);
+
+  if (display_wayland->xdg_session && wayland_toplevel->display_server.xdg_toplevel)
+    xdg_session_v1_remove_toplevel (display_wayland->xdg_session,
+				    wayland_toplevel->session_id);
 }
 
 /* }}} */
