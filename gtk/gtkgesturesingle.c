@@ -174,6 +174,8 @@ gtk_gesture_single_handle_event (GtkEventController *controller,
         return FALSE;
       if (priv->touch_only && !test_touchscreen && source != GDK_SOURCE_TOUCHSCREEN)
         return FALSE;
+      if (event->motion.state == 0)
+        return FALSE;
 
       if (priv->current_button > 0 && priv->current_button <= 5 &&
           (event->motion.state & (GDK_BUTTON1_MASK << (priv->current_button - 1))))
