@@ -164,6 +164,7 @@ icon_loaded (GObject      *object,
 
 - (id)initWithTrackerItem:(GtkMenuTrackerItem *)aTrackerItem
 {
+  const char *locale = setlocale (LC_NUMERIC, "C");
   self = [super initWithTitle:@""
                        action:@selector(didSelectItem:)
                 keyEquivalent:@""];
@@ -210,6 +211,7 @@ icon_loaded (GObject      *object,
         [self setSubmenu:[[[GNSMenu alloc] initWithTitle:[self title] trackerItem:trackerItem] autorelease]];
     }
 
+  setlocale (LC_NUMERIC, locale);
   return self;
 }
 
