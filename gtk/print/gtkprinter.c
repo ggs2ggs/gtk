@@ -132,7 +132,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
 							G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   /**
-   * GtkPrinter:is-virtual:
+   * GtkPrinter:is-virtual: (getter is-virtual)
    *
    * %FALSE if this represents a real hardware device.
    */
@@ -143,7 +143,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
 							 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   /**
-   * GtkPrinter:accepts-pdf:
+   * GtkPrinter:accepts-pdf: (getter accepts_pdf)
    *
    * %TRUE if this printer can accept PDF.
    */
@@ -154,7 +154,7 @@ gtk_printer_class_init (GtkPrinterClass *class)
 							 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   /**
-   * GtkPrinter:accepts-ps:
+   * GtkPrinter:accepts-ps: (getter accepts_ps)
    *
    * %TRUE if this printer can accept PostScript.
    */
@@ -761,7 +761,7 @@ gtk_printer_set_is_accepting_jobs (GtkPrinter *printer,
 }
 
 /**
- * gtk_printer_is_virtual:
+ * gtk_printer_is_virtual: (get-property is-virtual)
  * @printer: a `GtkPrinter`
  *
  * Returns whether the printer is virtual (i.e. does not
@@ -781,7 +781,7 @@ gtk_printer_is_virtual (GtkPrinter *printer)
 }
 
 /**
- * gtk_printer_accepts_pdf:
+ * gtk_printer_accepts_pdf: (get-property accepts-pdf)
  * @printer: a `GtkPrinter`
  *
  * Returns whether the printer accepts input in
@@ -811,7 +811,7 @@ gtk_printer_set_accepts_pdf (GtkPrinter *printer,
 }
 
 /**
- * gtk_printer_accepts_ps:
+ * gtk_printer_accepts_ps:  (get-property accepts-ps)
  * @printer: a `GtkPrinter`
  *
  * Returns whether the printer accepts input in
