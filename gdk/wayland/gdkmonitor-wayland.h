@@ -36,7 +36,10 @@ struct _GdkWaylandMonitor {
   /* Raw xdg_output data */
   GdkRectangle xdg_output_geometry;
   char *name;
+
+  gboolean wl_output_receiving;
   gboolean wl_output_done;
+  gboolean xdg_output_receiving;
   gboolean xdg_output_done;
 };
 
