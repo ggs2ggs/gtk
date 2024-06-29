@@ -133,6 +133,19 @@ toggle_cursor (GtkToggleButton *button)
     }
 }
 
+static void
+toggle_direction (GtkToggleButton *button)
+{
+  gboolean enable;
+
+  enable = gtk_toggle_button_get_active (button);
+
+  if (!enable)
+    gtk_widget_set_direction (tv, GTK_TEXT_DIR_LTR);
+  else
+    gtk_widget_set_direction (tv, GTK_TEXT_DIR_RTL);
+}
+
 static GtkTextMark *the_mark;
 static GtkWidget *mark_check;
 static GtkWidget *mark_visible;
@@ -240,6 +253,10 @@ main (int argc, char *argv[])
 
   button = gtk_toggle_button_new_with_label ("Wandering cursor");
   g_signal_connect (button, "notify::active", G_CALLBACK (toggle_cursor), NULL);
+  gtk_box_append (GTK_BOX (box2), button);
+
+  button = gtk_toggle_button_new_with_label ("Right to Left");
+  g_signal_connect (button, "notify::active", G_CALLBACK (toggle_direction), NULL);
   gtk_box_append (GTK_BOX (box2), button);
 
   gtk_window_present (GTK_WINDOW (window));

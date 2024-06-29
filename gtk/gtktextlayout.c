@@ -493,6 +493,17 @@ gtk_text_layout_set_keyboard_direction (GtkTextLayout   *layout,
     }
 }
 
+void
+gtk_text_layout_set_text_direction (GtkTextLayout   *layout,
+				    GtkTextDirection text_dir)
+{
+  if (text_dir != layout->text_direction)
+    {
+      layout->text_direction = text_dir;
+      gtk_text_layout_invalidate_all (layout);
+    }
+}
+
 /**
  * gtk_text_layout_get_buffer:
  * @layout: a `GtkTextLayout`
@@ -2345,6 +2356,18 @@ gtk_text_layout_create_display (GtkTextLayout *layout,
       base_dir = (layout->keyboard_direction == GTK_TEXT_DIR_LTR) ?
          PANGO_DIRECTION_LTR : PANGO_DIRECTION_RTL;
     }
+
+  /* Update the base direction from text direction */
+  switch (layout->text_direction) {
+  case GTK_TEXT_DIR_LTR:
+    base_dir = PANGO_DIRECTION_LTR;
+    break;
+  case GTK_TEXT_DIR_RTL:
+    base_dir = PANGO_DIRECTION_RTL;
+    break;
+  default:
+    break;
+  }
 
   btree = _gtk_text_buffer_get_btree (layout->buffer);
 
