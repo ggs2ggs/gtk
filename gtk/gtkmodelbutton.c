@@ -593,10 +593,6 @@ update_accessible_properties (GtkModelButton *button)
     gtk_accessible_reset_state (GTK_ACCESSIBLE (button),
                                 GTK_ACCESSIBLE_STATE_CHECKED);
 
-  gtk_accessible_update_relation (GTK_ACCESSIBLE (button),
-                                  GTK_ACCESSIBLE_RELATION_LABELLED_BY, button->label, NULL,
-                                  -1);
-
   if (button->accel_label)
     {
       const char *text = gtk_label_get_label (GTK_LABEL (button->accel_label));
@@ -713,8 +709,9 @@ gtk_model_button_set_text (GtkModelButton *button,
   update_visibility (button);
   update_tooltip (button);
 
-  gtk_accessible_update_relation (GTK_ACCESSIBLE (button),
-                                  GTK_ACCESSIBLE_RELATION_LABELLED_BY, button->label, NULL,
+  gtk_accessible_update_property (GTK_ACCESSIBLE (button),
+                                  GTK_ACCESSIBLE_PROPERTY_LABEL,
+                                  gtk_label_get_text (GTK_LABEL (button->label)),
                                   -1);
 
   g_object_notify_by_pspec (G_OBJECT (button), properties[PROP_TEXT]);
