@@ -650,7 +650,7 @@ cloudproviders_dep = dependency('cloudproviders',
   ])
 cdata.set('HAVE_CLOUDPROVIDERS', cloudproviders_dep.found())
 
-accesskit_dep = dependency('accesskit')
+accesskit_dep = dependency('accesskit-c-0.12')
 
 # libsysprof-capture support
 if not get_option('sysprof').disabled()
