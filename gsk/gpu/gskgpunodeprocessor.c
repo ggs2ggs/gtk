@@ -3008,12 +3008,26 @@ gsk_gpu_node_processor_add_glyph_node (GskGpuNodeProcessor *self,
   GskGpuImage *last_image;
   guint32 descriptor;
   const float inv_pango_scale = 1.f / PANGO_SCALE;
+  cairo_hint_metrics_t hint_metrics;
+  cairo_hint_style_t hint_style;
+  cairo_antialias_t antialias;
 
   if (self->opacity < 1.0 &&
       gsk_text_node_has_color_glyphs (node))
     {
       gsk_gpu_node_processor_add_without_opacity (self, node);
       return;
+    }
+
+  if (g_getenv ("DEBUG_TEXT_BOUNDS"))
+    {
+      GdkRGBA color;
+      GskRenderNode *c;
+
+      gdk_rgba_parse (&color, "yellow");
+      c = gsk_color_node_new (&color, &node->bounds);
+      gsk_gpu_node_processor_add_color_node (self, c);
+      gsk_render_node_unref (c);
     }
 
   device = gsk_gpu_frame_get_device (self->frame);
@@ -3030,7 +3044,8 @@ gsk_gpu_node_processor_add_glyph_node (GskGpuNodeProcessor *self,
   scale = MAX (graphene_vec2_get_x (&self->scale), graphene_vec2_get_y (&self->scale));
   inv_scale = 1.f / scale;
 
-  if (gsk_font_get_hint_style (font) != CAIRO_HINT_STYLE_NONE)
+  gsk_font_get_rendering (font, scale, &hint_metrics, &hint_style, &antialias);
+  if (hint_style != CAIRO_HINT_STYLE_NONE)
     {
       align_scale_x = scale * 4;
       align_scale_y = scale;
@@ -3128,6 +3143,9 @@ gsk_gpu_node_processor_create_glyph_pattern (GskGpuPatternWriter *self,
   float inv_align_scale_x, inv_align_scale_y;
   unsigned int flags_mask;
   const float inv_pango_scale = 1.f / PANGO_SCALE;
+  cairo_hint_metrics_t hint_metrics;
+  cairo_hint_style_t hint_style;
+  cairo_antialias_t antialias;
 
   if (gsk_text_node_has_color_glyphs (node))
     return FALSE;
@@ -3147,7 +3165,8 @@ gsk_gpu_node_processor_create_glyph_pattern (GskGpuPatternWriter *self,
   gsk_gpu_pattern_writer_append_rgba (self, gsk_text_node_get_color (node));
   gsk_gpu_pattern_writer_append_uint (self, num_glyphs);
 
-  if (gsk_font_get_hint_style (font) != CAIRO_HINT_STYLE_NONE)
+  gsk_font_get_rendering (font, scale, &hint_metrics, &hint_style, &antialias);
+  if (hint_style != CAIRO_HINT_STYLE_NONE)
     {
       align_scale_x = scale * 4;
       align_scale_y = scale;
