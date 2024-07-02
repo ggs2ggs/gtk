@@ -605,7 +605,6 @@ gtk_entry_completion_constructed (GObject *object)
 
   /* pack it all */
   priv->popup_window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_use_subsurface (GTK_WINDOW (priv->popup_window), TRUE);
   gtk_window_set_resizable (GTK_WINDOW (priv->popup_window), FALSE);
   gtk_window_set_type_hint (GTK_WINDOW(priv->popup_window),
                             GDK_WINDOW_TYPE_HINT_COMBO);
@@ -1126,11 +1125,34 @@ gtk_entry_completion_popup (GtkEntryCompletion *completion)
     }
 }
 
+static void
+moved_to_rect_cb (GdkWindow          *window,
+                  const GdkRectangle *flipped_rect,
+                  const GdkRectangle *final_rect,
+                  gboolean            flipped_x,
+                  gboolean            flipped_y,
+                  GtkEntryCompletion *completion)
+{
+  GtkTreePath *path;
+  gint matches;
+
+  matches = gtk_tree_model_iter_n_children (GTK_TREE_MODEL (completion->priv->filter_model), NULL);
+  if (matches > 0)
+    {
+      path = gtk_tree_path_new_from_indices (flipped_y ? matches - 1 : 0, -1);
+      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (completion->priv->tree_view), path,
+                                    NULL, FALSE, 0.0, 0.0);
+      gtk_tree_path_free (path);
+    }
+}
+
 void
 _gtk_entry_completion_popdown (GtkEntryCompletion *completion)
 {
   if (!gtk_widget_get_mapped (completion->priv->popup_window))
     return;
+
+  g_signal_handlers_disconnect_by_func (gtk_widget_get_window (completion->priv->popup_window), moved_to_rect_cb, completion);
 
   completion->priv->ignore_enter = FALSE;
 
@@ -1247,7 +1269,13 @@ gtk_entry_completion_set_model (GtkEntryCompletion *completion,
   g_object_notify_by_pspec (G_OBJECT (completion), entry_completion_props[PROP_MODEL]);
 
   if (gtk_widget_get_visible (completion->priv->popup_window))
-    _gtk_entry_completion_resize_popup (completion);
+    {
+      GtkWidget *toplevel;
+      toplevel = gtk_widget_get_toplevel (completion->priv->entry);
+      gtk_window_set_transient_for (GTK_WINDOW (completion->priv->popup_window),
+                                    GTK_WINDOW (toplevel));
+      _gtk_entry_completion_resize_popup (completion);
+    }
 }
 
 /**
@@ -1605,11 +1633,10 @@ _gtk_entry_completion_resize_popup (GtkEntryCompletion *completion)
   gint vertical_separator;
   GdkRectangle area;
   GdkWindow *window;
-  GtkRequisition popup_req;
   GtkRequisition entry_req;
   GtkRequisition tree_req;
-  GtkTreePath *path;
-  gboolean above;
+  GdkRectangle anchor_rect;
+  GtkWidget *toplevel;
   gint width;
   GtkTreeViewColumn *action_column;
   gint action_height;
@@ -1683,35 +1710,28 @@ _gtk_entry_completion_resize_popup (GtkEntryCompletion *completion)
   else
     gtk_widget_hide (completion->priv->action_view);
 
-  gtk_widget_get_preferred_size (completion->priv->popup_window,
-                                 &popup_req, NULL);
+  toplevel = gtk_widget_get_toplevel (completion->priv->entry);
+  gtk_widget_translate_coordinates (completion->priv->entry, toplevel,
+                                    0, 0,
+                                    &anchor_rect.x, &anchor_rect.y);
 
-  if (x < area.x)
-    x = area.x;
-  else if (x + popup_req.width > area.x + area.width)
-    x = area.x + area.width - popup_req.width;
+  anchor_rect.width = allocation.width;
+  anchor_rect.height = allocation.height;
 
-  if (y + entry_req.height + popup_req.height <= area.y + area.height ||
-      y - area.y < (area.y + area.height) - (y + entry_req.height))
-    {
-      y += entry_req.height;
-      above = FALSE;
-    }
-  else
-    {
-      y -= popup_req.height;
-      above = TRUE;
-    }
+  g_signal_connect (gtk_widget_get_window (completion->priv->popup_window), "moved-to-rect",
+		    G_CALLBACK (moved_to_rect_cb),
+		    completion);
 
-  if (matches > 0)
-    {
-      path = gtk_tree_path_new_from_indices (above ? matches - 1 : 0, -1);
-      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (completion->priv->tree_view), path,
-                                    NULL, FALSE, 0.0, 0.0);
-      gtk_tree_path_free (path);
-    }
+  gdk_window_move_to_rect (gtk_widget_get_window (completion->priv->popup_window),
+			   &anchor_rect,
+			   GDK_GRAVITY_SOUTH,
+			   GDK_GRAVITY_NORTH,
+			   GDK_ANCHOR_FLIP_Y | GDK_ANCHOR_RESIZE_X,
+			   0,
+			   0);
 
-  gtk_window_move (GTK_WINDOW (completion->priv->popup_window), x, y);
+  // Wayland: nothing happens until it's shown
+  gtk_widget_show (completion->priv->popup_window);
 }
 
 static gboolean
