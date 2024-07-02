@@ -709,10 +709,14 @@ gtk_popover_native_layout (GtkNative *native,
   GtkPopover *popover = GTK_POPOVER (native);
   GtkPopoverPrivate *priv = gtk_popover_get_instance_private (popover);
   GtkWidget *widget = GTK_WIDGET (popover);
-  GtkRequisition min, nat;
+  int min_height_for_width, min_width_for_height;
 
-  gtk_widget_get_preferred_size (widget, &min, &nat);
-  if (width < min.width || height < min.height)
+  gtk_widget_measure (widget, GTK_ORIENTATION_VERTICAL, width,
+                      &min_height_for_width, NULL, NULL, NULL);
+  gtk_widget_measure (widget, GTK_ORIENTATION_HORIZONTAL, height,
+                      &min_width_for_height, NULL, NULL, NULL);
+
+  if (width < min_width_for_height || height < min_height_for_width)
     {
       gtk_popover_popdown (popover);
       return;
@@ -1511,11 +1515,19 @@ gtk_popover_measure (GtkWidget      *widget,
   GtkCssStyle *style;
   GtkBorder shadow_width;
 
-  if (for_size >= 0 && (POS_IS_VERTICAL (priv->position) == (orientation == GTK_ORIENTATION_HORIZONTAL)))
-    for_size -= tail_height;
-
   style = gtk_css_node_get_style (gtk_widget_get_css_node (GTK_WIDGET (priv->contents_widget)));
   gtk_css_shadow_value_get_extents (style->used->box_shadow, &shadow_width);
+
+  if (for_size >= 0)
+    {
+      if ((POS_IS_VERTICAL (priv->position) == (orientation == GTK_ORIENTATION_HORIZONTAL)))
+        for_size -= tail_height;
+
+      if (orientation == GTK_ORIENTATION_HORIZONTAL)
+        for_size -= shadow_width.top + shadow_width.bottom;
+      else
+        for_size -= shadow_width.left + shadow_width.right;
+    }
 
   gtk_widget_measure (priv->contents_widget,
                       orientation, for_size,
