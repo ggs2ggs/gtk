@@ -558,8 +558,6 @@ mod_bits_to_gdk_mod_mask (BYTE mod_bits)
     result |= GDK_CONTROL_MASK;
   if (mod_bits & KBDALT)
     result |= GDK_MOD1_MASK;
-  if ((mod_bits & KBDALTGR) == KBDALTGR)
-    result |= GDK_MOD2_MASK;
   if (mod_bits & KBDKANA)
     result |= GDK_MOD3_MASK;
   if (mod_bits & KBDROYA)
@@ -581,8 +579,6 @@ gdk_mod_mask_to_mod_bits (GdkModifierType mod_mask)
     result |= KBDCTRL;
   if (mod_mask & GDK_MOD1_MASK)
     result |= KBDALT;
-  if (mod_mask & GDK_MOD2_MASK)
-    result |= KBDALTGR;
   if (mod_mask & GDK_MOD3_MASK)
     result |= KBDKANA;
   if (mod_mask & GDK_MOD4_MASK)

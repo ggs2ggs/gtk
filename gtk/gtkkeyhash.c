@@ -352,6 +352,12 @@ keyval_in_group (GdkKeymap  *keymap,
   return FALSE;
 }
 
+static gboolean
+is_equal_with_mask(GdkModifierType a, GdkModifierType b, GdkModifierType mask)
+{
+  return (a & mask) == (b & mask);
+}
+
 /**
  * _gtk_key_hash_lookup:
  * @key_hash: a #GtkKeyHash
@@ -388,15 +394,17 @@ _gtk_key_hash_lookup (GtkKeyHash      *key_hash,
   GSList *results = NULL;
   GSList *l;
   gboolean have_exact = FALSE;
-  guint keyval;
+  guint keyval, keyval_without_altgr;
   gint effective_group;
-  gint level;
-  GdkModifierType modifiers;
-  GdkModifierType consumed_modifiers;
+  gint level, level_without_altgr;
+  GdkModifierType consumed_modifiers, consumed_modifiers_without_altgr;
   GdkModifierType shift_group_mask;
   gboolean group_mod_is_accel_mod = FALSE;
   const GdkModifierType xmods = GDK_MOD2_MASK|GDK_MOD3_MASK|GDK_MOD4_MASK|GDK_MOD5_MASK;
   const GdkModifierType vmods = GDK_SUPER_MASK|GDK_HYPER_MASK|GDK_META_MASK;
+#ifdef G_OS_WIN32
+  const GdkModifierType altgrmods = GDK_CONTROL_MASK|GDK_MOD1_MASK;
+#endif
 
   /* We don't want Caps_Lock to affect keybinding lookups.
    */
@@ -404,8 +412,30 @@ _gtk_key_hash_lookup (GtkKeyHash      *key_hash,
 
   _gtk_translate_keyboard_accel_state (key_hash->keymap,
                                        hardware_keycode, state, mask, group,
-                                       &keyval,
-                                       &effective_group, &level, &consumed_modifiers);
+                                       &keyval, &effective_group, &level,
+                                       &consumed_modifiers);
+
+#ifdef G_OS_WIN32
+  /* On Windows, AltGr (= Ctrl + Alt) can affect the keyval translation result.
+   * For instance, on a German keyboard Ctrl + Alt + E produces the symbol "€".
+   * But in the context of accelerators, Ctrl + Alt + E could also just mean the
+   * shortcut Ctrl + Alt + E. The shortcuts "€" and "Ctrl + Alt + E" would both
+   * match in this case! Since we compare keyvals and not keycodes, we have to
+   * perform two comparisons: Once for the original keyval, and once for what
+   * the keyval would have been without Ctrl + Alt.
+   *
+   * (Note that we count this as an "exact" result rather than a "fuzzy" result
+   * because it does not change the effective group. "Fuzzy" results are results
+   * from other layouts.)
+   */
+  if (state & altgrmods)
+    {
+      _gtk_translate_keyboard_accel_state (key_hash->keymap,
+                                           hardware_keycode, state & ~altgrmods, mask, group,
+                                           &keyval_without_altgr, NULL, &level_without_altgr,
+                                           &consumed_modifiers_without_altgr);
+    }
+#endif
 
   /* if the group-toggling modifier is part of the default accel mod
    * mask, and it is active, disable it for matching
@@ -429,6 +459,8 @@ _gtk_key_hash_lookup (GtkKeyHash      *key_hash,
       while (tmp_list)
 	{
 	  GtkKeyHashEntry *entry = tmp_list->data;
+	  GdkModifierType modifiers;
+	  gboolean mapped, modifiers_match, modifiers_match_without_altgr;
 
 	  /* If the virtual Super, Hyper or Meta modifiers are present,
 	   * they will also be mapped to some of the Mod2 - Mod5 modifiers,
@@ -439,13 +471,27 @@ _gtk_key_hash_lookup (GtkKeyHash      *key_hash,
 	   * will not match a Super+Hyper entry.
 	   */
           modifiers = entry->modifiers;
-          if (gdk_keymap_map_virtual_modifiers (key_hash->keymap, &modifiers) &&
-	      ((modifiers & ~consumed_modifiers & mask & ~vmods) == (state & ~consumed_modifiers & mask & ~vmods) ||
-	       (modifiers & ~consumed_modifiers & mask & ~xmods) == (state & ~consumed_modifiers & mask & ~xmods)))
+          mapped = gdk_keymap_map_virtual_modifiers (key_hash->keymap, &modifiers);
+          modifiers_match =
+                  mapped &&
+                  (is_equal_with_mask(modifiers, state, ~consumed_modifiers & mask & ~vmods) ||
+                   is_equal_with_mask(modifiers, state, ~consumed_modifiers & mask & ~xmods));
+
+#ifdef G_OS_WIN32
+	  modifiers_match_without_altgr =
+		  mapped &&
+		  (is_equal_with_mask(modifiers, state, ~consumed_modifiers_without_altgr & mask & ~vmods) ||
+		   is_equal_with_mask(modifiers, state, ~consumed_modifiers_without_altgr & mask & ~xmods));
+#else
+          modifiers_match_without_altgr = FALSE;
+#endif
+
+          if (modifiers_match || modifiers_match_without_altgr)
 	    {
 	      gint i;
 
-	      if (keyval == entry->keyval && /* Exact match */
+	      if (((modifiers_match && entry->keyval == keyval) || /* Exact match */
+                   (modifiers_match_without_altgr && entry->keyval == keyval_without_altgr)) &&
                   /* but also match for group if it is an accel mod, because
                    * otherwise we can get multiple exact matches, some being
                    * bogus */
@@ -472,7 +518,8 @@ _gtk_key_hash_lookup (GtkKeyHash      *key_hash,
 		  for (i = 0; i < entry->n_keys; i++)
 		    {
                       if (entry->keys[i].keycode == hardware_keycode &&
-                          entry->keys[i].level == level &&
+                          ((modifiers_match && entry->keys[i].level == level) ||
+                           (modifiers_match_without_altgr && entry->keys[i].level == level_without_altgr)) &&
                            /* Only match for group if it's an accel mod */
                           (!group_mod_is_accel_mod ||
                            entry->keys[i].group == effective_group))
