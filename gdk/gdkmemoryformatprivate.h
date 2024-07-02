@@ -57,7 +57,7 @@ GdkMemoryDepth          gdk_memory_format_get_depth         (GdkMemoryFormat    
 gsize                   gdk_memory_format_min_buffer_size   (GdkMemoryFormat             format,
                                                              gsize                       stride,
                                                              gsize                       width,
-                                                             gsize                       height) G_GNU_CONST;
+                                                             gsize                       height) G_GNUC_CONST;
 gboolean                gdk_memory_depth_is_srgb            (GdkMemoryDepth              depth) G_GNUC_CONST;
 GdkMemoryDepth          gdk_memory_depth_merge              (GdkMemoryDepth              depth1,
                                                              GdkMemoryDepth              depth2) G_GNUC_CONST;

@@ -1492,7 +1492,7 @@ gdk_memory_format_min_buffer_size (GdkMemoryFormat format,
                                    gsize           width,
                                    gsize           height)
 {
-  return stride * (height - 1) + width * gdk_memory_format_bytes_per_pixel (format)
+  return stride * (height - 1) + width * gdk_memory_format_bytes_per_pixel (format);
 }
 
 /*<private>
