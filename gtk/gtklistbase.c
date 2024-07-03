@@ -2368,7 +2368,8 @@ gtk_list_base_scroll_to (GtkListBase        *self,
         {
           GtkListTile *tile = gtk_list_item_manager_get_nth (priv->item_manager, pos, NULL);
 
-          gtk_widget_grab_focus (tile->widget);
+          if (tile != NULL)
+            gtk_widget_grab_focus (tile->widget);
         }
 
       gtk_list_item_tracker_free (priv->item_manager, old_focus);
