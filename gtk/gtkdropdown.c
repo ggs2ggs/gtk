@@ -158,6 +158,7 @@ enum
   PROP_EXPRESSION,
   PROP_SHOW_ARROW,
   PROP_SEARCH_MATCH_MODE,
+  PROP_POPUP_SHOWN,
 
   N_PROPS
 };
@@ -184,6 +185,7 @@ button_toggled (GtkWidget *widget,
   else
     gtk_popover_popdown (GTK_POPOVER (self->popup));
 
+  g_object_notify_by_pspec(G_OBJECT(self), properties[PROP_POPUP_SHOWN]);
   gtk_accessible_update_state (GTK_ACCESSIBLE (self),
                                GTK_ACCESSIBLE_STATE_EXPANDED, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)),
                                -1);
@@ -403,6 +405,10 @@ gtk_drop_down_get_property (GObject    *object,
 
     case PROP_SEARCH_MATCH_MODE:
       g_value_set_enum (value, gtk_drop_down_get_search_match_mode (self));
+      break;
+
+    case PROP_POPUP_SHOWN:
+      g_value_set_boolean(value, gtk_drop_down_get_popup_shown (self));
       break;
 
     default:
@@ -675,6 +681,21 @@ gtk_drop_down_class_init (GtkDropDownClass *klass)
                            GTK_TYPE_STRING_FILTER_MATCH_MODE,
                            GTK_STRING_FILTER_MATCH_MODE_PREFIX,
                            G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+
+  /**
+   * GtkDropDown:popup-shown: (attributes org.gtk.Property.get=gtk_drop_down_get_popup_shown)
+   *
+   * Whether the dropdown is popped up.
+   *
+   * Note that this property is mainly useful, because it allows you to
+   * connect to notify::popup-shown.
+   *
+   * Since: 4.14
+   */
+  properties[PROP_POPUP_SHOWN] =
+    g_param_spec_boolean  ("popup-shown", NULL, NULL,
+                         FALSE,
+                         G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (gobject_class, N_PROPS, properties);
 
@@ -1365,4 +1386,22 @@ gtk_drop_down_get_search_match_mode (GtkDropDown *self)
   g_return_val_if_fail (GTK_IS_DROP_DOWN (self), GTK_STRING_FILTER_MATCH_MODE_PREFIX);
 
   return self->search_match_mode;
+}
+
+/**
+ * gtk_drop_down_get_popup_shown: (attributes org.gtk.Method.get_property=popup-shown)
+ * @self: a `GtkDropDown`
+ *
+ * Returns if the drop down is currently open.
+ *
+ * Returns: %TRUE if the drop down is open, %FALSE otherwise
+ *
+ * Since: 4.14
+ */
+gboolean
+gtk_drop_down_get_popup_shown (GtkDropDown *self)
+{
+  g_return_val_if_fail (GTK_IS_DROP_DOWN (self), FALSE);
+
+  return gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self->button));
 }
