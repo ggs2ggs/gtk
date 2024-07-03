@@ -17,6 +17,7 @@
 
 #include "gdk/gdkdmabufdownloaderprivate.h"
 #include "gdk/gdktexturedownloaderprivate.h"
+#include "gdk/gdkcolorstateprivate.h"
 
 #define DEFAULT_VERTEX_BUFFER_SIZE 128 * 1024
 
@@ -402,17 +403,26 @@ gsk_gpu_frame_get_last_op (GskGpuFrame *self)
 }
 
 GskGpuImage *
-gsk_gpu_frame_upload_texture (GskGpuFrame  *self,
-                              gboolean      with_mipmap,
-                              GdkTexture   *texture)
+gsk_gpu_frame_upload_texture (GskGpuFrame    *self,
+                              gboolean        with_mipmap,
+                              GdkTexture     *texture,
+                              GdkColorState **out_color_state)
 {
   GskGpuFramePrivate *priv = gsk_gpu_frame_get_instance_private (self);
   GskGpuImage *image;
+  GdkColorState *color_state;
 
   image = GSK_GPU_FRAME_GET_CLASS (self)->upload_texture (self, with_mipmap, texture);
 
+  if (gsk_gpu_image_get_flags (image) & GSK_GPU_IMAGE_SRGB)
+    color_state = GDK_COLOR_STATE_SRGB_LINEAR;
+  else
+    color_state = gdk_texture_get_color_state (texture);
+
   if (image)
-    gsk_gpu_device_cache_texture_image (priv->device, texture, priv->timestamp, image);
+    gsk_gpu_device_cache_texture_image (priv->device, texture, priv->timestamp, image, color_state);
+
+  *out_color_state = color_state;
 
   return image;
 }
@@ -561,6 +571,7 @@ copy_texture (gpointer    user_data,
 static void
 gsk_gpu_frame_record_rect (GskGpuFrame                 *self,
                            GskGpuImage                 *target,
+                           GdkColorState               *target_color_state,
                            const cairo_rectangle_int_t *clip,
                            GskRenderNode               *node,
                            const graphene_rect_t       *viewport)
@@ -572,6 +583,7 @@ gsk_gpu_frame_record_rect (GskGpuFrame                 *self,
 
   gsk_gpu_node_processor_process (self,
                                   target,
+                                  target_color_state,
                                   clip,
                                   node,
                                   viewport);
@@ -585,6 +597,7 @@ static void
 gsk_gpu_frame_record (GskGpuFrame            *self,
                       gint64                  timestamp,
                       GskGpuImage            *target,
+                      GdkColorState          *target_color_state,
                       const cairo_region_t   *clip,
                       GskRenderNode          *node,
                       const graphene_rect_t  *viewport,
@@ -603,13 +616,14 @@ gsk_gpu_frame_record (GskGpuFrame            *self,
           cairo_rectangle_int_t rect;
 
           cairo_region_get_rectangle (clip, i, &rect);
-          gsk_gpu_frame_record_rect (self, target, &rect, node, viewport);
+          gsk_gpu_frame_record_rect (self, target, target_color_state, &rect, node, viewport);
         }
     }
   else
     {
       gsk_gpu_frame_record_rect (self,
                                  target,
+                                 target_color_state,
                                  &(cairo_rectangle_int_t) {
                                      0, 0,
                                      gsk_gpu_image_get_width (target),
@@ -656,6 +670,7 @@ void
 gsk_gpu_frame_render (GskGpuFrame            *self,
                       gint64                  timestamp,
                       GskGpuImage            *target,
+                      GdkColorState          *target_color_state,
                       const cairo_region_t   *region,
                       GskRenderNode          *node,
                       const graphene_rect_t  *viewport,
@@ -663,7 +678,7 @@ gsk_gpu_frame_render (GskGpuFrame            *self,
 {
   gsk_gpu_frame_cleanup (self);
 
-  gsk_gpu_frame_record (self, timestamp, target, region, node, viewport, texture);
+  gsk_gpu_frame_record (self, timestamp, target, target_color_state, region, node, viewport, texture);
 
   gsk_gpu_frame_submit (self);
 }
@@ -702,10 +717,11 @@ gsk_gpu_frame_download_texture (GskGpuFrame     *self,
 {
   GskGpuFramePrivate *priv = gsk_gpu_frame_get_instance_private (self);
   GskGpuImage *image;
+  GdkColorState *color_state;
 
-  image = gsk_gpu_device_lookup_texture_image (priv->device, texture, timestamp);
+  image = gsk_gpu_device_lookup_texture_image (priv->device, texture, GDK_COLOR_STATE_SRGB, timestamp);
   if (image == NULL)
-    image = gsk_gpu_frame_upload_texture (self, FALSE, texture);
+    image = gsk_gpu_frame_upload_texture (self, FALSE, texture, &color_state);
   if (image == NULL)
     {
       g_critical ("Could not upload texture");

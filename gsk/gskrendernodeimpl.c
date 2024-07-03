@@ -40,12 +40,20 @@
 #include "gdk/gdktextureprivate.h"
 #include "gdk/gdktexturedownloaderprivate.h"
 #include "gdk/gdkrgbaprivate.h"
+#include "gdk/gdkcolorstateprivate.h"
 
 #include <cairo.h>
 #ifdef CAIRO_HAS_SVG_SURFACE
 #include <cairo-svg.h>
 #endif
 #include <hb-ot.h>
+
+#ifdef HAVE_PANGOFT
+#include <pango/pangofc-font.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include FT_PARAMETER_TAGS_H
+#endif
 
 /* for oversized image fallback - we use a smaller size than Cairo actually
  * allows to avoid rounding errors in Cairo */
@@ -139,6 +147,39 @@ region_union_region_affine (cairo_region_t       *region,
     }
 }
 
+static inline float
+srgb_inverse_transfer_function (float v)
+{
+  if (v >= 0.04045)
+    return powf (((v + 0.055)/(1 + 0.055)), 2.4);
+  else
+    return v / 12.92;
+}
+
+static void
+gsk_cairo_set_source_rgba (cairo_t       *cr,
+                           const GdkRGBA *rgba)
+{
+  cairo_set_source_rgba (cr,
+                         srgb_inverse_transfer_function (rgba->red),
+                         srgb_inverse_transfer_function (rgba->green),
+                         srgb_inverse_transfer_function (rgba->blue),
+                         rgba->alpha);
+}
+
+static void
+surface_srgb_to_linear_srgb (cairo_surface_t *s)
+{
+  gdk_memory_convert_color_state (cairo_image_surface_get_data (s),
+                                  cairo_image_surface_get_stride (s),
+                                  GDK_MEMORY_DEFAULT,
+                                  GDK_COLOR_STATE_SRGB,
+                                  GDK_COLOR_STATE_SRGB_LINEAR,
+                                  cairo_image_surface_get_width (s),
+                                  cairo_image_surface_get_height (s));
+  cairo_surface_mark_dirty (s);
+}
+
 /* {{{ GSK_COLOR_NODE */
 
 /**
@@ -159,7 +200,7 @@ gsk_color_node_draw (GskRenderNode *node,
 {
   GskColorNode *self = (GskColorNode *) node;
 
-  gdk_cairo_set_source_rgba (cr, &self->color);
+  gsk_cairo_set_source_rgba (cr, &self->color);
 
   gsk_cairo_rectangle (cr, &node->bounds);
   cairo_fill (cr);
@@ -294,25 +335,25 @@ gsk_linear_gradient_node_draw (GskRenderNode *node,
   if (self->stops[0].offset > 0.0)
     cairo_pattern_add_color_stop_rgba (pattern,
                                        0.0,
-                                       self->stops[0].color.red,
-                                       self->stops[0].color.green,
-                                       self->stops[0].color.blue,
+                                       srgb_inverse_transfer_function (self->stops[0].color.red),
+                                       srgb_inverse_transfer_function (self->stops[0].color.green),
+                                       srgb_inverse_transfer_function (self->stops[0].color.blue),
                                        self->stops[0].color.alpha);
   for (i = 0; i < self->n_stops; i++)
     {
       cairo_pattern_add_color_stop_rgba (pattern,
                                          self->stops[i].offset,
-                                         self->stops[i].color.red,
-                                         self->stops[i].color.green,
-                                         self->stops[i].color.blue,
+                                         srgb_inverse_transfer_function (self->stops[i].color.red),
+                                         srgb_inverse_transfer_function (self->stops[i].color.green),
+                                         srgb_inverse_transfer_function (self->stops[i].color.blue),
                                          self->stops[i].color.alpha);
     }
   if (self->stops[self->n_stops-1].offset < 1.0)
     cairo_pattern_add_color_stop_rgba (pattern,
                                        1.0,
-                                       self->stops[self->n_stops-1].color.red,
-                                       self->stops[self->n_stops-1].color.green,
-                                       self->stops[self->n_stops-1].color.blue,
+                                       srgb_inverse_transfer_function (self->stops[self->n_stops-1].color.red),
+                                       srgb_inverse_transfer_function (self->stops[self->n_stops-1].color.green),
+                                       srgb_inverse_transfer_function (self->stops[self->n_stops-1].color.blue),
                                        self->stops[self->n_stops-1].color.alpha);
 
   cairo_set_source (cr, pattern);
@@ -624,25 +665,25 @@ gsk_radial_gradient_node_draw (GskRenderNode *node,
   if (self->stops[0].offset > 0.0)
     cairo_pattern_add_color_stop_rgba (pattern,
                                        0.0,
-                                       self->stops[0].color.red,
-                                       self->stops[0].color.green,
-                                       self->stops[0].color.blue,
+                                       srgb_inverse_transfer_function (self->stops[0].color.red),
+                                       srgb_inverse_transfer_function (self->stops[0].color.green),
+                                       srgb_inverse_transfer_function (self->stops[0].color.blue),
                                        self->stops[0].color.alpha);
   for (i = 0; i < self->n_stops; i++)
     {
       cairo_pattern_add_color_stop_rgba (pattern,
                                          self->stops[i].offset,
-                                         self->stops[i].color.red,
-                                         self->stops[i].color.green,
-                                         self->stops[i].color.blue,
+                                         srgb_inverse_transfer_function (self->stops[i].color.red),
+                                         srgb_inverse_transfer_function (self->stops[i].color.green),
+                                         srgb_inverse_transfer_function (self->stops[i].color.blue),
                                          self->stops[i].color.alpha);
     }
   if (self->stops[self->n_stops-1].offset < 1.0)
     cairo_pattern_add_color_stop_rgba (pattern,
                                        1.0,
-                                       self->stops[self->n_stops-1].color.red,
-                                       self->stops[self->n_stops-1].color.green,
-                                       self->stops[self->n_stops-1].color.blue,
+                                       srgb_inverse_transfer_function (self->stops[self->n_stops-1].color.red),
+                                       srgb_inverse_transfer_function (self->stops[self->n_stops-1].color.green),
+                                       srgb_inverse_transfer_function (self->stops[self->n_stops-1].color.blue),
                                        self->stops[self->n_stops-1].color.alpha);
 
   gsk_cairo_rectangle (cr, &node->bounds);
@@ -1011,7 +1052,12 @@ _cairo_mesh_pattern_set_corner_rgba (cairo_pattern_t *pattern,
                                      guint            corner_num,
                                      const GdkRGBA   *rgba)
 {
-  cairo_mesh_pattern_set_corner_color_rgba (pattern, corner_num, rgba->red, rgba->green, rgba->blue, rgba->alpha);
+  cairo_mesh_pattern_set_corner_color_rgba (pattern,
+                                            corner_num,
+                                            srgb_inverse_transfer_function (rgba->red),
+                                            srgb_inverse_transfer_function (rgba->green),
+                                            srgb_inverse_transfer_function (rgba->blue),
+                                            rgba->alpha);
 }
 
 static void
@@ -1409,7 +1455,7 @@ gsk_border_node_draw (GskRenderNode *node,
       gdk_rgba_equal (&self->border_color[0], &self->border_color[2]) &&
       gdk_rgba_equal (&self->border_color[0], &self->border_color[3]))
     {
-      gdk_cairo_set_source_rgba (cr, &self->border_color[0]);
+      gsk_cairo_set_source_rgba (cr, &self->border_color[0]);
     }
   else
     {
@@ -1771,6 +1817,7 @@ gsk_texture_node_draw (GskRenderNode *node,
     }
 
   surface = gdk_texture_download_surface (self->texture);
+  surface_srgb_to_linear_srgb (surface);
   pattern = cairo_pattern_create_for_surface (surface);
   cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
 
@@ -1947,6 +1994,7 @@ gsk_texture_scale_node_draw (GskRenderNode *node,
   cr2 = cairo_create (surface2);
 
   surface = gdk_texture_download_surface (self->texture);
+  surface_srgb_to_linear_srgb (surface);
   pattern = cairo_pattern_create_for_surface (surface);
   cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
 
@@ -2149,7 +2197,7 @@ draw_shadow (cairo_t              *cr,
   if (has_empty_clip (cr))
     return;
 
-  gdk_cairo_set_source_rgba (cr, color);
+  gsk_cairo_set_source_rgba (cr, color);
   shadow_cr = gsk_cairo_blur_start_drawing (cr, radius, blur_flags);
 
   cairo_set_fill_rule (shadow_cr, CAIRO_FILL_RULE_EVEN_ODD);
@@ -2322,7 +2370,7 @@ draw_shadow_corner (cairo_t               *cr,
       g_hash_table_insert (corner_mask_cache, g_memdup2 (&key, sizeof (key)), mask);
     }
 
-  gdk_cairo_set_source_rgba (cr, color);
+  gsk_cairo_set_source_rgba (cr, color);
   pattern = cairo_pattern_create_for_surface (mask);
   cairo_matrix_init_identity (&matrix);
   cairo_matrix_scale (&matrix, sx, sy);
@@ -4691,7 +4739,7 @@ gsk_fill_node_draw (GskRenderNode *node,
   if (gsk_render_node_get_node_type (self->child) == GSK_COLOR_NODE &&
       gsk_rect_contains_rect (&self->child->bounds, &node->bounds))
     {
-      gdk_cairo_set_source_rgba (cr, gsk_color_node_get_color (self->child));
+      gsk_cairo_set_source_rgba (cr, gsk_color_node_get_color (self->child));
       cairo_fill (cr);
     }
   else
@@ -4886,7 +4934,7 @@ gsk_stroke_node_draw (GskRenderNode *node,
   if (gsk_render_node_get_node_type (self->child) == GSK_COLOR_NODE &&
       gsk_rect_contains_rect (&self->child->bounds, &node->bounds))
     {
-      gdk_cairo_set_source_rgba (cr, gsk_color_node_get_color (self->child));
+      gsk_cairo_set_source_rgba (cr, gsk_color_node_get_color (self->child));
     }
   else
     {
@@ -5113,7 +5161,7 @@ gsk_shadow_node_draw (GskRenderNode *node,
       gsk_render_node_draw (self->child, cr);
       pattern = cairo_pop_group (cr);
       cairo_reset_clip (cr);
-      gdk_cairo_set_source_rgba (cr, &shadow->color);
+      gsk_cairo_set_source_rgba (cr, &shadow->color);
       cairo_mask (cr, pattern);
       cairo_pattern_destroy (pattern);
       cairo_restore (cr);
@@ -5730,6 +5778,16 @@ gsk_text_node_draw (GskRenderNode *node,
 {
   GskTextNode *self = (GskTextNode *) node;
   PangoGlyphString glyphs;
+#ifdef HAVE_PANGOFT
+  FT_Face face;
+  FT_Bool darken = 1;
+  FT_Parameter property = { FT_PARAM_TAG_STEM_DARKENING, &darken };
+
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+  face = pango_fc_font_lock_face (PANGO_FC_FONT (self->font));
+G_GNUC_END_IGNORE_DEPRECATIONS
+  FT_Face_Properties (face, 1, &property);
+#endif
 
   glyphs.num_glyphs = self->num_glyphs;
   glyphs.glyphs = self->glyphs;
@@ -5737,11 +5795,17 @@ gsk_text_node_draw (GskRenderNode *node,
 
   cairo_save (cr);
 
-  gdk_cairo_set_source_rgba (cr, &self->color);
+  gsk_cairo_set_source_rgba (cr, &self->color);
   cairo_translate (cr, self->offset.x, self->offset.y);
   pango_cairo_show_glyph_string (cr, self->font, &glyphs);
 
   cairo_restore (cr);
+
+#ifdef HAVE_PANGOFT
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+  pango_fc_font_unlock_face (PANGO_FC_FONT (self->font));
+G_GNUC_END_IGNORE_DEPRECATIONS
+#endif
 }
 
 static void

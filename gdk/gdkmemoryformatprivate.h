@@ -59,6 +59,7 @@ GdkMemoryFormat         gdk_memory_depth_get_alpha_format   (GdkMemoryDepth     
 void                    gdk_memory_format_gl_format         (GdkMemoryFormat             format,
                                                              gboolean                    gles,
                                                              GLint                      *out_internal_format,
+                                                             GLint                      *out_internal_srgb_format,
                                                              GLenum                     *out_format,
                                                              GLenum                     *out_type,
                                                              GLint                       out_swizzle[4]);
@@ -66,12 +67,14 @@ gboolean                gdk_memory_format_gl_rgba_format    (GdkMemoryFormat    
                                                              gboolean                    gles,
                                                              GdkMemoryFormat            *out_actual_format,
                                                              GLint                      *out_internal_format,
+                                                             GLint                      *out_internal_srgb_format,
                                                              GLenum                     *out_format,
                                                              GLenum                     *out_type,
                                                              GLint                       out_swizzle[4]);
 #ifdef GDK_RENDERING_VULKAN
 VkFormat                gdk_memory_format_vk_format         (GdkMemoryFormat             format,
                                                              VkComponentMapping         *out_swizzle);
+VkFormat                gdk_memory_format_vk_srgb_format    (GdkMemoryFormat             format);
 VkFormat                gdk_memory_format_vk_rgba_format    (GdkMemoryFormat             format,
                                                              GdkMemoryFormat            *out_rgba_format,
                                                              VkComponentMapping         *out_swizzle);
@@ -85,6 +88,13 @@ void                    gdk_memory_convert                  (guchar             
                                                              const guchar               *src_data,
                                                              gsize                       src_stride,
                                                              GdkMemoryFormat             src_format,
+                                                             gsize                       width,
+                                                             gsize                       height);
+void                    gdk_memory_convert_color_state      (guchar                     *data,
+                                                             gsize                       stride,
+                                                             GdkMemoryFormat             format,
+                                                             GdkColorState              *src_color_state,
+                                                             GdkColorState              *dest_color_state,
                                                              gsize                       width,
                                                              gsize                       height);
 

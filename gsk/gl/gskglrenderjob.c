@@ -33,6 +33,7 @@
 #include <gdk/gdkdmabuftexture.h>
 #include <gdk/gdksurfaceprivate.h>
 #include <gdk/gdksubsurfaceprivate.h>
+#include <gdk/gdkcolorstateprivate.h>
 #include <gsk/gsktransformprivate.h>
 #include <gsk/gskroundedrectprivate.h>
 #include <gsk/gskrectprivate.h>
@@ -972,11 +973,28 @@ gsk_gl_render_job_update_clip (GskGLRenderJob        *job,
   return TRUE;
 }
 
+
+static inline float
+srgb_inverse_transfer_function (float v)
+{
+  if (v >= 0.04045)
+    return powf (((v + 0.055)/(1 + 0.055)), 2.4);
+  else
+    return v / 12.92;
+}
+
 static inline void
 rgba_to_half (const GdkRGBA *rgba,
               guint16        h[4])
 {
-  float_to_half4 ((const float *)rgba, h);
+  float v[4];
+
+  v[0] = srgb_inverse_transfer_function (rgba->red);
+  v[1] = srgb_inverse_transfer_function (rgba->green);
+  v[2] = srgb_inverse_transfer_function (rgba->blue);
+  v[3] = rgba->alpha;
+
+  float_to_half4 (v, h);
 }
 
 /* fill_vertex_data */
@@ -3679,8 +3697,11 @@ gsk_gl_render_job_visit_texture (GskGLRenderJob        *job,
       g_assert (offscreen.texture_id);
       g_assert (offscreen.was_offscreen == FALSE);
 
-      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, blit)))
+      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, colorconvert)))
         {
+          gsk_gl_program_set_uniform1i (job->current_program,
+                                        UNIFORM_TO_LINEAR, 0,
+                                        1);
           gsk_gl_program_set_uniform_texture_with_sync (job->current_program,
                                                         UNIFORM_SHARED_SOURCE, 0,
                                                         GL_TEXTURE_2D,
@@ -3706,7 +3727,7 @@ gsk_gl_render_job_visit_texture (GskGLRenderJob        *job,
       g_assert (slices != NULL);
       g_assert (n_slices > 0);
 
-      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, blit)))
+      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, colorconvert)))
         {
           for (unsigned int i = 0; i < n_slices; i++)
             {
@@ -3720,6 +3741,9 @@ gsk_gl_render_job_visit_texture (GskGLRenderJob        *job,
 
               if (i > 0)
                 gsk_gl_render_job_split_draw (job);
+              gsk_gl_program_set_uniform1i (job->current_program,
+                                            UNIFORM_TO_LINEAR, 0,
+                                            1);
               gsk_gl_program_set_uniform_texture_with_filter (job->current_program,
                                                               UNIFORM_SHARED_SOURCE, 0,
                                                               GL_TEXTURE_2D,
@@ -3834,8 +3858,11 @@ gsk_gl_render_job_visit_texture_scale_node (GskGLRenderJob      *job,
       u1 = (clip_rect.origin.x + clip_rect.size.width - bounds->origin.x) / bounds->size.width;
       v1 = (clip_rect.origin.y + clip_rect.size.height - bounds->origin.y) / bounds->size.height;
 
-      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, blit)))
+      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, colorconvert)))
         {
+          gsk_gl_program_set_uniform1i (job->current_program,
+                                        UNIFORM_TO_LINEAR, 0,
+                                        1);
           gsk_gl_program_set_uniform_texture_with_sync (job->current_program,
                                                         UNIFORM_SHARED_SOURCE, 0,
                                                         GL_TEXTURE_2D,
@@ -3861,7 +3888,7 @@ gsk_gl_render_job_visit_texture_scale_node (GskGLRenderJob      *job,
 
       gsk_gl_driver_slice_texture (job->driver, texture, need_mipmap, &slices, &n_slices);
 
-      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, blit)))
+      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, colorconvert)))
         {
           for (guint i = 0; i < n_slices; i++)
             {
@@ -3879,6 +3906,9 @@ gsk_gl_render_job_visit_texture_scale_node (GskGLRenderJob      *job,
               if (i > 0)
                 gsk_gl_render_job_split_draw (job);
 
+              gsk_gl_program_set_uniform1i (job->current_program,
+                                            UNIFORM_TO_LINEAR, 0,
+                                            1);
               gsk_gl_program_set_uniform_texture_with_filter (job->current_program,
                                                               UNIFORM_SHARED_SOURCE, 0,
                                                               GL_TEXTURE_2D,
@@ -3912,8 +3942,11 @@ gsk_gl_render_job_visit_texture_scale_node (GskGLRenderJob      *job,
   gsk_gl_driver_cache_texture (job->driver, &key, texture_id);
 
 render_texture:
-  if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, blit)))
+  if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, colorconvert)))
     {
+      gsk_gl_program_set_uniform1i (job->current_program,
+                                    UNIFORM_TO_LINEAR, 0,
+                                    1);
       gsk_gl_program_set_uniform_texture (job->current_program,
                                           UNIFORM_SHARED_SOURCE, 0,
                                           GL_TEXTURE_2D,
@@ -4466,7 +4499,8 @@ gsk_gl_render_job_visit_node_with_offscreen (GskGLRenderJob       *job,
 
 void
 gsk_gl_render_job_render_flipped (GskGLRenderJob *job,
-                                  GskRenderNode  *root)
+                                  GskRenderNode  *root,
+                                  GdkColorState  *target_color_state)
 {
   graphene_matrix_t proj;
   guint framebuffer_id;
@@ -4508,8 +4542,17 @@ gsk_gl_render_job_render_flipped (GskGLRenderJob *job,
   gsk_gl_render_job_set_alpha (job, 1.0f);
   gsk_gl_command_queue_bind_framebuffer (job->command_queue, job->framebuffer);
   gsk_gl_command_queue_clear (job->command_queue, 0, &job->viewport);
-  if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, blit)))
+
+  GskGLProgram *program;
+  if (target_color_state == GDK_COLOR_STATE_SRGB)
+    program = CHOOSE_PROGRAM (job, colorconvert);
+  else
+    program = CHOOSE_PROGRAM (job, blit);
+
+  if (gsk_gl_render_job_begin_draw (job, program))
     {
+      if (target_color_state == GDK_COLOR_STATE_SRGB)
+        gsk_gl_program_set_uniform1i (job->current_program, UNIFORM_TO_LINEAR, 0, 0);
       gsk_gl_program_set_uniform_texture (job->current_program,
                                           UNIFORM_SHARED_SOURCE, 0,
                                           GL_TEXTURE_2D,
@@ -4530,7 +4573,8 @@ gsk_gl_render_job_render_flipped (GskGLRenderJob *job,
 
 void
 gsk_gl_render_job_render (GskGLRenderJob *job,
-                          GskRenderNode  *root)
+                          GskRenderNode  *root,
+                          GdkColorState  *target_color_state)
 {
   G_GNUC_UNUSED gint64 start_time;
   float scale;
@@ -4553,7 +4597,38 @@ gsk_gl_render_job_render (GskGLRenderJob *job,
   gsk_gl_command_queue_bind_framebuffer (job->command_queue, job->framebuffer);
   if (job->clear_framebuffer)
     gsk_gl_command_queue_clear (job->command_queue, 0, &job->viewport);
-  gsk_gl_render_job_visit_node (job, root);
+
+  if (target_color_state == GDK_COLOR_STATE_SRGB_LINEAR)
+    {
+      gsk_gl_render_job_visit_node (job, root);
+    }
+  else
+    {
+      GskGLRenderOffscreen offscreen = {0};
+
+      offscreen.bounds = &root->bounds;
+      offscreen.force_offscreen = TRUE;
+      offscreen.reset_clip = TRUE;
+      offscreen.do_not_cache = TRUE;
+
+      gsk_gl_render_job_visit_node_with_offscreen (job, root, &offscreen);
+
+      g_assert (offscreen.texture_id);
+
+      if (gsk_gl_render_job_begin_draw (job, CHOOSE_PROGRAM (job, colorconvert)))
+        {
+          gsk_gl_program_set_uniform1i (job->current_program, UNIFORM_TO_LINEAR, 0, 0);
+          gsk_gl_program_set_uniform_texture (job->current_program,
+                                              UNIFORM_SHARED_SOURCE, 0,
+                                              GL_TEXTURE_2D,
+                                              GL_TEXTURE0,
+                                              offscreen.texture_id);
+          job->source_is_glyph_atlas = FALSE;
+          gsk_gl_render_job_draw_offscreen_rect (job, &root->bounds);
+          gsk_gl_render_job_end_draw (job);
+        }
+    }
+
   gdk_gl_context_pop_debug_group (job->command_queue->context);
 
   gdk_profiler_end_mark (start_time, "Build GL command queue", "");

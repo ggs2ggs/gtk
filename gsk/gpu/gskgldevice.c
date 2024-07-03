@@ -10,6 +10,7 @@
 #include "gdk/gdkdisplayprivate.h"
 #include "gdk/gdkglcontextprivate.h"
 #include "gdk/gdkprofilerprivate.h"
+#include "gdk/gdkcolorstateprivate.h"
 
 #include <glib/gi18n-lib.h>
 
@@ -76,6 +77,7 @@ gsk_gl_device_create_offscreen_image (GskGpuDevice   *device,
 
   return gsk_gl_image_new (self,
                            gdk_memory_depth_get_format (depth),
+                           GDK_COLOR_STATE_SRGB_LINEAR,
                            GSK_GPU_IMAGE_RENDERABLE | GSK_GPU_IMAGE_FILTERABLE,
                            width,
                            height);
@@ -85,6 +87,7 @@ static GskGpuImage *
 gsk_gl_device_create_upload_image (GskGpuDevice    *device,
                                    gboolean         with_mipmap,
                                    GdkMemoryFormat  format,
+                                   GdkColorState   *color_state,
                                    gsize            width,
                                    gsize            height)
 {
@@ -92,6 +95,7 @@ gsk_gl_device_create_upload_image (GskGpuDevice    *device,
 
   return gsk_gl_image_new (self,
                            format,
+                           color_state,
                            0,
                            width,
                            height);
@@ -107,6 +111,7 @@ gsk_gl_device_create_download_image (GskGpuDevice   *device,
 
   return gsk_gl_image_new (self,
                            gdk_memory_depth_get_format (depth),
+                           GDK_COLOR_STATE_SRGB_LINEAR,
                            GSK_GPU_IMAGE_RENDERABLE,
                            width,
                            height);
@@ -121,6 +126,7 @@ gsk_gl_device_create_atlas_image (GskGpuDevice *device,
 
   return gsk_gl_image_new (self,
                            GDK_MEMORY_DEFAULT,
+                           GDK_COLOR_STATE_SRGB_LINEAR,
                            GSK_GPU_IMAGE_RENDERABLE,
                            width,
                            height);
@@ -635,6 +641,7 @@ gsk_gl_device_find_gl_format (GskGLDevice      *self,
                               GdkMemoryFormat  *out_format,
                               GskGpuImageFlags *out_flags,
                               GLint            *out_gl_internal_format,
+                              GLint            *out_gl_internal_srgb_format,
                               GLenum           *out_gl_format,
                               GLenum           *out_gl_type,
                               GLint             out_swizzle[4])
@@ -654,6 +661,7 @@ gsk_gl_device_find_gl_format (GskGLDevice      *self,
       gdk_memory_format_gl_format (format,
                                    gdk_gl_context_get_use_es (context),
                                    out_gl_internal_format,
+                                   out_gl_internal_srgb_format,
                                    out_gl_format,
                                    out_gl_type,
                                    out_swizzle);
@@ -665,6 +673,7 @@ gsk_gl_device_find_gl_format (GskGLDevice      *self,
                                         gdk_gl_context_get_use_es (context),
                                         &alt_format,
                                         out_gl_internal_format,
+                                        out_gl_internal_srgb_format,
                                         out_gl_format,
                                         out_gl_type,
                                         out_swizzle) &&
@@ -688,6 +697,7 @@ gsk_gl_device_find_gl_format (GskGLDevice      *self,
           gdk_memory_format_gl_format (fallbacks[i],
                                        gdk_gl_context_get_use_es (context),
                                        out_gl_internal_format,
+                                       out_gl_internal_srgb_format,
                                        out_gl_format,
                                        out_gl_type,
                                        out_swizzle);

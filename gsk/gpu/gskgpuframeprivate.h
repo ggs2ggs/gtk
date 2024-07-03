@@ -58,7 +58,8 @@ gpointer                gsk_gpu_frame_alloc_op                          (GskGpuF
                                                                          gsize                   size);
 GskGpuImage *           gsk_gpu_frame_upload_texture                    (GskGpuFrame            *self,
                                                                          gboolean                with_mipmap,
-                                                                         GdkTexture             *texture);
+                                                                         GdkTexture             *texture,
+                                                                         GdkColorState         **out_color_state);
 GskGpuDescriptors *     gsk_gpu_frame_create_descriptors                (GskGpuFrame            *self);
 gsize                   gsk_gpu_frame_reserve_vertex_data               (GskGpuFrame            *self,
                                                                          gsize                   size);
@@ -75,6 +76,7 @@ void                    gsk_gpu_frame_wait                              (GskGpuF
 void                    gsk_gpu_frame_render                            (GskGpuFrame            *self,
                                                                          gint64                  timestamp,
                                                                          GskGpuImage            *target,
+                                                                         GdkColorState          *target_color_state,
                                                                          const cairo_region_t   *region,
                                                                          GskRenderNode          *node,
                                                                          const graphene_rect_t  *viewport,
