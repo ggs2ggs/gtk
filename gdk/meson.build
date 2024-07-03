@@ -360,6 +360,24 @@ if build_gir
     gdk_dep_sources += gdk_x11_gir
   endif
 
+  if wayland_enabled
+    gdk_wayland_gir = gnome.generate_gir(libgdk,
+                                     sources: gdk_wayland_public_headers + gdk_wayland_sources,
+                                     namespace: 'GdkWayland',
+                                     nsversion: gtk_api_version,
+                                     identifier_prefix: 'Gdk',
+                                     symbol_prefix: 'gdk',
+                                     export_packages: 'gdk-wayland-3.0',
+                                     includes: gdk_gir_inc + [ gdk_gir[0]],
+                                     install: true,
+                                     dependencies: gdk_gir_dep,
+                                     header: 'gdk/gdkwayland.h',
+                                     extra_args: gir_args + [
+                                       '-DGDK_COMPILATION',
+                                     ])
+    gdk_dep_sources += gdk_wayland_gir
+  endif
+
   if win32_enabled
     gdk_win32_gir = gnome.generate_gir(libgdk,
                                      sources: gdk_win32_public_headers + gdk_win32_sources,
