@@ -447,7 +447,7 @@ enum {
         G_TYPE_STRING,            /* MODEL_COL_LOCATION_TEXT */ \
         PANGO_TYPE_ELLIPSIZE_MODE /* MODEL_COL_ELLIPSIZE */
 
-#define DEFAULT_RECENT_FILES_LIMIT 50
+#define DEFAULT_RECENT_FILES_LIMIT 250
 
 /* Icon size for if we can't get it from the theme */
 #define FALLBACK_ICON_SIZE 16
@@ -7757,6 +7757,9 @@ populate_model_with_recent_items (GtkFileChooserWidget *impl,
       if (recent_item_is_private (info))
         continue;
 
+      if (gtk_recent_info_is_local (info) && !gtk_recent_info_exists (info))
+        continue;
+
       file = g_file_new_for_uri (gtk_recent_info_get_uri (info));
       _gtk_file_system_model_add_and_query_file (priv->recent_model,
                                                  file,
@@ -7789,6 +7792,23 @@ populate_model_with_folders (GtkFileChooserWidget *impl,
   g_list_free_full (folders, g_object_unref);
 }
 
+static gint
+recent_compare_modified (gconstpointer a, gconstpointer b)
+{
+  const GtkRecentInfo *info_a;
+  const GtkRecentInfo *info_b;
+  time_t modified_a, modified_b;
+
+  info_a = a;
+  info_b = b;
+
+  modified_a = gtk_recent_info_get_modified (info_a);
+  modified_b = gtk_recent_info_get_modified (info_b);
+
+  /* We want more recent entries first */
+  return modified_b - modified_a;
+}
+
 static gboolean
 recent_idle_load (gpointer data)
 {
@@ -7802,6 +7822,11 @@ recent_idle_load (gpointer data)
   load_data->items = gtk_recent_manager_get_items (priv->recent_manager);
   if (!load_data->items)
     return FALSE;
+
+  /* Sort the list so that if we need to limit the list, then we'll drop
+   * the oldest entries
+   */
+  load_data->items = g_list_sort (load_data->items, recent_compare_modified);
 
   if (priv->action == GTK_FILE_CHOOSER_ACTION_OPEN)
     populate_model_with_recent_items (impl, load_data->items);
