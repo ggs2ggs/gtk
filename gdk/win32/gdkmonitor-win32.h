@@ -63,6 +63,12 @@ struct _GdkWin32Monitor
   /* work area */
   GdkRectangle work_rect;
 
+  /* Physical width and height in pixels, without the OS DPI-virtualization */
+  guint os_dpi_scaled : 1;
+  int physical_width;
+  int physical_height;
+  double os_dpi_scale;
+
   /* Device instance path (used to match GdkWin32Monitor to monitor device) */
   gchar *instance_path;
 

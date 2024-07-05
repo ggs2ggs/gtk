@@ -558,6 +558,9 @@ enum_monitor (HMONITOR hmonitor,
       DISPLAY_DEVICEW dd;
       DEVMODEW dm;
       DWORD i_monitor;
+      /* With, height without DPI virtualization from the OS */
+      int physical_width;
+      int physical_height;
       DWORD frequency;
       GdkWin32MonitorRotation orientation;
 
@@ -585,6 +588,12 @@ enum_monitor (HMONITOR hmonitor,
       /* Grab refresh rate for this adapter while we're at it */
       if (EnumDisplaySettingsExW (dd.DeviceName, ENUM_CURRENT_SETTINGS, &dm, 0))
         {
+          if ((dm.dmFields & DM_PELSWIDTH) && (dm.dmFields & DM_PELSHEIGHT))
+            {
+              physical_width = dm.dmPelsWidth;
+              physical_height = dm.dmPelsHeight;
+            }
+
           if ((dm.dmFields & DM_DISPLAYORIENTATION) == DM_DISPLAYORIENTATION)
             {
               switch (dm.dmDisplayOrientation)
@@ -752,6 +761,11 @@ enum_monitor (HMONITOR hmonitor,
           gdk_monitor_set_position (mon, rect.x, rect.y);
           gdk_monitor_set_size (mon, rect.width, rect.height);
 
+          w32mon->os_dpi_scaled = FALSE;
+          w32mon->physical_width = physical_width;
+          w32mon->physical_height = physical_height;
+          w32mon->os_dpi_scale = 1.0;
+
           if (monitor_info.dwFlags & MONITORINFOF_PRIMARY && i != 0)
             {
               /* Put primary monitor at index 0, just in case somebody needs
@@ -902,7 +916,6 @@ _gdk_win32_display_get_monitor_list (GdkWin32Display *win32_display)
   GDK_NOTE (MISC, g_print ("Multi-monitor offset: (%d,%d)\n",
                            _gdk_offset_x, _gdk_offset_y));
 
-  /* Translate monitor coords into GDK coordinate space */
   for (i = 0; i < data.monitors->len; i++)
     {
       GdkWin32Monitor *m;
@@ -914,6 +927,7 @@ _gdk_win32_display_get_monitor_list (GdkWin32Display *win32_display)
       gdk_monitor_get_geometry (GDK_MONITOR (m), &rect);
       scale = gdk_monitor_get_scale_factor (GDK_MONITOR (m));
 
+      /* Translate monitor coords into GDK coordinate space */
       rect.x += _gdk_offset_x / scale;
       rect.y += _gdk_offset_y / scale;
       gdk_monitor_set_position (GDK_MONITOR (m), rect.x, rect.y);
@@ -923,6 +937,21 @@ _gdk_win32_display_get_monitor_list (GdkWin32Display *win32_display)
 
       GDK_NOTE (MISC, g_print ("Monitor %d: %dx%d@%+d%+d\n", i,
                                rect.width, rect.height, rect.x, rect.y));
+
+      /* Check physical size */
+      if (rect.width > 0 && rect.height > 0)
+        {
+          if (m->physical_width <= 0 || m->physical_height <= 0)
+            {
+              const char *model = gdk_monitor_get_model (GDK_MONITOR (m));
+              g_warning ("Invalid physical size for monitor %s", model ? model : "(unknown)");
+            }
+          else if (m->physical_width != rect.width || m->physical_height != rect.height)
+            {
+              m->os_dpi_scaled = TRUE;
+              m->os_dpi_scale = (double)rect.width / (double)m->physical_width;
+            }
+        }
     }
 
   return data.monitors;

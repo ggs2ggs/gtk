@@ -116,6 +116,10 @@ static t_WTOverlap p_WTOverlap;
 static t_WTPacket p_WTPacket;
 static t_WTQueueSizeSet p_WTQueueSizeSet;
 
+/* Wintab spec version supported by the driver */
+static unsigned wintab_major;
+static unsigned wintab_minor;
+
 static gboolean default_display_opened = FALSE;
 
 G_DEFINE_TYPE (GdkDeviceManagerWin32, gdk_device_manager_win32, GDK_TYPE_DEVICE_MANAGER)
@@ -998,6 +1002,32 @@ print_cursor (int index)
 }
 #endif
 
+static gboolean
+wintab_check_version (unsigned requested_major,
+                      unsigned requested_minor)
+{
+  return ((wintab_major > requested_major) ||
+          (wintab_major == requested_major && wintab_minor >= requested_minor));
+}
+
+static gboolean
+string_contains (const char *haystack,
+                 const char *needle)
+{
+  char *hs_folded = g_utf8_casefold (haystack, -1);
+  char *hs_normalized = g_utf8_normalize (hs_folded, -1, G_NORMALIZE_ALL);
+  char *nd_folded = g_utf8_casefold (needle, -1);
+  char *nd_normalized = g_utf8_normalize (nd_folded, -1, G_NORMALIZE_ALL);
+  gboolean is_contained = g_strstr_len (hs_normalized, -1, nd_normalized) != NULL;
+
+  g_free (nd_normalized);
+  g_free (nd_folded);
+  g_free (hs_normalized);
+  g_free (hs_folded);
+
+  return is_contained;
+}
+
 static void
 wintab_init_check (GdkDeviceManagerWin32 *device_manager)
 {
@@ -1005,11 +1035,11 @@ wintab_init_check (GdkDeviceManagerWin32 *device_manager)
   GdkWindow *root = gdk_screen_get_root_window (gdk_display_get_default_screen (display));
   static gboolean wintab_initialized = FALSE;
   GdkWindowAttr wa;
-  WORD specversion;
   HCTX *hctx;
   UINT ndevices, ncursors;
   UINT devix;
   AXIS axis_x, axis_y;
+  WORD specversion;
   int i;
   wchar_t devname[100];
   gchar *devname_utf8;
@@ -1070,8 +1100,10 @@ wintab_init_check (GdkDeviceManagerWin32 *device_manager)
     return;
 
   (*p_WTInfoA) (WTI_INTERFACE, IFC_SPECVERSION, &specversion);
-  GDK_NOTE (INPUT, g_print ("Wintab interface version %d.%d\n",
-			    HIBYTE (specversion), LOBYTE (specversion)));
+  wintab_major = HIBYTE (specversion);
+  wintab_minor = LOBYTE (specversion);
+  GDK_NOTE (INPUT, g_print ("Wintab interface version %u.%u\n",
+                            wintab_major, wintab_minor));
   (*p_WTInfoA) (WTI_INTERFACE, IFC_NDEVICES, &ndevices);
   (*p_WTInfoA) (WTI_INTERFACE, IFC_NCURSORS, &ncursors);
 #if DEBUG_WINTAB
@@ -1112,7 +1144,7 @@ wintab_init_check (GdkDeviceManagerWin32 *device_manager)
       (*p_WTInfoA) (WTI_DEVICES + devix, DVC_Y, &axis_y);
 
       defcontext_done = FALSE;
-      if (HIBYTE (specversion) > 1 || LOBYTE (specversion) >= 1)
+      if (wintab_check_version (1, 1))
         {
           /* Try to get device-specific default context */
           /* Some drivers, e.g. Aiptek, don't provide this info */
@@ -1206,6 +1238,7 @@ _wintab_recognize_new_cursors (GdkDeviceManagerWin32 *device_manager,
   BOOL active;
   DWORD physid;
   AXIS axis_x, axis_y, axis_npressure, axis_or[3], axis_tpressure;
+  GdkInputSource source;
   GdkDeviceWintab *device;
   LOGCONTEXT lc;
   int num_axes;
@@ -1231,7 +1264,7 @@ _wintab_recognize_new_cursors (GdkDeviceManagerWin32 *device_manager,
       /* Skip cursors that are already known to us */
       if (gdk_device_manager_find_wintab_device(device_manager, hctx, cursorix) != NULL)
         continue;
-        
+
       active = FALSE;
       (*p_WTInfoA) (WTI_CURSORS + cursorix, CSR_ACTIVE, &active);
       if (!active)
@@ -1262,12 +1295,22 @@ _wintab_recognize_new_cursors (GdkDeviceManagerWin32 *device_manager,
       (*p_WTInfoW) (WTI_CURSORS + cursorix, CSR_NAME, csrname);
       csrname_utf8 = g_utf16_to_utf8 (csrname, -1, NULL, NULL, NULL);
       device_name = g_strconcat (devname_utf8, " ", csrname_utf8, NULL);
+
+      if (wintab_check_version (1, 2))
+        {
+          (*p_WTInfoW) (WTI_CURSORS + cursorix, CSR_TYPE, csrname);
+        }
+      else
+        {
+          source = (string_contains (csrname_utf8, "eraser")) ? GDK_SOURCE_ERASER : GDK_SOURCE_PEN;
+        }
+
       g_free (csrname_utf8);
 
       device = g_object_new (GDK_TYPE_DEVICE_WINTAB,
                               "name", device_name,
                               "type", GDK_DEVICE_TYPE_FLOATING,
-                              "input-source", GDK_SOURCE_PEN,
+                              "input-source", source,
                               "input-mode", GDK_MODE_SCREEN,
                               "has-cursor", lc.lcOptions & CXO_SYSTEM,
                               "display", display,
