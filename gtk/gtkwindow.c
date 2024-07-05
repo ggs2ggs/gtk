@@ -7754,30 +7754,26 @@ update_window_style_classes (GtkWindow *window)
   else
     gtk_style_context_remove_class (context, "tiled");
 
-  if (priv->edge_constraints != 0)
-    {
-      guint edge_constraints = priv->edge_constraints;
+  guint edge_constraints = priv->edge_constraints;
+  if (edge_constraints & GDK_WINDOW_STATE_TOP_TILED)
+    gtk_style_context_add_class (context, "tiled-top");
+  else
+    gtk_style_context_remove_class (context, "tiled-top");
 
-      if (edge_constraints & GDK_WINDOW_STATE_TOP_TILED)
-        gtk_style_context_add_class (context, "tiled-top");
-      else
-        gtk_style_context_remove_class (context, "tiled-top");
+  if (edge_constraints & GDK_WINDOW_STATE_RIGHT_TILED)
+    gtk_style_context_add_class (context, "tiled-right");
+  else
+    gtk_style_context_remove_class (context, "tiled-right");
 
-      if (edge_constraints & GDK_WINDOW_STATE_RIGHT_TILED)
-        gtk_style_context_add_class (context, "tiled-right");
-      else
-        gtk_style_context_remove_class (context, "tiled-right");
+  if (edge_constraints & GDK_WINDOW_STATE_BOTTOM_TILED)
+    gtk_style_context_add_class (context, "tiled-bottom");
+  else
+    gtk_style_context_remove_class (context, "tiled-bottom");
 
-      if (edge_constraints & GDK_WINDOW_STATE_BOTTOM_TILED)
-        gtk_style_context_add_class (context, "tiled-bottom");
-      else
-        gtk_style_context_remove_class (context, "tiled-bottom");
-
-      if (edge_constraints & GDK_WINDOW_STATE_LEFT_TILED)
-        gtk_style_context_add_class (context, "tiled-left");
-      else
-        gtk_style_context_remove_class (context, "tiled-left");
-    }
+  if (edge_constraints & GDK_WINDOW_STATE_LEFT_TILED)
+    gtk_style_context_add_class (context, "tiled-left");
+  else
+    gtk_style_context_remove_class (context, "tiled-left");
 
   if (priv->maximized)
     gtk_style_context_add_class (context, "maximized");
