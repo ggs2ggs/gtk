@@ -30,6 +30,7 @@
 #include "gtkbox.h"
 #include "gtkbinlayout.h"
 #include "gtkcheckbutton.h"
+#include "gtkcustomsorter.h"
 #include "gtkcustomfilter.h"
 #include "gtkentry.h"
 #include "gtkfilter.h"
@@ -120,6 +121,7 @@ struct _GtkFontChooserWidget
   char            *preview_text;
   gboolean         show_preview_entry;
   gboolean         preview_text_set;
+  gboolean         sorted;
 
   GtkWidget *size_label;
   GtkWidget *size_spin;
@@ -208,6 +210,9 @@ static void                gtk_font_chooser_widget_set_level (GtkFontChooserWidg
 static GtkFontChooserLevel gtk_font_chooser_widget_get_level (GtkFontChooserWidget *fontchooser);
 static void                gtk_font_chooser_widget_set_language (GtkFontChooserWidget *fontchooser,
                                                                  const char           *language);
+static gboolean gtk_font_chooser_widget_get_sorted (GtkFontChooserWidget *fontchooser);
+static void     gtk_font_chooser_widget_set_sorted (GtkFontChooserWidget *fontchooser,
+                                                    gboolean              sorted);
 static void update_font_features (GtkFontChooserWidget *fontchooser);
 
 static void gtk_font_chooser_widget_iface_init (GtkFontChooserIface *iface);
@@ -244,6 +249,9 @@ gtk_font_chooser_widget_set_property (GObject         *object,
       break;
     case GTK_FONT_CHOOSER_PROP_LANGUAGE:
       gtk_font_chooser_widget_set_language (fontchooser, g_value_get_string (value));
+      break;
+    case GTK_FONT_CHOOSER_PROP_SORTED:
+      gtk_font_chooser_widget_set_sorted (fontchooser, g_value_get_boolean (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -284,6 +292,9 @@ gtk_font_chooser_widget_get_property (GObject         *object,
       break;
     case GTK_FONT_CHOOSER_PROP_LANGUAGE:
       g_value_set_string (value, pango_language_to_string (fontchooser->language));
+      break;
+    case GTK_FONT_CHOOSER_PROP_SORTED:
+      g_value_set_boolean (value, gtk_font_chooser_widget_get_sorted (fontchooser));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1100,6 +1111,23 @@ add_to_fontlist (GtkWidget     *widget,
     return G_SOURCE_CONTINUE;
 }
 
+static int
+font_sort_func (gconstpointer a,
+                gconstpointer b,
+                gpointer      user_data)
+{
+  GObject *a_font = (gpointer)a;
+  GObject *b_font = (gpointer)b;
+
+  if (a_font == NULL || b_font == NULL)
+    return 0;
+
+  const char *a_name = get_font_name(NULL, a_font);
+  const char *b_name = get_font_name(NULL, b_font);
+
+  return g_ascii_strcasecmp (a_name, b_name);
+}
+
 static void
 update_fontlist (GtkFontChooserWidget *self)
 {
@@ -1115,7 +1143,16 @@ update_fontlist (GtkFontChooserWidget *self)
   else
     model = G_LIST_MODEL (gtk_flatten_list_model_new (G_LIST_MODEL (g_object_ref (fontmap))));
 
-  model = G_LIST_MODEL (gtk_slice_list_model_new (model, 0, 20));
+  if (self->sorted) {
+    GtkSortListModel *sorted_model;
+    GtkSorter *sorter;
+    sorter = GTK_SORTER (gtk_custom_sorter_new (font_sort_func, NULL, NULL));
+    sorted_model = gtk_sort_list_model_new (model, sorter);
+    model = G_LIST_MODEL (gtk_slice_list_model_new (G_LIST_MODEL(sorted_model), 0, 20));
+  } else {
+    model = G_LIST_MODEL (gtk_slice_list_model_new (model, 0, 20));
+  }
+
   gtk_widget_add_tick_callback (GTK_WIDGET (self), add_to_fontlist, g_object_ref (model), g_object_unref);
 
   gtk_filter_list_model_set_model (self->filter_model, model);
@@ -2913,6 +2950,25 @@ gtk_font_chooser_widget_set_language (GtkFontChooserWidget *fontchooser,
   g_object_notify (G_OBJECT (fontchooser), "language");
 
   gtk_font_chooser_widget_update_preview_attributes (fontchooser);
+}
+
+static gboolean
+gtk_font_chooser_widget_get_sorted (GtkFontChooserWidget *fontchooser)
+{
+  return fontchooser->sorted;
+}
+
+static void
+gtk_font_chooser_widget_set_sorted (GtkFontChooserWidget *fontchooser,
+                                    gboolean              sorted)
+{
+  if (fontchooser->sorted != sorted)
+    {
+      fontchooser->sorted = sorted;
+
+      g_object_notify (G_OBJECT (fontchooser), "sorted");
+      update_fontlist (fontchooser);
+    }
 }
 
 static void

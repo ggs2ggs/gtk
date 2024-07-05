@@ -259,7 +259,9 @@ do_pickers (GtkWidget *do_widget)
     gtk_widget_set_hexpand (label, TRUE);
     gtk_grid_attach (GTK_GRID (table), label, 0, 1, 1, 1);
 
-    picker = gtk_font_dialog_button_new (gtk_font_dialog_new ());
+    GtkFontDialog *font_dialog = gtk_font_dialog_new ();
+    gtk_font_dialog_set_sorted (font_dialog, TRUE);
+    picker = gtk_font_dialog_button_new (font_dialog);
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), picker);
     gtk_grid_attach (GTK_GRID (table), picker, 1, 1, 1, 1);
 

@@ -153,6 +153,19 @@ gtk_font_chooser_default_init (GtkFontChooserInterface *iface)
                           GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY));
 
   /**
+   * GtkFontChooser:sorted: (attributes org.gtk.Property.get=gtk_font_chooser_get_sorted org.gtk.Property.set=gtk_font_chooser_set_sorted)
+   *
+   * Whether to sort fonts by name.
+   *
+   * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton] instead
+   */
+  g_object_interface_install_property
+     (iface,
+      g_param_spec_boolean ("sorted", NULL, NULL,
+                            FALSE,
+                            GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY));
+
+  /**
    * GtkFontChooser::font-activated:
    * @self: the object which received the signal
    * @fontname: the font name
@@ -584,6 +597,48 @@ gtk_font_chooser_get_level (GtkFontChooser *fontchooser)
   g_object_get (fontchooser, "level", &level, NULL);
 
   return level;
+}
+
+/**
+ * gtk_font_chooser_set_sorted: (attributes org.gtk.Method.set_property=sorted)
+ * @fontchooser: a `GtkFontChooser`
+ * @sorted: whether fonts should be sorted
+ *
+ * Sets whether fonts should be sorted by name.
+ *
+ * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton]
+ * instead
+ */
+void
+gtk_font_chooser_set_sorted (GtkFontChooser      *fontchooser,
+                             gboolean             sorted)
+{
+  g_return_if_fail (GTK_IS_FONT_CHOOSER (fontchooser));
+
+  g_object_set (fontchooser, "sorted", sorted, NULL);
+}
+
+/**
+ * gtk_font_chooser_get_level: (attributes org.gtk.Method.get_property=sorted)
+ * @fontchooser: a `GtkFontChooser`
+ *
+ * Returns whether fonts should be sorted by name.
+ *
+ * Returns: whether fonts should be sorted by name
+ *
+ * Deprecated: 4.10: Use [class@Gtk.FontDialog] and [class@Gtk.FontDialogButton]
+ * instead
+ */
+gboolean
+gtk_font_chooser_get_sorted (GtkFontChooser *fontchooser)
+{
+  gboolean sorted;
+
+  g_return_val_if_fail (GTK_IS_FONT_CHOOSER (fontchooser), 0);
+
+  g_object_get (fontchooser, "sorted", &sorted, NULL);
+
+  return sorted;
 }
 
 /**

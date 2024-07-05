@@ -21,7 +21,7 @@
  * Based on gtkfilechooserutils.h:
  *	Copyright (C) 2003 Red Hat, Inc.
  */
- 
+
 #pragma once
 
 #include "deprecated/gtkfontchooserprivate.h"
@@ -39,6 +39,7 @@ typedef enum {
   GTK_FONT_CHOOSER_PROP_LEVEL,
   GTK_FONT_CHOOSER_PROP_FONT_FEATURES,
   GTK_FONT_CHOOSER_PROP_LANGUAGE,
+  GTK_FONT_CHOOSER_PROP_SORTED,
   GTK_FONT_CHOOSER_PROP_LAST
 } GtkFontChooserProp;
 

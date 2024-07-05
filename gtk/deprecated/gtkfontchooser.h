@@ -153,6 +153,11 @@ GDK_DEPRECATED_IN_4_10
 GtkFontChooserLevel
                  gtk_font_chooser_get_level                (GtkFontChooser   *fontchooser);
 GDK_DEPRECATED_IN_4_10
+void             gtk_font_chooser_set_sorted               (GtkFontChooser   *fontchooser,
+                                                            gboolean sorted);
+GDK_DEPRECATED_IN_4_10
+gboolean         gtk_font_chooser_get_sorted               (GtkFontChooser   *fontchooser);
+GDK_DEPRECATED_IN_4_10
 char *           gtk_font_chooser_get_font_features        (GtkFontChooser   *fontchooser);
 GDK_DEPRECATED_IN_4_10
 char *           gtk_font_chooser_get_language             (GtkFontChooser   *fontchooser);
