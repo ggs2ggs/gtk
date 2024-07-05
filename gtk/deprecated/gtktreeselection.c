@@ -1268,59 +1268,75 @@ enum
   RANGE_UNSELECT
 };
 
-static int
+static void
+gtk_tree_selection_real_find_start_end (GtkTreeSelection *selection,
+                                        GtkTreePath      *start_path,
+                                        GtkTreePath      *end_path,
+                                        GtkTreeRBNode   **start_node,
+                                        GtkTreeRBNode   **end_node,
+                                        GtkTreeRBTree   **start_tree,
+                                        GtkTreeRBTree   **end_tree)
+{
+  switch (gtk_tree_path_compare (start_path, end_path))
+    {
+    case 1:
+      _gtk_tree_view_find_node (selection->tree_view,
+				end_path,
+				start_tree,
+				start_node);
+      _gtk_tree_view_find_node (selection->tree_view,
+				start_path,
+				end_tree,
+				end_node);
+      break;
+    case 0:
+      _gtk_tree_view_find_node (selection->tree_view,
+				start_path,
+				start_tree,
+				start_node);
+      *end_tree = *start_tree;
+      *end_node = *start_node;
+      break;
+    case -1:
+      _gtk_tree_view_find_node (selection->tree_view,
+				start_path,
+				start_tree,
+				start_node);
+      _gtk_tree_view_find_node (selection->tree_view,
+				end_path,
+				end_tree,
+				end_node);
+      break;
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+}
+
+static gint
 gtk_tree_selection_real_modify_range (GtkTreeSelection *selection,
-                                      int               mode,
-				      GtkTreePath      *start_path,
-				      GtkTreePath      *end_path)
+                                      gint              mode,
+                                      GtkTreePath      *start_path,
+                                      GtkTreePath      *end_path)
 {
   GtkTreeRBNode *start_node = NULL, *end_node = NULL;
   GtkTreeRBTree *start_tree, *end_tree;
   GtkTreePath *anchor_path = NULL;
   gboolean dirty = FALSE;
 
-  switch (gtk_tree_path_compare (start_path, end_path))
-    {
-    case 1:
-      _gtk_tree_view_find_node (selection->tree_view,
-				end_path,
-				&start_tree,
-				&start_node);
-      _gtk_tree_view_find_node (selection->tree_view,
-				start_path,
-				&end_tree,
-				&end_node);
-      anchor_path = start_path;
-      break;
-    case 0:
-      _gtk_tree_view_find_node (selection->tree_view,
-				start_path,
-				&start_tree,
-				&start_node);
-      end_tree = start_tree;
-      end_node = start_node;
-      anchor_path = start_path;
-      break;
-    case -1:
-      _gtk_tree_view_find_node (selection->tree_view,
-				start_path,
-				&start_tree,
-				&start_node);
-      _gtk_tree_view_find_node (selection->tree_view,
-				end_path,
-				&end_tree,
-				&end_node);
-      anchor_path = start_path;
-      break;
-    default:
-      g_assert_not_reached ();
-      break;
-    }
+  gtk_tree_selection_real_find_start_end (selection,
+                                          start_path,
+                                          end_path,
+                                          &start_node,
+                                          &end_node,
+                                          &start_tree,
+                                          &end_tree);
 
   /* Invalid start or end node? */
   if (start_node == NULL || end_node == NULL)
     return dirty;
 
+  anchor_path = start_path;
   if (anchor_path)
     _gtk_tree_view_set_anchor_path (selection->tree_view, anchor_path);
 
@@ -1376,6 +1392,68 @@ gtk_tree_selection_select_range (GtkTreeSelection *selection,
 
   if (gtk_tree_selection_real_modify_range (selection, RANGE_SELECT, start_path, end_path))
     g_signal_emit (selection, tree_selection_signals[CHANGED], 0);
+}
+
+static gint
+gtk_tree_selection_real_select_range_deselect_rest (GtkTreeSelection *selection,
+                                                    GtkTreePath      *start_path,
+                                                    GtkTreePath      *end_path)
+{
+  GtkTreeRBNode *start_node = NULL, *end_node = NULL, *current_node = NULL;
+  GtkTreeRBTree *start_tree, *end_tree, *current_tree;
+  GtkTreePath *anchor_path = NULL;
+  gboolean dirty = FALSE;
+  gboolean select = FALSE;
+
+  gtk_tree_selection_real_find_start_end (selection,
+                                          start_path,
+                                          end_path,
+                                          &start_node,
+                                          &end_node,
+                                          &start_tree,
+                                          &end_tree);
+
+  /* Invalid start or end node? */
+  if (start_node == NULL || end_node == NULL)
+    return dirty;
+
+  anchor_path = start_path;
+  if (anchor_path)
+    _gtk_tree_view_set_anchor_path (selection->tree_view, anchor_path);
+
+  start_path = gtk_tree_path_new_first ();
+  _gtk_tree_view_find_node (selection->tree_view,
+                            start_path,
+                            &current_tree,
+                            &current_node);
+  gtk_tree_path_free (start_path);
+
+  /* Traversal: select all from start to end, deselect the rest. */
+  do
+    {
+      if (current_node == start_node)
+        select = TRUE;
+
+      dirty |= gtk_tree_selection_real_select_node (selection, current_tree, current_node, select);
+
+      if (current_node == end_node)
+        select = FALSE;
+
+      if (current_node->children)
+	{
+	  current_tree = current_node->children;
+          current_node = gtk_tree_rbtree_first (current_tree);
+	}
+      else
+	{
+	  gtk_tree_rbtree_next_full (current_tree, current_node, &current_tree, &current_node);
+	  if (current_tree == NULL)
+		  break;
+	}
+    }
+  while (TRUE);
+
+  return dirty;
 }
 
 /**
@@ -1544,19 +1622,28 @@ _gtk_tree_selection_internal_select_node (GtkTreeSelection *selection,
 	}
       else if ((mode & GTK_TREE_SELECT_MODE_EXTEND) == GTK_TREE_SELECT_MODE_EXTEND)
 	{
-	  dirty = gtk_tree_selection_real_unselect_all (selection);
-	  dirty |= gtk_tree_selection_real_modify_range (selection,
-                                                         RANGE_SELECT,
-							 anchor_path,
-							 path);
+	  dirty |= gtk_tree_selection_real_select_range_deselect_rest (selection,
+								       anchor_path,
+								       path);
 	}
       else
 	{
-	  dirty = gtk_tree_selection_real_unselect_all (selection);
+	  flags = node->flags;
 
-	  _gtk_tree_view_set_anchor_path (selection->tree_view, path);
+	  /* Did we try to select the only selected row again? */
+	  if ((flags & GTK_TREE_RBNODE_IS_SELECTED) == GTK_TREE_RBNODE_IS_SELECTED &&
+	       gtk_tree_selection_count_selected_rows (selection) == 1)
+	    {
+	      _gtk_tree_view_set_anchor_path (selection->tree_view, path);
+	    }
+	  else
+	    {
+	      dirty = gtk_tree_selection_real_unselect_all (selection);
 
-	  dirty |= gtk_tree_selection_real_select_node (selection, tree, node, TRUE);
+	      _gtk_tree_view_set_anchor_path (selection->tree_view, path);
+
+	      dirty |= gtk_tree_selection_real_select_node (selection, tree, node, TRUE);
+	    }
 	}
     }
 
