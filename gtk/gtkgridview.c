@@ -55,6 +55,9 @@
  * it is possible to turn on _rubberband selection_, using
  * [property@Gtk.GridView:enable-rubberband].
  *
+ * `GtkGridView` must be placed *directly* inside a [class@GtkScrolledWindow] or an
+ * other [iface@GtkScrollable].
+ *
  * To learn more about the list widget framework, see the
  * [overview](section-list-widget.html).
  *
