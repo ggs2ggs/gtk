@@ -519,7 +519,10 @@ gtk_application_impl_dbus_startup (GtkApplicationImpl *impl,
                                                                           &error);
       if (error)
         {
-          g_debug ("Failed to get an inhibit portal proxy: %s", error->message);
+          if (g_error_matches(error, G_DBUS_ERROR, G_DBUS_ERROR_NAME_HAS_NO_OWNER))
+            g_debug ("Inhibit portal service not present: %s", error->message);
+          else
+            g_warning ("Failed to get an inhibit portal proxy; check system logs: %s", error->message);
           g_clear_error (&error);
           return;
         }
