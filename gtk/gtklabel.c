@@ -1709,13 +1709,13 @@ gtk_label_grab_focus (GtkWidget *widget)
   gboolean select_on_focus;
   GtkWidget *prev_focus;
 
-  if (self->select_info == NULL)
-    return FALSE;
-
   prev_focus = gtk_root_get_focus (gtk_widget_get_root (widget));
 
   if (!GTK_WIDGET_CLASS (gtk_label_parent_class)->grab_focus (widget))
     return FALSE;
+
+  if (self->select_info == NULL)
+    return TRUE;
 
   if (self->select_info->selectable)
     {
@@ -1850,7 +1850,9 @@ gtk_label_focus (GtkWidget        *widget,
 
   if (!gtk_widget_is_focus (widget))
     {
-      gtk_widget_grab_focus (widget);
+      if (!gtk_widget_grab_focus (widget))
+        return FALSE;
+
       if (info)
         {
           focus_link = gtk_label_get_focus_link (self, NULL);
@@ -1868,11 +1870,9 @@ gtk_label_focus (GtkWidget        *widget,
                     }
                 }
             }
-
-          return TRUE;
         }
 
-      return FALSE;
+      return TRUE;
     }
 
   if (!info)
