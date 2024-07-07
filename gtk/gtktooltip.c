@@ -761,6 +761,8 @@ gtk_tooltip_show_tooltip (GdkDisplay *display)
 
   gtk_tooltip_position (tooltip, display, tooltip_widget, device);
 
+  g_signal_emit_by_name (tooltip_widget, "tooltip-show", tooltip);
+
   gtk_widget_set_visible (GTK_WIDGET (tooltip->window), TRUE);
 
   /* Now a tooltip is visible again on the display, make sure browse
@@ -777,6 +779,8 @@ gtk_tooltip_show_tooltip (GdkDisplay *display)
 static void
 gtk_tooltip_hide_tooltip (GtkTooltip *tooltip)
 {
+  GtkWidget *tooltip_widget;
+
   guint timeout = BROWSE_DISABLE_TIMEOUT;
 
   if (!tooltip)
@@ -791,6 +795,7 @@ gtk_tooltip_hide_tooltip (GtkTooltip *tooltip)
   if (!GTK_TOOLTIP_VISIBLE (tooltip))
     return;
 
+  tooltip_widget = tooltip->tooltip_widget;
   tooltip->tooltip_widget = NULL;
 
   /* The tooltip is gone, after (by default, should be configurable) 500ms
@@ -807,7 +812,10 @@ gtk_tooltip_hide_tooltip (GtkTooltip *tooltip)
     }
 
   if (tooltip->window)
-    gtk_widget_set_visible (tooltip->window, FALSE);
+    {
+      gtk_widget_set_visible (tooltip->window, FALSE);
+      g_signal_emit_by_name (tooltip_widget, "tooltip-hide", tooltip);
+    }
 }
 
 static int
@@ -1071,3 +1079,26 @@ gtk_tooltip_unset_surface (GtkNative *native)
   gtk_tooltip_set_surface (tooltip, NULL);
 }
 
+/**
+ * gtk_tooltip_set_css_class:
+ * @tooltip: a #GtkTooltip
+ * @css_class: (allow-none): a css class name, or %NULL
+ *
+ * This function allows to add a single css class
+ * to @tooltip window, that means it will remove any
+ * css class previously added by this function before
+ * adding @css_class as the currently active one.
+ *
+ * if %NULL is passed then any active css class (which
+ * was added by this function) will be cleared.
+ *
+ * Since: 4.12
+ */
+void
+gtk_tooltip_set_css_class (GtkTooltip *tooltip,
+                           const char *css_class)
+{
+  g_return_if_fail (GTK_IS_TOOLTIP (tooltip));
+
+  gtk_tooltip_window_set_css_class (GTK_TOOLTIP_WINDOW (tooltip->window), css_class);
+}
