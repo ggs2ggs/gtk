@@ -83,7 +83,7 @@ Title: Widget Gallery
 [![aboutdialog](aboutdialog.png)](class.AboutDialog.html)
 [![assistant](assistant.png)](class.Assistant.html)
 [![colorchooser](colorchooser.png)](class.ColorChooserDialog.html)
-[![filechooser](filechooser.png)](class.FileChooserDialog.html)
+[![filedialog](filechooser.png)](class.FileDialog.html)
 [![fontchooser](fontchooser.png)](class.FontChooserDialog.html)
 [![appchooserdialog](appchooserdialog.png)](class.AppChooserDialog.html)
 [![pagesetupdialog](pagesetupdialog.png)](class.PageSetupUnixDialog.html)
