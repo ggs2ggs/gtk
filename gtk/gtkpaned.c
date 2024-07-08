@@ -71,6 +71,18 @@
  * If "resize" is false for both children, then this is treated as if
  * "resize" is true for both children.
  *
+ * <a id="build_ui_gotcha"></a>
+ * ::: warning "Building a GtkPaned from a ui file"
+ *     When a GtkPaned is built from a ui file, any time a child is added
+ *     and that child is not added via the [property@Gtk.Paned:start-child]
+ *     or [property@Gtk.Paned:end-child] properties
+ *     it will set the "resize" and "shrink" values for that child to the
+ *     defaults. This means that if your ui file has specified values for
+ *     these properties, and their position in the file is before the child
+ *     elements, then those values will effectively be ignored. Make sure
+ *     the `<property>` tags that set these appear after the `<child>` tags
+ *     or put the children inside the start-child and end-child properties.
+ *
  * The application can set the position of the slider as if it were set
  * by the user, by calling [method@Gtk.Paned.set_position].
  *
@@ -497,6 +509,9 @@ gtk_paned_class_init (GtkPanedClass *class)
    *
    * Determines whether the first child expands and shrinks
    * along with the paned widget.
+   *
+   * ::: warning "Building a GtkPaned from a ui file"
+   *     This value is sometimes ignored when the widget is built from a ui file. <a href="class.Paned.html#build_ui_gotcha">why?</a>
    */
   paned_props[PROP_RESIZE_START_CHILD] =
     g_param_spec_boolean ("resize-start-child", NULL, NULL,
@@ -508,6 +523,9 @@ gtk_paned_class_init (GtkPanedClass *class)
    *
    * Determines whether the second child expands and shrinks
    * along with the paned widget.
+   *
+   * ::: warning "Building a GtkPaned from a ui file"
+   *     This value is sometimes ignored when the widget is built from a ui file. <a href="class.Paned.html#build_ui_gotcha">why?</a>
    */
   paned_props[PROP_RESIZE_END_CHILD] =
     g_param_spec_boolean ("resize-end-child", NULL, NULL,
@@ -519,6 +537,9 @@ gtk_paned_class_init (GtkPanedClass *class)
    *
    * Determines whether the first child can be made smaller
    * than its requisition.
+   *
+   * ::: warning "Building a GtkPaned from a ui file"
+   *     This value is sometimes ignored when the widget is built from a ui file. <a href="class.Paned.html#build_ui_gotcha">why?</a>
    */
   paned_props[PROP_SHRINK_START_CHILD] =
     g_param_spec_boolean ("shrink-start-child", NULL, NULL,
@@ -530,6 +551,9 @@ gtk_paned_class_init (GtkPanedClass *class)
    *
    * Determines whether the second child can be made smaller
    * than its requisition.
+   *
+   * ::: warning "Building a GtkPaned from a ui file"
+   *     This value is sometimes ignored when the widget is built from a ui file. <a href="class.Paned.html#build_ui_gotcha">why?</a>
    */
   paned_props[PROP_SHRINK_END_CHILD] =
     g_param_spec_boolean ("shrink-end-child", NULL, NULL,
