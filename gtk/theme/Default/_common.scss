@@ -2561,6 +2561,7 @@ radio {
   min-width: 14px;
   border: 1px solid;
   -gtk-icon-source: none;
+  transition: $button_transition;
 
   & {
     // for unchecked
@@ -2569,6 +2570,7 @@ radio {
     @each $state, $t in ("", "normal"),
                         (":hover", "hover"),
                         (":active", "active"),
+                        (":backdrop", "backdrop"),
                         (":disabled", "insensitive") {
       &#{$state} {
         @include check($t, $_c);
@@ -2583,6 +2585,7 @@ radio {
         @each $state, $t in ("", "normal"),
                             (":hover", "hover"),
                             (":active", "active"),
+                            (":backdrop", "backdrop"),
                             (":disabled", "insensitive") {
           &#{$state} {
             @include check($t, $checkradio_bg_color, $checkradio_fg_color, $checked: true);
