@@ -21,7 +21,7 @@ init_random_curve_with_op (GskCurve         *curve,
 
         init_random_point (&p[0]);
         init_random_point (&p[1]);
-        gsk_curve_init (curve, gsk_pathop_encode (GSK_PATH_LINE, p));
+        gsk_curve_init_foreach (curve, GSK_PATH_LINE, p, 2, 0);
       }
       break;
 
@@ -32,7 +32,7 @@ init_random_curve_with_op (GskCurve         *curve,
         init_random_point (&p[0]);
         init_random_point (&p[1]);
         init_random_point (&p[2]);
-        gsk_curve_init (curve, gsk_pathop_encode (GSK_PATH_QUAD, p));
+        gsk_curve_init_foreach (curve, GSK_PATH_QUAD, p, 3, 0);
       }
     break;
 
@@ -44,20 +44,18 @@ init_random_curve_with_op (GskCurve         *curve,
         init_random_point (&p[1]);
         init_random_point (&p[2]);
         init_random_point (&p[3]);
-        gsk_curve_init (curve, gsk_pathop_encode (GSK_PATH_CUBIC, p));
+        gsk_curve_init_foreach (curve, GSK_PATH_CUBIC, p, 4, 0);
       }
     break;
 
     case GSK_PATH_CONIC:
       {
-        graphene_point_t p[4];
+        graphene_point_t p[3];
 
         init_random_point (&p[0]);
         init_random_point (&p[1]);
-        p[2].x = g_test_rand_double_range (0.2, 20);
-        p[2].y = 0.f;
-        init_random_point (&p[3]);
-        gsk_curve_init (curve, gsk_pathop_encode (GSK_PATH_CONIC, p));
+        init_random_point (&p[2]);
+        gsk_curve_init_foreach (curve, GSK_PATH_CONIC, p, 3, g_test_rand_double_range(0.2, 20));
       }
     break;
 
