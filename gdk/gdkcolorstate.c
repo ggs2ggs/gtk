@@ -154,7 +154,7 @@ gdk_default_color_state_has_srgb_tf (GdkColorState  *color_state,
 
   if (out_no_srgb)
     *out_no_srgb = gdk_color_state_ref (self->no_srgb);
-  
+
   return TRUE;
 }
 
@@ -177,7 +177,7 @@ srgb_eotf (float v)
 }
 
 static void
-gdk_default_srgb_to_linear_srgb (GdkColorState  *self,
+gdk_default_srgb_to_srgb_linear (GdkColorState  *self,
                                  float         (*values)[4],
                                  gsize           n_values)
 {
@@ -238,7 +238,7 @@ GdkDefaultColorState gdk_default_color_states[] = {
     .name = "srgb",
     .no_srgb = GDK_COLOR_STATE_SRGB_LINEAR,
     .convert_to = {
-      [GDK_COLOR_STATE_ID_SRGB_LINEAR] = gdk_default_srgb_to_linear_srgb,
+      [GDK_COLOR_STATE_ID_SRGB_LINEAR] = gdk_default_srgb_to_srgb_linear,
     },
   },
   [GDK_COLOR_STATE_ID_SRGB_LINEAR] = {

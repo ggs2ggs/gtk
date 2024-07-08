@@ -32,7 +32,7 @@ srgb_oetf (float v)
 }
 
 vec4
-srgb_to_linear_srgb (vec4 color)
+srgb_to_srgb_linear (vec4 color)
 {
   return vec4 (srgb_eotf (color.r),
                srgb_eotf (color.g),
@@ -41,7 +41,7 @@ srgb_to_linear_srgb (vec4 color)
 }
 
 vec4
-linear_srgb_to_srgb (vec4 color)
+srgb_linear_to_srgb (vec4 color)
 {
   return vec4 (srgb_oetf (color.r),
                srgb_oetf (color.g),
@@ -60,10 +60,10 @@ do_conversion (vec4     color,
   switch (PAIR (from_cs, to_cs))
     {
     case PAIR (GDK_COLOR_STATE_ID_SRGB, GDK_COLOR_STATE_ID_SRGB_LINEAR):
-      result = srgb_to_linear_srgb (color);
+      result = srgb_to_srgb_linear (color);
       break;
     case PAIR (GDK_COLOR_STATE_ID_SRGB_LINEAR, GDK_COLOR_STATE_ID_SRGB):
-      result = linear_srgb_to_srgb (color);
+      result = srgb_linear_to_srgb (color);
       break;
 
     default:
