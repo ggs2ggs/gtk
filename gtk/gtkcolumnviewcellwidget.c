@@ -188,6 +188,23 @@ gtk_column_view_cell_widget_update_object (GtkListFactoryWidget *fw,
 
   if (cell)
     gtk_column_view_cell_do_notify (cell, notify_item, notify_position, notify_selected);
+
+  if (object)
+    {
+      guint column = gtk_column_view_column_get_position (self->column);
+
+      gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                      GTK_ACCESSIBLE_RELATION_ROW_INDEX, position + 1,
+                                      GTK_ACCESSIBLE_RELATION_COL_INDEX, column + 1,
+                                      -1);
+    }
+  else
+    {
+      gtk_accessible_reset_relation (GTK_ACCESSIBLE (self),
+                                     GTK_ACCESSIBLE_RELATION_ROW_INDEX);
+      gtk_accessible_reset_relation (GTK_ACCESSIBLE (self),
+                                     GTK_ACCESSIBLE_RELATION_COL_INDEX);
+    }
 }
 
 static int

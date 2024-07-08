@@ -315,6 +315,7 @@ gtk_grid_view_create_list_widget (GtkListBase *base)
     factory = self->factory;
 
   result = gtk_list_item_widget_new (factory,
+                                     base,
                                      "child",
                                      GTK_ACCESSIBLE_ROLE_GRID_CELL);
 
@@ -549,6 +550,24 @@ gtk_grid_view_move_focus_across (GtkListBase *base,
   return pos;
 }
 
+static void
+gtk_grid_view_update_counts (GtkGridView *self)
+{
+  GtkSelectionModel *model;
+  guint rows = 0;
+
+  model = gtk_list_base_get_model (GTK_LIST_BASE (self));
+  if (model)
+    {
+      div_t d = div (g_list_model_get_n_items (G_LIST_MODEL (model)), self->n_columns);
+      rows = d.quot + (d.rem ? 1 : 0);
+    }
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_ROW_COUNT, rows,
+                                  GTK_ACCESSIBLE_RELATION_COL_COUNT, self->n_columns,
+                                  -1);
+}
+
 static int
 compare_ints (gconstpointer first,
               gconstpointer second)
@@ -756,7 +775,7 @@ gtk_grid_view_size_allocate (GtkWidget *widget,
   GtkOrientation orientation;
   GtkScrollablePolicy scroll_policy;
   int y, xspacing, yspacing;
-  guint i;
+  guint i, n_columns;
 
   orientation = gtk_list_base_get_orientation (GTK_LIST_BASE (self));
   scroll_policy = gtk_list_base_get_scroll_policy (GTK_LIST_BASE (self), orientation);
@@ -775,12 +794,18 @@ gtk_grid_view_size_allocate (GtkWidget *widget,
 
   /* step 1: determine width of the list */
   gtk_grid_view_measure_column_size (self, &col_min, &col_nat);
-  self->n_columns = gtk_grid_view_compute_n_columns (self,
-                                                     orientation == GTK_ORIENTATION_VERTICAL ? width : height,
-                                                     xspacing,
-                                                     col_min, col_nat);
+  n_columns = gtk_grid_view_compute_n_columns (self,
+                                               orientation == GTK_ORIENTATION_VERTICAL ? width : height,
+                                               xspacing,
+                                               col_min, col_nat);
   self->column_width = ((orientation == GTK_ORIENTATION_VERTICAL ? width : height) + xspacing) / self->n_columns - xspacing;
   self->column_width = MAX (self->column_width, col_min);
+
+  if (n_columns != self->n_columns)
+    {
+      self->n_columns = n_columns;
+      gtk_grid_view_update_counts (self);
+    }
 
   /* step 2: determine height of known rows */
   heights = g_array_new (FALSE, FALSE, sizeof (int));
@@ -1077,6 +1102,31 @@ gtk_grid_view_activate_item (GtkWidget  *widget,
 }
 
 static void
+gtk_grid_view_update_item (GtkListBase     *base,
+                           GtkListItemBase *item,
+                           gpointer         object)
+{
+  if (object)
+    {
+      GtkGridView *self = GTK_GRID_VIEW (base);
+      guint pos = gtk_list_item_base_get_position (item);
+      div_t d = div (pos, self->n_columns);
+
+      gtk_accessible_update_relation (GTK_ACCESSIBLE (item),
+                                      GTK_ACCESSIBLE_RELATION_ROW_INDEX, d.quot + 1,
+                                      GTK_ACCESSIBLE_RELATION_COL_INDEX, d.rem + 1,
+                                      -1);
+    }
+  else
+    {
+      gtk_accessible_reset_relation (GTK_ACCESSIBLE (item),
+                                     GTK_ACCESSIBLE_RELATION_ROW_INDEX);
+      gtk_accessible_reset_relation (GTK_ACCESSIBLE (item),
+                                     GTK_ACCESSIBLE_RELATION_COL_INDEX);
+    }
+}
+
+static void
 gtk_grid_view_class_init (GtkGridViewClass *klass)
 {
   GtkListBaseClass *list_base_class = GTK_LIST_BASE_CLASS (klass);
@@ -1090,6 +1140,7 @@ gtk_grid_view_class_init (GtkGridViewClass *klass)
   list_base_class->get_position_from_allocation = gtk_grid_view_get_position_from_allocation;
   list_base_class->move_focus_along = gtk_grid_view_move_focus_along;
   list_base_class->move_focus_across = gtk_grid_view_move_focus_across;
+  list_base_class->update_item = gtk_grid_view_update_item;
 
   widget_class->measure = gtk_grid_view_measure;
   widget_class->size_allocate = gtk_grid_view_size_allocate;
@@ -1307,15 +1358,33 @@ void
 gtk_grid_view_set_model (GtkGridView       *self,
                          GtkSelectionModel *model)
 {
+  GtkSelectionModel *old_model;
+
   g_return_if_fail (GTK_IS_GRID_VIEW (self));
   g_return_if_fail (model == NULL || GTK_IS_SELECTION_MODEL (model));
+
+  old_model = gtk_list_base_get_model (GTK_LIST_BASE (self));
+
+  if (old_model != NULL && old_model != model)
+    g_signal_handlers_disconnect_by_func (old_model,
+                                          gtk_grid_view_update_counts,
+                                          self);
 
   if (!gtk_list_base_set_model (GTK_LIST_BASE (self), model))
     return;
 
   gtk_accessible_update_property (GTK_ACCESSIBLE (self),
-                                  GTK_ACCESSIBLE_PROPERTY_MULTI_SELECTABLE, GTK_IS_MULTI_SELECTION (model),
+                                  GTK_ACCESSIBLE_PROPERTY_MULTI_SELECTABLE,
+                                  model ? GTK_IS_MULTI_SELECTION (model) : FALSE,
                                   -1);
+  gtk_grid_view_update_counts (self);
+
+  if (model != NULL)
+    g_signal_connect_object (model,
+                             "items-changed",
+                             G_CALLBACK (gtk_grid_view_update_counts),
+                             self,
+                             G_CONNECT_SWAPPED);
 
   g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_MODEL]);
 }

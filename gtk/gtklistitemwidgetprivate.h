@@ -33,9 +33,13 @@ G_BEGIN_DECLS
 typedef struct _GtkListItemWidget GtkListItemWidget;
 typedef struct _GtkListItemWidgetClass GtkListItemWidgetClass;
 
+typedef struct _GtkListBase GtkListBase;
+
 struct _GtkListItemWidget
 {
   GtkListFactoryWidget parent_instance;
+
+  GtkListBase *list;
 };
 
 struct _GtkListItemWidgetClass
@@ -46,6 +50,7 @@ struct _GtkListItemWidgetClass
 GType                   gtk_list_item_widget_get_type           (void) G_GNUC_CONST;
 
 GtkWidget *             gtk_list_item_widget_new                (GtkListItemFactory     *factory,
+                                                                 GtkListBase            *owner,
                                                                  const char             *css_name,
                                                                  GtkAccessibleRole       role);
 

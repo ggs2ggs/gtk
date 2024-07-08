@@ -190,6 +190,10 @@ gtk_column_view_row_widget_update_object (GtkListFactoryWidget *fw,
                                                                                           item,
                                                                                           selected);
 
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self),
+                                  GTK_ACCESSIBLE_RELATION_ROW_INDEX, position + 1,
+                                  -1);
+
   if (row)
     gtk_column_view_row_do_notify (row, notify_item, notify_position, notify_selected);
 }

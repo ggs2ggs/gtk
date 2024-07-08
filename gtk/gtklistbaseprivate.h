@@ -58,6 +58,9 @@ struct _GtkListBaseClass
   guint                (* move_focus_across)                    (GtkListBase            *self,
                                                                  guint                   pos,
                                                                  int                     steps);
+  void                 (* update_item)                          (GtkListBase            *self,
+                                                                 GtkListItemBase        *item,
+                                                                 gpointer                object);
 };
 
 GtkOrientation         gtk_list_base_get_orientation            (GtkListBase            *self);

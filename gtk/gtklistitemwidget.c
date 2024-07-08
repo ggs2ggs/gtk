@@ -187,6 +187,9 @@ gtk_list_item_widget_update_object (GtkListFactoryWidget *fw,
                                                                                     item,
                                                                                     selected);
 
+  if (self->list)
+    GTK_LIST_BASE_GET_CLASS (self->list)->update_item (self->list, base, object);
+
   if (list_item)
     gtk_list_item_do_notify (list_item, notify_item, notify_position, notify_selected);
 }
@@ -218,16 +221,22 @@ gtk_list_item_widget_init (GtkListItemWidget *self)
 
 GtkWidget *
 gtk_list_item_widget_new (GtkListItemFactory *factory,
+                          GtkListBase        *list,
                           const char         *css_name,
                           GtkAccessibleRole   role)
 {
+  GtkWidget *widget;
+
   g_return_val_if_fail (css_name != NULL, NULL);
 
-  return g_object_new (GTK_TYPE_LIST_ITEM_WIDGET,
-                       "css-name", css_name,
-                       "accessible-role", role,
-                       "factory", factory,
-                       NULL);
+  widget = g_object_new (GTK_TYPE_LIST_ITEM_WIDGET,
+                         "css-name", css_name,
+                         "accessible-role", role,
+                         "factory", factory,
+                         NULL);
+  GTK_LIST_ITEM_WIDGET (widget)->list = list;
+
+  return widget;
 }
 
 void

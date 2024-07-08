@@ -79,6 +79,8 @@ struct _GtkColumnViewColumn
 
   /* This list isn't sorted - this is just caching for performance */
   GtkColumnViewCellWidget *first_cell; /* no reference, just caching */
+
+  guint position;
 };
 
 struct _GtkColumnViewColumnClass
@@ -564,6 +566,9 @@ gtk_column_view_column_create_header (GtkColumnViewColumn *self)
   gtk_column_view_row_widget_add_child (gtk_column_view_get_header_widget (self->view),
                                   self->header);
   gtk_column_view_column_queue_resize (self);
+  gtk_accessible_update_relation (GTK_ACCESSIBLE (self->header),
+                                  GTK_ACCESSIBLE_RELATION_COL_INDEX, self->position + 1,
+                                  -1);
 }
 
 static void
@@ -637,6 +642,8 @@ gtk_column_view_column_set_position (GtkColumnViewColumn *self,
                                       self->header,
                                       position);
 
+  self->position = position;
+
   for (cell = self->first_cell; cell; cell = gtk_column_view_cell_widget_get_next (cell))
     {
       GtkColumnViewRowWidget *list_item;
@@ -644,6 +651,31 @@ gtk_column_view_column_set_position (GtkColumnViewColumn *self,
       list_item = GTK_COLUMN_VIEW_ROW_WIDGET (gtk_widget_get_parent (GTK_WIDGET (cell)));
       gtk_column_view_row_widget_reorder_child (list_item, GTK_WIDGET (cell), position);
     }
+}
+
+void
+gtk_column_view_column_update_position (GtkColumnViewColumn    *self,
+                                        guint                   position)
+{
+  GtkColumnViewCellWidget *cell;
+
+  self->position = position;
+
+  if (self->header)
+    gtk_accessible_update_relation (GTK_ACCESSIBLE (self->header),
+                                    GTK_ACCESSIBLE_RELATION_COL_INDEX, position + 1,
+                                    -1);
+
+  for (cell = self->first_cell; cell; cell = gtk_column_view_cell_widget_get_next (cell))
+    gtk_accessible_update_relation (GTK_ACCESSIBLE (cell),
+                                    GTK_ACCESSIBLE_RELATION_COL_INDEX, position + 1,
+                                    -1);
+}
+
+guint
+gtk_column_view_column_get_position (GtkColumnViewColumn *self)
+{
+  return self->position;
 }
 
 /**
