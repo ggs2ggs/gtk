@@ -157,11 +157,13 @@ os_create_anonymous_file(off_t size)
         if (ret == 0) {
                 goto allocated;
         }
+	else {
+                g_warning ("os_create_anonymous_file(): posix_fallocate(%d, 0, %ld) failed: %s", fd, size, strerror (ret));
+	}
 #endif
-
 	ret = ftruncate(fd, size);
 	if (ret < 0) {
-                g_warning ("os_create_anonymous_file(): ftruncate() failed");
+                g_warning ("os_create_anonymous_file(): ftruncate() failed: %s", strerror (errno));
 		close(fd);
 		return -1;
 	}
