@@ -41,6 +41,8 @@
 #include <cairo.h>
 #include <epoxy/wgl.h>
 
+typedef void (WINAPI *glAddSwapHintRectWIN)(GLint, GLint, GLsizei, GLsizei);
+
 struct _GdkWin32GLContextWGL
 {
   GdkWin32GLContext parent_instance;
@@ -53,10 +55,12 @@ struct _GdkWin32GLContextWGL
 
   enum {
     SWAP_METHOD_UNDEFINED = 0,
+    SWAP_METHOD_NONE,
     SWAP_METHOD_COPY,
     SWAP_METHOD_EXCHANGE,
   } swap_method;
 
+  glAddSwapHintRectWIN glAddSwapHintRectWIN;
   /* Only set when swap_method is exchange */
   cairo_region_t *previous_frame_damage;
 };
@@ -65,12 +69,16 @@ typedef struct _GdkWin32GLContextClass    GdkWin32GLContextWGLClass;
 
 G_DEFINE_TYPE (GdkWin32GLContextWGL, gdk_win32_gl_context_wgl, GDK_TYPE_WIN32_GL_CONTEXT)
 
-static void (WINAPI *glAddSwapHintRectWIN)(GLint, GLint, GLsizei, GLsizei);
-
 static void
 gdk_win32_gl_context_wgl_dispose (GObject *gobject)
 {
   GdkWin32GLContextWGL *context_wgl = GDK_WIN32_GL_CONTEXT_WGL (gobject);
+
+  if (context_wgl->previous_frame_damage != NULL)
+    {
+      cairo_region_destroy (context_wgl->previous_frame_damage);
+      context_wgl->previous_frame_damage = NULL;
+    }
 
   if (context_wgl->wgl_context != NULL)
     {
@@ -106,7 +114,7 @@ gdk_win32_gl_context_wgl_end_frame (GdkDrawContext *draw_context,
   else
     hdc = display_win32->dummy_context_wgl.hdc;
 
-  if (display_win32->hasGlWINSwapHint)
+  if (context_wgl->glAddSwapHintRectWIN != NULL)
     {
       /* glAddSwapHintRectWIN works with windows coordinates,
        * whereas GDK works with client-area coordinates */
@@ -116,7 +124,7 @@ gdk_win32_gl_context_wgl_end_frame (GdkDrawContext *draw_context,
       for (int i = 0; i < num_rectangles; i++)
         {
           cairo_region_get_rectangle (painted, i, &rectangle);
-          glAddSwapHintRectWIN (rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+          context_wgl->glAddSwapHintRectWIN (rectangle.x, rectangle.y, rectangle.width, rectangle.height);
         }
     }
 
@@ -153,47 +161,17 @@ static cairo_region_t *
 gdk_win32_gl_context_wgl_get_damage (GdkGLContext *gl_context)
 {
   GdkWin32GLContextWGL *self = GDK_WIN32_GL_CONTEXT_WGL (gl_context);
+  cairo_region_t *damage_region;
 
-  /* TODO */
-  gdk_win32_surface_handle_queued_move_resize ((GdkDrawContext*)gl_context);
-
-  if (!self->double_buffered)
+  if (!self->double_buffered ||
+      self->trust_swap_hint ||
+      self->swap_method == SWAP_METHOD_COPY)
     return cairo_region_create ();
 
-  if (self->trust_swap_hint)
-    return cairo_region_create ();
-
-  switch (self->swap_method)
-    {
-    case SWAP_METHOD_COPY:
-      return cairo_region_create ();
-      break;
-    case SWAP_METHOD_EXCHANGE:
-      if (self->previous_frame_damage)
-        return self->previous_frame_damage;
-      else
-        return GDK_GL_CONTEXT_CLASS (gdk_win32_gl_context_wgl_parent_class)->get_damage (gl_context);
-      break;
-    case SWAP_METHOD_UNDEFINED:
-      return GDK_GL_CONTEXT_CLASS (gdk_win32_gl_context_wgl_parent_class)->get_damage (gl_context);
-      break;
-    }
-
-  g_warn_if_reached ();
-
-  return GDK_GL_CONTEXT_CLASS (gdk_win32_gl_context_wgl_parent_class)->get_damage (gl_context);
-}
-
-static void
-gdk_win32_gl_context_wgl_surface_resized (GdkDrawContext *draw_context)
-{
-  GdkWin32GLContextWGL *self = (GdkWin32GLContextWGL*) draw_context;
-
-  if (self->previous_frame_damage)
-    {
-      cairo_region_destroy (self->previous_frame_damage);
-      self->previous_frame_damage = NULL;
-    }
+  if (self->swap_method == SWAP_METHOD_EXCHANGE && self->previous_frame_damage)
+    return self->previous_frame_damage;
+  else
+    return GDK_GL_CONTEXT_CLASS (gdk_win32_gl_context_wgl_parent_class)->get_damage (gl_context);
 }
 
 static void
@@ -201,6 +179,8 @@ gdk_win32_gl_context_wgl_begin_frame (GdkDrawContext *draw_context,
                                       GdkMemoryDepth  depth,
                                       cairo_region_t *update_area)
 {
+  gdk_win32_surface_handle_queued_move_resize (gdk_draw_context_get_surface (draw_context));
+
   GDK_DRAW_CONTEXT_CLASS (gdk_win32_gl_context_wgl_parent_class)->begin_frame (draw_context, depth, update_area);
 }
 
@@ -243,7 +223,7 @@ get_wgl_pfd (HDC                    hdc,
       pixelAttribs[i++] = WGL_TYPE_RGBA_ARB;
 
       pixelAttribs[i++] = WGL_SWAP_METHOD_ARB;
-      pixelAttribs[i++] = WGL_SWAP_COPY_ARB;
+      pixelAttribs[i++] = WGL_SWAP_EXCHANGE_ARB;
 
       pixelAttribs[i++] = WGL_COLOR_BITS_ARB;
       pixelAttribs[i++] = colorbits;
@@ -430,13 +410,7 @@ gdk_win32_display_init_wgl (GdkDisplay  *display,
   display_win32->hasWglARBPixelFormat =
     epoxy_has_wgl_extension (hdc, "WGL_ARB_pixel_format");
   display_win32->hasGlWINSwapHint =
-    FALSE;//epoxy_has_gl_extension ("GL_WIN_swap_hint");
-
-  if (display_win32->hasWglARBPixelFormat)
-    gdk_win32_private_wglGetPixelFormatAttribivARB_assign (wglGetProcAddress ("wglGetPixelFormatAttribivARB"));
-
-  if (display_win32->hasGlWINSwapHint)
-    glAddSwapHintRectWIN = (void*) wglGetProcAddress ("glAddSwapHintRectWIN");
+    epoxy_has_gl_extension ("GL_WIN_swap_hint");
 
   context = g_object_new (GDK_TYPE_WIN32_GL_CONTEXT_WGL,
                           "display", display,
@@ -804,59 +778,6 @@ gdk_win32_gl_context_wgl_realize (GdkGLContext *context,
       return 0;
     }
 
-  if (display_win32->hasWglARBPixelFormat)
-    {
-      /* wglChoosePixelFormatARB should match these attributes exactly
-       * as requested, according to the spec, but better check anyway */
-      int query_attribs[] = {
-        WGL_DOUBLE_BUFFER_ARB,
-        WGL_SWAP_METHOD_ARB,
-      };
-      int query_values[G_N_ELEMENTS (query_attribs)];
-
-      memset (query_values, 0, sizeof (query_values));
-
-      if (gdk_win32_private_wglGetPixelFormatAttribivARB (hdc, pixel_format, 0, G_N_ELEMENTS (query_attribs), query_attribs, query_values))
-        {
-          context_wgl->double_buffered = (query_values[0] == GL_TRUE);
-
-          switch (query_values[1])
-            {
-            case WGL_SWAP_COPY_ARB:
-              context_wgl->swap_method = SWAP_METHOD_COPY;
-              //g_print ("SWAP_METHOD_COPY\n");
-              break;
-            case WGL_SWAP_EXCHANGE_ARB:
-              context_wgl->swap_method = SWAP_METHOD_EXCHANGE;
-              //g_print ("EXCHANGE\n");
-              break;
-            default:
-              context_wgl->swap_method = SWAP_METHOD_UNDEFINED;
-              //g_print ("UNDEFINED\n");
-              break;
-            }
-        }
-    }
-  else
-    {
-      PIXELFORMATDESCRIPTOR pfd = {0};
-
-      if (DescribePixelFormat (hdc, pixel_format, sizeof (pfd), &pfd))
-        {
-          context_wgl->double_buffered = (pfd.dwFlags & PFD_DOUBLEBUFFER) != 0;
-
-          if (pfd.dwFlags & PFD_SWAP_COPY)
-            context_wgl->swap_method = SWAP_METHOD_COPY;
-          else if (pfd.dwFlags & PFD_SWAP_EXCHANGE)
-            context_wgl->swap_method = SWAP_METHOD_EXCHANGE;
-          else
-            context_wgl->swap_method = SWAP_METHOD_UNDEFINED;
-        }
-    }
-
-  if (context_wgl->swap_method == SWAP_METHOD_UNDEFINED)
-    g_message ("Undefined swap method"); /* TODO: once */
-
   /* if there isn't wglCreateContextAttribsARB() on WGL, use a legacy context */
   if (!legacy_bit)
     legacy_bit = !display_win32->hasWglARBCreateContext;
@@ -897,12 +818,78 @@ gdk_win32_gl_context_wgl_realize (GdkGLContext *context,
   if (hglrc == NULL)
     return 0;
 
+  if (context_wgl->swap_method == SWAP_METHOD_UNDEFINED)
+    {
+      HDC hdc_current = wglGetCurrentDC ();
+      HGLRC hglrc_current = wglGetCurrentContext ();
+
+      wglMakeCurrent (hdc, hglrc);
+      if (display_win32->hasWglARBPixelFormat)
+        {
+          /* wglChoosePixelFormatARB should match these attributes exactly
+           * as requested, according to the spec, but better check anyway */
+          int query_attribs[] = {
+            WGL_DOUBLE_BUFFER_ARB,
+            WGL_SWAP_METHOD_ARB,
+          };
+          int query_values[G_N_ELEMENTS (query_attribs)];
+
+          memset (query_values, 0, sizeof (query_values));
+
+          if (wglGetPixelFormatAttribivARB (hdc, pixel_format, 0, G_N_ELEMENTS (query_attribs), query_attribs, query_values))
+            {
+              context_wgl->double_buffered = (query_values[0] == GL_TRUE);
+
+              switch (query_values[1])
+                {
+                case WGL_SWAP_COPY_ARB:
+                  context_wgl->swap_method = SWAP_METHOD_COPY;
+                  //g_print ("SWAP_METHOD_COPY\n");
+                  break;
+                case WGL_SWAP_EXCHANGE_ARB:
+                  context_wgl->swap_method = SWAP_METHOD_EXCHANGE;
+                  //g_print ("EXCHANGE\n");
+                  break;
+                default:
+                  context_wgl->swap_method = SWAP_METHOD_NONE;
+                  //g_print ("UNDEFINED\n");
+                  break;
+                }
+            }
+        }
+      else
+        {
+          PIXELFORMATDESCRIPTOR pfd = {0};
+
+          if (DescribePixelFormat (hdc, pixel_format, sizeof (pfd), &pfd))
+            {
+              context_wgl->double_buffered = (pfd.dwFlags & PFD_DOUBLEBUFFER) != 0;
+
+              if (pfd.dwFlags & PFD_SWAP_COPY)
+                context_wgl->swap_method = SWAP_METHOD_COPY;
+              else if (pfd.dwFlags & PFD_SWAP_EXCHANGE)
+                context_wgl->swap_method = SWAP_METHOD_EXCHANGE;
+              else
+                context_wgl->swap_method = SWAP_METHOD_NONE;
+            }
+        }
+
+      wglMakeCurrent (hdc_current, hglrc_current);
+
+      if (context_wgl->swap_method == SWAP_METHOD_NONE)
+        g_message ("Unkwown swap method");
+    }
+
   GDK_NOTE (OPENGL,
             g_print ("Created WGL context[%p], pixel_format=%d\n",
                      hglrc,
                      pixel_format));
 
   context_wgl->wgl_context = hglrc;
+
+  /* sadly, libepoxy does not handle glAddSwapHintRectWIN() for us */
+  if (display_win32->hasGlWINSwapHint && context_wgl->glAddSwapHintRectWIN == NULL)
+    context_wgl->glAddSwapHintRectWIN = (glAddSwapHintRectWIN) gdk_win32_private_wglGetProcAddress ("glAddSwapHintRectWIN");
 
   return GDK_GL_API_GL;
 }
@@ -978,7 +965,6 @@ gdk_win32_gl_context_wgl_class_init (GdkWin32GLContextWGLClass *klass)
   draw_context_class->begin_frame = gdk_win32_gl_context_wgl_begin_frame;
   draw_context_class->end_frame = gdk_win32_gl_context_wgl_end_frame;
   draw_context_class->empty_frame = gdk_win32_gl_context_wgl_empty_frame;
-  draw_context_class->surface_resized = gdk_win32_gl_context_wgl_surface_resized;
 
   gobject_class->dispose = gdk_win32_gl_context_wgl_dispose;
 }

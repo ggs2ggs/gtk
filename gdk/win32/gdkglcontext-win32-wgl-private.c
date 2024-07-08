@@ -36,16 +36,6 @@
 
 #include "gdkglcontext-win32.h"
 
-typedef
-BOOL (WINAPI *ptr_wglGetPixelFormatAttribivARB_t) (HDC hdc,
-                                                   int iPixelFormat,
-                                                   int iLayerPlane,
-                                                   UINT nAttributes,
-                                                   const int * piAttributes,
-                                                   int * piValues);
-
-static ptr_wglGetPixelFormatAttribivARB_t ptr_wglGetPixelFormatAttribivARB;
-
 void
 gdk_win32_private_wglDeleteContext (HGLRC hglrc)
 {
@@ -65,23 +55,8 @@ gdk_win32_private_wglMakeCurrent (HDC   hdc,
   return wglMakeCurrent (hdc, hglrc);
 }
 
-BOOL
-gdk_win32_private_wglGetPixelFormatAttribivARB (HDC hdc,
-                                                int iPixelFormat,
-                                                int iLayerPlane,
-                                                UINT nAttributes,
-                                                const int * piAttributes,
-                                                int * piValues)
+PROC
+gdk_win32_private_wglGetProcAddress (LPCSTR fname)
 {
-  g_assert_nonnull (ptr_wglGetPixelFormatAttribivARB);
-
-  return ptr_wglGetPixelFormatAttribivARB (hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
-}
-
-void
-gdk_win32_private_wglGetPixelFormatAttribivARB_assign (PROC proc)
-{
-  g_assert (proc != NULL);
-
-  ptr_wglGetPixelFormatAttribivARB = (ptr_wglGetPixelFormatAttribivARB_t) proc;
+  return wglGetProcAddress (fname);
 }
