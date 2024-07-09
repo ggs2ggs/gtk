@@ -203,6 +203,7 @@ enum {
   PROP_KEYNAV_USE_CARET,
   PROP_OVERLAY_SCROLLING,
   PROP_FONT_RENDERING,
+  PROP_SCROLL_INTERPOLATION,
 
   NUM_PROPERTIES
 };
@@ -976,6 +977,20 @@ gtk_settings_class_init (GtkSettingsClass *class)
                                                    GTK_TYPE_FONT_RENDERING,
                                                    GTK_FONT_RENDERING_AUTOMATIC,
                                                    GTK_PARAM_READWRITE);
+
+  /**
+   * GtkSettings:gtk-scroll-interpolation:
+   *
+   * Whether scroll interpolation animation is enabled.
+   *
+   * The animation is triggered on mouse wheel scroll and makes the
+   * content smoothly scroll and not "jumpy" scroll as it is without
+   * animation. The goal is to make the content easier to follow on
+   * screen when using low precision mouse scroll.
+   */
+  pspecs[PROP_SCROLL_INTERPOLATION] = g_param_spec_boolean ("gtk-scroll-interpolation", NULL, NULL,
+                                                            FALSE,
+                                                            GTK_PARAM_READWRITE);
 
   g_object_class_install_properties (gobject_class, NUM_PROPERTIES, pspecs);
 }
