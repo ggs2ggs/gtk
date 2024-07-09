@@ -24,6 +24,8 @@
 #include "gdk/gdksurfaceprivate.h"
 #include "gdk/gdkcursor.h"
 
+#include "gtk/gtkcssnodeprivate.h"
+
 #include <windows.h>
 #include <directmanipulation.h>
 
@@ -287,6 +289,9 @@ struct _GdkWin32Surface
 
   GdkW32DragMoveResizeContext drag_move_resize_context;
 
+  /* Css node for getting headerbar color with server side decorations */
+  GtkCssNode *headerbar_node;
+
   /* Remembers where the window was snapped.
    * Some snap operations change their meaning if
    * the window is already snapped.
@@ -346,6 +351,12 @@ void  _gdk_win32_get_window_client_area_rect (GdkSurface *window,
                                               int         scale,
                                               RECT       *rect);
 
+BOOL  _gdk_win32_surface_set_transparent_titlebar   (GdkSurface *window, bool is_transparent);
+
+void  _gdk_win32_surface_set_immersive_titlebar     (GdkSurface *window);
+
+void  _gdk_win32_surface_set_titlebar_theme_variant (GdkSurface *window);
+
 void gdk_win32_surface_move (GdkSurface *surface,
                              int         x,
                              int         y);
@@ -368,4 +379,3 @@ EGLSurface gdk_win32_surface_get_egl_surface (GdkSurface *surface,
 #endif
 
 G_END_DECLS
-
