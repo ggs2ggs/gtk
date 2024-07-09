@@ -935,7 +935,7 @@ gtk_css_color_value_new_relative (GtkCssValue      *origin,
   if (!gtk_css_value_is_computed (origin))
     computed = FALSE;
 
-  if (!computed)
+  if (computed)
     {
       for (guint i = 0; i < 4; i++)
         {
