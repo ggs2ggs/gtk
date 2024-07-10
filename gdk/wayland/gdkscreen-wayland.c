@@ -1609,6 +1609,8 @@ xdg_output_handle_logical_position (void                  *data,
             g_message ("handle logical position xdg-output %d, position %d %d",
                        monitor->id, x, y));
 
+  monitor->xdg_output_receiving = TRUE;
+
   monitor->xdg_output_geometry.x = x;
   monitor->xdg_output_geometry.y = y;
 }
@@ -1625,6 +1627,8 @@ xdg_output_handle_logical_size (void                  *data,
             g_message ("handle logical size xdg-output %d, size %d %d",
                        monitor->id, width, height));
 
+  monitor->xdg_output_receiving = TRUE;
+
   monitor->xdg_output_geometry.width = width;
   monitor->xdg_output_geometry.height = height;
 }
@@ -1638,6 +1642,7 @@ xdg_output_handle_done (void                  *data,
   GDK_NOTE (MISC,
             g_message ("handle done xdg-output %d", monitor->id));
 
+  monitor->xdg_output_receiving = FALSE;
   monitor->xdg_output_done = TRUE;
   if (monitor->wl_output_done && should_expect_xdg_output_done (monitor))
     apply_monitor_change (monitor);
@@ -1653,6 +1658,8 @@ xdg_output_handle_name (void                  *data,
   GDK_NOTE (MISC,
             g_message ("handle name xdg-output %d", monitor->id));
 
+  monitor->xdg_output_receiving = TRUE;
+
   monitor->name = g_strdup (name);
 }
 
@@ -1661,9 +1668,11 @@ xdg_output_handle_description (void                  *data,
                                struct zxdg_output_v1 *xdg_output,
                                const char            *description)
 {
-#ifdef G_ENABLE_DEBUG
   GdkWaylandMonitor *monitor = (GdkWaylandMonitor *) data;
 
+  monitor->xdg_output_receiving = TRUE;
+
+#ifdef G_ENABLE_DEBUG
   GDK_NOTE (MISC,
             g_message ("handle description xdg-output %d", monitor->id));
 #endif
@@ -1713,6 +1722,8 @@ output_handle_geometry (void             *data,
             g_message ("handle geometry output %d, position %d %d, phys. size %d %d, subpixel layout %s, manufacturer %s, model %s, transform %s",
                        monitor->id, x, y, physical_width, physical_height, subpixel_to_string (subpixel), make, model, transform_to_string (transform)));
 
+  monitor->wl_output_receiving = TRUE;
+
   monitor->output_geometry.x = x;
   monitor->output_geometry.y = y;
 
@@ -1747,9 +1758,18 @@ output_handle_done (void             *data,
   GDK_NOTE (MISC,
             g_message ("handle done output %d", monitor->id));
 
-  monitor->wl_output_done = TRUE;
+  if (monitor->xdg_output_receiving && !should_expect_xdg_output_done (monitor))
+    {
+      monitor->xdg_output_receiving = FALSE;
+      monitor->xdg_output_done = TRUE;
+    }
+  else
+    {
+      monitor->wl_output_receiving = FALSE;
+      monitor->wl_output_done = TRUE;
+    }
 
-  if (!should_expect_xdg_output_done (monitor) || monitor->xdg_output_done)
+  if (monitor->wl_output_done && (!monitor_has_xdg_output (monitor) || monitor->xdg_output_done))
     apply_monitor_change (monitor);
 }
 
@@ -1762,6 +1782,8 @@ output_handle_scale (void             *data,
 
   GDK_NOTE (MISC,
             g_message ("handle scale output %d, scale %d", monitor->id, scale));
+
+  monitor->wl_output_receiving = TRUE;
 
   /* Set the scale from wl_output protocol, regardless of xdg-output support */
   gdk_monitor_set_scale_factor (GDK_MONITOR (monitor), scale);
@@ -1783,6 +1805,8 @@ output_handle_mode (void             *data,
   GDK_NOTE (MISC,
             g_message ("handle mode output %d, size %d %d, rate %d",
                        monitor->id, width, height, refresh));
+
+  monitor->wl_output_receiving = TRUE;
 
   if ((flags & WL_OUTPUT_MODE_CURRENT) == 0)
     return;
