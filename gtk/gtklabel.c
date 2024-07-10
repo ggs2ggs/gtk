@@ -1743,6 +1743,7 @@ gtk_label_grab_focus (GtkWidget *widget)
                 {
                   self->select_info->selection_anchor = link->start;
                   self->select_info->selection_end = link->start;
+                  gtk_widget_queue_draw (GTK_WIDGET (self));
                   break;
                 }
             }
@@ -1864,6 +1865,7 @@ gtk_label_focus (GtkWidget        *widget,
                     {
                       info->selection_anchor = focus_link->start;
                       info->selection_end = focus_link->start;
+                      gtk_widget_queue_draw (GTK_WIDGET (self));
                       break;
                     }
                 }
