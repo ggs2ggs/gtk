@@ -1244,6 +1244,8 @@ gtk_level_bar_set_value (GtkLevelBar *self,
 {
   g_return_if_fail (GTK_IS_LEVEL_BAR (self));
 
+  value = CLAMP (value, self->min_value, self->max_value);
+
   if (value == self->cur_value)
     return;
 
