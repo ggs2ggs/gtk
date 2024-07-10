@@ -80,6 +80,7 @@ struct _GdkWaylandPointerFrameData
   /* Specific to the scroll event */
   gdouble delta_x, delta_y;
   int32_t discrete_x, discrete_y;
+  int32_t value120_x, value120_y;
   gint8 is_scroll_stop;
   enum wl_pointer_axis_source source;
 };
@@ -1440,6 +1441,34 @@ flush_discrete_scroll_event (GdkWaylandSeat     *seat,
 }
 
 static void
+flush_v120_scroll_event (GdkWaylandSeat *seat,
+                         gint           value120_x,
+                         gint           value120_y)
+{
+  GdkEvent *event;
+  GdkDevice *source;
+  GdkScrollDirection direction;
+
+  if (value120_x > 0)
+    direction = GDK_SCROLL_LEFT;
+  else if (value120_x < 0)
+    direction = GDK_SCROLL_RIGHT;
+  else if (value120_y > 0)
+    direction = GDK_SCROLL_DOWN;
+  else
+    direction = GDK_SCROLL_UP;
+
+  source = get_scroll_device (seat, seat->pointer_info.frame.source);
+  event = create_scroll_event (seat, &seat->pointer_info,
+                               seat->master_pointer, source, TRUE);
+  event->scroll.direction = direction;
+  event->scroll.delta_x = value120_x;
+  event->scroll.delta_y = value120_y;
+
+  _gdk_wayland_display_deliver_event (seat->display, event);
+}
+
+static void
 flush_smooth_scroll_event (GdkWaylandSeat *seat,
                            gdouble         delta_x,
                            gdouble         delta_y,
@@ -1481,6 +1510,15 @@ flush_scroll_event (GdkWaylandSeat             *seat,
       flush_discrete_scroll_event (seat, direction);
       pointer_frame->discrete_x = 0;
       pointer_frame->discrete_y = 0;
+    }
+
+  if (pointer_frame->value120_x || pointer_frame->value120_y)
+    {
+      flush_v120_scroll_event (seat,
+                               pointer_frame->value120_x,
+                               pointer_frame->value120_y);
+      pointer_frame->value120_x = 0;
+      pointer_frame->value120_y = 0;
     }
 
   if (pointer_frame->is_scroll_stop ||
@@ -1929,6 +1967,35 @@ pointer_handle_axis_discrete (void              *data,
 
   GDK_NOTE (EVENTS,
             g_message ("discrete scroll, axis %s, value %d, seat %p",
+                       get_axis_name (axis), value, seat));
+}
+
+static void
+pointer_handle_axis_value120 (void              *data,
+                              struct wl_pointer *pointer,
+                              uint32_t           axis,
+                              int32_t            value)
+{
+  GdkWaylandSeat *seat = data;
+  GdkWaylandPointerFrameData *pointer_frame = &seat->pointer_info.frame;
+
+  if (!seat->pointer_info.focus)
+    return;
+
+  switch (axis)
+    {
+    case WL_POINTER_AXIS_VERTICAL_SCROLL:
+      pointer_frame->value120_y = value;
+      break;
+    case WL_POINTER_AXIS_HORIZONTAL_SCROLL:
+      pointer_frame->value120_x = value;
+      break;
+    default:
+      g_return_if_reached ();
+    }
+
+  GDK_NOTE (EVENTS,
+            g_message ("value120 scroll, axis %s, value %d, seat %p",
                        get_axis_name (axis), value, seat));
 }
 
@@ -3088,6 +3155,7 @@ static const struct wl_pointer_listener pointer_listener = {
   pointer_handle_axis_source,
   pointer_handle_axis_stop,
   pointer_handle_axis_discrete,
+  pointer_handle_axis_value120,
 };
 
 static const struct wl_keyboard_listener keyboard_listener = {
