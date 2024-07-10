@@ -3144,7 +3144,7 @@ gsk_gpu_node_processor_add_first_container_node (GskGpuNodeProcessor         *se
   if (n == 0)
     return FALSE;
 
-  for (i = n; i-->0; )
+  for (i = n - 1; i >= 0; i--)
     {
       if (gsk_gpu_node_processor_add_first_node (self,
                                                  target,
@@ -3170,9 +3170,11 @@ gsk_gpu_node_processor_add_first_container_node (GskGpuNodeProcessor         *se
                                     clip,
                                     NULL,
                                     pass_type);
+
+      i++;
     }
 
-  for (i++; i < n; i++)
+  for (; i < n; i++)
     gsk_gpu_node_processor_add_node (self, gsk_container_node_get_child (node, i));
 
   return TRUE;
