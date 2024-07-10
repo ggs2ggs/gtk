@@ -390,6 +390,8 @@ gtk_box_layout_compute_opposite_size (GtkBoxLayout *self,
  */
 #define MAX_ALLOWED_SIZE (1 << 20)
 
+#define STRINGIFY_ORIENTATION(orientation) ((orientation) == GTK_ORIENTATION_HORIZONTAL ? "width" : "height")
+
 static int
 distribute_remaining_size (GtkRequestedSize *sizes,
                            gsize             n_sizes,
@@ -403,6 +405,32 @@ distribute_remaining_size (GtkRequestedSize *sizes,
 
   if (n_sizes == 0)
     return available;
+
+  if (n_sizes == 1)
+    {
+      gtk_widget_measure (sizes[0].data,
+                          OPPOSITE_ORIENTATION (orientation),
+                          available,
+                          &min, NULL,
+                          NULL, NULL);
+      gtk_widget_measure (sizes[0].data,
+                          orientation,
+                          min,
+                          &sizes[0].minimum_size, &sizes[0].natural_size,
+                          NULL, NULL);
+
+      if (G_LIKELY (sizes[0].minimum_size <= available))
+        return available - sizes[0].minimum_size;
+      else
+        g_warning ("%s %p reports minimum %s of %d for %s of %d, but minimum %s of %d for %s of %d",
+                   G_OBJECT_TYPE_NAME (sizes[0].data), sizes[0].data,
+                   STRINGIFY_ORIENTATION (OPPOSITE_ORIENTATION (orientation)), min,
+                   STRINGIFY_ORIENTATION (orientation), available,
+                   STRINGIFY_ORIENTATION (orientation), sizes[0].minimum_size,
+                   STRINGIFY_ORIENTATION (OPPOSITE_ORIENTATION (orientation)), min);
+        /* Proceed to binary search, which only relies on measurements
+         * in one orientation being consistent.  */
+    }
 
   for (i = 0; i < n_sizes; i++)
     {
@@ -443,10 +471,10 @@ distribute_remaining_size (GtkRequestedSize *sizes,
                 {
                   g_critical ("%s %p reports a minimum %s of %u, but minimum %s for %s of %u is %u. Expect overlapping widgets.",
                               G_OBJECT_TYPE_NAME (sizes[i].data), sizes[i].data,
-                              orientation == GTK_ORIENTATION_HORIZONTAL ? "width" : "height",
+                              STRINGIFY_ORIENTATION (orientation),
                               check_min,
-                              orientation == GTK_ORIENTATION_HORIZONTAL ? "width" : "height",
-                              orientation == GTK_ORIENTATION_HORIZONTAL ? "height" : "width",
+                              STRINGIFY_ORIENTATION (orientation),
+                              STRINGIFY_ORIENTATION (OPPOSITE_ORIENTATION (orientation)),
                               MAX_ALLOWED_SIZE, sizes[i].minimum_size);
                   sizes[i].minimum_size = check_min;
                   sizes[i].natural_size = check_nat;
