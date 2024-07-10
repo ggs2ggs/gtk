@@ -3085,6 +3085,10 @@ gtk_entry_set_icon_tooltip_text (GtkEntry             *entry,
 
   ensure_has_tooltip (entry);
 
+  gtk_accessible_update_property (GTK_ACCESSIBLE (icon_info->widget),
+                                  GTK_ACCESSIBLE_PROPERTY_DESCRIPTION, tooltip,
+                                  -1);
+
   g_object_notify_by_pspec (G_OBJECT (entry),
                             entry_props[icon_pos == GTK_ENTRY_ICON_PRIMARY
                                         ? PROP_TOOLTIP_TEXT_PRIMARY
@@ -3142,6 +3146,7 @@ gtk_entry_set_icon_tooltip_markup (GtkEntry             *entry,
 {
   GtkEntryPrivate *priv = gtk_entry_get_instance_private (entry);
   EntryIconInfo *icon_info;
+  char *text;
 
   g_return_if_fail (GTK_IS_ENTRY (entry));
   g_return_if_fail (IS_VALID_ICON_POSITION (icon_pos));
@@ -3160,6 +3165,14 @@ gtk_entry_set_icon_tooltip_markup (GtkEntry             *entry,
   icon_info->tooltip = g_strdup (tooltip);
 
   ensure_has_tooltip (entry);
+
+  if (pango_parse_markup (tooltip, -1, 0, NULL, &text, NULL, NULL))
+    {
+      gtk_accessible_update_property (GTK_ACCESSIBLE (icon_info->widget),
+                                      GTK_ACCESSIBLE_PROPERTY_DESCRIPTION, text,
+                                      -1);
+      g_free (text);
+    }
 
   g_object_notify_by_pspec (G_OBJECT (entry),
                             entry_props[icon_pos == GTK_ENTRY_ICON_PRIMARY
