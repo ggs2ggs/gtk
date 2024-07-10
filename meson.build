@@ -408,6 +408,7 @@ pangoft_dep    = dependency('pangoft2', version: pango_req,
 if win32_enabled
   # for GTK_IM_CONTEXT_IME
   pangowin32_dep = dependency('pangowin32')
+  cdata.set('HAVE_PANGOWIN32', true)
 endif
 
 pangocairo_dep = dependency('pangocairo', version: pango_req)
@@ -434,6 +435,8 @@ endif
 if os_unix
   platform_gio_dep = giounix_dep
 endif
+
+cdata.set('HAVE_PANGOFC', os_unix or dependency('pangofc', required: false).found())
 
 tracker3_dep = dependency('tracker-sparql-3.0', required: get_option('tracker'))
 cdata.set('HAVE_TRACKER3', tracker3_dep.found())
