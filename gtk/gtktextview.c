@@ -139,9 +139,9 @@
  * `GtkTextView` uses the %GTK_ACCESSIBLE_ROLE_TEXT_BOX role.
  */
 
-/* How scrolling, validation, exposes, etc. work.
+/* How scrolling, validation, snapshots, etc. work.
  *
- * The expose_event handler has the invariant that the onscreen lines
+ * The snapshot handler has the invariant that the onscreen lines
  * have been validated.
  *
  * There are two ways that onscreen lines can become invalid. The first
@@ -150,7 +150,7 @@
  * gtk_text_view_value_changed() and goes like this:
  *   - gdk_surface_scroll() to reflect the new adjustment value
  *   - validate the lines that were moved onscreen
- *   - gdk_surface_process_updates() to handle the exposes immediately
+ *   - gdk_surface_process_updates() to handle the snapshots immediately
  *
  * The second way is that you get the “invalidated” signal from the layout,
  * indicating that lines have become invalid. This code path begins in
@@ -168,7 +168,7 @@
  *
  * Also, in size_allocate, if we invalidate some lines from changing
  * the layout width, we need to go ahead and run the high-priority idle,
- * because GTK sends exposes right after doing the size allocates without
+ * because GTK does snapshotting right after doing the size allocates without
  * returning to the main loop. This is also why the high-priority idle
  * is at a higher priority than resizing.
  *
@@ -267,7 +267,6 @@ struct _GtkTextViewPrivate
 
   guint scroll_timeout;
 
-  guint first_validate_idle;        /* Idle to revalidate onscreen portion, runs before resize */
   guint incremental_validate_idle;  /* Idle to revalidate offscreen portions, runs after redraw */
 
   /* Mark for drop target */
@@ -323,7 +322,7 @@ struct _GtkTextViewPrivate
 
   guint accepts_tab : 1;
 
-  /* debug flag - means that we've validated onscreen since the
+  /* whether we've validated onscreen since the
    * last "invalidate" signal from the layout
    */
   guint onscreen_validated : 1;
@@ -4034,16 +4033,9 @@ gtk_text_view_place_cursor_onscreen (GtkTextView *text_view)
 }
 
 static void
-gtk_text_view_remove_validate_idles (GtkTextView *text_view)
+gtk_text_view_remove_validate_idle (GtkTextView *text_view)
 {
   GtkTextViewPrivate *priv = text_view->priv;
-
-  if (priv->first_validate_idle != 0)
-    {
-      DV (g_print ("Removing first validate idle: %s\n", G_STRLOC));
-      g_source_remove (priv->first_validate_idle);
-      priv->first_validate_idle = 0;
-    }
 
   if (priv->incremental_validate_idle != 0)
     {
@@ -4066,7 +4058,7 @@ gtk_text_view_dispose (GObject *object)
       g_object_set_data (object, "gtk-emoji-chooser", NULL);
     }
 
-  gtk_text_view_remove_validate_idles (text_view);
+  gtk_text_view_remove_validate_idle (text_view);
   gtk_text_view_set_buffer (text_view, NULL);
   gtk_text_view_destroy_layout (text_view);
 
@@ -4867,9 +4859,9 @@ gtk_text_view_size_allocate (GtkWidget *widget,
     }
   g_object_unref (layout);
 
-  /* The GTK resize loop processes all the pending exposes right
-   * after doing the resize stuff, so the idle sizer won't have a
-   * chance to run. So we do the work here.
+  /* The GTK resize loop does snapshotting right after doing
+   * the resize stuff, so the idle sizer won't have a chance
+   * to run. So we do the work here.
    */
   gtk_text_view_flush_first_validate (text_view);
 
@@ -4946,19 +4938,16 @@ static void
 gtk_text_view_flush_first_validate (GtkTextView *text_view)
 {
   GtkTextViewPrivate *priv = text_view->priv;
-
-  if (priv->first_validate_idle == 0)
-    return;
+  gboolean onscreen_was_validated = priv->onscreen_validated;
 
   /* Do this first, which means that if an "invalidate"
-   * occurs during any of this process, a new first_validate_callback
-   * will be installed, and we'll start again.
+   * occurs during any of this process, onscreen_validated will be set
+   * back to false, and we'll start again.
    */
-  DV (g_print ("removing first validate in %s\n", G_STRLOC));
-  g_source_remove (priv->first_validate_idle);
-  priv->first_validate_idle = 0;
+  DV (g_print ("resetting onscreen_validated in %s\n", G_STRLOC));
+  priv->onscreen_validated = TRUE;
 
-  /* be sure we have up-to-date screen size set on the
+  /* Make sure we have up-to-date screen size set on the
    * layout.
    */
   gtk_text_view_update_layout_width (text_view);
@@ -4966,42 +4955,26 @@ gtk_text_view_flush_first_validate (GtkTextView *text_view)
   /* Bail out if we invalidated stuff; scrolling right away will just
    * confuse the issue.
    */
-  if (priv->first_validate_idle != 0)
+  if (!priv->onscreen_validated)
     {
       DV(g_print(">Width change forced requeue ("G_STRLOC")\n"));
+      return;
     }
-  else
-    {
-      /* scroll to any marks, if that's pending. This can jump us to
-       * the validation codepath used for scrolling onscreen, if so we
-       * bail out.  It won't jump if already in that codepath since
-       * value_changed is not recursive, so also validate if
-       * necessary.
-       */
-      if (!gtk_text_view_flush_scroll (text_view) ||
-          !priv->onscreen_validated)
-	gtk_text_view_validate_onscreen (text_view);
+  priv->onscreen_validated = onscreen_was_validated;
 
-      DV(g_print(">Leaving first validate idle ("G_STRLOC")\n"));
-
-      g_assert (priv->onscreen_validated);
-    }
-}
-
-static gboolean
-first_validate_callback (gpointer data)
-{
-  GtkTextView *text_view = data;
-
-  /* Note that some of this code is duplicated at the end of size_allocate,
-   * keep in sync with that.
+  /* Scroll to any marks, if that's pending. This can jump us to
+   * the validation codepath used for scrolling onscreen, if so we
+   * bail out.  It won't jump if already in that codepath since
+   * value_changed is not recursive, so also validate if
+   * necessary.
    */
+  if (!gtk_text_view_flush_scroll (text_view) ||
+      !priv->onscreen_validated)
+    gtk_text_view_validate_onscreen (text_view);
 
-  DV(g_print(G_STRLOC"\n"));
+  DV(g_print(">Leaving flush_first_validate ("G_STRLOC")\n"));
 
-  gtk_text_view_flush_first_validate (text_view);
-
-  return FALSE;
+  g_assert (priv->onscreen_validated);
 }
 
 static gboolean
@@ -5039,13 +5012,7 @@ gtk_text_view_invalidate (GtkTextView *text_view)
   if (priv->layout == NULL)
     return;
 
-  if (!priv->first_validate_idle)
-    {
-      priv->first_validate_idle = g_idle_add_full (GTK_PRIORITY_RESIZE - 2, first_validate_callback, text_view, NULL);
-      gdk_source_set_static_name_by_id (priv->first_validate_idle, "[gtk] first_validate_callback");
-      DV (g_print (G_STRLOC": adding first validate idle %d\n",
-                   priv->first_validate_idle));
-    }
+  gtk_widget_queue_allocate (GTK_WIDGET (text_view));
 
   if (!priv->incremental_validate_idle)
     {
@@ -5183,7 +5150,7 @@ gtk_text_view_unrealize (GtkWidget *widget)
       gtk_text_buffer_remove_selection_clipboard (priv->buffer, clipboard);
     }
 
-  gtk_text_view_remove_validate_idles (text_view);
+  gtk_text_view_remove_validate_idle (text_view);
 
   g_clear_pointer (&priv->popup_menu, gtk_widget_unparent);
 
@@ -6037,19 +6004,7 @@ gtk_text_view_paint (GtkWidget   *widget,
   g_return_if_fail (priv->layout != NULL);
   g_return_if_fail (priv->xoffset >= - priv->left_padding);
   g_return_if_fail (priv->yoffset >= - priv->top_margin);
-
-  while (priv->first_validate_idle != 0)
-    {
-      DV (g_print (G_STRLOC": first_validate_idle: %d\n",
-                   priv->first_validate_idle));
-      gtk_text_view_flush_first_validate (text_view);
-    }
-
-  if (!priv->onscreen_validated)
-    {
-      g_warning (G_STRLOC ": somehow some text lines were modified or scrolling occurred since the last validation of lines on the screen - may be a text widget bug.");
-      g_assert_not_reached ();
-    }
+  g_return_if_fail (priv->onscreen_validated);
 
   gtk_snapshot_save (snapshot);
   gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (-priv->xoffset, -priv->yoffset));
@@ -6145,7 +6100,7 @@ gtk_text_view_snapshot (GtkWidget   *widget,
   GtkTextViewPrivate *priv = text_view->priv;
   const GList *iter;
 
-  DV(g_print (">Exposed ("G_STRLOC")\n"));
+  DV(g_print (">Snapshot ("G_STRLOC")\n"));
 
   draw_text (widget, snapshot);
 
@@ -7492,8 +7447,8 @@ move_mark_to_pointer_and_scroll (GtkTextView    *text_view,
   DV(g_print (G_STRLOC": scrolling onscreen\n"));
   gtk_text_view_scroll_mark_onscreen (text_view, mark);
 
-  DV (g_print ("first validate idle leaving %s is %d\n",
-               G_STRLOC, text_view->priv->first_validate_idle));
+  DV (g_print ("onscreen_validated leaving %s is %d\n",
+               G_STRLOC, text_view->priv->onscreen_validated));
 }
 
 static gboolean
@@ -8237,7 +8192,7 @@ gtk_text_view_destroy_layout (GtkTextView *text_view)
     {
       const GList *iter;
 
-      gtk_text_view_remove_validate_idles (text_view);
+      gtk_text_view_remove_validate_idle (text_view);
 
       g_signal_handlers_disconnect_by_func (priv->layout,
 					    invalidated_handler,
@@ -8693,11 +8648,6 @@ gtk_text_view_value_changed (GtkAdjustment *adjustment,
         }
     }
 
-  /* This could result in invalidation, which would install the
-   * first_validate_idle, which would validate onscreen;
-   * but we're going to go ahead and validate here, so
-   * first_validate_idle shouldn't have anything to do.
-   */
   gtk_text_view_update_layout_width (text_view);
 
   /* We also update the IM spot location here, since the IM context
@@ -8711,13 +8661,6 @@ gtk_text_view_value_changed (GtkAdjustment *adjustment,
    * that, or shouldn't be.
    */
   gtk_text_view_validate_onscreen (text_view);
-
-  /* If this got installed, get rid of it, it's just a waste of time. */
-  if (priv->first_validate_idle != 0)
-    {
-      g_source_remove (priv->first_validate_idle);
-      priv->first_validate_idle = 0;
-    }
 
   /* Allow to extend selection with mouse scrollwheel. Bug 710612 */
   if (gtk_gesture_is_active (priv->drag_gesture))
