@@ -101,7 +101,7 @@
 #define XDG_WM_DIALOG_VERSION    1
 
 #ifdef HAVE_TOPLEVEL_STATE_SUSPENDED
-#define XDG_WM_BASE_VERSION      6
+#define XDG_WM_BASE_VERSION      7
 #else
 #define XDG_WM_BASE_VERSION      5
 #endif
