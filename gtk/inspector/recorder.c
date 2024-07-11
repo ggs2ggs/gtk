@@ -1573,6 +1573,7 @@ event_type_name (GdkEventType type)
     "Pad Strip",
     "Pad Group Mode",
     "Touchpad Hold",
+    "Pad Dial",
   };
 
   G_STATIC_ASSERT (G_N_ELEMENTS (event_name) == GDK_EVENT_LAST);
@@ -2117,6 +2118,7 @@ get_event_summary (GdkEvent *event)
     case GDK_PAD_BUTTON_RELEASE:
     case GDK_PAD_RING:
     case GDK_PAD_STRIP:
+    case GDK_PAD_DIAL:
     case GDK_PAD_GROUP_MODE:
     case GDK_DELETE:
       return g_strdup_printf ("%s", name);
