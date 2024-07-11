@@ -1010,6 +1010,7 @@ gtk_deps = [
   epoxy_dep,
   libm,
   graphene_dep,
+  accesskit_dep,
   profile_conf_h,
 ]
 
