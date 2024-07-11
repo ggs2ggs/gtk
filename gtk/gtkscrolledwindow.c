@@ -397,6 +397,10 @@ static void scrolled_window_scroll (GtkScrolledWindow        *scrolled_window,
                                     double                    delta_x,
                                     double                    delta_y,
                                     GtkEventControllerScroll *scroll);
+static gboolean scroll_controller_scroll (GtkEventControllerScroll *scroll,
+                                          double                    delta_x,
+                                          double                    delta_y,
+                                          GtkScrolledWindow        *scrolled_window);
 
 static guint signals[LAST_SIGNAL] = {0};
 static GParamSpec *properties[NUM_PROPERTIES];
@@ -1206,6 +1210,19 @@ get_wheel_detent_scroll_step (GtkScrolledWindow *sw,
   return scroll_step;
 }
 
+/* Returns whether @window can currently be scrolled
+ * i.e. the scrollbars can move because the content excedes the page_size */
+static gboolean
+content_can_be_scrolled (GtkScrolledWindow *window)
+{
+  GtkAdjustment *vadj;
+  gdouble upper, page_size;
+
+  vadj = gtk_scrolled_window_get_vadjustment (window);
+  g_object_get (vadj, "upper", &upper, "page_size", &page_size, NULL);
+  return !G_APPROX_VALUE ((upper - page_size), 0.0, DBL_EPSILON);
+}
+
 static gboolean
 captured_scroll_cb (GtkEventControllerScroll *scroll,
                     double                    delta_x,
@@ -1224,6 +1241,12 @@ captured_scroll_cb (GtkEventControllerScroll *scroll,
   if (priv->smooth_scroll)
     {
       scrolled_window_scroll (scrolled_window, delta_x, delta_y, scroll);
+      return GDK_EVENT_STOP;
+    }
+
+  if (content_can_be_scrolled (scrolled_window))
+    {
+      scroll_controller_scroll (scroll, delta_x, delta_y, scrolled_window);
       return GDK_EVENT_STOP;
     }
 
