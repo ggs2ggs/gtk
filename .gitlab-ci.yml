@@ -411,9 +411,9 @@ static-scan:
       - _scan_build/meson-logs
   allow_failure: true
 
-# Run tests with the address sanitizer. We need to turn off introspection
-# and f16c, since they are incompatible with asan
-asan-build:
+# Run tests with the address and undefined sanitizers. We need to turn off
+# introspection and f16c, since they are incompatible with asan
+sanitizer-build:
   image: $FEDORA_IMAGE
   tags: [ asan ]
   stage: analysis
@@ -423,7 +423,7 @@ asan-build:
     - export PATH="$HOME/.local/bin:$PATH"
     - CC=clang meson setup
             --buildtype=debugoptimized
-            -Db_sanitize=address
+            -Db_sanitize=address,undefined
             -Db_lundef=false
             -Dbuild-demos=false
             -Dbuild-tests=false
