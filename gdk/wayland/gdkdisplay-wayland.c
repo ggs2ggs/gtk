@@ -60,6 +60,7 @@
 #include <wayland/server-decoration-client-protocol.h>
 #include "linux-dmabuf-unstable-v1-client-protocol.h"
 #include "presentation-time-client-protocol.h"
+#include "xdg-session-management-v1-client-protocol.h"
 
 #include "wm-button-layout-translation.h"
 
@@ -99,6 +100,7 @@
 #define NO_XDG_OUTPUT_DONE_SINCE_VERSION 3
 #define OUTPUT_VERSION           3
 #define XDG_WM_DIALOG_VERSION    1
+#define XDG_SESSION_MANAGEMENT_VERSION 1
 
 #ifdef HAVE_TOPLEVEL_STATE_SUSPENDED
 #define XDG_WM_BASE_VERSION      6
@@ -309,6 +311,38 @@ static const struct org_kde_kwin_server_decoration_manager_listener server_decor
   .default_mode = server_decoration_manager_default_mode
 };
 
+static void
+session_listener_created (void                  *data,
+                          struct xdg_session_v1 *xdg_session_v1,
+                          const char            *id)
+{
+  GdkWaylandDisplay *display_wayland = data;
+
+  if (g_strcmp0 (display_wayland->session_id, id) != 0)
+    {
+      g_clear_pointer (&display_wayland->session_id, g_free);
+      display_wayland->session_id = g_strdup (id);
+    }
+}
+
+static void
+session_listener_restored (void                  *data,
+                           struct xdg_session_v1 *xdg_session_v1)
+{
+}
+
+static void
+session_listener_replaced (void                  *data,
+                           struct xdg_session_v1 *xdg_session_v1)
+{
+}
+
+static const struct xdg_session_v1_listener xdg_session_listener = {
+  .created = session_listener_created,
+  .restored = session_listener_restored,
+  .replaced = session_listener_replaced,
+};
+
 /*
  * gdk_wayland_display_prefers_ssd:
  * @display: (type GdkWaylandDisplay): a `GdkDisplay`
@@ -390,6 +424,13 @@ gdk_registry_handle_global (void               *data,
         wl_registry_bind (display_wayland->wl_registry, id,
                           &xdg_wm_dialog_v1_interface,
                           MIN (version, XDG_WM_DIALOG_VERSION));
+    }
+  else if (strcmp (interface, "xdg_session_manager_v1") == 0)
+    {
+      display_wayland->xdg_session_manager =
+        wl_registry_bind (display_wayland->wl_registry, id,
+                          &xdg_session_manager_v1_interface,
+                          MIN (version, XDG_SESSION_MANAGEMENT_VERSION));
     }
   else if (strcmp (interface, "gtk_shell1") == 0)
     {
@@ -753,6 +794,8 @@ gdk_wayland_display_dispose (GObject *object)
   g_clear_pointer (&display_wayland->single_pixel_buffer, wp_single_pixel_buffer_manager_v1_destroy);
   g_clear_pointer (&display_wayland->linux_dmabuf, zwp_linux_dmabuf_v1_destroy);
   g_clear_pointer (&display_wayland->dmabuf_formats_info, dmabuf_formats_info_free);
+  g_clear_pointer (&display_wayland->xdg_session, xdg_session_v1_destroy);
+  g_clear_pointer (&display_wayland->xdg_session_manager, xdg_session_manager_v1_destroy);
 
   g_clear_pointer (&display_wayland->shm, wl_shm_destroy);
   g_clear_pointer (&display_wayland->wl_registry, wl_registry_destroy);
@@ -2778,4 +2821,47 @@ gdk_wayland_display_dispatch_queue (GdkDisplay            *display,
                  errno, g_strerror (errno));
       _exit (1);
     }
+}
+
+void
+gdk_wayland_display_register_session (GdkDisplay *display,
+                                      const char *name)
+{
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (display);
+
+  if (!display_wayland->xdg_session_manager)
+    return;
+
+  g_clear_pointer (&display_wayland->session_id, g_free);
+  display_wayland->session_id = g_strdup (name);
+
+  display_wayland->xdg_session =
+    xdg_session_manager_v1_get_session (display_wayland->xdg_session_manager,
+                                        XDG_SESSION_MANAGER_V1_REASON_LAUNCH,
+                                        name);
+  xdg_session_v1_add_listener (display_wayland->xdg_session,
+                               &xdg_session_listener,
+                               display_wayland);
+
+  wl_display_roundtrip (display_wayland->wl_display);
+}
+
+void
+gdk_wayland_display_unregister_session (GdkDisplay *display)
+{
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (display);
+
+  if (!display_wayland->xdg_session_manager)
+    return;
+
+  if (display_wayland->xdg_session)
+    xdg_session_v1_remove (display_wayland->xdg_session);
+}
+
+const char *
+gdk_wayland_display_get_current_session_id (GdkDisplay *display)
+{
+  GdkWaylandDisplay *display_wayland = GDK_WAYLAND_DISPLAY (display);
+
+  return display_wayland->session_id;
 }

@@ -284,6 +284,8 @@ typedef struct
 
   GdkCursor *resize_cursor;
 
+  gchar *session_id;
+
   GtkEventController *menubar_controller;
 } GtkWindowPrivate;
 
@@ -332,6 +334,8 @@ enum {
 
   PROP_MAXIMIZED,
   PROP_FULLSCREENED,
+
+  PROP_SESSION_ID,
 
   LAST_ARG
 };
@@ -1078,6 +1082,23 @@ gtk_window_class_init (GtkWindowClass *klass)
       g_param_spec_boolean ("handle-menubar-accel", NULL, NULL,
                             TRUE,
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * GtkWindow:session-id: (attributes org.gtk.Property.get=gtk_window_get_session_id org.gtk.Property.set=gtk_window_set_session_id)
+   *
+   * The identificator of this toplevel in the session. In the windowing
+   * environments that allow it, this identificator will be used to
+   * identify windows in a persistent manner across runs, and restore
+   * window state (e.g. position, size) for them.
+   *
+   * Currently, this is only implemented for the Wayland backend.
+   *
+   * Since: 4.16
+   */
+  window_props[PROP_SESSION_ID] =
+      g_param_spec_string ("session-id", NULL, NULL,
+                           NULL,
+                           GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   g_object_class_install_properties (gobject_class, LAST_ARG, window_props);
 
@@ -1898,6 +1919,9 @@ gtk_window_set_property (GObject      *object,
     case PROP_HANDLE_MENUBAR_ACCEL:
       gtk_window_set_handle_menubar_accel (window, g_value_get_boolean (value));
       break;
+    case PROP_SESSION_ID:
+      gtk_window_set_session_id (window, g_value_get_string (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -1986,6 +2010,9 @@ gtk_window_get_property (GObject      *object,
       break;
     case PROP_HANDLE_MENUBAR_ACCEL:
       g_value_set_boolean (value, gtk_window_get_handle_menubar_accel (window));
+      break;
+    case PROP_SESSION_ID:
+      g_value_set_string (value, gtk_window_get_session_id (window));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -7031,4 +7058,44 @@ gtk_window_get_handle_menubar_accel (GtkWindow *window)
   phase = gtk_event_controller_get_propagation_phase (priv->menubar_controller);
 
   return phase == GTK_PHASE_CAPTURE;
+}
+
+/**
+ * gtk_window_set_session_id:
+ * @window: a `GtkWindow`
+ * @session_id: A persistent identifier for this window
+ *
+ * Sets the identifier to be used for session management purposes.
+ * This identifier should be fixed, or stable between executions.
+ *
+ * Since: 4.16
+ **/
+void
+gtk_window_set_session_id (GtkWindow   *window,
+                           const gchar *session_id)
+{
+  GtkWindowPrivate *priv = gtk_window_get_instance_private (window);
+
+  g_clear_pointer (&priv->session_id, g_free);
+  if (session_id)
+    priv->session_id = g_strdup (session_id);
+
+  g_object_notify (G_OBJECT (window), "session-id");
+}
+
+/**
+ * gtk_window_get_session_id:
+ * @window: a `GtkWindow`
+ *
+ * Gets the window identifier to be used for session management purposes.
+ * See [method@Gtk.Window.set_session_id] for more details about this.
+ *
+ * Returns: the session identifier
+ **/
+const gchar *
+gtk_window_get_session_id (GtkWindow *window)
+{
+  GtkWindowPrivate *priv = gtk_window_get_instance_private (window);
+
+  return priv->session_id;
 }
