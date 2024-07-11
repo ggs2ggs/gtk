@@ -188,7 +188,7 @@ gsk_renderer_class_init (GskRendererClass *klass)
   gobject_class->dispose = gsk_renderer_dispose;
 
   /**
-   * GskRenderer:realized: (attributes org.gtk.Property.get=gsk_renderer_is_realized)
+   * GskRenderer:realized:
    *
    * Whether the renderer has been associated with a surface or draw context.
    */
@@ -198,7 +198,7 @@ gsk_renderer_class_init (GskRendererClass *klass)
                           G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
   /**
-   * GskRenderer:surface: (attributes org.gtk.Property.get=gsk_renderer_get_surface)
+   * GskRenderer:surface:
    *
    * The surface associated with renderer.
    */
@@ -220,7 +220,7 @@ gsk_renderer_init (GskRenderer *self)
 }
 
 /**
- * gsk_renderer_get_surface: (attributes org.gtk.Method.get_property=surface)
+ * gsk_renderer_get_surface:
  * @renderer: a `GskRenderer`
  *
  * Retrieves the `GdkSurface` set using gsk_enderer_realize().
@@ -240,7 +240,7 @@ gsk_renderer_get_surface (GskRenderer *renderer)
 }
 
 /**
- * gsk_renderer_is_realized: (attributes org.gtk.Method.get_property=realized)
+ * gsk_renderer_is_realized:
  * @renderer: a `GskRenderer`
  *
  * Checks whether the @renderer is realized or not.

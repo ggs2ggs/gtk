@@ -791,7 +791,7 @@ gtk_window_class_init (GtkWindowClass *klass)
   klass->close_request = gtk_window_close_request;
 
   /**
-   * GtkWindow:title: (attributes org.gtk.Property.get=gtk_window_get_title org.gtk.Property.set=gtk_window_set_title)
+   * GtkWindow:title:
    *
    * The title of the window.
    */
@@ -801,7 +801,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE);
 
   /**
-   * GtkWindow:startup-id: (attributes org.gtk.Property.set=gtk_window_set_startup_id)
+   * GtkWindow:startup-id:
    *
    * A write-only property for setting window's startup notification identifier.
    */
@@ -811,7 +811,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_WRITABLE);
 
   /**
-   * GtkWindow:resizable: (attributes org.gtk.Property.get=gtk_window_get_resizable org.gtk.Property.set=gtk_window_set_resizable)
+   * GtkWindow:resizable:
    *
    * If %TRUE, users can resize the window.
    */
@@ -821,7 +821,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:modal: (attributes org.gtk.Property.get=gtk_window_get_modal org.gtk.Property.set=gtk_window_set_modal)
+   * GtkWindow:modal:
    *
    * If %TRUE, the window is modal.
    */
@@ -853,7 +853,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                         GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:destroy-with-parent: (attributes org.gtk.Property.get=gtk_window_get_destroy_with_parent org.gtk.Property.set=gtk_window_set_destroy_with_parent)
+   * GtkWindow:destroy-with-parent:
    *
    * If this window should be destroyed when the parent is destroyed.
    */
@@ -863,7 +863,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:hide-on-close: (attributes org.gtk.Property.get=gtk_window_get_hide_on_close org.gtk.Property.set=gtk_window_set_hide_on_close)
+   * GtkWindow:hide-on-close:
    *
    * If this window should be hidden when the users clicks the close button.
    */
@@ -873,7 +873,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:mnemonics-visible: (attributes org.gtk.Property.get=gtk_window_get_mnemonics_visible org.gtk.Property.set=gtk_window_set_mnemonics_visible)
+   * GtkWindow:mnemonics-visible:
    *
    * Whether mnemonics are currently visible in this window.
    *
@@ -886,7 +886,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:focus-visible: (attributes org.gtk.Property.get=gtk_window_get_focus_visible org.gtk.Property.set=gtk_window_set_focus_visible)
+   * GtkWindow:focus-visible:
    *
    * Whether 'focus rectangles' are currently visible in this window.
    *
@@ -899,7 +899,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:icon-name: (attributes org.gtk.Property.get=gtk_window_get_icon_name org.gtk.Property.set=gtk_window_set_icon_name)
+   * GtkWindow:icon-name:
    *
    * Specifies the name of the themed icon to use as the window icon.
    *
@@ -911,7 +911,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:display: (attributes org.gtk.Property.set=gtk_window_set_display)
+   * GtkWindow:display:
    *
    * The display that will display this window.
    */
@@ -921,7 +921,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:is-active: (attributes org.gtk.Property.get=gtk_window_is_active)
+   * GtkWindow:is-active:
    *
    * Whether the toplevel is the currently active window.
    */
@@ -931,7 +931,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READABLE);
 
   /**
-   * GtkWindow:decorated: (attributes org.gtk.Property.get=gtk_window_get_decorated org.gtk.Property.set=gtk_window_set_decorated)
+   * GtkWindow:decorated:
    *
    * Whether the window should have a frame (also known as *decorations*).
    */
@@ -941,7 +941,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:deletable: (attributes org.gtk.Property.get=gtk_window_get_deletable org.gtk.Property.set=gtk_window_set_deletable)
+   * GtkWindow:deletable:
    *
    * Whether the window frame should have a close button.
    */
@@ -951,7 +951,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:transient-for: (attributes org.gtk.Property.get=gtk_window_get_transient_for org.gtk.Property.set=gtk_window_set_transient_for)
+   * GtkWindow:transient-for:
    *
    * The transient parent of the window.
    */
@@ -961,7 +961,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_CONSTRUCT|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:maximized: (attributes org.gtk.Property.get=gtk_window_is_maximized)
+   * GtkWindow:maximized:
    *
    * Whether the window is maximized.
    *
@@ -977,7 +977,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_CONSTRUCT|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:fullscreened: (attributes org.gtk.Property.get=gtk_window_is_fullscreen)
+   * GtkWindow:fullscreened: (getter is_fullscreen)
    *
    * Whether the window is fullscreen.
    *
@@ -993,7 +993,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READWRITE|G_PARAM_CONSTRUCT|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:suspended: (attributes org.gtk.Property.get=gtk_window_is_suspended)
+   * GtkWindow:suspended:
    *
    * Whether the window is suspended.
    *
@@ -1007,7 +1007,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                             GTK_PARAM_READABLE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:application: (attributes org.gtk.Property.get=gtk_window_get_application org.gtk.Property.set=gtk_window_set_application)
+   * GtkWindow:application:
    *
    * The `GtkApplication` associated with the window.
    *
@@ -1025,7 +1025,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:default-widget: (attributes org.gtk.Property.get=gtk_window_get_default_widget org.gtk.Property.set=gtk_window_set_default_widget)
+   * GtkWindow:default-widget:
    *
    * The default widget.
    */
@@ -1035,7 +1035,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:focus-widget: (attributes org.gtk.Property.get=gtk_window_get_focus org.gtk.Property.set=gtk_window_set_focus)
+   * GtkWindow:focus-widget: (getter get_focus) (setter set_focus)
    *
    * The focus widget.
    */
@@ -1045,7 +1045,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:child: (attributes org.gtk.Property.get=gtk_window_get_child org.gtk.Property.set=gtk_window_set_child)
+   * GtkWindow:child:
    *
    * The child widget.
    */
@@ -1055,7 +1055,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:titlebar: (attributes org.gtk.Property.get=gtk_window_get_titlebar org.gtk.Property.set=gtk_window_set_titlebar)
+   * GtkWindow:titlebar:
    *
    * The titlebar widget.
    *
@@ -1067,7 +1067,7 @@ gtk_window_class_init (GtkWindowClass *klass)
                            GTK_PARAM_READWRITE|G_PARAM_STATIC_STRINGS|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
-   * GtkWindow:handle-menubar-accel: (attributes org.gtk.Property.get=gtk_window_get_handle_menubar_accel org.gtk.Property.set=gtk_window_set_handle_menubar_accel)
+   * GtkWindow:handle-menubar-accel:
    *
    * Whether the window frame should handle F10 for activating
    * menubars.
@@ -1266,7 +1266,7 @@ gtk_window_class_init (GtkWindowClass *klass)
 }
 
 /**
- * gtk_window_is_maximized: (attributes org.gtk.Method.get_property=maximized)
+ * gtk_window_is_maximized:
  * @window: a `GtkWindow`
  *
  * Retrieves the current maximized state of @window.
@@ -1293,7 +1293,7 @@ gtk_window_is_maximized (GtkWindow *window)
 }
 
 /**
- * gtk_window_is_fullscreen: (attributes org.gtk.Property.get=fullscreened)
+ * gtk_window_is_fullscreen: (get-property fullscreened)
  * @window: a `GtkWindow`
  *
  * Retrieves the current fullscreen state of @window.
@@ -1320,7 +1320,7 @@ gtk_window_is_fullscreen (GtkWindow *window)
 }
 
 /**
- * gtk_window_is_suspended: (attributes org.gtk.Property.get=suspended)
+ * gtk_window_is_suspended:
  * @window: a `GtkWindow`
  *
  * Retrieves the current suspended state of @window.
@@ -2239,7 +2239,7 @@ gtk_window_new (void)
 }
 
 /**
- * gtk_window_set_title: (attributes org.gtk.Method.set_property=title)
+ * gtk_window_set_title:
  * @window: a `GtkWindow`
  * @title: (nullable): title of the window
  *
@@ -2278,7 +2278,7 @@ gtk_window_set_title (GtkWindow  *window,
 }
 
 /**
- * gtk_window_get_title: (attributes org.gtk.Method.get_property=title)
+ * gtk_window_get_title:
  * @window: a `GtkWindow`
  *
  * Retrieves the title of the window.
@@ -2296,7 +2296,7 @@ gtk_window_get_title (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_default_widget: (attributes org.gtk.Property.set=default-widget)
+ * gtk_window_set_default_widget:
  * @window: a `GtkWindow`
  * @default_widget: (nullable): widget to be the default
  *   to unset the default widget for the toplevel
@@ -2359,7 +2359,7 @@ gtk_window_set_default_widget (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_default_widget: (attributes org.gtk.Property.get=default-widget)
+ * gtk_window_get_default_widget:
  * @window: a `GtkWindow`
  *
  * Returns the default widget for @window.
@@ -2408,7 +2408,7 @@ _gtk_window_notify_keys_changed (GtkWindow *window)
 }
 
 /**
- * gtk_window_get_focus: (attributes org.gtk.Property.get=focus-widget)
+ * gtk_window_get_focus: (get-property focus-widget)
  * @window: a `GtkWindow`
  *
  * Retrieves the current focused widget within the window.
@@ -2443,7 +2443,7 @@ gtk_window_real_activate_default (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_modal: (attributes org.gtk.Method.set_property=modal)
+ * gtk_window_set_modal:
  * @window: a `GtkWindow`
  * @modal: whether the window is modal
  *
@@ -2492,7 +2492,7 @@ gtk_window_set_modal (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_modal: (attributes org.gtk.Method.get_property=modal)
+ * gtk_window_get_modal:
  * @window: a `GtkWindow`
  *
  * Returns whether the window is modal.
@@ -2663,7 +2663,7 @@ gtk_window_unset_transient_for (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_transient_for: (attributes org.gtk.Method.set_property=transient-for)
+ * gtk_window_set_transient_for:
  * @window: a `GtkWindow`
  * @parent: (nullable): parent window
  *
@@ -2733,7 +2733,7 @@ gtk_window_set_transient_for (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_transient_for: (attributes org.gtk.Method.get_property=transient-for)
+ * gtk_window_get_transient_for:
  * @window: a `GtkWindow`
  *
  * Fetches the transient parent for this window.
@@ -2751,7 +2751,7 @@ gtk_window_get_transient_for (GtkWindow *window)
 }
 
 /**
- * gtk_window_get_application: (attributes org.gtk.Method.get_property=application)
+ * gtk_window_get_application:
  * @window: a `GtkWindow`
  *
  * Gets the `GtkApplication` associated with the window.
@@ -2790,7 +2790,7 @@ gtk_window_release_application (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_application: (attributes org.gtk.Method.set_property=application)
+ * gtk_window_set_application:
  * @window: a `GtkWindow`
  * @application: (nullable): a `GtkApplication`, or %NULL to unset
  *
@@ -2847,7 +2847,7 @@ gtk_window_set_application (GtkWindow      *window,
 }
 
 /**
- * gtk_window_set_destroy_with_parent: (attributes org.gtk.Method.set_property=destroy-with-parent)
+ * gtk_window_set_destroy_with_parent:
  * @window: a `GtkWindow`
  * @setting: whether to destroy @window with its transient parent
  *
@@ -2874,7 +2874,7 @@ gtk_window_set_destroy_with_parent (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_destroy_with_parent: (attributes org.gtk.Method.get_property=destroy-with-parent)
+ * gtk_window_get_destroy_with_parent:
  * @window: a `GtkWindow`
  *
  * Returns whether the window will be destroyed with its transient parent.
@@ -2892,7 +2892,7 @@ gtk_window_get_destroy_with_parent (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_hide_on_close: (attributes org.gtk.Method.set_property=hide-on-close)
+ * gtk_window_set_hide_on_close:
  * @window: a `GtkWindow`
  * @setting: whether to hide the window when it is closed
  *
@@ -2916,7 +2916,7 @@ gtk_window_set_hide_on_close (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_hide_on_close: (attributes org.gtk.Method.get_property=hide-on-close)
+ * gtk_window_get_hide_on_close:
  * @window: a `GtkWindow`
  *
  * Returns whether the window will be hidden when the close button is clicked.
@@ -3010,7 +3010,7 @@ gtk_window_enable_csd (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_titlebar: (attributes org.gtk.Method.set_property=titlebar)
+ * gtk_window_set_titlebar:
  * @window: a `GtkWindow`
  * @titlebar: (nullable): the widget to use as titlebar
  *
@@ -3079,7 +3079,7 @@ gtk_window_set_titlebar (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_titlebar: (attributes org.gtk.Method.get_property=titlebar)
+ * gtk_window_get_titlebar:
  * @window: a `GtkWindow`
  *
  * Returns the custom titlebar that has been set with
@@ -3098,7 +3098,7 @@ gtk_window_get_titlebar (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_decorated: (attributes org.gtk.Method.set_property=decorated)
+ * gtk_window_set_decorated:
  * @window: a `GtkWindow`
  * @setting: %TRUE to decorate the window
  *
@@ -3141,7 +3141,7 @@ gtk_window_set_decorated (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_decorated: (attributes org.gtk.Method.get_property=decorated)
+ * gtk_window_get_decorated:
  * @window: a `GtkWindow`
  *
  * Returns whether the window has been set to have decorations.
@@ -3159,7 +3159,7 @@ gtk_window_get_decorated (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_deletable: (attributes org.gtk.Method.set_property=deletable)
+ * gtk_window_set_deletable:
  * @window: a `GtkWindow`
  * @setting: %TRUE to decorate the window as deletable
  *
@@ -3200,7 +3200,7 @@ gtk_window_set_deletable (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_deletable: (attributes org.gtk.Method.get_property=deletable)
+ * gtk_window_get_deletable:
  * @window: a `GtkWindow`
  *
  * Returns whether the window has been set to have a close button.
@@ -3434,7 +3434,7 @@ update_themed_icon (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_icon_name: (attributes org.gtk.Method.set_property=icon-name)
+ * gtk_window_set_icon_name:
  * @window: a `GtkWindow`
  * @name: (nullable): the name of the themed icon
  *
@@ -3470,7 +3470,7 @@ gtk_window_set_icon_name (GtkWindow  *window,
 }
 
 /**
- * gtk_window_get_icon_name: (attributes org.gtk.Method.get_property=icon-name)
+ * gtk_window_get_icon_name:
  * @window: a `GtkWindow`
  *
  * Returns the name of the themed icon for the window.
@@ -5175,7 +5175,7 @@ synthesize_focus_change_events (GtkWindow       *window,
 }
 
 /**
- * gtk_window_set_focus: (attributes org.gtk.Method.set_property=focus-widget)
+ * gtk_window_set_focus: (set-property focus-widget)
  * @window: a `GtkWindow`
  * @focus: (nullable): widget to be the new focus widget, or %NULL to unset
  *   any focus widget for the toplevel window.
@@ -5290,7 +5290,7 @@ _gtk_window_present (GtkWindow *window,
 }
 
 /**
- * gtk_window_set_startup_id: (attributes org.gtk.Method.set_property=startup-id)
+ * gtk_window_set_startup_id:
  * @window: a `GtkWindow`
  * @startup_id: a string with startup-notification identifier
  *
@@ -5676,7 +5676,7 @@ gtk_window_unfullscreen (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_resizable: (attributes org.gtk.Method.set_property=resizable)
+ * gtk_window_set_resizable:
  * @window: a `GtkWindow`
  * @resizable: %TRUE if the user can resize this window
  *
@@ -5710,7 +5710,7 @@ gtk_window_set_resizable (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_resizable: (attributes org.gtk.Method.get_property=resizable)
+ * gtk_window_get_resizable:
  * @window: a `GtkWindow`
  *
  * Gets the value set by gtk_window_set_resizable().
@@ -5728,7 +5728,7 @@ gtk_window_get_resizable (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_display: (attributes org.gtk.Method.set_property=display)
+ * gtk_window_set_display:
  * @window: a `GtkWindow`
  * @display: a `GdkDisplay`
  *
@@ -5817,7 +5817,7 @@ gtk_window_on_theme_variant_changed (GtkSettings *settings,
 #endif
 
 /**
- * gtk_window_is_active: (attributes org.gtk.Method.get_property=is-active)
+ * gtk_window_is_active:
  * @window: a `GtkWindow`
  *
  * Returns whether the window is part of the current active toplevel.
@@ -6019,7 +6019,7 @@ gtk_window_set_auto_startup_notification (gboolean setting)
 }
 
 /**
- * gtk_window_get_mnemonics_visible: (attributes org.gtk.Method.get_property=mnemonics-visible)
+ * gtk_window_get_mnemonics_visible:
  * @window: a `GtkWindow`
  *
  * Gets whether mnemonics are supposed to be visible.
@@ -6038,7 +6038,7 @@ gtk_window_get_mnemonics_visible (GtkWindow *window)
 }
 
 /**
- * gtk_window_set_mnemonics_visible: (attributes org.gtk.Method.set_property=mnemonics-visible)
+ * gtk_window_set_mnemonics_visible:
  * @window: a `GtkWindow`
  * @setting: the new value
  *
@@ -6099,7 +6099,7 @@ _gtk_window_schedule_mnemonics_visible (GtkWindow *window)
 }
 
 /**
- * gtk_window_get_focus_visible: (attributes org.gtk.Method.get_property=focus-visible)
+ * gtk_window_get_focus_visible:
  * @window: a `GtkWindow`
  *
  * Gets whether “focus rectangles” are supposed to be visible.
@@ -6131,7 +6131,7 @@ unset_focus_visible (gpointer data)
 }
 
 /**
- * gtk_window_set_focus_visible: (attributes org.gtk.Method.set_property=focus-visible)
+ * gtk_window_set_focus_visible:
  * @window: a `GtkWindow`
  * @setting: the new value
  *
@@ -6764,7 +6764,7 @@ gtk_window_maybe_update_cursor (GtkWindow *window,
 }
 
 /**
- * gtk_window_set_child: (attributes org.gtk.Method.set_property=child)
+ * gtk_window_set_child:
  * @window: a `GtkWindow`
  * @child: (nullable): the child widget
  *
@@ -6794,7 +6794,7 @@ gtk_window_set_child (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_child: (attributes org.gtk.Method.get_property=child)
+ * gtk_window_get_child:
  * @window: a `GtkWindow`
  *
  * Gets the child widget of @window.
@@ -6981,7 +6981,7 @@ gtk_window_grab_notify (GtkWindow *window,
 }
 
 /**
- * gtk_window_set_handle_menubar_accel: (attributes org.gtk.Method.set_property=handle-menubar-accel)
+ * gtk_window_set_handle_menubar_accel:
  * @window: a `GtkWindow`
  * @handle_menubar_accel: %TRUE to make @window handle F10
  *
@@ -7010,7 +7010,7 @@ gtk_window_set_handle_menubar_accel (GtkWindow *window,
 }
 
 /**
- * gtk_window_get_handle_menubar_accel: (attributes org.gtk.Method.get_property=handle-menubar-accel)
+ * gtk_window_get_handle_menubar_accel:
  * @window: a `GtkWindow`
  *
  * Returns whether this window reacts to F10 key presses by

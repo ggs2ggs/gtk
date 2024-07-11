@@ -452,7 +452,7 @@ gtk_builder_class_init (GtkBuilderClass *klass)
   gobject_class->get_property = gtk_builder_get_property;
 
  /**
-  * GtkBuilder:translation-domain: (attributes org.gtk.Property.get=gtk_builder_get_translation_domain org.gtk.Property.set=gtk_builder_set_translation_domain)
+  * GtkBuilder:translation-domain:
   *
   * The translation domain used when translating property values that
   * have been marked as translatable.
@@ -466,7 +466,7 @@ gtk_builder_class_init (GtkBuilderClass *klass)
                            GTK_PARAM_READWRITE);
 
  /**
-  * GtkBuilder:current-object: (attributes org.gtk.Property.get=gtk_builder_get_current_object org.gtk.Property.set=gtk_builder_set_current_object)
+  * GtkBuilder:current-object:
   *
   * The object the builder is evaluating for.
   */
@@ -476,7 +476,7 @@ gtk_builder_class_init (GtkBuilderClass *klass)
                            GTK_PARAM_READWRITE);
 
  /**
-  * GtkBuilder:scope: (attributes org.gtk.Property.get=gtk_builder_get_scope org.gtk.Property.set=gtk_builder_set_scope)
+  * GtkBuilder:scope:
   *
   * The scope the builder is operating in
   */
@@ -1896,7 +1896,7 @@ gtk_builder_get_objects (GtkBuilder *builder)
 }
 
 /**
- * gtk_builder_set_translation_domain: (attributes org.gtk.Method.set_property=translation-domain)
+ * gtk_builder_set_translation_domain:
  * @builder: a `GtkBuilder`
  * @domain: (nullable): the translation domain
  *
@@ -1919,7 +1919,7 @@ gtk_builder_set_translation_domain (GtkBuilder  *builder,
 }
 
 /**
- * gtk_builder_get_translation_domain: (attributes org.gtk.Method.get_property=translation-domain)
+ * gtk_builder_get_translation_domain:
  * @builder: a `GtkBuilder`
  *
  * Gets the translation domain of @builder.
@@ -1968,7 +1968,7 @@ gtk_builder_expose_object (GtkBuilder    *builder,
 }
 
 /**
- * gtk_builder_get_current_object: (attributes org.gtk.Method.get_property=current-object)
+ * gtk_builder_get_current_object:
  * @builder: a `GtkBuilder`
  *
  * Gets the current object set via gtk_builder_set_current_object().
@@ -1986,7 +1986,7 @@ gtk_builder_get_current_object (GtkBuilder *builder)
 }
 
 /**
- * gtk_builder_set_current_object: (attributes org.gtk.Method.set_property=current-object)
+ * gtk_builder_set_current_object:
  * @builder: a `GtkBuilder`
  * @current_object: (nullable) (transfer none): the new current object
  *
@@ -2016,7 +2016,7 @@ gtk_builder_set_current_object (GtkBuilder *builder,
 }
 
 /**
- * gtk_builder_get_scope: (attributes org.gtk.Method.get_property=scope)
+ * gtk_builder_get_scope:
  * @builder: a `GtkBuilder`
  *
  * Gets the scope in use that was set via gtk_builder_set_scope().
@@ -2034,7 +2034,7 @@ gtk_builder_get_scope (GtkBuilder *builder)
 }
 
 /**
- * gtk_builder_set_scope: (attributes org.gtk.Method.set_property=scope)
+ * gtk_builder_set_scope:
  * @builder: a `GtkBuilder`
  * @scope: (nullable) (transfer none): the scope to use
  *
