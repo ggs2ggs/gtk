@@ -815,6 +815,8 @@ gtk_im_context_wayland_set_cursor_location (GtkIMContext *context,
     return;
 
   context_wayland->cursor_rect = *rect;
+  notify_cursor_location (context_wayland);
+  commit_state (context_wayland);
 }
 
 static void
