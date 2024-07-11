@@ -94,5 +94,14 @@ BOOL      gdk_win32_private_wglMakeCurrent       (HDC hdc,
                                                   HGLRC hglrc);
 void      gdk_win32_private_wglDeleteContext     (HGLRC hglrc);
 
+BOOL      gdk_win32_private_wglGetPixelFormatAttribivARB (HDC hdc,
+                                                          int iPixelFormat,
+                                                          int iLayerPlane,
+                                                          UINT nAttributes,
+                                                          const int * piAttributes,
+                                                          int * piValues);
+
+void      gdk_win32_private_wglGetPixelFormatAttribivARB_assign (PROC proc);
+
 G_END_DECLS
 
