@@ -1962,7 +1962,7 @@ gtk_menu_shell_set_take_focus (GtkMenuShell *menu_shell,
  *
  * Gets the currently selected item.
  *
- * Returns: (transfer none): the currently selected item
+ * Returns: (transfer none) (nullable): the currently selected item
  *
  * Since: 3.0
  */

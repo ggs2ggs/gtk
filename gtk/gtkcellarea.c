@@ -3001,7 +3001,7 @@ gtk_cell_area_set_focus_cell (GtkCellArea     *area,
  *
  * Retrieves the currently focused cell for @area
  *
- * Returns: (transfer none): the currently focused cell in @area.
+ * Returns: (transfer none) (nullable): the currently focused cell in @area.
  *
  * Since: 3.0
  */
@@ -3331,7 +3331,7 @@ gtk_cell_area_set_edit_widget (GtkCellArea     *area,
  * Gets the #GtkCellRenderer in @area that is currently
  * being edited.
  *
- * Returns: (transfer none): The currently edited #GtkCellRenderer
+ * Returns: (transfer none) (nullable): The currently edited #GtkCellRenderer
  *
  * Since: 3.0
  */
@@ -3354,7 +3354,7 @@ gtk_cell_area_get_edited_cell (GtkCellArea *area)
  * Gets the #GtkCellEditable widget currently used
  * to edit the currently edited cell.
  *
- * Returns: (transfer none): The currently active #GtkCellEditable widget
+ * Returns: (transfer none) (nullable): The currently active #GtkCellEditable widget
  *
  * Since: 3.0
  */

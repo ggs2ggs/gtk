@@ -3784,7 +3784,7 @@ gtk_tree_model_filter_new (GtkTreeModel *child_model,
  *
  * Returns a pointer to the child model of @filter.
  *
- * Returns: (transfer none): A pointer to a #GtkTreeModel.
+ * Returns: (transfer none) (nullable): A pointer to a #GtkTreeModel.
  *
  * Since: 2.4
  */

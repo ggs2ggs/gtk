@@ -2184,7 +2184,7 @@ gtk_button_set_label (GtkButton   *button,
  * case if you create an empty button with gtk_button_new() to 
  * use as a container.
  *
- * Returns: The text of the label widget. This string is owned
+ * Returns: (transfer none): The text of the label widget. This string is owned
  * by the widget and must not be modified or freed.
  */
 const gchar *
@@ -2717,7 +2717,7 @@ gtk_button_get_always_show_image (GtkButton *button)
  * Returns the button’s event window if it is realized, %NULL otherwise.
  * This function should be rarely needed.
  *
- * Returns: (transfer none): @button’s event window.
+ * Returns: (transfer none) (nullable): @button’s event window.
  *
  * Since: 2.22
  */

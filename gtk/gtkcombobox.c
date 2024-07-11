@@ -4649,7 +4649,7 @@ gtk_combo_box_get_popup_fixed_width (GtkComboBox *combo_box)
  * This function is mostly intended for use by accessibility technologies;
  * applications should have little use for it.
  *
- * Returns: (transfer none): the accessible object corresponding
+ * Returns: (transfer none) (nullable): the accessible object corresponding
  *     to the combo box’s popup.
  *
  * Since: 2.6

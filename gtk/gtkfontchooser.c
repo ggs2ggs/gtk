@@ -579,7 +579,7 @@ gtk_font_chooser_get_level (GtkFontChooser *fontchooser)
  *
  * Gets the currently-selected font features.
  *
- * Returns: the currently selected font features
+ * Returns: (transfer full): the currently selected font features
  *
  * Since: 3.24
  */
@@ -601,7 +601,7 @@ gtk_font_chooser_get_font_features (GtkFontChooser *fontchooser)
  *
  * Gets the language that is used for font features.
  *
- * Returns: the currently selected language
+ * Returns: (transfer full): the currently selected language
  *
  * Since: 3.24
  */

@@ -1596,7 +1596,7 @@ gtk_recent_info_unref (GtkRecentInfo *info)
  *
  * Gets the URI of the resource.
  *
- * Returns: the URI of the resource. The returned string is
+ * Returns: (transfer none) (uri): the URI of the resource. The returned string is
  *   owned by the recent manager, and should not be freed.
  *
  * Since: 2.10
@@ -1922,7 +1922,7 @@ gtk_recent_info_has_application (GtkRecentInfo *info,
  * Gets the name of the last application that have registered the
  * recently used resource represented by @info.
  *
- * Returns: an application name. Use g_free() to free it.
+ * Returns: (transfer full): an application name. Use g_free() to free it.
  *
  * Since: 2.10
  */
@@ -2278,7 +2278,7 @@ get_uri_shortname_for_display (const gchar *uri)
  * this function on an item that refers to
  * “file:///foo/bar.txt” will yield “bar.txt”.
  *
- * Returns: A newly-allocated string in UTF-8 encoding
+ * Returns: (transfer full) (nullable): A newly-allocated string in UTF-8 encoding
  *   free it with g_free()
  *
  * Since: 2.10
@@ -2306,7 +2306,7 @@ gtk_recent_info_get_short_name (GtkRecentInfo *info)
  * is local, it returns a local path; if the resource is not local,
  * it returns the UTF-8 encoded content of gtk_recent_info_get_uri().
  *
- * Returns: (nullable): a newly allocated UTF-8 string containing the
+ * Returns: (transfer full) (nullable): a newly allocated UTF-8 string containing the
  *   resource’s URI or %NULL. Use g_free() when done using it.
  *
  * Since: 2.10

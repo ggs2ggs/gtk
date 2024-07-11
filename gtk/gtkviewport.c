@@ -777,7 +777,7 @@ gtk_viewport_get_bin_window (GtkViewport *viewport)
  *
  * Gets the view window of the #GtkViewport.
  *
- * Returns: (transfer none): a #GdkWindow
+ * Returns: (transfer none) (nullable): a #GdkWindow
  *
  * Since: 2.22
  **/

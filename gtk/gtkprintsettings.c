@@ -160,7 +160,7 @@ gtk_print_settings_copy (GtkPrintSettings *other)
  * 
  * Looks up the string value associated with @key.
  * 
- * Returns: the string value for @key
+ * Returns: (transfer none) (nullable): the string value for @key
  * 
  * Since: 2.10
  */

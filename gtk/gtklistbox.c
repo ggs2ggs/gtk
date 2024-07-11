@@ -713,7 +713,7 @@ gtk_list_box_init (GtkListBox *box)
  * case you should use gtk_list_box_selected_foreach() to
  * find all selected rows.
  *
- * Returns: (transfer none): the selected row
+ * Returns: (transfer none) (nullable): the selected row
  *
  * Since: 3.10
  */
@@ -1057,7 +1057,7 @@ gtk_list_box_set_adjustment (GtkListBox    *box,
  * Gets the adjustment (if any) that the widget uses to
  * for vertical scrolling.
  *
- * Returns: (transfer none): the adjustment
+ * Returns: (transfer none) (nullable): the adjustment
  *
  * Since: 3.10
  */

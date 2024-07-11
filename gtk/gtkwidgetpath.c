@@ -469,7 +469,7 @@ gtk_widget_path_append_with_siblings (GtkWidgetPath *path,
  * Returns the list of siblings for the element at @pos. If the element
  * was not added with siblings, %NULL is returned.
  *
- * Returns: %NULL or the list of siblings for the element at @pos.
+ * Returns: (transfer none) (nullable): %NULL or the list of siblings for the element at @pos.
  **/
 const GtkWidgetPath *
 gtk_widget_path_iter_get_siblings (const GtkWidgetPath *path,
