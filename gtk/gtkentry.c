@@ -6093,6 +6093,10 @@ gtk_entry_preedit_changed_cb (GtkIMContext *context,
 
   if (priv->editable)
     {
+      if(priv->preedit_cursor == 0) {   
+        gtk_entry_enter_text(entry, "");
+      }                                 
+
       gchar *preedit_string;
       gint cursor_pos;
 
