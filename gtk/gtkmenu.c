@@ -1852,7 +1852,7 @@ gtk_menu_popup_internal (GtkMenu             *menu,
 
   menu_shell->priv->parent_menu_shell = parent_menu_shell;
 
-  priv->seen_item_enter = FALSE;
+  priv->last_item_enter = NULL;
 
   /* Find the last viewable ancestor, and make an X grab on it
    */
@@ -4488,7 +4488,7 @@ gtk_menu_enter_notify (GtkWidget        *widget,
           GtkMenuPrivate *priv = (GTK_MENU (menu))->priv;
           GtkMenuShell *menu_shell = GTK_MENU_SHELL (menu);
 
-          if (priv->seen_item_enter)
+          if (priv->last_item_enter && priv->last_item_enter != menu_item)
             {
               /* This is the second enter we see for an item
                * on this menu. This means a release should always
@@ -4511,7 +4511,7 @@ gtk_menu_enter_notify (GtkWidget        *widget,
                 }
             }
 
-          priv->seen_item_enter = TRUE;
+          priv->last_item_enter = menu_item;
         }
     }
 
