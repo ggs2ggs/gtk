@@ -3998,6 +3998,8 @@ gtk_icon_paintable_new_for_file (GFile *file,
 {
   GtkIconPaintable *icon;
 
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
   icon = icon_paintable_new (NULL, size, scale);
   icon->loadable = G_LOADABLE_ICON (g_file_icon_new (file));
   icon->is_resource = g_file_has_uri_scheme (file, "resource");
@@ -4015,8 +4017,20 @@ gtk_icon_paintable_new_for_file (GFile *file,
       icon->filename = g_file_get_path (file);
     }
 
-  icon->is_svg = suffix_from_name (icon->filename) == ICON_CACHE_FLAG_SVG_SUFFIX;
-  icon->is_symbolic = icon_uri_is_symbolic (icon->filename, -1);
+  if (icon->filename != NULL)
+    {
+      icon->is_svg = suffix_from_name (icon->filename) == ICON_CACHE_FLAG_SVG_SUFFIX;
+      icon->is_symbolic = icon_uri_is_symbolic (icon->filename, -1);
+    }
+  else
+    {
+      char *basename;
+
+      basename = g_file_get_basename (file);
+      icon->is_svg = suffix_from_name (basename) == ICON_CACHE_FLAG_SVG_SUFFIX;
+      icon->is_symbolic = icon_uri_is_symbolic (basename, -1);
+      g_free (basename);
+    }
 
   return icon;
 }
