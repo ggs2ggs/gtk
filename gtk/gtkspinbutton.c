@@ -251,6 +251,7 @@ enum {
   PROP_ADJUSTMENT,
   PROP_CLIMB_RATE,
   PROP_DIGITS,
+  PROP_INPUT_HINTS,
   PROP_SNAP_TO_TICKS,
   PROP_NUMERIC,
   PROP_WRAP,
@@ -424,6 +425,20 @@ gtk_spin_button_class_init (GtkSpinButtonClass *class)
     g_param_spec_uint ("digits", NULL, NULL,
                        0, MAX_DIGITS, 0,
                        GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
+
+  /**
+   * GtkSpinButton:input-hints: (attributes org.gtk.Property.get=gtk_spin_button_get_input_hints org.gtk.Property.set=gtk_spin_button_set_input_hints)
+   *
+   * Additional hints that allow input methods to fine-tune
+   * their behaviour.
+   *
+   * Since: 4.16
+   */
+  spinbutton_props[PROP_INPUT_HINTS] =
+    g_param_spec_flags ("input-hints", NULL, NULL,
+                        GTK_TYPE_INPUT_HINTS,
+                        GTK_INPUT_HINT_NO_SPELLCHECK|GTK_INPUT_HINT_NO_EMOJI,
+                        GTK_PARAM_READWRITE|G_PARAM_EXPLICIT_NOTIFY);
 
   /**
    * GtkSpinButton:snap-to-ticks: (attributes org.gtk.Property.get=gtk_spin_button_get_snap_to_ticks org.gtk.Property.set=gtk_spin_button_set_snap_to_ticks)
@@ -800,6 +815,9 @@ gtk_spin_button_set_property (GObject      *object,
                                  spin_button->climb_rate,
                                  g_value_get_uint (value));
       break;
+    case PROP_INPUT_HINTS:
+      gtk_spin_button_set_input_hints (spin_button, g_value_get_flags (value));
+      break;
     case PROP_SNAP_TO_TICKS:
       gtk_spin_button_set_snap_to_ticks (spin_button, g_value_get_boolean (value));
       break;
@@ -860,6 +878,9 @@ gtk_spin_button_get_property (GObject      *object,
       break;
     case PROP_DIGITS:
       g_value_set_uint (value, spin_button->digits);
+      break;
+    case PROP_INPUT_HINTS:
+      g_value_set_flags (value, gtk_spin_button_get_input_hints (spin_button));
       break;
     case PROP_SNAP_TO_TICKS:
       g_value_set_boolean (value, spin_button->snap_to_ticks);
@@ -1080,6 +1101,7 @@ gtk_spin_button_init (GtkSpinButton *spin_button)
   gtk_widget_update_orientation (GTK_WIDGET (spin_button), GTK_ORIENTATION_HORIZONTAL);
 
   spin_button->entry = gtk_text_new ();
+  gtk_text_set_input_hints (GTK_TEXT (spin_button->entry), GTK_INPUT_HINT_NO_SPELLCHECK|GTK_INPUT_HINT_NO_EMOJI);
   gtk_editable_init_delegate (GTK_EDITABLE (spin_button));
   gtk_editable_set_width_chars (GTK_EDITABLE (spin_button->entry), 0);
   gtk_editable_set_max_width_chars (GTK_EDITABLE (spin_button->entry), 0);
@@ -2117,6 +2139,44 @@ gtk_spin_button_get_increments (GtkSpinButton *spin_button,
 }
 
 /**
+ * gtk_spin_button_set_input_hints: (attributes org.gtk.Method.set_property=input-hints)
+ * @entry: a `GtkSpinButton`
+ * @hints: the hints
+ *
+ * Set additional hints which allow input methods to
+ * fine-tune their behavior.
+ *
+ * Since: 4.16
+ */
+void
+gtk_spin_button_set_input_hints (GtkSpinButton *spin_button,
+                                 GtkInputHints  hints)
+
+{
+  g_return_if_fail (GTK_IS_SPIN_BUTTON (spin_button));
+
+  gtk_text_set_input_hints (GTK_TEXT (spin_button->entry), hints);
+}
+
+/**
+ * gtk_spin_button_get_input_hints: (attributes org.gtk.Method.get_property=input-hints)
+ * @entry: a `GtkSpinButton`
+ *
+ * Gets the input hints of this `GtkSpinButton`.
+ *
+ * Returns: the input hints
+ *
+ * Since: 4.16
+ */
+GtkInputHints
+gtk_spin_button_get_input_hints (GtkSpinButton *spin_button)
+{
+  g_return_val_if_fail (GTK_IS_SPIN_BUTTON (spin_button), GTK_INPUT_HINT_NONE);
+
+  return gtk_text_get_input_hints (GTK_TEXT (spin_button->entry));
+}
+
+/**
  * gtk_spin_button_set_range:
  * @spin_button: a `GtkSpinButton`
  * @min: minimum allowable value
@@ -2567,6 +2627,7 @@ gtk_spin_button_update (GtkSpinButton *spin_button)
     gtk_spin_button_set_value (spin_button, val);
 }
 
+// Todo: Can this be removed?
 GtkText *
 gtk_spin_button_get_text_widget (GtkSpinButton *spin_button)
 {
