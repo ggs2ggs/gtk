@@ -440,6 +440,16 @@ _gdk_win32_screen_get_setting (GdkScreen   *screen,
           return TRUE;
         }
     }
+  else if (strcmp ("gtk-enable-animations", name) == 0)
+    {
+      BOOL val = TRUE;
+      SystemParametersInfo (SPI_GETCLIENTAREAANIMATION, 0, &val, 0);
+      g_value_set_boolean (value, val);
+
+      GDK_NOTE(MISC, g_print ("gdk_screen_get_setting(\"%s\") : %s\n", name, val ? "TRUE" : "FALSE"));
+      return TRUE;
+    }
+
 
   return FALSE;
 }
